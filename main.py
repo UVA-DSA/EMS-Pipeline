@@ -1,5 +1,5 @@
 ''' 
-Basic processing of EMS narratives
+Basic cleaning and pre-processing of EMS narratives
 
 Copyright (C) 2017 University of Virginia, Homa Alemzadeh
 
