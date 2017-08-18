@@ -1,0 +1,454 @@
+sentence# 1: 720 Mass Ave - MVA
+tokens: {720}	{Mass}	{Ave}	{-}	{MVA}	
+sentence# 2: Location: SEMS HQ
+tokens: {Location}	{:}	{SEMS}	{HQ}	
+sentence# 3: Time: 09:12 Wednesday
+tokens: {Time}	{:}	{09:12}	{Wednesday}	
+sentence# 4: Conditions: Warm and clear
+tokens: {Conditions}	{:}	{Warm}	{and}	{clear}	
+sentence# 5: Equipment: fully stocked
+tokens: {Equipment}	{:}	{fully}	{stocked}	
+sentence# 6: Dispatch
+tokens: {Dispatch}	
+sentence# 7: Another day in paradise.
+tokens: {Another}	{day}	{in}	{paradise}	{.}	
+sentence# 8: You're occupying a couch at the base, watching the morning news with a couple other crews and yawning.
+tokens: {You}	{'re}	{occupying}	{a}	{couch}	{at}	{the}	{base}	{,}	{watching}	{the}	{morning}	{news}	{with}	{a}	{couple}	{other}	{crews}	{and}	{yawning}	{.}	
+sentence# 9: A reporter's talking about a rabbit that just gave birth, or something similarly compelling.
+tokens: {A}	{reporter}	{'s}	{talking}	{about}	{a}	{rabbit}	{that}	{just}	{gave}	{birth}	{,}	{or}	{something}	{similarly}	{compelling}	{.}	
+sentence# 10: "You know," remarks Sarah McGuire from the 42, "if nothing's going on in the world, they could just tell us that and show cartoons for an hour."
+tokens: {``}	{You}	{know}	{,}	{''}	{remarks}	{Sarah}	{McGuire}	{from}	{the}	{42}	{,}	{``}	{if}	{nothing}	{'s}	{going}	{on}	{in}	{the}	{world}	{,}	{they}	{could}	{just}	{tell}	{us}	{that}	{and}	{show}	{cartoons}	{for}	{an}	{hour}	{.}	{''}	
+sentence# 11: "But the bunnies," her partner Jenn answers meekly.
+tokens: {``}	{But}	{the}	{bunnies}	{,}	{''}	{her}	{partner}	{Jenn}	{answers}	{meekly}	{.}	
+sentence# 12: "The bunnies, Sarah."
+tokens: {``}	{The}	{bunnies}	{,}	{Sarah}	{.}	{''}	
+sentence# 13: "Screw the bunnies.
+tokens: {``}	{Screw}	{the}	{bunnies}	{.}	
+sentence# 14: Bunnies are vermin."
+tokens: {Bunnies}	{are}	{vermin}	{.}	{''}	
+sentence# 15: "Gasp!"
+tokens: {``}	{Gasp}	{!}	{''}	
+sentence# 16: Bunnies notwithstanding, the tones blare out and the radio crackles...
+tokens: {Bunnies}	{notwithstanding}	{,}	{the}	{tones}	{blare}	{out}	{and}	{the}	{radio}	{crackles}	{...}	
+sentence# 17: [Ambulance 61, come up for 720 Mass Ave... 7-2-0 Massachusetts Ave, priority 1, in front of the town hall, for an MVA.
+tokens: {[}	{Ambulance}	{61}	{,}	{come}	{up}	{for}	{720}	{Mass}	{Ave}	{...}	{7-2-0}	{Massachusetts}	{Ave}	{,}	{priority}	{1}	{,}	{in}	{front}	{of}	{the}	{town}	{hall}	{,}	{for}	{an}	{MVA}	{.}	
+sentence# 18: Engine 1 responding with Ladder 2 to follow.
+tokens: {Engine}	{1}	{responding}	{with}	{Ladder}	{2}	{to}	{follow}	{.}	
+sentence# 19: 61?]
+tokens: {61}	{?}	{]}	
+sentence# 20: Response
+tokens: {Response}	
+sentence# 21: You loll your head left, right, left, and then muster the energy to stand and answer the radio.
+tokens: {You}	{loll}	{your}	{head}	{left}	{,}	{right}	{,}	{left}	{,}	{and}	{then}	{muster}	{the}	{energy}	{to}	{stand}	{and}	{answer}	{the}	{radio}	{.}	
+sentence# 22: Steve oozes past you toward the truck; you catch up as he climbs inside.
+tokens: {Steve}	{oozes}	{past}	{you}	{toward}	{the}	{truck}	{;}	{you}	{catch}	{up}	{as}	{he}	{climbs}	{inside}	{.}	
+sentence# 23: On the street, you see Engine 1 already rolling past the base, but the ladder is coming from a distance, so you figure you'll beat them.
+tokens: {On}	{the}	{street}	{,}	{you}	{see}	{Engine}	{1}	{already}	{rolling}	{past}	{the}	{base}	{,}	{but}	{the}	{ladder}	{is}	{coming}	{from}	{a}	{distance}	{,}	{so}	{you}	{figure}	{you}	{'ll}	{beat}	{them}	{.}	
+sentence# 24: You follow the engine a few blocks and home in on the flashing lights of two SPD cruisers.
+tokens: {You}	{follow}	{the}	{engine}	{a}	{few}	{blocks}	{and}	{home}	{in}	{on}	{the}	{flashing}	{lights}	{of}	{two}	{SPD}	{cruisers}	{.}	
+sentence# 25: The engine parks in a reasonable shielding position, you park down-traffic past the scene, and hop out as Steve calls you off.
+tokens: {The}	{engine}	{parks}	{in}	{a}	{reasonable}	{shielding}	{position}	{,}	{you}	{park}	{down-traffic}	{past}	{the}	{scene}	{,}	{and}	{hop}	{out}	{as}	{Steve}	{calls}	{you}	{off}	{.}	
+sentence# 26: Scene
+tokens: {Scene}	
+sentence# 27: You see a passenger car turned diagonally in the lane, with about five inches of intrusion to the left front wheel-well and quarter-panel.
+tokens: {You}	{see}	{a}	{passenger}	{car}	{turned}	{diagonally}	{in}	{the}	{lane}	{,}	{with}	{about}	{five}	{inches}	{of}	{intrusion}	{to}	{the}	{left}	{front}	{wheel-well}	{and}	{quarter-panel}	{.}	
+sentence# 28: In the driver's seat is a middle-aged female, appearing conscious but agitated, and in the passenger's seat is another female of similar age; both are dressed business casual and have no obvious injury.
+tokens: {In}	{the}	{driver}	{'s}	{seat}	{is}	{a}	{middle-aged}	{female}	{,}	{appearing}	{conscious}	{but}	{agitated}	{,}	{and}	{in}	{the}	{passenger}	{'s}	{seat}	{is}	{another}	{female}	{of}	{similar}	{age}	{;}	{both}	{are}	{dressed}	{business}	{casual}	{and}	{have}	{no}	{obvious}	{injury}	{.}	
+sentence# 29: To the left is a green SUV.
+tokens: {To}	{the}	{left}	{is}	{a}	{green}	{SUV}	{.}	
+sentence# 30: The right portion of its front fender is dented - just a few inches - and there's no other apparent damage.
+tokens: {The}	{right}	{portion}	{of}	{its}	{front}	{fender}	{is}	{dented}	{-}	{just}	{a}	{few}	{inches}	{-}	{and}	{there}	{'s}	{no}	{other}	{apparent}	{damage}	{.}	
+sentence# 31: A young woman is standing outside talking animatedly to one of the officers; she looks generally okay.
+tokens: {A}	{young}	{woman}	{is}	{standing}	{outside}	{talking}	{animatedly}	{to}	{one}	{of}	{the}	{officers}	{;}	{she}	{looks}	{generally}	{okay}	{.}	
+sentence# 32: Her rear windows are tinted and you're not sure if there's anybody else inside.
+tokens: {Her}	{rear}	{windows}	{are}	{tinted}	{and}	{you}	{'re}	{not}	{sure}	{if}	{there}	{'s}	{anybody}	{else}	{inside}	{.}	
+sentence# 33: The area seems reasonbly protected.
+tokens: {The}	{area}	{seems}	{reasonbly}	{protected}	{.}	
+sentence# 34: Mass Ave is busy in the middle of town here, but not too fast-moving, and there's a decent amount of metal surrounding the scene now.
+tokens: {Mass}	{Ave}	{is}	{busy}	{in}	{the}	{middle}	{of}	{town}	{here}	{,}	{but}	{not}	{too}	{fast-moving}	{,}	{and}	{there}	{'s}	{a}	{decent}	{amount}	{of}	{metal}	{surrounding}	{the}	{scene}	{now}	{.}	
+sentence# 35: Still, you figure you'll let the ladder continue in for now.
+tokens: {Still}	{,}	{you}	{figure}	{you}	{'ll}	{let}	{the}	{ladder}	{continue}	{in}	{for}	{now}	{.}	
+sentence# 36: Donning gloves and walking in, you nod to one of the officers.
+tokens: {Donning}	{gloves}	{and}	{walking}	{in}	{,}	{you}	{nod}	{to}	{one}	{of}	{the}	{officers}	{.}	
+sentence# 37: "What do we have, three?"
+tokens: {``}	{What}	{do}	{we}	{have}	{,}	{three}	{?}	{''}	
+sentence# 38: "Ah... yeah, everyone seems okay."
+tokens: {``}	{Ah}	{...}	{yeah}	{,}	{everyone}	{seems}	{okay}	{.}	{''}	
+sentence# 39: "Two over here" - you point at the car - "and just one here?"
+tokens: {``}	{Two}	{over}	{here}	{''}	{-}	{you}	{point}	{at}	{the}	{car}	{-}	{``}	{and}	{just}	{one}	{here}	{?}	{''}	
+sentence# 40: You indicate the SUV.
+tokens: {You}	{indicate}	{the}	{SUV}	{.}	
+sentence# 41: The young woman interjects, "My daughter's in the back seat."
+tokens: {The}	{young}	{woman}	{interjects}	{,}	{``}	{My}	{daughter}	{'s}	{in}	{the}	{back}	{seat}	{.}	{''}	
+sentence# 42: "Ah, okay."
+tokens: {``}	{Ah}	{,}	{okay}	{.}	{''}	
+sentence# 43: Initial Assessment
+tokens: {Initial}	{Assessment}	
+sentence# 44: Eyeballing her, you see a well-appearing woman in her late 20s, breathing without labor and with no grossly apparent trauma.
+tokens: {Eyeballing}	{her}	{,}	{you}	{see}	{a}	{well-appearing}	{woman}	{in}	{her}	{late}	{20s}	{,}	{breathing}	{without}	{labor}	{and}	{with}	{no}	{grossly}	{apparent}	{trauma}	{.}	
+sentence# 45: "What happened?"
+tokens: {``}	{What}	{happened}	{?}	{''}	
+sentence# 46: you ask her.
+tokens: {you}	{ask}	{her}	{.}	
+sentence# 47: Seeing Steve approach, you point him toward the other vehicle; he trots that way.
+tokens: {Seeing}	{Steve}	{approach}	{,}	{you}	{point}	{him}	{toward}	{the}	{other}	{vehicle}	{;}	{he}	{trots}	{that}	{way}	{.}	
+sentence# 48: "I was taking my daughter to school... she had a little problem this morning, I - I had to bring her late - but I was just driving here and they came out of nowhere and cut me off."
+tokens: {``}	{I}	{was}	{taking}	{my}	{daughter}	{to}	{school}	{...}	{she}	{had}	{a}	{little}	{problem}	{this}	{morning}	{,}	{I}	{-}	{I}	{had}	{to}	{bring}	{her}	{late}	{-}	{but}	{I}	{was}	{just}	{driving}	{here}	{and}	{they}	{came}	{out}	{of}	{nowhere}	{and}	{cut}	{me}	{off}	{.}	{''}	
+sentence# 49: "So... you were driving straight... and they merged in front of you?
+tokens: {``}	{So}	{...}	{you}	{were}	{driving}	{straight}	{...}	{and}	{they}	{merged}	{in}	{front}	{of}	{you}	{?}	
+sentence# 50: And you hit them with your corner there?"
+tokens: {And}	{you}	{hit}	{them}	{with}	{your}	{corner}	{there}	{?}	{''}	
+sentence# 51: "Yes."
+tokens: {``}	{Yes}	{.}	{''}	
+sentence# 52: "Any idea how fast?"
+tokens: {``}	{Any}	{idea}	{how}	{fast}	{?}	{''}	
+sentence# 53: You take her right wrist gently, feeling warm, dry skin and a strong, brisk radial pulse.
+tokens: {You}	{take}	{her}	{right}	{wrist}	{gently}	{,}	{feeling}	{warm}	{,}	{dry}	{skin}	{and}	{a}	{strong}	{,}	{brisk}	{radial}	{pulse}	{.}	
+sentence# 54: "Uh...
+tokens: {``}	{Uh}	{...}	
+sentence# 55: I don't know.
+tokens: {I}	{do}	{n't}	{know}	{.}	
+sentence# 56: Not that fast."
+tokens: {Not}	{that}	{fast}	{.}	{''}	
+sentence# 57: "All right.
+tokens: {``}	{All}	{right}	{.}	
+sentence# 58: How are you feeling now?"
+tokens: {How}	{are}	{you}	{feeling}	{now}	{?}	{''}	
+sentence# 59: "Good, I'm good, I'm fine."
+tokens: {``}	{Good}	{,}	{I}	{'m}	{good}	{,}	{I}	{'m}	{fine}	{.}	{''}	
+sentence# 60: "Nothing bothering you?
+tokens: {``}	{Nothing}	{bothering}	{you}	{?}	
+sentence# 61: Any pain?"
+tokens: {Any}	{pain}	{?}	{''}	
+sentence# 62: "No."
+tokens: {``}	{No}	{.}	{''}	
+sentence# 63: "Did you have your seatbelt on?"
+tokens: {``}	{Did}	{you}	{have}	{your}	{seatbelt}	{on}	{?}	{''}	
+sentence# 64: "Oh, yes."
+tokens: {``}	{Oh}	{,}	{yes}	{.}	{''}	
+sentence# 65: "Okay...
+tokens: {``}	{Okay}	{...}	
+sentence# 66: I'm Sam, by the way."
+tokens: {I}	{'m}	{Sam}	{,}	{by}	{the}	{way}	{.}	{''}	
+sentence# 67: "Rebecca," she replies.
+tokens: {``}	{Rebecca}	{,}	{''}	{she}	{replies}	{.}	
+sentence# 68: "Hang on one sec, Rebecca."
+tokens: {``}	{Hang}	{on}	{one}	{sec}	{,}	{Rebecca}	{.}	{''}	
+sentence# 69: You walk over to her vehicle.
+tokens: {You}	{walk}	{over}	{to}	{her}	{vehicle}	{.}	
+sentence# 70: Peeking inside, you see a clean interior, with no damage to the steering wheel, posts, glass, or dash.
+tokens: {Peeking}	{inside}	{,}	{you}	{see}	{a}	{clean}	{interior}	{,}	{with}	{no}	{damage}	{to}	{the}	{steering}	{wheel}	{,}	{posts}	{,}	{glass}	{,}	{or}	{dash}	{.}	
+sentence# 71: Opening the back door, you find a young girl, perhaps 9 or 10, sitting belted into a booster seat.
+tokens: {Opening}	{the}	{back}	{door}	{,}	{you}	{find}	{a}	{young}	{girl}	{,}	{perhaps}	{9}	{or}	{10}	{,}	{sitting}	{belted}	{into}	{a}	{booster}	{seat}	{.}	
+sentence# 72: You lean inside and give her a huge smile.
+tokens: {You}	{lean}	{inside}	{and}	{give}	{her}	{a}	{huge}	{smile}	{.}	
+sentence# 73: "Hi!"
+tokens: {``}	{Hi}	{!}	{''}	
+sentence# 74: "Hi," she replies.
+tokens: {``}	{Hi}	{,}	{''}	{she}	{replies}	{.}	
+sentence# 75: "What's your name?"
+tokens: {``}	{What}	{'s}	{your}	{name}	{?}	{''}	
+sentence# 76: "Myra."
+tokens: {``}	{Myra}	{.}	{''}	
+sentence# 77: "Myra, I'm Sam."
+tokens: {``}	{Myra}	{,}	{I}	{'m}	{Sam}	{.}	{''}	
+sentence# 78: You offer her a blue hand, which she shakes gravely.
+tokens: {You}	{offer}	{her}	{a}	{blue}	{hand}	{,}	{which}	{she}	{shakes}	{gravely}	{.}	
+sentence# 79: Her skin is warm and dry, and she's breathing normally, without any labor.
+tokens: {Her}	{skin}	{is}	{warm}	{and}	{dry}	{,}	{and}	{she}	{'s}	{breathing}	{normally}	{,}	{without}	{any}	{labor}	{.}	
+sentence# 80: "How old are you, Myra?"
+tokens: {``}	{How}	{old}	{are}	{you}	{,}	{Myra}	{?}	{''}	
+sentence# 81: "I'm ten."
+tokens: {``}	{I}	{'m}	{ten}	{.}	{''}	
+sentence# 82: "Ten?
+tokens: {``}	{Ten}	{?}	
+sentence# 83: Awesome.
+tokens: {Awesome}	{.}	
+sentence# 84: How are you feeling, Myra?"
+tokens: {How}	{are}	{you}	{feeling}	{,}	{Myra}	{?}	{''}	
+sentence# 85: "Okay."
+tokens: {``}	{Okay}	{.}	{''}	
+sentence# 86: "Okay?
+tokens: {``}	{Okay}	{?}	
+sentence# 87: Does anything hurt?"
+tokens: {Does}	{anything}	{hurt}	{?}	{''}	
+sentence# 88: She shakes her head back and forth.
+tokens: {She}	{shakes}	{her}	{head}	{back}	{and}	{forth}	{.}	
+sentence# 89: "No?
+tokens: {``}	{No}	{?}	
+sentence# 90: Your head and your neck feel okay?"
+tokens: {Your}	{head}	{and}	{your}	{neck}	{feel}	{okay}	{?}	{''}	
+sentence# 91: You palpate your own illustratively.
+tokens: {You}	{palpate}	{your}	{own}	{illustratively}	{.}	
+sentence# 92: "Yes."
+tokens: {``}	{Yes}	{.}	{''}	
+sentence# 93: She's shy, but clearly undistressed, and with no obvious injury.
+tokens: {She}	{'s}	{shy}	{,}	{but}	{clearly}	{undistressed}	{,}	{and}	{with}	{no}	{obvious}	{injury}	{.}	
+sentence# 94: With the booster seat and belts, she's pretty well protected as well.
+tokens: {With}	{the}	{booster}	{seat}	{and}	{belts}	{,}	{she}	{'s}	{pretty}	{well}	{protected}	{as}	{well}	{.}	
+sentence# 95: You stick out a couple fingers and let her squeeze with both hands, ask her to wriggle her feet at you, and see no gross motor deficits.
+tokens: {You}	{stick}	{out}	{a}	{couple}	{fingers}	{and}	{let}	{her}	{squeeze}	{with}	{both}	{hands}	{,}	{ask}	{her}	{to}	{wriggle}	{her}	{feet}	{at}	{you}	{,}	{and}	{see}	{no}	{gross}	{motor}	{deficits}	{.}	
+sentence# 96: "I'll be back in a second," you tell her with a grin, then duck out and return to her mom, who's giving information to the officer.
+tokens: {``}	{I}	{'ll}	{be}	{back}	{in}	{a}	{second}	{,}	{''}	{you}	{tell}	{her}	{with}	{a}	{grin}	{,}	{then}	{duck}	{out}	{and}	{return}	{to}	{her}	{mom}	{,}	{who}	{'s}	{giving}	{information}	{to}	{the}	{officer}	{.}	
+sentence# 97: Behind you, SFD Ladder 2 rolls up and parks to protect the scene.
+tokens: {Behind}	{you}	{,}	{SFD}	{Ladder}	{2}	{rolls}	{up}	{and}	{parks}	{to}	{protect}	{the}	{scene}	{.}	
+sentence# 98: "So you're feeling okay?"
+tokens: {``}	{So}	{you}	{'re}	{feeling}	{okay}	{?}	{''}	
+sentence# 99: you ask her.
+tokens: {you}	{ask}	{her}	{.}	
+sentence# 100: She nods.
+tokens: {She}	{nods}	{.}	
+sentence# 101: "Do you have any medical problems of any kind?"
+tokens: {``}	{Do}	{you}	{have}	{any}	{medical}	{problems}	{of}	{any}	{kind}	{?}	{''}	
+sentence# 102: "No... not really.
+tokens: {``}	{No}	{...}	{not}	{really}	{.}	
+sentence# 103: I had one of my toes removed last year from an infection."
+tokens: {I}	{had}	{one}	{of}	{my}	{toes}	{removed}	{last}	{year}	{from}	{an}	{infection}	{.}	{''}	
+sentence# 104: You blink.
+tokens: {You}	{blink}	{.}	
+sentence# 105: "Uh... right.
+tokens: {``}	{Uh}	{...}	{right}	{.}	
+sentence# 106: Taking any medications currently?"
+tokens: {Taking}	{any}	{medications}	{currently}	{?}	{''}	
+sentence# 107: "Just glucosamine, for my joints... you know, with the MSM."
+tokens: {``}	{Just}	{glucosamine}	{,}	{for}	{my}	{joints}	{...}	{you}	{know}	{,}	{with}	{the}	{MSM}	{.}	{''}	
+sentence# 108: "And Myra?
+tokens: {``}	{And}	{Myra}	{?}	
+sentence# 109: Any medical issues, taking any meds?"
+tokens: {Any}	{medical}	{issues}	{,}	{taking}	{any}	{meds}	{?}	{''}	
+sentence# 110: "No, no."
+tokens: {``}	{No}	{,}	{no}	{.}	{''}	
+sentence# 111: You ask her to squeeze your hands, which she does with equal strength, and take a quick look at her head for any injury; you find none.
+tokens: {You}	{ask}	{her}	{to}	{squeeze}	{your}	{hands}	{,}	{which}	{she}	{does}	{with}	{equal}	{strength}	{,}	{and}	{take}	{a}	{quick}	{look}	{at}	{her}	{head}	{for}	{any}	{injury}	{;}	{you}	{find}	{none}	{.}	
+sentence# 112: "So what do you think?"
+tokens: {``}	{So}	{what}	{do}	{you}	{think}	{?}	{''}	
+sentence# 113: you ask.
+tokens: {you}	{ask}	{.}	
+sentence# 114: "Do you want to come with us to the hospital?"
+tokens: {``}	{Do}	{you}	{want}	{to}	{come}	{with}	{us}	{to}	{the}	{hospital}	{?}	{''}	
+sentence# 115: "Oh, I don't think so..." she crosses her arms.
+tokens: {``}	{Oh}	{,}	{I}	{do}	{n't}	{think}	{so}	{...}	{''}	{she}	{crosses}	{her}	{arms}	{.}	
+sentence# 116: "Well... what do you think?
+tokens: {``}	{Well}	{...}	{what}	{do}	{you}	{think}	{?}	
+sentence# 117: Is Myra okay?"
+tokens: {Is}	{Myra}	{okay}	{?}	{''}	
+sentence# 118: You shrug.
+tokens: {You}	{shrug}	{.}	
+sentence# 119: "She seems to be okay - nothing obviously wrong.
+tokens: {``}	{She}	{seems}	{to}	{be}	{okay}	{-}	{nothing}	{obviously}	{wrong}	{.}	
+sentence# 120: Really nothing to make us think that she's high risk.
+tokens: {Really}	{nothing}	{to}	{make}	{us}	{think}	{that}	{she}	{'s}	{high}	{risk}	{.}	
+sentence# 121: But it's the same story for the both of you.
+tokens: {But}	{it}	{'s}	{the}	{same}	{story}	{for}	{the}	{both}	{of}	{you}	{.}	
+sentence# 122: If you're looking to be 100% sure that you're okay, you'd need to visit the hospital so they could do some tests and you can be seen by the doctor."
+tokens: {If}	{you}	{'re}	{looking}	{to}	{be}	{100}	{%}	{sure}	{that}	{you}	{'re}	{okay}	{,}	{you}	{'d}	{need}	{to}	{visit}	{the}	{hospital}	{so}	{they}	{could}	{do}	{some}	{tests}	{and}	{you}	{can}	{be}	{seen}	{by}	{the}	{doctor}	{.}	{''}	
+sentence# 123: She wrinkles her brow.
+tokens: {She}	{wrinkles}	{her}	{brow}	{.}	
+sentence# 124: "Does... well, is that necessary?"
+tokens: {``}	{Does}	{...}	{well}	{,}	{is}	{that}	{necessary}	{?}	{''}	
+sentence# 125: "It's up to you."
+tokens: {``}	{It}	{'s}	{up}	{to}	{you}	{.}	{''}	
+sentence# 126: After a pause, she nods.
+tokens: {After}	{a}	{pause}	{,}	{she}	{nods}	{.}	
+sentence# 127: "I think we're okay.
+tokens: {``}	{I}	{think}	{we}	{'re}	{okay}	{.}	
+sentence# 128: My husband is coming to pick us up."
+tokens: {My}	{husband}	{is}	{coming}	{to}	{pick}	{us}	{up}	{.}	{''}	
+sentence# 129: From the corner of your eye, you see Steve approaching, and step aside to meet him.
+tokens: {From}	{the}	{corner}	{of}	{your}	{eye}	{,}	{you}	{see}	{Steve}	{approaching}	{,}	{and}	{step}	{aside}	{to}	{meet}	{him}	{.}	
+sentence# 130: "They look okay," he tells you, indicating the two women in the other car.
+tokens: {``}	{They}	{look}	{okay}	{,}	{''}	{he}	{tells}	{you}	{,}	{indicating}	{the}	{two}	{women}	{in}	{the}	{other}	{car}	{.}	
+sentence# 131: "Annoyed but no pain or anything, belted, no airbag deployment."
+tokens: {``}	{Annoyed}	{but}	{no}	{pain}	{or}	{anything}	{,}	{belted}	{,}	{no}	{airbag}	{deployment}	{.}	{''}	
+sentence# 132: "Gotcha."
+tokens: {``}	{Gotcha}	{.}	{''}	
+sentence# 133: You count one, two, three, four people in cars, and feel a strong inclination to just turn tail and leave, calling it a non-incident.
+tokens: {You}	{count}	{one}	{,}	{two}	{,}	{three}	{,}	{four}	{people}	{in}	{cars}	{,}	{and}	{feel}	{a}	{strong}	{inclination}	{to}	{just}	{turn}	{tail}	{and}	{leave}	{,}	{calling}	{it}	{a}	{non-incident}	{.}	
+sentence# 134: But, sigh - you'd better do things properly.
+tokens: {But}	{,}	{sigh}	{-}	{you}	{'d}	{better}	{do}	{things}	{properly}	{.}	
+sentence# 135: "Okay.
+tokens: {``}	{Okay}	{.}	
+sentence# 136: You want to get a couple refusals over there?"
+tokens: {You}	{want}	{to}	{get}	{a}	{couple}	{refusals}	{over}	{there}	{?}	{''}	
+sentence# 137: you ask Steve.
+tokens: {you}	{ask}	{Steve}	{.}	
+sentence# 138: "I'll do these two after."
+tokens: {``}	{I}	{'ll}	{do}	{these}	{two}	{after}	{.}	{''}	
+sentence# 139: He nods and goes to retrieve the computer from the truck.
+tokens: {He}	{nods}	{and}	{goes}	{to}	{retrieve}	{the}	{computer}	{from}	{the}	{truck}	{.}	
+sentence# 140: You instinctively reach for your shoulder, then remember that somebody managed to break the lapel mic on the 61's portable radio; you pull the handset off your belt instead and hold it up.
+tokens: {You}	{instinctively}	{reach}	{for}	{your}	{shoulder}	{,}	{then}	{remember}	{that}	{somebody}	{managed}	{to}	{break}	{the}	{lapel}	{mic}	{on}	{the}	{61}	{'s}	{portable}	{radio}	{;}	{you}	{pull}	{the}	{handset}	{off}	{your}	{belt}	{instead}	{and}	{hold}	{it}	{up}	{.}	
+sentence# 141: "Operations, Ambulance 61."
+tokens: {``}	{Operations}	{,}	{Ambulance}	{61}	{.}	{''}	
+sentence# 142: "61, go."
+tokens: {``}	{61}	{,}	{go}	{.}	{''}	
+sentence# 143: "Looks like it's going to be four refusals here; can you send over a few more runs?"
+tokens: {``}	{Looks}	{like}	{it}	{'s}	{going}	{to}	{be}	{four}	{refusals}	{here}	{;}	{can}	{you}	{send}	{over}	{a}	{few}	{more}	{runs}	{?}	{''}	
+sentence# 144: "61, you have four patient refusals...
+tokens: {``}	{61}	{,}	{you}	{have}	{four}	{patient}	{refusals}	{...}	
+sentence# 145: I'll generate another three runsheets."
+tokens: {I}	{'ll}	{generate}	{another}	{three}	{runsheets}	{.}	{''}	
+sentence# 146: "Thank you.
+tokens: {``}	{Thank}	{you}	{.}	
+sentence# 147: We'll be on scene for a few minutes documenting."
+tokens: {We}	{'ll}	{be}	{on}	{scene}	{for}	{a}	{few}	{minutes}	{documenting}	{.}	{''}	
+sentence# 148: "You're remaining on scene.
+tokens: {``}	{You}	{'re}	{remaining}	{on}	{scene}	{.}	
+sentence# 149: Operations standing by, 9:22."
+tokens: {Operations}	{standing}	{by}	{,}	{9:22}	{.}	{''}	
+sentence# 150: Returning to Rebecca, you say, "All right.
+tokens: {Returning}	{to}	{Rebecca}	{,}	{you}	{say}	{,}	{``}	{All}	{right}	{.}	
+sentence# 151: So what are you thinking?
+tokens: {So}	{what}	{are}	{you}	{thinking}	{?}	
+sentence# 152: You're going to have your husband pick you guys up and head home?"
+tokens: {You}	{'re}	{going}	{to}	{have}	{your}	{husband}	{pick}	{you}	{guys}	{up}	{and}	{head}	{home}	{?}	{''}	
+sentence# 153: She nods.
+tokens: {She}	{nods}	{.}	
+sentence# 154: "He's on his way now."
+tokens: {``}	{He}	{'s}	{on}	{his}	{way}	{now}	{.}	{''}	
+sentence# 155: "Okay.
+tokens: {``}	{Okay}	{.}	
+sentence# 156: We're just going to have you sign something saying you don't want to come with us, all right?"
+tokens: {We}	{'re}	{just}	{going}	{to}	{have}	{you}	{sign}	{something}	{saying}	{you}	{do}	{n't}	{want}	{to}	{come}	{with}	{us}	{,}	{all}	{right}	{?}	{''}	
+sentence# 157: "Sure."
+tokens: {``}	{Sure}	{.}	{''}	
+sentence# 158: "Do me a favor - can you turn your head left and right?
+tokens: {``}	{Do}	{me}	{a}	{favor}	{-}	{can}	{you}	{turn}	{your}	{head}	{left}	{and}	{right}	{?}	
+sentence# 159: Touch your chin to each shoulder."
+tokens: {Touch}	{your}	{chin}	{to}	{each}	{shoulder}	{.}	{''}	
+sentence# 160: You act it out, and she complies.
+tokens: {You}	{act}	{it}	{out}	{,}	{and}	{she}	{complies}	{.}	
+sentence# 161: "And chin to your chest?
+tokens: {``}	{And}	{chin}	{to}	{your}	{chest}	{?}	
+sentence# 162: And look up?"
+tokens: {And}	{look}	{up}	{?}	{''}	
+sentence# 163: She does.
+tokens: {She}	{does}	{.}	
+sentence# 164: "That feels okay?
+tokens: {``}	{That}	{feels}	{okay}	{?}	
+sentence# 165: No pain?"
+tokens: {No}	{pain}	{?}	{''}	
+sentence# 166: "Yep."
+tokens: {``}	{Yep}	{.}	{''}	
+sentence# 167: You nod.
+tokens: {You}	{nod}	{.}	
+sentence# 168: "Great."
+tokens: {``}	{Great}	{.}	{''}	
+sentence# 169: Steve shows up beside you.
+tokens: {Steve}	{shows}	{up}	{beside}	{you}	{.}	
+sentence# 170: "All set."
+tokens: {``}	{All}	{set}	{.}	{''}	
+sentence# 171: He hands you the computer.
+tokens: {He}	{hands}	{you}	{the}	{computer}	{.}	
+sentence# 172: Tapping at the screen, you open a fresh PCR.
+tokens: {Tapping}	{at}	{the}	{screen}	{,}	{you}	{open}	{a}	{fresh}	{PCR}	{.}	
+sentence# 173: "Okay, can I just get your full name?"
+tokens: {``}	{Okay}	{,}	{can}	{I}	{just}	{get}	{your}	{full}	{name}	{?}	{''}	
+sentence# 174: you ask Rebecca.
+tokens: {you}	{ask}	{Rebecca}	{.}	
+sentence# 175: "Rebecca Towle.
+tokens: {``}	{Rebecca}	{Towle}	{.}	
+sentence# 176: T-o-w-l-e."
+tokens: {T-o-w-l-e}	{.}	{''}	
+sentence# 177: "And your date of birth?"
+tokens: {``}	{And}	{your}	{date}	{of}	{birth}	{?}	{''}	
+sentence# 178: "September 3, '79."
+tokens: {``}	{September}	{3}	{,}	{'79}	{.}	{''}	
+sentence# 179: "And your address?"
+tokens: {``}	{And}	{your}	{address}	{?}	{''}	
+sentence# 180: She reads it off, and you punch it in, followed by her phone number.
+tokens: {She}	{reads}	{it}	{off}	{,}	{and}	{you}	{punch}	{it}	{in}	{,}	{followed}	{by}	{her}	{phone}	{number}	{.}	
+sentence# 181: "All right, great."
+tokens: {``}	{All}	{right}	{,}	{great}	{.}	{''}	
+sentence# 182: You hold out the tablet and a stylus.
+tokens: {You}	{hold}	{out}	{the}	{tablet}	{and}	{a}	{stylus}	{.}	
+sentence# 183: "So you're just signing to say that you don't want to come with us right now to the hospital.
+tokens: {``}	{So}	{you}	{'re}	{just}	{signing}	{to}	{say}	{that}	{you}	{do}	{n't}	{want}	{to}	{come}	{with}	{us}	{right}	{now}	{to}	{the}	{hospital}	{.}	
+sentence# 184: But if you change your mind, or if anything starts bothering you, feel free to give us a call - we're always around - or head over to the ER yourself.
+tokens: {But}	{if}	{you}	{change}	{your}	{mind}	{,}	{or}	{if}	{anything}	{starts}	{bothering}	{you}	{,}	{feel}	{free}	{to}	{give}	{us}	{a}	{call}	{-}	{we}	{'re}	{always}	{around}	{-}	{or}	{head}	{over}	{to}	{the}	{ER}	{yourself}	{.}	
+sentence# 185: Like I said, I know you're feeling okay now, but you never know, and I can't guarantee that there's nothing wrong.
+tokens: {Like}	{I}	{said}	{,}	{I}	{know}	{you}	{'re}	{feeling}	{okay}	{now}	{,}	{but}	{you}	{never}	{know}	{,}	{and}	{I}	{ca}	{n't}	{guarantee}	{that}	{there}	{'s}	{nothing}	{wrong}	{.}	
+sentence# 186: Same goes for Myra."
+tokens: {Same}	{goes}	{for}	{Myra}	{.}	{''}	
+sentence# 187: Nodding, she scrawls a signature.
+tokens: {Nodding}	{,}	{she}	{scrawls}	{a}	{signature}	{.}	
+sentence# 188: "Great."
+tokens: {``}	{Great}	{.}	{''}	
+sentence# 189: You take back the computer, and open a fresh PCR.
+tokens: {You}	{take}	{back}	{the}	{computer}	{,}	{and}	{open}	{a}	{fresh}	{PCR}	{.}	
+sentence# 190: "And I'm just gonna have you sign the same thing for your daughter.
+tokens: {``}	{And}	{I}	{'m}	{just}	{gon}	{na}	{have}	{you}	{sign}	{the}	{same}	{thing}	{for}	{your}	{daughter}	{.}	
+sentence# 191: Is that M-y-r-a?
+tokens: {Is}	{that}	{M-y-r-a}	{?}	
+sentence# 192: Same last name?"
+tokens: {Same}	{last}	{name}	{?}	{''}	
+sentence# 193: She gives you the info, and signs a refusal of transport on her daughter's behalf.
+tokens: {She}	{gives}	{you}	{the}	{info}	{,}	{and}	{signs}	{a}	{refusal}	{of}	{transport}	{on}	{her}	{daughter}	{'s}	{behalf}	{.}	
+sentence# 194: "Terrific.
+tokens: {``}	{Terrific}	{.}	
+sentence# 195: Okay, we're gonna get out of here.
+tokens: {Okay}	{,}	{we}	{'re}	{gon}	{na}	{get}	{out}	{of}	{here}	{.}	
+sentence# 196: You all set?"
+tokens: {You}	{all}	{set}	{?}	{''}	
+sentence# 197: "Yes, thanks."
+tokens: {``}	{Yes}	{,}	{thanks}	{.}	{''}	
+sentence# 198: You hold out a hand and shake.
+tokens: {You}	{hold}	{out}	{a}	{hand}	{and}	{shake}	{.}	
+sentence# 199: "Good luck.
+tokens: {``}	{Good}	{luck}	{.}	
+sentence# 200: Hope your day improves."
+tokens: {Hope}	{your}	{day}	{improves}	{.}	{''}	
+sentence# 201: Walking back around to the SUV, you pop open the door again.
+tokens: {Walking}	{back}	{around}	{to}	{the}	{SUV}	{,}	{you}	{pop}	{open}	{the}	{door}	{again}	{.}	
+sentence# 202: Smiling at Myra, you tell her, "We're gonna get out of here, okay?
+tokens: {Smiling}	{at}	{Myra}	{,}	{you}	{tell}	{her}	{,}	{``}	{We}	{'re}	{gon}	{na}	{get}	{out}	{of}	{here}	{,}	{okay}	{?}	
+sentence# 203: Your dad is coming to pick you up."
+tokens: {Your}	{dad}	{is}	{coming}	{to}	{pick}	{you}	{up}	{.}	{''}	
+sentence# 204: "Okay."
+tokens: {``}	{Okay}	{.}	{''}	
+sentence# 205: "See you later."
+tokens: {``}	{See}	{you}	{later}	{.}	{''}	
+sentence# 206: You wave cheekily.
+tokens: {You}	{wave}	{cheekily}	{.}	
+sentence# 207: Hopping back into the truck, you plug the computer in and jot down the respective license numbers for the two vehicles.
+tokens: {Hopping}	{back}	{into}	{the}	{truck}	{,}	{you}	{plug}	{the}	{computer}	{in}	{and}	{jot}	{down}	{the}	{respective}	{license}	{numbers}	{for}	{the}	{two}	{vehicles}	{.}	
+sentence# 208: Your billing people have started to hassle crews for that; something about being able to bill the auto insurers.
+tokens: {Your}	{billing}	{people}	{have}	{started}	{to}	{hassle}	{crews}	{for}	{that}	{;}	{something}	{about}	{being}	{able}	{to}	{bill}	{the}	{auto}	{insurers}	{.}	
+sentence# 209: "All good?"
+tokens: {``}	{All}	{good}	{?}	{''}	
+sentence# 210: Steve asks, and you nod.
+tokens: {Steve}	{asks}	{,}	{and}	{you}	{nod}	{.}	
+sentence# 211: "I'll bang out these two, then I can drive if you want to write up the others."
+tokens: {``}	{I}	{'ll}	{bang}	{out}	{these}	{two}	{,}	{then}	{I}	{can}	{drive}	{if}	{you}	{want}	{to}	{write}	{up}	{the}	{others}	{.}	{''}	
+sentence# 212: "Sure."
+tokens: {``}	{Sure}	{.}	{''}	
+sentence# 213: Into the radio, he drawls, "Operations, 61, we're clear the scene with four refusals, available."
+tokens: {Into}	{the}	{radio}	{,}	{he}	{drawls}	{,}	{``}	{Operations}	{,}	{61}	{,}	{we}	{'re}	{clear}	{the}	{scene}	{with}	{four}	{refusals}	{,}	{available}	{.}	{''}	
+sentence# 214: "61, you're available.
+tokens: {``}	{61}	{,}	{you}	{'re}	{available}	{.}	
+sentence# 215: Post to Alpha."
+tokens: {Post}	{to}	{Alpha}	{.}	{''}	
+sentence# 216: "Copy Alpha."
+tokens: {``}	{Copy}	{Alpha}	{.}	{''}	
+sentence# 217: Discussion
+tokens: {Discussion}	
+sentence# 218: Diagnosis: no diagnosis
+tokens: {Diagnosis}	{:}	{no}	{diagnosis}	
+sentence# 219: EMS is frequently called to motor vehicle collisions, and in many cases, injuries are minimal or non-existent.
+tokens: {EMS}	{is}	{frequently}	{called}	{to}	{motor}	{vehicle}	{collisions}	{,}	{and}	{in}	{many}	{cases}	{,}	{injuries}	{are}	{minimal}	{or}	{non-existent}	{.}	
+sentence# 220: In some situations, particularly if a third-party called for the ambulance (such as a bystander), there may truly be no complaints of any kind, and it may be reasonable to go on your way, clearing out with the disposition that there's no need for EMS (also referred to as a "police matter," "good intent" or "unfounded call").
+tokens: {In}	{some}	{situations}	{,}	{particularly}	{if}	{a}	{third-party}	{called}	{for}	{the}	{ambulance}	{(}	{such}	{as}	{a}	{bystander}	{)}	{,}	{there}	{may}	{truly}	{be}	{no}	{complaints}	{of}	{any}	{kind}	{,}	{and}	{it}	{may}	{be}	{reasonable}	{to}	{go}	{on}	{your}	{way}	{,}	{clearing}	{out}	{with}	{the}	{disposition}	{that}	{there}	{'s}	{no}	{need}	{for}	{EMS}	{(}	{also}	{referred}	{to}	{as}	{a}	{``}	{police}	{matter}	{,}	{''}	{``}	{good}	{intent}	{''}	{or}	{``}	{unfounded}	{call}	{''}	{)}	{.}	
+sentence# 221: Likewise, first responders (fire or police) may clear you prior to arrival or as you arrive.
+tokens: {Likewise}	{,}	{first}	{responders}	{(}	{fire}	{or}	{police}	{)}	{may}	{clear}	{you}	{prior}	{to}	{arrival}	{or}	{as}	{you}	{arrive}	{.}	
+sentence# 222: However, if you do make patient contact, and there are complaints of any kind (such as the usual neck pain), these are patients, and they should sign a statement releasing you from liability if they don't want to be transported.
+tokens: {However}	{,}	{if}	{you}	{do}	{make}	{patient}	{contact}	{,}	{and}	{there}	{are}	{complaints}	{of}	{any}	{kind}	{(}	{such}	{as}	{the}	{usual}	{neck}	{pain}	{)}	{,}	{these}	{are}	{patients}	{,}	{and}	{they}	{should}	{sign}	{a}	{statement}	{releasing}	{you}	{from}	{liability}	{if}	{they}	{do}	{n't}	{want}	{to}	{be}	{transported}	{.}	
+sentence# 223: You never know who will later decide to sue somebody, so even for minor accidents, this is the smart approach, although it can become quickly tiresome when there are numerous patients.
+tokens: {You}	{never}	{know}	{who}	{will}	{later}	{decide}	{to}	{sue}	{somebody}	{,}	{so}	{even}	{for}	{minor}	{accidents}	{,}	{this}	{is}	{the}	{smart}	{approach}	{,}	{although}	{it}	{can}	{become}	{quickly}	{tiresome}	{when}	{there}	{are}	{numerous}	{patients}	{.}	
+sentence# 224: Minors typically cannot refuse care any more than they can explicitly consent to it, so a responsible adult will need to sign on their behalf.
+tokens: {Minors}	{typically}	{can}	{not}	{refuse}	{care}	{any}	{more}	{than}	{they}	{can}	{explicitly}	{consent}	{to}	{it}	{,}	{so}	{a}	{responsible}	{adult}	{will}	{need}	{to}	{sign}	{on}	{their}	{behalf}	{.}	
+sentence# 225: When documenting, there should be a thorough record of the assessment performed, mechanism of injury, presence or absence of risk factors, and basic demographics (name, DOB, and contact information).
+tokens: {When}	{documenting}	{,}	{there}	{should}	{be}	{a}	{thorough}	{record}	{of}	{the}	{assessment}	{performed}	{,}	{mechanism}	{of}	{injury}	{,}	{presence}	{or}	{absence}	{of}	{risk}	{factors}	{,}	{and}	{basic}	{demographics}	{(}	{name}	{,}	{DOB}	{,}	{and}	{contact}	{information}	{)}	{.}	
+sentence# 226: History and medications are relevant, although allergies probably not, unless they're pertinent to the complaint.
+tokens: {History}	{and}	{medications}	{are}	{relevant}	{,}	{although}	{allergies}	{probably}	{not}	{,}	{unless}	{they}	{'re}	{pertinent}	{to}	{the}	{complaint}	{.}	
+sentence# 227: A comprehensive exam may or may not be performed (assessing blood pressures, for instance, would help "buff" the chart for these patients, but the odds are negligible that it would reveal anything to change the decision-making process), but there should be an earnest search for injury, particularly in the head, spine, and associated nervous system, and all findings should be well-documented.
+tokens: {A}	{comprehensive}	{exam}	{may}	{or}	{may}	{not}	{be}	{performed}	{(}	{assessing}	{blood}	{pressures}	{,}	{for}	{instance}	{,}	{would}	{help}	{``}	{buff}	{''}	{the}	{chart}	{for}	{these}	{patients}	{,}	{but}	{the}	{odds}	{are}	{negligible}	{that}	{it}	{would}	{reveal}	{anything}	{to}	{change}	{the}	{decision-making}	{process}	{)}	{,}	{but}	{there}	{should}	{be}	{an}	{earnest}	{search}	{for}	{injury}	{,}	{particularly}	{in}	{the}	{head}	{,}	{spine}	{,}	{and}	{associated}	{nervous}	{system}	{,}	{and}	{all}	{findings}	{should}	{be}	{well-documented}	{.}	
