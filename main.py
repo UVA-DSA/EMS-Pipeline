@@ -25,14 +25,14 @@ from nltk.corpus import stopwords
 from nltk import bigrams
 from nltk import trigrams
 from nltk.util import ngrams
-from nltk.tag.stanford import StanfordPOSTagger
+#from nltk.tag.stanford import StanfordPOSTagger
 import csv, re, math, operator, sys, os, glob
 from time import time
 
 bigram_measures = nltk.collocations.BigramAssocMeasures()
 trigram_measures = nltk.collocations.TrigramAssocMeasures()
-pos = StanfordPOSTagger('./stanford-postagger-2013-06-20/models/english-left3words-distsim.tagger', 
-                './stanford-postagger-2013-06-20/stanford-postagger.jar')
+#pos = StanfordPOSTagger('./stanford-postagger-2013-06-20/models/english-left3words-distsim.tagger', 
+#                './stanford-postagger-2013-06-20/stanford-postagger.jar')
 
 # N-gram patterns for technical terms
 patterns = [['NN'],['JJ'], ['JJ','JJ'],['JJ', 'NN'], ['NN','NN'], ['JJ', 'JJ', 'NN'], ['JJ', 'NN', 'NN'], 
