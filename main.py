@@ -28,6 +28,11 @@ from nltk.util import ngrams
 #from nltk.tag.stanford import StanfordPOSTagger
 import csv, re, math, operator, sys, os, glob
 from time import time
+from gensim.models import Word2Vec, Doc2Vec
+from gensim.models.word2vec import LineSentence
+from gensim.models.doc2vec import LabeledSentence
+from gensim import utils
+import numpy as np
 
 bigram_measures = nltk.collocations.BigramAssocMeasures()
 trigram_measures = nltk.collocations.TrigramAssocMeasures()
@@ -41,6 +46,9 @@ patterns = [['NN'],['JJ'], ['JJ','JJ'],['JJ', 'NN'], ['NN','NN'], ['JJ', 'JJ', '
 			['NN', 'NN', 'NN','NN'],['NN','JJ', 'NN','NN'], ['NN', 'NN','JJ', 'NN']]
 # For filtering junk
 non_tech_words = []
+
+googlenews_model =  Word2Vec.load_word2vec_format('./word2vec/GoogleNews-vectors-negative300.bin', binary=True)
+googlenews_model.syn0norm = googlenews_model.syn0
 
 # Tokenization
 def get_tokens(text):
@@ -142,22 +150,54 @@ def get_tech_ngrams(text, tag_set):
 					if not(results.has_key(n_gram_str)):
 						results[n_gram_str] = tag_str
 				else:
-					print 'ngram not found in text: '+n_gram_str
+					print('ngram not found in text: '+n_gram_str)
 				# Restart searching for next n-gram
 				n_gram = []
 				tags = []
 				n_gram_str = ''
 				tag_str = ''
 
-	print str(len(results.keys()))+" n-grams found.."	
+	print(str(len(results.keys()))+" n-grams found..")	
+	results.pop("ngram")
 	return results
 
+def lexicon_expansion(seed_terms):
+	print("\n Total seed terms = " + str(len(seed_terms))+"\n")
+	terms_scores = []
+	for c in seed_terms:
+		terms_scores.append((str(c),str(1.0)))
+	for c in seed_terms:
+		if not(c.isdigit()) and (len(c) > 3):
+			print("\nSeed Term:" + c)
+			
+			# Get the word2vec representation of the ngram by adding word vectors
+			c_array = [s for s in c.split(' ') if s in googlenews_model.vocab]
+			if len(c_array):
+				vector = np.sum(googlenews_model[c_array], axis=0)			
+				
+				# Get the most similar vectors 
+				most_similar = googlenews_model.similar_by_vector(vector, topn=20, restrict_vocab=None)
+							
+				# Filter highly similar vectors
+				for (term,score) in most_similar:
+					term = term.lower().replace("_"," ")
+					if (score > 0.4):
+						if not(term in seed_terms) and not(term.isdigit()) and (len(term.split(' ')) < 3):
+							seed_terms.append(str(term))
+							terms_scores.append((str(term),round(score,2)))	
+							print(term)
+						
+	print(len(seed_terms))
+	return seed_terms
+	
 def main():
 	os.chdir("./dataset")
 	
 	# Set default encoding of python to utf8
 	reload(sys)  
 	sys.setdefaultencoding('utf8')
+	
+	ngrams_set = set()
 	
 	with open('output.csv', 'w') as output:
 		csvwriter = csv.writer(output)
@@ -168,7 +208,7 @@ def main():
 				for line in reader:
 					text = text + line.rstrip('\n\r').lower()
 				
-				print "\nProcessing "+file
+				print("\nProcessing "+file)
 				# Tokenization
 				tokens = get_tokens(text)
 
@@ -180,6 +220,14 @@ def main():
 				
 				# Write to output
 				csvwriter.writerow([file, text, ngrams.keys()])
+				
+				ngrams_set = ngrams_set.union(set(ngrams.keys()))
+	
+	ngrams_list = lexicon_expansion(list(ngrams_set))
+	
+	with open('ngrams.txt', 'w') as writer:
+		for s in ngrams_list:
+			writer.write(str(s)+'\n')
 
 if __name__ == '__main__':
     sys.exit(main())
