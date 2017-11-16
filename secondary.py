@@ -203,12 +203,12 @@ def main():
 				tag_set = get_pos_tags(tokens)
 
 				# Technical N-gram extraction
-				ngrams = get_tech_ngrams(text, tag_set)
+				ngrams = get_tech_ngrams(file, tag_set)
         # mutual info extraction
         mi= mutual info (text, n_gram)
 
 				# Write to output
-				csvwriter.writerow([file, text, mi_score.keys()])
+				csvwriter.writerow([file, mi_score.keys()])
 
 if __name__ == '__main__':
     sys.exit(main())
