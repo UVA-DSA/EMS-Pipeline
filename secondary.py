@@ -28,6 +28,7 @@ from nltk.util import ngrams
 #from nltk.tag.stanford import StanfordPOSTagger
 import csv, re, math, operator, sys, os, glob
 from time import time
+import math
 
 bigram_measures = nltk.collocations.BigramAssocMeasures()
 trigram_measures = nltk.collocations.TrigramAssocMeasures()
@@ -151,7 +152,7 @@ def get_tech_ngrams(text, tag_set):
 
 	print str(len(results.keys()))+" n-grams found.."
 	return results
-def mutual info (file, n_gram):
+def mutual_info (file, n_gram):
     N00=0
     N10=0
     N01=0
@@ -173,10 +174,10 @@ def mutual info (file, n_gram):
     N1=N10+N11
     N0=N01+N00
 
-    mi_score=  (N11/N)* log2((N*N11)/(N1*N1))+
-               (N01/N)* log2((N*N01)/(N0*N1))+
-               (N10/N)* log2((N*N10)/(N1*N0))+
-               (N00/N)* log2((N*N00)/(N0*N0))
+    mi_score=  (N11/N)* (math.log(((N*N11)/(N1*N1)),2)+
+               (N01/N)* (math.log(((N*N01)/(N0*N1)),2))+
+               (N10/N)* (math.log(((N*N10)/(N1*N0)),2)+
+               (N00/N)* (math.log(((N*N00)/(N0*N0)),2))
     return result_mi
 def main():
 	os.chdir("./dataset")
