@@ -1,0 +1,40 @@
+TOPIC: Obstetrics
+DISPATCH: MED 123 respond emergency traffic to a sick person at 123 Hawthorne Ln. Cad Notes: 20 YOF, nauseated and vomiting. Caller hung up. 
+BSI/PPE: Gloves
+SCENE SIZE UP
+Scene is safe
+MOI/NOI: N/V
+# of patients: 1
+Additional Resources: Fire Department is on scene
+C-Spine: not indicated
+PRIMARY
+GI: You arrive to the pt’s residence and go inside the house. Your patient, 20 YOF, is in the hallway bathroom leaning over the toilet vomiting. 
+LOC: Alert and oriented
+CC/Life Threats: N/V
+A: Patent
+B: 22RR, normal, 98% on room air, L/S clear and equal. 
+C: Strong radial pulse, no major bleeding, skin pale, diaphoretic, cool. 
+HISTORY
+Onset: Started about a week ago with N, just started throwing up yesterday morning, but it went away about 11, and came back this morning. 
+Provocation: “Nothing helps”
+Quality: N/A, no pain
+Radiation: N/A
+Severity: N/A, no pain. Threw up three times yesterday, hasn’t stopped today
+Time: Started again when I woke up this morning.
+S: N/V, approx 100mL fluid loss noted in the toliet
+A: Codeine, Ibuprofen
+M: Multivitamin, Allergy meds, Birth Control
+P: No history
+L: Dinner last night
+E: Just woke up
+SECONDARY
+-Cardiovascular: Sinus Tachycardia 124HR
+-GI/GU: Last ate a chicken and rice for dinner, staying hydrated with water, urinating normally, LBM yesterday.
+-Reproductive: LMP last month, supposed to start 5 days ago for this month. Just got married last month, sexually active, but takes birth control. 
+VITALS
+110/62; 122HR; 20RR; 98% on room air; BGl 74; Sinus Tachycardia
+116/64; 110HR; 18RR; 98%; Sinus Tachycardia
+DIAGNOSIS: Hyperemesis Gravidarum (Morning Sickness)
+INTERVENTIONS: IV, Fluids, Zofran, Oxygen
+TRANSPORT: Routine to closest facility.
+

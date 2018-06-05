@@ -1,0 +1,9 @@
+You are the doc at medical control when you receive a call for a field pronouncement. Your coversaton goes like this:
+
+EMS: We have a 77y/o male witnessed cardiac arrest. On my arrival the pt had lividity to his face. They were doing CPR and bagging the pt. His abd is distended. He has signs of not being viable. I want to stop CPR.
+
+Doc: So, the arrest was witnessed and CPR was started right away?
+
+EMS: Yup. The nurse said his face turned blue as soon as he went down. He now has lividity in both hands. Can I stop?
+
+

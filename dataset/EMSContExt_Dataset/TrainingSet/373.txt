@@ -1,0 +1,13 @@
+You are the on duty EMS Crew for a hospital based EMS System. You are asleep in your bed and you get paged out to Radiology department for a cardiac arrest.
+
+There is a physician, a nurse and a radiology Tech in the midst of working a 42 year old male patient in cardiac arrest.
+
+Background - patient is being evaluated for dehydration and nausea and vomiting. Patient was in radiology for a chest x-ray (PA and lateral)
+
+Patient has an IV of D5NS at 125 per hour, cardiac monitor shows Asystole with good cpr spikes.
+
+Patient has been down for 8 minutes.
+
+Patient was found by the rad tech in arrest.
+
+What do you want to know and what do you want to do. All appropriate ACLS guidelines are being followed for the current rhythm of asystole

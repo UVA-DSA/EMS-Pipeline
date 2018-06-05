@@ -1,0 +1,19 @@
+You are called to the house of 45 yo female on hospice for cervical Cancer.
+
+CC: Pain
+
+BP 190/90
+
+HR:64
+
+Resp 12
+
+O2 sat 75 RA
+
+How do you treat this patient?
+
+NKDA
+
+Pain rated at 20 on a scale of 1-10
+
+Alert and responsive

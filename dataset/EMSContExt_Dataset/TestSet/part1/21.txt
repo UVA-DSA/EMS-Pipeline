@@ -1,0 +1,31 @@
+Ambulance: "Medic 77 to Region View Hospital, Priority 3."
+
+Hospital:"Region View. Go with it."
+
+Ambulance: "Medic 77, Paramedic Doe transporting a 34 year old male complaining of abdominal pain. Patient states pain is in LRQ, does not radiate. Vitals are: Blood Pressure 145/34, Heart Rate of 80-strong-regular, Respiratory Rate of 20-equal-clear-bilateral, SPO2 is 100% on room air. Patient rates pain as a 8 on an 0-10 scale. Normal sinus rhythm on the monitor, got a saline lock estabished. We'll be there in about 10, any questions?"
+
+Hospital:"Negative. See you upon arrival."
+
+An emergency report:
+
+Ambulance: "Medic 77, Priority 1!"
+
+Hospital: "Go."
+
+Ambulance: "34 year old male, full arrest, full ACLS, 10."
+
+Hospital: "See you in 10. Go to Trauma-1."
+
+Physician's Order:
+
+Ambulance: "Medic 77, Priority 1, Physican needed."
+
+Hospital: "Go, we have Dr. Doe here."
+
+Ambulance: "Medic 77, Paramedic Doe, I'm on-scene, I got a 89 year old male, medical full arrest---unwitnessed. Patient was found in asytole. We've done 30+ minutes of full ACLS. Got the pt. intubated. Pt. has been in asytole the whole time. Requesting permission for field termination."
+
+Hospital: "Has the pt. been confirmed to be in asytole in 2 leads?"
+
+Ambulance: "Affirmitive."
+
+Hospital: "Receive. Time of death: 1553"
