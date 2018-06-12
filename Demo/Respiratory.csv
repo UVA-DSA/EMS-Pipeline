@@ -1,0 +1,186 @@
+Required Concept,CUI,Preferred Name
+mdi,C0993596,Metered Dose Inhaler
+,C1839839,MAJOR AFFECTIVE DISORDER 2
+,C4049613,Myositis Damage Index
+,C0046401,"2-n-butyl-3-(dimethylamino)-5,6-methylenedioxyindene"
+,C0045970,"2-butyl-1-(N-methyl-N-(2-(N',N'-dimethylamino)ethyl)amino)-5,6-methylenedioxyindene"
+,C0046406,"2-n-propyl-3-dimethylamino-5,6-methylenedioxyindene"
+,C0084193,propylmethylenedioxyindene
+,C0256037,"polymeric 4,4'-diphenylmethane diisocyanate"
+,C0632255,"2-butyl-3-(dimethylamino)-5,6-methylenedioxyindan"
+,C0638808,"2-(n-butyl)-1-(N-methyl-N-(2-(N',N'-dimethylamino)ethyl)amino)-5,6-methylenedioxyindane"
+,C1455259,MDI 301
+,C1722430,methylenediphenyl diisocyanate-glutathione adduct
+,C2932276,N6-(((4-(4-aminobenzyl)phenyl)amino)carbonyl)lysine
+,C0005586,Bipolar Disorder
+,C0047822,"4,4'-diphenylmethane diisocyanate"
+,C0253691,MDI radiation protective agent
+,C0290471,"5,6,6'-trimethoxy-3',4'-methylenedioxyisoflavone 7-O-(2''-O-4-coumaroylglucopyranoside)"
+,C0418991,Metered dose inhaler therapy
+,C0484030,Diphenylmethane diisocyanate (MDI) Ab.IgE:ACnc:Pt:Ser:Qn
+,C0487024,Diphenylmethane diisocyanate (MDI) Ab.IgE
+,C0725073,AeroChamber MDI Spacer
+,C0725878,Doser MDI Device
+,C0798964,Diphenylmethane diisocyanate (MDI) Ab.IgE.RAST class:PrThr:Pt:Ser:Ord
+,C0798965,Toluene diisocyanate (TDI) Ab.IgE.RAST class:PrThr:Pt:Ser:Ord
+,C1271818,Isocyanate MDI RAST
+,C1440834,Diphenylmethane diisocyanate (MDI)
+,C1526737,Diphenylmethane diisocyanate (MDI):MCnc:Pt:Air:Qn
+,C1990921,Isocyanate MDI | air
+,C2963446,Diphenylmethane diisocyanate (MDI) Ab
+,C2963447,Diphenylmethane diisocyanate (MDI) Ab.IgG
+,C2970257,Diphenylmethane diisocyanate (MDI) Ab.IgG:MCnc:Pt:Ser:Qn
+,C0806540,Diphenylmethane diisocyanate (MDI) Ab.IgE.RAST class
+,C3530849,OptiHaler MDI Drug Delivery System
+,C4256220,My MDI Portable Nebulizer Procedure Pack
+,C0798410,(Hexamethylene diisocyanate (HDI)+Diphenylmethane diisocyanate (MDI)+Toluene diisocyanate (TDI)+Phthalic anhydride) Ab.IgE:PrThr:Pt:Ser:Ord:Multidisk
+,C1440030,(Hexamethylene diisocyanate (HDI)+Diphenylmethane diisocyanate (MDI)+Toluene diisocyanate (TDI)+Phthalic anhydride)
+,C3654273,(Hexamethylene diisocyanate (HDI)+Diphenylmethane diisocyanate (MDI)+Toluene diisocyanate (TDI)+Phthalic anhydride) Ab.IgE:ACnc:Pt:Ser:Qn:Multidisk
+,C4264818,(Hexamethylene diisocyanate (HDI)+Diphenylmethane diisocyanate (MDI)+Toluene diisocyanate (TDI)+Phthalic anhydride) Ab.IgE.RAST class:PrThr:Pt:Ser:Ord:Multidisk
+,C0804922,(Hexamethylene diisocyanate (HDI)+Diphenylmethane diisocyanate (MDI)+Toluene diisocyanate (TDI)+Phthalic anhydride) Ab.IgE
+,C2358428,Occupational Allergen Mix 5 (Isocyanate HDI+MDI+TDI+Phthalic anhydride) | Bld-Ser-Plas
+,C4263055,(Hexamethylene diisocyanate (HDI)+Diphenylmethane diisocyanate (MDI)+Toluene diisocyanate (TDI)+Phthalic anhydride) Ab.IgE.RAST class
+cpap,C0199451,Continuous Positive Airway Pressure
+,C0180105,Continuing positive airway pressure unit
+,C0454518,Intermittent CPAP
+,C0628147,N-(1(S)-carboxy-(4-hydroxy-3-iodophenyl)ethyl)-alanylproline
+,C1507544,Pressure.continuous positive airway:Pres:Pt:Respiratory system:Qn
+,C3665969,Nasal CPAP
+,C4534471,BiPAP/CPAP
+,C0374380,"Continuous positive airway pressure ventilation (CPAP), initiation and management"
+,C0179576,CPAP nasal oxygen cannula
+,C1309662,"CENPJ protein, human"
+,C1568469,3-((5-(6-((3-chlorophenyl)amino)pyrazinyl)-3-pyridinyl)amino)-1-propanol
+,C1959403,"DSas-4 protein, Drosophila"
+,C2135601,has CPAP at home
+,C2234350,newborn facial CPAP
+,C2923270,BIPAP &or CPAP setting:Find:Pt:Ventilator:Ord
+,C2923271,BIPAP &or CPAP setting
+,C3481642,Pressure.continuous positive airway:Pres:24H^mean:Respiratory system:Qn
+,C3481644,Pressure.continuous positive airway:Pres:24H^max:Respiratory system:Qn
+,C3482023,Pressure.continuous positive airway:Pres:24H^median:Respiratory system:Qn
+,C3657516,"Cenpj protein, mouse"
+,C3836086,rnax provide cpap machine
+,C3845201,Non-invasive ventilation (CPAP)
+,C3849840,"cenpj protein, zebrafish"
+,C3863902,CPAP via nasal prongs
+albuterol sulfate,C1655019,albuterol (as albuterol sulfate)
+,C0543495,Albuterol Sulfate
+,C0687801,Albuterol 2 MG Oral Tablet
+,C0687804,Albuterol 4 MG Oral Tablet
+,C0718656,Arm-A-Med Albuterol Sulfate
+,C0778291,ALBUTEROL SO4 PWDR
+,C1321151,albuterol sulfate + ipratropium bromide
+,C1656996,Albuterol Sulfate HFA
+,C0687802,Albuterol 0.4 MG/ML Oral Solution
+,C0785994,Albuterol 1 MG/ML Inhalant Solution
+,C1168688,Albuterol 0.417 MG/ML Inhalant Solution
+,C1168689,Albuterol 0.21 MG/ML Inhalant Solution
+,C1177305,12 HR Albuterol 4 MG Extended Release Oral Tablet
+,C1177306,12 HR Albuterol 8 MG Extended Release Oral Tablet
+,C1696556,Albuterol 0.83 MG/ML Inhalant Solution
+,C3184745,Albuterol Sulfate 0.2% Inhalation Solution
+,C3202935,Albuterol Sulfate 0.05% Inhalation Solution
+,C4529298,Albuterol Sulfate 1 MG/ML
+,C0354696,Albuterol 0.4 MG/ACTUAT Inhalant Powder
+,C0731978,Albuterol 0.095 MG/ACTUAT Inhalant Powder
+,C0973882,Albuterol 0.2 MG/ACTUAT Inhalant Powder
+,C1163939,200 ACTUAT Albuterol 0.09 MG/ACTUAT / Ipratropium Bromide 0.018 MG/ACTUAT Metered Dose Inhaler
+,C1300039,Albuterol 8 MG Oral Tablet
+,C1737294,200 ACTUAT Albuterol 0.09 MG/ACTUAT Metered Dose Inhaler [ProAir]
+,C1164703,Albuterol 0.833 MG/ML / Ipratropium Bromide 0.167 MG/ML Inhalant Solution
+methylprednisolone,C0025815,Methylprednisolone
+,C0025819,Methylprednisolone Hemisuccinate
+,C0066429,methylprednisolone suleptanate
+,C0174938,methylprednisolone aceponate
+,C0281314,melphalan/methylprednisolone
+,C0338242,cyclosporine/methylprednisolone
+,C0359052,Lidocaine / Methylprednisolone
+,C0359075,Methylprednisolone / Neomycin
+,C0360556,Oral form methylprednisolone
+,C0360558,Methylprednisolone in parenteral dosage form
+,C0392931,etoposide/methylprednisolone
+,C0571614,Methylprednisolone allergy
+,C0600901,methylprednisolone acetate
+,C0678057,cyclophosphamide/methylprednisolone
+,C0779762,Methylprednisolone Powder
+,C0796442,doxorubicin/methylprednisolone
+,C0796460,methotrexate/methylprednisolone
+,C1246929,Methylprednisolone Oral Tablet
+,C1266621,Methylprednisolone measurement
+,C1327874,daclizumab/methylprednisolone
+,C1327890,beclomethasone/methylprednisolone
+,C2928989,Aspirin / Methylprednisolone
+,C3160026,"methylprednisolone, micronized"
+,C3217796,Methylprednisolone Pill
+,C3217798,Methylprednisolone Topical Product
+iv/io/vascular access,C0398266,Venous cannula insertion
+,C0511030,"Establish IV access, as appropriate"
+,C0512753,"Maintain IV access, as appropriate"
+,C0512826,Maintain patent IV access
+,C3842042,General-IV access
+,C0511982,"Initiate and maintain IV access, as appropriate"
+,C1735535,"Maintain patent IV access, as appropriate"
+,C0512038,Insert and maintain large bore IV access
+,C2215468,admission to trauma bay intravenous accessory secured
+,C2231022,Axis IV problems access to health care
+,C0510981,Ensure that IV access is in place at all times during therapy
+,C0511029,Establish IV access and discontinue intraosseous line after patient's condition stabilizes
+,C2026164,central venous line through two tunneled access sites
+,C0750138,vascular access
+,C0042371,Implantable Injection/Infusion Ports
+,C0184269,Vascular Access Devices
+,C0280956,poor vascular access
+,C0349422,Arterial steal syndrome
+,C0398220,Construction of vascular access
+,C0398232,Insertion of graft for vascular access
+,C0398233,Superficialization of vessel for vascular access
+,C0457910,Vascular access incision
+,C0493494,"GRAFT, VASCULAR ACCESS"
+,C0749854,UPPER EXTREMITY VASCULAR ACCESS
+,C0750139,VASCULAR ACCESS INFECTED
+,C0750140,VASCULAR ACCESS PERIPHERAL
+,C0750141,VASCULAR ACCESS PERMANENT
+,C0750142,VASCULAR ACCESS PLACEMENT ELECTIVE
+,C0771298,"syringe,vascular access, disposable"
+,C0920165,Vascular access complication
+,C1138773,"DEVICE, FLUSH, VASCULAR ACCESS"
+,C1519955,Vascular Access Device Placement
+,C1543260,Guidance for vascular access:Find:Pt:XXX:Doc:US
+,C1545497,Guidance for vascular access
+,C1608324,Vascular Access Ports
+,C1868857,Vascular access operation
+administer oxygen,C0508269,"Administer heated oxygen, as appropriate"
+,C0508317,"Administer oxygen, as appropriate"
+,C0508364,Administer supplemental oxygen as ordered
+,C0548041,Administer oxygen as ordered or indicated.
+,C0508271,"Administer humidified air or oxygen, as appropriate"
+,C0508316,"Administer oxygen and/or mechanical ventilation, as appropriate"
+,C0508287,Administer low-flow oxygen and monitor for CO2 narcosis in cases of chronic hypercapnia
+,C0515819,"Set up oxygen equipment and administer through a heated, humidified system"
+,C1735979,Administer oxygen at high flow rate (10-15 L/min)
+,C0030054,Oxygen
+,C0184633,Oxygen Therapy Care
+,C1547125,Oxygen Equipment Location
+,C2359957,Oxygen attachment:Finding:Point in time:^Patient:Document
+,C3656081,Oxygen saturation.preductal-oxygen saturation.postductal
+,C3896642,Oxygen 15-labeled Oxygen
+,C0003130,Anoxia
+,C0030055,Oxygen Consumption
+,C0030058,oxygen extraction
+,C0030061,Oxygen Isotopes
+,C0030063,Oxygen Radioisotopes
+,C0074565,Singlet Oxygen
+,C0134407,oxygen oxidase
+,C0162772,Reactive Oxygen Species
+,C0181208,Oxygen Delivery Hoods
+,C0181338,"Inhalators, Oxygen"
+,C0181744,Oxygen mask
+,C0182117,"Oxygen analyzer, device"
+,C0182122,Oxygen Canisters
+,C0182123,Oxygen concentrator (device)
+,C0182124,Oxygen cylinder
+,C0182127,Oxygen Flowmeters
+,C0182128,Oxygen Generators
+,C0182129,Oxygen Meters
+,C0182130,Oxygen Monitors
