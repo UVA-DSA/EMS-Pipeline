@@ -1,0 +1,42 @@
+Required Concept,CUI,Preferred Name
+dnr,C0582114,  DNR - Do not resuscitate
+,C4285234,  Do not resuscitate:Find:Pt:{Setting}:Doc:{Role}
+,C0079252,  Do-Not-Resuscitate Orders
+,C2133666,  DNR on file
+,C2133971,  DNR on file rescinded
+,C2911025,  DNR status
+cpr,C0007203,  Cardiopulmonary Resuscitation
+,C0183001,  Cardiopulmonary resuscitator
+,C2257336,  CPR activity
+,C3688876,  CPR Kits
+,C0182151,"  Pacers, Counting, Cardiopulmonary Resuscitation"
+,C0493567,"  DEVICE, CPR ASSIST"
+,C3826504,  CPR (First aid)
+aed,C0180309,  Automated External Defibrillators
+defibrillation,C0013778,  Electric Countershock
+,C1738398,  Defibrillation Pads
+,C1997298,  Monophasic defibrillation
+,C3841417,  Attempted defibrillation
+,C3857206,"  Electrodes, Defibrillation"
+,C0180628,  External defibrillator electrode
+,C0180629,"  Electrodes, Cardiac, External Defibrillator/Pacemaker"
+,C0199546,  Resuscitation by cardiac cardioversion
+,C0397419,  Direct current defibrillation
+,C0472587,  Synchronised direct current defibrillation
+,C0472588,  Unsynchronised direct current defibrillation
+,C0509814,"  Deliver cardioversion or defibrillation, as indicated"
+,C0513171,  Monitor for and treat ventricular defibrillation
+,C1292446,  Post-defibrillation procedure phase
+,C1536024,  Defibrillation threshold increased
+,C1960577,  External ventricular defibrillation
+,C1997033,  Biphasic defibrillation procedure
+bvm,C1960845,  Bag valve mask ventilation
+,C1960998,"  Respiratory assist, manual, using bag-valve-mask"
+opa,C0150694,"  Artificial Airways, Oropharyngeal"
+,C0189261,  Insertion of oropharyngeal airway
+,C2922478,  rnox insert oropharyngeal airway
+,C3469043,  oropharyngeal airway device (opa)
+,C3469044,  oropharyngeal airway device inserted
+,C3469045,  oropharyngeal airway device removed
+,C3881737,"  Oropharyngeal airway, reusable"
+,C3881856,"  Oropharyngeal airway, single-use"
