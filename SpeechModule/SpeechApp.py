@@ -140,5 +140,8 @@ def GoogleSpeechStream():
                 num_chars_printed = 0
 
 if __name__ == '__main__':
-    context_phrases = []
     StoppableThread(target = GoogleSpeechStream).start()
+    context_phrases = []
+
+
+    
