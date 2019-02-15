@@ -1,0 +1,98 @@
+Required Concept,CUI,Preferred Name
+ondansetron,C0061851,Ondansetron
+,C0700478,Ondansetron Hydrochloride
+,C0935854,dexamethasone/ondansetron
+,C3215388,Ondansetron Pill
+,C4083636,Ondansetron Injection
+,C0689845,Ondansetron 4 MG Oral Tablet
+,C0979118,Ondansetron 8 MG Oral Tablet
+,C0308189,Ondansetron Injectable Solution [Zofran]
+,C0355419,Ondansetron 4 MG Disintegrating Oral Tablet
+,C0792503,Ondansetron 16 MG Rectal Suppository
+,C0886673,"Ondansetron, (S)-Isomer"
+,C0886674,"Ondansetron, (R)-Isomer"
+,C0979116,Ondansetron 24 MG Oral Tablet
+,C0979119,Ondansetron 8 MG Disintegrating Oral Tablet
+,C1123365,Ondansetron 2 MG/ML
+,C1123366,Ondansetron 0.64 MG/ML
+,C1123367,Ondansetron 4 MG
+,C1123368,Ondansetron 8 MG
+,C1125588,Ondansetron 0.8 MG/ML
+,C1126040,Ondansetron 24 MG
+,C1134857,Ondansetron 16 MG
+,C1238268,Ondansetron Oral Solution [Zofran]
+,C1242203,Ondansetron Oral Tablet [Zofran]
+,C1247208,Ondansetron Oral Solution
+,C1247209,Ondansetron Rectal Suppository
+iv/io/vascular access,C0398266,Venous cannula insertion
+,C0511030,"Establish IV access, as appropriate"
+,C0512753,"Maintain IV access, as appropriate"
+,C0512826,Maintain patent IV access
+,C3842042,General-IV access
+,C0511982,"Initiate and maintain IV access, as appropriate"
+,C1735535,"Maintain patent IV access, as appropriate"
+,C0512038,Insert and maintain large bore IV access
+,C2215468,admission to trauma bay intravenous accessory secured
+,C2231022,Axis IV problems access to health care
+,C0510981,Ensure that IV access is in place at all times during therapy
+,C0511029,Establish IV access and discontinue intraosseous line after patient's condition stabilizes
+,C2026164,central venous line through two tunneled access sites
+,C0750138,vascular access
+,C0042371,Implantable Injection/Infusion Ports
+,C0184269,Vascular Access Devices
+,C0280956,poor vascular access
+,C0349422,Arterial steal syndrome
+,C0398220,Construction of vascular access
+,C0398232,Insertion of graft for vascular access
+,C0398233,Superficialization of vessel for vascular access
+,C0457910,Vascular access incision
+,C0493494,"GRAFT, VASCULAR ACCESS"
+,C0749854,UPPER EXTREMITY VASCULAR ACCESS
+,C0750139,VASCULAR ACCESS INFECTED
+,C0750140,VASCULAR ACCESS PERIPHERAL
+,C0750141,VASCULAR ACCESS PERMANENT
+,C0750142,VASCULAR ACCESS PLACEMENT ELECTIVE
+,C0771298,"syringe,vascular access, disposable"
+,C0920165,Vascular access complication
+,C1138773,"DEVICE, FLUSH, VASCULAR ACCESS"
+,C1519955,Vascular Access Device Placement
+,C1543260,Guidance for vascular access:Find:Pt:XXX:Doc:US
+,C1545497,Guidance for vascular access
+,C1608324,Vascular Access Ports
+,C1868857,Vascular access operation
+fentanyl,C0015846,Fentanyl
+,C2926152,Fentanyl/Creatinine
+,C3203016,Fentanyl Crystal
+,C3213451,Fentanyl Pill
+,C4080610,Fentanyl Injection [Sublimaze]
+,C1591850,Fentanyl 0.05 MG/ML [Sublimaze]
+,C0874677,Fentanyl 0.05 MG/ML Injection [Sublimaze]
+,C4048579,2 ML Fentanyl 0.05 MG/ML Injection [Sublimaze]
+,C4048580,10 ML Fentanyl 0.05 MG/ML Injection [Sublimaze]
+,C4080611,5 ML Fentanyl 0.05 MG/ML Injection [Sublimaze]
+,C4080612,20 ML Fentanyl 0.05 MG/ML Injection [Sublimaze]
+spinal motion restriction,C0183440,Spine board
+ketamine,C0665192,(N-methyl-11C)ketamine
+,C0774140,Ketamine 10 MG/ML Injectable Solution
+,C0774141,Ketamine 100 MG/ML Injectable Solution
+,C0774142,Ketamine 50 MG/ML Injectable Solution
+,C0800162,Ketamine:PrThr:Pt:Urine:Ord:Confirm
+,C0802380,Ketamine:MCnc:Pt:Urine:Qn:Screen
+,C0803346,Ketamine:MCnc:Pt:Urine:Qn:Confirm
+,C1123286,Ketamine 100 MG/ML
+,C1126133,Ketamine 10 MG/ML
+,C1126134,Ketamine 50 MG/ML
+,C1168703,ketamine compounding powder
+,C1236607,Ketamine Injectable Solution [Ketalar]
+,C1246585,Ketamine Injectable Solution
+,C0022614,Ketamine
+,C2825616,Esketamine
+,C1600185,Ketamine 10 MG/ML [Ketalar]
+,C1600187,Ketamine 100 MG/ML [Ketalar]
+,C1600189,Ketamine 50 MG/ML [Ketalar]
+,C1702535,Ketamine 100 MG/ML [Ketaved]
+,C2977979,Ketamine 100 MG/ML [Ketaset]
+,C3474532,Ketamine 100 MG/ML [Ketathesia]
+,C3536097,Ketamine 100 MG/ML [Ketaject]
+,C3701030,Ketamine 100 MG/ML [Zetamine]
+,C3893011,Ketamine 100 MG/ML [Vetaket]

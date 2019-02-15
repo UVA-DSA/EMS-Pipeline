@@ -1,0 +1,314 @@
+Required Concept,CUI,Preferred Name
+conscious,C0234421,conscious
+,C0229994,conscious mind
+,C0424523,Fully conscious
+,C0424532,semiconscious
+,C0456384,conscious level
+,C1882997,Self-conscious
+,C0751699,Minimally conscious state
+,C0009791,Consciousness related finding
+,C0517960,Neurological status: consciousness
+,C0041657,Unconscious state
+,C0234428,Disturbance of consciousness
+,C1998154,No loss of consciousness
+,C0234422,Awake
+,C0234425,Level of consciousness
+,C0237161,Consciousness - other
+,C0239110,Consciousness clear
+,C0549249,Depressed Level of Consciousness
+,C0679009,Consciousness: status
+,C0017594,Glasgow coma scale
+,C3665546,Alert
+,C2051416,"patient appears oriented to time, place, and person"
+,C1961840,"Oriented to person, time and place"
+,C0871320,Self consciousness
+breath,C0225386,Breath
+,C0013404,Dyspenea
+,C0004048,Inspiration function
+,C0035203,Respiration
+,C1160636,respiratory gaseous exchange in organisms
+,C0003578,Apnea
+,C0020578,Hyperventilation
+,C0035230,Respiratory Mechanics
+,C0231795,Normal respiratory function
+,C0231800,"Expiration, function"
+,C0043144,Wheezing
+,C0035234,Respiratory Sounds
+,C0521346,respiratory
+,C0231832,Respiratory rate
+pulse,C0232117,Pulse rate
+,C0391850,Physiologic pulse
+,C1947910,Pulse phenomenon
+,C1708738,Loss of pulse
+,C0039231,Tachycardia
+,C0277899,Absent pulse
+,C1287726,Pulse finding
+bleed,C0019080,Hemorrhage
+,C0005767,Blood
+,C0265031,Bleeding hemorrhoids
+,C0426474,Bleeding from anus
+,C0015402,Eye Hemorrhage
+,C0014591,Epistaxis
+,C0018924,Hemarhrosis
+,C0019065,Hemoperitoneum
+,C0025874,Metrorhagia
+,C0271412,Bleeding from ear
+,C0281789,Bleeding from nipple
+,C0576995,Bleeding skin
+Blood pressure,C0005823,Blood pressure
+,C0005824,Blood pressure determination
+,C1271104,Blood pressure finding
+,C0005826,Abnormal blood pressure
+,C0020649,Hypotension
+pain,C0006138,Bread
+,C0030193,Pain
+,C0518090,Frequency of Pain Question
+,C1549543,Administration Method - Pain
+,C1557397,Adverse Event Associated with Pain
+,C1882272,Pain Adverse Event by CTCAE Anatomic Descriptor
+,C2598155,Pain:-:Point in time:^Patient:-
+,C2984058,Have Pain
+,C4085210,Usual Severity Pain
+,C4085211,Pain Distress Question
+,C4085212,How Much Distress Pain
+,C0234225,Absence of pain
+,C3891813,Had No Pain
+,C4050153,No Extremity Pain
+,C4521576,Neck Pain Score 0
+,C0002766,Pain management
+,C0476289,Abdominal wind pain
+,C2367761,pain assessed as no pain present
+,C2367762,pain assessed as pain present
+,C2707301,Indicators of pain or possible pain:-:Point in time:^Patient:-
+,C2707302,Indicators of pain or possible pain
+,C4489337,Pain syndromes- neck pain
+,C4489338,Pain syndromes- limb pain
+,C4489339,Pain syndromes- other pain
+,C4489692,Pain syndromes- back pain
+,C0000737,Abdominal Pain
+,C0002771,Analgesics
+,C0002962,Angina Pectoris
+,C0003862,Arthralgia
+,C0004604,Back Pain
+,C0007462,Causalgia
+,C0007859,Neck Pain
+,C0008031,Chest Pain
+,C0008033,Pleuritic pain
+,C0009193,Pain in the coccyx
+,C0013390,Dysmenorrhea
+,C0013428,Dysuria
+,C0013456,Earache
+,C0015468,Facial Pain
+,C0016199,Flank Pain
+,C0016512,Foot pain
+,C0017672,Glossalgia
+,C0018681,Headache
+,C0019559,Hip pain
+,C0023222,Pain in lower limb
+,C0024031,Low Back Pain
+,C0024902,Mastodynia
+,C0026858,Musculoskeletal Pain
+,C0027796,Neuralgia
+,C0028246,Nociceptors
+,C0030196,Pain in limb
+,C0030198,Pain Measurement
+,C0030200,"Pain, Intractable"
+,C0030201,"Pain, Postoperative"
+,C0030794,Pelvic Pain
+,C0031315,Phantom Limb Syndrome
+,C0034886,Rectal pain
+,C0037011,Shoulder Pain
+,C0039591,Pain in testicle
+,C0040460,Toothache
+,C0040997,Trigeminal Neuralgia
+,C0042815,Visual Analog Pain Scale
+,C0085625,Hypoalgesia
+,C0149738,neurological pain
+,C0150055,Chronic pain
+,C0151824,Biliary Colic
+,C0151825,Bone pain
+,C0151826,Retrosternal pain
+,C0151827,Eye pain
+,C0151830,Pain in urethra
+Wound,C0043250,Injury wounds
+,C3714660,Trauma
+,C3263722,Traumatic AND/OR non-traumatic injury
+,C0302142,Deformity
+,C0433122,Degloving Injuries
+,C0043251,Wounds and injuries
+,C3263723,Traumatic injury
+,C0000925,Incised wound
+,C0003794,Arm injuries
+,C0004699,"Ballistics, Wound"
+,C0005658,Bite injury
+,C0006434,Burn injury
+,C0009938,Contusions
+,C0015408,Eye injuries
+,C0015459,Facial injuries
+,C0018571,Hand injuries
+,C0026771,Multiple trauma
+,C0033119,Puncture wound
+,C0039980,Thoracic injuries
+,C0042255,Injury of vagina
+,C0043240,Wound healing
+,C0043241,Wound infection
+,C0043242,Superficial abrasion
+,C0043252,Gunshot wound
+,C0043264,Wrist injuries
+,C0149697,Foot injuries
+spo2,C0428179,Measurement of oxygen saturation at periphery
+,C0456222,Conjunctival oxygen saturation measurement
+,C0513686,Pulse oximetry monitoring
+,C0999881,Bacillus phage SPO2
+,C1298690,Conjunctival SpO2 finding
+,C0182109,Pulse oximeter
+,C0994593,Transcervical fetal oxygen saturation monitoring
+,C1318118,SpO2 - Oxygen saturation at periphery result
+,C2317096,Peripheral oxygen saturation
+,C4162933,Sanguibacter sp. SPO2
+,C0523807,Oxygen saturation measurement
+,C0034108,"Oximetry, Pulse"
+,C0040656,Cutaneous Oximetry
+,C0458241,Invasive oximetry
+,C0746961,Oxygen saturation below reference range
+,C0852710,Oxygen saturation increased
+,C0853673,Oxygen saturation within reference range
+,C0853674,Oxygen saturation abnormal
+gender,C0079399,Gender
+,C1522384,sex
+,C3854125,Sex:Type:Point in time:^Patient:Nominal:NAACCR v.11
+,C0017249,Gender Identity
+,C0017253,Sex Role
+,C0036866,Sex Characteristics
+,C0036891,gender preference
+,C0086287,Females
+,C0086582,Males
+,C0205906,Sexism
+,C0242360,Gender Relations
+,C0282206,Gender Issues
+,C0679961,gender reinforcement
+,C0683640,gender chauvinism
+,C0686346,Gender Dysphoria
+,C0852312,Gender disorders
+,C1271088,Gender unknown
+,C1271089,Gender unspecified
+,C1287419,Gender finding
+,C1550327,Administrative Gender
+,C1553538,Gender Alert
+,C1706180,"Male Gender, Self Report"
+,C1710069,Sex or Gender
+,C3839079,Masculine gender
+,C3839293,Feminine gender
+,C1705497,"Female, Self-Report"
+,C0043210,Woman
+age,C0001779,Age
+,C0439234,year
+,C0439508,per year
+,C0001578,Adolescence
+,C0001675,Adult
+,C0007667,Centenarians
+,C0008059,Child
+,C0008100,"Child, Preschool"
+,C0178694,human very old age (85+)
+,C0596727,human middle age (35-64)
+,C0596728,human old age (65+)
+,C0596947,middle childhood (6-11)
+,C0597696,young adult human (21-34)
+,C3843802,65 years old or older
+,C3843803,40 - 64 years old
+,C3843804,25 - 39 years old
+,C3843805,15 - 24 years old
+,C3843806,5 - 14 years old
+,C3843807,Under 5 Years Old
+,C3862532,pubertal arrest at ___ years old
+,C4035139,75+ years old
+,C4035745,70-74 years old
+,C4035746,65-69 years old
+,C4035747,60-64 years old
+,C4035748,55-59 years old
+,C4035749,50-54 years old
+,C4035750,45-49 years old
+,C4035751,40-44 years old
+,C4035752,35-39 years old
+,C4035753,30-34 years old
+,C4035754,25-29 years old
+,C4035755,20-24 years old
+,C4035756,15-19 years old
+,C1648826,Age at first pregnancy
+,C1706730,Adult 18-65 Years Old
+,C1707381,Children 2-11 Years Old
+,C2219713,menarche before age nine
+,C0231338,Extreme old age (over 100 years)
+,C0419432,Mother less than 20 years old
+heart rate,C1314691,Age at menarche
+,C1837668,"Kyphoscoliosis, severe progressive (>12 years old)"
+,C1968780,Adult onset (40 to 60 years old)
+,C2066409,tracheostomy on child under 2 years old
+,C3151367,Onset of sleepwalking between 4 and 8 years old
+,C3175322,Was your child speaking by 2Y old:Find:Pt:^Patient:Ord:CAST
+,C4036097,First pregnancy and over 30 years old
+,C4036098,Under 18 or over 35 years old
+,C0018810,heart rate
+,C0488794,Heart beat:Number = Count/Time:Point in time:To be specified in another part of the message:Quantitative
+,C2041121,electrocardiogram rhythm strip 3-lead heart rate (bpm)
+,C2197023,examination of heart rate
+,C3845990,No heart rate
+,C0488798,Heart rate method:Type:Point in time:Heart rate measure:Nominal:*
+,C3263227,Orthostatic heart rate:RatDiff:Pt:Arterial system:Qn
+,C0018811,"Heart Rate, Fetal"
+,C0039231,Tachycardia
+,C0180847,Fetal Heart Rate Monitors
+,C0181140,Heart Rate Monitors
+,C0181141,"Heart Rate Monitors, ECG"
+,C0181142,"Heart Rate Monitors, Pulse"
+,C0199637,Cardiotachometry
+,C0232189,Alteration in heart rate (finding)
+,C0236095,HEART RATE AND RHYTHM DISORDERS
+,C0237314,Irregular heart beat
+,C0237315,excessively rapid heart rate
+,C0237316,excessively slow heart rate
+,C0419170,Learned heart rate control
+,C0426274,Apgar heart rate score
+,C0428977,Bradycardia
+,C0429477,Baseline fetal heart rate
+,C0429478,Fetal Heart Rate Variance from Normal Baseline
+,C0429480,Fetal heart deceleration
+blood glucose,C0005802,Blood Glucose
+,C0392201,Blood glucose measurement
+,C0428554,Finding of blood glucose level
+,C0005803,Blood Glucose Self-Monitoring
+,C0020456,Hyperglycemia
+,C0020615,Hypoglycemia
+,C0236460,Whole Blood Glucose Test
+,C0428566,Bedtime blood sugar measurement
+,C0428567,Random blood glucose measurement
+,C0428568,Fasting blood glucose measurement
+,C0428569,Post-prandial blood glucose measurement
+,C0430030,Blood glucose method (procedure)
+,C0430031,Laboratory blood glucose
+,C0430032,Glucometer blood glucose
+,C0457578,Capillary blood glucose measurement
+,C0462900,Blood glucose testing strips
+,C0472226,Blood glucose meters (medical device)
+,C0472227,Accutrend blood glucose meter
+,C0472230,ExacTech blood glucose meter
+,C0495706,elevated blood glucose level
+,C0549348,Blood glucose false positive
+,C0580545,Blood glucose normal
+,C0580546,Blood glucose abnormal
+,C0595310,Blood glucose testing kit
+,C0595312,Glucotrend blood glucose meter
+,C0595877,Blood glucose increased
+,C0595883,Blood glucose decreased
+,C0725150,Answer Blood Glucose
+etco2,C3840764,Waveform ETCO2
+,C3841578,Colorimetric ETCO2
+,C3841576,Digital (numeric) ETCO2
+,C0428664,End tidal carbon dioxide partial pressure
+,C0428658,End tidal carbon dioxide concentration
+,C1610024,"Physiologic Monitor Modules, End-Tidal Carbon Dioxide (EtCO2)"
+,C0376529,Capnography
+,C0542276,Respired carbon dioxide monitoring
+,C1610575,"Physiologic Monitor Modules, Capnography"
+,C4304484,Capnography oxygen mask
+,C4518119,Capnography sampling adaptor

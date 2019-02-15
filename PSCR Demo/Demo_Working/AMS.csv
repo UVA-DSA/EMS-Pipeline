@@ -1,0 +1,113 @@
+Required Concept,CUI,Preferred Name
+iv/io/vascular access,C0398266,Venous cannula insertion
+,C0511030,"Establish IV access, as appropriate"
+,C0512753,"Maintain IV access, as appropriate"
+,C0512826,Maintain patent IV access
+,C3842042,General-IV access
+,C0511982,"Initiate and maintain IV access, as appropriate"
+,C1735535,"Maintain patent IV access, as appropriate"
+,C0512038,Insert and maintain large bore IV access
+,C2215468,admission to trauma bay intravenous accessory secured
+,C2231022,Axis IV problems access to health care
+,C0510981,Ensure that IV access is in place at all times during therapy
+,C0511029,Establish IV access and discontinue intraosseous line after patient's condition stabilizes
+,C2026164,central venous line through two tunneled access sites
+,C0750138,vascular access
+,C0042371,Implantable Injection/Infusion Ports
+,C0184269,Vascular Access Devices
+,C0280956,poor vascular access
+,C0349422,Arterial steal syndrome
+,C0398220,Construction of vascular access
+,C0398232,Insertion of graft for vascular access
+,C0398233,Superficialization of vessel for vascular access
+,C0457910,Vascular access incision
+,C0493494,"GRAFT, VASCULAR ACCESS"
+,C0749854,UPPER EXTREMITY VASCULAR ACCESS
+,C0750139,VASCULAR ACCESS INFECTED
+,C0750140,VASCULAR ACCESS PERIPHERAL
+,C0750141,VASCULAR ACCESS PERMANENT
+,C0750142,VASCULAR ACCESS PLACEMENT ELECTIVE
+,C0771298,"syringe,vascular access, disposable"
+,C0920165,Vascular access complication
+,C1138773,"DEVICE, FLUSH, VASCULAR ACCESS"
+,C1519955,Vascular Access Device Placement
+,C1543260,Guidance for vascular access:Find:Pt:XXX:Doc:US
+,C1545497,Guidance for vascular access
+,C1608324,Vascular Access Ports
+,C1868857,Vascular access operation
+spinal motion restriction,C0183440,Spine board
+hypothermia,C0020672,"Hypothermia, natural"
+,C0413252,Hypothermia due to exposure
+,C1963170,Hypothermia Adverse Event
+,C0017131,Gastric Hypothermia
+,C0020674,"Hypothermia, Induced"
+,C0150255,Hypothermia treatment
+,C0179588,"Caps, Hypothermia"
+,C0181261,"Cooling Units, Patient"
+,C0270256,Hypothermia of newborn
+,C0274285,"Hypothermia, Accidental"
+,C0413250,Immersion hypothermia
+,C0419075,Hypothermia with hypotension
+,C0424978,At risk hypothermia
+,C0444908,Deep hypothermia
+,C0445043,Mild hypothermia
+,C0445045,Moderate hypothermia
+,C0445200,Profound hypothermia
+,C0558520,O/E - hypothermia
+,C0582606,Hypothermia caused by anesthetic
+,C0597844,anesthetic hypothermia
+,C0864565,Hypothermia central
+,C0864566,Hypothermia local
+,C0919592,Hypothermia neonatal
+,C0943767,Hypothermia:Find:Pt:^Patient:Ord:Observed.CCC
+,C1301797,Induced hypothermia (finding)
+hypoglycemia,C0020615,Hypoglycemia
+,C0020617,Hypoglycemic coma
+,C0150254,Hypoglycemia management
+,C0158986,Neonatal hypoglycemia
+,C0238179,"HYPOGLYCEMIA, EXOGENOUS"
+,C0270230,Hypoglycemia of piglets
+,C0271703,Factitious hypoglycemia
+,C0271707,Autoimmune hypoglycemia
+,C0271708,Fasting Hypoglycemia
+,C0271710,Reactive hypoglycemia
+,C0271711,Spontaneous hypoglycemia
+,C0271712,Hypoglycemia of childhood
+,C0271713,Ketotic hypoglycemia
+,C0271714,"Hypoglycemia, leucine-induced"
+,C0271715,Mixed hypoglycemia
+,C0311196,Hypoglycemia diet
+,C0338545,Neuropathy associated with hypoglycemia
+,C0342315,Nocturnal hypoglycemia
+,C0342317,Loss of hypoglycemic warning
+,C0342320,Alimentary hypoglycemia
+,C0342321,Drug induced hypoglycemia
+,C0348452,Other hypoglycemia
+,C0513272,Monitor for hypoglycemia
+,C0549443,Hypoglycemia aggravated
+,C0596744,hypoketonemic hypoglycemia
+hyperglycemia,C0020456,Hyperglycemia
+,C0150252,Hyperglycemia management
+,C0239979,"HYPERGLYCEMIA, SEVERE"
+,C0239980,"HYPERGLYCEMIA, SLIGHT"
+,C0271716,Postpancreatectomy hyperglycemia
+,C0342300,Chronic hyperglycemia
+,C0342301,Acute hyperglycemia
+,C0342303,Metabolic stress hyperglycemia
+,C0342314,Dawn phenomenon
+,C0475718,Neonatal hyperglycemia
+,C0745092,HYPERGLYCEMIA DECOMPENSATED
+,C0745095,hyperglycemia hyperosmolar
+,C0850855,diabetic hyperglycaemia
+,C1409092,pancreatectomy; hyperglycemia
+,C1855520,"Hyperglycemia, Postprandial"
+,C2609269,Fasting hyperglycaemia
+,C2828133,Hyperglycemia Artifact
+,C3650687,Managing Hyperglycaemia
+,C3842022,Medical-hyperglycemia
+,C4020778,maternal hyperglycemia
+,C0242019,Hyperosmolar non-ketotic hyperglycemia
+,C0342298,Diabetic severe hyperglycemia
+,C0362086,Drug-induced hyperglycemia
+,C0475719,Transient neonatal hyperglycemia
+,C0475720,Iatrogenic neonatal hyperglycemia
