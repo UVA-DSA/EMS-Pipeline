@@ -1,0 +1,7 @@
+
+
+dummy13='RAA responded immediately to 3246 BROAD ROCK BV for a person sick Upon arrival patient was being walked down stairs by her family Patient met EMS at the front door Abdominal Pain Patient states that she has had abdominal pain since yesterday morning with N/V Pt had this happen before about 1 month ago Was not seen for the issue then Pt has HX: HTN DM RX: Metformin Clonidine and Allergies to Red Dye Patient advised that she wanted to be transported to Chippingham Conscious and A&Ox4 Pupils perrl trachea mid line with no jvd equal chest rise and fall lung sounds Ctab skin warm and dry LLQ abdominal soft tender and nondistended Pain is 10/10 complete R.O.M. and full sensation of all extremities Patient was walked to ambulance and placed on stretcher Patient was secured with straps and rails up Patient was placed on cardiac monitor for vitals and EKG A 12-lead was done and showed Sinus Rhythm Vitals were BP 120/80 EKG 50 GCS 12 etco2 5.14 Glucose 4.5 SPO2 1.25 The patient was given Zofran 4mg 7 counts IM in right Arm with a 2 provider check En route to Chippingham ER patient was monitored with no changes and left in position of comfort The hospital was called by cell phone and given a patient report Upon arrival at ER patient was taken to room 14 and placed in ER bed A verbal report was given to receiving RN MRN and Insurance gathered patient and RN signed EMS documents'
+
+
+def getAudioStremText():
+    return dummy13

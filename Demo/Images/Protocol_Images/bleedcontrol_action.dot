@@ -1,0 +1,24 @@
+digraph bleedcontrol_action {
+graph [fontname="times-roman"];
+node [fontname="times-roman"];
+edge [fontname="times-roman"];
+BleedControl_Action [fontcolor=black, shape=box, fontsize=11, style=filled, fillcolor=orange];
+Selector [fontcolor=black, shape=octagon, fontsize=11, style=filled, fillcolor=cyan];
+BleedControl_Action -> Selector;
+Sequence_1 [fontcolor=black, shape=box, fontsize=11, style=filled, fillcolor=orange];
+Selector -> Sequence_1;
+"unstable?" [fontcolor=black, shape=ellipse, fontsize=11, style=filled, fillcolor=gray];
+Sequence_1 -> "unstable?";
+"Move to tourniquet" [fontcolor=black, shape=ellipse, fontsize=11, style=filled, fillcolor=gray];
+Sequence_1 -> "Move to tourniquet";
+Sequence_2 [fontcolor=black, shape=box, fontsize=11, style=filled, fillcolor=orange];
+Selector -> Sequence_2;
+"Direct pressure to the bleeding site" [fontcolor=black, shape=ellipse, fontsize=11, style=filled, fillcolor=gray];
+Sequence_2 -> "Direct pressure to the bleeding site";
+"Controlled?" [fontcolor=black, shape=ellipse, fontsize=11, style=filled, fillcolor=gray];
+Sequence_2 -> "Controlled?";
+"Move to tourniquet*" [fontcolor=black, shape=ellipse, fontsize=11, style=filled, fillcolor=gray];
+Sequence_2 -> "Move to tourniquet*";
+NS [fontcolor=black, shape=ellipse, fontsize=11, style=filled, fillcolor=gray];
+BleedControl_Action -> NS;
+}
