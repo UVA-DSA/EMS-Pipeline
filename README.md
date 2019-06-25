@@ -1,7 +1,7 @@
 # EMS Pipeline
 NLP Pipeline for Analysis of EMS Narratives
 
-![Alt text](main.png?raw=true "Demo")
+![Alt text](main2.png?raw=true "Demo")
 
 For the demo, make sure all the required Python packages, PyQt4, MetaMap, and PyMetaMap are installed. MetaMap should be installed under the public_mm directory. To run MetaMap, first make the metamap.sh file executable by
 
