@@ -1,8 +1,6 @@
 # EMS Pipeline
 Real-Time NLP Pipeline for Analysis of EMS Narratives
 
-## Pipeline Demo graphical User Interface
-
 ![GUI](ETC/GUI.png)
 
 This demo under the `Demo/` directory has been succesfully tested on:
@@ -70,7 +68,7 @@ To launch the graphical user interface (GUI), run:
 
 `Python GUI.py`
 
-## Publications
+### Publications
 
 ["CognitiveEMS: A Cognitive Assistant System for Emergency Medical Services"](http://faculty.virginia.edu/alemzadeh/papers/MEDCPS_2018.pdf)  
 S. Preum, S. Shu, M. Hotaki, R. Williams, J. Stankovic, H. Alemzadeh
