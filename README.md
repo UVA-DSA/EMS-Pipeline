@@ -16,11 +16,17 @@ This demo under the `Demo/` directory has been succesfully tested on:
 Most Python packages could be installed with pip. Some other requirements are:
 
 #### Installing MetaMap:
-MetaMap needs to be installed under the `Demo/public_mm` directory. To download MetaMap, visit <https://metamap.nlm.nih.gov/MainDownload.shtml>
+MetaMap needs to be installed under the `Demo/public_mm` directory. Downloads are hosted at:
 
-You will need a UMLS account/license: <https://uts.nlm.nih.gov/license.html>
+<https://metamap.nlm.nih.gov/MainDownload.shtml>
 
-Instruction for installing MetaMap are here: <https://metamap.nlm.nih.gov/Installation.shtml>
+You will need a UMLS account/license. You can request one here: 
+
+<https://uts.nlm.nih.gov/license.html>
+
+Instruction for installing MetaMap are here: 
+
+<https://metamap.nlm.nih.gov/Installation.shtml>
 
 #### Installing PyMetaMap:
 PyMetaMap is a Python Wrapper around MetaMap. It needs to be installed in the `Demo/pymetamap` directory. The software is already in this directory, but needs to be built:
