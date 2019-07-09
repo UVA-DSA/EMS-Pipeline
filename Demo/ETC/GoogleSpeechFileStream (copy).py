@@ -26,6 +26,10 @@ with open(os.devnull, 'w') as f:
 RATE = 16000
 CHUNK = int(RATE / 10)  # 100ms
 
+# Audio recording parameters
+RATE = 16000
+CHUNK = int(RATE / 10)  # 100ms
+
 class FileStream(object):
     fileSessionCounter = 0
     position = 0
@@ -47,9 +51,9 @@ class FileStream(object):
         self.closed = True
     
     def __enter__(self):
-        #self._audio_interface = pyaudio.PyAudio()
+        self._audio_interface = pyaudio.PyAudio()
         mixer.init(frequency = RATE)
-        #self._audio_stream = self._audio_interface.open(format = pyaudio.paInt16, channels = 1, rate = self._rate, input = True, frames_per_buffer = self._chunk, stream_callback = self._fill_buffer,)
+        self._audio_stream = self._audio_interface.open(format = pyaudio.paInt16, channels = 1, rate = self._rate, input = True, frames_per_buffer = self._chunk, stream_callback = self._fill_buffer,)
         self.closed = False
 
         if(FileStream.position  == 0):
@@ -59,50 +63,44 @@ class FileStream(object):
         return self
 
     def __exit__(self, type, value, traceback):
-        #self._audio_stream.stop_stream()
-        #self._audio_stream.close()
+        self._audio_stream.stop_stream()
+        self._audio_stream.close()
         self.closed = True
         # Signal the generator to terminate so that the client's
         # streaming_recognize method will not block the process termination.
-        #self._buff.put(None)
-        #self._audio_interface.terminate()
+        self._buff.put(None)
+        self._audio_interface.terminate()
 
     def _fill_buffer(self, in_data, frame_count, time_info, status_flags):
         """Continuously collect data from the audio stream, into the buffer."""
         #self._buff.put(in_data)
-        pass
-        #data = self.wf.readframes(CHUNK)
+        
+        data = self.wf.readframes(CHUNK)
 
 
-        #self._buff.put(data)
-        #return None, pyaudio.paContinue
+        self._buff.put(data)
+        return None, pyaudio.paContinue
 
     def generator(self):
-        # Create GUI Signal Objects
+        # Create Signal Objects
         GoogleSignal = GUISignal()
         GoogleSignal.signal.connect(self.Window.StartGoogle)
 
         MsgSignal = GUISignal()
         MsgSignal.signal.connect(self.Window.UpdateMsgBox)
-
-        VUSignal = GUISignal()
-        VUSignal.signal.connect(self.Window.UpdateVUBox)
-
-        ButtonsSignal = GUISignal()
-        ButtonsSignal.signal.connect(self.Window.ButtonsSetEnabled)
-
+    
         while not self.closed:
             # Use a blocking get() to ensure there's at least one chunk of
             # data, and stop iteration if the chunk is None, indicating the
             # end of the audio stream.
-            #chunk = self._buff.get()
-            time.sleep(.1)
-            chunk = self.wf.readframes(CHUNK)
-            
+            chunk = self._buff.get()
+
             if chunk == '':
-                FileStream.position = 0
                 MsgSignal.signal.emit(["Transcription of audio file complete!"])
-                ButtonsSignal.signal.emit([(self.Window.StartButton, True), (self.Window.ComboBox, True), (self.Window.ResetButton, True)])
+                FileStream.position = 0
+                self.Window.StartButton.setEnabled(True)
+                self.Window.ComboBox.setEnabled(True)
+                self.Window.ResetButton.setEnabled(True)
                 return
 
             if chunk is None:
@@ -117,16 +115,14 @@ class FileStream(object):
 
             data = [chunk]
 
-            # VU Meter in the GUI
-            signal = b''.join(data)
-            signal = np.fromstring(signal, 'Int16') 
-            VUSignal.signal.emit([signal])
-
             self.samplesCounter += self._chunk
             FileStream.position += 1
 
             if self.Window.stopped == 1:
                 print('File Speech Tread Killed')
+                self.Window.StartButton.setEnabled(True)
+                self.Window.ComboBox.setEnabled(True)
+                self.Window.ResetButton.setEnabled(True)
                 mixer.music.stop()
                 FileStream.position = 0
                 return
@@ -145,18 +141,16 @@ class FileStream(object):
  
             yield b''.join(data)
 
-# Google Cloud Speech API Recognition Thread for Microphone
-def GoogleSpeech(Window, SpeechToNLPQueue, wavefile_name):
 
-    # Create GUI Signal Object
+# Google Cloud Speech API Recognition Thread for Microphone
+def GoogleSpeech(Window, SpeechToNLPQueue, wavefile):
+
+    # Create Signal Object
     SpeechSignal = GUISignal()
     SpeechSignal.signal.connect(Window.UpdateSpeechBox)
 
     MsgSignal = GUISignal()
     MsgSignal.signal.connect(Window.UpdateMsgBox)
-
-    ButtonsSignal = GUISignal()
-    ButtonsSignal.signal.connect(Window.ButtonsSetEnabled)
 
     language_code = 'en-US'  # a BCP-47 language tag
 
@@ -165,15 +159,15 @@ def GoogleSpeech(Window, SpeechToNLPQueue, wavefile_name):
     streaming_config = types.StreamingRecognitionConfig(config = config, interim_results = True)
 
 
-    with FileStream(Window, RATE, CHUNK, wavefile_name) as stream:
+    with FileStream(Window, RATE, CHUNK, wavefile) as stream:
         audio_generator = stream.generator()
         requests = (types.StreamingRecognizeRequest(audio_content = content) for content in audio_generator)
 
         try:
             responses = client.streaming_recognize(streaming_config, requests)
 
-            # Signal that streaming has started
-            print("Started speech recognition on file audio via Google Speech API.\nFile Session Counter: " + str(FileStream.fileSessionCounter))
+            # Signal that speech recognition has started
+            #print('Started speech recognition via Google Speech API')
             MsgSignal.signal.emit(["Started speech recognition on file audio via Google Speech API.\nFile Session Counter: " + str(FileStream.fileSessionCounter)])
             
             # Now, put the transcription responses to use.
@@ -217,6 +211,6 @@ def GoogleSpeech(Window, SpeechToNLPQueue, wavefile_name):
 
         except Exception as e:
             MsgSignal.signal.emit(["Unable to get response from Google! Network or other issues. Please Try again!\n Exception: " + str(e)])     
-            ButtonsSignal.signal.emit([(Window.StartButton, True), (Window.ComboBox, True), (Window.ResetButton, True)])
+            Window.StartButton.setEnabled(True)
             sys.exit()
             

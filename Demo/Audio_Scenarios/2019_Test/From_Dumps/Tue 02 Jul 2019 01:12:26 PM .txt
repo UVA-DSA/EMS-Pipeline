@@ -1,0 +1,170 @@
+Mode:
+
+011_190105
+
+Speech: 
+
+Dispatch Priority One for breathing difficulties arrived on scene to find a patient being ambulated out to the residents with Richmond by the Richmond fire department. Patient complains of shortness of breath and a slightly productive cough since yesterday, the etiology of which patient reports that the day prior while minding his own business in a store he was sprayed in the face with some sort of cleaning agent on assessment. Patient is alert and oriented using good color and does not appear to be an extremist. He has clear lung sounds and a patent Airway he's takes a number of medications, including albuterol, aspirin, 81 mg daily amlodipine, Alprazolam, Lasix, pantoprazole and Neurontin use logic to Percocet and says he cannot be anywhere near it on contact patient. Neither has any traumatic injury loss of consciousness. Chest pain, abdominal pain, nausea, vomiting, diarrhea, vertigo, syncope, current or recent illness, suicidal ideation or homicidal ideation. 
+Or drug use his Airway is patent. His breathing is adequate. Circulation is 2 at the is cluster the radial artery patient. Without the stress, alert and oriented X4, an ambulatory with a walker and Walker body survey skin is normal, warm and dry skin turgor Norman, appropriate color. For patients, his vital signs are as follows: is a heart rate of 91 respiratory rate of 16 blood pressure is 137 over 73 glucose glucose 136 GCS 15 pulse ox at 99 % on room air. His EKG of sinus rhythm, without ectopy or stemi, have an IV established 12-lead done and that's it. 
+
+
+Concept Extraction:
+
+(Shortness of breath, True, breathing difficulties, 0.62)
+(Cough, True, productive cough, 0.9)
+(Shortness of breath, True, of shortness breath, 0.83)
+(Wheezing, True, lung sounds, 0.88)
+(Loss of consciousness, True, loss of consciousness, 0.83)
+(Trauma, True, traumatic injury, 0.62)
+(Pain, True, chest pain, 1.0)
+(Homicidal thoughts, True, homicidal ideation, 1.0)
+(Chest pain, True, chest pain, 1.0)
+(Loss of consciousness, True, syncope, 1.0)
+(Nausea, True, nausea, 1.0)
+(Abdominal pain, True, abdominal pain, 1.0)
+(Suicidal thought, True, suicidal ideation, 1.0)
+(Vomiting, True, vomiting, 1.0)
+(Diarrhea, True, diarrhea, 1.0)
+(Pulse, True, 99, 0.74)
+(Resp, True, 16, 0.59)
+(Glucose, True, 136, 0.74)
+(Pulse oximetry, True, 99, 0.74)
+(Ekg, True, ekg rhythm, 0.8)
+(Dysrhythmia, False, ekg rhythm, 0.8)
+
+
+Protocol Text:
+
+(Medical - Abdominal Pain, 0.46)
+(Medical - Respiratory Distress/Asthma/COPD/Croup/Reactive Airway, 0.33)
+(Medical - Chest Pain - Cardiac Suspected, 0.22)
+
+
+Intervention:
+
+(Transport, 1.0)
+(Cardiac monitor, 0.67)
+(Normal saline, 0.46)
+(Ondansetron, 0.46)
+
+
+System Messages Log:
+
+Welcome to CognitiveEMS, a cognitive assistant system for 
+Emergency Medical Services (EMS). 
+  _____                  _  __   _             ____ __  ___ ___
+ / ___/___  ___ _ ___   (_)/ /_ (_)_  __ ___  / __//  |/  // __/
+/ /__ / _ \/ _ `// _ \ / // __// /| |/ // -_)/ _/ / /|_/ /_\ \  
+\___/ \___/\_, //_//_//_/ \__//_/ |___/ \__//___//_/  /_//___/  
+          /___/                                                
+
+CognitiveEMS captures speech by first responders and attempts to 
+find appropriate EMS protocols and interventions. The following 
+protocols are currently supported:
+
+1. Medical - Abdominal Pain
+2. Medical - Altered Mental Status
+3. Medical - Seizure
+4. Medical - Respiratory Distress/Asthma/COPD/Croup/Reactive Airway
+5. General - Behavioral/Patient Restraint
+6. Medical - Overdose/Poisoning - Opioid
+7. Medical - Diabetic - Hypoglycemia
+8. Medical - Chest Pain - Cardiac Suspected
+
+For more information, visit:
+https://github.com/UVA-DSA/EMS-pipeline
+
+12:45:58 PM - Starting!
+12:45:58 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 1
+12:46:52 PM - Transcription of audio file complete!
+12:47:22 PM - System state dumped to /Dumps/Tue 02 Jul 2019 12:47:22 PM .txt
+12:47:26 PM - Form Being Generated!
+12:47:36 PM - Form Generated: /Dumps/Tue 02 Jul 2019 12:47:27 PM .pdf
+12:47:46 PM - Resetting!
+12:47:49 PM - Starting!
+12:47:49 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 2
+12:48:50 PM - API's 1 minute limit reached. Restablishing connection!
+12:48:50 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 3
+12:49:19 PM - Transcription of audio file complete!
+12:49:24 PM - System state dumped to /Dumps/Tue 02 Jul 2019 12:49:24 PM .txt
+12:49:25 PM - Form Being Generated!
+12:49:37 PM - Form Generated: /Dumps/Tue 02 Jul 2019 12:49:27 PM .pdf
+12:49:49 PM - Resetting!
+12:49:57 PM - Starting!
+12:49:57 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 4
+12:50:57 PM - API's 1 minute limit reached. Restablishing connection!
+12:50:57 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 5
+12:51:07 PM - Transcription of audio file complete!
+12:51:32 PM - System state dumped to /Dumps/Tue 02 Jul 2019 12:51:32 PM .txt
+12:51:34 PM - Form Being Generated!
+12:51:46 PM - Form Generated: /Dumps/Tue 02 Jul 2019 12:51:37 PM .pdf
+12:52:07 PM - Resetting!
+12:52:09 PM - Starting!
+12:52:09 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 6
+12:53:10 PM - API's 1 minute limit reached. Restablishing connection!
+12:53:10 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 7
+12:53:29 PM - Transcription of audio file complete!
+12:53:44 PM - System state dumped to /Dumps/Tue 02 Jul 2019 12:53:44 PM .txt
+12:53:45 PM - Form Being Generated!
+12:53:55 PM - Form Generated: /Dumps/Tue 02 Jul 2019 12:53:46 PM .pdf
+12:54:08 PM - Resetting!
+12:54:12 PM - Starting!
+12:54:12 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 8
+12:55:13 PM - API's 1 minute limit reached. Restablishing connection!
+12:55:13 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 9
+12:55:26 PM - Transcription of audio file complete!
+12:56:01 PM - System state dumped to /Dumps/Tue 02 Jul 2019 12:56:01 PM .txt
+12:56:02 PM - Form Being Generated!
+12:56:06 PM - Form Generated: /Dumps/Tue 02 Jul 2019 12:56:02 PM .pdf
+12:56:49 PM - Resetting!
+12:56:52 PM - Starting!
+12:56:52 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 10
+12:57:52 PM - API's 1 minute limit reached. Restablishing connection!
+12:57:52 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 11
+12:58:20 PM - Transcription of audio file complete!
+12:59:26 PM - System state dumped to /Dumps/Tue 02 Jul 2019 12:59:26 PM .txt
+12:59:30 PM - Form Being Generated!
+12:59:48 PM - Form Generated: /Dumps/Tue 02 Jul 2019 12:59:39 PM .pdf
+01:00:04 PM - Resetting!
+01:00:06 PM - Starting!
+01:00:06 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 12
+01:01:07 PM - API's 1 minute limit reached. Restablishing connection!
+01:01:07 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 13
+01:01:11 PM - Transcription of audio file complete!
+01:01:36 PM - System state dumped to /Dumps/Tue 02 Jul 2019 01:01:36 PM .txt
+01:01:37 PM - Form Being Generated!
+01:01:47 PM - Form Generated: /Dumps/Tue 02 Jul 2019 01:01:39 PM .pdf
+01:03:30 PM - Resetting!
+01:03:33 PM - Starting!
+01:03:33 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 14
+01:04:33 PM - API's 1 minute limit reached. Restablishing connection!
+01:04:33 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 15
+01:04:48 PM - Transcription of audio file complete!
+01:05:26 PM - System state dumped to /Dumps/Tue 02 Jul 2019 01:05:26 PM .txt
+01:05:28 PM - Form Being Generated!
+01:05:41 PM - Form Generated: /Dumps/Tue 02 Jul 2019 01:05:31 PM .pdf
+01:05:57 PM - Resetting!
+01:05:59 PM - Starting!
+01:05:59 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 16
+01:07:00 PM - API's 1 minute limit reached. Restablishing connection!
+01:07:00 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 17
+01:07:06 PM - Transcription of audio file complete!
+01:07:28 PM - System state dumped to /Dumps/Tue 02 Jul 2019 01:07:28 PM .txt
+01:07:30 PM - Form Being Generated!
+01:07:43 PM - Form Generated: /Dumps/Tue 02 Jul 2019 01:07:36 PM .pdf
+01:08:07 PM - Resetting!
+01:08:07 PM - Resetting!
+01:08:12 PM - Starting!
+01:08:12 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 18
+01:09:13 PM - API's 1 minute limit reached. Restablishing connection!
+01:09:13 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 19
+01:09:13 PM - Transcription of audio file complete!
+01:09:43 PM - System state dumped to /Dumps/Tue 02 Jul 2019 01:09:43 PM .txt
+01:09:45 PM - Form Being Generated!
+01:10:01 PM - Form Generated: /Dumps/Tue 02 Jul 2019 01:09:52 PM .pdf
+01:10:16 PM - Resetting!
+01:10:18 PM - Starting!
+01:10:18 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 20
+01:11:19 PM - API's 1 minute limit reached. Restablishing connection!
+01:11:19 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 21
+01:12:08 PM - Transcription of audio file complete!

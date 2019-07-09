@@ -11,14 +11,18 @@ from google.cloud.speech import types
 import numpy as np
 #import gui
 from classes import SpeechNLPItem, GUISignal
-
+import scipy
+import datetime
+import wave, struct, math
 
 # Audio recording parameters
 RATE = 16000
 CHUNK = int(RATE / 10)  # 100ms
+#CHUNK = int(RATE * 5)  # 100ms
 
 class MicrophoneStream(object):
     micSessionCounter = 0
+    audio_buffer = ""
     """Opens a recording stream as a generator yielding the audio chunks."""
     def __init__(self, Window, rate, chunk):
         MicrophoneStream.micSessionCounter += 1
@@ -56,14 +60,13 @@ class MicrophoneStream(object):
         return None, pyaudio.paContinue
 
     def generator(self):
-        # Create Signal Objects
+        # Create GUI Signal Objects
         GoogleSignal = GUISignal()
         GoogleSignal.signal.connect(self.Window.StartGoogle)
 
         MsgSignal = GUISignal()
         MsgSignal.signal.connect(self.Window.UpdateMsgBox)
 
-        # Create Signal Objects
         VUSignal = GUISignal()
         VUSignal.signal.connect(self.Window.UpdateVUBox)
 
@@ -76,7 +79,7 @@ class MicrophoneStream(object):
                 return
             data = [chunk]
 
-            # Plot in the GUI
+            # VU Meter in the GUI
             signal = b''.join(data)
             signal = np.fromstring(signal, 'Int16') 
             VUSignal.signal.emit([signal])
@@ -91,7 +94,16 @@ class MicrophoneStream(object):
 
             if self.Window.stopped == 1:
                 print('Speech Tread Killed')
-                self.Window.StartButton.setEnabled(True)
+           
+                # Dump file to disk
+                output_audio = wave.open("./Dumps/" + str(datetime.datetime.now().strftime("%c")) + ".wav",'wb')
+                output_audio.setnchannels(1) # mono
+                output_audio.setsampwidth(2)
+                output_audio.setframerate(RATE)
+                output_audio.writeframesraw( MicrophoneStream.audio_buffer )
+                output_audio.close()
+
+                MicrophoneStream.audio_buffer = ""
                 return
 
             # Now consume whatever other data's still buffered.
@@ -103,19 +115,24 @@ class MicrophoneStream(object):
                     data.append(chunk)
                 except queue.Empty:
                     break
-            
+
+            #MicrophoneStream.audio_buffer = np.append(MicrophoneStream.audio_buffer, np.fromstring(b''.join(data), 'Int16'))
+            MicrophoneStream.audio_buffer += b''.join(data)
             yield b''.join(data)
 
 
 # Google Cloud Speech API Recognition Thread for Microphone
 def GoogleSpeech(Window, SpeechToNLPQueue):
 
-    # Create Signal Object
+    # Create GUI Signal Object
     SpeechSignal = GUISignal()
     SpeechSignal.signal.connect(Window.UpdateSpeechBox)
 
     MsgSignal = GUISignal()
     MsgSignal.signal.connect(Window.UpdateMsgBox)
+
+    ButtonsSignal = GUISignal()
+    ButtonsSignal.signal.connect(Window.ButtonsSetEnabled)
 
     language_code = 'en-US'  # a BCP-47 language tag
 
@@ -130,8 +147,8 @@ def GoogleSpeech(Window, SpeechToNLPQueue):
         try:
             responses = client.streaming_recognize(streaming_config, requests)
 
-            # Signal that speech recognition has started
-            #Print('Started speech recognition via Google Speech API')
+            # Signal that streaming has started
+            print("Started speech recognition on microphone audio via Google Speech API.\nMicrophone Session counter: " + str(MicrophoneStream.micSessionCounter))
             MsgSignal.signal.emit(["Started speech recognition on microphone audio via Google Speech API.\nMicrophone Session counter: " + str(MicrophoneStream.micSessionCounter)])
             
             # Now, put the transcription responses to use.
@@ -174,5 +191,5 @@ def GoogleSpeech(Window, SpeechToNLPQueue):
 
         except Exception as e:
             MsgSignal.signal.emit(["Unable to get response from Google! Network or other issues. Please Try again!\n Exception: " + str(e)])     
-            Window.StartButton.setEnabled(True)
+            ButtonsSignal.signal.emit([(Window.StartButton, True), (Window.ComboBox, True), (Window.ResetButton, True)])
             sys.exit()

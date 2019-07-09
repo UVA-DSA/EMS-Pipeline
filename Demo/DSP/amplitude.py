@@ -53,4 +53,8 @@ class Amplitude(object):
         mark_val = mark.to_int(scale)
         delta = abs(int_val - mark_val)
         return (int_val * '*', (delta-1) * ' ', '|')
-        
+
+    def getValue(self):
+        return self.value
+
+      

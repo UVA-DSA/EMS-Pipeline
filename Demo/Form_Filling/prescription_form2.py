@@ -13,7 +13,7 @@ mm = MetaMap.get_instance('./public_mm/bin/metamap16')
 #for abs path, add "/home/arif/Desktop/metamap/"
 caseNo='023'
 
-def generateFields(sentenceList, wordList, narrative):
+def generateFields(sentenceList, wordList, narrative, file_name):
     wordList=[x.lower() for x in wordList]
     numOfSentences=len(sentenceList)
     numOfWords=len(wordList)
@@ -2182,7 +2182,8 @@ def generateFields(sentenceList, wordList, narrative):
     pdf.multi_cell(0, 7, 'Narrative: '+narrative, 1, 1, 'L')
     
     now=datetime.datetime.now()
-    pdf.output(str(caseNo)+".pdf", 'F')
+    #pdf.output(str(caseNo)+".pdf", 'F')
+    pdf.output("./Dumps/" + file_name +".pdf", 'F')
     #pdf.output("fire rescue report for"+namePatient2+" at "+str(now)+".pdf", 'F')
     #pdf.output("fire rescue report for patient.pdf", 'F')
     
