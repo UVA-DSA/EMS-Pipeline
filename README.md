@@ -44,7 +44,7 @@ To use the Google Cloud Speech API, you need to have your own service account ke
 
 #### DeepSpeech Models (Optional):
 
-DeepSpeech functionality is currently **disabled** in the demo. The models are not need, but they could be downloaded by running:
+DeepSpeech functionality is currently **disabled** in the demo. The models are not needed, but they could be downloaded by running:
 
 `mkdir DeepSpeech_Models`
 
@@ -56,11 +56,11 @@ For more information and link to more recent models, visit: <https://github.com/
 
 ### Running the Demo
 
-Make the `metamap.sh` executable by running (This step is only needed to be run once on every machine):
+Make the `metamap.sh` executable by running (this step is only needed to be run once on every machine):
 
 `chmod +x metamap.sh`
 
-To run MetaMap, run (This step needs to repeated after every reboot):
+To run MetaMap, run (this step needs to repeated after every reboot):
 
 `./metamap.sh`
 
