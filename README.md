@@ -11,35 +11,34 @@ This demo under the `Demo/` directory has been succesfully tested on:
 
 `Python 2.7` 
 
-
-### Requirments
+### Requirements
 
 Most Python packages could be installed with pip. Some other requirements are:
 
 #### Installing MetaMap:
-MetaMap needs to be installed under the `Demo/public_mm` directory. Instruction for installing MetaMap are here:
+MetaMap needs to be installed under the `Demo/public_mm` directory. To download MetaMap, visit <https://metamap.nlm.nih.gov/MainDownload.shtml>
 
-<https://metamap.nlm.nih.gov/Installation.shtml>
+You will need a UMLS account/license: <https://uts.nlm.nih.gov/license.html>
+
+Instruction for installing MetaMap are here: <https://metamap.nlm.nih.gov/Installation.shtml>
 
 #### Installing PyMetaMap:
-PyMetaMap is a Python Wrapper around MetaMap. It needs to be installed in the `Demo/pymetamap` directory. To do this
-
-`cd Demo`
-
-`git clone https://github.com/AnthonyMRios/pymetamap`
+PyMetaMap is a Python Wrapper around MetaMap. It needs to be installed in the `Demo/pymetamap` directory. The software is already in this directory, but needs to be built:
 
 `cd pymetamap`
 
 `python setup.py install`
 
+For more information, visit: <https://github.com/AnthonyMRios/pymetamap>
+
 #### Google Cloud Speech API:
-To use the Google Cloud Speech API, you need to have your own service account key in JSON format with the Cloud Speech API enabled. It needs to be in the demo folder: 
+To use the Google Cloud Speech API, you need to have your own service account key in JSON format. The service account must have the Speech API enabled enabled. It needs to be in the demo folder: 
 
 `Demo/service-account.json`
 
 #### DeepSpeech Models:
 
-DeepSpeech fucntionality is currently * disabled * in the demo. However, the models could be downloaded by:
+DeepSpeech fucntionality is currently * disabled * in the demo. The models are no need, but, they could be downloaded:
 
 `mkdir DeepSpeech_Models`
 
@@ -47,7 +46,7 @@ DeepSpeech fucntionality is currently * disabled * in the demo. However, the mod
 
 `tar xvfz deepspeech-0.5.1-models.tar.gz`
 
-Links to more recent models can be found at: <https://github.com/mozilla/DeepSpeech>
+For more information and link to more recent models, visit: <https://github.com/mozilla/DeepSpeech>
 
 ### Running the Demo
 
@@ -65,5 +64,15 @@ This step needs to repeated after every reboot.
 
 To run the graphical user interface (GUI), run:
 
-`Python gui.py`
+`Python GUI.py`
 
+### Publications
+
+["CognitiveEMS: A Cognitive Assistant System for Emergency Medical Services"](http://faculty.virginia.edu/alemzadeh/papers/MEDCPS_2018.pdf)  
+S. Preum, S. Shu, M. Hotaki, R. Williams, J. Stankovic, H. Alemzadeh
+In SIGBED Review, Special Issue on Medical Cyber Physical Systems Workshop (CPS-Week), 2018.
+ Featured by the IWCE's Urgent Communications and UVA SEAS News, 2018.
+ 
+["Towards a Cognitive Assistant System for Emergency Response"](http://faculty.virginia.edu/alemzadeh/papers/ICCPS_Poster_2018.pdf)  
+S. Preum, S. Shu, J. Ting, V. Lin, R. Williams, J. Stankovic, H. Alemzadeh
+In the 9th ACM/IEEE International Conference on Cyber-Physical Systems (CPS-Week), 2018.
