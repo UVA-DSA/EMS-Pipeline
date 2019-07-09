@@ -1,15 +1,15 @@
 # EMS Pipeline
-Real-Time NLP Pipeline for Analysis of EMS Narratives
+Real-Time NLP Pipeline for Analysis of Emergency Medical Services (EMS) Narratives
 
 ![GUI](ETC/GUI.png)
 
-This demo under the `Demo/` directory has been succesfully tested on:
+The `Demo/` directory contains a graphical user interface (GUI) shown above. It has been succesfully tested on:
 
 `64-bit Ubuntu 16.04 LTS`
 
 `Intel® Core™ i7-7700 CPU @ 3.60GHz × 8`
 
-`Python 2.7` 
+`Python 2.7.12` 
 
 ### Requirements
 
@@ -69,6 +69,10 @@ To launch the graphical user interface (GUI), run:
 `Python GUI.py`
 
 ### Publications
+
+["A Behavior Tree Cognitive Assistant System for Emergency Medical Services"](http://faculty.virginia.edu/alemzadeh/papers/IROS2019.pdf)  
+S. Shu, S. Preum, H. M. Pitchford, R. D. Williams, J. Stankovic, H. Alemzadeh
+To appear in the IEEE IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2019
 
 ["CognitiveEMS: A Cognitive Assistant System for Emergency Medical Services"](http://faculty.virginia.edu/alemzadeh/papers/MEDCPS_2018.pdf)  
 S. Preum, S. Shu, M. Hotaki, R. Williams, J. Stankovic, H. Alemzadeh
