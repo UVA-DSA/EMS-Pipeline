@@ -38,13 +38,13 @@ PyMetaMap is a Python Wrapper around MetaMap. It needs to be installed in the `D
 For more information, visit: <https://github.com/AnthonyMRios/pymetamap>
 
 #### Google Cloud Speech API:
-To use the Google Cloud Speech API, you need to have your own service account key in JSON format. The service account must have the Speech API enabled enabled. It needs to be in the demo folder: 
+To use the Google Cloud Speech API, you need to have your own service account key in JSON format. The service account must have the Speech API enabled. It needs to be in the demo folder: 
 
 `Demo/service-account.json`
 
-#### DeepSpeech Models:
+#### DeepSpeech Models (Optional):
 
-DeepSpeech fucntionality is currently * disabled * in the demo. The models are no need, but, they could be downloaded:
+DeepSpeech functionality is currently **disabled** in the demo. The models are not need, but they could be downloaded by running:
 
 `mkdir DeepSpeech_Models`
 
