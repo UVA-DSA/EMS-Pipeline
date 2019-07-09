@@ -1,5 +1,7 @@
 # EMS Pipeline
-NLP Pipeline for Analysis of EMS Narratives
+Real-Time NLP Pipeline for Analysis of EMS Narratives
+
+## Pipeline Demo graphical User Interface
 
 ![GUI](ETC/GUI.png)
 
@@ -56,23 +58,19 @@ For more information and link to more recent models, visit: <https://github.com/
 
 ### Running the Demo
 
-Make the `metamap.sh` executable by running:
+Make the `metamap.sh` executable by running (This step is only needed to be run once on every machine):
 
 `chmod +x metamap.sh`
 
-This step is only needed to be run once on every machine.
-
-To run MetaMap, run:
+To run MetaMap, run (This step needs to repeated after every reboot):
 
 `./metamap.sh`
 
-This step needs to repeated after every reboot.
-
-To run the graphical user interface (GUI), run:
+To launch the graphical user interface (GUI), run:
 
 `Python GUI.py`
 
-### Publications
+## Publications
 
 ["CognitiveEMS: A Cognitive Assistant System for Emergency Medical Services"](http://faculty.virginia.edu/alemzadeh/papers/MEDCPS_2018.pdf)  
 S. Preum, S. Shu, M. Hotaki, R. Williams, J. Stankovic, H. Alemzadeh
