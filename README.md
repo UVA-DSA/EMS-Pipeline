@@ -69,14 +69,14 @@ To launch the graphical user interface (GUI), run:
 ### Publications
 
 ["A Behavior Tree Cognitive Assistant System for Emergency Medical Services"](http://faculty.virginia.edu/alemzadeh/papers/IROS2019.pdf)  
-S. Shu, S. Preum, H. M. Pitchford, R. D. Williams, J. Stankovic, H. Alemzadeh
+S. Shu, S. Preum, H. M. Pitchford, R. D. Williams, J. Stankovic, H. Alemzadeh  
 To appear in the IEEE IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2019
 
 ["CognitiveEMS: A Cognitive Assistant System for Emergency Medical Services"](http://faculty.virginia.edu/alemzadeh/papers/MEDCPS_2018.pdf)  
-S. Preum, S. Shu, M. Hotaki, R. Williams, J. Stankovic, H. Alemzadeh
+S. Preum, S. Shu, M. Hotaki, R. Williams, J. Stankovic, H. Alemzadeh  
 In SIGBED Review, Special Issue on Medical Cyber Physical Systems Workshop (CPS-Week), 2018.
  Featured by the IWCE's Urgent Communications and UVA SEAS News, 2018.
  
 ["Towards a Cognitive Assistant System for Emergency Response"](http://faculty.virginia.edu/alemzadeh/papers/ICCPS_Poster_2018.pdf)  
-S. Preum, S. Shu, J. Ting, V. Lin, R. Williams, J. Stankovic, H. Alemzadeh
+S. Preum, S. Shu, J. Ting, V. Lin, R. Williams, J. Stankovic, H. Alemzadeh  
 In the 9th ACM/IEEE International Conference on Cyber-Physical Systems (CPS-Week), 2018.
