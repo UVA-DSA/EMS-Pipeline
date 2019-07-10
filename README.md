@@ -9,11 +9,9 @@ The `Demo/` directory contains a graphical user interface (GUI) shown above. It 
 
 `Intel® Core™ i7-7700 CPU @ 3.60GHz × 8`
 
-`Python 2.7.12` 
-
 ### Requirements
-
-Most Python packages could be installed with pip. Some other requirements are:
+The project requires Python 2.7.12.
+Most packages could be installed with pip. Some other requirements are:
 
 #### Installing MetaMap:
 MetaMap needs to be installed under the `Demo/public_mm` directory. Downloads are hosted at:
