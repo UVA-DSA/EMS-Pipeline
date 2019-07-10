@@ -5,8 +5,7 @@ Real-Time NLP Pipeline for Analysis of Emergency Medical Services (EMS) Narrativ
 
 The `Demo/` directory contains a graphical user interface (GUI) shown above. It has been succesfully tested on:
 
-`64-bit Ubuntu 16.04 LTS`
-
+`64-bit Ubuntu 16.04 LTS`  
 `Intel® Core™ i7-7700 CPU @ 3.60GHz × 8`
 
 ### Requirements
@@ -29,8 +28,7 @@ Instruction for installing MetaMap are here:
 #### Installing PyMetaMap:
 PyMetaMap is a Python Wrapper around MetaMap. It needs to be installed in the `Demo/pymetamap` directory. The software is already in this directory, but needs to be built:
 
-`cd pymetamap`
-
+`cd pymetamap`  
 `python setup.py install`
 
 For more information, visit: <https://github.com/AnthonyMRios/pymetamap>
@@ -44,10 +42,8 @@ To use the Google Cloud Speech API, you need to have your own service account ke
 
 DeepSpeech functionality is currently **disabled** in the demo. The models are not needed, but they could be downloaded by running:
 
-`mkdir DeepSpeech_Models`
-
-`wget https://github.com/mozilla/DeepSpeech/releases/download/v0.5.1/deepspeech-0.5.1-models.tar.gz`
-
+`mkdir DeepSpeech_Models`  
+`wget https://github.com/mozilla/DeepSpeech/releases/download/v0.5.1/deepspeech-0.5.1-models.tar.gz`  
 `tar xvfz deepspeech-0.5.1-models.tar.gz`
 
 For more information and link to more recent models, visit: <https://github.com/mozilla/DeepSpeech>
