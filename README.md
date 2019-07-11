@@ -9,7 +9,7 @@ The `Demo/` directory contains a graphical user interface (GUI) shown above. It 
 `Intel® Core™ i7-7700 CPU @ 3.60GHz × 8`
 
 ### Requirements
-The project requires Python 2.7.12.
+The project requires Python 2  
 Most packages could be installed with pip. Some other requirements are:
 
 #### Installing MetaMap:
