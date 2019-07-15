@@ -20,13 +20,16 @@ Most packages could be installed with pip. Some other requirements are:
 #### MetaMap:
 **MetaMap 2016v2** needs to be installed under the `Demo/public_mm` directory. Downloads are hosted at:  
 <https://metamap.nlm.nih.gov/MainDownload.shtml>  
+
 You will need a UMLS account/license. You can request one here:  
 <https://uts.nlm.nih.gov/license.html>  
+
 Instruction for installing MetaMap are here:  
 <https://metamap.nlm.nih.gov/Installation.shtml>
 
 #### PyMetaMap:
-**PyMetaMap** is a Python Wrapper around MetaMap. It needs to be installed in the `Demo/pymetamap` directory. The software is already in this directory, but needs to be built:  
+**PyMetaMap** is a Python Wrapper around MetaMap. It needs to be installed in the `Demo/pymetamap` directory. The software is already in this directory, but needs to be built:
+
 `cd pymetamap`  
 `python setup.py install`  
 
@@ -34,6 +37,7 @@ For more information, visit: <https://github.com/AnthonyMRios/pymetamap>
 
 #### Google Cloud Speech API:
 To use the **Google Cloud Speech API**, you need to have your own service account key in JSON format. The service account must have the Speech API enabled. It needs to be in the demo folder:  
+
 `Demo/service-account.json`
 
 For more information, visit: <https://cloud.google.com/speech-to-text/>
