@@ -47,6 +47,7 @@ For more information, visit: <https://cloud.google.com/speech-to-text/>
 **DeepSpeech** functionality is currently **disabled** in the demo. The models are not needed, but they could be downloaded by running:
 
 `mkdir DeepSpeech_Models`  
+`cd DeepSpeech_Models`  
 `wget https://github.com/mozilla/DeepSpeech/releases/download/v0.5.1/deepspeech-0.5.1-models.tar.gz`  
 `tar xvfz deepspeech-0.5.1-models.tar.gz`
 
