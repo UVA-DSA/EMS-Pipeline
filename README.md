@@ -1,12 +1,14 @@
 # EMS Pipeline
-Thie repository contains a real-time protocol-driven decision support pipeline for Emergency Medical Serivces (EMS). The system-level implementation is shown below:
+This repository contains a real-time protocol-driven decision support pipeline Emergency Medical Serivces (EMS). The system aims to improve situational awareness of the first responders/paramedics by automated collection and analysis of data from incident scenes and providing suggestions to them. The figure below shows the overall architecture of the proposed system:
+
+![Architecture](ETC/CognitiveEMS.png)
+
+## Demo 
+The system-level implementation of the pipeline at the edge device is shown below:
 
 ![System](ETC/System.png)
 
-## Demo
-The `Demo/` directory contains a demonstration of the system in form of a graphical user interface (GUI):
-
-![GUI](ETC/GUI.png)
+The `Demo/` directory contains a demonstration of the edge device system in form of a graphical user interface (GUI). 
 
  The GUI is built with PyQt4 and has been succesfully tested on:
 
@@ -66,6 +68,8 @@ To run MetaMap, run (this step needs to repeated after every reboot):
 To launch the graphical user interface (GUI), run:
 
 `Python GUI.py`
+
+![GUI](ETC/GUI.png)
 
 ## Publications
 
