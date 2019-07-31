@@ -3,10 +3,6 @@ This repository contains a real-time protocol-driven decision support pipeline E
 
 ![Architecture](ETC/CognitiveEMS.png)
 
-The system-level implementation of the pipeline at the edge device is shown below:
-
-![System](ETC/System.png)
-
 ## Demo 
 The `Demo/` directory contains a demonstration of the edge device system in form of a graphical user interface (GUI). 
 
