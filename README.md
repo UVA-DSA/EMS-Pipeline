@@ -22,7 +22,7 @@ Most packages could be installed with pip. Some other requirements are:
 You will need a UMLS account/license. You can request one here:  
 <https://uts.nlm.nih.gov/license.html>  
 
-Instruction for installing MetaMap are here:  
+Instructions for installing MetaMap are here:  
 <https://metamap.nlm.nih.gov/Installation.shtml>
 
 #### PyMetaMap:
@@ -33,7 +33,7 @@ Instruction for installing MetaMap are here:
 
 For more information, visit: <https://github.com/AnthonyMRios/pymetamap>
 
-#### Google Cloud Speech API:
+#### Google Cloud Speech-to-Text API:
 To use the **Google Cloud Speech API**, you need to have your own service account key in JSON format. The service account must have the Speech API enabled. It needs to be in the demo folder:  
 
 `Demo/service-account.json`
