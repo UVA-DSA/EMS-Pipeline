@@ -10,70 +10,6 @@ from nltk.corpus import stopwords
 import re
 from nltk import ngrams
 from nltk.tokenize import sent_tokenize
-import csv
-
-def get_bp(scores, text):
-    if not "C1271104" in scores:
-	check = text[0].find("blood pressure")
-	if not check == -1:
-	    bp_object = ['00000000', 'MMI', '1', 'bp', 'C1271104', 'x', '["bp-tx-1-"spo2"-noun-0]', 'TX', str(check) + '/14', '']
-	    return True, bp_object
-	return False, []
-    return False, []
-
-def get_sp(scores, text):
-    if not "C0428179" in scores:
-        check = text[0].find("spo2")
-        if not check == -1:
-	    sp_object = ['00000000', 'MMI', '1', 'spo2', 'C0428179', 'x', '["spo2-tx-1-"spo2"-noun-0]', 'TX', str(check) + '/4', '']
-	    return True, sp_object
-        return False, []
-    return False, []
-
-CUI_pulse = "C0391850"
-CUI_ox = "C0300971"
-CUI_oximetry = "C0523807"
-def check_pulse(concepts, scores, text):
-	if not CUI_pulse in scores: # if no pulses found
-		print("Check initial")
-		return -1,0
-	if not CUI_ox in scores and not CUI_oximetry in scores: # pulse but no spo2
-		print("Check A")
-		return -1,0
-	text = text[0]
-	regex = re.compile(r'([Pp]ulse),? (ox)?')
-	results = regex.finditer(text)
-	names = []
-	spans = []
-	pulses = []
-	deletes = []
-	for match in results:
-		names.append(match.group(2))
-		spans.append(match.span())
-	print(names)
-	if names[0] == None: # pulse before pulse ox
-		print("Check B")
-		return -1,0
-	print(len(names))
-	if not "None" in names: # spo2 but no pulse
-		for i in range(len(concepts)):
-			if "pulse" in concepts[i][3]:
-				print("Check D")
-				deletes.append(i)
-		return deletes, pulses
-	pulses = []
-	deletes = []
-	for i in range(len(names)):
-		if names[i] == None:
-			pulses.append(['00000000', 'MMI', '1', 'Physiological pulse', str(CUI_pulse), 'x', '["pulse-tx-1-"pulse"-noun-0]', 'TX', str(spans[i][0]) + '/5', ''])
-	for j in range(len(concepts)):
-		if concepts[j][3] == "Physiological pulse":
-			deletes.append[j]
-	print("Check C")
-	return deletes, pulses
-
-
-
 
 class PatientStatus(object):
     def __init__(self, name, binary, value = '', content = ''):
@@ -95,7 +31,7 @@ class ConceptExtractor(object):
         self.CUI2Concept: mapping the CUIs to the concepts
         self.Status: dict to store the information
         self.mm: MetaMap object
-        self.R_range: range of value retrival in the text, default: 30
+        self.R_range: range of value retrival in the text, default: 15
         self.pattern: pattern of the requied value
         '''
         extended_concept_list = pd.read_csv(List_route)
@@ -109,8 +45,8 @@ class ConceptExtractor(object):
                 self.CUI2Concept[self.CUIs[idx]].append(temp)
             else:
                 self.CUI2Concept[self.CUIs[idx]].append(temp)
-        self.R_range = 30
-        self.pattern = "-?\d+\.\d+|-?\d+"
+        self.R_range = 15
+        self.pattern = "\d+\.?\d*"
         self.Log = list()
         #self.ex_extend_cons = []
         #self.raw_ex_cons = []
@@ -136,9 +72,7 @@ class ConceptExtractor(object):
         else:
             self.Status[item] = PatientStatus(item, False)
                 
-          
-  
-  
+            
     
     def ConceptExtract(self, sent_text):
         '''
@@ -147,39 +81,9 @@ class ConceptExtractor(object):
         mm = MetaMap.get_instance('./public_mm/bin/metamap16',version = 2016)
         self.concepts,_ = mm.extract_concepts(sent_text,word_sense_disambiguation=True,\
                                      ignore_stop_phrases=True)
-	
         self.scores,_ = mm.extract_concepts(sent_text,mmi_output=False,word_sense_disambiguation=True,\
                                      ignore_stop_phrases=True)
-
-	with open ("chunk.csv", "a") as f:
-		writer = csv.writer(f, delimiter=',')
-		writer.writerow(sent_text)
-
-	check1, ob1 = get_bp(self.scores, sent_text)
-	if check1:
-	    self.concepts.append(ob1)
-	    self.scores["C1271104"] = '1000'
-
-	check2, ob2 = get_sp(self.scores, sent_text)
-	if check2:
-	    self.concepts.append(ob2)
-	    self.scores['C0428179'] = '1000'
-	
-	deletes, pulses = check_pulse(self.concepts, self.scores, sent_text)
-	if deletes != -1:
-		for i in deletes:
-			# print(i)
-			self.concepts.pop(i)
-			self.scores.pop(CUI_pulse)
-		for j in pulses:
-			# print(j)
-			self.concepts.append(j)
-			self.scores[CUI_pulse] = '1000'
-			break
-	
-	
-	
-	
+                                     
     def ConceptWrapper(self,concepts):
         '''
         this method is developed especially for transforming the information in vital column of RAA dataset
@@ -216,19 +120,19 @@ class ConceptExtractor(object):
             str(self.Status[item[0]].value)+';'+self.Status[item[0]].content+';'+\
             str(self.Status[item[0]].score)+';'+str(self.Status[item[0]].tick)+')'
             self.Log.append(content)
-	
             
         
     def FirstExtract(self, sent_text, tick_num):
+        # print(self.CUIs)
         for concept in self.concepts:
             if concept[1] == 'AA':
                 continue
-            print(concept)
+            # print(concept)
             normalized_trigger_name = concept[6].split('-')[3].strip('"').lower()
             # last part of "trigger" field, 1 means negation is detected
             negation = concept[6].split('-')[-1].rstrip(']') == '0' # negation = False if negation is detected
             CUI = concept[4]
-            print("Concept: " + normalized_trigger_name + " CUI: " + CUI)
+            #print("Concept: " + normalized_trigger_name + " CUI: " + CUI)
             #score = float(concept[2])
             score = float(self.scores[CUI])
             # print(concept[8])
@@ -265,10 +169,8 @@ class ConceptExtractor(object):
                                 value = re.findall(self.pattern,former_strPiece)
                             else:
                                 value = re.findall(self.pattern,latter_strPiece)
-				if mapped_concept == "spo2":				
-					print(value)
                             if len(value) > 0:
-                                if mapped_concept == 'bp':
+                                if mapped_concept == 'blood pressure':
                                     if len(value) >= 2:
                                         self.Status[mapped_concept].value = (value[0]+'/'+value[1])
                                     else:
