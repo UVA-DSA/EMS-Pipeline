@@ -1,0 +1,4211 @@
+Abbreviation	aox1	decreased mental status
+Abbreviation	aox2	decreased mental status
+Abbreviation	aox3	decreased mental status
+Abbreviation	aox4	decreased mental status
+Abbreviation	abcs	breath
+Abbreviation	ams	decreased mental status
+Abbreviation	anox4	decreased mental status
+Abbreviation	avpu	decreased mental status
+Abbreviation	ayox4	decreased mental status
+Abbreviation	bp	blood pressure
+Abbreviation	bs	breath
+Abbreviation	caox4	decreased mental status
+Abbreviation	caox1	decreased mental status
+Abbreviation	caox2	decreased mental status
+Abbreviation	caox3	decreased mental status
+Abbreviation	cp	chest pain
+Abbreviation	cx	decreased mental status
+Abbreviation	dbc	cough
+Abbreviation	dcapbtls	trauma
+Abbreviation	etoh	intoxication
+Abbreviation	gcs	decreased mental status
+Abbreviation	gsw	trauma
+Abbreviation	ha	headache
+Abbreviation	hi	trauma
+Abbreviation	htn	hypertension
+Abbreviation	ld	pregnancy
+Abbreviation	lac	trauma
+Abbreviation	lkw	last known well
+Abbreviation	loa	loss of consciousness
+Abbreviation	loc	loss of consciousness
+Abbreviation	lsn	last known well
+Abbreviation	moi	trauma
+Abbreviation	m of i	trauma
+Abbreviation	mva	trauma
+Abbreviation	mvc	trauma
+Abbreviation	nvd	nausea vomitting diarrhea
+Abbreviation	obs	pregnancy
+Abbreviation	palp	palpitations
+Abbreviation	r	respiratory rate
+Abbreviation	resp	breath
+Abbreviation	rr	respiratory rate
+Abbreviation	sob	shortness of breath
+Abbreviation	sz	seizure
+Abbreviation	tpr	temperature pulse respirations
+UMLS	pain severity	pain severity
+UMLS	pain distress question	pain severity
+UMLS	pain severity reported	pain severity
+UMLS	pain severity score pt  patient qn reported visual analog score	pain severity
+UMLS	pain severity total score pt  patient qn observed flacc	pain severity
+UMLS	pain severity face find pt  patient ord observed flacc	pain severity
+UMLS	pain severity legs find pt  patient ord observed flacc	pain severity
+UMLS	pain severity activity find pt  patient ord observed flacc	pain severity
+UMLS	pain severity cry find pt  patient ord observed flacc	pain severity
+UMLS	pain severity consolability find pt  patient ord observed flacc	pain severity
+UMLS	chest pain increasing in severity	pain severity
+UMLS	severity of flank pain	pain severity
+UMLS	pain severity quantified	pain severity
+UMLS	pain severity descriptive category arbitrary point in time  patient ordinal	pain severity
+UMLS	pain severity descriptive category	pain severity
+UMLS	pain severity find pt  patient ord reported fps r	pain severity
+UMLS	pain severity in last 5d	pain severity
+UMLS	pain severity score pt  patient qn phenx	pain severity
+UMLS	pelvic pain decreasing in severity	pain severity
+UMLS	pelvic pain increasing in severity	pain severity
+UMLS	average severity of pain	pain severity
+UMLS	gcgi   global severity of pain	pain severity
+UMLS	haq di with vas   severity of pain in the past week	pain severity
+UMLS	pain severity finding point in time  patient ordinal reported	pain severity
+UMLS	pain severity 0 10	pain severity
+UMLS	jaw pain	pain jaw
+UMLS	outcomes otolaryngology  jaw pain	pain jaw
+UMLS	jaw claudication	pain jaw
+UMLS	upper jaw  pain	pain jaw
+UMLS	pain radiating to jaw	pain jaw
+UMLS	pain in left side of jaw	pain jaw
+UMLS	pain in right side of jaw	pain jaw
+UMLS	chest pain radiating to jaw	pain jaw
+UMLS	ent goal to alleviate jaw pain	pain jaw
+UMLS	jaw pain during exercise	pain jaw
+UMLS	pain in jaw both sides	pain jaw
+UMLS	extent have pain in jaw	pain jaw
+UMLS	tooth pain in left lower jaw	pain jaw
+UMLS	tooth pain in left upper jaw	pain jaw
+UMLS	tooth pain in right lower jaw	pain jaw
+UMLS	tooth pain in right upper jaw	pain jaw
+UMLS	pain in the jaw joint or in front of the ear	pain jaw
+UMLS	ent procedure possible limitations and risks discussed include residual jaw pain	pain jaw
+UMLS	ent procedure possible limitations and risks discussed include worsened jaw pain	pain jaw
+UMLS	tooth pain in posterior left lower jaw	pain jaw
+UMLS	tooth pain in anterior left lower jaw	pain jaw
+UMLS	tooth pain in posterior left upper jaw	pain jaw
+UMLS	tooth pain in anterior left upper jaw	pain jaw
+UMLS	tooth pain in posterior right lower jaw	pain jaw
+UMLS	tooth pain in anterior right lower jaw	pain jaw
+UMLS	constipation	constipation
+UMLS	constipation adverse event	constipation
+UMLS	have constipation	constipation
+UMLS	how often constipation	constipation
+UMLS	how much distress constipation	constipation
+UMLS	usual severity constipation	constipation
+UMLS	simple constipation	constipation
+UMLS	obstipation	constipation
+UMLS	psychogenic constipation	constipation
+UMLS	constipation   functional	constipation
+UMLS	acute constipation	constipation
+UMLS	chronic constipation	constipation
+UMLS	monitor for constipation	constipation
+UMLS	slow transit constipation	constipation
+UMLS	constipation aggravated	constipation
+UMLS	iatrogenic constipation	constipation
+UMLS	constipation find pt gastrointestinal system ord observed ccc	constipation
+UMLS	postoperative constipation	constipation
+UMLS	constipation prophylaxis	constipation
+UMLS	other constipation	constipation
+UMLS	at risk for constipation	constipation
+UMLS	constipation care	constipation
+UMLS	constipation due to neurogenic bowel	constipation
+UMLS	severe constipation	constipation
+UMLS	nursing care  nutrition monitoring bowel movement constipation	constipation
+UMLS	agitation	agitation
+UMLS	agitation adverse event	agitation
+UMLS	muscular unrest	agitation
+UMLS	neonatal agitation	agitation
+UMLS	agitation mental	agitation
+UMLS	hyperactive behavior	agitation
+UMLS	restlessness and agitation	agitation
+UMLS	restlessness  phenothiazine	agitation
+UMLS	agitation aggravated	agitation
+UMLS	motor restlessness	agitation
+UMLS	agitation extreme	agitation
+UMLS	increased agitation	agitation
+UMLS	physically restless	agitation
+UMLS	catatonic agitation	agitation
+UMLS	schizophrenia agitation	agitation
+UMLS	nocturnal agitation	agitation
+UMLS	agitation postoperative	agitation
+UMLS	emergence delirium	agitation
+UMLS	no psychomotor agitation	agitation
+UMLS	level of agitation	agitation
+UMLS	reduced agitation	agitation
+UMLS	hamd 17   agitation	agitation
+UMLS	hamd 21   agitation	agitation
+UMLS	restlessness	agitation
+UMLS	psychomotor agitation	agitation
+UMLS	abdominal pain	abdominal pain
+UMLS	no abdominal pain	abdominal pain
+UMLS	severe  abdominal pain	abdominal pain
+UMLS	abdominal rigidity	rigidity
+UMLS	abdomen	abdominal pain
+UMLS	acute	abdominal pain
+UMLS	abdominal cramps	abdominal pain
+UMLS	nausea or abdominal pain	abdominal pain
+UMLS	abdominal colic	abdominal pain
+UMLS	chronic abdominal pain	abdominal pain
+UMLS	upper abdominal pain	abdominal pain
+UMLS	epigastric pain	abdominal pain
+UMLS	lower abdominal pain	abdominal pain
+UMLS	rebound tenderness	rebound tenderness
+UMLS	right upper quadrant pain	abdominal pain
+UMLS	abdominal pain radiating to back	abdominal pain
+UMLS	left lower quadrant pain	abdominal pain
+UMLS	left upper quadrant pain	abdominal pain
+UMLS	suprapubic pain	abdominal pain
+UMLS	chronic ruq abdominal pain	abdominal pain
+UMLS	intermittent abdominal pain	abdominal pain
+UMLS	intermittent llq abdominal pain	abdominal pain
+UMLS	abdominal pain through to back	abdominal pain
+UMLS	abdominal pain worse on motion	abdominal pain
+UMLS	generalized abdominal pain	abdominal pain
+UMLS	chronic nonspecific abdominal pain	abdominal pain
+UMLS	central abdominal pain	abdominal pain
+UMLS	pain radiation	pain radiation
+UMLS	pain radiation finding point in time   nominal	pain radiation
+UMLS	back pain without radiation	pain radiation
+UMLS	back pain with radiation	pain radiation
+UMLS	radiation associated pain	pain radiation
+UMLS	abdominal pain radiating to chest	pain radiation
+UMLS	abdominal pain radiation	pain radiation
+UMLS	neck pain  with radiation	pain radiation
+UMLS	neuropathic pain due to radiation	pain radiation
+UMLS	pain following radiation therapy	pain radiation
+UMLS	low back pain  without radiation	pain radiation
+UMLS	chest pain with radiation to left arm	pain radiation
+UMLS	lumbar spine pain with radiation below knee	pain radiation
+UMLS	evaluate chest pain  e g	pain radiation
+UMLS	intensity	pain radiation
+UMLS	location	pain radiation
+UMLS	radiation	pain radiation
+UMLS	duration	pain radiation
+UMLS	and precipitating and alleviating factors	pain radiation
+UMLS	bizarre behavior	bizarre behavior
+UMLS	bizarre behavior find pt  patient ord di pad cgp v 1 4	bizarre behavior
+UMLS	demonstrated behavior mannerisms bizarre	bizarre behavior
+UMLS	seizures	convulsions
+UMLS	seizure adverse event	seizure
+UMLS	no seizures	seizure
+UMLS	gelastic seizure with intractable seizure	seizure
+UMLS	intractable jacksonian epilepsy	seizure
+UMLS	cursive seizure with intractable seizure	seizure
+UMLS	febrile convulsions	convulsions
+UMLS	epilepsy	convulsions
+UMLS	myoclonic epilepsy	seizure
+UMLS	absence epilepsy	seizure
+UMLS	temporal lobe	convulsions
+UMLS	jacksonian seizure	convulsions
+UMLS	fit frequency	seizure
+UMLS	seizure management	seizure
+UMLS	seizure precautions	seizure
+UMLS	convulsions in the newborn	convulsions
+UMLS	generalized seizures	convulsions
+UMLS	clonic	convulsions
+UMLS	stress seizure	convulsions
+UMLS	withdrawal seizures	convulsions
+UMLS	tremors and or seizures	seizure
+UMLS	unilateral seizure	seizure
+UMLS	reflex epilepsy	seizure
+UMLS	cursive  running	seizure
+UMLS	gelastic epilepsy	seizure
+UMLS	visual seizure	seizure
+UMLS	pregnancy	pregnancy
+UMLS	possible pregnancy  finding	pregnancy
+UMLS	hydatidiform mole	pregnancy
+UMLS	prolonged	pregnancy
+UMLS	heterotopic	pregnancy
+UMLS	encounter due to normal pregnancy	pregnancy
+UMLS	ectopic pregnancy previous pregnancy	pregnancy
+UMLS	abdominal pregnancy with intrauterine pregnancy	pregnancy
+UMLS	tubal pregnancy with intrauterine pregnancy	pregnancy
+UMLS	combined intrauterine and ovarian pregnancy	pregnancy
+UMLS	thrombosis  pregnancy	pregnancy
+UMLS	ectopic pregnancy	pregnancy
+UMLS	molar pregnancy	pregnancy
+UMLS	pregnancy  hypertension	hypertension
+UMLS	pregnancy induced	pregnancy
+UMLS	cervical pregnancy with intrauterine pregnancy	pregnancy
+UMLS	interligamentous pregnancy with intrauterine pregnancy	pregnancy
+UMLS	pregnancy test positive   pregnancy no	pregnancy
+UMLS	recent pregnancy with pregnancy number	pregnancy
+UMLS	cornual pregnancy with intrauterine pregnancy	pregnancy
+UMLS	mesometric pregnancy with intrauterine pregnancy	pregnancy
+UMLS	mural pregnancy with intrauterine pregnancy	pregnancy
+UMLS	pregnancy with history of ectopic pregnancy	pregnancy
+UMLS	combined tubal and intrauterine pregnancy	pregnancy
+UMLS	spontaneous abortion	pregnancy
+UMLS	obstetric delivery	pregnancy
+UMLS	fetal membranes	pregnancy
+UMLS	premature rupture	pregnancy
+UMLS	violent	violent
+UMLS	violent retching	violent
+UMLS	violent thoughts	violent
+UMLS	violent environment	violent
+UMLS	assaultive behavior	violent
+UMLS	physical aggression	violent
+UMLS	violent spouse	violent
+UMLS	violent crime	violent
+UMLS	violent dreams	violent
+UMLS	violent ideation	violent
+UMLS	violent event	violent
+UMLS	violent sneezing	violent
+UMLS	violent relationship	violent
+UMLS	aggressive behavior	violent
+UMLS	torture	violent
+UMLS	temper tantrum	violent
+UMLS	violent motor activity	violent
+UMLS	violent and nonviolent crime	violent
+UMLS	violent crime and behavior	violent
+UMLS	behavior violent toward self	violent
+UMLS	violent acts towards others	violent
+UMLS	violent  behavior	violent
+UMLS	family history	substance abuse history
+UMLS	control of violent content in the media	violent
+UMLS	victim of violent environment	violent
+UMLS	patient observed being violent	violent
+UMLS	palpitations	diaphoresis
+UMLS	palpitations adverse event	palpitations
+UMLS	no palpitations	palpitations
+UMLS	palpitations   fluttering	palpitations
+UMLS	pounding heart	palpitations
+UMLS	irregular heart beat	palpitations
+UMLS	palpitations   rapid	palpitations
+UMLS	bumping heart	palpitations
+UMLS	intermittent palpitations	palpitations
+UMLS	palpitations aggravated	palpitations
+UMLS	abnormal palpitations	palpitations
+UMLS	obsolete palpitations  with pheochromocytoma	palpitations
+UMLS	palpitations at rest	palpitations
+UMLS	duration of palpitations	palpitations
+UMLS	occurrence of palpitations	palpitations
+UMLS	palpitations sustained	palpitations
+UMLS	fast palpitations	palpitations
+UMLS	history of palpitations	palpitations
+UMLS	palpitations awareness of heart	palpitations
+UMLS	ctcae grade 1 palpitations	palpitations
+UMLS	ctcae grade 2 palpitations	palpitations
+UMLS	palpitations with regular rhythm	palpitations
+UMLS	factors decreasing palpitations	palpitations
+UMLS	palpitations decreased by bending over	palpitations
+UMLS	palpitations decreased by coughing	palpitations
+UMLS	slow respiration	bradypnea
+UMLS	monitor breathing patterns  bradypnea	tachypnea
+UMLS	tachypnea	chest tightness
+UMLS	hyperventilation	chest tightness
+UMLS	kussmaul respirations	tachypnea
+UMLS	cheyne stokes respirations	tachypnea
+UMLS	apneustic breathing	tachypnea
+UMLS	biot s respiration	tachypnea
+UMLS	and ataxic patterns	tachypnea
+UMLS	dysuria	dysuria
+UMLS	psychogenic dysuria	dysuria
+UMLS	difficulty passing urine	dysuria
+UMLS	dysuria chronic	dysuria
+UMLS	dysuria intermittent	dysuria
+UMLS	dysuria aggravated	dysuria
+UMLS	psychophysiological dysuria	dysuria
+UMLS	positional dysuria	dysuria
+UMLS	dysuria frequency syndrome	dysuria
+UMLS	instruct to report discomfort  dysuria  changes in color	dysuria
+UMLS	consistency	dysuria
+UMLS	or frequency of vaginal discharge	dysuria
+UMLS	pain during urination  dysuria  seems related to menstrual cycle	dysuria
+UMLS	tripod	tripoding
+UMLS	hyperglycemia	hyperglycemia
+UMLS	hyperglycemia management	hyperglycemia
+UMLS	severe	hyperglycemia
+UMLS	slight	hyperglycemia
+UMLS	postpancreatectomy hyperglycemia	hyperglycemia
+UMLS	chronic hyperglycemia	hyperglycemia
+UMLS	acute hyperglycemia	hyperglycemia
+UMLS	metabolic stress hyperglycemia	hyperglycemia
+UMLS	dawn phenomenon	hyperglycemia
+UMLS	neonatal hyperglycemia	hyperglycemia
+UMLS	hyperglycemia decompensated	hyperglycemia
+UMLS	hyperglycemia hyperosmolar	hyperglycemia
+UMLS	diabetic hyperglycaemia	hyperglycemia
+UMLS	pancreatectomy  hyperglycemia	hyperglycemia
+UMLS	postprandial	hyperglycemia
+UMLS	fasting hyperglycaemia	hyperglycemia
+UMLS	hyperglycemia artifact	hyperglycemia
+UMLS	managing hyperglycaemia	hyperglycemia
+UMLS	medical hyperglycemia	hyperglycemia
+UMLS	maternal hyperglycemia	hyperglycemia
+UMLS	hyperosmolar non ketotic hyperglycemia	hyperglycemia
+UMLS	diabetic severe hyperglycemia	hyperglycemia
+UMLS	drug induced hyperglycemia	hyperglycemia
+UMLS	transient neonatal hyperglycemia	hyperglycemia
+UMLS	iatrogenic neonatal hyperglycemia	hyperglycemia
+UMLS	pallor	diaphoresis
+UMLS	pale color	pale
+UMLS	patient observed to be pale	pale
+UMLS	pale color saturation	pale
+UMLS	pale feces  finding	pale
+UMLS	pallor of skin	pale
+UMLS	lycodes pallidus	pale
+UMLS	apogon planifrons	pale
+UMLS	kalmia polifolia	pale
+UMLS	anemic infarct	pale
+UMLS	urine  pale	pale
+UMLS	pale ale	pale
+UMLS	pale   symptom	pale
+UMLS	placenta pale	pale
+UMLS	pallor of lung	pale
+UMLS	pallor of liver	pale
+UMLS	pallor of spleen	pale
+UMLS	looked pale	pale
+UMLS	pale lips	pale
+UMLS	echinacea pallida preparation	pale
+UMLS	strongylocentrotus pallidus	pale
+UMLS	turdus pallidus	pale
+UMLS	ptereleotris heteroptera	pale
+UMLS	pale red color	pale
+UMLS	pale catechu	pale
+UMLS	muscle rigidity	rigidity
+UMLS	plastic property   rigidity	rigidity
+UMLS	decerebrate state	rigidity
+UMLS	neck stiffness	rigidity
+UMLS	cogwheel rigidity	rigidity
+UMLS	analyzer	rigidity
+UMLS	rigidity	tachypnea
+UMLS	gegenhalten	rigidity
+UMLS	decorticate rigidity	rigidity
+UMLS	catatonic rigidity	rigidity
+UMLS	rigidity  personality	rigidity
+UMLS	extensor rigidity	rigidity
+UMLS	face rigidity	rigidity
+UMLS	trunk rigidity	rigidity
+UMLS	athetosis with rigidity	rigidity
+UMLS	extrapyramidal rigidity	rigidity
+UMLS	abdominal rigidity in epigastric region	rigidity
+UMLS	exercises for rigidity	rigidity
+UMLS	rigidity of thinking	rigidity
+UMLS	attacks of rigidity	rigidity
+UMLS	marked rigidity	rigidity
+UMLS	rigidity masticatory	rigidity
+UMLS	rigidity bodily	rigidity
+UMLS	rigidity of limbs	rigidity
+UMLS	nuchal rigidity	rigidity
+UMLS	no vaginal blood loss	vaginal bleeding
+UMLS	vaginal hemorrhage	vaginal bleeding
+UMLS	perinatal transient vaginal bleeding	vaginal bleeding
+UMLS	vaginal introitus bleeding	vaginal bleeding
+UMLS	vaginal vault bleeding	vaginal bleeding
+UMLS	scanty vaginal bleeding	vaginal bleeding
+UMLS	moderate vaginal bleeding	vaginal bleeding
+UMLS	profuse vaginal bleeding	vaginal bleeding
+UMLS	vaginal bleeding problem	vaginal bleeding
+UMLS	non menstrual vaginal bleeding	vaginal bleeding
+UMLS	abnormal vaginal bleeding	vaginal bleeding
+UMLS	normal menstrual blood loss	vaginal bleeding
+UMLS	rectal vaginal bleeding duration	vaginal bleeding
+UMLS	vaginal bleeding episode	vaginal bleeding
+UMLS	vaginal bleeding irregular	vaginal bleeding
+UMLS	vaginal bleeding not present	vaginal bleeding
+UMLS	vaginal bleeding prolonged	vaginal bleeding
+UMLS	pre pubertal vaginal bleeding	vaginal bleeding
+UMLS	heavy episode of vaginal bleeding	vaginal bleeding
+UMLS	abnormal bleeding vaginal discharge	vaginal bleeding
+UMLS	prepubertal vaginal bleeding	vaginal bleeding
+UMLS	unexplained vaginal bleeding	vaginal bleeding
+UMLS	vaginal bleeding during pregnancy	vaginal bleeding
+UMLS	discussion about vaginal bleeding	vaginal bleeding
+UMLS	have vaginal bleeding or spotting	vaginal bleeding
+UMLS	incontinence	incontinence
+UMLS	fecal incontinence	incontinence
+UMLS	urinary incontinence	incontinence
+UMLS	urinary stress incontinence	incontinence
+UMLS	incontinence pads	incontinence
+UMLS	functional urinary incontinence	incontinence
+UMLS	reflex incontinence of urine	incontinence
+UMLS	total urinary incontinence	incontinence
+UMLS	urge incontinence	incontinence
+UMLS	incontinence care	incontinence
+UMLS	nocturnal bladder warning system	incontinence
+UMLS	incontinence bags	incontinence
+UMLS	clamps	incontinence
+UMLS	external occlusion	incontinence
+UMLS	penis incontinence	incontinence
+UMLS	incontinence pants	incontinence
+UMLS	stimulators	incontinence
+UMLS	electrical	incontinence
+UMLS	neuromuscular	incontinence
+UMLS	idiopathic fecal incontinence	incontinence
+UMLS	overflow incontinence of urine	incontinence
+UMLS	double incontinence	incontinence
+UMLS	pigmentary incontinence	incontinence
+UMLS	frequency of incontinence	incontinence
+UMLS	unaware of passing urine	incontinence
+UMLS	incontinence appliance	incontinence
+UMLS	incontinence belt	incontinence
+UMLS	incontinence sheath	incontinence
+UMLS	incontinence control	incontinence
+UMLS	myalgia	myalgias
+UMLS	pleurodynia	myalgias
+UMLS	epidemic	myalgias
+UMLS	myalgias myopathy	myalgias
+UMLS	viral myalgia	myalgias
+UMLS	episodic	myalgias
+UMLS	sudden onset of generalized muscle aches	myalgias
+UMLS	coughing	chest tightness
+UMLS	cough adverse event	cough
+UMLS	have been coughing	cough
+UMLS	cough  guaifenesin	cough
+UMLS	usual severity cough	cough
+UMLS	how much distress cough	cough
+UMLS	cough frequency	cough
+UMLS	no cough	cough
+UMLS	cough x cough relief	cough
+UMLS	antitussive agents	cough
+UMLS	chronic cough	cough
+UMLS	pertussis	cough
+UMLS	whooping cough due to unspecified organism	cough
+UMLS	encouragement of deep breathing and coughing exercises	cough
+UMLS	decreased coughing	cough
+UMLS	paroxysmal cough	cough
+UMLS	nocturnal cough	cough
+UMLS	cough at rest	cough
+UMLS	postural cough	cough
+UMLS	cough reflex	cough
+UMLS	syncope	loss of consciousness
+UMLS	tussive	cough
+UMLS	barking cough	cough
+UMLS	cough	cough
+UMLS	explosive	cough
+UMLS	hacking cough	cough
+UMLS	productive cough	cough
+UMLS	mental status changes	mental status changes
+UMLS	mental status changes postoperative	mental status changes
+UMLS	acute mental status changes	mental status changes
+UMLS	monitor for apprehension	mental status changes
+UMLS	increased anxiety	mental status changes
+UMLS	and changes in mental status	mental status changes
+UMLS	stress test induced mental status changes	mental status changes
+UMLS	rales	rales
+UMLS	rhonchi	tachypnea
+UMLS	high pitched rhonchi	rales
+UMLS	low pitched rhonchi	rales
+UMLS	moist rales	rales
+UMLS	dry rale	rhonchi
+UMLS	inspiratory rhonchi	rhonchi
+UMLS	rhonchi in left lung	rhonchi
+UMLS	rhonchi in right lung	rhonchi
+UMLS	expiratory rhonchi	rhonchi
+UMLS	rhonchi in both lungs	rhonchi
+UMLS	o e   rhonchi present	rhonchi
+UMLS	breath sound rhonchi	rhonchi
+UMLS	breath sound rhonchi asymptomatic	rhonchi
+UMLS	rhonchi at right apex	rhonchi
+UMLS	rhonchi in right mid lung field	rhonchi
+UMLS	rhonchi at right base	rhonchi
+UMLS	rhonchi at left apex	rhonchi
+UMLS	rhonchi in left mid lung field	rhonchi
+UMLS	rhonchi in left base	rhonchi
+UMLS	rhonchi at both apices	rhonchi
+UMLS	rhonchi in both bases	rhonchi
+UMLS	rhonchi on both sides laterally	rhonchi
+UMLS	rhonchi on both sides medially	rhonchi
+UMLS	rhonchi on both sides anteromedially	rhonchi
+UMLS	vaginal discharge	vaginal discharge
+UMLS	vaginal discharge symptom	vaginal discharge
+UMLS	leukorrhea	vaginal discharge
+UMLS	hemorrhagic vaginal discharge	vaginal discharge
+UMLS	brown vaginal discharge	vaginal discharge
+UMLS	cheesy	vaginal discharge
+UMLS	foul smelling vaginal discharge	vaginal discharge
+UMLS	frothy vaginal discharge	vaginal discharge
+UMLS	meconium stained	vaginal discharge
+UMLS	mucoid vaginal discharge	vaginal discharge
+UMLS	purulent vaginal discharge	vaginal discharge
+UMLS	serosanguinous vaginal discharge	vaginal discharge
+UMLS	watery vaginal discharge	vaginal discharge
+UMLS	yellow vaginal discharge	vaginal discharge
+UMLS	vaginal discharge present	vaginal discharge
+UMLS	vaginal discharge absent	vaginal discharge
+UMLS	o e   vaginal discharge	vaginal discharge
+UMLS	o e   no vaginal discharge	vaginal discharge
+UMLS	on examination   white vaginal discharge	vaginal discharge
+UMLS	o e   creamy vaginal discharge	vaginal discharge
+UMLS	on examination   yellow vaginal discharge	vaginal discharge
+UMLS	on examination   green vaginal discharge	vaginal discharge
+UMLS	o e   bloodstained vaginal discharge	vaginal discharge
+UMLS	on examination   frothy vaginal discharge	vaginal discharge
+UMLS	on examination   profuse vaginal discharge	vaginal discharge
+UMLS	pathological dilatation	distension
+UMLS	abdominal bloating	distension
+UMLS	distention	distension
+UMLS	abdomen distended	distension
+UMLS	bladder distention	distension
+UMLS	enlarged uterus	distension
+UMLS	enlargement abdomen	distension
+UMLS	distension of joint	distension
+UMLS	dilatation of intestine	distension
+UMLS	dilatation of ureter	distension
+UMLS	colon distension	distension
+UMLS	gastric distention	distension
+UMLS	distension  cecum	distension
+UMLS	gallbladder distended	distension
+UMLS	liver  distension	distension
+UMLS	uterus  distension	distension
+UMLS	kidney  distension	distension
+UMLS	distended bowel	distension
+UMLS	distended ureter	distension
+UMLS	intracelomic distension	distension
+UMLS	distension system	distension
+UMLS	acute dilatation of stomach	distension
+UMLS	irrigation distension system	distension
+UMLS	abdominal distension	distension
+UMLS	gaseous	distension
+UMLS	arthroscopic irrigation distension pump	distension
+UMLS	iv t pa initiated within three hours     180 minutes  of time last known well	last known well
+UMLS	iv t pa not initiated within three hours     180 minutes  of time last known well for reasons documented by clinician	last known well
+UMLS	iv t pa not initiated within three hours     180 minutes  of time last known well	last known well
+UMLS	reason not given	last known well
+UMLS	feeling suicidal  finding	suicidal thought
+UMLS	c ssrs baseline   non specific suicidal thought	suicidal thought
+UMLS	c ssrs since last visit   non specific suicidal thought	suicidal thought
+UMLS	c ssrs children s since last visit   non specific active suicidal thoughts	suicidal thought
+UMLS	c ssrs children s baseline   non specific active suicidal thoughts	suicidal thought
+UMLS	diarrhea	diaphoresis
+UMLS	diarrhea adverse event	diarrhea
+UMLS	have diarrhea	diarrhea
+UMLS	how much distress diarrhea	diarrhea
+UMLS	usual severity diarrhea	diarrhea
+UMLS	how often diarrhea	diarrhea
+UMLS	diarrhea not present	diarrhea
+UMLS	balantidiasis	diarrhea
+UMLS	infantile diarrhea	diarrhea
+UMLS	dysentery	diarrhea
+UMLS	sprue	diarrhea
+UMLS	tropical	diarrhea
+UMLS	hemorrhagic diarrhea	diarrhea
+UMLS	enteritis due to specified virus	vomiting
+UMLS	functional diarrhea	diarrhea
+UMLS	postprandial diarrhea	diarrhea
+UMLS	chronic constipation with overflow	diarrhea
+UMLS	nervous diarrhea	anxiety
+UMLS	neonatal diarrhea	diarrhea
+UMLS	clostridium difficile diarrhea	diarrhea
+UMLS	intermittent diarrhea	diarrhea
+UMLS	watery diarrhoea	diarrhea
+UMLS	mucous diarrhoea	diarrhea
+UMLS	non infective diarrhea	diarrhea
+UMLS	allergic diarrhea	diarrhea
+UMLS	dietetic diarrhea	diarrhea
+UMLS	unequal femoral pulses	unequal femoral pulses
+UMLS	exanthema	rash
+UMLS	cutaneous candidiasis	rash
+UMLS	drug eruptions	rash
+UMLS	diaper rash	rash
+UMLS	eczema	rash
+UMLS	miliaria	rash
+UMLS	petechiae	rash
+UMLS	prurigo	rash
+UMLS	serum sickness	rash
+UMLS	urticaria	rash
+UMLS	pustular rash	rash
+UMLS	purpuric rash	rash
+UMLS	vesiculobullous rash	rash
+UMLS	viral exanthem	rash
+UMLS	miliaria rubra	rash
+UMLS	dermatitis	rash
+UMLS	phototoxic	rash
+UMLS	acneiform eruptions	rash
+UMLS	macular rash	rash
+UMLS	vesicular rash	rash
+UMLS	jra rash	rash
+UMLS	dermatitis acneiform	rash
+UMLS	rash erythematous	rash
+UMLS	rash follicular	rash
+UMLS	morbilliform rash	rash
+UMLS	rash papulosquamous	rash
+UMLS	assessment of history of substance abuse	substance abuse history
+UMLS	history of substance abuse	substance abuse history
+UMLS	family history of substance abuse	substance abuse history
+UMLS	encounter for family history of alcohol abuse	substance abuse history
+UMLS	family history of tobacco abuse	substance abuse history
+UMLS	family history of other substance abuse	substance abuse history
+UMLS	personal history of psychoactive substance abuse	substance abuse history
+UMLS	assess and document substance abuse history	substance abuse history
+UMLS	history of present alcohol  or substance abuse	substance abuse history
+UMLS	psychoactive  substance	substance abuse history
+UMLS	abuse	substance abuse history
+UMLS	reported family history of substance abuse	substance abuse history
+UMLS	rnox evaluate substance abuse history	substance abuse history
+UMLS	reported family history of substance abuse   father	substance abuse history
+UMLS	reported family history of substance abuse   mother	substance abuse history
+UMLS	reported family history of substance abuse   brother	substance abuse history
+UMLS	reported family history of substance abuse   sister	substance abuse history
+UMLS	reported family history of substance abuse   husband	substance abuse history
+UMLS	reported family history of substance abuse   wife	substance abuse history
+UMLS	family history of other psychoactive substance abuse	substance abuse history
+UMLS	family history of other psychoactive substance abuse and dependence	substance abuse history
+UMLS	family history of other substance abuse and dependence	substance abuse history
+UMLS	reported family history of substance abuse   domestic partner	substance abuse history
+UMLS	screening and history of mental health and substance abuse codes	substance abuse history
+UMLS	history of present alcohol  or substance abuse hx pt  patient nar	substance abuse history
+UMLS	past medical history level of function find pt alcohol substance abuse rehabilitation treatment plan nar	substance abuse history
+UMLS	homicidal thoughts	homicidal thoughts
+UMLS	expresses suicidal homicidal thoughts	homicidal thoughts
+UMLS	femoral pulse absent	absent femoral pulses
+UMLS	absent femoral pulses on both sides	absent femoral pulses
+UMLS	wounds and injuries	trauma
+UMLS	trauma assessment and care	trauma
+UMLS	trauma qualifier	trauma
+UMLS	traumatic injury	trauma
+UMLS	trauma	trauma
+UMLS	nursing specialty	trauma
+UMLS	arm injuries	trauma
+UMLS	dysbarism	trauma
+UMLS	birth injuries	trauma
+UMLS	burn injury	trauma
+UMLS	combat disorders	trauma
+UMLS	eye injuries	trauma
+UMLS	craniocerebral trauma	trauma
+UMLS	noise induced hearing loss	trauma
+UMLS	heart injuries	trauma
+UMLS	knee injuries	trauma
+UMLS	multiple trauma	trauma
+UMLS	radiation injury	trauma
+UMLS	smoke inhalation injury	trauma
+UMLS	spinal cord injuries	trauma
+UMLS	spinal injuries	trauma
+UMLS	tendon injuries	trauma
+UMLS	thoracic injuries	trauma
+UMLS	trauma centers	trauma
+UMLS	trauma units	trauma
+UMLS	wheezing	wheezing
+UMLS	respiratory sounds	wheezing
+UMLS	inspiratory wheezing	wheezing
+UMLS	expiratory wheezing	wheezing
+UMLS	wheezing stridor	wheezing
+UMLS	asthmatic breathing	wheezing
+UMLS	wheezing symptom	wheezing
+UMLS	wheezing aggravated	wheezing
+UMLS	bronchospasm and wheezing adverse event	wheezing
+UMLS	chronic wheezing	wheezing
+UMLS	diffuse wheezing	wheezing
+UMLS	wheezing occurs only with exercise	wheezing
+UMLS	wheezing on auscultation  physical finding	wheezing
+UMLS	wheezing recurs from time to time	wheezing
+UMLS	wheezing recurs intermittently	wheezing
+UMLS	wheezing unilaterally	wheezing
+UMLS	wheezing in both lungs	wheezing
+UMLS	wheezing recorders	wheezing
+UMLS	frequent wheezing	wheezing
+UMLS	factitious asthma	wheezing
+UMLS	wheezing find 24h respiratory system ord reported hiv ssc	wheezing
+UMLS	ctcae grade 1 bronchospasm and wheezing	wheezing
+UMLS	ctcae grade 2 bronchospasm and wheezing	wheezing
+UMLS	ctcae grade 3 bronchospasm and wheezing	wheezing
+UMLS	neck pain	pain region
+UMLS	low back pain	pain region
+UMLS	pain in or around eyes	pain region
+UMLS	shoulder pain	pain region
+UMLS	pain in cheek	pain region
+UMLS	pain finding at anatomical site	pain region
+UMLS	pain of head and neck region	pain region
+UMLS	pain in joint involving shoulder region	pain region
+UMLS	pain in limb	pain region
+UMLS	shoulder region	pain region
+UMLS	pain in the umbilical region	pain region
+UMLS	parotid region pain	pain region
+UMLS	pain  lumbar region	pain region
+UMLS	pain in left infraspinatus region	pain region
+UMLS	pain in left supraspinatus region	pain region
+UMLS	pelvic pain on the left	pain region
+UMLS	pelvic pain on the right	pain region
+UMLS	radiating pain in a segment or region	pain region
+UMLS	pain in axillary region	pain region
+UMLS	chest pain in the pleural region	pain region
+UMLS	joint pain of pelvic region	pain region
+UMLS	pain in a joint	pain region
+UMLS	pelvic region and thigh	pain region
+UMLS	characteristics of pain of head and neck region	pain region
+UMLS	pain radiating to lumbar region of back	pain region
+UMLS	joint pain in left infraclavicular region	pain region
+UMLS	weakness	weakness
+UMLS	heart failure	weakness
+UMLS	paresis	weakness
+UMLS	muscle weakness	weakness
+UMLS	weak arterial pulse	weakness
+UMLS	voice fatigue	weakness
+UMLS	attacks of weakness	weakness
+UMLS	weakness of sternomastoid	weakness
+UMLS	weakness present	weakness
+UMLS	weakness of neck	weakness
+UMLS	facial paresis	weakness
+UMLS	weakness of back	weakness
+UMLS	monoparesis   leg	weakness
+UMLS	paralysis weakness	weakness
+UMLS	diaphragmatic paresis	weakness
+UMLS	weakness postural	weakness
+UMLS	palate weakness	weakness
+UMLS	larynx weakness	weakness
+UMLS	weakness of hand	weakness
+UMLS	weakness of foot	weakness
+UMLS	weakness of toe	weakness
+UMLS	quadriceps weakness	weakness
+UMLS	abdominal weakness	weakness
+UMLS	muscle weakness of limb	weakness
+UMLS	cardiovascular deterioration	weakness
+UMLS	tachycardia	diaphoresis
+UMLS	tachycardia by ecg finding	tachycardia
+UMLS	ectopic junctional	tachycardia
+UMLS	paroxysmal	confusion
+UMLS	sinus tachycardia	tachycardia
+UMLS	supraventricular tachycardia	tachycardia
+UMLS	ventricular	tachycardia
+UMLS	bradycardia tachycardia syndrome	bradycardia
+UMLS	idiojunctional tachycardia	tachycardia
+UMLS	exertional	tachycardia
+UMLS	reciprocating	tachycardia
+UMLS	sinoatrial node tachycardia	tachycardia
+UMLS	atrioventricular tachycardia	tachycardia
+UMLS	ventricular tachycardia by ecg finding	tachycardia
+UMLS	irregular tachycardia	tachycardia
+UMLS	fetal tachycardia	tachycardia
+UMLS	av junctional  nodal  tachycardia	tachycardia
+UMLS	baseline tachycardia	tachycardia
+UMLS	atrial tachycardia	tachycardia
+UMLS	tachycardia aggravated	tachycardia
+UMLS	tachycardia rest	tachycardia
+UMLS	tachycardia with ectopy	tachycardia
+UMLS	supraventicular tachycardia	tachycardia
+UMLS	tachycardia nervous	tachycardia
+UMLS	neonatal tachycardia	tachycardia
+UMLS	anxiety	chest tightness
+UMLS	anxiety disorders	anxiety
+UMLS	anxiety symptoms	anxiety
+UMLS	anxiety adverse event	anxiety
+UMLS	anxiety scale  basc 2	anxiety
+UMLS	anxiety disorder anxiety state	anxiety
+UMLS	anxiety  nocturnal	anxiety
+UMLS	dream anxiety	anxiety
+UMLS	castration	anxiety
+UMLS	separation anxiety disorder	anxiety
+UMLS	fear  mental process	anxiety
+UMLS	dental anxiety	anxiety
+UMLS	alleviating anxiety	anxiety
+UMLS	anticipatory anxiety	anxiety
+UMLS	mild anxiety	anxiety
+UMLS	moderate anxiety	anxiety
+UMLS	anxiety ridden	anxiety
+UMLS	anxiety complex	anxiety
+UMLS	aids anxiety	anxiety
+UMLS	anxiety generalized	anxiety
+UMLS	situational anxiety	anxiety
+UMLS	anxiety hyperventilation	anxiety
+UMLS	mixed anxiety and depressive disorder	anxiety
+UMLS	anxiety hysteria	anxiety
+UMLS	phobic anxiety disorder	anxiety
+UMLS	o e   tachypnea	tachypnea
+UMLS	neonatal tachypnoea	tachypnea
+UMLS	transitory  tachypnea	tachypnea
+UMLS	episodic tachypnea	tachypnea
+UMLS	transitory tachypnea of newborn	tachypnea
+UMLS	mild transient tachypnea of newborn	tachypnea
+UMLS	severe transient tachypnea of newborn	tachypnea
+UMLS	sleep related neurogenic tachypnea	tachypnea
+UMLS	not elsewhere classified	tachypnea
+UMLS	apnea alternating with tachypnea	tachypnea
+UMLS	neonatal  in some patients	tachypnea
+UMLS	monitor for dyspnea	chest tightness
+UMLS	fatigue	malaise
+UMLS	and orthopnea	tachypnea
+UMLS	monitor for fluid loss  e g	tachypnea
+UMLS	bleeding	tachypnea
+UMLS	vomiting	vomiting
+UMLS	perspiration	tachypnea
+UMLS	and tachypnea	tachypnea
+UMLS	monitor respiratory pattern for symptoms of respiratory difficulty  e g	tachypnea
+UMLS	dyspnea	shortness of breath
+UMLS	and shortness of breath	tachypnea
+UMLS	monitor respiratory status	tachypnea
+UMLS	noting signs of respiratory distress  tachypnea	tachypnea
+UMLS	nasal flaring	tachypnea
+UMLS	grunting	tachypnea
+UMLS	retractions	chest tightness
+UMLS	or rales	tachypnea
+UMLS	stridor	chest tightness
+UMLS	sneezing	chest tightness
+UMLS	hoarseness	chest tightness
+UMLS	chest pain or tightness	chest tightness
+UMLS	cyanosis	diaphoresis
+UMLS	monitor for signs of malignant hyperthermia  e g	tachypnea
+UMLS	hypercarbia	tachypnea
+UMLS	rise in temperature	tachypnea
+UMLS	arrhythmias	hypoxemia
+UMLS	mottled skin	tachypnea
+UMLS	profuse sweating	tachypnea
+UMLS	and unstable blood pressure	tachypnea
+UMLS	sore to touch	tenderness
+UMLS	emotional tenderness	tenderness
+UMLS	scalp tenderness	tenderness
+UMLS	liver tender	tenderness
+UMLS	abdominal tenderness	tenderness
+UMLS	pain and tenderness	tenderness
+UMLS	renal angle tenderness	tenderness
+UMLS	adnexal tenderness	tenderness
+UMLS	back tenderness	tenderness
+UMLS	bone tenderness	tenderness
+UMLS	bursal tenderness	tenderness
+UMLS	calf tenderness	tenderness
+UMLS	cervical tenderness	tenderness
+UMLS	chest wall tenderness	tenderness
+UMLS	ear tenderness	tenderness
+UMLS	epididymal tenderness	tenderness
+UMLS	tenderness in limb	tenderness
+UMLS	tenderness eye	tenderness
+UMLS	tenderness on palpation of eyelid	tenderness
+UMLS	facial tenderness	tenderness
+UMLS	fingertip tenderness	tenderness
+UMLS	forehead tenderness	tenderness
+UMLS	genital tenderness	tenderness
+UMLS	tenderness of gums	tenderness
+UMLS	headache	diaphoresis
+UMLS	no headache	headache
+UMLS	rebound headache with intractable headache	headache
+UMLS	aural headache	headache
+UMLS	cluster headache	headache
+UMLS	dental headache	headache
+UMLS	nasal headache	headache
+UMLS	ocular headache	headache
+UMLS	postseizure headache	headache
+UMLS	post traumatic headache	headache
+UMLS	tension headache	headache
+UMLS	sinus headache	headache
+UMLS	vascular headaches	headache
+UMLS	migraine disorders	headache
+UMLS	chronic headache	headache
+UMLS	occipital headache	headache
+UMLS	allergic headache	headache
+UMLS	headache dull	headache
+UMLS	frontal headache	headache
+UMLS	postauricular	headache
+UMLS	headache recurrent	headache
+UMLS	excruciating headache	headache
+UMLS	post lumbar puncture headache	headache
+UMLS	common migraine	headache
+UMLS	menopausal headache	headache
+UMLS	clammy skin	clammy skin
+UMLS	skin cold clammy	clammy skin
+UMLS	monitor for cardiovascular manifestations of hyponatremia  e g	clammy skin
+UMLS	elevated blood pressure	clammy skin
+UMLS	cold and clammy skin	clammy skin
+UMLS	and hypo  or hypervolemia	clammy skin
+UMLS	reduced visual acuity	decreased visual acuity
+UMLS	visual acuity decreased bilaterally	decreased visual acuity
+UMLS	visual acuity decreased od	decreased visual acuity
+UMLS	visual acuity decreased os	decreased visual acuity
+UMLS	visual acuity decreased unilateral	decreased visual acuity
+UMLS	decreased visual acuity	decreased visual acuity
+UMLS	progressive	decreased visual acuity
+UMLS	nonprogressive	decreased visual acuity
+UMLS	decreased uncorrected visual acuity	decreased visual acuity
+UMLS	decreased visual acuity  rare	decreased visual acuity
+UMLS	adult onset	decreased visual acuity
+UMLS	slowly progressive	decreased visual acuity
+UMLS	decreased visual acuity  in some patients	decreased visual acuity
+UMLS	decreased visual acuity in early childhood	decreased visual acuity
+UMLS	rapidly progressive	decreased visual acuity
+UMLS	decreased visual acuity with current correction	decreased visual acuity
+UMLS	decreased best corrected visual acuity	decreased visual acuity
+UMLS	decreased visual acuity  in older patients	decreased visual acuity
+UMLS	in some female carriers	decreased visual acuity
+UMLS	best corrected distance visual acuity decreased	decreased visual acuity
+UMLS	decreased visual acuity in fourth decade of life	decreased visual acuity
+UMLS	normal luminance best corrected visual acuity decreased	decreased visual acuity
+UMLS	low luminance best corrected visual acuity decreased	decreased visual acuity
+UMLS	moderately decreased visual acuity	decreased visual acuity
+UMLS	late onset	decreased visual acuity
+UMLS	decreased visual acuity from infancy or early childhood	decreased visual acuity
+UMLS	decreased best corrected visual acuity  in some patients	decreased visual acuity
+UMLS	accessory respiratory muscles used	use of accessory muscles
+UMLS	accessory muscles used with breathing	use of accessory muscles
+UMLS	exaggerated use of accessory muscles for inspiration	use of accessory muscles
+UMLS	use of significant respiratory accessory muscles	use of accessory muscles
+UMLS	minimal use of respiratory accessory muscles	use of accessory muscles
+UMLS	monitor work of breathing  e g	diaphoresis
+UMLS	respiratory rate	diaphoresis
+UMLS	heart rate	diaphoresis
+UMLS	use of accessory muscles	diaphoresis
+UMLS	and diaphoresis	cool skin
+UMLS	note chest movement	use of accessory muscles
+UMLS	watching for symmetry	use of accessory muscles
+UMLS	and supraclavicular and intercostal muscle retractions	use of accessory muscles
+UMLS	observe chest movement	use of accessory muscles
+UMLS	including symmetry	use of accessory muscles
+UMLS	monitor for indications of chronic respiratory acidosis  e g	use of accessory muscles
+UMLS	barrel chest	use of accessory muscles
+UMLS	clubbing of nails	use of accessory muscles
+UMLS	pursed lips breathing	use of accessory muscles
+UMLS	and use of accessory muscles	use of accessory muscles
+UMLS	as appropriate	cool skin
+UMLS	fever	hyperthermia
+UMLS	fever symptoms  finding	fever
+UMLS	malaria	fever
+UMLS	trench fever	fever
+UMLS	jungle yellow fever	fever
+UMLS	screening  fever	fever
+UMLS	yellow fever	fever
+UMLS	glandular fever  fever	fever
+UMLS	fever  screening hemorrhagic fever	fever
+UMLS	fever  blackwater fever	fever
+UMLS	fever  mediterranean	fever
+UMLS	tick fever  rickettsiosis	fever
+UMLS	spotted fever	fever
+UMLS	bovine anaplasmosis	fever
+UMLS	anthrax disease	fever
+UMLS	bartonella infections	fever
+UMLS	blackwater fever	fever
+UMLS	boutonneuse fever	fever
+UMLS	brucellosis	fever
+UMLS	bunyamwera virus disease	fever
+UMLS	byssinosis	fever
+UMLS	chikungunya fever	fever
+UMLS	coccidioidomycosis	fever
+UMLS	colorado tick fever	fever
+UMLS	dengue fever	fever
+UMLS	ephemeral fever	fever
+UMLS	equine infectious anemia	fever
+UMLS	substance of abuse	abuse of substance
+UMLS	substance abuse problem	abuse of substance
+UMLS	actual positive absence of substance use	abuse of substance
+UMLS	drug abuse	abuse of substance
+UMLS	drug habituation	abuse of substance
+UMLS	mescaline	abuse of substance
+UMLS	phencyclidine	abuse of substance
+UMLS	psychoactive substance abuse	abuse of substance
+UMLS	substance abuse detection	abuse of substance
+UMLS	substance abuse	abuse of substance
+UMLS	intravenous	abuse of substance
+UMLS	substance abuse treatment centers	abuse of substance
+UMLS	other	abuse of substance
+UMLS	unknown substance abuse	abuse of substance
+UMLS	psychoactive substance of abuse   non pharmaceutical	abuse of substance
+UMLS	substance abuse epidemiology	abuse of substance
+UMLS	aodd recovery	abuse of substance
+UMLS	aodd relapse	abuse of substance
+UMLS	cidi substance abuse module	abuse of substance
+UMLS	substance abuse attitude survey	abuse of substance
+UMLS	substance abuse counseling	abuse of substance
+UMLS	chronic drug abuse	abuse of substance
+UMLS	prevention issue substance abuse	abuse of substance
+UMLS	substance abuse daterange	abuse of substance
+UMLS	substance abuse pregnancy	abuse of substance
+UMLS	substance abuse pregnancy acid	abuse of substance
+UMLS	dizziness	dizziness
+UMLS	lightheadedness	lightheadedness
+UMLS	postural dizziness	dizziness
+UMLS	lightheadedness with collapse	lightheadedness
+UMLS	pdqualif   lightheadedness	lightheadedness
+UMLS	lightheadedness during exercise	lightheadedness
+UMLS	mds updrs   lightheadedness on standing	lightheadedness
+UMLS	or loss of balance	lightheadedness
+UMLS	monitor exercise tolerance  e g	lightheadedness
+UMLS	presence of such symptoms as breathlessness	lightheadedness
+UMLS	rapid pulse	lightheadedness
+UMLS	and joint muscle pain or swelling  during exercise	lightheadedness
+UMLS	confusion	post-ictal
+UMLS	clouded consciousness	confusion
+UMLS	confusion adverse event	confusion
+UMLS	actual positive absence of confusion	confusion
+UMLS	reactive	confusion
+UMLS	chronic confusion	confusion
+UMLS	onset of confusion	confusion
+UMLS	intermittent confusion	confusion
+UMLS	confusion baseline	confusion
+UMLS	confusion episode	confusion
+UMLS	post ictal	post-ictal
+UMLS	bewilderment	confusion
+UMLS	confusion aggravated	confusion
+UMLS	acute onset of confusion	confusion
+UMLS	nocturnal confusion	confusion
+UMLS	confusion reversible	confusion
+UMLS	acute confusional state	confusion
+UMLS	dissociative confusion	confusion
+UMLS	postoperative confusion	confusion
+UMLS	confusion  situational	confusion
+UMLS	confusion find pt  patient ord observed ccc	confusion
+UMLS	confusion fluctuates	confusion
+UMLS	confusion steadily worsening	confusion
+UMLS	constant confusion	confusion
+UMLS	combative	combative
+UMLS	behavior combative	combative
+UMLS	aggressive reaction	combative
+UMLS	convulsions followed by combative behavior	combative
+UMLS	vascular dementia with combative behavior	combative
+UMLS	dementia	combative
+UMLS	with combative behavior	combative
+UMLS	unspecified dementia with combative behavior	combative
+UMLS	major neurocognitive disorder with combative behavior	combative
+UMLS	dementia in conditions classified elsewhere with combative behavior	combative
+UMLS	dementia in other diseases classified elsewhere with combative behavior	combative
+UMLS	major neurocognitive disorder in other diseases classified elsewhere with combative behavior	combative
+UMLS	physical aggression  aggressive or combative to self and others  for example	combative
+UMLS	hits self	combative
+UMLS	throws objects	combative
+UMLS	punches	combative
+UMLS	dangerous maneuvers with wheelchair or other objects	combative
+UMLS	basilar rales	rales
+UMLS	medium rales	rales
+UMLS	subcrepitant	rales
+UMLS	atelectatic rales	rales
+UMLS	coarse respiratory crackles	rales
+UMLS	fine respiratory crackles	rales
+UMLS	post tussive crackles	rales
+UMLS	inspiratory crackles	rales
+UMLS	expiratory crackles	rales
+UMLS	rales right	rales
+UMLS	rales left	rales
+UMLS	superficial crackling rales	rales
+UMLS	basilar	rales
+UMLS	right	rales
+UMLS	bilateral	rales
+UMLS	bubbling crackles	rales
+UMLS	breath sound rales	rales
+UMLS	breath sound rales asymptomatic	rales
+UMLS	breath sound rales diffuse	rales
+UMLS	breath sound rales fine	rales
+UMLS	breath sound rales new	rales
+UMLS	stress test induced rales	rales
+UMLS	drowsiness	sleepiness
+UMLS	somnolence	sleepiness
+UMLS	daytime sleepiness	sleepiness
+UMLS	hypersomnia	sleepiness
+UMLS	narcolepsy	sleepiness
+UMLS	postviral excessive daytime sleepiness	sleepiness
+UMLS	excessive daytime somnolence	sleepiness
+UMLS	feeling of residual sleepiness	sleepiness
+UMLS	fainting followed by prolonged sleepiness	sleepiness
+UMLS	daytime somnolence	sleepiness
+UMLS	medicated level of sleepiness	sleepiness
+UMLS	epworth sleepiness scale questionnaire	sleepiness
+UMLS	mds updrs   daytime sleepiness	sleepiness
+UMLS	excessive day and night time sleepiness	sleepiness
+UMLS	excess daytime sleepiness with sleep paralysis	sleepiness
+UMLS	excessive daytime sleepiness   normal night sleep	sleepiness
+UMLS	irresistible sleepiness	sleepiness
+UMLS	cataplexy and onset of sleep in desynchronized phase	sleepiness
+UMLS	cdisc questionnaire ess test name terminology	sleepiness
+UMLS	cdisc questionnaire ess test code terminology	sleepiness
+UMLS	likelihood fall asleep during day total epworth score	sleepiness
+UMLS	does your child have a problem with sleepiness during the day find pt  patient ord phenx	sleepiness
+UMLS	does your child have a problem with sleepiness during the day	sleepiness
+UMLS	sleep apnea symptoms assessed	sleepiness
+UMLS	including presence or absence of snoring and daytime sleepiness	sleepiness
+UMLS	milder cases have isolated recurrent daytime sleepiness and or lapses into sleep without cataplexy	sleepiness
+UMLS	multiple sleep latency test	sleepiness
+UMLS	generalized clonic or tonic clonic seizures	tonic-clonic
+UMLS	tonic clonic epilepsy	convulsions
+UMLS	tonic   clonic seizures	tonic-clonic
+UMLS	cryptogenic tonic clonic epilepsy	tonic-clonic
+UMLS	tonic clonic	tonic-clonic
+UMLS	familial	tonic-clonic
+UMLS	symptomatic	tonic-clonic
+UMLS	status  epilepticus	tonic-clonic
+UMLS	tonic clonic movements	tonic-clonic
+UMLS	status  epileptic	tonic-clonic
+UMLS	photosensitive tonic clonic seizures	tonic-clonic
+UMLS	tonic clonic seizure	tonic-clonic
+UMLS	refractory	tonic-clonic
+UMLS	tonic	tonic-clonic
+UMLS	focal	convulsions
+UMLS	tonic clonic  rare	tonic-clonic
+UMLS	seizures  tonic clonic or nonfebrile	tonic-clonic
+UMLS	atypical absence	tonic-clonic
+UMLS	atonic tonic	tonic-clonic
+UMLS	or tonic clonic seizures	tonic-clonic
+UMLS	seizure disorder generalized tonic clonic	tonic-clonic
+UMLS	generalized tonic clonic seizures with focal onset	tonic-clonic
+UMLS	generalized tonic clonic seizures on awakening	tonic-clonic
+UMLS	generalized tonic clonic seizures in 50	tonic-clonic
+UMLS	tonic clonic epilepsy with intractable epilepsy	tonic-clonic
+UMLS	nonspecific tonic clonic epileptic seizures	tonic-clonic
+UMLS	tonic clonic  1 patient	tonic-clonic
+UMLS	non refractory	tonic-clonic
+UMLS	tonic clonic seizures  less common	tonic-clonic
+UMLS	generalized tonic clonic seizures  rare	tonic-clonic
+UMLS	agitated delirium	agitated delirium
+UMLS	chest tightness	chest tightness
+UMLS	dull chest pain	chest pressure
+UMLS	chest symptom tightness chronic	chest tightness
+UMLS	chest and heart tightness	chest tightness
+UMLS	respiratory chest tightness	chest tightness
+UMLS	chest tightness aggravated	chest tightness
+UMLS	chest tightness or pressure	chest pressure
+UMLS	chest tightness or heavy pressure	chest pressure
+UMLS	in the last 12mo	chest tightness
+UMLS	have you been awakened from sleep by shortness of breath or a feeling of tightness in your chest find 12mo  patient ord phenx	chest tightness
+UMLS	i feel tightness in my chest in the past 7d	chest tightness
+UMLS	tightness	chest tightness
+UMLS	pain	hypoxemia
+UMLS	or discomfort in your chest or stomach	chest tightness
+UMLS	chest tightness within 60 minutes after exercise	chest tightness
+UMLS	i feel tightness in my chest in the past 7d find 7d  patient ord facit	chest tightness
+UMLS	acute episode of pain	chest tightness
+UMLS	discomfort or tightness in the chest	chest tightness
+UMLS	left arm or jaw within 72h of the hospitalization or in hospital event	chest tightness
+UMLS	left arm or jaw within 72h of the hospitalization or in hospital event finding point in time  patient ordinal	chest tightness
+UMLS	have you been awakened from sleep by shortness of breath or a feeling of tightness in your chest	chest tightness
+UMLS	monitor for early signs of allergic reactions  wheezing	chest tightness
+UMLS	itching	chest tightness
+UMLS	hives and wheals	chest tightness
+UMLS	angioedema	chest tightness
+UMLS	gi upset	chest tightness
+UMLS	and restlessness	chest tightness
+UMLS	how often did your asthma symptoms  wheezing	chest tightness
+UMLS	shortness of breath	chest tightness
+UMLS	chest tightness or pain  wake you up at night or earlier than usual in the morning during the past 4w	chest tightness
+UMLS	chest tightness or pain  wake you up at night or earlier than usual in the morning during the past 4w find 4w  patient ord act	chest tightness
+UMLS	increased sweating	diaphoresis
+UMLS	menopausal diaphoresis	diaphoresis
+UMLS	diaphoresis adverse event	diaphoresis
+UMLS	profuse diaphoresis	diaphoresis
+UMLS	obsolete diaphoresis  with pheochromocytoma	diaphoresis
+UMLS	ctcae grade 1 diaphoresis	diaphoresis
+UMLS	ctcae grade 2 diaphoresis	diaphoresis
+UMLS	pain level expressed by diaphoresis	diaphoresis
+UMLS	dizziness preceded by sweating	diaphoresis
+UMLS	diaphoresis above the injury	diaphoresis
+UMLS	monitor for insensible fluid loss	diaphoresis
+UMLS	autonomic features may occur  diaphoresis	diaphoresis
+UMLS	hyperthermia	hyperthermia
+UMLS	hypertension	hypertension
+UMLS	monitor cardiorespiratory response to activity  e g	diaphoresis
+UMLS	other dysrhythmias	diaphoresis
+UMLS	diaphoresis	diaphoresis
+UMLS	hemodynamic pressures	diaphoresis
+UMLS	and respiratory rate	diaphoresis
+UMLS	monitor for loss of electrolyte rich fluids  e g	diaphoresis
+UMLS	nasogastric suction	diaphoresis
+UMLS	ileostomy drainage	diaphoresis
+UMLS	wound drainage	diaphoresis
+UMLS	note tachycardia or bradycardia	diaphoresis
+UMLS	decreased blood pressure	diaphoresis
+UMLS	or abnormally low systemic arterial pressure	diaphoresis
+UMLS	as well as pallor	diaphoresis
+UMLS	perform a comprehensive appraisal of peripheral circulation  e g	diaphoresis
+UMLS	check peripheral pulses	diaphoresis
+UMLS	edema	diaphoresis
+UMLS	capillary refill	diaphoresis
+UMLS	color	diaphoresis
+UMLS	and temperature	diaphoresis
+UMLS	determine possible risk factors for fluid imbalance  e g	diaphoresis
+UMLS	diuretic therapy	diaphoresis
+UMLS	renal pathologies	diaphoresis
+UMLS	cardiac failure	diaphoresis
+UMLS	liver dysfunction	diaphoresis
+UMLS	strenuous exercise	diaphoresis
+UMLS	heat exposure	diaphoresis
+UMLS	infection	diaphoresis
+UMLS	postoperative state	diaphoresis
+UMLS	polyuria	diaphoresis
+UMLS	and diarrhea	diaphoresis
+UMLS	monitor for early compensatory responses to fluid loss  increased heart rate	cool skin
+UMLS	decreased bp	cool skin
+UMLS	orthostatic hypotension	cool skin
+UMLS	decreased urinary output	cool skin
+UMLS	narrowed pulse pressure	cool skin
+UMLS	decreased capillary refill	cool skin
+UMLS	apprehension	cool skin
+UMLS	pale and cool skin	cool skin
+UMLS	monitor for signs and symptoms of carbonic acid deficit and respiratory alkalosis  frequent sighing and yawning	diaphoresis
+UMLS	tetany	diaphoresis
+UMLS	paresthesia	diaphoresis
+UMLS	muscle twitching	diaphoresis
+UMLS	tingling and numbness	diaphoresis
+UMLS	blurred vision	diaphoresis
+UMLS	dry mouth	diaphoresis
+UMLS	convulsions	convulsions
+UMLS	ph level of  7 45	diaphoresis
+UMLS	paco2  35 mm hg	diaphoresis
+UMLS	associated hyperchloremia	diaphoresis
+UMLS	and possible hco3 deficit	diaphoresis
+UMLS	monitor for signs and symptoms of autonomic dysreflexia  paroxysmal hypertension	diaphoresis
+UMLS	bradycardia	bradycardia
+UMLS	diaphoresis above the level of injury	diaphoresis
+UMLS	facial flushing	diaphoresis
+UMLS	pallor below the level of injury	diaphoresis
+UMLS	nasal congestion	diaphoresis
+UMLS	engorgement of temporal and neck vessels	diaphoresis
+UMLS	conjunctival congestion	diaphoresis
+UMLS	chills without fever	diaphoresis
+UMLS	pilomotor erection	diaphoresis
+UMLS	and chest pain	diaphoresis
+UMLS	chest pain	chest pain
+UMLS	chest pain finding point in time  patient ordinal	chest pain
+UMLS	chest wall pain	pain chest wall
+UMLS	retrosternal pain	chest pain
+UMLS	chest pain site anterior chest	chest pain
+UMLS	chest pain site lower chest	chest pain
+UMLS	chest pain site posterior chest	chest pain
+UMLS	angina pectoris	chest pain
+UMLS	angina	chest pain
+UMLS	unstable	chest pain
+UMLS	pleuritic pain	chest pain
+UMLS	other chest pain	chest pain
+UMLS	angina decubitus	chest pain
+UMLS	xiphodynia	chest pain
+UMLS	precordial pain	chest pain
+UMLS	chest pain on exertion	chest pain
+UMLS	radiating chest pain	chest pain
+UMLS	crushing chest pain	chest pain
+UMLS	pleuropericardial chest pain	chest pain
+UMLS	esophageal chest pain	chest pain
+UMLS	chest burning pain of	chest pain
+UMLS	nonpleuritic	chest pain
+UMLS	sharp chest pain	chest pain
+UMLS	atypical chest pain	chest pain
+UMLS	chest pain nec in mdr	chest pain
+UMLS	delusions	delusional thoughts
+UMLS	hallucinations	hallucinations
+UMLS	organic	hallucinations
+UMLS	elementary	hallucinations
+UMLS	functional hallucinations	hallucinations
+UMLS	extracampine hallucinations	hallucinations
+UMLS	auditory	hallucinations
+UMLS	visual	hallucinations
+UMLS	olfactory	hallucinations
+UMLS	gustatory	hallucinations
+UMLS	tactile	hallucinations
+UMLS	hypnagogic	hallucinations
+UMLS	somatic	hallucinations
+UMLS	sensory	hallucinations
+UMLS	mushroom hallucinosis	hallucinations
+UMLS	verbal auditory hallucinations	hallucinations
+UMLS	hallucinations of music	hallucinations
+UMLS	hallucinations of pain	hallucinations
+UMLS	hallucinations of temperature	hallucinations
+UMLS	hallucinations in several modalities at once	hallucinations
+UMLS	sexual hallucinations	hallucinations
+UMLS	hypnapompic	hallucinations
+UMLS	dissociative	hallucinations
+UMLS	other hallucinations	hallucinations
+UMLS	kinesthetic	hallucinations
+UMLS	reflex	hallucinations
+UMLS	blindness	post-ictal
+UMLS	hemeralopia	blindness
+UMLS	night blindness	blindness
+UMLS	color blindness	blindness
+UMLS	snow blindness	blindness
+UMLS	blindness  excl colour blindness	blindness
+UMLS	blindness  day blindness	blindness
+UMLS	sequelae	blindness
+UMLS	word blindness  blindness	blindness
+UMLS	river blindness  blindness  manifestation	blindness
+UMLS	alexia	blindness
+UMLS	tobacco amblyopia	blindness
+UMLS	congenital blindness	blindness
+UMLS	onchocerciasis	blindness
+UMLS	ocular	blindness
+UMLS	amaurosis fugax	blindness
+UMLS	recurrent iridocyclitis	blindness
+UMLS	sudden visual loss	blindness
+UMLS	transient	blindness
+UMLS	cortical	post-ictal
+UMLS	hysterical	blindness
+UMLS	musical alexia	blindness
+UMLS	prosopagnosia	blindness
+UMLS	norrie disease	blindness
+UMLS	central blindness	blindness
+UMLS	legal	blindness
+UMLS	vomiting adverse event	vomiting
+UMLS	have been vomiting	vomiting
+UMLS	how much distress vomiting	vomiting
+UMLS	bothered by vomiting	vomiting
+UMLS	usual severity vomiting	vomiting
+UMLS	how often vomiting	vomiting
+UMLS	no vomiting	nausea
+UMLS	vomit containing blood at beginning of vomiting	vomiting
+UMLS	epidemic vomiting syndrome	vomiting
+UMLS	hematemesis	vomiting
+UMLS	nausea and vomiting	nausea
+UMLS	anticipatory	vomiting
+UMLS	cyclical vomiting syndrome  disorder	vomiting
+UMLS	persistent vomiting	vomiting
+UMLS	projectile vomiting	vomiting
+UMLS	acute vomiting	vomiting
+UMLS	chronic vomiting	vomiting
+UMLS	vomiting bile	vomiting
+UMLS	concealed vomiting	vomiting
+UMLS	psychogenic vomiting	vomiting
+UMLS	feculent vomiting	vomiting
+UMLS	habit vomiting	vomiting
+UMLS	vomiting of pregnancy	vomiting
+UMLS	hyperthermia treatment	hyperthermia
+UMLS	induced hyperthermia	hyperthermia
+UMLS	local	hyperthermia
+UMLS	malignant hyperpyrexia due to anesthesia	hyperthermia
+UMLS	therapeutic heat application	hyperthermia
+UMLS	hyperthermia blankets	hyperthermia
+UMLS	ultrasound therapy systems	hyperthermia
+UMLS	intermittent fever	hyperthermia
+UMLS	hyperthermia in newborn	hyperthermia
+UMLS	endocrine hyperthermia	hyperthermia
+UMLS	hyperthermia sudden	hyperthermia
+UMLS	hyperthermia nec	hyperthermia
+UMLS	hyperthermia find pt  patient ord observed ccc	hyperthermia
+UMLS	microspheres	hyperthermia
+UMLS	embolization	hyperthermia
+UMLS	hyperthermia  history	hyperthermia
+UMLS	susceptible to hyperthermia	hyperthermia
+UMLS	hyperthermia induction	hyperthermia
+UMLS	radiation hyperthermia treatment	hyperthermia
+UMLS	neurogenic hyperthermia	hyperthermia
+UMLS	hyperthermia of brain	hyperthermia
+UMLS	hyperthermia of thymus	hyperthermia
+UMLS	hyperthermia of spleen	hyperthermia
+UMLS	hyperthermia of eye	hyperthermia
+UMLS	hyperthermia of ear	hyperthermia
+UMLS	eclampsia	convulsions
+UMLS	uremic convulsion	convulsions
+UMLS	convulsions aggravated	convulsions
+UMLS	tonic seizures	convulsions
+UMLS	dissociative convulsions	convulsions
+UMLS	convulsions  infantile	convulsions
+UMLS	other convulsions	convulsions
+UMLS	febrile convulsion medications	convulsions
+UMLS	concussive convulsion	convulsions
+UMLS	convulsive seizures	convulsions
+UMLS	epilepsy  convulsions	convulsions
+UMLS	pregnancy convulsions	convulsions
+UMLS	unconscious state	loss of consciousness
+UMLS	no loss of consciousness	loss of consciousness
+UMLS	hypoglycemic coma	hypoglycemia
+UMLS	concussion with no loss of consciousness	loss of consciousness
+UMLS	concussion with less than 1 hour loss of consciousness	loss of consciousness
+UMLS	concussion with 1 24 hours loss of consciousness	loss of consciousness
+UMLS	concussion with loss of consciousness	loss of consciousness
+UMLS	brief loss of consciousness	loss of consciousness
+UMLS	moderate loss of consciousness	loss of consciousness
+UMLS	prolonged loss of consciousness	loss of consciousness
+UMLS	cerebellar contusion without open intracranial wound and with no loss of consciousness	loss of consciousness
+UMLS	o e   loss of consciousness	loss of consciousness
+UMLS	loss of consciousness of unspecified duration	loss of consciousness
+UMLS	history of loss of consciousness	loss of consciousness
+UMLS	intracranial injury with loss of consciousness	loss of consciousness
+UMLS	cerebral contusion with no loss of consciousness	loss of consciousness
+UMLS	laceration of cerebrum with no loss of consciousness	loss of consciousness
+UMLS	fracture of skull with no loss of consciousness	loss of consciousness
+UMLS	urinary incontinence with loss of consciousness	loss of consciousness
+UMLS	concussion without loss of consciousness	loss of consciousness
+UMLS	cerebellar hemorrhage with no loss of consciousness	loss of consciousness
+UMLS	cerebellar hemorrhage with loss of consciousness	loss of consciousness
+UMLS	brainstem hemorrhage with no loss of consciousness	loss of consciousness
+UMLS	brainstem hemorrhage with loss of consciousness	loss of consciousness
+UMLS	nausea	nausea
+UMLS	nausea adverse event	nausea
+UMLS	have nausea	nausea
+UMLS	how much nausea during this period	nausea
+UMLS	how often nausea	nausea
+UMLS	how much distress nausea	nausea
+UMLS	usual severity nausea	nausea
+UMLS	bothered by nausea	nausea
+UMLS	nausea presence or threshold point in time  patient ordinal	nausea
+UMLS	no nausea	nausea
+UMLS	motion sickness	nausea
+UMLS	morning nausea	nausea
+UMLS	emetrol	nausea
+UMLS	morning sickness	nausea
+UMLS	nausea present	nausea
+UMLS	postoperative nausea	nausea
+UMLS	nausea aggravated	nausea
+UMLS	anti nausea	nausea
+UMLS	nausea control	nausea
+UMLS	chronic nausea	nausea
+UMLS	nausea exertional	nausea
+UMLS	nausea intractable	nausea
+UMLS	persistent nausea	nausea
+UMLS	post ictal state	post-ictal
+UMLS	neurogenic pulmonary edema	post-ictal
+UMLS	post ictal coma	post-ictal
+UMLS	aphasia	post-ictal
+UMLS	hemiplegia	post-ictal
+UMLS	post ictal memory loss	post-ictal
+UMLS	post ictal drowsiness	post-ictal
+UMLS	post ictal headache	post-ictal
+UMLS	hypotension	hypoxemia
+UMLS	hypotension adverse event	hypotension
+UMLS	controlled	hypotension
+UMLS	orthostatic	hypotension
+UMLS	ocular hypotension	hypotension
+UMLS	chronic hypotension	hypotension
+UMLS	extremity hypotension	hypotension
+UMLS	decreased systolic arterial pressure	hypotension
+UMLS	decreased diastolic arterial pressure	hypotension
+UMLS	drug induced hypotension	hypotension
+UMLS	other hypotension	hypotension
+UMLS	idiopathic hypotension	hypotension
+UMLS	iatrogenic hypotension	hypotension
+UMLS	hypothermia with hypotension	hypothermia
+UMLS	diastolic blood pressure	hypotension
+UMLS	neonatal hypotension	hypotension
+UMLS	low intracranial pressure	hypotension
+UMLS	intracranial hypotension	hypotension
+UMLS	hypotension and shock	hypotension
+UMLS	hypotension asymptomatic	hypotension
+UMLS	acute hypotension	hypotension
+UMLS	hypotension persistent	hypotension
+UMLS	hypotension aggravated	hypotension
+UMLS	hypotension paroxysm	hypotension
+UMLS	hypotension symptomatic	hypotension
+UMLS	anterior chest wall pain	pain chest wall
+UMLS	chest wall pain musculoskeletal	pain chest wall
+UMLS	chest wall pain pleuritic	pain chest wall
+UMLS	chest wall pain adverse event	pain chest wall
+UMLS	chest wall pain syndrome chronic	pain chest wall
+UMLS	ctcae grade 1 chest wall pain	pain chest wall
+UMLS	ctcae grade 2 chest wall pain	pain chest wall
+UMLS	ctcae grade 3 chest wall pain	pain chest wall
+UMLS	ctcae grade 4 chest wall pain	pain chest wall
+UMLS	anterior wall chest pain with respiration	pain chest wall
+UMLS	chest pain localizing to chest wall in center	pain chest wall
+UMLS	chest pain localizing to chest wall in center anteriorly	pain chest wall
+UMLS	chest pain localizing to chest wall in center posteriorly	pain chest wall
+UMLS	chest pain localizing to chest wall on left	pain chest wall
+UMLS	chest pain localizing to chest wall on left anteriorly	pain chest wall
+UMLS	chest pain localizing to chest wall on left laterally	pain chest wall
+UMLS	chest pain localizing to chest wall on left posteriorly	pain chest wall
+UMLS	chest pain localizing to chest wall on right	pain chest wall
+UMLS	chest pain localizing to right anterior chest wall	pain chest wall
+UMLS	chest pain localizing to chest wall on right laterally	pain chest wall
+UMLS	chest pain localizing to right posterior chest wall	pain chest wall
+UMLS	chest pain localizing to deep within chest wall	pain chest wall
+UMLS	shortness of breath   point in time  patient	shortness of breath
+UMLS	have shortness of breath question	shortness of breath
+UMLS	no shortness of breath	shortness of breath
+UMLS	usual severity shortness of breath	shortness of breath
+UMLS	how often shortness of breath	shortness of breath
+UMLS	how much distress shortness of breath	shortness of breath
+UMLS	dyspnea on exertion	shortness of breath
+UMLS	shortness of breath not present	shortness of breath
+UMLS	increasing breathlessness	shortness of breath
+UMLS	resting dyspnea	shortness of breath
+UMLS	shortness of breath acute	shortness of breath
+UMLS	shortness of breath chronic	shortness of breath
+UMLS	shortness of breath episode	shortness of breath
+UMLS	shortness of breath extreme	shortness of breath
+UMLS	shortness of breath intermittent	shortness of breath
+UMLS	shortness of breath new onset	shortness of breath
+UMLS	shortness of breath progressive	shortness of breath
+UMLS	shortness of breath rest	shortness of breath
+UMLS	shortness of breath stable chronic	shortness of breath
+UMLS	shortness of breath with activity	shortness of breath
+UMLS	clasp shortness of breath score	shortness of breath
+UMLS	dyspnea adverse event	shortness of breath
+UMLS	phq 15   shortness of breath	shortness of breath
+UMLS	shortness of breath at its worst	shortness of breath
+UMLS	hypothermia	hypothermia
+UMLS	natural	hypothermia
+UMLS	hypothermia due to exposure	hypothermia
+UMLS	hypothermia adverse event	hypothermia
+UMLS	gastric hypothermia	hypothermia
+UMLS	induced	hypothermia
+UMLS	hypothermia treatment	hypothermia
+UMLS	caps	hypothermia
+UMLS	cooling units	hypothermia
+UMLS	patient	hypothermia
+UMLS	hypothermia of newborn	hypothermia
+UMLS	accidental	hypothermia
+UMLS	immersion hypothermia	hypothermia
+UMLS	at risk hypothermia	hypothermia
+UMLS	deep hypothermia	hypothermia
+UMLS	mild hypothermia	hypothermia
+UMLS	moderate hypothermia	hypothermia
+UMLS	profound hypothermia	hypothermia
+UMLS	o e   hypothermia	hypothermia
+UMLS	hypothermia caused by anesthetic	hypothermia
+UMLS	anesthetic hypothermia	hypothermia
+UMLS	hypothermia central	hypothermia
+UMLS	hypothermia local	hypothermia
+UMLS	hypothermia neonatal	hypothermia
+UMLS	hypothermia find pt  patient ord observed ccc	hypothermia
+UMLS	induced hypothermia  finding	hypothermia
+UMLS	drug paraphernalia	paraphernalia
+UMLS	intraperitoneal admin sets paraphernalia	paraphernalia
+UMLS	infusion sets paraphernalia	paraphernalia
+UMLS	drug paraphernalia at scene	paraphernalia
+UMLS	alcohol containers paraphernalia at scene	paraphernalia
+UMLS	dialysis  peritoneal  kits miscell intraperitoneal admin sets paraphernalia	paraphernalia
+UMLS	hypodermoclysis set needles miscell infusion sets paraphernalia	paraphernalia
+UMLS	intravenous administration set miscell infusion sets paraphernalia	paraphernalia
+UMLS	intravenous administration extension set miscell infusion sets paraphernalia	paraphernalia
+UMLS	intravenous piggyback administration set miscell infusion sets paraphernalia	paraphernalia
+UMLS	intravenous administration extension set with filter miscell infusion sets paraphernalia	paraphernalia
+UMLS	intravenous catheter miscell infusion sets paraphernalia	paraphernalia
+UMLS	intravenous catheter kit miscell infusion sets paraphernalia	paraphernalia
+UMLS	intravenous infusion pump accessory miscell infusion sets paraphernalia	paraphernalia
+UMLS	intravenous  iv  infusion pump miscell infusion sets paraphernalia	paraphernalia
+UMLS	intraveous administration set with filter miscell infusion sets paraphernalia	paraphernalia
+UMLS	infusion set for insulin pump miscell infusion sets paraphernalia	paraphernalia
+UMLS	infusion set with insulin pump body miscell infusion sets paraphernalia	paraphernalia
+UMLS	intravenous administration set 21 gauge x 3 4  miscell infusion sets paraphernalia	paraphernalia
+UMLS	intravenous administration set 23 gauge x 3 4  miscell infusion sets paraphernalia	paraphernalia
+UMLS	intravenous administration set 25 gauge x 3 4  miscell infusion sets paraphernalia	paraphernalia
+UMLS	intravenous catheter 24 gauge x 3 4  miscell infusion sets paraphernalia	paraphernalia
+UMLS	subcutaneous administration set 10 mm x 100 cm sub q infusion sets paraphernalia	paraphernalia
+UMLS	subcutaneous administration set 10 mm x 110 cm sub q infusion sets paraphernalia	paraphernalia
+UMLS	subcutaneous administration set 10 mm x 50 cm sub q infusion sets paraphernalia	paraphernalia
+UMLS	hypoglycemia	hypoglycemia
+UMLS	hypoglycemia management	hypoglycemia
+UMLS	neonatal hypoglycemia	hypoglycemia
+UMLS	exogenous	hypoglycemia
+UMLS	hypoglycemia of piglets	hypoglycemia
+UMLS	factitious hypoglycemia	hypoglycemia
+UMLS	autoimmune hypoglycemia	hypoglycemia
+UMLS	fasting hypoglycemia	hypoglycemia
+UMLS	reactive hypoglycemia	hypoglycemia
+UMLS	spontaneous hypoglycemia	hypoglycemia
+UMLS	hypoglycemia of childhood	hypoglycemia
+UMLS	ketotic hypoglycemia	hypoglycemia
+UMLS	leucine induced	hypoglycemia
+UMLS	mixed hypoglycemia	hypoglycemia
+UMLS	hypoglycemia diet	hypoglycemia
+UMLS	neuropathy associated with hypoglycemia	hypoglycemia
+UMLS	nocturnal hypoglycemia	hypoglycemia
+UMLS	loss of hypoglycemic warning	hypoglycemia
+UMLS	alimentary hypoglycemia	hypoglycemia
+UMLS	drug induced hypoglycemia	hypoglycemia
+UMLS	other hypoglycemia	hypoglycemia
+UMLS	monitor for hypoglycemia	hypoglycemia
+UMLS	hypoglycemia aggravated	hypoglycemia
+UMLS	hypoketonemic hypoglycemia	hypoglycemia
+UMLS	pin point pupils	pin point pupils
+UMLS	hypoxemia	hypoxemia
+UMLS	hypoxemia asymptomatic	hypoxemia
+UMLS	chronic hypoxemia	hypoxemia
+UMLS	hypoxemia intraoperative	hypoxemia
+UMLS	asphyxia and hypoxemia	hypoxemia
+UMLS	neonatal hypoxemia	hypoxemia
+UMLS	fetal hypoxemia	hypoxemia
+UMLS	erythrocytosis due to tissue hypoxemia	hypoxemia
+UMLS	hypoxemia and cor pulmonale	hypoxemia
+UMLS	sleep related hypoxemia	hypoxemia
+UMLS	sleep related hypoventilation or hypoxemia	hypoxemia
+UMLS	decreased sensitivity to hypercapnia and hypoxemia	hypoxemia
+UMLS	decreased sensitivity to hypoxemia	hypoxemia
+UMLS	hypoxemia during surgery	hypoxemia
+UMLS	sleep related hypoventilation hypoxemia in conditions classifiable elsewhere	hypoxemia
+UMLS	organic sleep related hypoventilation or hypoxemia in other conditions	hypoxemia
+UMLS	sleep related hypoxemia in conditions classified elsewhere	hypoxemia
+UMLS	monitor for hyperventilation resulting in respiratory alkalosis  e g	hypoxemia
+UMLS	cns injury	hypoxemia
+UMLS	hypermetabolic states	hypoxemia
+UMLS	gi distention	hypoxemia
+UMLS	and stress	hypoxemia
+UMLS	monitor the patient for adverse effects of medication	hypoxemia
+UMLS	including agitation	hypoxemia
+UMLS	respiratory depression	hypoxemia
+UMLS	undue somnolence	hypoxemia
+UMLS	apnea	hypoxemia
+UMLS	or exacerbation of a preexisting condition	hypoxemia
+UMLS	monitor for signs of respiratory muscle fatigue  e g	hypoxemia
+UMLS	abrubt rise in paco2  rapid	hypoxemia
+UMLS	shallow ventilation  paradoxical abdominal wall motion	hypoxemia
+UMLS	and tissue hypoxia while weaning is in process	hypoxemia
+UMLS	assessment of baseline neurological status	baseline neurological status
+UMLS	assess for changes in baseline neurological status	baseline neurological status
+UMLS	neurological status is consistent with or improved from preoperative baseline	baseline neurological status
+UMLS	patient s neurological status is maintained at or improved from baseline levels	baseline neurological status
+UMLS	malaise	malaise
+UMLS	presyncope	malaise
+UMLS	feeling sick	malaise
+UMLS	malaise and fatigue	malaise
+UMLS	vasovagal syncope	malaise
+UMLS	malay peninsula	malaise
+UMLS	aids with malaise	malaise
+UMLS	feeling of malaise	malaise
+UMLS	vaccination related malaise	malaise
+UMLS	postexertional fatigue	malaise
+UMLS	other malaise	malaise
+UMLS	c o   debility   malaise	malaise
+UMLS	other malaise and fatigue	malaise
+UMLS	near sudden infant death syndrome	malaise
+UMLS	fatigue adverse event	malaise
+UMLS	malaise associated with aids	malaise
+UMLS	malaise worse in morning	malaise
+UMLS	malaise worse in evening	malaise
+UMLS	malaise started suddenly	malaise
+UMLS	post exertional malaise	malaise
+UMLS	infantile apparent life threatening event	malaise
+UMLS	monitor for change in energy level malaise	malaise
+UMLS	pharynx ill sensation of	malaise
+UMLS	monitor energy level	malaise
+UMLS	and weakness	malaise
+UMLS	leg discomfort	malaise
+UMLS	vertigo	dizziness
+UMLS	dizziness adverse event	dizziness
+UMLS	have dizziness	dizziness
+UMLS	how often dizzy	dizziness
+UMLS	usual severity dizziness	dizziness
+UMLS	how much distress dizziness	dizziness
+UMLS	no dizziness	dizziness
+UMLS	psychogenic vertigo	dizziness
+UMLS	exertional dizziness	dizziness
+UMLS	multisensory dizziness	dizziness
+UMLS	dizziness present	dizziness
+UMLS	dizziness and giddiness symptoms	dizziness
+UMLS	giddiness	dizziness
+UMLS	vertigo dizziness	dizziness
+UMLS	dizziness aggravated	dizziness
+UMLS	dizziness chronic	dizziness
+UMLS	dizziness intermittent	dizziness
+UMLS	positional dizziness	dizziness
+UMLS	postoperative dizziness	dizziness
+UMLS	epidemic  dizziness	dizziness
+UMLS	hysterical  giddiness	dizziness
+UMLS	syndrome  dizziness	dizziness
+UMLS	dizziness or vertigo	dizziness
+UMLS	cardiac arrhythmia	dysrhythmia
+UMLS	atrial arrhythmia	dysrhythmia
+UMLS	ventricular arrhythmia	dysrhythmia
+UMLS	dysrhythmia management	dysrhythmia
+UMLS	abnormal gastric electrical activity	dysrhythmia
+UMLS	conduction disorder of the heart	dysrhythmia
+UMLS	fetal dysrhythmia	dysrhythmia
+UMLS	circadian dysrhythmia	dysrhythmia
+UMLS	arrhythmia prophylaxis	dysrhythmia
+UMLS	cerebral  dysrhythmia	dysrhythmia
+UMLS	cortical  dysrhythmia	dysrhythmia
+UMLS	neonatal dysrhythmia	dysrhythmia
+UMLS	monitor hemodynamic response to the dysrhythmia	dysrhythmia
+UMLS	note frequency and duration of dysrhythmia	dysrhythmia
+UMLS	ecg automated dysrhythmia monitoring	dysrhythmia
+UMLS	dysrhythmia  cardiac	dysrhythmia
+UMLS	postoperative	dysrhythmia
+UMLS	dysrhythmia  cerebral or cortical	dysrhythmia
+UMLS	stress electrocardiogram  dysrhythmia at peak stress	dysrhythmia
+UMLS	non reassuring dysrhythmia	dysrhythmia
+UMLS	cardiac dysrhythmia  irregular heartbeat	dysrhythmia
+UMLS	chronic atrial and intestinal dysrhythmia	dysrhythmia
+UMLS	follow protocol for the patient with cardiac dysrhythmia	dysrhythmia
+UMLS	termination of stress test due to dysrhythmia	dysrhythmia
+UMLS	non reassuring dysrhythmia with baby delivered	dysrhythmia
+UMLS	non reassuring dysrhythmia as antepartum condition	dysrhythmia
+UMLS	mental status altered responsiveness decreased	decreased mental status
+UMLS	hypertensive disease	hypertension
+UMLS	hypertension adverse event	hypertension
+UMLS	no hypertension	hypertension
+UMLS	hypertension with complications and secondary hypertension	hypertension
+UMLS	c pregnancy  hypertension	hypertension
+UMLS	gestational hypertension	hypertension
+UMLS	diastolic hypertension and systolic hypertension	hypertension
+UMLS	goldblatt	hypertension
+UMLS	malignant hypertension	hypertension
+UMLS	portal	hypertension
+UMLS	pulmonary hypertension	hypertension
+UMLS	renal hypertension	hypertension
+UMLS	renovascular	hypertension
+UMLS	ocular hypertension	hypertension
+UMLS	essential hypertension	hypertension
+UMLS	intracranial hypertension	hypertension
+UMLS	hypertensive heart disease	hypertension
+UMLS	transient hypertension	hypertension
+UMLS	secondary hypertension	hypertension
+UMLS	hypertension education	hypertension
+UMLS	endolymphatic hydrops	hypertension
+UMLS	paroxysmal hypertension	hypertension
+UMLS	systolic hypertension	hypertension
+UMLS	diastolic hypertension	hypertension
+UMLS	hypertension worsened	hypertension
+UMLS	chest pressure	chest pressure
+UMLS	pressure in chest and heart	chest pressure
+UMLS	chest pressure exertional	chest pressure
+UMLS	pain or pressure in chest	chest pressure
+UMLS	asphyxiation by sustained compression of chest	chest pressure
+UMLS	change pressure dressing on chest wall	chest pressure
+UMLS	removal of pressure dressing on chest wall	chest pressure
+UMLS	change intermittent pressure device on chest wall	chest pressure
+UMLS	compression of chest wall using pressure dressing	chest pressure
+UMLS	compression of chest wall using intermittent pressure device	chest pressure
+UMLS	removal of intermittent pressure device on chest wall	chest pressure
+UMLS	did you have chest pain or pressure finding point in time  patient ordinal	chest pressure
+UMLS	did you have chest pain or pressure	chest pressure
+UMLS	carbon dioxide during chest physiotherapy ppres pt bldc qn transcutaneous co2 monitor	chest pressure
+UMLS	carbon dioxide during chest physiotherapy ppres pt bldc qn	chest pressure
+UMLS	carbon dioxide post chest physiotherapy ppres pt bldc qn transcutaneous co2 monitor	chest pressure
+UMLS	carbon dioxide post chest physiotherapy ppres pt bldc qn	chest pressure
+UMLS	carbon dioxide pre chest physiotherapy ppres pt bldc qn transcutaneous co2 monitor	chest pressure
+UMLS	carbon dioxide pre chest physiotherapy ppres pt bldc qn	chest pressure
+UMLS	oxygen during chest physiotherapy ppres pt bldc qn transcutaneous o2 monitor	chest pressure
+UMLS	oxygen during chest physiotherapy ppres pt bldc qn	chest pressure
+UMLS	oxygen post chest physiotherapy ppres pt bldc qn transcutaneous o2 monitor	chest pressure
+UMLS	cool skin	cool skin
+UMLS	generalized coolness of skin	cool skin
+UMLS	soothe   cool skin paste	cool skin
+UMLS	skin cool to touch	cool skin
+UMLS	cool skin and pallor with feet elevated	cool skin
+UMLS	cool the skin with water in cases of minor burns	cool skin
+UMLS	cool skin and pallor with feet in dependent position	cool skin
+UMLS	cool and blue skin with feet in dependent position	cool skin
+UMLS	petrolatum 0 5 mg mg   zinc oxide 0 1 mg mg paste  soothe   cool skin paste	cool skin
+UMLS	soothe   cool skin paste paste product	cool skin
+UMLS	soothe and cool free medseptic skin protectant	cool skin
+UMLS	warm or cool all irrigating	cool skin
+UMLS	iv	cool skin
+UMLS	and skin preparation solutions	cool skin
+UMLS	lanolin 0 5 mg mg topical ointment	cool skin
+UMLS	barrier skin protectant topical application cream  soothe   cool inzo	cool skin
+UMLS	petrolatum   zinc oxide paste  soothe   cool skin paste	cool skin
+UMLS	flush exposed skin with copious amounts of cool water	cool skin
+UMLS	use eyelid retractors if needed	cool skin
+UMLS	and utilize appropriate neutralizing agent if indicated	cool skin
+UMLS	lidocaine 5 mg ml topical lotion	cool skin
+UMLS	teach patient to report signs and symptoms of impaired circulation  e g	cool skin
+UMLS	tingling	cool skin
+UMLS	absent peripheral pulse	cool skin
+UMLS	cool skin temperature	cool skin
+UMLS	petrolatum 0 5 mg mg   zinc oxide 0 1 mg mg  soothe   cool skin paste	cool skin
+UMLS	triclosan 4 6 mg ml medicated liquid soap	cool skin
+UMLS	octinoxate 75 mg in 1 ml   oxybenzone 60 mg in 1 ml   octisalate 50 mg in 1 ml topical lotion  skin so soft bug guard plus ir3535 cool n fabulous disappearing color insect repellent sunscreen	cool skin
+UMLS	octinoxate 30 mg in 1 ml   titanium dioxide 31 6 mg in 1 ml topical emulsion  lingerie de peau natural perfection foundation skin fusion texture with sunscreen broad spectrum spf 20 00n porcelaine porcelain	cool skin
+UMLS	abdominal rebound tenderness	rebound tenderness
+UMLS	o e   rebound tenderness	rebound tenderness
+UMLS	o e   no rebound tenderness	rebound tenderness
+UMLS	rebound tenderness absent	rebound tenderness
+UMLS	rebound tenderness of epigastrium	rebound tenderness
+UMLS	rebound tenderness of right hypochondrium	rebound tenderness
+UMLS	rebound tenderness of left hypochondrium	rebound tenderness
+UMLS	rebound tenderness of central region	rebound tenderness
+UMLS	rebound tenderness of right lumbar	rebound tenderness
+UMLS	rebound tenderness of left lumbar	rebound tenderness
+UMLS	rebound tenderness of hypogastrium	rebound tenderness
+UMLS	abdomen sign rebound tenderness	rebound tenderness
+UMLS	generalized rebound abdominal tenderness	rebound tenderness
+UMLS	rebound tenderness of periumbilical region	rebound tenderness
+UMLS	referred rebound abdominal tenderness	rebound tenderness
+UMLS	rebound tenderness of left lower quadrant of abdomen	rebound tenderness
+UMLS	rebound tenderness of left upper quadrant of abdomen	rebound tenderness
+UMLS	rebound tenderness of right upper quadrant of abdomen	rebound tenderness
+UMLS	rebound tenderness of right lower quadrant of abdomen	rebound tenderness
+UMLS	periumbilic rebound abdominal tenderness	rebound tenderness
+UMLS	epigastric rebound abdominal tenderness	rebound tenderness
+UMLS	rebound tenderness of right iliac fossa	rebound tenderness
+UMLS	rebound tenderness of left iliac fossa	rebound tenderness
+UMLS	rebound abdominal tenderness	rebound tenderness
+UMLS	unspecified site	rebound tenderness
+UMLS	bradycardia by ecg finding	bradycardia
+UMLS	sinus bradycardia	bradycardia
+UMLS	vagal autonomic bradycardia	bradycardia
+UMLS	reflex bradycardia	bradycardia
+UMLS	fetal bradycardia	bradycardia
+UMLS	baseline bradycardia	bradycardia
+UMLS	monitor for bradycardia	bradycardia
+UMLS	bradycardia asymptomatic	bradycardia
+UMLS	bradycardia episode	bradycardia
+UMLS	bradycardia symptomatic	bradycardia
+UMLS	junctional bradycardia	bradycardia
+UMLS	neonatal bradycardia	bradycardia
+UMLS	syncope  bradycardia	bradycardia
+UMLS	nodal bradycardia	bradycardia
+UMLS	ecg  bradycardia	bradycardia
+UMLS	sinus bradycardia adverse event	bradycardia
+UMLS	continuous electrocardiogram sinus bradycardia  finding	bradycardia
+UMLS	bradycardia by auscultation	bradycardia
+UMLS	pulse slow  finding	bradycardia
+UMLS	sinoatrial bradycardia	bradycardia
+UMLS	bradycardia arrest	bradycardia
+UMLS	bradycardia  rare	bradycardia
+UMLS	medical bradycardia	bradycardia
+WN_Synonym	abdominal	abdominal
+WN_Synonym	abdominal muscle	abdominal
+WN_Synonym	ab	abdominal
+WN_Synonym	pain	pain
+WN_Synonym	hurting	pain
+WN_Synonym	painfulness	pain
+WN_Synonym	pain sensation	pain
+WN_Synonym	painful sensation	pain
+WN_Synonym	absent	absent
+WN_Synonym	remove	absent
+WN_Synonym	lacking	absent
+WN_Synonym	missing	absent
+WN_Synonym	wanting	absent
+WN_Synonym	scatty	absent
+WN_Synonym	pulsation	pulses
+WN_Synonym	pulsing	pulses
+WN_Synonym	pulse	pulses
+WN_Synonym	impulse	pulses
+WN_Synonym	heartbeat	pulses
+WN_Synonym	beat	pulses
+WN_Synonym	pulse rate	pulses
+WN_Synonym	heart rate	pulses
+WN_Synonym	pulsate	pulses
+WN_Synonym	throb	pulses
+WN_Synonym	agitate	agitated
+WN_Synonym	foment	agitated
+WN_Synonym	stir up	agitated
+WN_Synonym	rouse	agitated
+WN_Synonym	turn on	agitated
+WN_Synonym	charge	agitated
+WN_Synonym	commove	agitated
+WN_Synonym	excite	agitated
+WN_Synonym	charge up	agitated
+WN_Synonym	crusade	agitated
+WN_Synonym	fight	agitated
+WN_Synonym	press	agitated
+WN_Synonym	campaign	agitated
+WN_Synonym	push	agitated
+WN_Synonym	stir	agitated
+WN_Synonym	shift	changes
+WN_Synonym	budge	agitated
+WN_Synonym	shake	agitated
+WN_Synonym	vex	agitated
+WN_Synonym	disturb	agitated
+WN_Synonym	shake up	agitated
+WN_Synonym	raise up	agitated
+WN_Synonym	agitated	agitated
+WN_Synonym	craze	delirium
+WN_Synonym	delirium	delirium
+WN_Synonym	frenzy	delirium
+WN_Synonym	fury	delirium
+WN_Synonym	hysteria	delirium
+WN_Synonym	agitation	agitation
+WN_Synonym	ferment	agitation
+WN_Synonym	fermentation	agitation
+WN_Synonym	tempestuousness	agitation
+WN_Synonym	unrest	agitation
+WN_Synonym	excitement	agitation
+WN_Synonym	turmoil	agitation
+WN_Synonym	upheaval	agitation
+WN_Synonym	hullabaloo	agitation
+WN_Synonym	baseline	baseline
+WN_Synonym	service line	baseline
+WN_Synonym	neurological	neurological
+WN_Synonym	neurologic	neurological
+WN_Synonym	status	status
+WN_Synonym	position	status
+WN_Synonym	condition	status
+WN_Synonym	bizarre	bizarre
+WN_Synonym	eccentric	bizarre
+WN_Synonym	freakish	bizarre
+WN_Synonym	freaky	bizarre
+WN_Synonym	flaky	bizarre
+WN_Synonym	flakey	bizarre
+WN_Synonym	gonzo	bizarre
+WN_Synonym	off-the-wall	bizarre
+WN_Synonym	outlandish	bizarre
+WN_Synonym	outre	bizarre
+WN_Synonym	behavior	behavior
+WN_Synonym	behaviour	behavior
+WN_Synonym	conduct	behavior
+WN_Synonym	doings	behavior
+WN_Synonym	demeanor	behavior
+WN_Synonym	demeanour	behavior
+WN_Synonym	deportment	behavior
+WN_Synonym	blindness	blindness
+WN_Synonym	sightlessness	blindness
+WN_Synonym	cecity	blindness
+WN_Synonym	bradycardia	bradycardia
+WN_Synonym	thorax	chest
+WN_Synonym	chest	chest
+WN_Synonym	pectus	chest
+WN_Synonym	breast	chest
+WN_Synonym	stringency	tightness
+WN_Synonym	tightness	tightness
+WN_Synonym	constriction	tightness
+WN_Synonym	concentration	tightness
+WN_Synonym	density	tightness
+WN_Synonym	denseness	tightness
+WN_Synonym	compactness	tightness
+WN_Synonym	clammy	clammy
+WN_Synonym	dank	clammy
+WN_Synonym	skin	skin
+WN_Synonym	tegument	skin
+WN_Synonym	cutis	skin
+WN_Synonym	hide	skin
+WN_Synonym	pelt	skin
+WN_Synonym	peel	skin
+WN_Synonym	clamber	skin
+WN_Synonym	contentious	combative
+WN_Synonym	combative	combative
+WN_Synonym	disputatious	combative
+WN_Synonym	disputative	combative
+WN_Synonym	litigious	combative
+WN_Synonym	agonistic	combative
+WN_Synonym	agonistical	combative
+WN_Synonym	battleful	combative
+WN_Synonym	bellicose	combative
+WN_Synonym	confusion	confusion
+WN_Synonym	mental confusion	confusion
+WN_Synonym	confusedness	confusion
+WN_Synonym	muddiness	confusion
+WN_Synonym	disarray	confusion
+WN_Synonym	discombobulation	confusion
+WN_Synonym	mix-up	confusion
+WN_Synonym	constipation	constipation
+WN_Synonym	irregularity	constipation
+WN_Synonym	paroxysm	convulsions
+WN_Synonym	fit	convulsions
+WN_Synonym	convulsion	convulsions
+WN_Synonym	cool	cool
+WN_Synonym	chill	cool
+WN_Synonym	cough	cough
+WN_Synonym	coughing	cough
+WN_Synonym	decrease	decreased
+WN_Synonym	diminish	decreased
+WN_Synonym	lessen	decreased
+WN_Synonym	fall	decreased
+WN_Synonym	minify	decreased
+WN_Synonym	decreased	decreased
+WN_Synonym	reduced	decreased
+WN_Synonym	mental	mental
+WN_Synonym	genial	mental
+WN_Synonym	ocular	visual
+WN_Synonym	optic	visual
+WN_Synonym	optical	visual
+WN_Synonym	visual	visual
+WN_Synonym	acuity	acuity
+WN_Synonym	visual acuity	acuity
+WN_Synonym	sharp-sightedness	acuity
+WN_Synonym	acuteness	acuity
+WN_Synonym	sharpness	acuity
+WN_Synonym	keenness	acuity
+WN_Synonym	idea	thought
+WN_Synonym	thought	thought
+WN_Synonym	thinking	thought
+WN_Synonym	thought process	thought
+WN_Synonym	cerebration	thought
+WN_Synonym	intellection	thought
+WN_Synonym	mentation	thought
+WN_Synonym	opinion	thought
+WN_Synonym	sentiment	thought
+WN_Synonym	persuasion	thought
+WN_Synonym	view	thought
+WN_Synonym	perspiration	diaphoresis
+WN_Synonym	sweating	diaphoresis
+WN_Synonym	diaphoresis	diaphoresis
+WN_Synonym	sudation	diaphoresis
+WN_Synonym	hidrosis	diaphoresis
+WN_Synonym	diarrhea	diarrhea
+WN_Synonym	diarrhoea	diarrhea
+WN_Synonym	looseness of the bowels	diarrhea
+WN_Synonym	looseness	diarrhea
+WN_Synonym	distention	distension
+WN_Synonym	distension	distension
+WN_Synonym	dilatation	distension
+WN_Synonym	dizziness	lightheadedness
+WN_Synonym	giddiness	lightheadedness
+WN_Synonym	lightheadedness	lightheadedness
+WN_Synonym	vertigo	lightheadedness
+WN_Synonym	fever	fever
+WN_Synonym	febrility	fever
+WN_Synonym	febricity	fever
+WN_Synonym	pyrexia	fever
+WN_Synonym	feverishness	fever
+WN_Synonym	hallucination	hallucinations
+WN_Synonym	delusion	hallucinations
+WN_Synonym	headache	headache
+WN_Synonym	vexation	headache
+WN_Synonym	head ache	headache
+WN_Synonym	cephalalgia	headache
+WN_Synonym	homicidal	homicidal
+WN_Synonym	murderous	homicidal
+WN_Synonym	hyperglycemia	hyperglycemia
+WN_Synonym	hyperglycaemia	hyperglycemia
+WN_Synonym	high blood pressure	hypertension
+WN_Synonym	hypertension	hypertension
+WN_Synonym	hyperthermia	hyperthermia
+WN_Synonym	hyperthermy	hyperthermia
+WN_Synonym	hypoglycemia	hypoglycemia
+WN_Synonym	hypoglycaemia	hypoglycemia
+WN_Synonym	incontinence	incontinence
+WN_Synonym	incontinency	incontinence
+WN_Synonym	know	known
+WN_Synonym	cognize	known
+WN_Synonym	cognise	known
+WN_Synonym	experience	known
+WN_Synonym	live	known
+WN_Synonym	acknowledge	known
+WN_Synonym	recognize	known
+WN_Synonym	recognise	known
+WN_Synonym	well	well
+WN_Synonym	wellspring	well
+WN_Synonym	fountainhead	well
+WN_Synonym	swell	well
+WN_Synonym	good	well
+WN_Synonym	easily	well
+WN_Synonym	considerably	well
+WN_Synonym	substantially	well
+WN_Synonym	intimately	well
+WN_Synonym	advantageously	well
+WN_Synonym	comfortably	well
+WN_Synonym	loss	loss
+WN_Synonym	deprivation	loss
+WN_Synonym	personnel casualty	loss
+WN_Synonym	passing	loss
+WN_Synonym	departure	loss
+WN_Synonym	exit	loss
+WN_Synonym	expiration	loss
+WN_Synonym	going	loss
+WN_Synonym	release	discharge
+WN_Synonym	consciousness	consciousness
+WN_Synonym	awareness	consciousness
+WN_Synonym	cognizance	consciousness
+WN_Synonym	cognisance	consciousness
+WN_Synonym	knowingness	consciousness
+WN_Synonym	malaise	malaise
+WN_Synonym	unease	malaise
+WN_Synonym	uneasiness	malaise
+WN_Synonym	change	changes
+WN_Synonym	alteration	changes
+WN_Synonym	modification	changes
+WN_Synonym	variety	changes
+WN_Synonym	alter	changes
+WN_Synonym	modify	changes
+WN_Synonym	vary	changes
+WN_Synonym	switch	changes
+WN_Synonym	convert	changes
+WN_Synonym	interchange	changes
+WN_Synonym	transfer	changes
+WN_Synonym	deepen	changes
+WN_Synonym	myalgia	myalgias
+WN_Synonym	myodynia	myalgias
+WN_Synonym	nausea	nausea
+WN_Synonym	sickness	nausea
+WN_Synonym	radiation	radiation
+WN_Synonym	radiation sickness	radiation
+WN_Synonym	region	region
+WN_Synonym	part	region
+WN_Synonym	area	region
+WN_Synonym	neighborhood	region
+WN_Synonym	realm	region
+WN_Synonym	badness	severity
+WN_Synonym	severity	severity
+WN_Synonym	severeness	severity
+WN_Synonym	asperity	severity
+WN_Synonym	grimness	severity
+WN_Synonym	hardship	severity
+WN_Synonym	rigor	severity
+WN_Synonym	rigour	severity
+WN_Synonym	rigorousness	severity
+WN_Synonym	rigourousness	severity
+WN_Synonym	austereness	severity
+WN_Synonym	harshness	severity
+WN_Synonym	inclemency	severity
+WN_Synonym	hardness	severity
+WN_Synonym	stiffness	severity
+WN_Synonym	picket	pale
+WN_Synonym	pale	pale
+WN_Synonym	blanch	pale
+WN_Synonym	blench	pale
+WN_Synonym	pallid	pale
+WN_Synonym	wan	pale
+WN_Synonym	sick	vomiting
+WN_Synonym	palpitation	palpitations
+WN_Synonym	shaking	palpitations
+WN_Synonym	shakiness	palpitations
+WN_Synonym	trembling	palpitations
+WN_Synonym	quiver	palpitations
+WN_Synonym	quivering	palpitations
+WN_Synonym	vibration	palpitations
+WN_Synonym	gear	paraphernalia
+WN_Synonym	paraphernalia	paraphernalia
+WN_Synonym	appurtenance	accessory
+WN_Synonym	point	point
+WN_Synonym	detail	point
+WN_Synonym	item	point
+WN_Synonym	degree	point
+WN_Synonym	level	point
+WN_Synonym	stage	point
+WN_Synonym	point in time	point
+WN_Synonym	tip	point
+WN_Synonym	peak	point
+WN_Synonym	dot	point
+WN_Synonym	spot	point
+WN_Synonym	compass point	point
+WN_Synonym	period	point
+WN_Synonym	full stop	point
+WN_Synonym	stop	point
+WN_Synonym	full point	point
+WN_Synonym	ictal	ictal
+WN_Synonym	ictic	ictal
+WN_Synonym	pregnancy	pregnancy
+WN_Synonym	gestation	pregnancy
+WN_Synonym	maternity	pregnancy
+WN_Synonym	rattle	rales
+WN_Synonym	rattling	rales
+WN_Synonym	rale	rales
+WN_Synonym	rash	rash
+WN_Synonym	roseola	rash
+WN_Synonym	efflorescence	rash
+WN_Synonym	skin rash	rash
+WN_Synonym	recoil	rebound
+WN_Synonym	repercussion	rebound
+WN_Synonym	rebound	rebound
+WN_Synonym	backlash	rebound
+WN_Synonym	bounce	rebound
+WN_Synonym	resile	rebound
+WN_Synonym	take a hop	rebound
+WN_Synonym	spring	rebound
+WN_Synonym	bound	rebound
+WN_Synonym	reverberate	rebound
+WN_Synonym	ricochet	rebound
+WN_Synonym	rally	rebound
+WN_Synonym	tenderness	tenderness
+WN_Synonym	soreness	tenderness
+WN_Synonym	rawness	tenderness
+WN_Synonym	rhonchus	rhonchi
+WN_Synonym	rigidity	rigidity
+WN_Synonym	rigidness	rigidity
+WN_Synonym	inflexibility	rigidity
+WN_Synonym	seizure	seizure
+WN_Synonym	ictus	seizure
+WN_Synonym	raptus	seizure
+WN_Synonym	capture	seizure
+WN_Synonym	gaining control	seizure
+WN_Synonym	shortness	shortness
+WN_Synonym	truncation	shortness
+WN_Synonym	abruptness	shortness
+WN_Synonym	brusqueness	shortness
+WN_Synonym	curtness	shortness
+WN_Synonym	gruffness	shortness
+WN_Synonym	breath	breath
+WN_Synonym	breather	breath
+WN_Synonym	breathing place	breath
+WN_Synonym	sleepiness	sleepiness
+WN_Synonym	drowsiness	sleepiness
+WN_Synonym	somnolence	sleepiness
+WN_Synonym	history	history
+WN_Synonym	account	history
+WN_Synonym	chronicle	history
+WN_Synonym	story	history
+WN_Synonym	self-destructive	suicidal
+WN_Synonym	suicidal	suicidal
+WN_Synonym	think	thought
+WN_Synonym	believe	thought
+WN_Synonym	consider	thought
+WN_Synonym	conceive	thought
+WN_Synonym	opine	thought
+WN_Synonym	suppose	thought
+WN_Synonym	imagine	thought
+WN_Synonym	reckon	thought
+WN_Synonym	guess	thought
+WN_Synonym	cogitate	thought
+WN_Synonym	cerebrate	thought
+WN_Synonym	remember	thought
+WN_Synonym	retrieve	thought
+WN_Synonym	recall	thought
+WN_Synonym	call back	thought
+WN_Synonym	call up	thought
+WN_Synonym	recollect	thought
+WN_Synonym	intend	thought
+WN_Synonym	mean	thought
+WN_Synonym	injury	trauma
+WN_Synonym	hurt	trauma
+WN_Synonym	harm	trauma
+WN_Synonym	trauma	trauma
+WN_Synonym	psychic trauma	trauma
+WN_Synonym	unequal	unequal
+WN_Synonym	inadequate	unequal
+WN_Synonym	use	use
+WN_Synonym	usage	use
+WN_Synonym	utilization	use
+WN_Synonym	utilisation	use
+WN_Synonym	employment	use
+WN_Synonym	exercise	use
+WN_Synonym	function	use
+WN_Synonym	purpose	use
+WN_Synonym	role	use
+WN_Synonym	consumption	use
+WN_Synonym	economic consumption	use
+WN_Synonym	usance	use
+WN_Synonym	utilize	use
+WN_Synonym	utilise	use
+WN_Synonym	apply	use
+WN_Synonym	employ	use
+WN_Synonym	habituate	use
+WN_Synonym	expend	use
+WN_Synonym	practice	use
+WN_Synonym	accessory	accessory
+WN_Synonym	accoutrement	accessory
+WN_Synonym	accouterment	accessory
+WN_Synonym	supplement	accessory
+WN_Synonym	add-on	accessory
+WN_Synonym	accessary	accessory
+WN_Synonym	adjunct	accessory
+WN_Synonym	ancillary	accessory
+WN_Synonym	adjuvant	accessory
+WN_Synonym	appurtenant	accessory
+WN_Synonym	auxiliary	accessory
+WN_Synonym	muscle	muscles
+WN_Synonym	musculus	muscles
+WN_Synonym	muscular tissue	muscles
+WN_Synonym	muscleman	muscles
+WN_Synonym	bleeding	bleeding
+WN_Synonym	hemorrhage	bleeding
+WN_Synonym	haemorrhage	bleeding
+WN_Synonym	shed blood	bleeding
+WN_Synonym	bleed	bleeding
+WN_Synonym	leech	bleeding
+WN_Synonym	phlebotomize	bleeding
+WN_Synonym	phlebotomise	bleeding
+WN_Synonym	discharge	discharge
+WN_Synonym	venting	discharge
+WN_Synonym	emission	discharge
+WN_Synonym	expelling	discharge
+WN_Synonym	outpouring	discharge
+WN_Synonym	run	discharge
+WN_Synonym	dismissal	discharge
+WN_Synonym	dismission	discharge
+WN_Synonym	firing	discharge
+WN_Synonym	liberation	discharge
+WN_Synonym	sack	discharge
+WN_Synonym	sacking	discharge
+WN_Synonym	waiver	discharge
+WN_Synonym	drop	discharge
+WN_Synonym	drop off	discharge
+WN_Synonym	violent	violent
+WN_Synonym	wild	violent
+WN_Synonym	fierce	violent
+WN_Synonym	tearing	violent
+WN_Synonym	vehement	violent
+WN_Synonym	vomit	vomiting
+WN_Synonym	vomiting	vomiting
+WN_Synonym	emesis	vomiting
+WN_Synonym	regurgitation	vomiting
+WN_Synonym	disgorgement	vomiting
+WN_Synonym	puking	vomiting
+WN_Synonym	vomit up	vomiting
+WN_Synonym	purge	vomiting
+WN_Synonym	cast	vomiting
+WN_Synonym	cat	vomiting
+WN_Synonym	be sick	vomiting
+WN_Synonym	disgorge	vomiting
+WN_Synonym	regorge	vomiting
+WN_Synonym	retch	vomiting
+WN_Synonym	puke	vomiting
+WN_Synonym	barf	vomiting
+WN_Synonym	spew	vomiting
+WN_Synonym	spue	vomiting
+WN_Synonym	chuck	vomiting
+WN_Synonym	upchuck	vomiting
+WN_Synonym	honk	vomiting
+WN_Synonym	regurgitate	vomiting
+WN_Synonym	throw up	vomiting
+WN_Synonym	failing	weakness
+WN_Synonym	weakness	weakness
+WN_Synonym	helplessness	weakness
+WN_Synonym	impuissance	weakness
+WN_Synonym	wheeze	wheezing
+WN_Synonym	asthmatic	wheezing
+WN_Synonym	wheezing	wheezing
+WN_Synonym	wheezy	wheezing
+WN_Synonym	shortness of breath	shortness of breath
+WN_Synonym	sob	shortness of breath
+WN_Synonym	breathlessness	shortness of breath
+WN_Antonym	present	absent
+WN_Antonym	calm	agitated
+WN_Antonym	unagitated	agitated
+WN_Antonym	calmness	agitation
+WN_Antonym	heat	cool
+WN_Antonym	warm	cool
+WN_Antonym	increase	decreased
+WN_Antonym	increased	decreased
+WN_Antonym	physical	mental
+WN_Antonym	hypoglycemia	hyperglycemia
+WN_Antonym	hypotension	hypertension
+WN_Antonym	hypothermia	hyperthermia
+WN_Antonym	hyperglycemia	hypoglycemia
+WN_Antonym	hypertension	hypotension
+WN_Antonym	hyperthermia	hypothermia
+WN_Antonym	ignore	known
+WN_Antonym	unknown	known
+WN_Antonym	ill	well
+WN_Antonym	badly	well
+WN_Antonym	disadvantageously	well
+WN_Antonym	gain	loss
+WN_Antonym	unconsciousness	consciousness
+WN_Antonym	incognizance	consciousness
+WN_Antonym	stay	changes
+WN_Antonym	unpin	pin
+WN_Antonym	unpointedness	point
+WN_Antonym	flexibility	rigidity
+WN_Antonym	longness	shortness
+WN_Antonym	tallness	shortness
+WN_Antonym	wakefulness	sleepiness
+WN_Antonym	equal	unequal
+WN_Antonym	adequate	unequal
+WN_Antonym	nonviolent	violent
+WN_Antonym	strength	weakness
+WN_Hyponym	external oblique muscle	abdominal
+WN_Hyponym	musculus obliquus externus abdominis	abdominal
+WN_Hyponym	abdominal external oblique muscle	abdominal
+WN_Hyponym	oblique	abdominal
+WN_Hyponym	transversus abdominis muscle	abdominal
+WN_Hyponym	transverse muscle of abdomen	abdominal
+WN_Hyponym	musculus transversalis abdominis	abdominal
+WN_Hyponym	transversus abdominis	abdominal
+WN_Hyponym	ache	pain
+WN_Hyponym	aching	pain
+WN_Hyponym	agony	pain
+WN_Hyponym	suffering	pain
+WN_Hyponym	excruciation	pain
+WN_Hyponym	arthralgia	pain
+WN_Hyponym	burn	trauma
+WN_Hyponym	burning	pain
+WN_Hyponym	causalgia	pain
+WN_Hyponym	chest pain	pain
+WN_Hyponym	chiralgia	pain
+WN_Hyponym	colic	pain
+WN_Hyponym	intestinal colic	pain
+WN_Hyponym	gripes	pain
+WN_Hyponym	griping	pain
+WN_Hyponym	distress	pain
+WN_Hyponym	dysmenorrhea	pain
+WN_Hyponym	glossalgia	pain
+WN_Hyponym	glossodynia	pain
+WN_Hyponym	growing pains	pain
+WN_Hyponym	hemorrhoid	pain
+WN_Hyponym	haemorrhoid	pain
+WN_Hyponym	piles	pain
+WN_Hyponym	keratalgia	pain
+WN_Hyponym	labor pain	pain
+WN_Hyponym	mastalgia	pain
+WN_Hyponym	melagra	pain
+WN_Hyponym	meralgia	pain
+WN_Hyponym	metralgia	pain
+WN_Hyponym	myalgia	pain
+WN_Hyponym	myodynia	pain
+WN_Hyponym	nephralgia	pain
+WN_Hyponym	neuralgia	pain
+WN_Hyponym	neuralgy	pain
+WN_Hyponym	odynophagia	pain
+WN_Hyponym	orchidalgia	pain
+WN_Hyponym	pang	pain
+WN_Hyponym	sting	trauma
+WN_Hyponym	photalgia	pain
+WN_Hyponym	photophobia	pain
+WN_Hyponym	pleurodynia	pain
+WN_Hyponym	pleuralgia	pain
+WN_Hyponym	costalgia	pain
+WN_Hyponym	podalgia	pain
+WN_Hyponym	proctalgia	pain
+WN_Hyponym	referred pain	pain
+WN_Hyponym	renal colic	pain
+WN_Hyponym	smart	pain
+WN_Hyponym	smarting	pain
+WN_Hyponym	smartness	pain
+WN_Hyponym	stinging	pain
+WN_Hyponym	stitch	pain
+WN_Hyponym	tenderness	pain
+WN_Hyponym	soreness	pain
+WN_Hyponym	rawness	pain
+WN_Hyponym	thermalgesia	pain
+WN_Hyponym	throb	pulses
+WN_Hyponym	torture	pain
+WN_Hyponym	torment	pain
+WN_Hyponym	ulalgia	pain
+WN_Hyponym	urodynia	pain
+WN_Hyponym	hurt	pain
+WN_Hyponym	mental anguish	pain
+WN_Hyponym	unpleasantness	pain
+WN_Hyponym	mittelschmerz	pain
+WN_Hyponym	phantom limb pain	pain
+WN_Hyponym	twinge	pain
+WN_Hyponym	irritant	pain
+WN_Hyponym	thorn	pain
+WN_Hyponym	nuisance	pain
+WN_Hyponym	plague	pain
+WN_Hyponym	erupt	pain
+WN_Hyponym	recrudesce	pain
+WN_Hyponym	break out	pain
+WN_Hyponym	agonize	pain
+WN_Hyponym	agonise	pain
+WN_Hyponym	break someone's heart	pain
+WN_Hyponym	excruciate	pain
+WN_Hyponym	rack	pain
+WN_Hyponym	try	pain
+WN_Hyponym	diastole	pulses
+WN_Hyponym	systole	pulses
+WN_Hyponym	throbbing	pulses
+WN_Hyponym	pounding	pulses
+WN_Hyponym	femoral pulse	pulses
+WN_Hyponym	radial pulse	pulses
+WN_Hyponym	substance abuse	abuse
+WN_Hyponym	drug abuse	abuse
+WN_Hyponym	mass hysteria	delirium
+WN_Hyponym	epidemic hysertia	delirium
+WN_Hyponym	nympholepsy	delirium
+WN_Hyponym	disturbance	agitation
+WN_Hyponym	perturbation	agitation
+WN_Hyponym	upset	agitation
+WN_Hyponym	dither	agitation
+WN_Hyponym	pother	agitation
+WN_Hyponym	fuss	agitation
+WN_Hyponym	tizzy	agitation
+WN_Hyponym	flap	agitation
+WN_Hyponym	fret	agitation
+WN_Hyponym	stew	agitation
+WN_Hyponym	sweat	agitation
+WN_Hyponym	lather	agitation
+WN_Hyponym	swither	agitation
+WN_Hyponym	tailspin	agitation
+WN_Hyponym	fidget	agitation
+WN_Hyponym	fidgetiness	agitation
+WN_Hyponym	restlessness	agitation
+WN_Hyponym	stewing	agitation
+WN_Hyponym	stir	agitation
+WN_Hyponym	tumult	agitation
+WN_Hyponym	turmoil	agitation
+WN_Hyponym	unrest	agitation
+WN_Hyponym	shaking	agitation
+WN_Hyponym	stirring	agitation
+WN_Hyponym	wag	agitation
+WN_Hyponym	waggle	agitation
+WN_Hyponym	shake	agitation
+WN_Hyponym	worrying	agitation
+WN_Hyponym	castration anxiety	anxiety
+WN_Hyponym	hypochondria	anxiety
+WN_Hyponym	hypochondriasis	anxiety
+WN_Hyponym	overanxiety	anxiety
+WN_Hyponym	panic	anxiety
+WN_Hyponym	scare	anxiety
+WN_Hyponym	angst	anxiety
+WN_Hyponym	anxiousness	anxiety
+WN_Hyponym	disquiet	anxiety
+WN_Hyponym	concern	anxiety
+WN_Hyponym	care	anxiety
+WN_Hyponym	fear	anxiety
+WN_Hyponym	discomfiture	anxiety
+WN_Hyponym	discomposure	anxiety
+WN_Hyponym	disconcertion	anxiety
+WN_Hyponym	disconcertment	anxiety
+WN_Hyponym	edginess	anxiety
+WN_Hyponym	uneasiness	anxiety
+WN_Hyponym	inquietude	anxiety
+WN_Hyponym	disquietude	anxiety
+WN_Hyponym	insecurity	anxiety
+WN_Hyponym	jitteriness	anxiety
+WN_Hyponym	jumpiness	anxiety
+WN_Hyponym	nervousness	anxiety
+WN_Hyponym	restiveness	anxiety
+WN_Hyponym	scruple	anxiety
+WN_Hyponym	qualm	nausea
+WN_Hyponym	misgiving	anxiety
+WN_Hyponym	sinking	anxiety
+WN_Hyponym	sinking feeling	anxiety
+WN_Hyponym	worry	anxiety
+WN_Hyponym	trouble	anxiety
+WN_Hyponym	anopia	blindness
+WN_Hyponym	eyelessness	blindness
+WN_Hyponym	figural blindness	blindness
+WN_Hyponym	legal blindness	blindness
+WN_Hyponym	snowblindness	blindness
+WN_Hyponym	snow-blindness	blindness
+WN_Hyponym	dyschezia	constipation
+WN_Hyponym	fecal impaction	constipation
+WN_Hyponym	obstipation	constipation
+WN_Hyponym	clonus	convulsions
+WN_Hyponym	epileptic seizure	convulsions
+WN_Hyponym	clear the throat	cough
+WN_Hyponym	hawk	cough
+WN_Hyponym	hack	cough
+WN_Hyponym	whoop	cough
+WN_Hyponym	abate	decreased
+WN_Hyponym	let up	decreased
+WN_Hyponym	slack off	decreased
+WN_Hyponym	slack	decreased
+WN_Hyponym	die away	decreased
+WN_Hyponym	boil down	decreased
+WN_Hyponym	reduce	decreased
+WN_Hyponym	decoct	decreased
+WN_Hyponym	concentrate	decreased
+WN_Hyponym	break	trauma
+WN_Hyponym	de-escalate	decreased
+WN_Hyponym	decelerate	decreased
+WN_Hyponym	slow	decreased
+WN_Hyponym	slow down	decreased
+WN_Hyponym	slow up	decreased
+WN_Hyponym	retard	decreased
+WN_Hyponym	decline	decreased
+WN_Hyponym	go down	decreased
+WN_Hyponym	wane	decreased
+WN_Hyponym	decrescendo	decreased
+WN_Hyponym	deflate	decreased
+WN_Hyponym	depreciate	decreased
+WN_Hyponym	undervalue	decreased
+WN_Hyponym	devaluate	decreased
+WN_Hyponym	devalue	decreased
+WN_Hyponym	drop off	decreased
+WN_Hyponym	dwindle	decreased
+WN_Hyponym	dwindle away	decreased
+WN_Hyponym	dwindle down	decreased
+WN_Hyponym	ease up	decreased
+WN_Hyponym	ease off	decreased
+WN_Hyponym	slacken off	decreased
+WN_Hyponym	flag	decreased
+WN_Hyponym	remit	decreased
+WN_Hyponym	shorten	decreased
+WN_Hyponym	shrink	decreased
+WN_Hyponym	contract	decreased
+WN_Hyponym	shrivel	decreased
+WN_Hyponym	shrivel up	decreased
+WN_Hyponym	wither	decreased
+WN_Hyponym	taper	decreased
+WN_Hyponym	thin out	decreased
+WN_Hyponym	vanish	decreased
+WN_Hyponym	fly	decreased
+WN_Hyponym	vaporize	decreased
+WN_Hyponym	weaken	decreased
+WN_Hyponym	abridge	decreased
+WN_Hyponym	foreshorten	decreased
+WN_Hyponym	abbreviate	decreased
+WN_Hyponym	cut	decreased
+WN_Hyponym	step down	decreased
+WN_Hyponym	diminish	decreased
+WN_Hyponym	belittle	decreased
+WN_Hyponym	limit	decreased
+WN_Hyponym	circumscribe	decreased
+WN_Hyponym	confine	decreased
+WN_Hyponym	minimize	decreased
+WN_Hyponym	minimise	decreased
+WN_Hyponym	mitigate	decreased
+WN_Hyponym	pare	decreased
+WN_Hyponym	pare down	decreased
+WN_Hyponym	cut down	decreased
+WN_Hyponym	cut back	decreased
+WN_Hyponym	trim	decreased
+WN_Hyponym	trim down	decreased
+WN_Hyponym	trim back	decreased
+WN_Hyponym	bring down	decreased
+WN_Hyponym	slacken	decreased
+WN_Hyponym	slack up	decreased
+WN_Hyponym	relax	decreased
+WN_Hyponym	slake	decreased
+WN_Hyponym	suppress	decreased
+WN_Hyponym	turn down	decreased
+WN_Hyponym	lower	decreased
+WN_Hyponym	lour	decreased
+WN_Hyponym	oxyopia	acuity
+WN_Hyponym	twenty-twenty	acuity
+WN_Hyponym	20/20	acuity
+WN_Hyponym	steel trap	acuity
+WN_Hyponym	hyperhidrosis	diaphoresis
+WN_Hyponym	hyperidrosis	diaphoresis
+WN_Hyponym	polyhidrosis	diaphoresis
+WN_Hyponym	montezuma's revenge	diarrhea
+WN_Hyponym	the shits	diarrhea
+WN_Hyponym	the trots	diarrhea
+WN_Hyponym	ectasia	distension
+WN_Hyponym	ectasis	distension
+WN_Hyponym	tympanites	distension
+WN_Hyponym	varicocele	distension
+WN_Hyponym	hyperpyrexia	hyperthermia
+WN_Hyponym	buck fever	fever
+WN_Hyponym	gold fever	fever
+WN_Hyponym	auditory hallucination	hallucinations
+WN_Hyponym	acousma	hallucinations
+WN_Hyponym	pseudohallucination	hallucinations
+WN_Hyponym	trip	hallucinations
+WN_Hyponym	visual hallucination	hallucinations
+WN_Hyponym	disorientation	hallucinations
+WN_Hyponym	freak out	hallucinations
+WN_Hyponym	cluster headache	headache
+WN_Hyponym	migraine	headache
+WN_Hyponym	megrim	headache
+WN_Hyponym	sick headache	headache
+WN_Hyponym	hemicrania	headache
+WN_Hyponym	sinus headache	headache
+WN_Hyponym	tension headache	headache
+WN_Hyponym	essential hypertension	hypertension
+WN_Hyponym	hyperpiesia	hypertension
+WN_Hyponym	hyperpiesis	hypertension
+WN_Hyponym	malignant hypertension	hypertension
+WN_Hyponym	secondary hypertension	hypertension
+WN_Hyponym	white-coat hypertension	hypertension
+WN_Hyponym	orthostatic hypotension	hypotension
+WN_Hyponym	postural hypotension	hypotension
+WN_Hyponym	enuresis	incontinence
+WN_Hyponym	urinary incontinence	incontinence
+WN_Hyponym	rakishness	incontinence
+WN_Hyponym	awareness	consciousness
+WN_Hyponym	sentience	consciousness
+WN_Hyponym	self	consciousness
+WN_Hyponym	ego	consciousness
+WN_Hyponym	sensibility	consciousness
+WN_Hyponym	esthesia	consciousness
+WN_Hyponym	aesthesia	consciousness
+WN_Hyponym	stream of consciousness	consciousness
+WN_Hyponym	waking	consciousness
+WN_Hyponym	feel	consciousness
+WN_Hyponym	self-awareness	consciousness
+WN_Hyponym	sense	consciousness
+WN_Hyponym	morning sickness	nausea
+WN_Hyponym	motion sickness	nausea
+WN_Hyponym	kinetosis	nausea
+WN_Hyponym	queasiness	nausea
+WN_Hyponym	squeamishness	nausea
+WN_Hyponym	lower jaw	jaw
+WN_Hyponym	mandible	jaw
+WN_Hyponym	mandibula	jaw
+WN_Hyponym	mandibular bone	jaw
+WN_Hyponym	submaxilla	jaw
+WN_Hyponym	lower jawbone	jaw
+WN_Hyponym	jawbone	jaw
+WN_Hyponym	jowl	jaw
+WN_Hyponym	upper jaw	jaw
+WN_Hyponym	upper jawbone	jaw
+WN_Hyponym	maxilla	jaw
+WN_Hyponym	maxillary	jaw
+WN_Hyponym	foulness	severity
+WN_Hyponym	raininess	severity
+WN_Hyponym	seriousness	severity
+WN_Hyponym	distressfulness	severity
+WN_Hyponym	sternness	severity
+WN_Hyponym	tremolo	palpitations
+WN_Hyponym	tremor	palpitations
+WN_Hyponym	ectopic pregnancy	pregnancy
+WN_Hyponym	extrauterine pregnancy	pregnancy
+WN_Hyponym	ectopic gestation	pregnancy
+WN_Hyponym	extrauterine gestation	pregnancy
+WN_Hyponym	eccyesis	pregnancy
+WN_Hyponym	metacyesis	pregnancy
+WN_Hyponym	entopic pregnancy	pregnancy
+WN_Hyponym	gravida	pregnancy
+WN_Hyponym	gravidity	pregnancy
+WN_Hyponym	gravidness	pregnancy
+WN_Hyponym	gravidation	pregnancy
+WN_Hyponym	parity	pregnancy
+WN_Hyponym	para	pregnancy
+WN_Hyponym	placenta previa	pregnancy
+WN_Hyponym	crepitation rale	rales
+WN_Hyponym	prickly heat	rash
+WN_Hyponym	heat rash	rash
+WN_Hyponym	miliaria	rash
+WN_Hyponym	urtication	rash
+WN_Hyponym	urticaria	rash
+WN_Hyponym	hives	rash
+WN_Hyponym	nettle rash	rash
+WN_Hyponym	chafe	tenderness
+WN_Hyponym	chafing	tenderness
+WN_Hyponym	rebound tenderness	tenderness
+WN_Hyponym	attachment	tenderness
+WN_Hyponym	fond regard	tenderness
+WN_Hyponym	protectiveness	tenderness
+WN_Hyponym	regard	tenderness
+WN_Hyponym	respect	tenderness
+WN_Hyponym	soft spot	weakness
+WN_Hyponym	absence seizure	seizure
+WN_Hyponym	convulsion	seizure
+WN_Hyponym	focal seizure	seizure
+WN_Hyponym	raptus hemorrhagicus	seizure
+WN_Hyponym	briefness	shortness
+WN_Hyponym	curtailment	shortness
+WN_Hyponym	oscitancy	sleepiness
+WN_Hyponym	oscitance	sleepiness
+WN_Hyponym	birth trauma	trauma
+WN_Hyponym	blast trauma	trauma
+WN_Hyponym	bleeding	trauma
+WN_Hyponym	hemorrhage	trauma
+WN_Hyponym	haemorrhage	trauma
+WN_Hyponym	blunt trauma	trauma
+WN_Hyponym	brain damage	trauma
+WN_Hyponym	bruise	trauma
+WN_Hyponym	contusion	trauma
+WN_Hyponym	bump	trauma
+WN_Hyponym	dislocation	trauma
+WN_Hyponym	electric shock	trauma
+WN_Hyponym	fracture	trauma
+WN_Hyponym	frostbite	trauma
+WN_Hyponym	cryopathy	trauma
+WN_Hyponym	intravasation	trauma
+WN_Hyponym	penetrating trauma	trauma
+WN_Hyponym	penetrating injury	trauma
+WN_Hyponym	pinch	trauma
+WN_Hyponym	rupture	trauma
+WN_Hyponym	bite	trauma
+WN_Hyponym	insect bite	trauma
+WN_Hyponym	strain	trauma
+WN_Hyponym	wale	trauma
+WN_Hyponym	welt	trauma
+WN_Hyponym	weal	trauma
+WN_Hyponym	wheal	trauma
+WN_Hyponym	whiplash	trauma
+WN_Hyponym	whiplash injury	trauma
+WN_Hyponym	wound	trauma
+WN_Hyponym	lesion	trauma
+WN_Hyponym	wrench	trauma
+WN_Hyponym	twist	trauma
+WN_Hyponym	pull	trauma
+WN_Hyponym	antagonistic muscle	muscles
+WN_Hyponym	levator	muscles
+WN_Hyponym	ocular muscle	muscles
+WN_Hyponym	eye muscle	muscles
+WN_Hyponym	pronator	muscles
+WN_Hyponym	rectus	muscles
+WN_Hyponym	skeletal muscle	muscles
+WN_Hyponym	striated muscle	muscles
+WN_Hyponym	smooth muscle	muscles
+WN_Hyponym	involuntary muscle	muscles
+WN_Hyponym	sphincter	muscles
+WN_Hyponym	anatomical sphincter	muscles
+WN_Hyponym	sphincter muscle	muscles
+WN_Hyponym	supinator	muscles
+WN_Hyponym	tensor	muscles
+WN_Hyponym	cardiac muscle	muscles
+WN_Hyponym	heart muscle	muscles
+WN_Hyponym	striated muscle tissue	muscles
+WN_Hyponym	blood extravasation	bleeding
+WN_Hyponym	cerebral hemorrhage	bleeding
+WN_Hyponym	hemorrhagic stroke	bleeding
+WN_Hyponym	haemorrhagic stroke	bleeding
+WN_Hyponym	hyphema	bleeding
+WN_Hyponym	metrorrhagia	bleeding
+WN_Hyponym	nosebleed	bleeding
+WN_Hyponym	epistaxis	bleeding
+WN_Hyponym	ulemorrhagia	bleeding
+WN_Hyponym	menstruate	bleeding
+WN_Hyponym	flow	bleeding
+WN_Hyponym	crock	bleeding
+WN_Hyponym	hematemesis	vomiting
+WN_Hyponym	haematemesis	vomiting
+WN_Hyponym	hyperemesis	vomiting
+WN_Hyponym	rumination	vomiting
+WN_Hyponym	fatigue	weakness
+WN_Hyponym	flaw	weakness
+WN_Hyponym	insufficiency	weakness
+WN_Hyponym	inadequacy	weakness
+WN_Hyponym	adynamia	weakness
+WN_Hyponym	attenuation	weakness
+WN_Hyponym	enervation	weakness
+WN_Hyponym	faintness	weakness
+WN_Hyponym	fatigability	weakness
+WN_Hyponym	feebleness	weakness
+WN_Hyponym	tenuity	weakness
+WN_Hyponym	flimsiness	weakness
+WN_Hyponym	shoddiness	weakness
+WN_Hyponym	fragility	weakness
+WN_Hyponym	delicacy	weakness
+WN_Hyponym	inanition	weakness
+WN_Hyponym	lassitude	weakness
+WN_Hyponym	lethargy	weakness
+WN_Hyponym	slackness	weakness
+WN_Hyponym	insubstantiality	weakness
+WN_Hyponym	smallness	weakness
+WN_Hyponym	littleness	weakness
+WN_Hyponym	vulnerability	weakness
+WN_Hyponym	weak part	weakness
+WN_Hyponym	weak spot	weakness
+WN_Hyponym	faint	loss of consciousness
+WN_Hyponym	swoon	loss of consciousness
+WN_Hyponym	syncope	loss of consciousness
+WN_Hyponym	deliquium	loss of consciousness
+WN_Hypernym	skeletal muscle	abdominal
+WN_Hypernym	striated muscle	abdominal
+WN_Hypernym	disappear	absent
+WN_Hypernym	vanish	absent
+WN_Hypernym	go away	absent
+WN_Hypernym	mania	delirium
+WN_Hypernym	manic disorder	delirium
+WN_Hypernym	mental disorder	delirium
+WN_Hypernym	mental disturbance	delirium
+WN_Hypernym	disturbance	delirium
+WN_Hypernym	psychological disorder	delirium
+WN_Hypernym	folie	delirium
+WN_Hypernym	psychological state	anxiety
+WN_Hypernym	psychological condition	anxiety
+WN_Hypernym	mental state	anxiety
+WN_Hypernym	mental condition	anxiety
+WN_Hypernym	emotion	anxiety
+WN_Hypernym	standard	baseline
+WN_Hypernym	criterion	baseline
+WN_Hypernym	measure	baseline
+WN_Hypernym	touchstone	baseline
+WN_Hypernym	line	baseline
+WN_Hypernym	state	status
+WN_Hypernym	activity	behavior
+WN_Hypernym	action	behavior
+WN_Hypernym	activeness	behavior
+WN_Hypernym	trait	behavior
+WN_Hypernym	visual impairment	blindness
+WN_Hypernym	visual defect	blindness
+WN_Hypernym	vision defect	blindness
+WN_Hypernym	visual disorder	blindness
+WN_Hypernym	cardiac arrhythmia	tachycardia
+WN_Hypernym	arrhythmia	tachycardia
+WN_Hypernym	disorder	confusion
+WN_Hypernym	cognitive state	confusion
+WN_Hypernym	state of mind	confusion
+WN_Hypernym	embarrassment	confusion
+WN_Hypernym	combination	confusion
+WN_Hypernym	combining	confusion
+WN_Hypernym	compounding	confusion
+WN_Hypernym	mistake	confusion
+WN_Hypernym	error	confusion
+WN_Hypernym	fault	confusion
+WN_Hypernym	attack	convulsions
+WN_Hypernym	seizure	convulsions
+WN_Hypernym	ictus	convulsions
+WN_Hypernym	raptus	convulsions
+WN_Hypernym	coldness	cool
+WN_Hypernym	cold	cool
+WN_Hypernym	low temperature	cool
+WN_Hypernym	frigidity	cool
+WN_Hypernym	frigidness	cool
+WN_Hypernym	symptom	cough
+WN_Hypernym	expectorate	cough
+WN_Hypernym	cough up	cough
+WN_Hypernym	cough out	cough
+WN_Hypernym	spit up	cough
+WN_Hypernym	spit out	cough
+WN_Hypernym	sight	acuity
+WN_Hypernym	vision	acuity
+WN_Hypernym	visual sense	acuity
+WN_Hypernym	visual modality	acuity
+WN_Hypernym	intelligence	acuity
+WN_Hypernym	content	thoughts
+WN_Hypernym	cognitive content	thoughts
+WN_Hypernym	mental object	thoughts
+WN_Hypernym	higher cognitive process	thoughts
+WN_Hypernym	belief	thoughts
+WN_Hypernym	delusion	hallucinations
+WN_Hypernym	psychotic belief	hallucinations
+WN_Hypernym	misconception	hallucinations
+WN_Hypernym	object	hallucinations
+WN_Hypernym	discomfort	malaise
+WN_Hypernym	uncomfortableness	malaise
+WN_Hypernym	pain	myalgias
+WN_Hypernym	hurting	myalgias
+WN_Hypernym	intensity	severity
+WN_Hypernym	intensiveness	severity
+WN_Hypernym	difficulty	severity
+WN_Hypernym	difficultness	severity
+WN_Hypernym	plainness	severity
+WN_Hypernym	sternness	severity
+WN_Hypernym	strictness	severity
+WN_Hypernym	strip	pale
+WN_Hypernym	discolor	pale
+WN_Hypernym	discolour	pale
+WN_Hypernym	colour	pale
+WN_Hypernym	color	pale
+WN_Hypernym	noise	rhonchi
+WN_Hypernym	tenderness	rebound tenderness
+WN_Hypernym	soreness	rebound tenderness
+WN_Hypernym	rawness	rebound tenderness
+WN_Hypernym	dyspnea	shortness of breath
+WN_Hypernym	dyspnoea	shortness of breath
+UMLS	Albuterol	albuterol
+UMLS	Levalbuterol	albuterol
+UMLS	albuterol (as albuterol sulfate)	albuterol
+UMLS	Inhaled albuterol preparation	albuterol
+UMLS	Albuterol Sulfate	albuterol
+UMLS	Albuterol / Ipratropium	albuterol
+UMLS	albuterol treatment	albuterol
+UMLS	Albuterol measurement	albuterol
+UMLS	Albuterol / Beclomethasone	albuterol
+UMLS	Albuterol / Guaifenesin	albuterol
+UMLS	Albuterol / Cromolyn	albuterol
+UMLS	Albuterol / Ambroxol	albuterol
+UMLS	racemic albuterol	albuterol
+UMLS	Albuterol Pill	albuterol
+UMLS	Albuterol 2 MG Oral Tablet	albuterol
+UMLS	Albuterol 4 MG Oral Tablet	albuterol
+UMLS	Albuterol in oral dosage form	albuterol
+UMLS	Albuterol in parenteral dosage form	albuterol
+UMLS	Albuterol 0.4 MG/ACTUAT Inhalant Powder	albuterol
+UMLS	Albuterol and cromoglicate sodium	albuterol
+UMLS	Albuterol:MCnc:Pt:Ser/Plas:Qn	albuterol
+UMLS	Albuterol 0.4 MG/ML Oral Solution	albuterol
+UMLS	Albuterol 0.5 MG/ML Injectable Solution	albuterol
+UMLS	Arm-A-Med Albuterol Sulfate	albuterol
+UMLS	ALBUTEROL SO4 PWDR	albuterol
+UMLS	Albuterol 1 MG/ML Inhalant Solution	albuterol
+UMLS	Albuterol 0.05 MG/ML Injectable Solution	albuterol
+UMLS	Albuterol 0.1 MG/ACTUAT Inhalant Solution	albuterol
+UMLS	Albuterol:PrThr:Pt:Urine:Ord	albuterol
+UMLS	Albuterol 0.2 MG/ACTUAT Inhalant Powder	albuterol
+UMLS	Albuterol 4 MG	albuterol
+UMLS	Albuterol 0.09 MG/ACTUAT	albuterol
+UMLS	Albuterol 2 MG	albuterol
+UMLS	Albuterol 0.4 MG/ML	albuterol
+UMLS	Albuterol 0.5 MG/ML	albuterol
+UMLS	Albuterol 0.1 MG/ACTUAT	albuterol
+UMLS	Albuterol 0.05 MG/ML	albuterol
+UMLS	Albuterol 1 MG/ML	albuterol
+UMLS	Albuterol 8 MG	albuterol
+UMLS	Albuterol 0.417 MG/ML Inhalant Solution	albuterol
+UMLS	Albuterol 0.21 MG/ML Inhalant Solution	albuterol
+UMLS	Albuterol 0.21 MG/ML	albuterol
+UMLS	Albuterol 2 MG/ML	albuterol
+UMLS	Albuterol 0.4 MG/ACTUAT	albuterol
+UMLS	Albuterol 0.2 MG/ACTUAT	albuterol
+UMLS	Albuterol 0.417 MG/ML	albuterol
+UMLS	Albuterol 0.095 MG/ACTUAT	albuterol
+UMLS	Albuterol 2.5 MG/ACTUAT	albuterol
+UMLS	Albuterol Inhalant Solution	albuterol
+UMLS	Albuterol Inhalant Solution [Accuneb]	albuterol
+UMLS	Aspirin	aspirin
+UMLS	N-acetyl-S-(alpha-methyl-4-(2-methylpropyl)benzeneacetyl)cysteine 4-(nitrooxy)butyl ester	aspirin
+UMLS	Aspirin or aspirin-containing product	aspirin
+UMLS	Aluminum aspirin	aspirin
+UMLS	Aspirin allergy	aspirin
+UMLS	aspirin intolerance	aspirin
+UMLS	Poisoning by aspirin	aspirin
+UMLS	acetylsalicylic acid hydrolase	aspirin
+UMLS	N-3'a-propylphenazonyl-2-acetoxybenzamide	aspirin
+UMLS	acetylsalicylic acid lysinate	aspirin
+UMLS	Poisoning by salicylate	aspirin
+UMLS	Aspirin Tolerance Test	aspirin
+UMLS	Salicylate measurement	aspirin
+UMLS	ASPIRIN INGESTION	aspirin
+UMLS	Empirin Aspirin	aspirin
+UMLS	ASPIRIN BOLUSES	aspirin
+UMLS	Aspirin Rectal Product	aspirin
+UMLS	Aspirin / Codeine	aspirin
+UMLS	Aspirin overdose	aspirin
+UMLS	methyl acetylsalicylic acid	aspirin
+UMLS	succinylamino aspirin	aspirin
+UMLS	Aspirin / butalbital	aspirin
+UMLS	Aspirin / Caffeine	aspirin
+UMLS	Aspirin / Carisoprodol	aspirin
+UMLS	Aspirin / Diphenhydramine	aspirin
+UMLS	Aspirin / Hydrocodone	aspirin
+UMLS	Aspirin / Meprobamate	aspirin
+UMLS	Aspirin / Methocarbamol	aspirin
+UMLS	Aspirin / Oxycodone	aspirin
+UMLS	Aspirin / Pentazocine	aspirin
+UMLS	Aspirin / phenyltoloxamine	aspirin
+UMLS	Aspirin / Pseudoephedrine	aspirin
+UMLS	Buffered aspirin	aspirin
+UMLS	Child Aspirin	aspirin
+UMLS	Aspirin-Free	aspirin
+UMLS	Litecoat Aspirin	aspirin
+UMLS	Aspirin-Antacid	aspirin
+UMLS	Bayer Aspirin	aspirin
+UMLS	CTD Aspirin	aspirin
+UMLS	Child No-Aspirin	aspirin
+UMLS	Coated Aspirin	aspirin
+UMLS	Med Aspirin	aspirin
+UMLS	Non-Aspirin	aspirin
+UMLS	Norwich Aspirin	aspirin
+UMLS	Aspirin prophylaxis	aspirin
+UMLS	Aspirin / Dipyridamole	aspirin
+UMLS	Aspirin Oral Product	aspirin
+UMLS	ASPIRIN ABUSE	aspirin
+UMLS	aspirin sensitivity	aspirin
+UMLS	aspirin toxicity	aspirin
+UMLS	Bag valve mask ventilation	bag valve mask ventilation
+UMLS	Bronchodilator Agents	bronchodilator
+UMLS	BRONCHODILATORS,ANTICHOLINERGIC	bronchodilator
+UMLS	Xanthine bronchodilators	bronchodilator
+UMLS	Inhaled bronchodilator therapy	bronchodilator
+UMLS	ANTITUSSIVE/BRONCHODILATOR	bronchodilator
+UMLS	post bronchodilator	bronchodilator
+UMLS	pre bronchodilator	bronchodilator
+UMLS	Bronchodilator Effect	bronchodilator
+UMLS	using bronchodilator	bronchodilator
+UMLS	response to bronchodilator	bronchodilator
+UMLS	Metaprel Inhalation Aerosol Bronchodilator	bronchodilator
+UMLS	Poisoning by bronchodilator drug	bronchodilator
+UMLS	Spirometry, before and after bronchodilator	bronchodilator
+UMLS	Accidental poisoning by bronchodilator drug	bronchodilator
+UMLS	Intentional poisoning by bronchodilator drug	bronchodilator
+UMLS	Bronchodilator preparations adverse reaction	bronchodilator
+UMLS	Bronchodilator preparations allergy	bronchodilator
+UMLS	Bronchodilator preparations overdose	bronchodilator
+UMLS	Accidental bronchodilator preparations overdose	bronchodilator
+UMLS	Intentional bronchodilator preparations overdose	bronchodilator
+UMLS	Reversibility trial by bronchodilator	bronchodilator
+UMLS	Inhaled bronchodilator prescribed (COPD)	bronchodilator
+UMLS	post-bronchodilator spirometry	bronchodilator
+UMLS	pre-bronchodilator spirometry	bronchodilator
+UMLS	Inhaled bronchodilator not prescribed	bronchodilator
+UMLS	AsthmaHaler Mist Epinephrine Bitartrate Bronchodilator	bronchodilator
+UMLS	Poisoning by bronchodilator drug of undetermined intent	bronchodilator
+UMLS	Bronchodilator preparations overdose of undetermined intent	bronchodilator
+UMLS	Voluntary ventilation.max^post bronchodilator:VRat:Pt:Respiratory system:Qn	bronchodilator
+UMLS	Voluntary ventilation.max^pre bronchodilator:VRat:Pt:Respiratory system:Qn	bronchodilator
+UMLS	Bronchodilator Drug Level Determination Reagents	bronchodilator
+UMLS	FEV1/FVC ratio before bronchodilator	bronchodilator
+UMLS	Forced expiratory volume 1 (FEV1)/ forced vital capacity (FVC) ratio after bronchodilator	bronchodilator
+UMLS	post bronchodilator/Voluntary ventilation.max predicted	bronchodilator
+UMLS	pre bronchodilator/Voluntary ventilation.max predicted	bronchodilator
+UMLS	frequent use of short-acting bronchodilator	bronchodilator
+UMLS	spirometry fvc % change after bronchodilator	bronchodilator
+UMLS	Long-acting inhaled bronchodilator prescribed	bronchodilator
+UMLS	Bronchodilation responsiveness, spirometry as in 94010, pre- and post-bronchodilator administration	bronchodilator
+UMLS	Spirometry for bronchospasm with prolonged evaluation after bronchodilator	bronchodilator
+UMLS	Gas transport time peak following bronchodilator	bronchodilator
+UMLS	Voluntary ventilation.max^pre bronchodilator:VRat:Pt:Respiratory system:Qn:Measured	bronchodilator
+UMLS	Number of times bronchodilator used in one week	bronchodilator
+UMLS	Number of times bronchodilator used in 24 hours	bronchodilator
+UMLS	pulmonary function FEV1 % change after bronchodilator	bronchodilator
+UMLS	FEF (25 - 75%) % change after bronchodilator	bronchodilator
+UMLS	pulmonary function test vital capacity % change after bronchodilator	bronchodilator
+UMLS	PhenX - respiratory - bronchodilator responsiveness - BDR protocol	bronchodilator
+UMLS	PhenX measure - respiratory - bronchodilator responsiveness - BDR	bronchodilator
+UMLS	Post-bronchodilator forced vital capacity attempt	bronchodilator
+UMLS	Capnography	capnography
+UMLS	Respired carbon dioxide monitoring	capnography
+UMLS	Physiologic Monitor Modules, Capnography	capnography
+UMLS	Capnography oxygen mask	capnography
+UMLS	Capnography sampling adaptor	capnography
+UMLS	Cardiac monitoring	cardiac monitor
+UMLS	Cardiac monitors	cardiac monitor
+UMLS	Cardiac monitor surveillance	cardiac monitor
+UMLS	Cardiac monitor removal	cardiac monitor
+UMLS	Fetal cardiac monitor	cardiac monitor
+UMLS	Apply cardiac/apnea monitor	cardiac monitor
+UMLS	Monitor for presence of cardiac arrhythmias	cardiac monitor
+UMLS	Monitor heart rate and rhythm	cardiac monitor
+UMLS	Place on a cardiac monitor, as appropriate	cardiac monitor
+UMLS	Monitor for signs of cardiac decompensation.	cardiac monitor
+UMLS	Cardiac monitor interpretation:Impression/interpretation of study:Point in time:Heart:Narrative	cardiac monitor
+UMLS	Cardiac monitor interpretation	cardiac monitor
+UMLS	Attach cardiac monitor, as appropriate	cardiac monitor
+UMLS	Cardiac Event Monitor	cardiac monitor
+UMLS	rnox monitor cardiac care	cardiac monitor
+UMLS	rnox monitor cardiac rehabilitation	cardiac monitor
+UMLS	code cart cardiac monitor	cardiac monitor
+UMLS	rnax apply cardiac monitor	cardiac monitor
+UMLS	Implantable cardiac monitor insertion	cardiac monitor
+UMLS	Implantable cardiac monitor	cardiac monitor
+UMLS	Monitoring of cardiac output by thermodilution indicator	cardiac monitor
+UMLS	Attach the cardiac monitor and determine the rhythm	cardiac monitor
+UMLS	Monitor respiratory, cardiac, and neurological status	cardiac monitor
+UMLS	Physiologic Monitor Modules, Cardiac Output	cardiac monitor
+UMLS	transportation within facility with cardiac monitor	cardiac monitor
+UMLS	Implantable cardiac monitor patient activator	cardiac monitor
+UMLS	Cardiotachometers	cardiac monitor
+UMLS	Apply EKG electrodes and connect to a cardiac monitor	cardiac monitor
+UMLS	Monitor for hypotension, cardiac arrhythmias, and signs of respiratory distress	cardiac monitor
+UMLS	Thermodilution Cardiac Output Modules, Physiologic Monitor	cardiac monitor
+UMLS	Arterial pressure cardiac output/oximetry monitor	cardiac monitor
+UMLS	Cardiac implantable loop monitor study report:Find:Pt:{Setting}:Doc:{Role}	cardiac monitor
+UMLS	Cardiac implantable loop monitor study report	cardiac monitor
+UMLS	Physician or other qualified health care professional services for outpatient cardiac rehabilitation; without continuous ECG monitoring (per session)	cardiac monitor
+UMLS	Monitor fetal parameters, including number, size, cardiac activity, presentation, and position	cardiac monitor
+UMLS	Monitor for adverse effects of mechanical ventilation: infection, barotrauma, reduced cardiac output	cardiac monitor
+UMLS	Monitor for cardiac dysrhythmias, including disturbances of both rhythm and conduction	cardiac monitor
+UMLS	Monitor orthostatic blood pressure and change in cardiac rhythm, as appropriate	cardiac monitor
+UMLS	Monitor appropriate laboratory values (e.g., cardiac enzymes, electrolyte levels)	cardiac monitor
+UMLS	Monitor for signs of shock, (e.g., respiratory difficulty, cardiac arrhythmias, seizures, and hypotension)	cardiac monitor
+UMLS	remote analysis of technical component of implantable cardiac monitor system	cardiac monitor
+UMLS	Monitor cardiac manifestations of hyperkalemia (e.g., decreased cardiac output, heart blocks, peaked T waves, fibrillation, or asystole)	cardiac monitor
+UMLS	Monitor cardiac output and/or cardiac index and left ventricular stroke work index, as appropriate	cardiac monitor
+UMLS	Monitor for cardiac manifestations of metabolic alkalosis (e.g., arrhythmias, reduced contractility, and decreased cardiac output)	cardiac monitor
+UMLS	Monitor cardiac manifestations of hypokalemia (e.g., hypotension, broad T wave, U wave, ectopy, tachycardia, and weak pulse)	cardiac monitor
+UMLS	Monitor cardiac output, PCWP, SVR, and RAP, using invasive hemodynamic monitoring as appropriate	cardiac monitor
+UMLS	Monitor determinants of tissue oxygen delivery (e.g., PaO2, SaO2, hemoglobin levels, and cardiac output), if available	cardiac monitor
+UMLS	Monitor for cardiac manifestations of hypernatremia (e.g., tachycardia, orthostatic hypotension, and flat neck veins)	cardiac monitor
+UMLS	Monitor for cardiopulmonary manifestations of respiratory alkalosis (e.g., arrhythmias, decreased cardiac output, and hyperventilation)	cardiac monitor
+UMLS	Monitor for cardiovascular manifestations of hypophosphatemia (e.g., decreased contractility, decreased cardiac output, heart failure, and ectopy)	cardiac monitor
+UMLS	Continuous Positive Airway Pressure	cpap
+UMLS	CENPJ gene	cpap
+UMLS	Continuing positive airway pressure unit	cpap
+UMLS	Intermittent CPAP	cpap
+UMLS	N-(1(S)-carboxy-(4-hydroxy-3-iodophenyl)ethyl)-alanylproline	cpap
+UMLS	Pressure.continuous positive airway:Pres:Pt:Respiratory system:Qn	cpap
+UMLS	Nasal CPAP	cpap
+UMLS	BiPAP/CPAP	cpap
+UMLS	Continuous positive airway pressure ventilation (CPAP), initiation and management	cpap
+UMLS	CPAP nasal oxygen cannula	cpap
+UMLS	CENPJ protein, human	cpap
+UMLS	3-((5-(6-((3-chlorophenyl)amino)pyrazinyl)-3-pyridinyl)amino)-1-propanol	cpap
+UMLS	DSas-4 protein, Drosophila	cpap
+UMLS	has CPAP at home	cpap
+UMLS	newborn facial CPAP	cpap
+UMLS	BIPAP &or CPAP setting:Find:Pt:Ventilator:Ord	cpap
+UMLS	BIPAP &or CPAP setting	cpap
+UMLS	Pressure.continuous positive airway:Pres:24H^mean:Respiratory system:Qn	cpap
+UMLS	Pressure.continuous positive airway:Pres:24H^max:Respiratory system:Qn	cpap
+UMLS	Pressure.continuous positive airway:Pres:24H^median:Respiratory system:Qn	cpap
+UMLS	Cenpj protein, mouse	cpap
+UMLS	rnax provide cpap machine	cpap
+UMLS	Non-invasive ventilation (CPAP)	cpap
+UMLS	cenpj protein, zebrafish	cpap
+UMLS	CPAP via nasal prongs	cpap
+UMLS	CPAP via face mask	cpap
+UMLS	Home CPAP unit	cpap
+UMLS	CPAP/BPAP oral mask	cpap
+UMLS	Neonatal/infant continuous positive airway pressure unit	cpap
+UMLS	CPAP using humidified air	cpap
+UMLS	Continuous positive airway pressure ventilation weaning protocol	cpap
+UMLS	respiratory equipment continuous positive airway pressure device (CPAP)	cpap
+UMLS	respiratory equipment intermittent assist device	cpap
+UMLS	CPAP delivered through invasive interface	cpap
+UMLS	Continuous positive airway pressure attachment:Finding:Point in time:^Patient:Document	cpap
+UMLS	CPAP/BPAP nasal mask, reusable	cpap
+UMLS	CPAP/BPAP face mask, reusable	cpap
+UMLS	Non-invasive ventilator (BIPAP, CPAP)	cpap
+UMLS	Utilize CPAP mechanical ventilation as indicated or ordered.	cpap
+UMLS	Follow protocol for management of the patient with CPAP mechanical ventilation.	cpap
+UMLS	Continuous Positive Airway Pressure (CPAP) Ventilators	cpap
+UMLS	Dependence on continuous positive airway pressure ventilation	cpap
+UMLS	CPAP without (delivery through) endotrachael tube or tracheostomy	cpap
+UMLS	CPAP delivered through endotracheal tube or tracheostomy	cpap
+UMLS	BIPAP &or CPAP machine in last 14D - while not a resident	cpap
+UMLS	BIPAP &or CPAP machine in last 14D - while a resident	cpap
+UMLS	Continuous positive airway pressure to nonventilated lung	cpap
+UMLS	CPAP/BPAP nasal mask, single-use	cpap
+UMLS	CPAP/BPAP face mask, single-use	cpap
+UMLS	Polysomnography; age 6 years or older, sleep staging with 4 or more additional parameters of sleep, with initiation of continuous positive airway pressure therapy or bilevel ventilation, attended by a technologist	cpap
+UMLS	Dexamethasone	dexamethasone
+UMLS	Dexamethasone Isonicotinate	dexamethasone
+UMLS	dexamethasone 17-valerate	dexamethasone
+UMLS	dexamethasone acetate	dexamethasone
+UMLS	dexamethasone oxetanone	dexamethasone
+UMLS	dexamethasone receptor	dexamethasone
+UMLS	dexamethasone trimethyl acetate	dexamethasone
+UMLS	dexamethasone dipropionate	dexamethasone
+UMLS	cyclophosphamide/dexamethasone	dexamethasone
+UMLS	dexamethasone/vincristine	dexamethasone
+UMLS	Dexamethasone ophthalmic preparation	dexamethasone
+UMLS	dexamethasone injection	dexamethasone
+UMLS	dexamethasone/melphalan	dexamethasone
+UMLS	daunorubicin/dexamethasone	dexamethasone
+UMLS	Oral form dexamethasone	dexamethasone
+UMLS	Dexamethasone in parenteral dosage form	dexamethasone
+UMLS	Dexamethasone Topical Product	dexamethasone
+UMLS	dexamethasone glucuronide	dexamethasone
+UMLS	Dexamethasone allergy	dexamethasone
+UMLS	Dexamethasone overdose	dexamethasone
+UMLS	dexamethasone linoleate	dexamethasone
+UMLS	dexamethasone/metoclopramide	dexamethasone
+UMLS	dexamethasone/granisetron	dexamethasone
+UMLS	Sk-Dexamethasone	dexamethasone
+UMLS	dexamethasone nasal	dexamethasone
+UMLS	Dexamethasone / Lidocaine	dexamethasone
+UMLS	Dexamethasone Intensol	dexamethasone
+UMLS	Dexamethasone / Neomycin	dexamethasone
+UMLS	Dexamethasone phosphate	dexamethasone
+UMLS	Dexamethasone Powder	dexamethasone
+UMLS	chlorambucil/dexamethasone	dexamethasone
+UMLS	dexamethasone/rituximab	dexamethasone
+UMLS	dexamethasone/methotrexate	dexamethasone
+UMLS	asparaginase/dexamethasone	dexamethasone
+UMLS	dexamethasone/SU5416	dexamethasone
+UMLS	dexamethasone/idarubicin	dexamethasone
+UMLS	dexamethasone/floxuridine	dexamethasone
+UMLS	calcitriol/dexamethasone	dexamethasone
+UMLS	dexamethasone/ondansetron	dexamethasone
+UMLS	dexamethasone/pegaspargase	dexamethasone
+UMLS	dexamethasone/isotretinoin	dexamethasone
+UMLS	dexamethasone/doxorubicin	dexamethasone
+UMLS	dexamethasone/oblimersen	dexamethasone
+UMLS	Dexamethasone/Thalidomide protocol	dexamethasone
+UMLS	Dexamethasone Oral Tablet	dexamethasone
+UMLS	Dexamethasone measurement	dexamethasone
+UMLS	Dexamethasone / Tobramycin	dexamethasone
+UMLS	bortezomib/dexamethasone agent combination	dexamethasone
+UMLS	dexamethasone/lenalidomide	dexamethasone
+UMLS	dexamethasone otic	dexamethasone
+UMLS	Glucose	dextrose
+UMLS	intravenous infusion of intravenous dextrose	dextrose
+UMLS	dextrose monohydrate	dextrose
+UMLS	Bupivacaine and glucose	dextrose
+UMLS	Glucose / Sodium Chloride	dextrose
+UMLS	Glucose intake	dextrose
+UMLS	Dextrose (for TPN)	dextrose
+UMLS	Dextrose 2.5%	dextrose
+UMLS	Dextrose and Water	dextrose
+UMLS	Dextrose-Mefoxin	dextrose
+UMLS	Travasol with Dextrose	dextrose
+UMLS	Glucose powder	dextrose
+UMLS	Dextrose Granule	dextrose
+UMLS	Glucose 50 MG/ML	dextrose
+UMLS	Glucose 500 MG/ML	dextrose
+UMLS	Anhydrous Dextrose	dextrose
+UMLS	dextrose solution	dextrose
+UMLS	DEXTROSE/DOPAMINE	dextrose
+UMLS	ALCOHOL/DEXTROSE	dextrose
+UMLS	DEXTROSE/THEOPHYLLINE	dextrose
+UMLS	CEFOXITIN/DEXTROSE	dextrose
+UMLS	Dextran in Dextrose	dextrose
+UMLS	Dextrose Hydrous	dextrose
+UMLS	Plasmalyte In Dextrose	dextrose
+UMLS	Caffeine / Glucose	dextrose
+UMLS	AZTREONAM/DEXTROSE	dextrose
+UMLS	BRETYLIUM/DEXTROSE	dextrose
+UMLS	CEFAZOLIN/DEXTROSE	dextrose
+UMLS	CEFOPERAZONE/DEXTROSE	dextrose
+UMLS	CEFTIZOXIME/DEXTROSE	dextrose
+UMLS	CEFTRIAXONE/DEXTROSE	dextrose
+UMLS	CEFUROXIME/DEXTROSE	dextrose
+UMLS	CEPHALOTHIN/DEXTROSE	dextrose
+UMLS	CIMETIDINE/DEXTROSE	dextrose
+UMLS	CIPROFLOXACIN/DEXTROSE	dextrose
+UMLS	CLINDAMYCIN/DEXTROSE	dextrose
+UMLS	DEXTROSE/ELECTROLYTES	dextrose
+UMLS	DEXTROSE/GENTAMICIN	dextrose
+UMLS	DEXTROSE/HEPARIN	dextrose
+UMLS	DEXTROSE/LIDOCAINE	dextrose
+UMLS	DEXTROSE/NAFCILLIN	dextrose
+UMLS	DEXTROSE/OXACILLIN	dextrose
+UMLS	DEXTROSE/OXYTOCIN	dextrose
+UMLS	DEXTROSE/PENICILLIN	dextrose
+UMLS	DEXTROSE/PIPERACILLIN	dextrose
+UMLS	DEXTROSE/PSYLLIUM	dextrose
+UMLS	DEXTROSE/RINGER'S	dextrose
+UMLS	DEXTROSE/TETRACAINE	dextrose
+UMLS	DEXTROSE/TICARCILLIN	dextrose
+UMLS	fluconazole in dextrose	dextrose
+UMLS	Diazepam	diazepam
+UMLS	Diazepam measurement	diazepam
+UMLS	Diazepam Binding Inhibitor	diazepam
+UMLS	Benzodiazepine Receptor	diazepam
+UMLS	pro-diazepam	diazepam
+UMLS	Poisoning by diazepam	diazepam
+UMLS	Diazepam dependence	diazepam
+UMLS	Diazepam Oral Product	diazepam
+UMLS	Diazepam in parenteral dosage form	diazepam
+UMLS	Diazepam Rectal Product	diazepam
+UMLS	Diazepam:MCnc:Pt:Ser/Plas:Qn	diazepam
+UMLS	Diazepam:Mass:Pt:Dose:Qn	diazepam
+UMLS	Diazepam allergy	diazepam
+UMLS	Diazepam overdose	diazepam
+UMLS	Diastat	diazepam
+UMLS	DIAZEPAM TREATMENT	diazepam
+UMLS	Diazepam:SCnc:Pt:Ser/Plas:Qn	diazepam
+UMLS	Diazepam cutoff:MCnc:Pt:Urine:Qn:Screen	diazepam
+UMLS	Diazepam cutoff:MCnc:Pt:Urine:Qn:Confirm	diazepam
+UMLS	Diazepam+Nordiazepam:MCnc:Pt:Urine:Qn	diazepam
+UMLS	Diazepam cutoff	diazepam
+UMLS	Diazepam+Nordiazepam	diazepam
+UMLS	diazepam binding	diazepam
+UMLS	Diazepam Powder	diazepam
+UMLS	Diazepam Enema	diazepam
+UMLS	Diazepam / Sulpiride	diazepam
+UMLS	Diazepam / Isopropamide	diazepam
+UMLS	Diazepam / Hyoscyamine	diazepam
+UMLS	Diazepam / fenproporex	diazepam
+UMLS	Diazepam / Scopolamine	diazepam
+UMLS	Diazepam / octylonium	diazepam
+UMLS	Diazepam:PrThr:Pt:XXX:Ord	diazepam
+UMLS	Diazepam/Creatinine:MRto:Pt:Urine:Qn	diazepam
+UMLS	Diazepam/Creatinine	diazepam
+UMLS	Diazepam Pill	diazepam
+UMLS	Diazepam Hydrochloride	diazepam
+UMLS	Diazepam:MCnc:Pt:Saliva:Qn:Confirm	diazepam
+UMLS	diazepam injection	diazepam
+UMLS	Diazepam cutoff:MCnc:Pt:Saliva:Qn:Confirm	diazepam
+UMLS	Diazepam Cartridge	diazepam
+UMLS	Diazepam Autoinjector	diazepam
+UMLS	Diazepam 10 MG Oral Tablet	diazepam
+UMLS	Diazepam 2 MG Oral Tablet	diazepam
+UMLS	Diazepam 5 MG Oral Tablet	diazepam
+UMLS	diazepam N-demethylase	diazepam
+UMLS	diazepam-binding inhibitor receptor	diazepam
+UMLS	Urine Diazepam Test	diazepam
+UMLS	Diazepam Oral Tablet [Valium]	diazepam
+UMLS	Diazepam 10 MG Rectal Suppository	diazepam
+UMLS	Diazepam 0.2 MG/ML Oral Suspension	diazepam
+UMLS	Encourage the patient to relax	encourage patient to relax
+UMLS	Encourage patient to deep breathe and relax during massage	encourage patient to relax
+UMLS	Endotracheal tube	endotracheal tube
+UMLS	Tube, Endotracheal	endotracheal tube
+UMLS	Intubation, Intratracheal	endotracheal tube
+UMLS	Bougie	endotracheal tube
+UMLS	Endotracheal tube cuff	endotracheal tube
+UMLS	Endotracheal intubation, emergency procedure	endotracheal tube
+UMLS	Orotracheal intubation	endotracheal tube
+UMLS	Nasotracheal intubation	endotracheal tube
+UMLS	Via endotracheal tube	endotracheal tube
+UMLS	Specimen from endotracheal tube	endotracheal tube
+UMLS	Suction and cleaning of endotracheal tube	endotracheal tube
+UMLS	Irrigation and suction of endotracheal tube	endotracheal tube
+UMLS	Endotracheal tube suction	endotracheal tube
+UMLS	Reposition endotracheal tube	endotracheal tube
+UMLS	Check endotracheal tube is secure	endotracheal tube
+UMLS	Checking position of endotracheal tube	endotracheal tube
+UMLS	Changing endotracheal tube	endotracheal tube
+UMLS	Changing endotracheal tube headband	endotracheal tube
+UMLS	Changing endotracheal tube tapes	endotracheal tube
+UMLS	CHANGER, TUBE, ENDOTRACHEAL	endotracheal tube
+UMLS	Awake intubation	endotracheal tube
+UMLS	Retape endotracheal tube.	endotracheal tube
+UMLS	Tracheal Extubation	endotracheal tube
+UMLS	Armored endotracheal tube	endotracheal tube
+UMLS	RAE endotracheal tube	endotracheal tube
+UMLS	Oxford endotracheal tube	endotracheal tube
+UMLS	Oral RAE endotracheal tube	endotracheal tube
+UMLS	Nasal RAE endotracheal tube	endotracheal tube
+UMLS	Change of endotracheal or endobronchial tube	endotracheal tube
+UMLS	Endotracheal tube leak:VFr:Pt:Respiratory system:Qn	endotracheal tube
+UMLS	Endotracheal tube leak	endotracheal tube
+UMLS	Blocked endotracheal tube	endotracheal tube
+UMLS	Endotracheal Tube Insertion Laryngoscopes	endotracheal tube
+UMLS	Tube care: endotracheal	endotracheal tube
+UMLS	Endotracheal tube secure method:Type:Point in time:Tube, unspecified:Nominal	endotracheal tube
+UMLS	Endotracheal tube secure method	endotracheal tube
+UMLS	Instillation, endotracheal tube	endotracheal tube
+UMLS	Nebulization, endotracheal tube	endotracheal tube
+UMLS	Nasal endotracheal tube present	endotracheal tube
+UMLS	Endotracheal tube present	endotracheal tube
+UMLS	Oral endotracheal tube present	endotracheal tube
+UMLS	Magill type endotracheal tube	endotracheal tube
+UMLS	Preformed endotracheal tube	endotracheal tube
+UMLS	Endotracheal tube cuff leak	endotracheal tube
+UMLS	Endotracheal tube cuff herniation	endotracheal tube
+UMLS	Endotracheal tube disconnection	endotracheal tube
+UMLS	Endotracheal tube obstruction	endotracheal tube
+UMLS	Manual securing of endotracheal tube	endotracheal tube
+UMLS	endotracheal tube insertion unsuccessful	endotracheal tube
+UMLS	difficult endotracheal tube intubation	endotracheal tube
+UMLS	Epinephrine	epinephrine
+UMLS	Epinephrine measurement	epinephrine
+UMLS	epinephrine hydrochloride	epinephrine
+UMLS	Monoamine Oxidase	epinephrine
+UMLS	Adrenergic Receptor	epinephrine
+UMLS	Dipivefrin	epinephrine
+UMLS	epinephrine cyclase	epinephrine
+UMLS	epinephrine sulfate	epinephrine
+UMLS	epinephryl borate	epinephrine
+UMLS	epinephrine glucuronide	epinephrine
+UMLS	epinephrine sulfoconjugate	epinephrine
+UMLS	Racepinephrine	epinephrine
+UMLS	Epinephrine deficiency	epinephrine
+UMLS	Poisoning by epinephrine	epinephrine
+UMLS	Epinephrine / Lidocaine	epinephrine
+UMLS	Bupivacaine / Epinephrine	epinephrine
+UMLS	Cocaine / Epinephrine	epinephrine
+UMLS	Epinephrine^supine:MCnc:Pt:Plas:Qn	epinephrine
+UMLS	Urine epinephrine measurement	epinephrine
+UMLS	Epinephrine Acetate	epinephrine
+UMLS	Epinephrine Injectable Product	epinephrine
+UMLS	cisplatin-epinephrine therapeutic implant	epinephrine
+UMLS	epinephrine bitartrate	epinephrine
+UMLS	Epinephrine + chlorpheniramine	epinephrine
+UMLS	EPINEPHrine ophthalmic	epinephrine
+UMLS	Epinephrine / Etidocaine	epinephrine
+UMLS	Epinephrine / Prilocaine	epinephrine
+UMLS	Sensorcaine with Epinephrine	epinephrine
+UMLS	Injection of epinephrine	epinephrine
+UMLS	epinephrine allergy	epinephrine
+UMLS	Epinephrine Powder	epinephrine
+UMLS	Epinephrine/Creatinine:MRto:Pt:Urine:Qn	epinephrine
+UMLS	epinephrine and norepinephrine	epinephrine
+UMLS	Epinephrine/Creatinine	epinephrine
+UMLS	Abnormal epinephrine	epinephrine
+UMLS	Epinephrine normal	epinephrine
+UMLS	Epinephrine increased	epinephrine
+UMLS	Epinephrine decreased	epinephrine
+UMLS	Epinephrine/Creatinine:SRto:Pt:Urine:Qn	epinephrine
+UMLS	Articaine / Epinephrine	epinephrine
+UMLS	epinephrine metabolic process	epinephrine
+UMLS	epinephrine biosynthetic process	epinephrine
+UMLS	epinephrine catabolic process	epinephrine
+UMLS	Epinephrine / Mepivacaine	epinephrine
+UMLS	Epinephrine / Fluorouracil	epinephrine
+UMLS	Epinephrine/Creatinine:SRto:XXX:Urine:Qn	epinephrine
+UMLS	Epinephrine / Guanethidine	epinephrine
+UMLS	epinephrine secretion	epinephrine
+UMLS	epinephrine transport	epinephrine
+UMLS	adrenaline; hypersecretion	epinephrine
+UMLS	Fentanyl	fentanyl
+UMLS	Fentanyl measurement	fentanyl
+UMLS	fentanyl isothiocyanate	fentanyl
+UMLS	Droperidol / Fentanyl	fentanyl
+UMLS	fentanyl:mass:point in time:dose med or substance:quantitative	fentanyl
+UMLS	Fentanyl Citrate	fentanyl
+UMLS	Fentanyl poisoning	fentanyl
+UMLS	Fentanyl allergy	fentanyl
+UMLS	Fentanyl overdose	fentanyl
+UMLS	BUPIVACAINE/FENTANYL	fentanyl
+UMLS	Fentanyl / ropivacaine	fentanyl
+UMLS	FENTANYL HYDROCHLORIDE	fentanyl
+UMLS	Fentanyl dependence	fentanyl
+UMLS	exposure to fentanyl	fentanyl
+UMLS	BEMA Fentanyl	fentanyl
+UMLS	FentaNYL Matrix	fentanyl
+UMLS	Fentanyl+Norfentanyl	fentanyl
+UMLS	Fentanyl+Norfentanyl:PrThr:Pt:Urine:Ord:Screen	fentanyl
+UMLS	Fentanyl/Creatinine:MRto:Pt:Urine:Qn	fentanyl
+UMLS	Fentanyl/Creatinine	fentanyl
+UMLS	Fentanyl Crystal	fentanyl
+UMLS	Fentanyl Pill	fentanyl
+UMLS	Fentanyl Topical Product	fentanyl
+UMLS	Fentanyl+Norfentanyl:PrThr:Pt:Urine:Ord:Confirm	fentanyl
+UMLS	fentanyl, combinations	fentanyl
+UMLS	N-(1-phenethylpiperidin-4-yl)-N-phenylacetamide	fentanyl
+UMLS	Fentanyl cutoff	fentanyl
+UMLS	Fentanyl cutoff:MCnc:Pt:Urine:Qn:Screen	fentanyl
+UMLS	Fentanyl cutoff:MCnc:Pt:Urine:Qn:Confirm	fentanyl
+UMLS	Fentanyl cutoff:MCnc:Pt:Saliva:Qn:Confirm	fentanyl
+UMLS	Fentanyl Cartridge	fentanyl
+UMLS	Fentanyl Injection	fentanyl
+UMLS	butyrfentanyl	fentanyl
+UMLS	furanyl fentanyl	fentanyl
+UMLS	72 HR Fentanyl 0.075 MG/HR Transdermal System	fentanyl
+UMLS	72 HR Fentanyl 0.025 MG/HR Transdermal System	fentanyl
+UMLS	72 HR Fentanyl 0.05 MG/HR Transdermal System	fentanyl
+UMLS	72 HR Fentanyl 0.1 MG/HR Transdermal System	fentanyl
+UMLS	Fentanyl 1.2 MG Oral Lozenge	fentanyl
+UMLS	Fentanyl 1.6 MG Oral Lozenge	fentanyl
+UMLS	Fentanyl 0.2 MG Oral Lozenge	fentanyl
+UMLS	Fentanyl 0.3 MG Oral Lozenge	fentanyl
+UMLS	Fentanyl 0.4 MG Oral Lozenge	fentanyl
+UMLS	Fentanyl 0.6 MG Oral Lozenge	fentanyl
+UMLS	Fentanyl 0.8 MG Oral Lozenge	fentanyl
+UMLS	72 HR Fentanyl 0.012 MG/HR Transdermal System	fentanyl
+UMLS	Fentanyl 0.1 MG Buccal Tablet	fentanyl
+UMLS	Fentanyl 0.2 MG Buccal Tablet	fentanyl
+UMLS	Fentanyl 0.2 MG Buccal Film	fentanyl
+UMLS	Fentanyl 0.1 MG Sublingual Tablet	fentanyl
+UMLS	Geodon	geodon
+UMLS	Geodon, for Injection	geodon
+UMLS	Geodon, Capsules	geodon
+UMLS	Geodon Pill	geodon
+UMLS	ziprasidone 40 MG Oral Capsule [Geodon]	geodon
+UMLS	ziprasidone 60 MG Oral Capsule [Geodon]	geodon
+UMLS	ziprasidone 80 MG Oral Capsule [Geodon]	geodon
+UMLS	ziprasidone 20 MG Oral Capsule [Geodon]	geodon
+UMLS	ziprasidone 20 MG Injection [Geodon]	geodon
+UMLS	ziprasidone Oral Capsule [Geodon]	geodon
+UMLS	ziprasidone 40 MG [Geodon]	geodon
+UMLS	ziprasidone 60 MG [Geodon]	geodon
+UMLS	ziprasidone 80 MG [Geodon]	geodon
+UMLS	ziprasidone 20 MG [Geodon]	geodon
+UMLS	Geodon Injectable Product	geodon
+UMLS	Geodon Oral Product	geodon
+UMLS	ziprasidone Injection [Geodon]	geodon
+UMLS	Glucagon	glucagon
+UMLS	Glucagon measurement	glucagon
+UMLS	glucagon, human	glucagon
+UMLS	GCG gene	glucagon
+UMLS	Structure of alpha Cell of islet	glucagon
+UMLS	glucagon, N(alpha)-trinitrophenyl-His(1)-homo-Arg(12)-	glucagon
+UMLS	Glucagon Receptor	glucagon
+UMLS	glucagon, 12-(N(6)-(4-azidophenylamidino)Lys)-	glucagon
+UMLS	glucagon, 2-nitro-4-azidophenylsulfenyl-	glucagon
+UMLS	N-trinitrophenylglucagon	glucagon
+UMLS	Proglucagon	glucagon
+UMLS	Abnormality of secretion of glucagon	glucagon
+UMLS	Glucagon resistance	glucagon
+UMLS	Poisoning by glucagon	glucagon
+UMLS	Glucagon deficiency	glucagon
+UMLS	Glucagon Ag:PrThr:Pt:Tiss:Ord:Immune stain	glucagon
+UMLS	Glucagon Ag	glucagon
+UMLS	RADIOIMMUNOASSAY, GLUCAGON	glucagon
+UMLS	Increased secretion of glucagon (finding)	glucagon
+UMLS	Glucagon Injectable Product	glucagon
+UMLS	Glucagon allergy	glucagon
+UMLS	Glucagon overdose	glucagon
+UMLS	Glucagon Novo	glucagon
+UMLS	glucagon, di-(delta-(5-nitro-2-pyrimidyl)Orn)(17,18)-	glucagon
+UMLS	glucagon, carboxy-Me-Met(27)-	glucagon
+UMLS	Glucagon Lilly	glucagon
+UMLS	glucagon 29	glucagon
+UMLS	GLUCAGON HYDROCHLORIDE	glucagon
+UMLS	Glucagon:SCnc:Pt:Ser/Plas:Qn	glucagon
+UMLS	Blood glucagon	glucagon
+UMLS	Serum glucagon	glucagon
+UMLS	Glucagon normal	glucagon
+UMLS	Glucagon increased	glucagon
+UMLS	Glucagon low	glucagon
+UMLS	Abnormal glucagon	glucagon
+UMLS	glucagon (rDNA)	glucagon
+UMLS	glucagon (rDNA) 1 MG Injection	glucagon
+UMLS	Plasma glucagon measurement	glucagon
+UMLS	GCGR gene	glucagon
+UMLS	Enteroglucagons	glucagon
+UMLS	Glucagon Precursors	glucagon
+UMLS	Glucagon:Mass:Pt:Dose:Qn	glucagon
+UMLS	Betaxolol+Glucagon	glucagon
+UMLS	Propranolol+Glucagon	glucagon
+UMLS	glucagon kit	glucagon
+UMLS	response to glucagon	glucagon
+UMLS	glucagon secretion	glucagon
+UMLS	glucagon yellow	glucagon
+UMLS	Glucagon Injection	glucagon
+UMLS	Glucagon, porcine	glucagon
+UMLS	Ipratropium	ipratropium
+UMLS	Ipratropium allergy	ipratropium
+UMLS	Ipratropium Bromide	ipratropium
+UMLS	Albuterol / Ipratropium	ipratropium
+UMLS	ipratropium nasal	ipratropium
+UMLS	Ipratropium reversibility	ipratropium
+UMLS	Fenoterol / Ipratropium	ipratropium
+UMLS	Ipratropium cation	ipratropium
+UMLS	Ipratropium Bromide 0.021 MG/ACTUAT Metered Dose Nasal Spray	ipratropium
+UMLS	Ipratropium adverse reaction	ipratropium
+UMLS	Ipratropium Bromide 0.021 MG/ACTUAT Nasal Spray	ipratropium
+UMLS	Ipratropium Bromide 0.042 MG/ACTUAT Nasal Spray	ipratropium
+UMLS	Steri-Neb Ipratropium	ipratropium
+UMLS	Ipratropium Bromide Powder	ipratropium
+UMLS	Ipratropium 0.04 MG/ACTUAT Inhalant Solution	ipratropium
+UMLS	Ipratropium Bromide, endo-Isomer	ipratropium
+UMLS	Ipratropium 0.04 MG/ACTUAT	ipratropium
+UMLS	Ipratropium 0.5 MG/ACTUAT	ipratropium
+UMLS	Ipratropium Nasal Spray	ipratropium
+UMLS	Fenoterol / Ipratropium Inhalant Solution	ipratropium
+UMLS	Ipratropium Inhalant Solution	ipratropium
+UMLS	Albuterol / Ipratropium Inhalant Solution	ipratropium
+UMLS	Ipratropium Inhalant Powder	ipratropium
+UMLS	Albuterol-Ipratropium Bromide	ipratropium
+UMLS	Ipratropium 1.25 MG/ACTUAT	ipratropium
+UMLS	albuterol sulfate + ipratropium bromide	ipratropium
+UMLS	Ipratropium Bromide Nasal	ipratropium
+UMLS	Ipratropium Bromide Novaplus	ipratropium
+UMLS	Ipratropium Bromide Hydrous	ipratropium
+UMLS	Ipratropium Metered Dose Inhaler	ipratropium
+UMLS	Ipratropium in respiratory dosage form	ipratropium
+UMLS	Ipratropium in nasal dosage form	ipratropium
+UMLS	Ipratropium bromide 20micrograms inhaler	ipratropium
+UMLS	Ipratropium Bromide, Micronized Powder	ipratropium
+UMLS	Albuterol / Ipratropium Inhalant Product	ipratropium
+UMLS	Ipratropium Inhalant Product	ipratropium
+UMLS	Ipratropium Nasal Product	ipratropium
+UMLS	Fenoterol / Ipratropium Inhalant Product	ipratropium
+UMLS	Ipratropium Bromide Monohydrate	ipratropium
+UMLS	Ipratropium induced platelet Ab.IgM	ipratropium
+UMLS	Ipratropium induced platelet Ab.IgG	ipratropium
+UMLS	Ipratropium induced platelet Ab	ipratropium
+UMLS	Ipratropium Bromide Anhydrous	ipratropium
+UMLS	fenoterol and ipratropium bromide	ipratropium
+UMLS	Ipratropium Bromide 0.04 MG/ACTUAT Inhalant Powder	ipratropium
+UMLS	Ipratropium Bromide, (endo,anti)-Isomer	ipratropium
+UMLS	Ipratropium Bromide, (exo,syn)-Isomer	ipratropium
+UMLS	Ipratropium Bromide 0.2 MG/ML Inhalant Solution	ipratropium
+UMLS	Ipratropium Bromide 0.167 MG/ML	ipratropium
+UMLS	Albuterol / Ipratropium Inhalant Solution [DuoNeb]	ipratropium
+UMLS	Magnesium Sulfate	magnesium sulfate
+UMLS	Magnesium Oxide / Magnesium Sulfate	magnesium sulfate
+UMLS	magnesium carbonate & magnesium sulfate	magnesium sulfate
+UMLS	Magnesium Sulfate / potassium sulfate / sodium sulfate	magnesium sulfate
+UMLS	MAGNESIUM LAURYL SULFATE	magnesium sulfate
+UMLS	2,2'-dithio-bis-pyridine-1-oxide magnesium sulfate	magnesium sulfate
+UMLS	Poisoning by magnesium sulfate	magnesium sulfate
+UMLS	Magnesium Sulfate Powder	magnesium sulfate
+UMLS	Magnesium sulphate paste BP	magnesium sulfate
+UMLS	Accidental magnesium sulfate poisoning	magnesium sulfate
+UMLS	Intentional magnesium sulfate poisoning	magnesium sulfate
+UMLS	Magnesium sulfate adverse reaction	magnesium sulfate
+UMLS	Magnesium sulfate allergy	magnesium sulfate
+UMLS	Magnesium sulfate overdose	magnesium sulfate
+UMLS	Accidental magnesium sulfate overdose	magnesium sulfate
+UMLS	Intentional magnesium sulfate overdose	magnesium sulfate
+UMLS	potassium magnesium sulfate	magnesium sulfate
+UMLS	Dextrose-Magnesium Sulfate	magnesium sulfate
+UMLS	Magnesium Sulfate Injectable Product	magnesium sulfate
+UMLS	Magnesium sulfate heptahydrate	magnesium sulfate
+UMLS	Magnesium Sulfate Crystal	magnesium sulfate
+UMLS	Magnesium Sulfate Oral Granules	magnesium sulfate
+UMLS	Magnesium Sulfate 70 MG	magnesium sulfate
+UMLS	Magnesium Sulfate Injectable Solution	magnesium sulfate
+UMLS	Magnesium Sulfate Oral Solution	magnesium sulfate
+UMLS	Magnesium Sulfate Topical Ointment	magnesium sulfate
+UMLS	MAGNESIUM SULFATE ANHYDROUS	magnesium sulfate
+UMLS	magnesium oxide-zinc sulfate	magnesium sulfate
+UMLS	magnesium hydroxide sulfate hydrate	magnesium sulfate
+UMLS	Magnesium Sulfate Prefilled Syringe	magnesium sulfate
+UMLS	Magnesium Sulfate-Lactated Ringers	magnesium sulfate
+UMLS	Magnesium Sulfate / Peptones	magnesium sulfate
+UMLS	magnesium sulfate in D5W	magnesium sulfate
+UMLS	Magnesium Sulfate 6.9 MG	magnesium sulfate
+UMLS	Magnesium Sulfate 0.05 MG	magnesium sulfate
+UMLS	Magnesium Sulfate 40 MG/ML Injection	magnesium sulfate
+UMLS	Magnesium Sulfate-Sodium Chloride	magnesium sulfate
+UMLS	calcium lactate / Magnesium Sulfate	magnesium sulfate
+UMLS	Lidocaine / Magnesium Sulfate	magnesium sulfate
+UMLS	Benzocaine / Magnesium Sulfate	magnesium sulfate
+UMLS	Magnesium Sulfate / Phenolphthalein	magnesium sulfate
+UMLS	Magnesium Sulfate 1000 MG	magnesium sulfate
+UMLS	Magnesium Sulfate 1000 MG Oral Granules	magnesium sulfate
+UMLS	Magnesium Sulfate Oral Product	magnesium sulfate
+UMLS	Magnesium Sulfate Pill	magnesium sulfate
+UMLS	Magnesium Sulfate Topical Product	magnesium sulfate
+UMLS	MAGNESIUM SULFATE MONOHYDRATE	magnesium sulfate
+UMLS	Magnesium Sulfate Granule Product	magnesium sulfate
+UMLS	Magnesium Sulfate 10 MG	magnesium sulfate
+UMLS	Magnesium Sulfate Injection	magnesium sulfate
+UMLS	Metered dose inhaler therapy	metered dose inhaler
+UMLS	Metered Dose Inhaler	metered dose inhaler
+UMLS	Metered dose powder inhaler	metered dose inhaler
+UMLS	Metered dose aerosol inhaler	metered dose inhaler
+UMLS	Albuterol Metered Dose Inhaler	metered dose inhaler
+UMLS	Levalbuterol Metered Dose Inhaler	metered dose inhaler
+UMLS	Cromolyn Metered Dose Inhaler	metered dose inhaler
+UMLS	Beclomethasone Metered Dose Inhaler	metered dose inhaler
+UMLS	Epinephrine Metered Dose Inhaler	metered dose inhaler
+UMLS	fluticasone Metered Dose Inhaler	metered dose inhaler
+UMLS	Ipratropium Metered Dose Inhaler	metered dose inhaler
+UMLS	Nedocromil Metered Dose Inhaler	metered dose inhaler
+UMLS	ciclesonide Metered Dose Inhaler	metered dose inhaler
+UMLS	pirbuterol Metered Dose Inhaler	metered dose inhaler
+UMLS	flunisolide Metered Dose Inhaler	metered dose inhaler
+UMLS	metaproterenol Metered Dose Inhaler	metered dose inhaler
+UMLS	Mometasone Metered Dose Inhaler	metered dose inhaler
+UMLS	olodaterol Metered Dose Inhaler	metered dose inhaler
+UMLS	Metered dose inhaler (physical object)	metered dose inhaler
+UMLS	tiotropium Metered Dose Inhaler	metered dose inhaler
+UMLS	fluticasone / salmeterol Metered Dose Inhaler	metered dose inhaler
+UMLS	Albuterol / Ipratropium Metered Dose Inhaler	metered dose inhaler
+UMLS	Budesonide / formoterol Metered Dose Inhaler	metered dose inhaler
+UMLS	fluticasone Metered Dose Inhaler [Flovent]	metered dose inhaler
+UMLS	Ipratropium Metered Dose Inhaler [Atrovent]	metered dose inhaler
+UMLS	Levalbuterol Metered Dose Inhaler [Xopenex]	metered dose inhaler
+UMLS	Albuterol Metered Dose Inhaler [Proventil]	metered dose inhaler
+UMLS	ciclesonide Metered Dose Inhaler [Alvesco]	metered dose inhaler
+UMLS	Albuterol Metered Dose Inhaler [Ventolin]	metered dose inhaler
+UMLS	Beclomethasone Metered Dose Inhaler [Qvar]	metered dose inhaler
+UMLS	formoterol / Mometasone Metered Dose Inhaler	metered dose inhaler
+UMLS	flunisolide Metered Dose Inhaler [Aerospan]	metered dose inhaler
+UMLS	Mometasone Metered Dose Inhaler [Asmanex]	metered dose inhaler
+UMLS	olodaterol Metered Dose Inhaler [Striverdi]	metered dose inhaler
+UMLS	tiotropium Metered Dose Inhaler [Spiriva]	metered dose inhaler
+UMLS	Albuterol Metered Dose Inhaler [ProAir]	metered dose inhaler
+UMLS	olodaterol / tiotropium Metered Dose Inhaler	metered dose inhaler
+UMLS	formoterol / Glycopyrrolate Metered Dose Inhaler	metered dose inhaler
+UMLS	Epinephrine Metered Dose Inhaler [Primatene Mist Inhaler]	metered dose inhaler
+UMLS	Drug administered through a metered dose inhaler	metered dose inhaler
+UMLS	Beclomethasone dipropionate 250micrograms compact spacer refill	metered dose inhaler
+UMLS	Albuterol 0.1 MG/ACTUAT Inhalant Solution	metered dose inhaler
+UMLS	120 ACTUAT Beclomethasone Dipropionate 0.084 MG/ACTUAT Metered Dose Inhaler	metered dose inhaler
+UMLS	80 ACTUAT Beclomethasone Dipropionate 0.042 MG/ACTUAT Metered Dose Inhaler	metered dose inhaler
+UMLS	Albuterol / Ipratropium Metered Dose Inhaler [Combivent]	metered dose inhaler
+UMLS	Budesonide / formoterol Metered Dose Inhaler [Symbicort]	metered dose inhaler
+UMLS	patient education about asthma metered dose inhaler	metered dose inhaler
+UMLS	fluticasone / salmeterol Metered Dose Inhaler [Advair]	metered dose inhaler
+UMLS	formoterol / Mometasone Metered Dose Inhaler [Dulera]	metered dose inhaler
+UMLS	Albuterol 0.09 MG/ACTUAT Metered Dose Inhaler	metered dose inhaler
+UMLS	Midazolam	midazolam
+UMLS	Midazolam Measurement	midazolam
+UMLS	Midazolam:MCnc:Pt:Ser/Plas:Qn	midazolam
+UMLS	midazolam:mass:point in time:dose med or substance:quantitative	midazolam
+UMLS	Midazolam Maleate	midazolam
+UMLS	Midazolam poisoning	midazolam
+UMLS	Midazolam allergy	midazolam
+UMLS	Midazolam overdose	midazolam
+UMLS	Midazolam Hydrochloride	midazolam
+UMLS	Midazolam:SCnc:Pt:Ser/Plas:Qn	midazolam
+UMLS	Midazolam cutoff:MCnc:Pt:Urine:Qn:Screen	midazolam
+UMLS	Midazolam cutoff:MCnc:Pt:Urine:Qn:Confirm	midazolam
+UMLS	Midazolam cutoff	midazolam
+UMLS	Midazolam Powder	midazolam
+UMLS	Midazolam Crystal	midazolam
+UMLS	Midazolam:MCnc:Pt:Body fld:Qn	midazolam
+UMLS	Midazolam:MCnc:Pt:Body fld:Qn:Confirm	midazolam
+UMLS	Midazolam:MCnt:Pt:Tiss:Qn	midazolam
+UMLS	Midazolam:MCnt:Pt:Tiss:Qn:Confirm	midazolam
+UMLS	Midazolam:MCnc:Pt:Bld:Qn	midazolam
+UMLS	Midazolam:MCnc:Pt:Bld:Qn:Confirm	midazolam
+UMLS	Midazolam Pill	midazolam
+UMLS	Midazolam Cartridge	midazolam
+UMLS	Midazolam Injection	midazolam
+UMLS	Midazolam/Creatinine:MRto:Pt:Urine:Qn:Confirm	midazolam
+UMLS	Midazolam/Creatinine	midazolam
+UMLS	Midazolam 2 MG/ML Oral Solution	midazolam
+UMLS	dexamethasone/metoclopramide/midazolam	midazolam
+UMLS	Midazolam 2 MG/ML Injectable Solution	midazolam
+UMLS	Midazolam:PrThr:Pt:Stool:Ord	midazolam
+UMLS	Accidental midazolam poisoning	midazolam
+UMLS	Intentional midazolam poisoning	midazolam
+UMLS	Midazolam poisoning of undetermined intent	midazolam
+UMLS	Midazolam adverse reaction	midazolam
+UMLS	Accidental midazolam overdose	midazolam
+UMLS	Intentional midazolam overdose	midazolam
+UMLS	Midazolam overdose of undetermined intent	midazolam
+UMLS	Midazolam:MCnc:Pt:Urine:Qn:Confirm	midazolam
+UMLS	Midazolam:PrThr:Pt:Urine:Ord:Screen	midazolam
+UMLS	Midazolam:PrThr:Pt:Urine:Ord:Confirm	midazolam
+UMLS	Midazolam:MCnc:Pt:Urine:Qn	midazolam
+UMLS	Midazolam:MCnt:Pt:Hair:Qn	midazolam
+UMLS	Midazolam:MCnt:Pt:Stool:Qn	midazolam
+UMLS	Midazolam:MCnt:Pt:Meconium:Qn	midazolam
+UMLS	Midazolam:MCnc:Pt:Vitr fld:Qn	midazolam
+UMLS	Midazolam 1 MG/ML	midazolam
+UMLS	Midazolam 2 MG/ML	midazolam
+UMLS	Midazolam 5 MG/ML	midazolam
+UMLS	Midazolam 7.5 MG	midazolam
+UMLS	Midazolam Oral Tablet	midazolam
+UMLS	Morphine	morphine
+UMLS	Morphine Measurement	morphine
+UMLS	morphine and morphine derivative	morphine
+UMLS	Codeine	morphine
+UMLS	Heroin	morphine
+UMLS	Ethylmorphine	morphine
+UMLS	Morphine Chloride	morphine
+UMLS	Morphine Dependence	morphine
+UMLS	Morphine Derivatives Including Cocaine	morphine
+UMLS	morphine 6-dehydrogenase	morphine
+UMLS	Morphine Sulfate	morphine
+UMLS	nicomorphine	morphine
+UMLS	paregoric	morphine
+UMLS	Morphine Receptor	morphine
+UMLS	Morphine Glucuronyltransferase	morphine
+UMLS	morphine acetate	morphine
+UMLS	morphine use	morphine
+UMLS	Morphine habit	morphine
+UMLS	Poisoning by morphine	morphine
+UMLS	Kaolin+morphine	morphine
+UMLS	Morphine Oral Product	morphine
+UMLS	Morphine:MCnc:Pt:Ser/Plas:Qn	morphine
+UMLS	morphine dose	morphine
+UMLS	morphine methiodide	morphine
+UMLS	FLUOROMETRY, MORPHINE	morphine
+UMLS	Morphine allergy	morphine
+UMLS	Morphine overdose	morphine
+UMLS	Morphine in parenteral dosage form	morphine
+UMLS	Morphine Rectal Product	morphine
+UMLS	Morphine capsule	morphine
+UMLS	Morphine Abuse	morphine
+UMLS	morphine monohemisuccinate	morphine
+UMLS	10-alpha-S-glutathionylmorphine	morphine
+UMLS	Morphine Derivatives Excluding Cocaine	morphine
+UMLS	Morphine IR	morphine
+UMLS	Morphine hydrochloride	morphine
+UMLS	MORPHINE TARTRATE	morphine
+UMLS	dextromethorphan/morphine	morphine
+UMLS	Morphine:SCnc:Pt:Ser/Plas:Qn	morphine
+UMLS	Morphine cutoff:MCnc:Pt:Urine:Qn:Screen	morphine
+UMLS	Morphine cutoff:MCnc:Pt:Urine:Qn:Confirm	morphine
+UMLS	Morphine cutoff	morphine
+UMLS	Morphine Oral Tablet	morphine
+UMLS	Urine morphine level result	morphine
+UMLS	marijuana/morphine	morphine
+UMLS	response to morphine	morphine
+UMLS	Morphine liposome	morphine
+UMLS	Morphine Liposomal	morphine
+UMLS	Cyclizine / Morphine	morphine
+UMLS	Morphine + cocaine	morphine
+UMLS	Narcan	narcan
+UMLS	Naloxone Injectable Solution [Narcan]	narcan
+UMLS	Naloxone Hydrochloride 1 MG/ML Injectable Solution [Narcan]	narcan
+UMLS	Naloxone Hydrochloride 0.4 MG/ML Injectable Solution [Narcan]	narcan
+UMLS	Naloxone Nasal Spray [Narcan]	narcan
+UMLS	Narcan Nasal Product	narcan
+UMLS	Narcan Inhalant Product	narcan
+UMLS	Naloxone Hydrochloride 0.02 MG/ML Injectable Solution [Narcan]	narcan
+UMLS	Narcan 400micrograms/1mL prefilled syringe	narcan
+UMLS	Naloxone Hydrochloride 40 MG/ML Nasal Spray [Narcan]	narcan
+UMLS	Naloxone Hydrochloride 0.4 MG/ML includes Injectable Solution, Injection & Cartridge	narcan
+UMLS	Naloxone Hydrochloride 40 MG/ML [Narcan]	narcan
+UMLS	Naloxone Hydrochloride 20 MG/ML Nasal Spray [Narcan]	narcan
+UMLS	Naloxone Hydrochloride 20 MG/ML [Narcan]	narcan
+UMLS	1 ML Naloxone Hydrochloride 0.4 MG/ML Cartridge	narcan
+UMLS	Naloxone Hydrochloride 0.4 MG/ML Injectable Solution	narcan
+UMLS	1 ML Naloxone Hydrochloride 0.4 MG/ML Injection	narcan
+UMLS	Artificial Airways, Nasopharyngeal	nasopharyngeal airway
+UMLS	Nasopharyngeal airway insertion	nasopharyngeal airway
+UMLS	NASOPHARYNGEAL AIRWAY OBSTRUCTION	nasopharyngeal airway
+UMLS	rnox insert nasopharyngeal airway	nasopharyngeal airway
+UMLS	nasopharyngeal airway device (___ fr)	nasopharyngeal airway
+UMLS	nasopharyngeal airway device inserted	nasopharyngeal airway
+UMLS	nasopharyngeal airway device removed	nasopharyngeal airway
+UMLS	Nasopharyngeal airway, reusable	nasopharyngeal airway
+UMLS	Nasopharyngeal airway, single-use	nasopharyngeal airway
+UMLS	airway obstructed by edema nasopharyngeal	nasopharyngeal airway
+UMLS	Insert oral or nasopharyngeal airway, as appropriate	nasopharyngeal airway
+UMLS	Keep oral or nasopharyngeal airway at bedside	nasopharyngeal airway
+UMLS	Tape the oro/nasopharyngeal airway in place	nasopharyngeal airway
+UMLS	Change the oro/nasopharyngeal airway daily and inspect mucosa	nasopharyngeal airway
+UMLS	Select the correct size and type of oropharyngeal or nasopharyngeal airway	nasopharyngeal airway
+UMLS	Monitor for dyspnea, snoring, or inspiratory crowing when oro/nasopharyngeal airway is in place	nasopharyngeal airway
+UMLS	Insert oro/nasopharyngeal airway, ensuring that it reaches to the base of the tongue, supporting the tongue in a forward position	nasopharyngeal airway
+UMLS	Nitroglycerin	nitroglycerin
+UMLS	Poisoning by nitroglycerin	nitroglycerin
+UMLS	Explosive nitroglycerin	nitroglycerin
+UMLS	nitroglycerin reductase	nitroglycerin
+UMLS	Nitroglycerin Transdermal System	nitroglycerin
+UMLS	Nitroglycerin ER	nitroglycerin
+UMLS	nitroglycerin metabolic process	nitroglycerin
+UMLS	Nitroglycerin measurement	nitroglycerin
+UMLS	Nitroglycerin prophylaxis	nitroglycerin
+UMLS	Transdermal glyceryl trinitrate	nitroglycerin
+UMLS	nitroglycerin 2.5mg	nitroglycerin
+UMLS	Caffeine / Nitroglycerin	nitroglycerin
+UMLS	Nitroglycerin Pill	nitroglycerin
+UMLS	response to nitroglycerin	nitroglycerin
+UMLS	Nitroglycerin Injection	nitroglycerin
+UMLS	Nitroglycerin 2.5 MG Extended Release Oral Capsule	nitroglycerin
+UMLS	Nitroglycerin 6.5 MG Extended Release Oral Capsule	nitroglycerin
+UMLS	Nitroglycerin 9 MG Extended Release Oral Capsule	nitroglycerin
+UMLS	Nitroglycerin 0.4 MG/ACTUAT Mucosal Spray	nitroglycerin
+UMLS	Nitroglycerin Intravenous Administration Sets	nitroglycerin
+UMLS	Nitroglycerin Topical Ointment [Nitrol]	nitroglycerin
+UMLS	CONTAINER, SUPPLEMENTARY NITROGLYCERIN	nitroglycerin
+UMLS	Nitroglycerin:MCnc:Pt:Ser/Plas:Qn	nitroglycerin
+UMLS	Modified release glyceryl trinitrate allergy	nitroglycerin
+UMLS	Nitroglycerin 0.3 MG Sublingual Tablet	nitroglycerin
+UMLS	Nitroglycerin 0.4 MG Sublingual Tablet	nitroglycerin
+UMLS	Nitroglycerin 0.6 MG Sublingual Tablet	nitroglycerin
+UMLS	NITROGLYCERIN PATCH ALLERGY	nitroglycerin
+UMLS	NITROGLYCERIN PATCH INTOLERANCE	nitroglycerin
+UMLS	Glyceryl trinitrate 5mg/mL injection solution 5mL ampule	nitroglycerin
+UMLS	Nitroglycerin 0.02 MG/MG Topical Ointment	nitroglycerin
+UMLS	Nitroglycerin 1 MG/ML Injectable Solution	nitroglycerin
+UMLS	24 HR Nitroglycerin 0.3 MG/HR Transdermal System	nitroglycerin
+UMLS	24 HR Nitroglycerin 0.8 MG/HR Transdermal System	nitroglycerin
+UMLS	Nitroglycerin 1.5 MG Sustained Release Buccal Tablet	nitroglycerin
+UMLS	Nitroglycerin 2 MG Sustained Release Buccal Tablet	nitroglycerin
+UMLS	Nitroglycerin 3 MG Sustained Release Buccal Tablet	nitroglycerin
+UMLS	Nitroglycerin 1 MG Sustained Release Buccal Tablet	nitroglycerin
+UMLS	Nitroglycerin 5 MG Sustained Release Buccal Tablet	nitroglycerin
+UMLS	Nitroglycerin 0.1 MG/ML	nitroglycerin
+UMLS	Nitroglycerin 0.2 MG/ML	nitroglycerin
+UMLS	Nitroglycerin 0.3 MG	nitroglycerin
+UMLS	Nitroglycerin 0.4 MG	nitroglycerin
+UMLS	Nitroglycerin 0.4 MG/ML	nitroglycerin
+UMLS	Nitroglycerin 0.6 MG	nitroglycerin
+UMLS	Nitroglycerin 1 MG	nitroglycerin
+UMLS	Nitroglycerin 1.5 MG	nitroglycerin
+UMLS	Nitroglycerin 2 MG	nitroglycerin
+UMLS	Nitroglycerin 2.5 MG	nitroglycerin
+UMLS	Nitroglycerin 2.6 MG	nitroglycerin
+UMLS	Normal saline	normal saline
+UMLS	dextrose 2.5 % in normal saline	normal saline
+UMLS	Normal Saline Flush	normal saline
+UMLS	Continuous infusion of normal saline	normal saline
+UMLS	Normal saline + potassium chloride	normal saline
+UMLS	BD Normal Saline Flush	normal saline
+UMLS	normal saline, sterile	normal saline
+UMLS	sterile solutions normal saline 1000cc	normal saline
+UMLS	sterile solutions normal saline 30cc	normal saline
+UMLS	intravenous infusion of half-normal saline	normal saline
+UMLS	intravenous infusion of normal saline	normal saline
+UMLS	intravenous infusion of normal sterile saline	normal saline
+UMLS	normal saline 250cc	normal saline
+UMLS	normal saline 1000cc	normal saline
+UMLS	enemas normal saline	normal saline
+UMLS	Irrigate nasogastric tubes with normal saline	normal saline
+UMLS	Dextrose 5% in 0.2% Normal Saline	normal saline
+UMLS	sterile solutions normal saline up to 5cc	normal saline
+UMLS	surgical irrigation of cholecystostomy with normal saline	normal saline
+UMLS	surgical irrigation of choledochostomy with normal saline	normal saline
+UMLS	surgical irrigation of colostomy with normal saline	normal saline
+UMLS	surgical irrigation of gastrostomy with normal saline	normal saline
+UMLS	surgical irrigation of ileostomy with normal saline	normal saline
+UMLS	surgical irrigation of jejunostomy with normal saline	normal saline
+UMLS	bladder irrigation with ___ cc normal saline	normal saline
+UMLS	flood thoracotomy field with normal saline	normal saline
+UMLS	10 ML Sodium Chloride 9 MG/ML Injection	normal saline
+UMLS	INFUSION, NORMAL SALINE SOLUTION , 1000 CC ADMINISTERED	normal saline
+UMLS	INFUSION, NORMAL SALINE SOLUTION , 250 CC ADMINISTERED	normal saline
+UMLS	Sodium chloride 1.8% infusion solution bag	normal saline
+UMLS	dextrose 2.5% in 1/3 normal saline	normal saline
+UMLS	dextrose 2.5% in 1/4 normal saline	normal saline
+UMLS	dextrose 2.5% in 1/8 normal saline	normal saline
+UMLS	Sodium Chloride 4.5 MG/ML Injection	normal saline
+UMLS	5% dextrose and 0.45% normal saline, 1000 ml	normal saline
+UMLS	5 ML Sodium Chloride 9 MG/ML Prefilled Syringe	normal saline
+UMLS	Cleanse with normal saline or a nontoxic cleanser, as appropriate	normal saline
+UMLS	10 ML Sodium Chloride 9 MG/ML Prefilled Syringe	normal saline
+UMLS	sterile solutions normal saline containing antibiotic	normal saline
+UMLS	surgical irrigation of peritoneal catheter with normal saline	normal saline
+UMLS	surgical irrigation of suprapubic catheter with normal saline	normal saline
+UMLS	intravenous infusion of 5% dextrose in third-normal saline	normal saline
+UMLS	intra-operative wound irrigated with normal saline	normal saline
+UMLS	impregnated gauze dressing with water or normal saline	normal saline
+UMLS	intravenous infusion of 5% dextrose in 0.45% normal saline	normal saline
+UMLS	intravenous infusion of 5% dextrose in 0.9% saline (treatment)	normal saline
+UMLS	Dextran-Albumin Solution	normal saline
+UMLS	Sodium Chloride 0.154 MEQ/ML Injectable Solution includes 0.9 ML, 2 ML, 3 ML, 5 ML, 6 ML, & 10 ML Prefilled Syringe	normal saline
+UMLS	2.5 ML Sodium Chloride 9 MG/ML Prefilled Syringe	normal saline
+UMLS	1 ML Sodium Chloride 9 MG/ML Prefilled Syringe	normal saline
+UMLS	Ondansetron	ondansetron
+UMLS	Ondansetron Hydrochloride	ondansetron
+UMLS	dexamethasone/ondansetron	ondansetron
+UMLS	Ondansetron Pill	ondansetron
+UMLS	Ondansetron Injection	ondansetron
+UMLS	Ondansetron 4 MG Oral Tablet	ondansetron
+UMLS	Ondansetron 8 MG Oral Tablet	ondansetron
+UMLS	Ondansetron Injectable Solution [Zofran]	ondansetron
+UMLS	Ondansetron 4 MG Disintegrating Oral Tablet	ondansetron
+UMLS	Ondansetron 16 MG Rectal Suppository	ondansetron
+UMLS	Ondansetron, (S)-Isomer	ondansetron
+UMLS	Ondansetron, (R)-Isomer	ondansetron
+UMLS	Ondansetron 24 MG Oral Tablet	ondansetron
+UMLS	Ondansetron 8 MG Disintegrating Oral Tablet	ondansetron
+UMLS	Ondansetron 2 MG/ML	ondansetron
+UMLS	Ondansetron 0.64 MG/ML	ondansetron
+UMLS	Ondansetron 4 MG	ondansetron
+UMLS	Ondansetron 8 MG	ondansetron
+UMLS	Ondansetron 0.8 MG/ML	ondansetron
+UMLS	Ondansetron 24 MG	ondansetron
+UMLS	Ondansetron 16 MG	ondansetron
+UMLS	Ondansetron Oral Solution [Zofran]	ondansetron
+UMLS	Ondansetron Oral Tablet [Zofran]	ondansetron
+UMLS	Ondansetron Oral Solution	ondansetron
+UMLS	Ondansetron Rectal Suppository	ondansetron
+UMLS	Ondansetron Oral Tablet	ondansetron
+UMLS	Ondansetron Disintegrating Oral Tablet	ondansetron
+UMLS	Ondansetron Injectable Solution	ondansetron
+UMLS	Ondansetron 4 MG [Zofran]	ondansetron
+UMLS	Ondansetron 8 MG [Zofran]	ondansetron
+UMLS	Ondansetron Hydrochloride Powder	ondansetron
+UMLS	Ondansetron Hydrochloride Novaplus	ondansetron
+UMLS	Ondansetron 8mg oromucosal spray	ondansetron
+UMLS	Ondansetron in oropharyngeal dosage form	ondansetron
+UMLS	Ondansetron Oral Strip	ondansetron
+UMLS	Ondansetron 8 MG Oral Strip	ondansetron
+UMLS	Ondansetron 8 MG [Zuplenz]	ondansetron
+UMLS	Ondansetron Oral Strip [Zuplenz]	ondansetron
+UMLS	Ondansetron 4 MG Oral Strip	ondansetron
+UMLS	Ondansetron 4 MG [Zuplenz]	ondansetron
+UMLS	Ondansetron Injectable Product	ondansetron
+UMLS	Ondansetron Oral Liquid Product	ondansetron
+UMLS	Ondansetron Oral Product	ondansetron
+UMLS	Ondansetron Rectal Product	ondansetron
+UMLS	Ondansetron Oral Strip Product	ondansetron
+UMLS	Ondansetron Disintegrating Oral Product	ondansetron
+UMLS	Ondansetron Prefilled Syringe	ondansetron
+UMLS	Ondansetron induced platelet Ab.IgM	ondansetron
+UMLS	Ondansetron induced platelet Ab.IgG	ondansetron
+UMLS	Ondansetron induced platelet Ab	ondansetron
+UMLS	Glucose (oral)	oral glucose
+UMLS	Glucose Oral Gel [Insta-Glucose]	oral glucose
+UMLS	Glucose Oral Solution [Enfamil Glucose]	oral glucose
+UMLS	Oral Glucose Tolerance Test	oral glucose
+UMLS	Glucose 0.4 MG/MG Oral Gel	oral glucose
+UMLS	Glucose Oral Solution	oral glucose
+UMLS	Glucose Oral Gel	oral glucose
+UMLS	Glucose Oral Gel [Dex4]	oral glucose
+UMLS	Abnormal oral glucose tolerance	oral glucose
+UMLS	Glucose 30g Oral gel	oral glucose
+UMLS	glucose (oral challenge)	oral glucose
+UMLS	Glucose in oral dosage form	oral glucose
+UMLS	Glucose 254 MG/ML Oral Solution	oral glucose
+UMLS	Impaired glucose tolerance (oral)	oral glucose
+UMLS	Glucose Oral Solution [Dex4]	oral glucose
+UMLS	Glucose Oral Gel [Glutose]	oral glucose
+UMLS	Glucose Oral Liquid Product	oral glucose
+UMLS	Glucose Oral Product	oral glucose
+UMLS	Enfamil Glucose Oral Product	oral glucose
+UMLS	Insta-Glucose Oral Product	oral glucose
+UMLS	Glucose Oral Gel Product	oral glucose
+UMLS	Cholecalciferol / Glucose Oral Gel	oral glucose
+UMLS	Cholecalciferol / Glucose Oral Solution	oral glucose
+UMLS	Cholecalciferol / Glucose Oral Product	oral glucose
+UMLS	ReliOn Glucose Oral Product	oral glucose
+UMLS	Glucose 0.774 MG/MG Oral Gel	oral glucose
+UMLS	Glucose 0.45 MG/MG Oral Gel	oral glucose
+UMLS	Cholecalciferol / Glucose Oral Solution [ReliOn Glucose]	oral glucose
+UMLS	Glucose tolerance test	oral glucose
+UMLS	Glucose 0.4 MG/MG Oral Gel [Insta-Glucose]	oral glucose
+UMLS	GLUCOSE 100GM/300ML LIQUID,ORAL	oral glucose
+UMLS	GLUCOSE 75GM/300ML LIQUID,ORAL	oral glucose
+UMLS	postpartum oral glucose tolerance test	oral glucose
+UMLS	Glucose tolerance test, antenatal	oral glucose
+UMLS	Dextrose Oral Solution	oral glucose
+UMLS	Glucose 166.7 MG/ML Oral Solution	oral glucose
+UMLS	Glucose 50 MG/ML Oral Solution [Enfamil Glucose]	oral glucose
+UMLS	PhenX - oral glucose tolerance test protocol:-:Point in time:^Patient:-:PhenX	oral glucose
+UMLS	Enfamil Glucose Oral Liquid Product	oral glucose
+UMLS	Insta-Glucose Oral Gel Product	oral glucose
+UMLS	Cholecalciferol / Glucose Oral Liquid Product	oral glucose
+UMLS	ReliOn Glucose Oral Liquid Product	oral glucose
+UMLS	Glucose 0.774 MG/MG Oral Gel [Insta-Glucose]	oral glucose
+UMLS	Cholecalciferol / Glucose Oral Gel Product	oral glucose
+UMLS	blood glucose measurement 30 minutes post oral glucose tolerance test	oral glucose
+UMLS	blood glucose measurement 1 hour post oral glucose tolerance test	oral glucose
+UMLS	blood glucose measurement 90 minutes post oral glucose tolerance test	oral glucose
+UMLS	blood glucose measurement 2 hours post oral glucose tolerance test	oral glucose
+UMLS	fasting blood glucose measurement for 2 hour oral glucose tolerance test	oral glucose
+UMLS	urine glucose 1 hour post oral glucose tolerance test	oral glucose
+UMLS	Oxygen	oxygen
+UMLS	Oxygen Therapy Care	oxygen
+UMLS	Oxygen Equipment Location	oxygen
+UMLS	Oxygen attachment:Finding:Point in time:^Patient:Document	oxygen
+UMLS	Oxygen saturation.preductal-oxygen saturation.postductal	oxygen
+UMLS	Oxygen 15-labeled Oxygen	oxygen
+UMLS	Anoxia	oxygen
+UMLS	Oxygen Consumption	oxygen
+UMLS	oxygen extraction	oxygen
+UMLS	Oxygen Isotopes	oxygen
+UMLS	Oxygen Radioisotopes	oxygen
+UMLS	Singlet Oxygen	oxygen
+UMLS	oxygen oxidase	oxygen
+UMLS	Reactive Oxygen Species	oxygen
+UMLS	Oxygen Delivery Hoods	oxygen
+UMLS	Inhalators, Oxygen	oxygen
+UMLS	Oxygen mask	oxygen
+UMLS	Oxygen analyzer, device	oxygen
+UMLS	Oxygen Canisters	oxygen
+UMLS	Oxygen concentrator (device)	oxygen
+UMLS	Oxygen cylinder	oxygen
+UMLS	Oxygen Flowmeters	oxygen
+UMLS	Oxygen Generators	oxygen
+UMLS	Oxygen Meters	oxygen
+UMLS	Oxygen Monitors	oxygen
+UMLS	Oxygen sensors	oxygen
+UMLS	Oxygen tent	oxygen
+UMLS	Timers, Oxygen	oxygen
+UMLS	Oxygen measurement, partial pressure, arterial	oxygen
+UMLS	Oxygen Compounds, Inorganic	oxygen
+UMLS	Oxygen toxicity	oxygen
+UMLS	OXYGEN EXPOSURE	oxygen
+UMLS	Hypoxia	oxygen
+UMLS	Liquid oxygen	oxygen
+UMLS	Hyperbaric Oxygen (substance)	oxygen
+UMLS	Molecular oxygen	oxygen
+UMLS	fluorine monoxide	oxygen
+UMLS	Oxygen gas	oxygen
+UMLS	Oxygen saturation:MFr:Pt:BldA:Qn	oxygen
+UMLS	Oxygen saturation:MFr:Pt:BldC:Qn	oxygen
+UMLS	Oxygen saturation:MFr:Pt:BldV:Qn	oxygen
+UMLS	Oxygen affinity	oxygen
+UMLS	Oxygen inhaled	oxygen
+UMLS	Molecular oxygen saturation	oxygen
+UMLS	Oxygen content	oxygen
+UMLS	Home oxygen supply	oxygen
+UMLS	Oxygen concentration	oxygen
+UMLS	Oxygen delivery	oxygen
+UMLS	Oxygen uptake	oxygen
+UMLS	Oxygen rotameter	oxygen
+UMLS	Physical Restraint (procedure)	physical restraint
+UMLS	Ankle restraint	physical restraint
+UMLS	Arm restraint	physical restraint
+UMLS	Wrist restraint	physical restraint
+UMLS	Placing restraint	physical restraint
+UMLS	PHYSICAL RESTRAINT EQUIPMENT AND STRUCTURES	physical restraint
+UMLS	Physical restraint equipment (device)	physical restraint
+UMLS	Physical restraint structure	physical restraint
+UMLS	Assault by physical restraint	physical restraint
+UMLS	Assault by physical restraint with handcuffs	physical restraint
+UMLS	Head restraint	physical restraint
+UMLS	Physical restraint equipment AND/OR structure	physical restraint
+UMLS	Manhandling procedure for physical restraint	physical restraint
+UMLS	Legal physical restraint procedure	physical restraint
+UMLS	Legal physical restraint performed	physical restraint
+UMLS	Trunk restraint	physical restraint
+UMLS	Physical restraint status	physical restraint
+UMLS	Implementing Physical Restraint Regime	physical restraint
+UMLS	Implementation of physical restraint regime	physical restraint
+UMLS	Wheelchair occupant restraint	physical restraint
+UMLS	Assault by physical restraint with rope or cord	physical restraint
+UMLS	Assault by physical restraint with adhesive tape	physical restraint
+UMLS	Infant bed restraint	physical restraint
+UMLS	Adult limb restraint	physical restraint
+UMLS	Physical restraints used in bed - trunk restraint:Find:Pt:^Patient:Ord:MDSv3	physical restraint
+UMLS	Physical restraints used in bed - trunk restraint	physical restraint
+UMLS	Physical restraints used in bed - limb restraint:Find:Pt:^Patient:Ord:MDSv3	physical restraint
+UMLS	Physical restraints used in bed - limb restraint	physical restraint
+UMLS	Limb/torso restraint, reusable	physical restraint
+UMLS	Physical restraints used in chair or out of bed - trunk restraint:Find:Pt:^Patient:Ord:MDSv3	physical restraint
+UMLS	Physical restraints used in chair or out of bed - trunk restraint	physical restraint
+UMLS	Physical restraints used in chair or out of bed - limb restraint:Find:Pt:^Patient:Ord:MDSv3	physical restraint
+UMLS	Physical restraints used in chair or out of bed - limb restraint	physical restraint
+UMLS	Physical restraints used in bed - limb restraint during 7D assessment period	physical restraint
+UMLS	Utilize restrictive interventions (e.g., area restriction, seclusion, physical restraint, chemical restraint) to manage unsafe or inappropriate behavior that is not responsive to less restrictive behavior management interventions	physical restraint
+UMLS	Provide adaptive devices to limit mobility, as needed (e.g., cribs, gates, Dutch doors, and physical restraint)	physical restraint
+UMLS	Provide the next appropriate level of restrictive intervention (e.g., physical restraint or area restriction), as needed	physical restraint
+UMLS	Provide the next appropriate level of restrictive intervention (e.g., physical restraint or seclusion), as needed	physical restraint
+UMLS	Use external controls, as necessary, to calm patient (e.g., time out, seclusion, and physical restraint)	physical restraint
+UMLS	Physical restraints used in bed - trunk restraint used during 7D assessment period:NRat:7D:^Patient:Ord:CMS Assessment	physical restraint
+UMLS	Physical restraints used in bed - trunk restraint used during 7D assessment period	physical restraint
+UMLS	Physical restraints used in bed - limb restraint during 7D assessment period:NRat:7D:^Patient:Ord:CMS Assessment	physical restraint
+UMLS	Physical restraints used in chair or out of bed - trunk restraint used during 7D assessment period:NRat:7D:^Patient:Ord:CMS Assessment	physical restraint
+UMLS	Physical restraints used in chair or out of bed - trunk restraint used during 7D assessment period	physical restraint
+UMLS	Physical restraints used in chair or out of bed - limb restraint used during 7D assessment period:NRat:7D:^Patient:Ord:CMS Assessment	physical restraint
+UMLS	Physical restraints used in chair or out of bed - limb restraint used during 7D assessment period	physical restraint
+UMLS	Provide for the safety and comfort of patient and others when patient is unable to control behavior (e.g., limit setting, area restriction, physical restraint, or seclusion)	physical restraint
+UMLS	Use external controls (e.g., physical or manual restraint, time outs, and seclusion) as needed, to calm patient who is expressing anger in a maladaptive manner	physical restraint
+UMLS	Utilize protective interventions (e.g., area restrictions, seclusion, physical restraints) if patient lacks the restraint to refrain from harming self, as needed	physical restraint
+UMLS	Semiprone position	recovery position
+UMLS	Positioning subject in recovery position	recovery position
+UMLS	Nasopharyngeal suction	suction the nasopharynx
+UMLS	Aspirate the nasopharynx with a bulb syringe or suction device, as appropriate	suction the nasopharynx
+UMLS	Provide mouth care and suction oropharynx, as appropriate	suction the oropharynx
+UMLS	Suction the oropharynx after completion of tracheal suctioning	suction the oropharynx
+UMLS	Suction the oropharynx and secretions from the top of the tube cuff before deflating cuff	suction the oropharynx
+UMLS	Supine Position	supine position
+UMLS	Pain relief by supine position	supine position
+UMLS	patient in supine position for procedure	supine position
+UMLS	nursing care: patient positioning maintain supine position	supine position
+UMLS	normal pregnancy delivery with patient returned to supine position	supine position
+UMLS	Patient in supine position with hip support	supine position
+UMLS	supine position test of talus of ankle	supine position
+UMLS	Conduct exam while patient is in upright then supine position	supine position
+UMLS	supine position test of head of talus of left ankle	supine position
+UMLS	supine position test of head of talus of right ankle	supine position
+UMLS	inability to arise from supine to sitting position	supine position
+UMLS	pre-incision patient positioned supine	supine position
+UMLS	moving from supine to sitting position in bed independently	supine position
+UMLS	moving from sitting to supine position in bed independently	supine position
+UMLS	normal pregnancy delivery with patient returned to supine position and returned to room	supine position
+UMLS	Place in the designated surgical position (e.g., supine, prone, lateral chest, or lithotomy)	supine position
+UMLS	Place patient in supine position with legs elevated to increase preload, as appropriate	supine position
+UMLS	Position patient supine for insertion with arm at a 90-degree angle to body	supine position
+UMLS	supine position test of head of talus of left ankle showing lateral bulge	supine position
+UMLS	supine position test of head of talus of left ankle showing medial bulge	supine position
+UMLS	supine position test of head of talus of right ankle showing lateral bulge	supine position
+UMLS	supine position test of head of talus of right ankle showing medial bulge	supine position
+UMLS	pain at end of range of movement with thoracolumbar spine extension in supine position	supine position
+UMLS	pain at initiation of movement with thoracolumbar spine extension in supine position	supine position
+UMLS	pain during movement with thoracolumbar spine extension in supine position	supine position
+UMLS	pain at end of range of movement with thoracolumbar spine flexion in supine position	supine position
+UMLS	pain at initiation of movement with thoracolumbar spine flexion in supine position	supine position
+UMLS	pain during movement with thoracolumbar spine flexion in supine position	supine position
+UMLS	limited ability to move from sitting to supine position in bed	supine position
+UMLS	moving from sitting to supine position in bed required assistance	supine position
+UMLS	limited ability to move from supine to sitting position in bed	supine position
+UMLS	moving from supine to sitting position in bed required assistance	supine position
+UMLS	pain at end of range of movement with lumbosacral spine extension in supine position	supine position
+UMLS	pain at initiation of movement with lumbosacral spine extension in supine position	supine position
+UMLS	pain during movement with lumbosacral spine extension in supine position	supine position
+UMLS	pain during movement at specified angle with lumbosacral spine extension in supine position	supine position
+UMLS	pain at end of range of movement with lumbosacral spine flexion in supine position	supine position
+UMLS	pain at initiation of movement with lumbosacral spine flexion in supine position	supine position
+UMLS	pain during movement with lumbosacral spine flexion in supine position	supine position
+UMLS	pain during movement at specified angle with lumbosacral spine flexion in supine position	supine position
+UMLS	moving from supine to sitting position in bed required verbal cues	supine position
+UMLS	moving from supine to sitting position in bed required stand-by supervision	supine position
+UMLS	moving from supine to sitting position in bed required contact guard	supine position
+UMLS	moving from supine to sitting position in bed required minimum assistance	supine position
+UMLS	moving from supine to sitting position in bed required moderate assistance	supine position
+UMLS	moving from supine to sitting position in bed required maximum assistance	supine position
+UMLS	moving from supine to sitting position in bed required two-person assistance	supine position
+UMLS	moving from sitting to supine position in bed required verbal cues	supine position
+UMLS	moving from sitting to supine position in bed required stand-by supervision	supine position
+UMLS	moving from sitting to supine position in bed required contact guard	supine position
+UMLS	Biological Transport	transport
+UMLS	transportation industry	transport
+UMLS	Patient Transport	transport
+UMLS	Carrying	transport
+UMLS	transport (device)	transport
+UMLS	Molecular Transport	transport
+UMLS	Transport Device Component	transport
+UMLS	Transfer Technique	transport
+UMLS	Mobility aid	transport
+UMLS	Remote control command - Transport To	transport
+UMLS	Transport direction:Type:Pt:Ambulance transport:Nom	transport
+UMLS	Golgi to transport vesicle transport	transport
+UMLS	Axonal Transport	transport
+UMLS	Biological Transport, Active	transport
+UMLS	Carrier Proteins	transport
+UMLS	Electron Transport	transport
+UMLS	Mucociliary Clearance	transport
+UMLS	Ovum Transport	transport
+UMLS	Pasteurella Infections	transport
+UMLS	Patient Transfer	transport
+UMLS	Respiratory Transport	transport
+UMLS	Transfer RNA	transport
+UMLS	Pasteurellosis, Pneumonic	transport
+UMLS	Sperm Transport	transport
+UMLS	Transportation of Patients	transport
+UMLS	Ion Transport	transport
+UMLS	glucose transport	transport
+UMLS	neuronal transport	transport
+UMLS	Transport infant incubator	transport
+UMLS	Portable X-Ray Units	transport
+UMLS	Enterocyte transport	transport
+UMLS	Ventilators, Transport	transport
+UMLS	Amino acid transport disorder	transport
+UMLS	Transport tetany of ruminants	transport
+UMLS	Passive biological transport	transport
+UMLS	Transport conductor	transport
+UMLS	Transport vehicle	transport
+UMLS	Injury caused by transport accident	transport
+UMLS	Transport manager	transport
+UMLS	Transport occupation	transport
+UMLS	Fear of transport	transport
+UMLS	Transport problems	transport
+UMLS	Attendant powered wheelchair	transport
+UMLS	Invalid transport facilities	transport
+UMLS	Transport facility	transport
+UMLS	Transport mode	transport
+UMLS	Provision of transport	transport
+UMLS	Carer's transport	transport
+UMLS	amino acid transport	transport
+UMLS	sugar transport	transport

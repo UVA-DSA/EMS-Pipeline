@@ -1,0 +1,463 @@
+external oblique muscle	abdominal
+musculus obliquus externus abdominis	abdominal
+abdominal external oblique muscle	abdominal
+oblique	abdominal
+transversus abdominis muscle	abdominal
+transverse muscle of abdomen	abdominal
+musculus transversalis abdominis	abdominal
+transversus abdominis	abdominal
+ache	pain
+aching	pain
+agony	pain
+suffering	pain
+excruciation	pain
+arthralgia	pain
+burn	trauma
+burning	pain
+causalgia	pain
+chest pain	pain
+chiralgia	pain
+colic	pain
+intestinal colic	pain
+gripes	pain
+griping	pain
+distress	pain
+dysmenorrhea	pain
+glossalgia	pain
+glossodynia	pain
+growing pains	pain
+hemorrhoid	pain
+haemorrhoid	pain
+piles	pain
+keratalgia	pain
+labor pain	pain
+mastalgia	pain
+melagra	pain
+meralgia	pain
+metralgia	pain
+myalgia	pain
+myodynia	pain
+nephralgia	pain
+neuralgia	pain
+neuralgy	pain
+odynophagia	pain
+orchidalgia	pain
+pang	pain
+sting	trauma
+photalgia	pain
+photophobia	pain
+pleurodynia	pain
+pleuralgia	pain
+costalgia	pain
+podalgia	pain
+proctalgia	pain
+referred pain	pain
+renal colic	pain
+smart	pain
+smarting	pain
+smartness	pain
+stinging	pain
+stitch	pain
+tenderness	pain
+soreness	pain
+rawness	pain
+thermalgesia	pain
+throb	pulses
+torture	pain
+torment	pain
+ulalgia	pain
+urodynia	pain
+hurt	pain
+mental anguish	pain
+unpleasantness	pain
+mittelschmerz	pain
+phantom limb pain	pain
+twinge	pain
+irritant	pain
+thorn	pain
+nuisance	pain
+plague	pain
+erupt	pain
+recrudesce	pain
+break out	pain
+agonize	pain
+agonise	pain
+break someone's heart	pain
+excruciate	pain
+rack	pain
+try	pain
+diastole	pulses
+systole	pulses
+throbbing	pulses
+pounding	pulses
+femoral pulse	pulses
+radial pulse	pulses
+substance abuse	abuse
+drug abuse	abuse
+mass hysteria	delirium
+epidemic hysertia	delirium
+nympholepsy	delirium
+disturbance	agitation
+perturbation	agitation
+upset	agitation
+dither	agitation
+pother	agitation
+fuss	agitation
+tizzy	agitation
+flap	agitation
+fret	agitation
+stew	agitation
+sweat	agitation
+lather	agitation
+swither	agitation
+tailspin	agitation
+fidget	agitation
+fidgetiness	agitation
+restlessness	agitation
+stewing	agitation
+stir	agitation
+tumult	agitation
+turmoil	agitation
+unrest	agitation
+shaking	agitation
+stirring	agitation
+wag	agitation
+waggle	agitation
+shake	agitation
+worrying	agitation
+castration anxiety	anxiety
+hypochondria	anxiety
+hypochondriasis	anxiety
+overanxiety	anxiety
+panic	anxiety
+scare	anxiety
+angst	anxiety
+anxiousness	anxiety
+disquiet	anxiety
+concern	anxiety
+care	anxiety
+fear	anxiety
+discomfiture	anxiety
+discomposure	anxiety
+disconcertion	anxiety
+disconcertment	anxiety
+edginess	anxiety
+uneasiness	anxiety
+inquietude	anxiety
+disquietude	anxiety
+insecurity	anxiety
+jitteriness	anxiety
+jumpiness	anxiety
+nervousness	anxiety
+restiveness	anxiety
+scruple	anxiety
+qualm	nausea
+misgiving	anxiety
+sinking	anxiety
+sinking feeling	anxiety
+worry	anxiety
+trouble	anxiety
+anopia	blindness
+eyelessness	blindness
+figural blindness	blindness
+legal blindness	blindness
+snowblindness	blindness
+snow-blindness	blindness
+dyschezia	constipation
+fecal impaction	constipation
+obstipation	constipation
+clonus	convulsions
+epileptic seizure	convulsions
+clear the throat	cough
+hawk	cough
+hack	cough
+whoop	cough
+abate	decreased
+let up	decreased
+slack off	decreased
+slack	decreased
+die away	decreased
+boil down	decreased
+reduce	decreased
+decoct	decreased
+concentrate	decreased
+break	trauma
+de-escalate	decreased
+decelerate	decreased
+slow	decreased
+slow down	decreased
+slow up	decreased
+retard	decreased
+decline	decreased
+go down	decreased
+wane	decreased
+decrescendo	decreased
+deflate	decreased
+depreciate	decreased
+undervalue	decreased
+devaluate	decreased
+devalue	decreased
+drop off	decreased
+dwindle	decreased
+dwindle away	decreased
+dwindle down	decreased
+ease up	decreased
+ease off	decreased
+slacken off	decreased
+flag	decreased
+remit	decreased
+shorten	decreased
+shrink	decreased
+contract	decreased
+shrivel	decreased
+shrivel up	decreased
+wither	decreased
+taper	decreased
+thin out	decreased
+vanish	decreased
+fly	decreased
+vaporize	decreased
+weaken	decreased
+abridge	decreased
+foreshorten	decreased
+abbreviate	decreased
+cut	decreased
+step down	decreased
+diminish	decreased
+belittle	decreased
+limit	decreased
+circumscribe	decreased
+confine	decreased
+minimize	decreased
+minimise	decreased
+mitigate	decreased
+pare	decreased
+pare down	decreased
+cut down	decreased
+cut back	decreased
+trim	decreased
+trim down	decreased
+trim back	decreased
+bring down	decreased
+slacken	decreased
+slack up	decreased
+relax	decreased
+slake	decreased
+suppress	decreased
+turn down	decreased
+lower	decreased
+lour	decreased
+oxyopia	acuity
+twenty-twenty	acuity
+20/20	acuity
+steel trap	acuity
+hyperhidrosis	diaphoresis
+hyperidrosis	diaphoresis
+polyhidrosis	diaphoresis
+montezuma's revenge	diarrhea
+the shits	diarrhea
+the trots	diarrhea
+ectasia	distension
+ectasis	distension
+tympanites	distension
+varicocele	distension
+hyperpyrexia	hyperthermia
+buck fever	fever
+gold fever	fever
+auditory hallucination	hallucinations
+acousma	hallucinations
+pseudohallucination	hallucinations
+trip	hallucinations
+visual hallucination	hallucinations
+disorientation	hallucinations
+freak out	hallucinations
+cluster headache	headache
+migraine	headache
+megrim	headache
+sick headache	headache
+hemicrania	headache
+sinus headache	headache
+tension headache	headache
+essential hypertension	hypertension
+hyperpiesia	hypertension
+hyperpiesis	hypertension
+malignant hypertension	hypertension
+secondary hypertension	hypertension
+white-coat hypertension	hypertension
+orthostatic hypotension	hypotension
+postural hypotension	hypotension
+enuresis	incontinence
+urinary incontinence	incontinence
+rakishness	incontinence
+awareness	consciousness
+sentience	consciousness
+self	consciousness
+ego	consciousness
+sensibility	consciousness
+esthesia	consciousness
+aesthesia	consciousness
+stream of consciousness	consciousness
+waking	consciousness
+feel	consciousness
+self-awareness	consciousness
+sense	consciousness
+morning sickness	nausea
+motion sickness	nausea
+kinetosis	nausea
+queasiness	nausea
+squeamishness	nausea
+lower jaw	jaw
+mandible	jaw
+mandibula	jaw
+mandibular bone	jaw
+submaxilla	jaw
+lower jawbone	jaw
+jawbone	jaw
+jowl	jaw
+upper jaw	jaw
+upper jawbone	jaw
+maxilla	jaw
+maxillary	jaw
+foulness	severity
+raininess	severity
+seriousness	severity
+distressfulness	severity
+sternness	severity
+tremolo	palpitations
+tremor	palpitations
+ectopic pregnancy	pregnancy
+extrauterine pregnancy	pregnancy
+ectopic gestation	pregnancy
+extrauterine gestation	pregnancy
+eccyesis	pregnancy
+metacyesis	pregnancy
+entopic pregnancy	pregnancy
+gravida	pregnancy
+gravidity	pregnancy
+gravidness	pregnancy
+gravidation	pregnancy
+parity	pregnancy
+para	pregnancy
+placenta previa	pregnancy
+crepitation rale	rales
+prickly heat	rash
+heat rash	rash
+miliaria	rash
+urtication	rash
+urticaria	rash
+hives	rash
+nettle rash	rash
+chafe	tenderness
+chafing	tenderness
+rebound tenderness	tenderness
+attachment	tenderness
+fond regard	tenderness
+protectiveness	tenderness
+regard	tenderness
+respect	tenderness
+soft spot	weakness
+absence seizure	seizure
+convulsion	seizure
+focal seizure	seizure
+raptus hemorrhagicus	seizure
+briefness	shortness
+curtailment	shortness
+oscitancy	sleepiness
+oscitance	sleepiness
+birth trauma	trauma
+blast trauma	trauma
+bleeding	trauma
+hemorrhage	trauma
+haemorrhage	trauma
+blunt trauma	trauma
+brain damage	trauma
+bruise	trauma
+contusion	trauma
+bump	trauma
+dislocation	trauma
+electric shock	trauma
+fracture	trauma
+frostbite	trauma
+cryopathy	trauma
+intravasation	trauma
+penetrating trauma	trauma
+penetrating injury	trauma
+pinch	trauma
+rupture	trauma
+bite	trauma
+insect bite	trauma
+strain	trauma
+wale	trauma
+welt	trauma
+weal	trauma
+wheal	trauma
+whiplash	trauma
+whiplash injury	trauma
+wound	trauma
+lesion	trauma
+wrench	trauma
+twist	trauma
+pull	trauma
+antagonistic muscle	muscles
+levator	muscles
+ocular muscle	muscles
+eye muscle	muscles
+pronator	muscles
+rectus	muscles
+skeletal muscle	muscles
+striated muscle	muscles
+smooth muscle	muscles
+involuntary muscle	muscles
+sphincter	muscles
+anatomical sphincter	muscles
+sphincter muscle	muscles
+supinator	muscles
+tensor	muscles
+cardiac muscle	muscles
+heart muscle	muscles
+striated muscle tissue	muscles
+blood extravasation	bleeding
+cerebral hemorrhage	bleeding
+hemorrhagic stroke	bleeding
+haemorrhagic stroke	bleeding
+hyphema	bleeding
+metrorrhagia	bleeding
+nosebleed	bleeding
+epistaxis	bleeding
+ulemorrhagia	bleeding
+menstruate	bleeding
+flow	bleeding
+crock	bleeding
+hematemesis	vomiting
+haematemesis	vomiting
+hyperemesis	vomiting
+rumination	vomiting
+fatigue	weakness
+flaw	weakness
+insufficiency	weakness
+inadequacy	weakness
+adynamia	weakness
+attenuation	weakness
+enervation	weakness
+faintness	weakness
+fatigability	weakness
+feebleness	weakness
+tenuity	weakness
+flimsiness	weakness
+shoddiness	weakness
+fragility	weakness
+delicacy	weakness
+inanition	weakness
+lassitude	weakness
+lethargy	weakness
+slackness	weakness
+insubstantiality	weakness
+smallness	weakness
+littleness	weakness
+vulnerability	weakness
+weak part	weakness
+weak spot	weakness
+faint	loss of consciousness
+swoon	loss of consciousness
+syncope	loss of consciousness
+deliquium	loss of consciousness

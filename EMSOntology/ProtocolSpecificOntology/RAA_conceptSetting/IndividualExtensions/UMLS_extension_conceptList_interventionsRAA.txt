@@ -1,0 +1,1315 @@
+albuterol	Albuterol
+albuterol	Levalbuterol
+albuterol	albuterol (as albuterol sulfate)
+albuterol	Inhaled albuterol preparation
+albuterol	Albuterol Sulfate
+albuterol	Albuterol / Ipratropium
+albuterol	albuterol treatment
+albuterol	Albuterol measurement
+albuterol	Albuterol / Beclomethasone
+albuterol	Albuterol / Guaifenesin
+albuterol	Albuterol / Cromolyn
+albuterol	Albuterol / Ambroxol
+albuterol	racemic albuterol
+albuterol	Albuterol Pill
+albuterol	Albuterol 2 MG Oral Tablet
+albuterol	Albuterol 4 MG Oral Tablet
+albuterol	Albuterol in oral dosage form
+albuterol	Albuterol in parenteral dosage form
+albuterol	Albuterol 0.4 MG/ACTUAT Inhalant Powder
+albuterol	Albuterol and cromoglicate sodium
+albuterol	Albuterol:MCnc:Pt:Ser/Plas:Qn
+albuterol	Albuterol 0.4 MG/ML Oral Solution
+albuterol	Albuterol 0.5 MG/ML Injectable Solution
+albuterol	Arm-A-Med Albuterol Sulfate
+albuterol	ALBUTEROL SO4 PWDR
+albuterol	Albuterol 1 MG/ML Inhalant Solution
+albuterol	Albuterol 0.05 MG/ML Injectable Solution
+albuterol	Albuterol 0.1 MG/ACTUAT Inhalant Solution
+albuterol	Albuterol:PrThr:Pt:Urine:Ord
+albuterol	Albuterol 0.2 MG/ACTUAT Inhalant Powder
+albuterol	Albuterol 4 MG
+albuterol	Albuterol 0.09 MG/ACTUAT
+albuterol	Albuterol 2 MG
+albuterol	Albuterol 0.4 MG/ML
+albuterol	Albuterol 0.5 MG/ML
+albuterol	Albuterol 0.1 MG/ACTUAT
+albuterol	Albuterol 0.05 MG/ML
+albuterol	Albuterol 1 MG/ML
+albuterol	Albuterol 8 MG
+albuterol	Albuterol 0.417 MG/ML Inhalant Solution
+albuterol	Albuterol 0.21 MG/ML Inhalant Solution
+albuterol	Albuterol 0.21 MG/ML
+albuterol	Albuterol 2 MG/ML
+albuterol	Albuterol 0.4 MG/ACTUAT
+albuterol	Albuterol 0.2 MG/ACTUAT
+albuterol	Albuterol 0.417 MG/ML
+albuterol	Albuterol 0.095 MG/ACTUAT
+albuterol	Albuterol 2.5 MG/ACTUAT
+albuterol	Albuterol Inhalant Solution
+albuterol	Albuterol Inhalant Solution [Accuneb]
+aspirin	Aspirin
+aspirin	N-acetyl-S-(alpha-methyl-4-(2-methylpropyl)benzeneacetyl)cysteine 4-(nitrooxy)butyl ester
+aspirin	Aspirin or aspirin-containing product
+aspirin	Aluminum aspirin
+aspirin	Aspirin allergy
+aspirin	aspirin intolerance
+aspirin	Poisoning by aspirin
+aspirin	acetylsalicylic acid hydrolase
+aspirin	N-3'a-propylphenazonyl-2-acetoxybenzamide
+aspirin	acetylsalicylic acid lysinate
+aspirin	Poisoning by salicylate
+aspirin	Aspirin Tolerance Test
+aspirin	Salicylate measurement
+aspirin	ASPIRIN INGESTION
+aspirin	Empirin Aspirin
+aspirin	ASPIRIN BOLUSES
+aspirin	Aspirin Rectal Product
+aspirin	Aspirin / Codeine
+aspirin	Aspirin overdose
+aspirin	methyl acetylsalicylic acid
+aspirin	succinylamino aspirin
+aspirin	Aspirin / butalbital
+aspirin	Aspirin / Caffeine
+aspirin	Aspirin / Carisoprodol
+aspirin	Aspirin / Diphenhydramine
+aspirin	Aspirin / Hydrocodone
+aspirin	Aspirin / Meprobamate
+aspirin	Aspirin / Methocarbamol
+aspirin	Aspirin / Oxycodone
+aspirin	Aspirin / Pentazocine
+aspirin	Aspirin / phenyltoloxamine
+aspirin	Aspirin / Pseudoephedrine
+aspirin	Buffered aspirin
+aspirin	Child Aspirin
+aspirin	Aspirin-Free
+aspirin	Litecoat Aspirin
+aspirin	Aspirin-Antacid
+aspirin	Bayer Aspirin
+aspirin	CTD Aspirin
+aspirin	Child No-Aspirin
+aspirin	Coated Aspirin
+aspirin	Med Aspirin
+aspirin	Non-Aspirin
+aspirin	Norwich Aspirin
+aspirin	Aspirin prophylaxis
+aspirin	Aspirin / Dipyridamole
+aspirin	Aspirin Oral Product
+aspirin	ASPIRIN ABUSE
+aspirin	aspirin sensitivity
+aspirin	aspirin toxicity
+bag valve mask ventilation	Bag valve mask ventilation
+bronchodilator	Bronchodilator Agents
+bronchodilator	BRONCHODILATORS,ANTICHOLINERGIC
+bronchodilator	Xanthine bronchodilators
+bronchodilator	Inhaled bronchodilator therapy
+bronchodilator	ANTITUSSIVE/BRONCHODILATOR
+bronchodilator	post bronchodilator
+bronchodilator	pre bronchodilator
+bronchodilator	Bronchodilator Effect
+bronchodilator	using bronchodilator
+bronchodilator	response to bronchodilator
+bronchodilator	Metaprel Inhalation Aerosol Bronchodilator
+bronchodilator	Poisoning by bronchodilator drug
+bronchodilator	Spirometry, before and after bronchodilator
+bronchodilator	Accidental poisoning by bronchodilator drug
+bronchodilator	Intentional poisoning by bronchodilator drug
+bronchodilator	Bronchodilator preparations adverse reaction
+bronchodilator	Bronchodilator preparations allergy
+bronchodilator	Bronchodilator preparations overdose
+bronchodilator	Accidental bronchodilator preparations overdose
+bronchodilator	Intentional bronchodilator preparations overdose
+bronchodilator	Reversibility trial by bronchodilator
+bronchodilator	Inhaled bronchodilator prescribed (COPD)
+bronchodilator	post-bronchodilator spirometry
+bronchodilator	pre-bronchodilator spirometry
+bronchodilator	Inhaled bronchodilator not prescribed
+bronchodilator	AsthmaHaler Mist Epinephrine Bitartrate Bronchodilator
+bronchodilator	Poisoning by bronchodilator drug of undetermined intent
+bronchodilator	Bronchodilator preparations overdose of undetermined intent
+bronchodilator	Voluntary ventilation.max^post bronchodilator:VRat:Pt:Respiratory system:Qn
+bronchodilator	Voluntary ventilation.max^pre bronchodilator:VRat:Pt:Respiratory system:Qn
+bronchodilator	Bronchodilator Drug Level Determination Reagents
+bronchodilator	FEV1/FVC ratio before bronchodilator
+bronchodilator	Forced expiratory volume 1 (FEV1)/ forced vital capacity (FVC) ratio after bronchodilator
+bronchodilator	post bronchodilator/Voluntary ventilation.max predicted
+bronchodilator	pre bronchodilator/Voluntary ventilation.max predicted
+bronchodilator	frequent use of short-acting bronchodilator
+bronchodilator	spirometry fvc % change after bronchodilator
+bronchodilator	Long-acting inhaled bronchodilator prescribed
+bronchodilator	Bronchodilation responsiveness, spirometry as in 94010, pre- and post-bronchodilator administration
+bronchodilator	Spirometry for bronchospasm with prolonged evaluation after bronchodilator
+bronchodilator	Gas transport time peak following bronchodilator
+bronchodilator	Voluntary ventilation.max^pre bronchodilator:VRat:Pt:Respiratory system:Qn:Measured
+bronchodilator	Number of times bronchodilator used in one week
+bronchodilator	Number of times bronchodilator used in 24 hours
+bronchodilator	pulmonary function FEV1 % change after bronchodilator
+bronchodilator	FEF (25 - 75%) % change after bronchodilator
+bronchodilator	pulmonary function test vital capacity % change after bronchodilator
+bronchodilator	PhenX - respiratory - bronchodilator responsiveness - BDR protocol
+bronchodilator	PhenX measure - respiratory - bronchodilator responsiveness - BDR
+bronchodilator	Post-bronchodilator forced vital capacity attempt
+capnography	Capnography
+capnography	Respired carbon dioxide monitoring
+capnography	Physiologic Monitor Modules, Capnography
+capnography	Capnography oxygen mask
+capnography	Capnography sampling adaptor
+cardiac monitor	Cardiac monitoring
+cardiac monitor	Cardiac monitors
+cardiac monitor	Cardiac monitor surveillance
+cardiac monitor	Cardiac monitor removal
+cardiac monitor	Fetal cardiac monitor
+cardiac monitor	Apply cardiac/apnea monitor
+cardiac monitor	Monitor for presence of cardiac arrhythmias
+cardiac monitor	Monitor heart rate and rhythm
+cardiac monitor	Place on a cardiac monitor, as appropriate
+cardiac monitor	Monitor for signs of cardiac decompensation.
+cardiac monitor	Cardiac monitor interpretation:Impression/interpretation of study:Point in time:Heart:Narrative
+cardiac monitor	Cardiac monitor interpretation
+cardiac monitor	Attach cardiac monitor, as appropriate
+cardiac monitor	Cardiac Event Monitor
+cardiac monitor	rnox monitor cardiac care
+cardiac monitor	rnox monitor cardiac rehabilitation
+cardiac monitor	code cart cardiac monitor
+cardiac monitor	rnax apply cardiac monitor
+cardiac monitor	Implantable cardiac monitor insertion
+cardiac monitor	Implantable cardiac monitor
+cardiac monitor	Monitoring of cardiac output by thermodilution indicator
+cardiac monitor	Attach the cardiac monitor and determine the rhythm
+cardiac monitor	Monitor respiratory, cardiac, and neurological status
+cardiac monitor	Physiologic Monitor Modules, Cardiac Output
+cardiac monitor	transportation within facility with cardiac monitor
+cardiac monitor	Implantable cardiac monitor patient activator
+cardiac monitor	Cardiotachometers
+cardiac monitor	Apply EKG electrodes and connect to a cardiac monitor
+cardiac monitor	Monitor for hypotension, cardiac arrhythmias, and signs of respiratory distress
+cardiac monitor	Thermodilution Cardiac Output Modules, Physiologic Monitor
+cardiac monitor	Arterial pressure cardiac output/oximetry monitor
+cardiac monitor	Cardiac implantable loop monitor study report:Find:Pt:{Setting}:Doc:{Role}
+cardiac monitor	Cardiac implantable loop monitor study report
+cardiac monitor	Physician or other qualified health care professional services for outpatient cardiac rehabilitation; without continuous ECG monitoring (per session)
+cardiac monitor	Monitor fetal parameters, including number, size, cardiac activity, presentation, and position
+cardiac monitor	Monitor for adverse effects of mechanical ventilation: infection, barotrauma, reduced cardiac output
+cardiac monitor	Monitor for cardiac dysrhythmias, including disturbances of both rhythm and conduction
+cardiac monitor	Monitor orthostatic blood pressure and change in cardiac rhythm, as appropriate
+cardiac monitor	Monitor appropriate laboratory values (e.g., cardiac enzymes, electrolyte levels)
+cardiac monitor	Monitor for signs of shock, (e.g., respiratory difficulty, cardiac arrhythmias, seizures, and hypotension)
+cardiac monitor	remote analysis of technical component of implantable cardiac monitor system
+cardiac monitor	Monitor cardiac manifestations of hyperkalemia (e.g., decreased cardiac output, heart blocks, peaked T waves, fibrillation, or asystole)
+cardiac monitor	Monitor cardiac output and/or cardiac index and left ventricular stroke work index, as appropriate
+cardiac monitor	Monitor for cardiac manifestations of metabolic alkalosis (e.g., arrhythmias, reduced contractility, and decreased cardiac output)
+cardiac monitor	Monitor cardiac manifestations of hypokalemia (e.g., hypotension, broad T wave, U wave, ectopy, tachycardia, and weak pulse)
+cardiac monitor	Monitor cardiac output, PCWP, SVR, and RAP, using invasive hemodynamic monitoring as appropriate
+cardiac monitor	Monitor determinants of tissue oxygen delivery (e.g., PaO2, SaO2, hemoglobin levels, and cardiac output), if available
+cardiac monitor	Monitor for cardiac manifestations of hypernatremia (e.g., tachycardia, orthostatic hypotension, and flat neck veins)
+cardiac monitor	Monitor for cardiopulmonary manifestations of respiratory alkalosis (e.g., arrhythmias, decreased cardiac output, and hyperventilation)
+cardiac monitor	Monitor for cardiovascular manifestations of hypophosphatemia (e.g., decreased contractility, decreased cardiac output, heart failure, and ectopy)
+cpap	Continuous Positive Airway Pressure
+cpap	CENPJ gene
+cpap	Continuing positive airway pressure unit
+cpap	Intermittent CPAP
+cpap	N-(1(S)-carboxy-(4-hydroxy-3-iodophenyl)ethyl)-alanylproline
+cpap	Pressure.continuous positive airway:Pres:Pt:Respiratory system:Qn
+cpap	Nasal CPAP
+cpap	BiPAP/CPAP
+cpap	Continuous positive airway pressure ventilation (CPAP), initiation and management
+cpap	CPAP nasal oxygen cannula
+cpap	CENPJ protein, human
+cpap	3-((5-(6-((3-chlorophenyl)amino)pyrazinyl)-3-pyridinyl)amino)-1-propanol
+cpap	DSas-4 protein, Drosophila
+cpap	has CPAP at home
+cpap	newborn facial CPAP
+cpap	BIPAP &or CPAP setting:Find:Pt:Ventilator:Ord
+cpap	BIPAP &or CPAP setting
+cpap	Pressure.continuous positive airway:Pres:24H^mean:Respiratory system:Qn
+cpap	Pressure.continuous positive airway:Pres:24H^max:Respiratory system:Qn
+cpap	Pressure.continuous positive airway:Pres:24H^median:Respiratory system:Qn
+cpap	Cenpj protein, mouse
+cpap	rnax provide cpap machine
+cpap	Non-invasive ventilation (CPAP)
+cpap	cenpj protein, zebrafish
+cpap	CPAP via nasal prongs
+cpap	CPAP via face mask
+cpap	Home CPAP unit
+cpap	CPAP/BPAP oral mask
+cpap	Neonatal/infant continuous positive airway pressure unit
+cpap	CPAP using humidified air
+cpap	Continuous positive airway pressure ventilation weaning protocol
+cpap	respiratory equipment continuous positive airway pressure device (CPAP)
+cpap	respiratory equipment intermittent assist device
+cpap	CPAP delivered through invasive interface
+cpap	Continuous positive airway pressure attachment:Finding:Point in time:^Patient:Document
+cpap	CPAP/BPAP nasal mask, reusable
+cpap	CPAP/BPAP face mask, reusable
+cpap	Non-invasive ventilator (BIPAP, CPAP)
+cpap	Utilize CPAP mechanical ventilation as indicated or ordered.
+cpap	Follow protocol for management of the patient with CPAP mechanical ventilation.
+cpap	Continuous Positive Airway Pressure (CPAP) Ventilators
+cpap	Dependence on continuous positive airway pressure ventilation
+cpap	CPAP without (delivery through) endotrachael tube or tracheostomy
+cpap	CPAP delivered through endotracheal tube or tracheostomy
+cpap	BIPAP &or CPAP machine in last 14D - while not a resident
+cpap	BIPAP &or CPAP machine in last 14D - while a resident
+cpap	Continuous positive airway pressure to nonventilated lung
+cpap	CPAP/BPAP nasal mask, single-use
+cpap	CPAP/BPAP face mask, single-use
+cpap	Polysomnography; age 6 years or older, sleep staging with 4 or more additional parameters of sleep, with initiation of continuous positive airway pressure therapy or bilevel ventilation, attended by a technologist
+dexamethasone	Dexamethasone
+dexamethasone	Dexamethasone Isonicotinate
+dexamethasone	dexamethasone 17-valerate
+dexamethasone	dexamethasone acetate
+dexamethasone	dexamethasone oxetanone
+dexamethasone	dexamethasone receptor
+dexamethasone	dexamethasone trimethyl acetate
+dexamethasone	dexamethasone dipropionate
+dexamethasone	cyclophosphamide/dexamethasone
+dexamethasone	dexamethasone/vincristine
+dexamethasone	Dexamethasone ophthalmic preparation
+dexamethasone	dexamethasone injection
+dexamethasone	dexamethasone/melphalan
+dexamethasone	daunorubicin/dexamethasone
+dexamethasone	Oral form dexamethasone
+dexamethasone	Dexamethasone in parenteral dosage form
+dexamethasone	Dexamethasone Topical Product
+dexamethasone	dexamethasone glucuronide
+dexamethasone	Dexamethasone allergy
+dexamethasone	Dexamethasone overdose
+dexamethasone	dexamethasone linoleate
+dexamethasone	dexamethasone/metoclopramide
+dexamethasone	dexamethasone/granisetron
+dexamethasone	Sk-Dexamethasone
+dexamethasone	dexamethasone nasal
+dexamethasone	Dexamethasone / Lidocaine
+dexamethasone	Dexamethasone Intensol
+dexamethasone	Dexamethasone / Neomycin
+dexamethasone	Dexamethasone phosphate
+dexamethasone	Dexamethasone Powder
+dexamethasone	chlorambucil/dexamethasone
+dexamethasone	dexamethasone/rituximab
+dexamethasone	dexamethasone/methotrexate
+dexamethasone	asparaginase/dexamethasone
+dexamethasone	dexamethasone/SU5416
+dexamethasone	dexamethasone/idarubicin
+dexamethasone	dexamethasone/floxuridine
+dexamethasone	calcitriol/dexamethasone
+dexamethasone	dexamethasone/ondansetron
+dexamethasone	dexamethasone/pegaspargase
+dexamethasone	dexamethasone/isotretinoin
+dexamethasone	dexamethasone/doxorubicin
+dexamethasone	dexamethasone/oblimersen
+dexamethasone	Dexamethasone/Thalidomide protocol
+dexamethasone	Dexamethasone Oral Tablet
+dexamethasone	Dexamethasone measurement
+dexamethasone	Dexamethasone / Tobramycin
+dexamethasone	bortezomib/dexamethasone agent combination
+dexamethasone	dexamethasone/lenalidomide
+dexamethasone	dexamethasone otic
+dextrose	Glucose
+dextrose	intravenous infusion of intravenous dextrose
+dextrose	dextrose monohydrate
+dextrose	Bupivacaine and glucose
+dextrose	Glucose / Sodium Chloride
+dextrose	Glucose intake
+dextrose	Dextrose (for TPN)
+dextrose	Dextrose 2.5%
+dextrose	Dextrose and Water
+dextrose	Dextrose-Mefoxin
+dextrose	Travasol with Dextrose
+dextrose	Glucose powder
+dextrose	Dextrose Granule
+dextrose	Glucose 50 MG/ML
+dextrose	Glucose 500 MG/ML
+dextrose	Anhydrous Dextrose
+dextrose	dextrose solution
+dextrose	DEXTROSE/DOPAMINE
+dextrose	ALCOHOL/DEXTROSE
+dextrose	DEXTROSE/THEOPHYLLINE
+dextrose	CEFOXITIN/DEXTROSE
+dextrose	Dextran in Dextrose
+dextrose	Dextrose Hydrous
+dextrose	Plasmalyte In Dextrose
+dextrose	Caffeine / Glucose
+dextrose	AZTREONAM/DEXTROSE
+dextrose	BRETYLIUM/DEXTROSE
+dextrose	CEFAZOLIN/DEXTROSE
+dextrose	CEFOPERAZONE/DEXTROSE
+dextrose	CEFTIZOXIME/DEXTROSE
+dextrose	CEFTRIAXONE/DEXTROSE
+dextrose	CEFUROXIME/DEXTROSE
+dextrose	CEPHALOTHIN/DEXTROSE
+dextrose	CIMETIDINE/DEXTROSE
+dextrose	CIPROFLOXACIN/DEXTROSE
+dextrose	CLINDAMYCIN/DEXTROSE
+dextrose	DEXTROSE/ELECTROLYTES
+dextrose	DEXTROSE/GENTAMICIN
+dextrose	DEXTROSE/HEPARIN
+dextrose	DEXTROSE/LIDOCAINE
+dextrose	DEXTROSE/NAFCILLIN
+dextrose	DEXTROSE/OXACILLIN
+dextrose	DEXTROSE/OXYTOCIN
+dextrose	DEXTROSE/PENICILLIN
+dextrose	DEXTROSE/PIPERACILLIN
+dextrose	DEXTROSE/PSYLLIUM
+dextrose	DEXTROSE/RINGER'S
+dextrose	DEXTROSE/TETRACAINE
+dextrose	DEXTROSE/TICARCILLIN
+dextrose	fluconazole in dextrose
+diazepam	Diazepam
+diazepam	Diazepam measurement
+diazepam	Diazepam Binding Inhibitor
+diazepam	Benzodiazepine Receptor
+diazepam	pro-diazepam
+diazepam	Poisoning by diazepam
+diazepam	Diazepam dependence
+diazepam	Diazepam Oral Product
+diazepam	Diazepam in parenteral dosage form
+diazepam	Diazepam Rectal Product
+diazepam	Diazepam:MCnc:Pt:Ser/Plas:Qn
+diazepam	Diazepam:Mass:Pt:Dose:Qn
+diazepam	Diazepam allergy
+diazepam	Diazepam overdose
+diazepam	Diastat
+diazepam	DIAZEPAM TREATMENT
+diazepam	Diazepam:SCnc:Pt:Ser/Plas:Qn
+diazepam	Diazepam cutoff:MCnc:Pt:Urine:Qn:Screen
+diazepam	Diazepam cutoff:MCnc:Pt:Urine:Qn:Confirm
+diazepam	Diazepam+Nordiazepam:MCnc:Pt:Urine:Qn
+diazepam	Diazepam cutoff
+diazepam	Diazepam+Nordiazepam
+diazepam	diazepam binding
+diazepam	Diazepam Powder
+diazepam	Diazepam Enema
+diazepam	Diazepam / Sulpiride
+diazepam	Diazepam / Isopropamide
+diazepam	Diazepam / Hyoscyamine
+diazepam	Diazepam / fenproporex
+diazepam	Diazepam / Scopolamine
+diazepam	Diazepam / octylonium
+diazepam	Diazepam:PrThr:Pt:XXX:Ord
+diazepam	Diazepam/Creatinine:MRto:Pt:Urine:Qn
+diazepam	Diazepam/Creatinine
+diazepam	Diazepam Pill
+diazepam	Diazepam Hydrochloride
+diazepam	Diazepam:MCnc:Pt:Saliva:Qn:Confirm
+diazepam	diazepam injection
+diazepam	Diazepam cutoff:MCnc:Pt:Saliva:Qn:Confirm
+diazepam	Diazepam Cartridge
+diazepam	Diazepam Autoinjector
+diazepam	Diazepam 10 MG Oral Tablet
+diazepam	Diazepam 2 MG Oral Tablet
+diazepam	Diazepam 5 MG Oral Tablet
+diazepam	diazepam N-demethylase
+diazepam	diazepam-binding inhibitor receptor
+diazepam	Urine Diazepam Test
+diazepam	Diazepam Oral Tablet [Valium]
+diazepam	Diazepam 10 MG Rectal Suppository
+diazepam	Diazepam 0.2 MG/ML Oral Suspension
+encourage patient to relax	Encourage the patient to relax
+encourage patient to relax	Encourage patient to deep breathe and relax during massage
+endotracheal tube	Endotracheal tube
+endotracheal tube	Tube, Endotracheal
+endotracheal tube	Intubation, Intratracheal
+endotracheal tube	Bougie
+endotracheal tube	Endotracheal tube cuff
+endotracheal tube	Endotracheal intubation, emergency procedure
+endotracheal tube	Orotracheal intubation
+endotracheal tube	Nasotracheal intubation
+endotracheal tube	Via endotracheal tube
+endotracheal tube	Specimen from endotracheal tube
+endotracheal tube	Suction and cleaning of endotracheal tube
+endotracheal tube	Irrigation and suction of endotracheal tube
+endotracheal tube	Endotracheal tube suction
+endotracheal tube	Reposition endotracheal tube
+endotracheal tube	Check endotracheal tube is secure
+endotracheal tube	Checking position of endotracheal tube
+endotracheal tube	Changing endotracheal tube
+endotracheal tube	Changing endotracheal tube headband
+endotracheal tube	Changing endotracheal tube tapes
+endotracheal tube	CHANGER, TUBE, ENDOTRACHEAL
+endotracheal tube	Awake intubation
+endotracheal tube	Retape endotracheal tube.
+endotracheal tube	Tracheal Extubation
+endotracheal tube	Armored endotracheal tube
+endotracheal tube	RAE endotracheal tube
+endotracheal tube	Oxford endotracheal tube
+endotracheal tube	Oral RAE endotracheal tube
+endotracheal tube	Nasal RAE endotracheal tube
+endotracheal tube	Change of endotracheal or endobronchial tube
+endotracheal tube	Endotracheal tube leak:VFr:Pt:Respiratory system:Qn
+endotracheal tube	Endotracheal tube leak
+endotracheal tube	Blocked endotracheal tube
+endotracheal tube	Endotracheal Tube Insertion Laryngoscopes
+endotracheal tube	Tube care: endotracheal
+endotracheal tube	Endotracheal tube secure method:Type:Point in time:Tube, unspecified:Nominal
+endotracheal tube	Endotracheal tube secure method
+endotracheal tube	Instillation, endotracheal tube
+endotracheal tube	Nebulization, endotracheal tube
+endotracheal tube	Nasal endotracheal tube present
+endotracheal tube	Endotracheal tube present
+endotracheal tube	Oral endotracheal tube present
+endotracheal tube	Magill type endotracheal tube
+endotracheal tube	Preformed endotracheal tube
+endotracheal tube	Endotracheal tube cuff leak
+endotracheal tube	Endotracheal tube cuff herniation
+endotracheal tube	Endotracheal tube disconnection
+endotracheal tube	Endotracheal tube obstruction
+endotracheal tube	Manual securing of endotracheal tube
+endotracheal tube	endotracheal tube insertion unsuccessful
+endotracheal tube	difficult endotracheal tube intubation
+epinephrine	Epinephrine
+epinephrine	Epinephrine measurement
+epinephrine	epinephrine hydrochloride
+epinephrine	Monoamine Oxidase
+epinephrine	Adrenergic Receptor
+epinephrine	Dipivefrin
+epinephrine	epinephrine cyclase
+epinephrine	epinephrine sulfate
+epinephrine	epinephryl borate
+epinephrine	epinephrine glucuronide
+epinephrine	epinephrine sulfoconjugate
+epinephrine	Racepinephrine
+epinephrine	Epinephrine deficiency
+epinephrine	Poisoning by epinephrine
+epinephrine	Epinephrine / Lidocaine
+epinephrine	Bupivacaine / Epinephrine
+epinephrine	Cocaine / Epinephrine
+epinephrine	Epinephrine^supine:MCnc:Pt:Plas:Qn
+epinephrine	Urine epinephrine measurement
+epinephrine	Epinephrine Acetate
+epinephrine	Epinephrine Injectable Product
+epinephrine	cisplatin-epinephrine therapeutic implant
+epinephrine	epinephrine bitartrate
+epinephrine	Epinephrine + chlorpheniramine
+epinephrine	EPINEPHrine ophthalmic
+epinephrine	Epinephrine / Etidocaine
+epinephrine	Epinephrine / Prilocaine
+epinephrine	Sensorcaine with Epinephrine
+epinephrine	Injection of epinephrine
+epinephrine	epinephrine allergy
+epinephrine	Epinephrine Powder
+epinephrine	Epinephrine/Creatinine:MRto:Pt:Urine:Qn
+epinephrine	epinephrine and norepinephrine
+epinephrine	Epinephrine/Creatinine
+epinephrine	Abnormal epinephrine
+epinephrine	Epinephrine normal
+epinephrine	Epinephrine increased
+epinephrine	Epinephrine decreased
+epinephrine	Epinephrine/Creatinine:SRto:Pt:Urine:Qn
+epinephrine	Articaine / Epinephrine
+epinephrine	epinephrine metabolic process
+epinephrine	epinephrine biosynthetic process
+epinephrine	epinephrine catabolic process
+epinephrine	Epinephrine / Mepivacaine
+epinephrine	Epinephrine / Fluorouracil
+epinephrine	Epinephrine/Creatinine:SRto:XXX:Urine:Qn
+epinephrine	Epinephrine / Guanethidine
+epinephrine	epinephrine secretion
+epinephrine	epinephrine transport
+epinephrine	adrenaline; hypersecretion
+fentanyl	Fentanyl
+fentanyl	Fentanyl measurement
+fentanyl	fentanyl isothiocyanate
+fentanyl	Droperidol / Fentanyl
+fentanyl	fentanyl:mass:point in time:dose med or substance:quantitative
+fentanyl	Fentanyl Citrate
+fentanyl	Fentanyl poisoning
+fentanyl	Fentanyl allergy
+fentanyl	Fentanyl overdose
+fentanyl	BUPIVACAINE/FENTANYL
+fentanyl	Fentanyl / ropivacaine
+fentanyl	FENTANYL HYDROCHLORIDE
+fentanyl	Fentanyl dependence
+fentanyl	exposure to fentanyl
+fentanyl	BEMA Fentanyl
+fentanyl	FentaNYL Matrix
+fentanyl	Fentanyl+Norfentanyl
+fentanyl	Fentanyl+Norfentanyl:PrThr:Pt:Urine:Ord:Screen
+fentanyl	Fentanyl/Creatinine:MRto:Pt:Urine:Qn
+fentanyl	Fentanyl/Creatinine
+fentanyl	Fentanyl Crystal
+fentanyl	Fentanyl Pill
+fentanyl	Fentanyl Topical Product
+fentanyl	Fentanyl+Norfentanyl:PrThr:Pt:Urine:Ord:Confirm
+fentanyl	fentanyl, combinations
+fentanyl	N-(1-phenethylpiperidin-4-yl)-N-phenylacetamide
+fentanyl	Fentanyl cutoff
+fentanyl	Fentanyl cutoff:MCnc:Pt:Urine:Qn:Screen
+fentanyl	Fentanyl cutoff:MCnc:Pt:Urine:Qn:Confirm
+fentanyl	Fentanyl cutoff:MCnc:Pt:Saliva:Qn:Confirm
+fentanyl	Fentanyl Cartridge
+fentanyl	Fentanyl Injection
+fentanyl	butyrfentanyl
+fentanyl	furanyl fentanyl
+fentanyl	72 HR Fentanyl 0.075 MG/HR Transdermal System
+fentanyl	72 HR Fentanyl 0.025 MG/HR Transdermal System
+fentanyl	72 HR Fentanyl 0.05 MG/HR Transdermal System
+fentanyl	72 HR Fentanyl 0.1 MG/HR Transdermal System
+fentanyl	Fentanyl 1.2 MG Oral Lozenge
+fentanyl	Fentanyl 1.6 MG Oral Lozenge
+fentanyl	Fentanyl 0.2 MG Oral Lozenge
+fentanyl	Fentanyl 0.3 MG Oral Lozenge
+fentanyl	Fentanyl 0.4 MG Oral Lozenge
+fentanyl	Fentanyl 0.6 MG Oral Lozenge
+fentanyl	Fentanyl 0.8 MG Oral Lozenge
+fentanyl	72 HR Fentanyl 0.012 MG/HR Transdermal System
+fentanyl	Fentanyl 0.1 MG Buccal Tablet
+fentanyl	Fentanyl 0.2 MG Buccal Tablet
+fentanyl	Fentanyl 0.2 MG Buccal Film
+fentanyl	Fentanyl 0.1 MG Sublingual Tablet
+geodon	Geodon
+geodon	Geodon, for Injection
+geodon	Geodon, Capsules
+geodon	Geodon Pill
+geodon	ziprasidone 40 MG Oral Capsule [Geodon]
+geodon	ziprasidone 60 MG Oral Capsule [Geodon]
+geodon	ziprasidone 80 MG Oral Capsule [Geodon]
+geodon	ziprasidone 20 MG Oral Capsule [Geodon]
+geodon	ziprasidone 20 MG Injection [Geodon]
+geodon	ziprasidone Oral Capsule [Geodon]
+geodon	ziprasidone 40 MG [Geodon]
+geodon	ziprasidone 60 MG [Geodon]
+geodon	ziprasidone 80 MG [Geodon]
+geodon	ziprasidone 20 MG [Geodon]
+geodon	Geodon Injectable Product
+geodon	Geodon Oral Product
+geodon	ziprasidone Injection [Geodon]
+glucagon	Glucagon
+glucagon	Glucagon measurement
+glucagon	glucagon, human
+glucagon	GCG gene
+glucagon	Structure of alpha Cell of islet
+glucagon	glucagon, N(alpha)-trinitrophenyl-His(1)-homo-Arg(12)-
+glucagon	Glucagon Receptor
+glucagon	glucagon, 12-(N(6)-(4-azidophenylamidino)Lys)-
+glucagon	glucagon, 2-nitro-4-azidophenylsulfenyl-
+glucagon	N-trinitrophenylglucagon
+glucagon	Proglucagon
+glucagon	Abnormality of secretion of glucagon
+glucagon	Glucagon resistance
+glucagon	Poisoning by glucagon
+glucagon	Glucagon deficiency
+glucagon	Glucagon Ag:PrThr:Pt:Tiss:Ord:Immune stain
+glucagon	Glucagon Ag
+glucagon	RADIOIMMUNOASSAY, GLUCAGON
+glucagon	Increased secretion of glucagon (finding)
+glucagon	Glucagon Injectable Product
+glucagon	Glucagon allergy
+glucagon	Glucagon overdose
+glucagon	Glucagon Novo
+glucagon	glucagon, di-(delta-(5-nitro-2-pyrimidyl)Orn)(17,18)-
+glucagon	glucagon, carboxy-Me-Met(27)-
+glucagon	Glucagon Lilly
+glucagon	glucagon 29
+glucagon	GLUCAGON HYDROCHLORIDE
+glucagon	Glucagon:SCnc:Pt:Ser/Plas:Qn
+glucagon	Blood glucagon
+glucagon	Serum glucagon
+glucagon	Glucagon normal
+glucagon	Glucagon increased
+glucagon	Glucagon low
+glucagon	Abnormal glucagon
+glucagon	glucagon (rDNA)
+glucagon	glucagon (rDNA) 1 MG Injection
+glucagon	Plasma glucagon measurement
+glucagon	GCGR gene
+glucagon	Enteroglucagons
+glucagon	Glucagon Precursors
+glucagon	Glucagon:Mass:Pt:Dose:Qn
+glucagon	Betaxolol+Glucagon
+glucagon	Propranolol+Glucagon
+glucagon	glucagon kit
+glucagon	response to glucagon
+glucagon	glucagon secretion
+glucagon	glucagon yellow
+glucagon	Glucagon Injection
+glucagon	Glucagon, porcine
+ipratropium	Ipratropium
+ipratropium	Ipratropium allergy
+ipratropium	Ipratropium Bromide
+ipratropium	Albuterol / Ipratropium
+ipratropium	ipratropium nasal
+ipratropium	Ipratropium reversibility
+ipratropium	Fenoterol / Ipratropium
+ipratropium	Ipratropium cation
+ipratropium	Ipratropium Bromide 0.021 MG/ACTUAT Metered Dose Nasal Spray
+ipratropium	Ipratropium adverse reaction
+ipratropium	Ipratropium Bromide 0.021 MG/ACTUAT Nasal Spray
+ipratropium	Ipratropium Bromide 0.042 MG/ACTUAT Nasal Spray
+ipratropium	Steri-Neb Ipratropium
+ipratropium	Ipratropium Bromide Powder
+ipratropium	Ipratropium 0.04 MG/ACTUAT Inhalant Solution
+ipratropium	Ipratropium Bromide, endo-Isomer
+ipratropium	Ipratropium 0.04 MG/ACTUAT
+ipratropium	Ipratropium 0.5 MG/ACTUAT
+ipratropium	Ipratropium Nasal Spray
+ipratropium	Fenoterol / Ipratropium Inhalant Solution
+ipratropium	Ipratropium Inhalant Solution
+ipratropium	Albuterol / Ipratropium Inhalant Solution
+ipratropium	Ipratropium Inhalant Powder
+ipratropium	Albuterol-Ipratropium Bromide
+ipratropium	Ipratropium 1.25 MG/ACTUAT
+ipratropium	albuterol sulfate + ipratropium bromide
+ipratropium	Ipratropium Bromide Nasal
+ipratropium	Ipratropium Bromide Novaplus
+ipratropium	Ipratropium Bromide Hydrous
+ipratropium	Ipratropium Metered Dose Inhaler
+ipratropium	Ipratropium in respiratory dosage form
+ipratropium	Ipratropium in nasal dosage form
+ipratropium	Ipratropium bromide 20micrograms inhaler
+ipratropium	Ipratropium Bromide, Micronized Powder
+ipratropium	Albuterol / Ipratropium Inhalant Product
+ipratropium	Ipratropium Inhalant Product
+ipratropium	Ipratropium Nasal Product
+ipratropium	Fenoterol / Ipratropium Inhalant Product
+ipratropium	Ipratropium Bromide Monohydrate
+ipratropium	Ipratropium induced platelet Ab.IgM
+ipratropium	Ipratropium induced platelet Ab.IgG
+ipratropium	Ipratropium induced platelet Ab
+ipratropium	Ipratropium Bromide Anhydrous
+ipratropium	fenoterol and ipratropium bromide
+ipratropium	Ipratropium Bromide 0.04 MG/ACTUAT Inhalant Powder
+ipratropium	Ipratropium Bromide, (endo,anti)-Isomer
+ipratropium	Ipratropium Bromide, (exo,syn)-Isomer
+ipratropium	Ipratropium Bromide 0.2 MG/ML Inhalant Solution
+ipratropium	Ipratropium Bromide 0.167 MG/ML
+ipratropium	Albuterol / Ipratropium Inhalant Solution [DuoNeb]
+magnesium sulfate	Magnesium Sulfate
+magnesium sulfate	Magnesium Oxide / Magnesium Sulfate
+magnesium sulfate	magnesium carbonate & magnesium sulfate
+magnesium sulfate	Magnesium Sulfate / potassium sulfate / sodium sulfate
+magnesium sulfate	MAGNESIUM LAURYL SULFATE
+magnesium sulfate	2,2'-dithio-bis-pyridine-1-oxide magnesium sulfate
+magnesium sulfate	Poisoning by magnesium sulfate
+magnesium sulfate	Magnesium Sulfate Powder
+magnesium sulfate	Magnesium sulphate paste BP
+magnesium sulfate	Accidental magnesium sulfate poisoning
+magnesium sulfate	Intentional magnesium sulfate poisoning
+magnesium sulfate	Magnesium sulfate adverse reaction
+magnesium sulfate	Magnesium sulfate allergy
+magnesium sulfate	Magnesium sulfate overdose
+magnesium sulfate	Accidental magnesium sulfate overdose
+magnesium sulfate	Intentional magnesium sulfate overdose
+magnesium sulfate	potassium magnesium sulfate
+magnesium sulfate	Dextrose-Magnesium Sulfate
+magnesium sulfate	Magnesium Sulfate Injectable Product
+magnesium sulfate	Magnesium sulfate heptahydrate
+magnesium sulfate	Magnesium Sulfate Crystal
+magnesium sulfate	Magnesium Sulfate Oral Granules
+magnesium sulfate	Magnesium Sulfate 70 MG
+magnesium sulfate	Magnesium Sulfate Injectable Solution
+magnesium sulfate	Magnesium Sulfate Oral Solution
+magnesium sulfate	Magnesium Sulfate Topical Ointment
+magnesium sulfate	MAGNESIUM SULFATE ANHYDROUS
+magnesium sulfate	magnesium oxide-zinc sulfate
+magnesium sulfate	magnesium hydroxide sulfate hydrate
+magnesium sulfate	Magnesium Sulfate Prefilled Syringe
+magnesium sulfate	Magnesium Sulfate-Lactated Ringers
+magnesium sulfate	Magnesium Sulfate / Peptones
+magnesium sulfate	magnesium sulfate in D5W
+magnesium sulfate	Magnesium Sulfate 6.9 MG
+magnesium sulfate	Magnesium Sulfate 0.05 MG
+magnesium sulfate	Magnesium Sulfate 40 MG/ML Injection
+magnesium sulfate	Magnesium Sulfate-Sodium Chloride
+magnesium sulfate	calcium lactate / Magnesium Sulfate
+magnesium sulfate	Lidocaine / Magnesium Sulfate
+magnesium sulfate	Benzocaine / Magnesium Sulfate
+magnesium sulfate	Magnesium Sulfate / Phenolphthalein
+magnesium sulfate	Magnesium Sulfate 1000 MG
+magnesium sulfate	Magnesium Sulfate 1000 MG Oral Granules
+magnesium sulfate	Magnesium Sulfate Oral Product
+magnesium sulfate	Magnesium Sulfate Pill
+magnesium sulfate	Magnesium Sulfate Topical Product
+magnesium sulfate	MAGNESIUM SULFATE MONOHYDRATE
+magnesium sulfate	Magnesium Sulfate Granule Product
+magnesium sulfate	Magnesium Sulfate 10 MG
+magnesium sulfate	Magnesium Sulfate Injection
+metered dose inhaler	Metered dose inhaler therapy
+metered dose inhaler	Metered Dose Inhaler
+metered dose inhaler	Metered dose powder inhaler
+metered dose inhaler	Metered dose aerosol inhaler
+metered dose inhaler	Albuterol Metered Dose Inhaler
+metered dose inhaler	Levalbuterol Metered Dose Inhaler
+metered dose inhaler	Cromolyn Metered Dose Inhaler
+metered dose inhaler	Beclomethasone Metered Dose Inhaler
+metered dose inhaler	Epinephrine Metered Dose Inhaler
+metered dose inhaler	fluticasone Metered Dose Inhaler
+metered dose inhaler	Ipratropium Metered Dose Inhaler
+metered dose inhaler	Nedocromil Metered Dose Inhaler
+metered dose inhaler	ciclesonide Metered Dose Inhaler
+metered dose inhaler	pirbuterol Metered Dose Inhaler
+metered dose inhaler	flunisolide Metered Dose Inhaler
+metered dose inhaler	metaproterenol Metered Dose Inhaler
+metered dose inhaler	Mometasone Metered Dose Inhaler
+metered dose inhaler	olodaterol Metered Dose Inhaler
+metered dose inhaler	Metered dose inhaler (physical object)
+metered dose inhaler	tiotropium Metered Dose Inhaler
+metered dose inhaler	fluticasone / salmeterol Metered Dose Inhaler
+metered dose inhaler	Albuterol / Ipratropium Metered Dose Inhaler
+metered dose inhaler	Budesonide / formoterol Metered Dose Inhaler
+metered dose inhaler	fluticasone Metered Dose Inhaler [Flovent]
+metered dose inhaler	Ipratropium Metered Dose Inhaler [Atrovent]
+metered dose inhaler	Levalbuterol Metered Dose Inhaler [Xopenex]
+metered dose inhaler	Albuterol Metered Dose Inhaler [Proventil]
+metered dose inhaler	ciclesonide Metered Dose Inhaler [Alvesco]
+metered dose inhaler	Albuterol Metered Dose Inhaler [Ventolin]
+metered dose inhaler	Beclomethasone Metered Dose Inhaler [Qvar]
+metered dose inhaler	formoterol / Mometasone Metered Dose Inhaler
+metered dose inhaler	flunisolide Metered Dose Inhaler [Aerospan]
+metered dose inhaler	Mometasone Metered Dose Inhaler [Asmanex]
+metered dose inhaler	olodaterol Metered Dose Inhaler [Striverdi]
+metered dose inhaler	tiotropium Metered Dose Inhaler [Spiriva]
+metered dose inhaler	Albuterol Metered Dose Inhaler [ProAir]
+metered dose inhaler	olodaterol / tiotropium Metered Dose Inhaler
+metered dose inhaler	formoterol / Glycopyrrolate Metered Dose Inhaler
+metered dose inhaler	Epinephrine Metered Dose Inhaler [Primatene Mist Inhaler]
+metered dose inhaler	Drug administered through a metered dose inhaler
+metered dose inhaler	Beclomethasone dipropionate 250micrograms compact spacer refill
+metered dose inhaler	Albuterol 0.1 MG/ACTUAT Inhalant Solution
+metered dose inhaler	120 ACTUAT Beclomethasone Dipropionate 0.084 MG/ACTUAT Metered Dose Inhaler
+metered dose inhaler	80 ACTUAT Beclomethasone Dipropionate 0.042 MG/ACTUAT Metered Dose Inhaler
+metered dose inhaler	Albuterol / Ipratropium Metered Dose Inhaler [Combivent]
+metered dose inhaler	Budesonide / formoterol Metered Dose Inhaler [Symbicort]
+metered dose inhaler	patient education about asthma metered dose inhaler
+metered dose inhaler	fluticasone / salmeterol Metered Dose Inhaler [Advair]
+metered dose inhaler	formoterol / Mometasone Metered Dose Inhaler [Dulera]
+metered dose inhaler	Albuterol 0.09 MG/ACTUAT Metered Dose Inhaler
+midazolam	Midazolam
+midazolam	Midazolam Measurement
+midazolam	Midazolam:MCnc:Pt:Ser/Plas:Qn
+midazolam	midazolam:mass:point in time:dose med or substance:quantitative
+midazolam	Midazolam Maleate
+midazolam	Midazolam poisoning
+midazolam	Midazolam allergy
+midazolam	Midazolam overdose
+midazolam	Midazolam Hydrochloride
+midazolam	Midazolam:SCnc:Pt:Ser/Plas:Qn
+midazolam	Midazolam cutoff:MCnc:Pt:Urine:Qn:Screen
+midazolam	Midazolam cutoff:MCnc:Pt:Urine:Qn:Confirm
+midazolam	Midazolam cutoff
+midazolam	Midazolam Powder
+midazolam	Midazolam Crystal
+midazolam	Midazolam:MCnc:Pt:Body fld:Qn
+midazolam	Midazolam:MCnc:Pt:Body fld:Qn:Confirm
+midazolam	Midazolam:MCnt:Pt:Tiss:Qn
+midazolam	Midazolam:MCnt:Pt:Tiss:Qn:Confirm
+midazolam	Midazolam:MCnc:Pt:Bld:Qn
+midazolam	Midazolam:MCnc:Pt:Bld:Qn:Confirm
+midazolam	Midazolam Pill
+midazolam	Midazolam Cartridge
+midazolam	Midazolam Injection
+midazolam	Midazolam/Creatinine:MRto:Pt:Urine:Qn:Confirm
+midazolam	Midazolam/Creatinine
+midazolam	Midazolam 2 MG/ML Oral Solution
+midazolam	dexamethasone/metoclopramide/midazolam
+midazolam	Midazolam 2 MG/ML Injectable Solution
+midazolam	Midazolam:PrThr:Pt:Stool:Ord
+midazolam	Accidental midazolam poisoning
+midazolam	Intentional midazolam poisoning
+midazolam	Midazolam poisoning of undetermined intent
+midazolam	Midazolam adverse reaction
+midazolam	Accidental midazolam overdose
+midazolam	Intentional midazolam overdose
+midazolam	Midazolam overdose of undetermined intent
+midazolam	Midazolam:MCnc:Pt:Urine:Qn:Confirm
+midazolam	Midazolam:PrThr:Pt:Urine:Ord:Screen
+midazolam	Midazolam:PrThr:Pt:Urine:Ord:Confirm
+midazolam	Midazolam:MCnc:Pt:Urine:Qn
+midazolam	Midazolam:MCnt:Pt:Hair:Qn
+midazolam	Midazolam:MCnt:Pt:Stool:Qn
+midazolam	Midazolam:MCnt:Pt:Meconium:Qn
+midazolam	Midazolam:MCnc:Pt:Vitr fld:Qn
+midazolam	Midazolam 1 MG/ML
+midazolam	Midazolam 2 MG/ML
+midazolam	Midazolam 5 MG/ML
+midazolam	Midazolam 7.5 MG
+midazolam	Midazolam Oral Tablet
+morphine	Morphine
+morphine	Morphine Measurement
+morphine	morphine and morphine derivative
+morphine	Codeine
+morphine	Heroin
+morphine	Ethylmorphine
+morphine	Morphine Chloride
+morphine	Morphine Dependence
+morphine	Morphine Derivatives Including Cocaine
+morphine	morphine 6-dehydrogenase
+morphine	Morphine Sulfate
+morphine	nicomorphine
+morphine	paregoric
+morphine	Morphine Receptor
+morphine	Morphine Glucuronyltransferase
+morphine	morphine acetate
+morphine	morphine use
+morphine	Morphine habit
+morphine	Poisoning by morphine
+morphine	Kaolin+morphine
+morphine	Morphine Oral Product
+morphine	Morphine:MCnc:Pt:Ser/Plas:Qn
+morphine	morphine dose
+morphine	morphine methiodide
+morphine	FLUOROMETRY, MORPHINE
+morphine	Morphine allergy
+morphine	Morphine overdose
+morphine	Morphine in parenteral dosage form
+morphine	Morphine Rectal Product
+morphine	Morphine capsule
+morphine	Morphine Abuse
+morphine	morphine monohemisuccinate
+morphine	10-alpha-S-glutathionylmorphine
+morphine	Morphine Derivatives Excluding Cocaine
+morphine	Morphine IR
+morphine	Morphine hydrochloride
+morphine	MORPHINE TARTRATE
+morphine	dextromethorphan/morphine
+morphine	Morphine:SCnc:Pt:Ser/Plas:Qn
+morphine	Morphine cutoff:MCnc:Pt:Urine:Qn:Screen
+morphine	Morphine cutoff:MCnc:Pt:Urine:Qn:Confirm
+morphine	Morphine cutoff
+morphine	Morphine Oral Tablet
+morphine	Urine morphine level result
+morphine	marijuana/morphine
+morphine	response to morphine
+morphine	Morphine liposome
+morphine	Morphine Liposomal
+morphine	Cyclizine / Morphine
+morphine	Morphine + cocaine
+narcan	Narcan
+narcan	Naloxone Injectable Solution [Narcan]
+narcan	Naloxone Hydrochloride 1 MG/ML Injectable Solution [Narcan]
+narcan	Naloxone Hydrochloride 0.4 MG/ML Injectable Solution [Narcan]
+narcan	Naloxone Nasal Spray [Narcan]
+narcan	Narcan Nasal Product
+narcan	Narcan Inhalant Product
+narcan	Naloxone Hydrochloride 0.02 MG/ML Injectable Solution [Narcan]
+narcan	Narcan 400micrograms/1mL prefilled syringe
+narcan	Naloxone Hydrochloride 40 MG/ML Nasal Spray [Narcan]
+narcan	Naloxone Hydrochloride 0.4 MG/ML includes Injectable Solution, Injection & Cartridge
+narcan	Naloxone Hydrochloride 40 MG/ML [Narcan]
+narcan	Naloxone Hydrochloride 20 MG/ML Nasal Spray [Narcan]
+narcan	Naloxone Hydrochloride 20 MG/ML [Narcan]
+narcan	1 ML Naloxone Hydrochloride 0.4 MG/ML Cartridge
+narcan	Naloxone Hydrochloride 0.4 MG/ML Injectable Solution
+narcan	1 ML Naloxone Hydrochloride 0.4 MG/ML Injection
+nasopharyngeal airway	Artificial Airways, Nasopharyngeal
+nasopharyngeal airway	Nasopharyngeal airway insertion
+nasopharyngeal airway	NASOPHARYNGEAL AIRWAY OBSTRUCTION
+nasopharyngeal airway	rnox insert nasopharyngeal airway
+nasopharyngeal airway	nasopharyngeal airway device (___ fr)
+nasopharyngeal airway	nasopharyngeal airway device inserted
+nasopharyngeal airway	nasopharyngeal airway device removed
+nasopharyngeal airway	Nasopharyngeal airway, reusable
+nasopharyngeal airway	Nasopharyngeal airway, single-use
+nasopharyngeal airway	airway obstructed by edema nasopharyngeal
+nasopharyngeal airway	Insert oral or nasopharyngeal airway, as appropriate
+nasopharyngeal airway	Keep oral or nasopharyngeal airway at bedside
+nasopharyngeal airway	Tape the oro/nasopharyngeal airway in place
+nasopharyngeal airway	Change the oro/nasopharyngeal airway daily and inspect mucosa
+nasopharyngeal airway	Select the correct size and type of oropharyngeal or nasopharyngeal airway
+nasopharyngeal airway	Monitor for dyspnea, snoring, or inspiratory crowing when oro/nasopharyngeal airway is in place
+nasopharyngeal airway	Insert oro/nasopharyngeal airway, ensuring that it reaches to the base of the tongue, supporting the tongue in a forward position
+nitroglycerin	Nitroglycerin
+nitroglycerin	Poisoning by nitroglycerin
+nitroglycerin	Explosive nitroglycerin
+nitroglycerin	nitroglycerin reductase
+nitroglycerin	Nitroglycerin Transdermal System
+nitroglycerin	Nitroglycerin ER
+nitroglycerin	nitroglycerin metabolic process
+nitroglycerin	Nitroglycerin measurement
+nitroglycerin	Nitroglycerin prophylaxis
+nitroglycerin	Transdermal glyceryl trinitrate
+nitroglycerin	nitroglycerin 2.5mg
+nitroglycerin	Caffeine / Nitroglycerin
+nitroglycerin	Nitroglycerin Pill
+nitroglycerin	response to nitroglycerin
+nitroglycerin	Nitroglycerin Injection
+nitroglycerin	Nitroglycerin 2.5 MG Extended Release Oral Capsule
+nitroglycerin	Nitroglycerin 6.5 MG Extended Release Oral Capsule
+nitroglycerin	Nitroglycerin 9 MG Extended Release Oral Capsule
+nitroglycerin	Nitroglycerin 0.4 MG/ACTUAT Mucosal Spray
+nitroglycerin	Nitroglycerin Intravenous Administration Sets
+nitroglycerin	Nitroglycerin Topical Ointment [Nitrol]
+nitroglycerin	CONTAINER, SUPPLEMENTARY NITROGLYCERIN
+nitroglycerin	Nitroglycerin:MCnc:Pt:Ser/Plas:Qn
+nitroglycerin	Modified release glyceryl trinitrate allergy
+nitroglycerin	Nitroglycerin 0.3 MG Sublingual Tablet
+nitroglycerin	Nitroglycerin 0.4 MG Sublingual Tablet
+nitroglycerin	Nitroglycerin 0.6 MG Sublingual Tablet
+nitroglycerin	NITROGLYCERIN PATCH ALLERGY
+nitroglycerin	NITROGLYCERIN PATCH INTOLERANCE
+nitroglycerin	Glyceryl trinitrate 5mg/mL injection solution 5mL ampule
+nitroglycerin	Nitroglycerin 0.02 MG/MG Topical Ointment
+nitroglycerin	Nitroglycerin 1 MG/ML Injectable Solution
+nitroglycerin	24 HR Nitroglycerin 0.3 MG/HR Transdermal System
+nitroglycerin	24 HR Nitroglycerin 0.8 MG/HR Transdermal System
+nitroglycerin	Nitroglycerin 1.5 MG Sustained Release Buccal Tablet
+nitroglycerin	Nitroglycerin 2 MG Sustained Release Buccal Tablet
+nitroglycerin	Nitroglycerin 3 MG Sustained Release Buccal Tablet
+nitroglycerin	Nitroglycerin 1 MG Sustained Release Buccal Tablet
+nitroglycerin	Nitroglycerin 5 MG Sustained Release Buccal Tablet
+nitroglycerin	Nitroglycerin 0.1 MG/ML
+nitroglycerin	Nitroglycerin 0.2 MG/ML
+nitroglycerin	Nitroglycerin 0.3 MG
+nitroglycerin	Nitroglycerin 0.4 MG
+nitroglycerin	Nitroglycerin 0.4 MG/ML
+nitroglycerin	Nitroglycerin 0.6 MG
+nitroglycerin	Nitroglycerin 1 MG
+nitroglycerin	Nitroglycerin 1.5 MG
+nitroglycerin	Nitroglycerin 2 MG
+nitroglycerin	Nitroglycerin 2.5 MG
+nitroglycerin	Nitroglycerin 2.6 MG
+normal saline	Normal saline
+normal saline	dextrose 2.5 % in normal saline
+normal saline	Normal Saline Flush
+normal saline	Continuous infusion of normal saline
+normal saline	Normal saline + potassium chloride
+normal saline	BD Normal Saline Flush
+normal saline	normal saline, sterile
+normal saline	sterile solutions normal saline 1000cc
+normal saline	sterile solutions normal saline 30cc
+normal saline	intravenous infusion of half-normal saline
+normal saline	intravenous infusion of normal saline
+normal saline	intravenous infusion of normal sterile saline
+normal saline	normal saline 250cc
+normal saline	normal saline 1000cc
+normal saline	enemas normal saline
+normal saline	Irrigate nasogastric tubes with normal saline
+normal saline	Dextrose 5% in 0.2% Normal Saline
+normal saline	sterile solutions normal saline up to 5cc
+normal saline	surgical irrigation of cholecystostomy with normal saline
+normal saline	surgical irrigation of choledochostomy with normal saline
+normal saline	surgical irrigation of colostomy with normal saline
+normal saline	surgical irrigation of gastrostomy with normal saline
+normal saline	surgical irrigation of ileostomy with normal saline
+normal saline	surgical irrigation of jejunostomy with normal saline
+normal saline	bladder irrigation with ___ cc normal saline
+normal saline	flood thoracotomy field with normal saline
+normal saline	10 ML Sodium Chloride 9 MG/ML Injection
+normal saline	INFUSION, NORMAL SALINE SOLUTION , 1000 CC ADMINISTERED
+normal saline	INFUSION, NORMAL SALINE SOLUTION , 250 CC ADMINISTERED
+normal saline	Sodium chloride 1.8% infusion solution bag
+normal saline	dextrose 2.5% in 1/3 normal saline
+normal saline	dextrose 2.5% in 1/4 normal saline
+normal saline	dextrose 2.5% in 1/8 normal saline
+normal saline	Sodium Chloride 4.5 MG/ML Injection
+normal saline	5% dextrose and 0.45% normal saline, 1000 ml
+normal saline	5 ML Sodium Chloride 9 MG/ML Prefilled Syringe
+normal saline	Cleanse with normal saline or a nontoxic cleanser, as appropriate
+normal saline	10 ML Sodium Chloride 9 MG/ML Prefilled Syringe
+normal saline	sterile solutions normal saline containing antibiotic
+normal saline	surgical irrigation of peritoneal catheter with normal saline
+normal saline	surgical irrigation of suprapubic catheter with normal saline
+normal saline	intravenous infusion of 5% dextrose in third-normal saline
+normal saline	intra-operative wound irrigated with normal saline
+normal saline	impregnated gauze dressing with water or normal saline
+normal saline	intravenous infusion of 5% dextrose in 0.45% normal saline
+normal saline	intravenous infusion of 5% dextrose in 0.9% saline (treatment)
+normal saline	Dextran-Albumin Solution
+normal saline	Sodium Chloride 0.154 MEQ/ML Injectable Solution includes 0.9 ML, 2 ML, 3 ML, 5 ML, 6 ML, & 10 ML Prefilled Syringe
+normal saline	2.5 ML Sodium Chloride 9 MG/ML Prefilled Syringe
+normal saline	1 ML Sodium Chloride 9 MG/ML Prefilled Syringe
+ondansetron	Ondansetron
+ondansetron	Ondansetron Hydrochloride
+ondansetron	dexamethasone/ondansetron
+ondansetron	Ondansetron Pill
+ondansetron	Ondansetron Injection
+ondansetron	Ondansetron 4 MG Oral Tablet
+ondansetron	Ondansetron 8 MG Oral Tablet
+ondansetron	Ondansetron Injectable Solution [Zofran]
+ondansetron	Ondansetron 4 MG Disintegrating Oral Tablet
+ondansetron	Ondansetron 16 MG Rectal Suppository
+ondansetron	Ondansetron, (S)-Isomer
+ondansetron	Ondansetron, (R)-Isomer
+ondansetron	Ondansetron 24 MG Oral Tablet
+ondansetron	Ondansetron 8 MG Disintegrating Oral Tablet
+ondansetron	Ondansetron 2 MG/ML
+ondansetron	Ondansetron 0.64 MG/ML
+ondansetron	Ondansetron 4 MG
+ondansetron	Ondansetron 8 MG
+ondansetron	Ondansetron 0.8 MG/ML
+ondansetron	Ondansetron 24 MG
+ondansetron	Ondansetron 16 MG
+ondansetron	Ondansetron Oral Solution [Zofran]
+ondansetron	Ondansetron Oral Tablet [Zofran]
+ondansetron	Ondansetron Oral Solution
+ondansetron	Ondansetron Rectal Suppository
+ondansetron	Ondansetron Oral Tablet
+ondansetron	Ondansetron Disintegrating Oral Tablet
+ondansetron	Ondansetron Injectable Solution
+ondansetron	Ondansetron 4 MG [Zofran]
+ondansetron	Ondansetron 8 MG [Zofran]
+ondansetron	Ondansetron Hydrochloride Powder
+ondansetron	Ondansetron Hydrochloride Novaplus
+ondansetron	Ondansetron 8mg oromucosal spray
+ondansetron	Ondansetron in oropharyngeal dosage form
+ondansetron	Ondansetron Oral Strip
+ondansetron	Ondansetron 8 MG Oral Strip
+ondansetron	Ondansetron 8 MG [Zuplenz]
+ondansetron	Ondansetron Oral Strip [Zuplenz]
+ondansetron	Ondansetron 4 MG Oral Strip
+ondansetron	Ondansetron 4 MG [Zuplenz]
+ondansetron	Ondansetron Injectable Product
+ondansetron	Ondansetron Oral Liquid Product
+ondansetron	Ondansetron Oral Product
+ondansetron	Ondansetron Rectal Product
+ondansetron	Ondansetron Oral Strip Product
+ondansetron	Ondansetron Disintegrating Oral Product
+ondansetron	Ondansetron Prefilled Syringe
+ondansetron	Ondansetron induced platelet Ab.IgM
+ondansetron	Ondansetron induced platelet Ab.IgG
+ondansetron	Ondansetron induced platelet Ab
+oral glucose	Glucose (oral)
+oral glucose	Glucose Oral Gel [Insta-Glucose]
+oral glucose	Glucose Oral Solution [Enfamil Glucose]
+oral glucose	Oral Glucose Tolerance Test
+oral glucose	Glucose 0.4 MG/MG Oral Gel
+oral glucose	Glucose Oral Solution
+oral glucose	Glucose Oral Gel
+oral glucose	Glucose Oral Gel [Dex4]
+oral glucose	Abnormal oral glucose tolerance
+oral glucose	Glucose 30g Oral gel
+oral glucose	glucose (oral challenge)
+oral glucose	Glucose in oral dosage form
+oral glucose	Glucose 254 MG/ML Oral Solution
+oral glucose	Impaired glucose tolerance (oral)
+oral glucose	Glucose Oral Solution [Dex4]
+oral glucose	Glucose Oral Gel [Glutose]
+oral glucose	Glucose Oral Liquid Product
+oral glucose	Glucose Oral Product
+oral glucose	Enfamil Glucose Oral Product
+oral glucose	Insta-Glucose Oral Product
+oral glucose	Glucose Oral Gel Product
+oral glucose	Cholecalciferol / Glucose Oral Gel
+oral glucose	Cholecalciferol / Glucose Oral Solution
+oral glucose	Cholecalciferol / Glucose Oral Product
+oral glucose	ReliOn Glucose Oral Product
+oral glucose	Glucose 0.774 MG/MG Oral Gel
+oral glucose	Glucose 0.45 MG/MG Oral Gel
+oral glucose	Cholecalciferol / Glucose Oral Solution [ReliOn Glucose]
+oral glucose	Glucose tolerance test
+oral glucose	Glucose 0.4 MG/MG Oral Gel [Insta-Glucose]
+oral glucose	GLUCOSE 100GM/300ML LIQUID,ORAL
+oral glucose	GLUCOSE 75GM/300ML LIQUID,ORAL
+oral glucose	postpartum oral glucose tolerance test
+oral glucose	Glucose tolerance test, antenatal
+oral glucose	Dextrose Oral Solution
+oral glucose	Glucose 166.7 MG/ML Oral Solution
+oral glucose	Glucose 50 MG/ML Oral Solution [Enfamil Glucose]
+oral glucose	PhenX - oral glucose tolerance test protocol:-:Point in time:^Patient:-:PhenX
+oral glucose	Enfamil Glucose Oral Liquid Product
+oral glucose	Insta-Glucose Oral Gel Product
+oral glucose	Cholecalciferol / Glucose Oral Liquid Product
+oral glucose	ReliOn Glucose Oral Liquid Product
+oral glucose	Glucose 0.774 MG/MG Oral Gel [Insta-Glucose]
+oral glucose	Cholecalciferol / Glucose Oral Gel Product
+oral glucose	blood glucose measurement 30 minutes post oral glucose tolerance test
+oral glucose	blood glucose measurement 1 hour post oral glucose tolerance test
+oral glucose	blood glucose measurement 90 minutes post oral glucose tolerance test
+oral glucose	blood glucose measurement 2 hours post oral glucose tolerance test
+oral glucose	fasting blood glucose measurement for 2 hour oral glucose tolerance test
+oral glucose	urine glucose 1 hour post oral glucose tolerance test
+oxygen	Oxygen
+oxygen	Oxygen Therapy Care
+oxygen	Oxygen Equipment Location
+oxygen	Oxygen attachment:Finding:Point in time:^Patient:Document
+oxygen	Oxygen saturation.preductal-oxygen saturation.postductal
+oxygen	Oxygen 15-labeled Oxygen
+oxygen	Anoxia
+oxygen	Oxygen Consumption
+oxygen	oxygen extraction
+oxygen	Oxygen Isotopes
+oxygen	Oxygen Radioisotopes
+oxygen	Singlet Oxygen
+oxygen	oxygen oxidase
+oxygen	Reactive Oxygen Species
+oxygen	Oxygen Delivery Hoods
+oxygen	Inhalators, Oxygen
+oxygen	Oxygen mask
+oxygen	Oxygen analyzer, device
+oxygen	Oxygen Canisters
+oxygen	Oxygen concentrator (device)
+oxygen	Oxygen cylinder
+oxygen	Oxygen Flowmeters
+oxygen	Oxygen Generators
+oxygen	Oxygen Meters
+oxygen	Oxygen Monitors
+oxygen	Oxygen sensors
+oxygen	Oxygen tent
+oxygen	Timers, Oxygen
+oxygen	Oxygen measurement, partial pressure, arterial
+oxygen	Oxygen Compounds, Inorganic
+oxygen	Oxygen toxicity
+oxygen	OXYGEN EXPOSURE
+oxygen	Hypoxia
+oxygen	Liquid oxygen
+oxygen	Hyperbaric Oxygen (substance)
+oxygen	Molecular oxygen
+oxygen	fluorine monoxide
+oxygen	Oxygen gas
+oxygen	Oxygen saturation:MFr:Pt:BldA:Qn
+oxygen	Oxygen saturation:MFr:Pt:BldC:Qn
+oxygen	Oxygen saturation:MFr:Pt:BldV:Qn
+oxygen	Oxygen affinity
+oxygen	Oxygen inhaled
+oxygen	Molecular oxygen saturation
+oxygen	Oxygen content
+oxygen	Home oxygen supply
+oxygen	Oxygen concentration
+oxygen	Oxygen delivery
+oxygen	Oxygen uptake
+oxygen	Oxygen rotameter
+physical restraint	Physical Restraint (procedure)
+physical restraint	Ankle restraint
+physical restraint	Arm restraint
+physical restraint	Wrist restraint
+physical restraint	Placing restraint
+physical restraint	PHYSICAL RESTRAINT EQUIPMENT AND STRUCTURES
+physical restraint	Physical restraint equipment (device)
+physical restraint	Physical restraint structure
+physical restraint	Assault by physical restraint
+physical restraint	Assault by physical restraint with handcuffs
+physical restraint	Head restraint
+physical restraint	Physical restraint equipment AND/OR structure
+physical restraint	Manhandling procedure for physical restraint
+physical restraint	Legal physical restraint procedure
+physical restraint	Legal physical restraint performed
+physical restraint	Trunk restraint
+physical restraint	Physical restraint status
+physical restraint	Implementing Physical Restraint Regime
+physical restraint	Implementation of physical restraint regime
+physical restraint	Wheelchair occupant restraint
+physical restraint	Assault by physical restraint with rope or cord
+physical restraint	Assault by physical restraint with adhesive tape
+physical restraint	Infant bed restraint
+physical restraint	Adult limb restraint
+physical restraint	Physical restraints used in bed - trunk restraint:Find:Pt:^Patient:Ord:MDSv3
+physical restraint	Physical restraints used in bed - trunk restraint
+physical restraint	Physical restraints used in bed - limb restraint:Find:Pt:^Patient:Ord:MDSv3
+physical restraint	Physical restraints used in bed - limb restraint
+physical restraint	Limb/torso restraint, reusable
+physical restraint	Physical restraints used in chair or out of bed - trunk restraint:Find:Pt:^Patient:Ord:MDSv3
+physical restraint	Physical restraints used in chair or out of bed - trunk restraint
+physical restraint	Physical restraints used in chair or out of bed - limb restraint:Find:Pt:^Patient:Ord:MDSv3
+physical restraint	Physical restraints used in chair or out of bed - limb restraint
+physical restraint	Physical restraints used in bed - limb restraint during 7D assessment period
+physical restraint	Utilize restrictive interventions (e.g., area restriction, seclusion, physical restraint, chemical restraint) to manage unsafe or inappropriate behavior that is not responsive to less restrictive behavior management interventions
+physical restraint	Provide adaptive devices to limit mobility, as needed (e.g., cribs, gates, Dutch doors, and physical restraint)
+physical restraint	Provide the next appropriate level of restrictive intervention (e.g., physical restraint or area restriction), as needed
+physical restraint	Provide the next appropriate level of restrictive intervention (e.g., physical restraint or seclusion), as needed
+physical restraint	Use external controls, as necessary, to calm patient (e.g., time out, seclusion, and physical restraint)
+physical restraint	Physical restraints used in bed - trunk restraint used during 7D assessment period:NRat:7D:^Patient:Ord:CMS Assessment
+physical restraint	Physical restraints used in bed - trunk restraint used during 7D assessment period
+physical restraint	Physical restraints used in bed - limb restraint during 7D assessment period:NRat:7D:^Patient:Ord:CMS Assessment
+physical restraint	Physical restraints used in chair or out of bed - trunk restraint used during 7D assessment period:NRat:7D:^Patient:Ord:CMS Assessment
+physical restraint	Physical restraints used in chair or out of bed - trunk restraint used during 7D assessment period
+physical restraint	Physical restraints used in chair or out of bed - limb restraint used during 7D assessment period:NRat:7D:^Patient:Ord:CMS Assessment
+physical restraint	Physical restraints used in chair or out of bed - limb restraint used during 7D assessment period
+physical restraint	Provide for the safety and comfort of patient and others when patient is unable to control behavior (e.g., limit setting, area restriction, physical restraint, or seclusion)
+physical restraint	Use external controls (e.g., physical or manual restraint, time outs, and seclusion) as needed, to calm patient who is expressing anger in a maladaptive manner
+physical restraint	Utilize protective interventions (e.g., area restrictions, seclusion, physical restraints) if patient lacks the restraint to refrain from harming self, as needed
+recovery position	Semiprone position
+recovery position	Positioning subject in recovery position
+suction the nasopharynx	Nasopharyngeal suction
+suction the nasopharynx	Aspirate the nasopharynx with a bulb syringe or suction device, as appropriate
+suction the oropharynx	Provide mouth care and suction oropharynx, as appropriate
+suction the oropharynx	Suction the oropharynx after completion of tracheal suctioning
+suction the oropharynx	Suction the oropharynx and secretions from the top of the tube cuff before deflating cuff
+supine position	Supine Position
+supine position	Pain relief by supine position
+supine position	patient in supine position for procedure
+supine position	nursing care: patient positioning maintain supine position
+supine position	normal pregnancy delivery with patient returned to supine position
+supine position	Patient in supine position with hip support
+supine position	supine position test of talus of ankle
+supine position	Conduct exam while patient is in upright then supine position
+supine position	supine position test of head of talus of left ankle
+supine position	supine position test of head of talus of right ankle
+supine position	inability to arise from supine to sitting position
+supine position	pre-incision patient positioned supine
+supine position	moving from supine to sitting position in bed independently
+supine position	moving from sitting to supine position in bed independently
+supine position	normal pregnancy delivery with patient returned to supine position and returned to room
+supine position	Place in the designated surgical position (e.g., supine, prone, lateral chest, or lithotomy)
+supine position	Place patient in supine position with legs elevated to increase preload, as appropriate
+supine position	Position patient supine for insertion with arm at a 90-degree angle to body
+supine position	supine position test of head of talus of left ankle showing lateral bulge
+supine position	supine position test of head of talus of left ankle showing medial bulge
+supine position	supine position test of head of talus of right ankle showing lateral bulge
+supine position	supine position test of head of talus of right ankle showing medial bulge
+supine position	pain at end of range of movement with thoracolumbar spine extension in supine position
+supine position	pain at initiation of movement with thoracolumbar spine extension in supine position
+supine position	pain during movement with thoracolumbar spine extension in supine position
+supine position	pain at end of range of movement with thoracolumbar spine flexion in supine position
+supine position	pain at initiation of movement with thoracolumbar spine flexion in supine position
+supine position	pain during movement with thoracolumbar spine flexion in supine position
+supine position	limited ability to move from sitting to supine position in bed
+supine position	moving from sitting to supine position in bed required assistance
+supine position	limited ability to move from supine to sitting position in bed
+supine position	moving from supine to sitting position in bed required assistance
+supine position	pain at end of range of movement with lumbosacral spine extension in supine position
+supine position	pain at initiation of movement with lumbosacral spine extension in supine position
+supine position	pain during movement with lumbosacral spine extension in supine position
+supine position	pain during movement at specified angle with lumbosacral spine extension in supine position
+supine position	pain at end of range of movement with lumbosacral spine flexion in supine position
+supine position	pain at initiation of movement with lumbosacral spine flexion in supine position
+supine position	pain during movement with lumbosacral spine flexion in supine position
+supine position	pain during movement at specified angle with lumbosacral spine flexion in supine position
+supine position	moving from supine to sitting position in bed required verbal cues
+supine position	moving from supine to sitting position in bed required stand-by supervision
+supine position	moving from supine to sitting position in bed required contact guard
+supine position	moving from supine to sitting position in bed required minimum assistance
+supine position	moving from supine to sitting position in bed required moderate assistance
+supine position	moving from supine to sitting position in bed required maximum assistance
+supine position	moving from supine to sitting position in bed required two-person assistance
+supine position	moving from sitting to supine position in bed required verbal cues
+supine position	moving from sitting to supine position in bed required stand-by supervision
+supine position	moving from sitting to supine position in bed required contact guard
+transport	Biological Transport
+transport	transportation industry
+transport	Patient Transport
+transport	Carrying
+transport	transport (device)
+transport	Molecular Transport
+transport	Transport Device Component
+transport	Transfer Technique
+transport	Mobility aid
+transport	Remote control command - Transport To
+transport	Transport direction:Type:Pt:Ambulance transport:Nom
+transport	Golgi to transport vesicle transport
+transport	Axonal Transport
+transport	Biological Transport, Active
+transport	Carrier Proteins
+transport	Electron Transport
+transport	Mucociliary Clearance
+transport	Ovum Transport
+transport	Pasteurella Infections
+transport	Patient Transfer
+transport	Respiratory Transport
+transport	Transfer RNA
+transport	Pasteurellosis, Pneumonic
+transport	Sperm Transport
+transport	Transportation of Patients
+transport	Ion Transport
+transport	glucose transport
+transport	neuronal transport
+transport	Transport infant incubator
+transport	Portable X-Ray Units
+transport	Enterocyte transport
+transport	Ventilators, Transport
+transport	Amino acid transport disorder
+transport	Transport tetany of ruminants
+transport	Passive biological transport
+transport	Transport conductor
+transport	Transport vehicle
+transport	Injury caused by transport accident
+transport	Transport manager
+transport	Transport occupation
+transport	Fear of transport
+transport	Transport problems
+transport	Attendant powered wheelchair
+transport	Invalid transport facilities
+transport	Transport facility
+transport	Transport mode
+transport	Provision of transport
+transport	Carer's transport
+transport	amino acid transport
+transport	sugar transport

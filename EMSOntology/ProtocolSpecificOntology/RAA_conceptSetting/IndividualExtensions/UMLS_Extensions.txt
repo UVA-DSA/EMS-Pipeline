@@ -1,0 +1,1775 @@
+pain severity	pain severity
+pain distress question	pain severity
+pain severity reported	pain severity
+pain severity score pt  patient qn reported visual analog score	pain severity
+pain severity total score pt  patient qn observed flacc	pain severity
+pain severity face find pt  patient ord observed flacc	pain severity
+pain severity legs find pt  patient ord observed flacc	pain severity
+pain severity activity find pt  patient ord observed flacc	pain severity
+pain severity cry find pt  patient ord observed flacc	pain severity
+pain severity consolability find pt  patient ord observed flacc	pain severity
+chest pain increasing in severity	pain severity
+severity of flank pain	pain severity
+pain severity quantified	pain severity
+pain severity descriptive category arbitrary point in time  patient ordinal	pain severity
+pain severity descriptive category	pain severity
+pain severity find pt  patient ord reported fps r	pain severity
+pain severity in last 5d	pain severity
+pain severity score pt  patient qn phenx	pain severity
+pelvic pain decreasing in severity	pain severity
+pelvic pain increasing in severity	pain severity
+average severity of pain	pain severity
+gcgi   global severity of pain	pain severity
+haq di with vas   severity of pain in the past week	pain severity
+pain severity finding point in time  patient ordinal reported	pain severity
+pain severity 0 10	pain severity
+jaw pain	pain jaw
+outcomes otolaryngology  jaw pain	pain jaw
+jaw claudication	pain jaw
+upper jaw  pain	pain jaw
+pain radiating to jaw	pain jaw
+pain in left side of jaw	pain jaw
+pain in right side of jaw	pain jaw
+chest pain radiating to jaw	pain jaw
+ent goal to alleviate jaw pain	pain jaw
+jaw pain during exercise	pain jaw
+pain in jaw both sides	pain jaw
+extent have pain in jaw	pain jaw
+tooth pain in left lower jaw	pain jaw
+tooth pain in left upper jaw	pain jaw
+tooth pain in right lower jaw	pain jaw
+tooth pain in right upper jaw	pain jaw
+pain in the jaw joint or in front of the ear	pain jaw
+ent procedure possible limitations and risks discussed include residual jaw pain	pain jaw
+ent procedure possible limitations and risks discussed include worsened jaw pain	pain jaw
+tooth pain in posterior left lower jaw	pain jaw
+tooth pain in anterior left lower jaw	pain jaw
+tooth pain in posterior left upper jaw	pain jaw
+tooth pain in anterior left upper jaw	pain jaw
+tooth pain in posterior right lower jaw	pain jaw
+tooth pain in anterior right lower jaw	pain jaw
+constipation	constipation
+constipation adverse event	constipation
+have constipation	constipation
+how often constipation	constipation
+how much distress constipation	constipation
+usual severity constipation	constipation
+simple constipation	constipation
+obstipation	constipation
+psychogenic constipation	constipation
+constipation   functional	constipation
+acute constipation	constipation
+chronic constipation	constipation
+monitor for constipation	constipation
+slow transit constipation	constipation
+constipation aggravated	constipation
+iatrogenic constipation	constipation
+constipation find pt gastrointestinal system ord observed ccc	constipation
+postoperative constipation	constipation
+constipation prophylaxis	constipation
+other constipation	constipation
+at risk for constipation	constipation
+constipation care	constipation
+constipation due to neurogenic bowel	constipation
+severe constipation	constipation
+nursing care  nutrition monitoring bowel movement constipation	constipation
+agitation	agitation
+agitation adverse event	agitation
+muscular unrest	agitation
+neonatal agitation	agitation
+agitation mental	agitation
+hyperactive behavior	agitation
+restlessness and agitation	agitation
+restlessness  phenothiazine	agitation
+agitation aggravated	agitation
+motor restlessness	agitation
+agitation extreme	agitation
+increased agitation	agitation
+physically restless	agitation
+catatonic agitation	agitation
+schizophrenia agitation	agitation
+nocturnal agitation	agitation
+agitation postoperative	agitation
+emergence delirium	agitation
+no psychomotor agitation	agitation
+level of agitation	agitation
+reduced agitation	agitation
+hamd 17   agitation	agitation
+hamd 21   agitation	agitation
+restlessness	agitation
+psychomotor agitation	agitation
+abdominal pain	abdominal pain
+no abdominal pain	abdominal pain
+severe  abdominal pain	abdominal pain
+abdominal rigidity	rigidity
+abdomen	abdominal pain
+acute	abdominal pain
+abdominal cramps	abdominal pain
+nausea or abdominal pain	abdominal pain
+abdominal colic	abdominal pain
+chronic abdominal pain	abdominal pain
+upper abdominal pain	abdominal pain
+epigastric pain	abdominal pain
+lower abdominal pain	abdominal pain
+rebound tenderness	rebound tenderness
+right upper quadrant pain	abdominal pain
+abdominal pain radiating to back	abdominal pain
+left lower quadrant pain	abdominal pain
+left upper quadrant pain	abdominal pain
+suprapubic pain	abdominal pain
+chronic ruq abdominal pain	abdominal pain
+intermittent abdominal pain	abdominal pain
+intermittent llq abdominal pain	abdominal pain
+abdominal pain through to back	abdominal pain
+abdominal pain worse on motion	abdominal pain
+generalized abdominal pain	abdominal pain
+chronic nonspecific abdominal pain	abdominal pain
+central abdominal pain	abdominal pain
+pain radiation	pain radiation
+pain radiation finding point in time   nominal	pain radiation
+back pain without radiation	pain radiation
+back pain with radiation	pain radiation
+radiation associated pain	pain radiation
+abdominal pain radiating to chest	pain radiation
+abdominal pain radiation	pain radiation
+neck pain  with radiation	pain radiation
+neuropathic pain due to radiation	pain radiation
+pain following radiation therapy	pain radiation
+low back pain  without radiation	pain radiation
+chest pain with radiation to left arm	pain radiation
+lumbar spine pain with radiation below knee	pain radiation
+evaluate chest pain  e g	pain radiation
+intensity	pain radiation
+location	pain radiation
+radiation	pain radiation
+duration	pain radiation
+and precipitating and alleviating factors	pain radiation
+bizarre behavior	bizarre behavior
+bizarre behavior find pt  patient ord di pad cgp v 1 4	bizarre behavior
+demonstrated behavior mannerisms bizarre	bizarre behavior
+seizures	convulsions
+seizure adverse event	seizure
+no seizures	seizure
+gelastic seizure with intractable seizure	seizure
+intractable jacksonian epilepsy	seizure
+cursive seizure with intractable seizure	seizure
+febrile convulsions	convulsions
+epilepsy	convulsions
+myoclonic epilepsy	seizure
+absence epilepsy	seizure
+temporal lobe	convulsions
+jacksonian seizure	convulsions
+fit frequency	seizure
+seizure management	seizure
+seizure precautions	seizure
+convulsions in the newborn	convulsions
+generalized seizures	convulsions
+clonic	convulsions
+stress seizure	convulsions
+withdrawal seizures	convulsions
+tremors and or seizures	seizure
+unilateral seizure	seizure
+reflex epilepsy	seizure
+cursive  running	seizure
+gelastic epilepsy	seizure
+visual seizure	seizure
+pregnancy	pregnancy
+possible pregnancy  finding	pregnancy
+hydatidiform mole	pregnancy
+prolonged	pregnancy
+heterotopic	pregnancy
+encounter due to normal pregnancy	pregnancy
+ectopic pregnancy previous pregnancy	pregnancy
+abdominal pregnancy with intrauterine pregnancy	pregnancy
+tubal pregnancy with intrauterine pregnancy	pregnancy
+combined intrauterine and ovarian pregnancy	pregnancy
+thrombosis  pregnancy	pregnancy
+ectopic pregnancy	pregnancy
+molar pregnancy	pregnancy
+pregnancy  hypertension	hypertension
+pregnancy induced	pregnancy
+cervical pregnancy with intrauterine pregnancy	pregnancy
+interligamentous pregnancy with intrauterine pregnancy	pregnancy
+pregnancy test positive   pregnancy no	pregnancy
+recent pregnancy with pregnancy number	pregnancy
+cornual pregnancy with intrauterine pregnancy	pregnancy
+mesometric pregnancy with intrauterine pregnancy	pregnancy
+mural pregnancy with intrauterine pregnancy	pregnancy
+pregnancy with history of ectopic pregnancy	pregnancy
+combined tubal and intrauterine pregnancy	pregnancy
+spontaneous abortion	pregnancy
+obstetric delivery	pregnancy
+fetal membranes	pregnancy
+premature rupture	pregnancy
+violent	violent
+violent retching	violent
+violent thoughts	violent
+violent environment	violent
+assaultive behavior	violent
+physical aggression	violent
+violent spouse	violent
+violent crime	violent
+violent dreams	violent
+violent ideation	violent
+violent event	violent
+violent sneezing	violent
+violent relationship	violent
+aggressive behavior	violent
+torture	violent
+temper tantrum	violent
+violent motor activity	violent
+violent and nonviolent crime	violent
+violent crime and behavior	violent
+behavior violent toward self	violent
+violent acts towards others	violent
+violent  behavior	violent
+family history	substance abuse history
+control of violent content in the media	violent
+victim of violent environment	violent
+patient observed being violent	violent
+palpitations	diaphoresis
+palpitations adverse event	palpitations
+no palpitations	palpitations
+palpitations   fluttering	palpitations
+pounding heart	palpitations
+irregular heart beat	palpitations
+palpitations   rapid	palpitations
+bumping heart	palpitations
+intermittent palpitations	palpitations
+palpitations aggravated	palpitations
+abnormal palpitations	palpitations
+obsolete palpitations  with pheochromocytoma	palpitations
+palpitations at rest	palpitations
+duration of palpitations	palpitations
+occurrence of palpitations	palpitations
+palpitations sustained	palpitations
+fast palpitations	palpitations
+history of palpitations	palpitations
+palpitations awareness of heart	palpitations
+ctcae grade 1 palpitations	palpitations
+ctcae grade 2 palpitations	palpitations
+palpitations with regular rhythm	palpitations
+factors decreasing palpitations	palpitations
+palpitations decreased by bending over	palpitations
+palpitations decreased by coughing	palpitations
+slow respiration	bradypnea
+monitor breathing patterns  bradypnea	tachypnea
+tachypnea	chest tightness
+hyperventilation	chest tightness
+kussmaul respirations	tachypnea
+cheyne stokes respirations	tachypnea
+apneustic breathing	tachypnea
+biot s respiration	tachypnea
+and ataxic patterns	tachypnea
+dysuria	dysuria
+psychogenic dysuria	dysuria
+difficulty passing urine	dysuria
+dysuria chronic	dysuria
+dysuria intermittent	dysuria
+dysuria aggravated	dysuria
+psychophysiological dysuria	dysuria
+positional dysuria	dysuria
+dysuria frequency syndrome	dysuria
+instruct to report discomfort  dysuria  changes in color	dysuria
+consistency	dysuria
+or frequency of vaginal discharge	dysuria
+pain during urination  dysuria  seems related to menstrual cycle	dysuria
+tripod	tripoding
+hyperglycemia	hyperglycemia
+hyperglycemia management	hyperglycemia
+severe	hyperglycemia
+slight	hyperglycemia
+postpancreatectomy hyperglycemia	hyperglycemia
+chronic hyperglycemia	hyperglycemia
+acute hyperglycemia	hyperglycemia
+metabolic stress hyperglycemia	hyperglycemia
+dawn phenomenon	hyperglycemia
+neonatal hyperglycemia	hyperglycemia
+hyperglycemia decompensated	hyperglycemia
+hyperglycemia hyperosmolar	hyperglycemia
+diabetic hyperglycaemia	hyperglycemia
+pancreatectomy  hyperglycemia	hyperglycemia
+postprandial	hyperglycemia
+fasting hyperglycaemia	hyperglycemia
+hyperglycemia artifact	hyperglycemia
+managing hyperglycaemia	hyperglycemia
+medical hyperglycemia	hyperglycemia
+maternal hyperglycemia	hyperglycemia
+hyperosmolar non ketotic hyperglycemia	hyperglycemia
+diabetic severe hyperglycemia	hyperglycemia
+drug induced hyperglycemia	hyperglycemia
+transient neonatal hyperglycemia	hyperglycemia
+iatrogenic neonatal hyperglycemia	hyperglycemia
+pallor	diaphoresis
+pale color	pale
+patient observed to be pale	pale
+pale color saturation	pale
+pale feces  finding	pale
+pallor of skin	pale
+lycodes pallidus	pale
+apogon planifrons	pale
+kalmia polifolia	pale
+anemic infarct	pale
+urine  pale	pale
+pale ale	pale
+pale   symptom	pale
+placenta pale	pale
+pallor of lung	pale
+pallor of liver	pale
+pallor of spleen	pale
+looked pale	pale
+pale lips	pale
+echinacea pallida preparation	pale
+strongylocentrotus pallidus	pale
+turdus pallidus	pale
+ptereleotris heteroptera	pale
+pale red color	pale
+pale catechu	pale
+muscle rigidity	rigidity
+plastic property   rigidity	rigidity
+decerebrate state	rigidity
+neck stiffness	rigidity
+cogwheel rigidity	rigidity
+analyzer	rigidity
+rigidity	tachypnea
+gegenhalten	rigidity
+decorticate rigidity	rigidity
+catatonic rigidity	rigidity
+rigidity  personality	rigidity
+extensor rigidity	rigidity
+face rigidity	rigidity
+trunk rigidity	rigidity
+athetosis with rigidity	rigidity
+extrapyramidal rigidity	rigidity
+abdominal rigidity in epigastric region	rigidity
+exercises for rigidity	rigidity
+rigidity of thinking	rigidity
+attacks of rigidity	rigidity
+marked rigidity	rigidity
+rigidity masticatory	rigidity
+rigidity bodily	rigidity
+rigidity of limbs	rigidity
+nuchal rigidity	rigidity
+no vaginal blood loss	vaginal bleeding
+vaginal hemorrhage	vaginal bleeding
+perinatal transient vaginal bleeding	vaginal bleeding
+vaginal introitus bleeding	vaginal bleeding
+vaginal vault bleeding	vaginal bleeding
+scanty vaginal bleeding	vaginal bleeding
+moderate vaginal bleeding	vaginal bleeding
+profuse vaginal bleeding	vaginal bleeding
+vaginal bleeding problem	vaginal bleeding
+non menstrual vaginal bleeding	vaginal bleeding
+abnormal vaginal bleeding	vaginal bleeding
+normal menstrual blood loss	vaginal bleeding
+rectal vaginal bleeding duration	vaginal bleeding
+vaginal bleeding episode	vaginal bleeding
+vaginal bleeding irregular	vaginal bleeding
+vaginal bleeding not present	vaginal bleeding
+vaginal bleeding prolonged	vaginal bleeding
+pre pubertal vaginal bleeding	vaginal bleeding
+heavy episode of vaginal bleeding	vaginal bleeding
+abnormal bleeding vaginal discharge	vaginal bleeding
+prepubertal vaginal bleeding	vaginal bleeding
+unexplained vaginal bleeding	vaginal bleeding
+vaginal bleeding during pregnancy	vaginal bleeding
+discussion about vaginal bleeding	vaginal bleeding
+have vaginal bleeding or spotting	vaginal bleeding
+incontinence	incontinence
+fecal incontinence	incontinence
+urinary incontinence	incontinence
+urinary stress incontinence	incontinence
+incontinence pads	incontinence
+functional urinary incontinence	incontinence
+reflex incontinence of urine	incontinence
+total urinary incontinence	incontinence
+urge incontinence	incontinence
+incontinence care	incontinence
+nocturnal bladder warning system	incontinence
+incontinence bags	incontinence
+clamps	incontinence
+external occlusion	incontinence
+penis incontinence	incontinence
+incontinence pants	incontinence
+stimulators	incontinence
+electrical	incontinence
+neuromuscular	incontinence
+idiopathic fecal incontinence	incontinence
+overflow incontinence of urine	incontinence
+double incontinence	incontinence
+pigmentary incontinence	incontinence
+frequency of incontinence	incontinence
+unaware of passing urine	incontinence
+incontinence appliance	incontinence
+incontinence belt	incontinence
+incontinence sheath	incontinence
+incontinence control	incontinence
+myalgia	myalgias
+pleurodynia	myalgias
+epidemic	myalgias
+myalgias myopathy	myalgias
+viral myalgia	myalgias
+episodic	myalgias
+sudden onset of generalized muscle aches	myalgias
+coughing	chest tightness
+cough adverse event	cough
+have been coughing	cough
+cough  guaifenesin	cough
+usual severity cough	cough
+how much distress cough	cough
+cough frequency	cough
+no cough	cough
+cough x cough relief	cough
+antitussive agents	cough
+chronic cough	cough
+pertussis	cough
+whooping cough due to unspecified organism	cough
+encouragement of deep breathing and coughing exercises	cough
+decreased coughing	cough
+paroxysmal cough	cough
+nocturnal cough	cough
+cough at rest	cough
+postural cough	cough
+cough reflex	cough
+syncope	loss of consciousness
+tussive	cough
+barking cough	cough
+cough	cough
+explosive	cough
+hacking cough	cough
+productive cough	cough
+mental status changes	mental status changes
+mental status changes postoperative	mental status changes
+acute mental status changes	mental status changes
+monitor for apprehension	mental status changes
+increased anxiety	mental status changes
+and changes in mental status	mental status changes
+stress test induced mental status changes	mental status changes
+rales	rales
+rhonchi	tachypnea
+high pitched rhonchi	rales
+low pitched rhonchi	rales
+moist rales	rales
+dry rale	rhonchi
+inspiratory rhonchi	rhonchi
+rhonchi in left lung	rhonchi
+rhonchi in right lung	rhonchi
+expiratory rhonchi	rhonchi
+rhonchi in both lungs	rhonchi
+o e   rhonchi present	rhonchi
+breath sound rhonchi	rhonchi
+breath sound rhonchi asymptomatic	rhonchi
+rhonchi at right apex	rhonchi
+rhonchi in right mid lung field	rhonchi
+rhonchi at right base	rhonchi
+rhonchi at left apex	rhonchi
+rhonchi in left mid lung field	rhonchi
+rhonchi in left base	rhonchi
+rhonchi at both apices	rhonchi
+rhonchi in both bases	rhonchi
+rhonchi on both sides laterally	rhonchi
+rhonchi on both sides medially	rhonchi
+rhonchi on both sides anteromedially	rhonchi
+vaginal discharge	vaginal discharge
+vaginal discharge symptom	vaginal discharge
+leukorrhea	vaginal discharge
+hemorrhagic vaginal discharge	vaginal discharge
+brown vaginal discharge	vaginal discharge
+cheesy	vaginal discharge
+foul smelling vaginal discharge	vaginal discharge
+frothy vaginal discharge	vaginal discharge
+meconium stained	vaginal discharge
+mucoid vaginal discharge	vaginal discharge
+purulent vaginal discharge	vaginal discharge
+serosanguinous vaginal discharge	vaginal discharge
+watery vaginal discharge	vaginal discharge
+yellow vaginal discharge	vaginal discharge
+vaginal discharge present	vaginal discharge
+vaginal discharge absent	vaginal discharge
+o e   vaginal discharge	vaginal discharge
+o e   no vaginal discharge	vaginal discharge
+on examination   white vaginal discharge	vaginal discharge
+o e   creamy vaginal discharge	vaginal discharge
+on examination   yellow vaginal discharge	vaginal discharge
+on examination   green vaginal discharge	vaginal discharge
+o e   bloodstained vaginal discharge	vaginal discharge
+on examination   frothy vaginal discharge	vaginal discharge
+on examination   profuse vaginal discharge	vaginal discharge
+pathological dilatation	distension
+abdominal bloating	distension
+distention	distension
+abdomen distended	distension
+bladder distention	distension
+enlarged uterus	distension
+enlargement abdomen	distension
+distension of joint	distension
+dilatation of intestine	distension
+dilatation of ureter	distension
+colon distension	distension
+gastric distention	distension
+distension  cecum	distension
+gallbladder distended	distension
+liver  distension	distension
+uterus  distension	distension
+kidney  distension	distension
+distended bowel	distension
+distended ureter	distension
+intracelomic distension	distension
+distension system	distension
+acute dilatation of stomach	distension
+irrigation distension system	distension
+abdominal distension	distension
+gaseous	distension
+arthroscopic irrigation distension pump	distension
+iv t pa initiated within three hours     180 minutes  of time last known well	last known well
+iv t pa not initiated within three hours     180 minutes  of time last known well for reasons documented by clinician	last known well
+iv t pa not initiated within three hours     180 minutes  of time last known well	last known well
+reason not given	last known well
+feeling suicidal  finding	suicidal thought
+c ssrs baseline   non specific suicidal thought	suicidal thought
+c ssrs since last visit   non specific suicidal thought	suicidal thought
+c ssrs children s since last visit   non specific active suicidal thoughts	suicidal thought
+c ssrs children s baseline   non specific active suicidal thoughts	suicidal thought
+diarrhea	diaphoresis
+diarrhea adverse event	diarrhea
+have diarrhea	diarrhea
+how much distress diarrhea	diarrhea
+usual severity diarrhea	diarrhea
+how often diarrhea	diarrhea
+diarrhea not present	diarrhea
+balantidiasis	diarrhea
+infantile diarrhea	diarrhea
+dysentery	diarrhea
+sprue	diarrhea
+tropical	diarrhea
+hemorrhagic diarrhea	diarrhea
+enteritis due to specified virus	vomiting
+functional diarrhea	diarrhea
+postprandial diarrhea	diarrhea
+chronic constipation with overflow	diarrhea
+nervous diarrhea	anxiety
+neonatal diarrhea	diarrhea
+clostridium difficile diarrhea	diarrhea
+intermittent diarrhea	diarrhea
+watery diarrhoea	diarrhea
+mucous diarrhoea	diarrhea
+non infective diarrhea	diarrhea
+allergic diarrhea	diarrhea
+dietetic diarrhea	diarrhea
+unequal femoral pulses	unequal femoral pulses
+exanthema	rash
+cutaneous candidiasis	rash
+drug eruptions	rash
+diaper rash	rash
+eczema	rash
+miliaria	rash
+petechiae	rash
+prurigo	rash
+serum sickness	rash
+urticaria	rash
+pustular rash	rash
+purpuric rash	rash
+vesiculobullous rash	rash
+viral exanthem	rash
+miliaria rubra	rash
+dermatitis	rash
+phototoxic	rash
+acneiform eruptions	rash
+macular rash	rash
+vesicular rash	rash
+jra rash	rash
+dermatitis acneiform	rash
+rash erythematous	rash
+rash follicular	rash
+morbilliform rash	rash
+rash papulosquamous	rash
+assessment of history of substance abuse	substance abuse history
+history of substance abuse	substance abuse history
+family history of substance abuse	substance abuse history
+encounter for family history of alcohol abuse	substance abuse history
+family history of tobacco abuse	substance abuse history
+family history of other substance abuse	substance abuse history
+personal history of psychoactive substance abuse	substance abuse history
+assess and document substance abuse history	substance abuse history
+history of present alcohol  or substance abuse	substance abuse history
+psychoactive  substance	substance abuse history
+abuse	substance abuse history
+reported family history of substance abuse	substance abuse history
+rnox evaluate substance abuse history	substance abuse history
+reported family history of substance abuse   father	substance abuse history
+reported family history of substance abuse   mother	substance abuse history
+reported family history of substance abuse   brother	substance abuse history
+reported family history of substance abuse   sister	substance abuse history
+reported family history of substance abuse   husband	substance abuse history
+reported family history of substance abuse   wife	substance abuse history
+family history of other psychoactive substance abuse	substance abuse history
+family history of other psychoactive substance abuse and dependence	substance abuse history
+family history of other substance abuse and dependence	substance abuse history
+reported family history of substance abuse   domestic partner	substance abuse history
+screening and history of mental health and substance abuse codes	substance abuse history
+history of present alcohol  or substance abuse hx pt  patient nar	substance abuse history
+past medical history level of function find pt alcohol substance abuse rehabilitation treatment plan nar	substance abuse history
+homicidal thoughts	homicidal thoughts
+expresses suicidal homicidal thoughts	homicidal thoughts
+femoral pulse absent	absent femoral pulses
+absent femoral pulses on both sides	absent femoral pulses
+wounds and injuries	trauma
+trauma assessment and care	trauma
+trauma qualifier	trauma
+traumatic injury	trauma
+trauma	trauma
+nursing specialty	trauma
+arm injuries	trauma
+dysbarism	trauma
+birth injuries	trauma
+burn injury	trauma
+combat disorders	trauma
+eye injuries	trauma
+craniocerebral trauma	trauma
+noise induced hearing loss	trauma
+heart injuries	trauma
+knee injuries	trauma
+multiple trauma	trauma
+radiation injury	trauma
+smoke inhalation injury	trauma
+spinal cord injuries	trauma
+spinal injuries	trauma
+tendon injuries	trauma
+thoracic injuries	trauma
+trauma centers	trauma
+trauma units	trauma
+wheezing	wheezing
+respiratory sounds	wheezing
+inspiratory wheezing	wheezing
+expiratory wheezing	wheezing
+wheezing stridor	wheezing
+asthmatic breathing	wheezing
+wheezing symptom	wheezing
+wheezing aggravated	wheezing
+bronchospasm and wheezing adverse event	wheezing
+chronic wheezing	wheezing
+diffuse wheezing	wheezing
+wheezing occurs only with exercise	wheezing
+wheezing on auscultation  physical finding	wheezing
+wheezing recurs from time to time	wheezing
+wheezing recurs intermittently	wheezing
+wheezing unilaterally	wheezing
+wheezing in both lungs	wheezing
+wheezing recorders	wheezing
+frequent wheezing	wheezing
+factitious asthma	wheezing
+wheezing find 24h respiratory system ord reported hiv ssc	wheezing
+ctcae grade 1 bronchospasm and wheezing	wheezing
+ctcae grade 2 bronchospasm and wheezing	wheezing
+ctcae grade 3 bronchospasm and wheezing	wheezing
+neck pain	pain region
+low back pain	pain region
+pain in or around eyes	pain region
+shoulder pain	pain region
+pain in cheek	pain region
+pain finding at anatomical site	pain region
+pain of head and neck region	pain region
+pain in joint involving shoulder region	pain region
+pain in limb	pain region
+shoulder region	pain region
+pain in the umbilical region	pain region
+parotid region pain	pain region
+pain  lumbar region	pain region
+pain in left infraspinatus region	pain region
+pain in left supraspinatus region	pain region
+pelvic pain on the left	pain region
+pelvic pain on the right	pain region
+radiating pain in a segment or region	pain region
+pain in axillary region	pain region
+chest pain in the pleural region	pain region
+joint pain of pelvic region	pain region
+pain in a joint	pain region
+pelvic region and thigh	pain region
+characteristics of pain of head and neck region	pain region
+pain radiating to lumbar region of back	pain region
+joint pain in left infraclavicular region	pain region
+weakness	weakness
+heart failure	weakness
+paresis	weakness
+muscle weakness	weakness
+weak arterial pulse	weakness
+voice fatigue	weakness
+attacks of weakness	weakness
+weakness of sternomastoid	weakness
+weakness present	weakness
+weakness of neck	weakness
+facial paresis	weakness
+weakness of back	weakness
+monoparesis   leg	weakness
+paralysis weakness	weakness
+diaphragmatic paresis	weakness
+weakness postural	weakness
+palate weakness	weakness
+larynx weakness	weakness
+weakness of hand	weakness
+weakness of foot	weakness
+weakness of toe	weakness
+quadriceps weakness	weakness
+abdominal weakness	weakness
+muscle weakness of limb	weakness
+cardiovascular deterioration	weakness
+tachycardia	diaphoresis
+tachycardia by ecg finding	tachycardia
+ectopic junctional	tachycardia
+paroxysmal	confusion
+sinus tachycardia	tachycardia
+supraventricular tachycardia	tachycardia
+ventricular	tachycardia
+bradycardia tachycardia syndrome	bradycardia
+idiojunctional tachycardia	tachycardia
+exertional	tachycardia
+reciprocating	tachycardia
+sinoatrial node tachycardia	tachycardia
+atrioventricular tachycardia	tachycardia
+ventricular tachycardia by ecg finding	tachycardia
+irregular tachycardia	tachycardia
+fetal tachycardia	tachycardia
+av junctional  nodal  tachycardia	tachycardia
+baseline tachycardia	tachycardia
+atrial tachycardia	tachycardia
+tachycardia aggravated	tachycardia
+tachycardia rest	tachycardia
+tachycardia with ectopy	tachycardia
+supraventicular tachycardia	tachycardia
+tachycardia nervous	tachycardia
+neonatal tachycardia	tachycardia
+anxiety	chest tightness
+anxiety disorders	anxiety
+anxiety symptoms	anxiety
+anxiety adverse event	anxiety
+anxiety scale  basc 2	anxiety
+anxiety disorder anxiety state	anxiety
+anxiety  nocturnal	anxiety
+dream anxiety	anxiety
+castration	anxiety
+separation anxiety disorder	anxiety
+fear  mental process	anxiety
+dental anxiety	anxiety
+alleviating anxiety	anxiety
+anticipatory anxiety	anxiety
+mild anxiety	anxiety
+moderate anxiety	anxiety
+anxiety ridden	anxiety
+anxiety complex	anxiety
+aids anxiety	anxiety
+anxiety generalized	anxiety
+situational anxiety	anxiety
+anxiety hyperventilation	anxiety
+mixed anxiety and depressive disorder	anxiety
+anxiety hysteria	anxiety
+phobic anxiety disorder	anxiety
+o e   tachypnea	tachypnea
+neonatal tachypnoea	tachypnea
+transitory  tachypnea	tachypnea
+episodic tachypnea	tachypnea
+transitory tachypnea of newborn	tachypnea
+mild transient tachypnea of newborn	tachypnea
+severe transient tachypnea of newborn	tachypnea
+sleep related neurogenic tachypnea	tachypnea
+not elsewhere classified	tachypnea
+apnea alternating with tachypnea	tachypnea
+neonatal  in some patients	tachypnea
+monitor for dyspnea	chest tightness
+fatigue	malaise
+and orthopnea	tachypnea
+monitor for fluid loss  e g	tachypnea
+bleeding	tachypnea
+vomiting	vomiting
+perspiration	tachypnea
+and tachypnea	tachypnea
+monitor respiratory pattern for symptoms of respiratory difficulty  e g	tachypnea
+dyspnea	shortness of breath
+and shortness of breath	tachypnea
+monitor respiratory status	tachypnea
+noting signs of respiratory distress  tachypnea	tachypnea
+nasal flaring	tachypnea
+grunting	tachypnea
+retractions	chest tightness
+or rales	tachypnea
+stridor	chest tightness
+sneezing	chest tightness
+hoarseness	chest tightness
+chest pain or tightness	chest tightness
+cyanosis	diaphoresis
+monitor for signs of malignant hyperthermia  e g	tachypnea
+hypercarbia	tachypnea
+rise in temperature	tachypnea
+arrhythmias	hypoxemia
+mottled skin	tachypnea
+profuse sweating	tachypnea
+and unstable blood pressure	tachypnea
+sore to touch	tenderness
+emotional tenderness	tenderness
+scalp tenderness	tenderness
+liver tender	tenderness
+abdominal tenderness	tenderness
+pain and tenderness	tenderness
+renal angle tenderness	tenderness
+adnexal tenderness	tenderness
+back tenderness	tenderness
+bone tenderness	tenderness
+bursal tenderness	tenderness
+calf tenderness	tenderness
+cervical tenderness	tenderness
+chest wall tenderness	tenderness
+ear tenderness	tenderness
+epididymal tenderness	tenderness
+tenderness in limb	tenderness
+tenderness eye	tenderness
+tenderness on palpation of eyelid	tenderness
+facial tenderness	tenderness
+fingertip tenderness	tenderness
+forehead tenderness	tenderness
+genital tenderness	tenderness
+tenderness of gums	tenderness
+headache	diaphoresis
+no headache	headache
+rebound headache with intractable headache	headache
+aural headache	headache
+cluster headache	headache
+dental headache	headache
+nasal headache	headache
+ocular headache	headache
+postseizure headache	headache
+post traumatic headache	headache
+tension headache	headache
+sinus headache	headache
+vascular headaches	headache
+migraine disorders	headache
+chronic headache	headache
+occipital headache	headache
+allergic headache	headache
+headache dull	headache
+frontal headache	headache
+postauricular	headache
+headache recurrent	headache
+excruciating headache	headache
+post lumbar puncture headache	headache
+common migraine	headache
+menopausal headache	headache
+clammy skin	clammy skin
+skin cold clammy	clammy skin
+monitor for cardiovascular manifestations of hyponatremia  e g	clammy skin
+elevated blood pressure	clammy skin
+cold and clammy skin	clammy skin
+and hypo  or hypervolemia	clammy skin
+reduced visual acuity	decreased visual acuity
+visual acuity decreased bilaterally	decreased visual acuity
+visual acuity decreased od	decreased visual acuity
+visual acuity decreased os	decreased visual acuity
+visual acuity decreased unilateral	decreased visual acuity
+decreased visual acuity	decreased visual acuity
+progressive	decreased visual acuity
+nonprogressive	decreased visual acuity
+decreased uncorrected visual acuity	decreased visual acuity
+decreased visual acuity  rare	decreased visual acuity
+adult onset	decreased visual acuity
+slowly progressive	decreased visual acuity
+decreased visual acuity  in some patients	decreased visual acuity
+decreased visual acuity in early childhood	decreased visual acuity
+rapidly progressive	decreased visual acuity
+decreased visual acuity with current correction	decreased visual acuity
+decreased best corrected visual acuity	decreased visual acuity
+decreased visual acuity  in older patients	decreased visual acuity
+in some female carriers	decreased visual acuity
+best corrected distance visual acuity decreased	decreased visual acuity
+decreased visual acuity in fourth decade of life	decreased visual acuity
+normal luminance best corrected visual acuity decreased	decreased visual acuity
+low luminance best corrected visual acuity decreased	decreased visual acuity
+moderately decreased visual acuity	decreased visual acuity
+late onset	decreased visual acuity
+decreased visual acuity from infancy or early childhood	decreased visual acuity
+decreased best corrected visual acuity  in some patients	decreased visual acuity
+accessory respiratory muscles used	use of accessory muscles
+accessory muscles used with breathing	use of accessory muscles
+exaggerated use of accessory muscles for inspiration	use of accessory muscles
+use of significant respiratory accessory muscles	use of accessory muscles
+minimal use of respiratory accessory muscles	use of accessory muscles
+monitor work of breathing  e g	diaphoresis
+respiratory rate	diaphoresis
+heart rate	diaphoresis
+use of accessory muscles	diaphoresis
+and diaphoresis	cool skin
+note chest movement	use of accessory muscles
+watching for symmetry	use of accessory muscles
+and supraclavicular and intercostal muscle retractions	use of accessory muscles
+observe chest movement	use of accessory muscles
+including symmetry	use of accessory muscles
+monitor for indications of chronic respiratory acidosis  e g	use of accessory muscles
+barrel chest	use of accessory muscles
+clubbing of nails	use of accessory muscles
+pursed lips breathing	use of accessory muscles
+and use of accessory muscles	use of accessory muscles
+as appropriate	cool skin
+fever	hyperthermia
+fever symptoms  finding	fever
+malaria	fever
+trench fever	fever
+jungle yellow fever	fever
+screening  fever	fever
+yellow fever	fever
+glandular fever  fever	fever
+fever  screening hemorrhagic fever	fever
+fever  blackwater fever	fever
+fever  mediterranean	fever
+tick fever  rickettsiosis	fever
+spotted fever	fever
+bovine anaplasmosis	fever
+anthrax disease	fever
+bartonella infections	fever
+blackwater fever	fever
+boutonneuse fever	fever
+brucellosis	fever
+bunyamwera virus disease	fever
+byssinosis	fever
+chikungunya fever	fever
+coccidioidomycosis	fever
+colorado tick fever	fever
+dengue fever	fever
+ephemeral fever	fever
+equine infectious anemia	fever
+substance of abuse	abuse of substance
+substance abuse problem	abuse of substance
+actual positive absence of substance use	abuse of substance
+drug abuse	abuse of substance
+drug habituation	abuse of substance
+mescaline	abuse of substance
+phencyclidine	abuse of substance
+psychoactive substance abuse	abuse of substance
+substance abuse detection	abuse of substance
+substance abuse	abuse of substance
+intravenous	abuse of substance
+substance abuse treatment centers	abuse of substance
+other	abuse of substance
+unknown substance abuse	abuse of substance
+psychoactive substance of abuse   non pharmaceutical	abuse of substance
+substance abuse epidemiology	abuse of substance
+aodd recovery	abuse of substance
+aodd relapse	abuse of substance
+cidi substance abuse module	abuse of substance
+substance abuse attitude survey	abuse of substance
+substance abuse counseling	abuse of substance
+chronic drug abuse	abuse of substance
+prevention issue substance abuse	abuse of substance
+substance abuse daterange	abuse of substance
+substance abuse pregnancy	abuse of substance
+substance abuse pregnancy acid	abuse of substance
+dizziness	dizziness
+lightheadedness	lightheadedness
+postural dizziness	dizziness
+lightheadedness with collapse	lightheadedness
+pdqualif   lightheadedness	lightheadedness
+lightheadedness during exercise	lightheadedness
+mds updrs   lightheadedness on standing	lightheadedness
+or loss of balance	lightheadedness
+monitor exercise tolerance  e g	lightheadedness
+presence of such symptoms as breathlessness	lightheadedness
+rapid pulse	lightheadedness
+and joint muscle pain or swelling  during exercise	lightheadedness
+confusion	post-ictal
+clouded consciousness	confusion
+confusion adverse event	confusion
+actual positive absence of confusion	confusion
+reactive	confusion
+chronic confusion	confusion
+onset of confusion	confusion
+intermittent confusion	confusion
+confusion baseline	confusion
+confusion episode	confusion
+post ictal	post-ictal
+bewilderment	confusion
+confusion aggravated	confusion
+acute onset of confusion	confusion
+nocturnal confusion	confusion
+confusion reversible	confusion
+acute confusional state	confusion
+dissociative confusion	confusion
+postoperative confusion	confusion
+confusion  situational	confusion
+confusion find pt  patient ord observed ccc	confusion
+confusion fluctuates	confusion
+confusion steadily worsening	confusion
+constant confusion	confusion
+combative	combative
+behavior combative	combative
+aggressive reaction	combative
+convulsions followed by combative behavior	combative
+vascular dementia with combative behavior	combative
+dementia	combative
+with combative behavior	combative
+unspecified dementia with combative behavior	combative
+major neurocognitive disorder with combative behavior	combative
+dementia in conditions classified elsewhere with combative behavior	combative
+dementia in other diseases classified elsewhere with combative behavior	combative
+major neurocognitive disorder in other diseases classified elsewhere with combative behavior	combative
+physical aggression  aggressive or combative to self and others  for example	combative
+hits self	combative
+throws objects	combative
+punches	combative
+dangerous maneuvers with wheelchair or other objects	combative
+basilar rales	rales
+medium rales	rales
+subcrepitant	rales
+atelectatic rales	rales
+coarse respiratory crackles	rales
+fine respiratory crackles	rales
+post tussive crackles	rales
+inspiratory crackles	rales
+expiratory crackles	rales
+rales right	rales
+rales left	rales
+superficial crackling rales	rales
+basilar	rales
+right	rales
+bilateral	rales
+bubbling crackles	rales
+breath sound rales	rales
+breath sound rales asymptomatic	rales
+breath sound rales diffuse	rales
+breath sound rales fine	rales
+breath sound rales new	rales
+stress test induced rales	rales
+drowsiness	sleepiness
+somnolence	sleepiness
+daytime sleepiness	sleepiness
+hypersomnia	sleepiness
+narcolepsy	sleepiness
+postviral excessive daytime sleepiness	sleepiness
+excessive daytime somnolence	sleepiness
+feeling of residual sleepiness	sleepiness
+fainting followed by prolonged sleepiness	sleepiness
+daytime somnolence	sleepiness
+medicated level of sleepiness	sleepiness
+epworth sleepiness scale questionnaire	sleepiness
+mds updrs   daytime sleepiness	sleepiness
+excessive day and night time sleepiness	sleepiness
+excess daytime sleepiness with sleep paralysis	sleepiness
+excessive daytime sleepiness   normal night sleep	sleepiness
+irresistible sleepiness	sleepiness
+cataplexy and onset of sleep in desynchronized phase	sleepiness
+cdisc questionnaire ess test name terminology	sleepiness
+cdisc questionnaire ess test code terminology	sleepiness
+likelihood fall asleep during day total epworth score	sleepiness
+does your child have a problem with sleepiness during the day find pt  patient ord phenx	sleepiness
+does your child have a problem with sleepiness during the day	sleepiness
+sleep apnea symptoms assessed	sleepiness
+including presence or absence of snoring and daytime sleepiness	sleepiness
+milder cases have isolated recurrent daytime sleepiness and or lapses into sleep without cataplexy	sleepiness
+multiple sleep latency test	sleepiness
+generalized clonic or tonic clonic seizures	tonic-clonic
+tonic clonic epilepsy	convulsions
+tonic   clonic seizures	tonic-clonic
+cryptogenic tonic clonic epilepsy	tonic-clonic
+tonic clonic	tonic-clonic
+familial	tonic-clonic
+symptomatic	tonic-clonic
+status  epilepticus	tonic-clonic
+tonic clonic movements	tonic-clonic
+status  epileptic	tonic-clonic
+photosensitive tonic clonic seizures	tonic-clonic
+tonic clonic seizure	tonic-clonic
+refractory	tonic-clonic
+tonic	tonic-clonic
+focal	convulsions
+tonic clonic  rare	tonic-clonic
+seizures  tonic clonic or nonfebrile	tonic-clonic
+atypical absence	tonic-clonic
+atonic tonic	tonic-clonic
+or tonic clonic seizures	tonic-clonic
+seizure disorder generalized tonic clonic	tonic-clonic
+generalized tonic clonic seizures with focal onset	tonic-clonic
+generalized tonic clonic seizures on awakening	tonic-clonic
+generalized tonic clonic seizures in 50	tonic-clonic
+tonic clonic epilepsy with intractable epilepsy	tonic-clonic
+nonspecific tonic clonic epileptic seizures	tonic-clonic
+tonic clonic  1 patient	tonic-clonic
+non refractory	tonic-clonic
+tonic clonic seizures  less common	tonic-clonic
+generalized tonic clonic seizures  rare	tonic-clonic
+agitated delirium	agitated delirium
+chest tightness	chest tightness
+dull chest pain	chest pressure
+chest symptom tightness chronic	chest tightness
+chest and heart tightness	chest tightness
+respiratory chest tightness	chest tightness
+chest tightness aggravated	chest tightness
+chest tightness or pressure	chest pressure
+chest tightness or heavy pressure	chest pressure
+in the last 12mo	chest tightness
+have you been awakened from sleep by shortness of breath or a feeling of tightness in your chest find 12mo  patient ord phenx	chest tightness
+i feel tightness in my chest in the past 7d	chest tightness
+tightness	chest tightness
+pain	hypoxemia
+or discomfort in your chest or stomach	chest tightness
+chest tightness within 60 minutes after exercise	chest tightness
+i feel tightness in my chest in the past 7d find 7d  patient ord facit	chest tightness
+acute episode of pain	chest tightness
+discomfort or tightness in the chest	chest tightness
+left arm or jaw within 72h of the hospitalization or in hospital event	chest tightness
+left arm or jaw within 72h of the hospitalization or in hospital event finding point in time  patient ordinal	chest tightness
+have you been awakened from sleep by shortness of breath or a feeling of tightness in your chest	chest tightness
+monitor for early signs of allergic reactions  wheezing	chest tightness
+itching	chest tightness
+hives and wheals	chest tightness
+angioedema	chest tightness
+gi upset	chest tightness
+and restlessness	chest tightness
+how often did your asthma symptoms  wheezing	chest tightness
+shortness of breath	chest tightness
+chest tightness or pain  wake you up at night or earlier than usual in the morning during the past 4w	chest tightness
+chest tightness or pain  wake you up at night or earlier than usual in the morning during the past 4w find 4w  patient ord act	chest tightness
+increased sweating	diaphoresis
+menopausal diaphoresis	diaphoresis
+diaphoresis adverse event	diaphoresis
+profuse diaphoresis	diaphoresis
+obsolete diaphoresis  with pheochromocytoma	diaphoresis
+ctcae grade 1 diaphoresis	diaphoresis
+ctcae grade 2 diaphoresis	diaphoresis
+pain level expressed by diaphoresis	diaphoresis
+dizziness preceded by sweating	diaphoresis
+diaphoresis above the injury	diaphoresis
+monitor for insensible fluid loss	diaphoresis
+autonomic features may occur  diaphoresis	diaphoresis
+hyperthermia	hyperthermia
+hypertension	hypertension
+monitor cardiorespiratory response to activity  e g	diaphoresis
+other dysrhythmias	diaphoresis
+diaphoresis	diaphoresis
+hemodynamic pressures	diaphoresis
+and respiratory rate	diaphoresis
+monitor for loss of electrolyte rich fluids  e g	diaphoresis
+nasogastric suction	diaphoresis
+ileostomy drainage	diaphoresis
+wound drainage	diaphoresis
+note tachycardia or bradycardia	diaphoresis
+decreased blood pressure	diaphoresis
+or abnormally low systemic arterial pressure	diaphoresis
+as well as pallor	diaphoresis
+perform a comprehensive appraisal of peripheral circulation  e g	diaphoresis
+check peripheral pulses	diaphoresis
+edema	diaphoresis
+capillary refill	diaphoresis
+color	diaphoresis
+and temperature	diaphoresis
+determine possible risk factors for fluid imbalance  e g	diaphoresis
+diuretic therapy	diaphoresis
+renal pathologies	diaphoresis
+cardiac failure	diaphoresis
+liver dysfunction	diaphoresis
+strenuous exercise	diaphoresis
+heat exposure	diaphoresis
+infection	diaphoresis
+postoperative state	diaphoresis
+polyuria	diaphoresis
+and diarrhea	diaphoresis
+monitor for early compensatory responses to fluid loss  increased heart rate	cool skin
+decreased bp	cool skin
+orthostatic hypotension	cool skin
+decreased urinary output	cool skin
+narrowed pulse pressure	cool skin
+decreased capillary refill	cool skin
+apprehension	cool skin
+pale and cool skin	cool skin
+monitor for signs and symptoms of carbonic acid deficit and respiratory alkalosis  frequent sighing and yawning	diaphoresis
+tetany	diaphoresis
+paresthesia	diaphoresis
+muscle twitching	diaphoresis
+tingling and numbness	diaphoresis
+blurred vision	diaphoresis
+dry mouth	diaphoresis
+convulsions	convulsions
+ph level of  7 45	diaphoresis
+paco2  35 mm hg	diaphoresis
+associated hyperchloremia	diaphoresis
+and possible hco3 deficit	diaphoresis
+monitor for signs and symptoms of autonomic dysreflexia  paroxysmal hypertension	diaphoresis
+bradycardia	bradycardia
+diaphoresis above the level of injury	diaphoresis
+facial flushing	diaphoresis
+pallor below the level of injury	diaphoresis
+nasal congestion	diaphoresis
+engorgement of temporal and neck vessels	diaphoresis
+conjunctival congestion	diaphoresis
+chills without fever	diaphoresis
+pilomotor erection	diaphoresis
+and chest pain	diaphoresis
+chest pain	chest pain
+chest pain finding point in time  patient ordinal	chest pain
+chest wall pain	pain chest wall
+retrosternal pain	chest pain
+chest pain site anterior chest	chest pain
+chest pain site lower chest	chest pain
+chest pain site posterior chest	chest pain
+angina pectoris	chest pain
+angina	chest pain
+unstable	chest pain
+pleuritic pain	chest pain
+other chest pain	chest pain
+angina decubitus	chest pain
+xiphodynia	chest pain
+precordial pain	chest pain
+chest pain on exertion	chest pain
+radiating chest pain	chest pain
+crushing chest pain	chest pain
+pleuropericardial chest pain	chest pain
+esophageal chest pain	chest pain
+chest burning pain of	chest pain
+nonpleuritic	chest pain
+sharp chest pain	chest pain
+atypical chest pain	chest pain
+chest pain nec in mdr	chest pain
+delusions	delusional thoughts
+hallucinations	hallucinations
+organic	hallucinations
+elementary	hallucinations
+functional hallucinations	hallucinations
+extracampine hallucinations	hallucinations
+auditory	hallucinations
+visual	hallucinations
+olfactory	hallucinations
+gustatory	hallucinations
+tactile	hallucinations
+hypnagogic	hallucinations
+somatic	hallucinations
+sensory	hallucinations
+mushroom hallucinosis	hallucinations
+verbal auditory hallucinations	hallucinations
+hallucinations of music	hallucinations
+hallucinations of pain	hallucinations
+hallucinations of temperature	hallucinations
+hallucinations in several modalities at once	hallucinations
+sexual hallucinations	hallucinations
+hypnapompic	hallucinations
+dissociative	hallucinations
+other hallucinations	hallucinations
+kinesthetic	hallucinations
+reflex	hallucinations
+blindness	post-ictal
+hemeralopia	blindness
+night blindness	blindness
+color blindness	blindness
+snow blindness	blindness
+blindness  excl colour blindness	blindness
+blindness  day blindness	blindness
+sequelae	blindness
+word blindness  blindness	blindness
+river blindness  blindness  manifestation	blindness
+alexia	blindness
+tobacco amblyopia	blindness
+congenital blindness	blindness
+onchocerciasis	blindness
+ocular	blindness
+amaurosis fugax	blindness
+recurrent iridocyclitis	blindness
+sudden visual loss	blindness
+transient	blindness
+cortical	post-ictal
+hysterical	blindness
+musical alexia	blindness
+prosopagnosia	blindness
+norrie disease	blindness
+central blindness	blindness
+legal	blindness
+vomiting adverse event	vomiting
+have been vomiting	vomiting
+how much distress vomiting	vomiting
+bothered by vomiting	vomiting
+usual severity vomiting	vomiting
+how often vomiting	vomiting
+no vomiting	nausea
+vomit containing blood at beginning of vomiting	vomiting
+epidemic vomiting syndrome	vomiting
+hematemesis	vomiting
+nausea and vomiting	nausea
+anticipatory	vomiting
+cyclical vomiting syndrome  disorder	vomiting
+persistent vomiting	vomiting
+projectile vomiting	vomiting
+acute vomiting	vomiting
+chronic vomiting	vomiting
+vomiting bile	vomiting
+concealed vomiting	vomiting
+psychogenic vomiting	vomiting
+feculent vomiting	vomiting
+habit vomiting	vomiting
+vomiting of pregnancy	vomiting
+hyperthermia treatment	hyperthermia
+induced hyperthermia	hyperthermia
+local	hyperthermia
+malignant hyperpyrexia due to anesthesia	hyperthermia
+therapeutic heat application	hyperthermia
+hyperthermia blankets	hyperthermia
+ultrasound therapy systems	hyperthermia
+intermittent fever	hyperthermia
+hyperthermia in newborn	hyperthermia
+endocrine hyperthermia	hyperthermia
+hyperthermia sudden	hyperthermia
+hyperthermia nec	hyperthermia
+hyperthermia find pt  patient ord observed ccc	hyperthermia
+microspheres	hyperthermia
+embolization	hyperthermia
+hyperthermia  history	hyperthermia
+susceptible to hyperthermia	hyperthermia
+hyperthermia induction	hyperthermia
+radiation hyperthermia treatment	hyperthermia
+neurogenic hyperthermia	hyperthermia
+hyperthermia of brain	hyperthermia
+hyperthermia of thymus	hyperthermia
+hyperthermia of spleen	hyperthermia
+hyperthermia of eye	hyperthermia
+hyperthermia of ear	hyperthermia
+eclampsia	convulsions
+uremic convulsion	convulsions
+convulsions aggravated	convulsions
+tonic seizures	convulsions
+dissociative convulsions	convulsions
+convulsions  infantile	convulsions
+other convulsions	convulsions
+febrile convulsion medications	convulsions
+concussive convulsion	convulsions
+convulsive seizures	convulsions
+epilepsy  convulsions	convulsions
+pregnancy convulsions	convulsions
+unconscious state	loss of consciousness
+no loss of consciousness	loss of consciousness
+hypoglycemic coma	hypoglycemia
+concussion with no loss of consciousness	loss of consciousness
+concussion with less than 1 hour loss of consciousness	loss of consciousness
+concussion with 1 24 hours loss of consciousness	loss of consciousness
+concussion with loss of consciousness	loss of consciousness
+brief loss of consciousness	loss of consciousness
+moderate loss of consciousness	loss of consciousness
+prolonged loss of consciousness	loss of consciousness
+cerebellar contusion without open intracranial wound and with no loss of consciousness	loss of consciousness
+o e   loss of consciousness	loss of consciousness
+loss of consciousness of unspecified duration	loss of consciousness
+history of loss of consciousness	loss of consciousness
+intracranial injury with loss of consciousness	loss of consciousness
+cerebral contusion with no loss of consciousness	loss of consciousness
+laceration of cerebrum with no loss of consciousness	loss of consciousness
+fracture of skull with no loss of consciousness	loss of consciousness
+urinary incontinence with loss of consciousness	loss of consciousness
+concussion without loss of consciousness	loss of consciousness
+cerebellar hemorrhage with no loss of consciousness	loss of consciousness
+cerebellar hemorrhage with loss of consciousness	loss of consciousness
+brainstem hemorrhage with no loss of consciousness	loss of consciousness
+brainstem hemorrhage with loss of consciousness	loss of consciousness
+nausea	nausea
+nausea adverse event	nausea
+have nausea	nausea
+how much nausea during this period	nausea
+how often nausea	nausea
+how much distress nausea	nausea
+usual severity nausea	nausea
+bothered by nausea	nausea
+nausea presence or threshold point in time  patient ordinal	nausea
+no nausea	nausea
+motion sickness	nausea
+morning nausea	nausea
+emetrol	nausea
+morning sickness	nausea
+nausea present	nausea
+postoperative nausea	nausea
+nausea aggravated	nausea
+anti nausea	nausea
+nausea control	nausea
+chronic nausea	nausea
+nausea exertional	nausea
+nausea intractable	nausea
+persistent nausea	nausea
+post ictal state	post-ictal
+neurogenic pulmonary edema	post-ictal
+post ictal coma	post-ictal
+aphasia	post-ictal
+hemiplegia	post-ictal
+post ictal memory loss	post-ictal
+post ictal drowsiness	post-ictal
+post ictal headache	post-ictal
+hypotension	hypoxemia
+hypotension adverse event	hypotension
+controlled	hypotension
+orthostatic	hypotension
+ocular hypotension	hypotension
+chronic hypotension	hypotension
+extremity hypotension	hypotension
+decreased systolic arterial pressure	hypotension
+decreased diastolic arterial pressure	hypotension
+drug induced hypotension	hypotension
+other hypotension	hypotension
+idiopathic hypotension	hypotension
+iatrogenic hypotension	hypotension
+hypothermia with hypotension	hypothermia
+diastolic blood pressure	hypotension
+neonatal hypotension	hypotension
+low intracranial pressure	hypotension
+intracranial hypotension	hypotension
+hypotension and shock	hypotension
+hypotension asymptomatic	hypotension
+acute hypotension	hypotension
+hypotension persistent	hypotension
+hypotension aggravated	hypotension
+hypotension paroxysm	hypotension
+hypotension symptomatic	hypotension
+anterior chest wall pain	pain chest wall
+chest wall pain musculoskeletal	pain chest wall
+chest wall pain pleuritic	pain chest wall
+chest wall pain adverse event	pain chest wall
+chest wall pain syndrome chronic	pain chest wall
+ctcae grade 1 chest wall pain	pain chest wall
+ctcae grade 2 chest wall pain	pain chest wall
+ctcae grade 3 chest wall pain	pain chest wall
+ctcae grade 4 chest wall pain	pain chest wall
+anterior wall chest pain with respiration	pain chest wall
+chest pain localizing to chest wall in center	pain chest wall
+chest pain localizing to chest wall in center anteriorly	pain chest wall
+chest pain localizing to chest wall in center posteriorly	pain chest wall
+chest pain localizing to chest wall on left	pain chest wall
+chest pain localizing to chest wall on left anteriorly	pain chest wall
+chest pain localizing to chest wall on left laterally	pain chest wall
+chest pain localizing to chest wall on left posteriorly	pain chest wall
+chest pain localizing to chest wall on right	pain chest wall
+chest pain localizing to right anterior chest wall	pain chest wall
+chest pain localizing to chest wall on right laterally	pain chest wall
+chest pain localizing to right posterior chest wall	pain chest wall
+chest pain localizing to deep within chest wall	pain chest wall
+shortness of breath   point in time  patient	shortness of breath
+have shortness of breath question	shortness of breath
+no shortness of breath	shortness of breath
+usual severity shortness of breath	shortness of breath
+how often shortness of breath	shortness of breath
+how much distress shortness of breath	shortness of breath
+dyspnea on exertion	shortness of breath
+shortness of breath not present	shortness of breath
+increasing breathlessness	shortness of breath
+resting dyspnea	shortness of breath
+shortness of breath acute	shortness of breath
+shortness of breath chronic	shortness of breath
+shortness of breath episode	shortness of breath
+shortness of breath extreme	shortness of breath
+shortness of breath intermittent	shortness of breath
+shortness of breath new onset	shortness of breath
+shortness of breath progressive	shortness of breath
+shortness of breath rest	shortness of breath
+shortness of breath stable chronic	shortness of breath
+shortness of breath with activity	shortness of breath
+clasp shortness of breath score	shortness of breath
+dyspnea adverse event	shortness of breath
+phq 15   shortness of breath	shortness of breath
+shortness of breath at its worst	shortness of breath
+hypothermia	hypothermia
+natural	hypothermia
+hypothermia due to exposure	hypothermia
+hypothermia adverse event	hypothermia
+gastric hypothermia	hypothermia
+induced	hypothermia
+hypothermia treatment	hypothermia
+caps	hypothermia
+cooling units	hypothermia
+patient	hypothermia
+hypothermia of newborn	hypothermia
+accidental	hypothermia
+immersion hypothermia	hypothermia
+at risk hypothermia	hypothermia
+deep hypothermia	hypothermia
+mild hypothermia	hypothermia
+moderate hypothermia	hypothermia
+profound hypothermia	hypothermia
+o e   hypothermia	hypothermia
+hypothermia caused by anesthetic	hypothermia
+anesthetic hypothermia	hypothermia
+hypothermia central	hypothermia
+hypothermia local	hypothermia
+hypothermia neonatal	hypothermia
+hypothermia find pt  patient ord observed ccc	hypothermia
+induced hypothermia  finding	hypothermia
+drug paraphernalia	paraphernalia
+intraperitoneal admin sets paraphernalia	paraphernalia
+infusion sets paraphernalia	paraphernalia
+drug paraphernalia at scene	paraphernalia
+alcohol containers paraphernalia at scene	paraphernalia
+dialysis  peritoneal  kits miscell intraperitoneal admin sets paraphernalia	paraphernalia
+hypodermoclysis set needles miscell infusion sets paraphernalia	paraphernalia
+intravenous administration set miscell infusion sets paraphernalia	paraphernalia
+intravenous administration extension set miscell infusion sets paraphernalia	paraphernalia
+intravenous piggyback administration set miscell infusion sets paraphernalia	paraphernalia
+intravenous administration extension set with filter miscell infusion sets paraphernalia	paraphernalia
+intravenous catheter miscell infusion sets paraphernalia	paraphernalia
+intravenous catheter kit miscell infusion sets paraphernalia	paraphernalia
+intravenous infusion pump accessory miscell infusion sets paraphernalia	paraphernalia
+intravenous  iv  infusion pump miscell infusion sets paraphernalia	paraphernalia
+intraveous administration set with filter miscell infusion sets paraphernalia	paraphernalia
+infusion set for insulin pump miscell infusion sets paraphernalia	paraphernalia
+infusion set with insulin pump body miscell infusion sets paraphernalia	paraphernalia
+intravenous administration set 21 gauge x 3 4  miscell infusion sets paraphernalia	paraphernalia
+intravenous administration set 23 gauge x 3 4  miscell infusion sets paraphernalia	paraphernalia
+intravenous administration set 25 gauge x 3 4  miscell infusion sets paraphernalia	paraphernalia
+intravenous catheter 24 gauge x 3 4  miscell infusion sets paraphernalia	paraphernalia
+subcutaneous administration set 10 mm x 100 cm sub q infusion sets paraphernalia	paraphernalia
+subcutaneous administration set 10 mm x 110 cm sub q infusion sets paraphernalia	paraphernalia
+subcutaneous administration set 10 mm x 50 cm sub q infusion sets paraphernalia	paraphernalia
+hypoglycemia	hypoglycemia
+hypoglycemia management	hypoglycemia
+neonatal hypoglycemia	hypoglycemia
+exogenous	hypoglycemia
+hypoglycemia of piglets	hypoglycemia
+factitious hypoglycemia	hypoglycemia
+autoimmune hypoglycemia	hypoglycemia
+fasting hypoglycemia	hypoglycemia
+reactive hypoglycemia	hypoglycemia
+spontaneous hypoglycemia	hypoglycemia
+hypoglycemia of childhood	hypoglycemia
+ketotic hypoglycemia	hypoglycemia
+leucine induced	hypoglycemia
+mixed hypoglycemia	hypoglycemia
+hypoglycemia diet	hypoglycemia
+neuropathy associated with hypoglycemia	hypoglycemia
+nocturnal hypoglycemia	hypoglycemia
+loss of hypoglycemic warning	hypoglycemia
+alimentary hypoglycemia	hypoglycemia
+drug induced hypoglycemia	hypoglycemia
+other hypoglycemia	hypoglycemia
+monitor for hypoglycemia	hypoglycemia
+hypoglycemia aggravated	hypoglycemia
+hypoketonemic hypoglycemia	hypoglycemia
+pin point pupils	pin point pupils
+hypoxemia	hypoxemia
+hypoxemia asymptomatic	hypoxemia
+chronic hypoxemia	hypoxemia
+hypoxemia intraoperative	hypoxemia
+asphyxia and hypoxemia	hypoxemia
+neonatal hypoxemia	hypoxemia
+fetal hypoxemia	hypoxemia
+erythrocytosis due to tissue hypoxemia	hypoxemia
+hypoxemia and cor pulmonale	hypoxemia
+sleep related hypoxemia	hypoxemia
+sleep related hypoventilation or hypoxemia	hypoxemia
+decreased sensitivity to hypercapnia and hypoxemia	hypoxemia
+decreased sensitivity to hypoxemia	hypoxemia
+hypoxemia during surgery	hypoxemia
+sleep related hypoventilation hypoxemia in conditions classifiable elsewhere	hypoxemia
+organic sleep related hypoventilation or hypoxemia in other conditions	hypoxemia
+sleep related hypoxemia in conditions classified elsewhere	hypoxemia
+monitor for hyperventilation resulting in respiratory alkalosis  e g	hypoxemia
+cns injury	hypoxemia
+hypermetabolic states	hypoxemia
+gi distention	hypoxemia
+and stress	hypoxemia
+monitor the patient for adverse effects of medication	hypoxemia
+including agitation	hypoxemia
+respiratory depression	hypoxemia
+undue somnolence	hypoxemia
+apnea	hypoxemia
+or exacerbation of a preexisting condition	hypoxemia
+monitor for signs of respiratory muscle fatigue  e g	hypoxemia
+abrubt rise in paco2  rapid	hypoxemia
+shallow ventilation  paradoxical abdominal wall motion	hypoxemia
+and tissue hypoxia while weaning is in process	hypoxemia
+assessment of baseline neurological status	baseline neurological status
+assess for changes in baseline neurological status	baseline neurological status
+neurological status is consistent with or improved from preoperative baseline	baseline neurological status
+patient s neurological status is maintained at or improved from baseline levels	baseline neurological status
+malaise	malaise
+presyncope	malaise
+feeling sick	malaise
+malaise and fatigue	malaise
+vasovagal syncope	malaise
+malay peninsula	malaise
+aids with malaise	malaise
+feeling of malaise	malaise
+vaccination related malaise	malaise
+postexertional fatigue	malaise
+other malaise	malaise
+c o   debility   malaise	malaise
+other malaise and fatigue	malaise
+near sudden infant death syndrome	malaise
+fatigue adverse event	malaise
+malaise associated with aids	malaise
+malaise worse in morning	malaise
+malaise worse in evening	malaise
+malaise started suddenly	malaise
+post exertional malaise	malaise
+infantile apparent life threatening event	malaise
+monitor for change in energy level malaise	malaise
+pharynx ill sensation of	malaise
+monitor energy level	malaise
+and weakness	malaise
+leg discomfort	malaise
+vertigo	dizziness
+dizziness adverse event	dizziness
+have dizziness	dizziness
+how often dizzy	dizziness
+usual severity dizziness	dizziness
+how much distress dizziness	dizziness
+no dizziness	dizziness
+psychogenic vertigo	dizziness
+exertional dizziness	dizziness
+multisensory dizziness	dizziness
+dizziness present	dizziness
+dizziness and giddiness symptoms	dizziness
+giddiness	dizziness
+vertigo dizziness	dizziness
+dizziness aggravated	dizziness
+dizziness chronic	dizziness
+dizziness intermittent	dizziness
+positional dizziness	dizziness
+postoperative dizziness	dizziness
+epidemic  dizziness	dizziness
+hysterical  giddiness	dizziness
+syndrome  dizziness	dizziness
+dizziness or vertigo	dizziness
+cardiac arrhythmia	dysrhythmia
+atrial arrhythmia	dysrhythmia
+ventricular arrhythmia	dysrhythmia
+dysrhythmia management	dysrhythmia
+abnormal gastric electrical activity	dysrhythmia
+conduction disorder of the heart	dysrhythmia
+fetal dysrhythmia	dysrhythmia
+circadian dysrhythmia	dysrhythmia
+arrhythmia prophylaxis	dysrhythmia
+cerebral  dysrhythmia	dysrhythmia
+cortical  dysrhythmia	dysrhythmia
+neonatal dysrhythmia	dysrhythmia
+monitor hemodynamic response to the dysrhythmia	dysrhythmia
+note frequency and duration of dysrhythmia	dysrhythmia
+ecg automated dysrhythmia monitoring	dysrhythmia
+dysrhythmia  cardiac	dysrhythmia
+postoperative	dysrhythmia
+dysrhythmia  cerebral or cortical	dysrhythmia
+stress electrocardiogram  dysrhythmia at peak stress	dysrhythmia
+non reassuring dysrhythmia	dysrhythmia
+cardiac dysrhythmia  irregular heartbeat	dysrhythmia
+chronic atrial and intestinal dysrhythmia	dysrhythmia
+follow protocol for the patient with cardiac dysrhythmia	dysrhythmia
+termination of stress test due to dysrhythmia	dysrhythmia
+non reassuring dysrhythmia with baby delivered	dysrhythmia
+non reassuring dysrhythmia as antepartum condition	dysrhythmia
+mental status altered responsiveness decreased	decreased mental status
+hypertensive disease	hypertension
+hypertension adverse event	hypertension
+no hypertension	hypertension
+hypertension with complications and secondary hypertension	hypertension
+c pregnancy  hypertension	hypertension
+gestational hypertension	hypertension
+diastolic hypertension and systolic hypertension	hypertension
+goldblatt	hypertension
+malignant hypertension	hypertension
+portal	hypertension
+pulmonary hypertension	hypertension
+renal hypertension	hypertension
+renovascular	hypertension
+ocular hypertension	hypertension
+essential hypertension	hypertension
+intracranial hypertension	hypertension
+hypertensive heart disease	hypertension
+transient hypertension	hypertension
+secondary hypertension	hypertension
+hypertension education	hypertension
+endolymphatic hydrops	hypertension
+paroxysmal hypertension	hypertension
+systolic hypertension	hypertension
+diastolic hypertension	hypertension
+hypertension worsened	hypertension
+chest pressure	chest pressure
+pressure in chest and heart	chest pressure
+chest pressure exertional	chest pressure
+pain or pressure in chest	chest pressure
+asphyxiation by sustained compression of chest	chest pressure
+change pressure dressing on chest wall	chest pressure
+removal of pressure dressing on chest wall	chest pressure
+change intermittent pressure device on chest wall	chest pressure
+compression of chest wall using pressure dressing	chest pressure
+compression of chest wall using intermittent pressure device	chest pressure
+removal of intermittent pressure device on chest wall	chest pressure
+did you have chest pain or pressure finding point in time  patient ordinal	chest pressure
+did you have chest pain or pressure	chest pressure
+carbon dioxide during chest physiotherapy ppres pt bldc qn transcutaneous co2 monitor	chest pressure
+carbon dioxide during chest physiotherapy ppres pt bldc qn	chest pressure
+carbon dioxide post chest physiotherapy ppres pt bldc qn transcutaneous co2 monitor	chest pressure
+carbon dioxide post chest physiotherapy ppres pt bldc qn	chest pressure
+carbon dioxide pre chest physiotherapy ppres pt bldc qn transcutaneous co2 monitor	chest pressure
+carbon dioxide pre chest physiotherapy ppres pt bldc qn	chest pressure
+oxygen during chest physiotherapy ppres pt bldc qn transcutaneous o2 monitor	chest pressure
+oxygen during chest physiotherapy ppres pt bldc qn	chest pressure
+oxygen post chest physiotherapy ppres pt bldc qn transcutaneous o2 monitor	chest pressure
+cool skin	cool skin
+generalized coolness of skin	cool skin
+soothe   cool skin paste	cool skin
+skin cool to touch	cool skin
+cool skin and pallor with feet elevated	cool skin
+cool the skin with water in cases of minor burns	cool skin
+cool skin and pallor with feet in dependent position	cool skin
+cool and blue skin with feet in dependent position	cool skin
+petrolatum 0 5 mg mg   zinc oxide 0 1 mg mg paste  soothe   cool skin paste	cool skin
+soothe   cool skin paste paste product	cool skin
+soothe and cool free medseptic skin protectant	cool skin
+warm or cool all irrigating	cool skin
+iv	cool skin
+and skin preparation solutions	cool skin
+lanolin 0 5 mg mg topical ointment	cool skin
+barrier skin protectant topical application cream  soothe   cool inzo	cool skin
+petrolatum   zinc oxide paste  soothe   cool skin paste	cool skin
+flush exposed skin with copious amounts of cool water	cool skin
+use eyelid retractors if needed	cool skin
+and utilize appropriate neutralizing agent if indicated	cool skin
+lidocaine 5 mg ml topical lotion	cool skin
+teach patient to report signs and symptoms of impaired circulation  e g	cool skin
+tingling	cool skin
+absent peripheral pulse	cool skin
+cool skin temperature	cool skin
+petrolatum 0 5 mg mg   zinc oxide 0 1 mg mg  soothe   cool skin paste	cool skin
+triclosan 4 6 mg ml medicated liquid soap	cool skin
+octinoxate 75 mg in 1 ml   oxybenzone 60 mg in 1 ml   octisalate 50 mg in 1 ml topical lotion  skin so soft bug guard plus ir3535 cool n fabulous disappearing color insect repellent sunscreen	cool skin
+octinoxate 30 mg in 1 ml   titanium dioxide 31 6 mg in 1 ml topical emulsion  lingerie de peau natural perfection foundation skin fusion texture with sunscreen broad spectrum spf 20 00n porcelaine porcelain	cool skin
+abdominal rebound tenderness	rebound tenderness
+o e   rebound tenderness	rebound tenderness
+o e   no rebound tenderness	rebound tenderness
+rebound tenderness absent	rebound tenderness
+rebound tenderness of epigastrium	rebound tenderness
+rebound tenderness of right hypochondrium	rebound tenderness
+rebound tenderness of left hypochondrium	rebound tenderness
+rebound tenderness of central region	rebound tenderness
+rebound tenderness of right lumbar	rebound tenderness
+rebound tenderness of left lumbar	rebound tenderness
+rebound tenderness of hypogastrium	rebound tenderness
+abdomen sign rebound tenderness	rebound tenderness
+generalized rebound abdominal tenderness	rebound tenderness
+rebound tenderness of periumbilical region	rebound tenderness
+referred rebound abdominal tenderness	rebound tenderness
+rebound tenderness of left lower quadrant of abdomen	rebound tenderness
+rebound tenderness of left upper quadrant of abdomen	rebound tenderness
+rebound tenderness of right upper quadrant of abdomen	rebound tenderness
+rebound tenderness of right lower quadrant of abdomen	rebound tenderness
+periumbilic rebound abdominal tenderness	rebound tenderness
+epigastric rebound abdominal tenderness	rebound tenderness
+rebound tenderness of right iliac fossa	rebound tenderness
+rebound tenderness of left iliac fossa	rebound tenderness
+rebound abdominal tenderness	rebound tenderness
+unspecified site	rebound tenderness
+bradycardia by ecg finding	bradycardia
+sinus bradycardia	bradycardia
+vagal autonomic bradycardia	bradycardia
+reflex bradycardia	bradycardia
+fetal bradycardia	bradycardia
+baseline bradycardia	bradycardia
+monitor for bradycardia	bradycardia
+bradycardia asymptomatic	bradycardia
+bradycardia episode	bradycardia
+bradycardia symptomatic	bradycardia
+junctional bradycardia	bradycardia
+neonatal bradycardia	bradycardia
+syncope  bradycardia	bradycardia
+nodal bradycardia	bradycardia
+ecg  bradycardia	bradycardia
+sinus bradycardia adverse event	bradycardia
+continuous electrocardiogram sinus bradycardia  finding	bradycardia
+bradycardia by auscultation	bradycardia
+pulse slow  finding	bradycardia
+sinoatrial bradycardia	bradycardia
+bradycardia arrest	bradycardia
+bradycardia  rare	bradycardia
+medical bradycardia	bradycardia
