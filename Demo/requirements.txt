@@ -1,0 +1,15 @@
+numpy
+pandas
+scipy
+pyqt4
+fpdf
+pyaudio
+py-trees==0.6.5
+nltk
+xlrd
+google-cloud-core
+google-cloud-sdk
+google-cloud-speech
+deepspeech
+pygame
+tqdm
