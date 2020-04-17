@@ -69,14 +69,15 @@ To launch the graphical user interface (GUI), run:
 
 ## Publications
 [“EMSContExt: EMS Protocol-driven Concept Extraction for Cognitive Assistance in Emergency Response”] (https://faculty.virginia.edu/alemzadeh/papers/EMSContExt_IAAI2020.pdf)  
-S. M. Preum, S. Shu, H. Alemzadeh, J. Stankovic
+S. M. Preum, S. Shu, H. Alemzadeh, J. Stankovic  
 In the Thirty-Second Annual Conf. on Innovative Applications of Artificial Intelligence (IAAI-20), 2020.
 
-[“GRACE: Generating Summary Reports Automatically for Cognitive Assistance in Emergency Response” (https://www.cs.virginia.edu/~stankovic/psfiles/IAAI-RahmanM.42.pdf)  
-M A. Rahman, S. M. Preum, R. Williams, H. Alemzadeh, J. Stankovic
+[“GRACE: Generating Summary Reports Automatically for Cognitive Assistance in Emergency Response”] 
+(https://www.cs.virginia.edu/~stankovic/psfiles/IAAI-RahmanM.42.pdf)  
+M A. Rahman, S. M. Preum, R. Williams, H. Alemzadeh, J. Stankovic  
 In the Thirty-Second Annual Conf. on Innovative Applications of Artificial Intelligence (IAAI-20), 2020.
 
-["A Behavior Tree Cognitive Assistant System for Emergency Medical Services (http://faculty.virginia.edu/alemzadeh/papers/IROS2019.pdf)  
+["A Behavior Tree Cognitive Assistant System for Emergency Medical Services] (http://faculty.virginia.edu/alemzadeh/papers/IROS2019.pdf)  
 S. Shu, S. Preum, H. M. Pitchford, R. D. Williams, J. Stankovic, H. Alemzadeh  
 In the IEEE IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2019
 
