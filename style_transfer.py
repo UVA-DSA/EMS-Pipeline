@@ -23,9 +23,9 @@ def style_transfer(clinical_text_df):
 
 
 def main():
-    clinical_text_df = pd.read_csv('data/eimara_transcripts.csv')
+    clinical_text_df = pd.read_csv('data/transcripts.csv')
     clinical_text_df = style_transfer(clinical_text_df)
-    clinical_text_df.to_csv(path_or_buf='data/eimara_transcripts.csv', index=False)
+    clinical_text_df.to_csv(path_or_buf='data/transcripts.csv', index=False)
 
 
 if __name__ == "__main__":
