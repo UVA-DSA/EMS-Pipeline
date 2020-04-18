@@ -1,5 +1,8 @@
-Find: Dispatched
-Replacement: test2
+Find: (?i)\sc/o\s
+Replacement: ' complains of '
 ---
-Find: test3
-Replacement: test4
+Find: (?i)\sy/o\s
+Replacement: ' year old '
+---
+Find: (?i)\spt.?\s
+Replacement: ' patient '
