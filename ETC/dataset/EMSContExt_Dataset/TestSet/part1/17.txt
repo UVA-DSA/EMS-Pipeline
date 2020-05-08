@@ -1,7 +1,0 @@
-Ambulance: Lindsay, 4282 requesting a patch to Base Hospital Physician.
-
-Dispatch: 10-4, switch to Tactical 1 for PRHC BHP.
-
-Hospital: Base Hospital, Dr. Arceri.
-
-Ambulance: Dr. Arceri, this is ACP Chris Johnson, OASIS number 143682. I am on scene with a 42y/o male complaining of severe 10/10 back pain as a result of moving boxes and is unable to ambulate due to pain. Patient does not meet my standing order, but I'd like permission for fentanyl, 25mcg IV. Vitals are pulse 110bpm, resps 24, BP 130/90, SPO2 100% on 8lpm. No known allergies or relevant medical history. Patient is going to require stair chair to extricate from home.

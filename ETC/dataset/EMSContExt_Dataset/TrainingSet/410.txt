@@ -1,9 +1,0 @@
-You (as an ALS provider. If you're not, pretend you are for a moment.) are called for a patient with shortness of breath. Your patient is a 41 year old female with a history of Lupus (Systemic Lupus Erythematosis), an autoimmune disorder. The patient, on a scale from 1 to SICK, is most definitely SICK. She has a known pericardial effusion (a complication of SLE), and was to have it drained in 2 days in the cath lab by cardiology. She has had worsening shortness of breath for weeks, which is what prompted the diagnosis and plan for drainage of her pericardial effusion. Over the last 24 hours, her SOB has become intolerable, and she now is very symptomatic at rest. Vitals are as follows:
-
-T: 36.6 P: 138 R: 36 BP: 60/P SaO2: 88% on room air.
-
-Examination reveals rales in all fields, JVD, poor pulses.
-
-EKG shows a sinus tachycardia with electrical alternans, which is pathognomonic for pericardial effusion.
-
-

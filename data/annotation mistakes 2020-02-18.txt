@@ -1,0 +1,35 @@
+Common noted errors:
+- "ill" often misdetected as substring in words like "chill"
+- phrases like "nontender" not detected as negated concepts
+- Sentencizer has problems with these kinds of transcripts and therefore many false positives
+- (trauma)tic happens sometimes because targets do not have leading or ending spaces required in the regex
+- "obs" and "ld" for pregnancy are often misdetected in "observations", also for "obstruction" and "old"
+- loss of consciousness (loc) sometimes detected in "location"
+- "clear breath sounds" -> negated concept "wheezing" detected, which is technically true! But in the sense that the program meant it, it's not true. RIP
+- "N&V" for nausea and vomiting wasn't in the target file so it wasn't detected
+- "c/p" for chest pain not in target file
+- "n/v/d" is only in diarrhea so nausea and vomiting aren't detected
+- in these transcripts, the "-" symbol is used to represent negation a lot of the times, which is uncharacteristic of spoken dialogue.
+
+Possible improvements:
+- maybe try ignoring any detections that span more than 100 characters in length? that would definitely boost precision
+
+Mistakes:
+
+Transcript 6, row 8:
+(trauma,False,strain,denies,1496,1631,denies N/V/D, pt reports infrequent bowel movements, pt reports last bowel movement this morning, pt reports feeling like she is strain)
+
+Transcript 9, row 11:
+(rash,False,rash,not,1061,1284,rash / hives accu check = 95 R; poc, pt follows commands like slid back in cot and able to tell us what arm the b/p should be taken in, ecg (Paced rythem) transport to SMH room 1 T: pt would / could not sit still and by not)
+
+Transcript 10, row 12:
+(trauma,False,trauma,clear,798,827,clear without signs of trauma)
+
+Transcript 28, row 30:
+(shortness_of_breath,False,dyspnea,no,263,292,no complaints, denies dyspnea)
+
+Transcript 33, row 35:
+(trauma,False,TRAUMA,DENIES,596,609,DENIES TRAUMA)
+
+Transcript 82, row 84:
+(trauma,False,bruising,no,667,678,no bruising)
