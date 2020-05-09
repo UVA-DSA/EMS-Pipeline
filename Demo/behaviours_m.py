@@ -98,7 +98,7 @@ class InformationGathering(py_trees.behaviour.Behaviour):
                 if temp[0] and temp[1] and temp[0].isdigit() and temp[1].isdigit():
                     bp = [int(temp[0]), int(temp[1])]
                     mbp = (bp[0] + 2 * bp[1])/3
-                    if bp[0] > 140 and bp[1] > 90:
+                    if bp[0] >= 140 or bp[1] >= 90:
                         self.sce.Status['hypertension'] = CE.PatientStatus('hypertension',True,str(bp[0]),'bp')
                         self.sce.Status['hypertension'].score = self.vce.Status['bp'].score
                     elif mbp < 70:
@@ -126,11 +126,11 @@ class InformationGathering(py_trees.behaviour.Behaviour):
                 
         # spo2 symptoms
         if len(self.vce.Status['spo2'].content) > 0:
-            if self.vce.vtLog['spo2'].value and self.vce.vtLog['spo2'].value.isdigit():
-                spo2 = int(self.vce.vtLog['spo2'].value)
+            if self.vce.Status['spo2'].value and self.vce.Status['spo2'].value.isdigit():
+                spo2 = int(self.vce.Status['spo2'].value)
                 if spo2 < 94:
                     self.sce.Status['hypoxemia'] = CE.PatientStatus('hypoxemia',True,str(spo2),'spo2')
-                    self.sce.Status['hypoxemia'].score = self.vce.vtLog['spo2'].score
+                    self.sce.Status['hypoxemia'].score = self.vce.Status['spo2'].score
                 
         # pain
         if len(self.vce.Status['pain'].content) > 0:
@@ -141,7 +141,6 @@ class InformationGathering(py_trees.behaviour.Behaviour):
         
         # ekg symptoms
         if len(self.vce.Status['ekg'].content) > 0:
-            
             ekg = self.vce.Status['ekg'].value
             if "Sinus_Arrhythmia" in ekg:
                 self.sce.Status['dysrhythmia'] = CE.PatientStatus('dysrhythmia',True,ekg,'ekg')
@@ -582,7 +581,7 @@ class resp(py_trees.behaviour.Behaviour):
             if blackboard.Signs['wheezing'].binary:
                 blackboard.feedback['dexamethasone'] += self.posi * s * blackboard.Signs['wheezing'].score / 1000.
             if blackboard.Signs['hypoxemia'].binary and blackboard.Signs['tachypnea'].binary \
-            and blackboard.Vitals['bp'].binary and int(blackboard.Vitals['bp'].value.strip().split('/')[0]) > 90:
+            and blackboard.Vitals['bp'].binary and blackboard.Vitals['bp'].value.strip().split('/')[0].isdigit() and int(blackboard.Vitals['bp'].value.strip().split('/')[0]) > 90:
                 blackboard.feedback['cpap'] += self.posi * s * blackboard.Signs['tachypnea'].score / 1000.
             blackboard.feedback['cardiac monitor'] += self.posi
         blackboard.feedback['transport'] += self.posi
@@ -656,7 +655,7 @@ class Overdose(py_trees.behaviour.Behaviour):
             return py_trees.Status.SUCCESS
         if blackboard.Signs['hypoxemia'].binary:
             blackboard.feedback['oxygen'] += self.posi * blackboard.Signs['hypoxemia'].score / 1000.
-        if blackboard.Vitals['bp'].binary and int(blackboard.Vitals['bp'].value.strip().split('/')[0]) <= 90:
+        if blackboard.Vitals['bp'].binary and "/" in blackboard.Vitals['bp'].value and int(blackboard.Vitals['bp'].value.strip().split('/')[0]) <= 90:
             blackboard.feedback['normal saline'] += self.posi * blackboard.Vitals['bp'].score / 1000.
         if blackboard.Signs['abuse of substance'].binary:
             blackboard.feedback['narcan'] += self.posi * blackboard.Signs['abuse of substance'].score / 1000.
@@ -678,4 +677,6 @@ OV = py_trees.composites.Sequence("Diab",children = [OV_C,OV_A])
 
 protocols = py_trees.composites.Parallel('protocols',policy=py_trees.common.ParallelPolicy.SUCCESS_ON_ONE,\
                                    children = [CP,OV,DI,AMS,RE,SZ,BE,AP])
+
+
 
