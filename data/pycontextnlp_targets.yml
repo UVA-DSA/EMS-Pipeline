@@ -1,0 +1,433 @@
+Comments: ''
+Direction: ''
+Lex: absent femoral pulses
+Regex: ((\s|\/)absent femoral pulses(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: ABSENT_FEMORAL_PULSES
+---
+Comments: ''
+Direction: ''
+Lex: agitation
+Regex: ((\s|\/)swither(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)stir(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)wag(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)stew(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)hullabaloo(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)agitation(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)flap(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)fret(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)tumult(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)fuss(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)sweat(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)lather(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)physically
+  restless(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)tizzy(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)upset(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)shake(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)turmoil(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: AGITATION
+---
+Comments: ''
+Direction: ''
+Lex: anxiety
+Regex: ((\s|\/)scare(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)scruple(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)fear(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)worry(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)tx(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)psychological
+  state(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)trouble(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)anxiety(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: ANXIETY
+---
+Comments: ''
+Direction: ''
+Lex: bizarre behavior
+Regex: ((\s|\/)bizarre behavior(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: BIZARRE_BEHAVIOR
+---
+Comments: ''
+Direction: ''
+Lex: blindness
+Regex: ((\s|\/)blindness(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)ocular(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)legal(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)tobacco
+  amblyopia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)cecity(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)amaurosis
+  fugax(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)hysterical(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)hemeralopia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)alexia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)sequelae(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: BLINDNESS
+---
+Comments: ''
+Direction: ''
+Lex: blood pressure
+Regex: ((\s|\/)blood pressure(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)bp(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: BLOOD_PRESSURE
+---
+Comments: ''
+Direction: ''
+Lex: chest pain
+Regex: ((\s|\/)cx pain(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)c/p(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)chest
+  pain(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)cp(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: CHEST_PAIN
+---
+Comments: ''
+Direction: ''
+Lex: clammy skin
+Regex: ((\s|\/)clammy skin(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: CLAMMY_SKIN
+---
+Comments: ''
+Direction: ''
+Lex: combative
+Regex: ((\s|\/)battleful(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)combative(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)hits
+  self(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)bellicose(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)litigious(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: COMBATIVE
+---
+Comments: ''
+Direction: ''
+Lex: confusion
+Regex: ((\s|\/)paroxysmal(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)fault(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)mistake(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)mix-up(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)confusion(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)error(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: CONFUSION
+---
+Comments: ''
+Direction: ''
+Lex: constipation
+Regex: ((\s|\/)irregularity(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)constipation(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: CONSTIPATION
+---
+Comments: ''
+Direction: ''
+Lex: cool skin
+Regex: ((\s|\/)cool skin(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)as appropriate(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: COOL_SKIN
+---
+Comments: ''
+Direction: ''
+Lex: cough
+Regex: ((\s|\/)symptom(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)spit out(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)whoop(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)expectorate(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)cough(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)pertussis(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)hack(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)clear
+  the throat(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)spit up(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)hawk(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: COUGH
+---
+Comments: ''
+Direction: ''
+Lex: decreased mental status
+Regex: ((\s|\/)aox1(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)post ictal(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)aox2(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)ANOx4(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)aox3(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)A&Ox4(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)AY&Ox4(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)AOX4(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)gcs(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)A&O
+  x 1(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)aox4(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)decreased
+  mental status(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)CAox4(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)ayox4(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)GCS(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)alert(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)AMS(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)Aox2(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)appears
+  lethargic(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)ams(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: DECREASED_MENTAL_STATUS
+---
+Comments: ''
+Direction: ''
+Lex: decreased visual acuity
+Regex: ((\s|\/)decreased visual acuity(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: DECREASED_VISUAL_ACUITY
+---
+Comments: ''
+Direction: ''
+Lex: delusional thoughts
+Regex: ((\s|\/)delusional thoughts(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: DELUSIONAL_THOUGHTS
+---
+Comments: ''
+Direction: ''
+Lex: malaise
+Regex: ((\s|\/)discomfort(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)malaise(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)distress(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)feel
+  crummy(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: MALAISE
+---
+Comments: ''
+Direction: ''
+Lex: diaphoresis
+Regex: ((\s|\/)paresthesia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)check peripheral pulses(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)diaphoresis(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)capillary
+  refill(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)heat exposure(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)paco2  35
+  mm hg(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)heart rate(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)polyuria(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: DIAPHORESIS
+---
+Comments: ''
+Direction: ''
+Lex: diarrhea
+Regex: ((\s|\/)the trots(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)d(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)tropical(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)diarrhea(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)sprue(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)the
+  shits(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: DIARRHEA
+---
+Comments: ''
+Direction: ''
+Lex: distension
+Regex: ((\s|\/)ectasia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)distension(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)gaseous(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)distended(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)distention(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)ectasis(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: DISTENSION
+---
+Comments: ''
+Direction: ''
+Lex: dizziness
+Regex: ((\s|\/)dizzyness(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)dizziness(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: DIZZINESS
+---
+Comments: ''
+Direction: ''
+Lex: dysrhythmia
+Regex: ((\s|\/)atrial ectopy(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)arrythmia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)dysrhythmia(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: DYSRHYTHMIA
+---
+Comments: ''
+Direction: ''
+Lex: dysuria
+Regex: ((\s|\/)dysuria(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)difficulty urinating(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: DYSURIA
+---
+Comments: ''
+Direction: ''
+Lex: fever
+Regex: ((\s|\/)temperature 99.7F(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)afebrile(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)brucellosis(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)malaria(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)febrility(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)fevers(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)fever(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)febricity(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: FEVER
+---
+Comments: ''
+Direction: ''
+Lex: hallucinations
+Regex: ((\s|\/)olfactory(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)somatic(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)object(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)tactile(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)hallucinations(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)acousma(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)freak
+  out(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)gustatory(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)psychotic
+  belief(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: HALLUCINATIONS
+---
+Comments: ''
+Direction: ''
+Lex: headache
+Regex: ((\s|\/)head pain(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)head ache(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)postauricular(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)cephalalgia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)headache(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)megrim(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: HEADACHE
+---
+Comments: ''
+Direction: ''
+Lex: homicidal thoughts
+Regex: ((\s|\/)homicidal(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)homicidal ideations(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)homicide(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)murder(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)homicidal
+  thoughts(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: HOMICIDAL_THOUGHTS
+---
+Comments: ''
+Direction: ''
+Lex: hypertension
+Regex: ((\s|\/)hyperpiesis(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)hypertension(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)hyperpiesia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)portal(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: HYPERTENSION
+---
+Comments: ''
+Direction: ''
+Lex: hyperthermia
+Regex: ((\s|\/)microspheres(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)hyperpyrexia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)hyperthermy(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)hyperthermia(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: HYPERTHERMIA
+---
+Comments: ''
+Direction: ''
+Lex: hypotension
+Regex: ((\s|\/)orthostatic(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)hypotension(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: HYPOTENSION
+---
+Comments: ''
+Direction: ''
+Lex: hypothermia
+Regex: ((\s|\/)caps(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)hypothermia(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: HYPOTHERMIA
+---
+Comments: ''
+Direction: ''
+Lex: incontinence
+Regex: ((\s|\/)electrical(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)incontinence(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)stimulators(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)clamps(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)incontinent(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: INCONTINENCE
+---
+Comments: ''
+Direction: ''
+Lex: lightheadedness
+Regex: ((\s|\/)light headedness(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)lightheadedness(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: LIGHTHEADEDNESS
+---
+Comments: ''
+Direction: ''
+Lex: loss of consciousness
+Regex: ((\s|\/)LOC(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)loc(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)syncope(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)loa(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)loss
+  of consciousness(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)unconscious(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: LOSS_OF_CONSCIOUSNESS
+---
+Comments: ''
+Direction: ''
+Lex: mental status changes
+Regex: ((\s|\/)mental status changes(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: MENTAL_STATUS_CHANGES
+---
+Comments: ''
+Direction: ''
+Lex: myalgias
+Regex: ((\s|\/)myalgias(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: MYALGIAS
+---
+Comments: ''
+Direction: ''
+Lex: nausea
+Regex: ((\s|\/)emetrol(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)qualm(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)nausea(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)n(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: NAUSEA
+---
+Comments: ''
+Direction: ''
+Lex: pain
+Regex: ((\s|\/)chiralgia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)meralgia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)causalgia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)gripes(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)try(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)photalgia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)plague(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)mittelschmerz(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)pleuralgia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)erupt(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)costalgia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)torture(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)arthralgia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)hurt(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)break
+  out(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)thermalgesia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)pain(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)melagra(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)colic(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)metralgia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)glossalgia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)excruciate(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)stitch(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)rack(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)mastalgia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)photophobia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)proctalgia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)piles(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)keratalgia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)smart(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)ulalgia(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: PAIN
+---
+Comments: Should "radiation" alone be a form of "pain radiation" as a concept?
+Direction: ''
+Lex: pain radiation
+Regex: ((\s|\/)pain radiation(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)radiating(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)radiation(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: PAIN_RADIATION
+---
+Comments: ''
+Direction: ''
+Lex: pain region
+Regex: ((\s|\/)pain region(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)lower back pain(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: PAIN_REGION
+---
+Comments: ''
+Direction: ''
+Lex: pain severity
+Regex: ((\s|\/)pain severity(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: PAIN_SEVERITY
+---
+Comments: ''
+Direction: ''
+Lex: pale
+Regex: ((\s|\/)pale(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)colour(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)picket(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)pallor(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)strip(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)ptereleotris
+  heteroptera(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)color(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)kalmia
+  polifolia(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: PALE
+---
+Comments: ''
+Direction: ''
+Lex: palpitations
+Regex: ((\s|\/)tremolo(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)tremor(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)palpitations(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)irregular
+  heart beat(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: PALPITATIONS
+---
+Comments: ''
+Direction: ''
+Lex: pregnancy
+Regex: ((\s|\/)metacyesis(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)miscarriages(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)parity(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)eccyesis(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)heterotopic(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)para(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)obs(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)pregnancy(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)pregnant(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: PREGNANCY
+---
+Comments: ''
+Direction: ''
+Lex: pulse rate
+Regex: ((\s|\/)pulse rate(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: PULSE_RATE
+---
+Comments: ''
+Direction: ''
+Lex: rales
+Regex: ((\s|\/)bilateral(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)rattle(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)right(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)basilar(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)rales(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: RALES
+---
+Comments: ''
+Direction: ''
+Lex: rash
+Regex: ((\s|\/)phototoxic(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)roseola(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)urticaria(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)prurigo(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)miliaria(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)rash(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)petechiae(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)rashes(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)prickly
+  heat(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)eczema(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: RASH
+---
+Comments: What does "respiratory rate" as a concept mean? Does it mean "abnormally
+  rapid breathing" aka "tachypnea/tachypneic"?
+Direction: ''
+Lex: respiratory rate
+Regex: ((\s|\/)Cx rise(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)tachypnea(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)respiratory
+  rate(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)tachypneic(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: RESPIRATORY_RATE
+---
+Comments: ''
+Direction: ''
+Lex: rhonchi
+Regex: ((\s|\/)CBBS(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)rhonchi(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: RHONCHI
+---
+Comments: ''
+Direction: ''
+Lex: rigidity
+Regex: ((\s|\/)rigidity(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: RIGIDITY
+---
+Comments: ''
+Direction: ''
+Lex: seizure
+Regex: ((\s|\/)seizure(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)reflex epilepsy(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)sz(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)capture(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)gelastic
+  epilepsy(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)raptus hemorrhagicus(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)ictus(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)postictal(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: SEIZURE
+---
+Comments: ''
+Direction: ''
+Lex: shortness of breath
+Regex: ((\s|\/)shortness of breath(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)sob(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)difficulty
+  breathing(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)dyspnea(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: SHORTNESS_OF_BREATH
+---
+Comments: ''
+Direction: ''
+Lex: sleepiness
+Regex: ((\s|\/)sleepiness(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)sleepy(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: SLEEPINESS
+---
+Comments: ''
+Direction: ''
+Lex: suicidal thought
+Regex: ((\s|\/)suicide(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)suicidal(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)suicidal
+  thought(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)suicidal ideations(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: SUICIDAL_THOUGHT
+---
+Comments: ''
+Direction: ''
+Lex: tachycardia
+Regex: ((\s|\/)tachycardia(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)arrhythmia(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: TACHYCARDIA
+---
+Comments: ''
+Direction: ''
+Lex: tenderness
+Regex: ((\s|\/)sore to touch(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)chafe(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)respect(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)tender(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)tenderness(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: TENDERNESS
+---
+Comments: ''
+Direction: ''
+Lex: trauma
+Regex: ((\s|\/)pull(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)fracture(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)harm(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)injury(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)assault(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)hemorrhage(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)DCAPBTLS(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)injuries(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)cryopathy(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)electric
+  shock(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)weal(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)wale(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)welt(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)bruise(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)haemorrhage(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)frostbite(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)gsw(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)traumatic(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)MVA(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)traumatic
+  injuries(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)wheal(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)lac(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)m
+  of i(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)whiplash(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)trauma(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)twist(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)fall(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)bump(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)rupture(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: TRAUMA
+---
+Comments: ''
+Direction: ''
+Lex: tripoding
+Regex: ((\s|\/)tripoding(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: TRIPODING
+---
+Comments: ''
+Direction: ''
+Lex: unequal femoral pulses
+Regex: ((\s|\/)unequal femoral pulses(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: UNEQUAL_FEMORAL_PULSES
+---
+Comments: ''
+Direction: ''
+Lex: use of accessory muscles
+Regex: ((\s|\/)barrel chest(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)use of accessory muscles(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)accessory
+  muscle usage(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: USE_OF_ACCESSORY_MUSCLES
+---
+Comments: ''
+Direction: ''
+Lex: vaginal bleeding
+Regex: ((\s|\/)vaginal bleeding(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: VAGINAL_BLEEDING
+---
+Comments: ''
+Direction: ''
+Lex: vaginal discharge
+Regex: ((\s|\/)vaginal discharge(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)leukorrhea(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)cheesy(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: VAGINAL_DISCHARGE
+---
+Comments: ''
+Direction: ''
+Lex: violent
+Regex: ((\s|\/)fierce(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)violent(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: VIOLENT
+---
+Comments: ''
+Direction: ''
+Lex: vomiting
+Regex: ((\s|\/)cast(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)purge(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)hematemesis(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)retch(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)regurgitate(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)hyperemesis(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)throw
+  up(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)vomitting(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)sick(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)puke(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)vomiting(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)v(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)haematemesis(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)chuck(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)regorge(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)vomit(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)spue(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)spew(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)barf(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)cat(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: VOMITING
+---
+Comments: Is concept "weakness" related to term "facial droop"?
+Direction: ''
+Lex: weakness
+Regex: ((\s|\/)fatigability(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)lethargy(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)facial
+  droop(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)weakness(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)flaw(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)fatigue(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)fragility(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)weak
+  arterial pulse(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)feels weak(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)weak
+  spot(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)weak part(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)heart
+  failure(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)soft spot(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)paresis(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: WEAKNESS
+---
+Comments: ''
+Direction: ''
+Lex: wheezing
+Regex: ((\s|\/)asthmatic(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)wheezing(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)factitious
+  asthma(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)clear to ausc(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)wheezy(\s|\/|\.|\!|\?|\,|\:|\-)|(\s|\/)wheeze(\s|\/|\.|\!|\?|\,|\:|\-))
+Type: WHEEZING
