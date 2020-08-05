@@ -1,4 +1,4 @@
-#A- TROUBLESHOOTING TIPS: (add to this as you find and fix problems)
+# A- TROUBLESHOOTING TIPS: (add to this as you find and fix problems)
 1. Check file paths. You may need to update based on how you're running the code.
 
 2. jupyter notebook, Python 3 kernel
@@ -22,7 +22,7 @@ openpyxl==3.0.3
 
 
 
-#B- ALL FILES AS OF 06/11/20 AND THEIR IMPORTANCE:
+# B- ALL FILES AS OF 06/11/20 AND THEIR IMPORTANCE:
 - CLfromVt.csv: concepts needed for cosine similarity in ProtocolAssessment.ipynb
 
 - concept_list(s&s)_revised.csv: concepts needed for cosine similarity in ProtocolAssessment.ipynb; to add concepts, add to left column at the bottom. No CUI needed.
