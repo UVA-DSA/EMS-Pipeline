@@ -68,6 +68,14 @@ To launch the graphical user interface (GUI), run:
 ![GUI](ETC/GUI.png)
 
 ## Publications
+[“A Review of Cognitive Assistants for Healthcare: Trends, Prospects, and Future Directions”]
+S. Preum, S. Munir, M. Ma, M. S. Yasar, D. J. Stone, R. Williams, H. Alemzadeh, J. Stankovic
+To appear in ACM Computing Surveys.
+
+[“IMACS-an interactive cognitive assistant module for cardiac arrest cases in emergency medical service: Demo Abstract.”] (https://dl.acm.org/doi/abs/10.1145/3384419.3430451)  
+MA. Rahman, S. Preum, J. Stankovic. L. Jia, E. Mirza, R. Williams, H. Alemzadeh
+In the 18th Conference on Embedded Networked Sensor Systems 2020 Nov 16 (pp. 621-622).
+
 [“EMSContExt: EMS Protocol-driven Concept Extraction for Cognitive Assistance in Emergency Response”](https://faculty.virginia.edu/alemzadeh/papers/EMSContExt_IAAI2020.pdf)  
 S. M. Preum, S. Shu, H. Alemzadeh, J. Stankovic  
 In the Thirty-Second Annual Conf. on Innovative Applications of Artificial Intelligence (IAAI-20), 2020.
