@@ -74,7 +74,7 @@ To appear in ACM Computing Surveys.
 
 [“IMACS-an interactive cognitive assistant module for cardiac arrest cases in emergency medical service: Demo Abstract.”](https://dl.acm.org/doi/abs/10.1145/3384419.3430451)  
 M. A. Rahman, S. Preum, J. Stankovic. L. Jia, E. Mirza, R. Williams, H. Alemzadeh  
-In the 18th Conference on Embedded Networked Sensor Systems (SenSys'20) 2020.
+In the 18th Conference on Embedded Networked Sensor Systems (SenSys'20), 2020.
 
 [“EMSContExt: EMS Protocol-driven Concept Extraction for Cognitive Assistance in Emergency Response”](https://faculty.virginia.edu/alemzadeh/papers/EMSContExt_IAAI2020.pdf)  
 S. Preum, S. Shu, H. Alemzadeh, J. Stankovic  
