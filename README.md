@@ -1,4 +1,4 @@
-# EMS Pipeline
+# CognitiveEMS Pipeline
 This repository contains a real-time protocol-driven decision support pipeline for Emergency Medical Serivces (EMS). The system aims to improve situational awareness of the first responders/paramedics by automated collection and analysis of data from incident scenes and providing suggestions to them. The figure below shows the overall architecture of the proposed system:
 
 ![Architecture](ETC/CognitiveEMS.png)
