@@ -1,5 +1,5 @@
 # CognitiveEMS Pipeline
-This repository contains the decision support pipeline for a Cognitive Assistant System for Emergency Medical Serivces (EMS). The system aims to improve situational awareness of the first responders/paramedics by automated collection and analysis of data from incident scenes and providing suggestions to them. The figure below shows the overall architecture of the proposed system:
+This repository contains the decision support pipeline for a Cognitive Assistant System for Emergency Medical Serivces (EMS). The system aims to improve situational awareness of the first responders/paramedics by automated collection and analysis of data from incident scenes and providing suggestions to them. The figure below shows the overall architecture of the proposed system. For more information visit the project page at: https://www.nist.gov/ctl/pscr/cognitive-assistant-systems-emergency-response
 
 ![Architecture](ETC/CognitiveEMS.png)
 
