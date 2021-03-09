@@ -70,7 +70,7 @@ To launch the graphical user interface (GUI), run:
 ## Publications
 [“A Review of Cognitive Assistants for Healthcare: Trends, Prospects, and Future Directions”](https://www.cs.virginia.edu/~stankovic/psfiles/CognitiveAssistantHealthSurvey_Main.pdf)  
 S. Preum, S. Munir, M. Ma, M. S. Yasar, D. J. Stone, R. Williams, H. Alemzadeh, J. Stankovic  
-To appear in ACM Computing Surveys.  
+In ACM Computing Surveys, 2021.  
 
 [“IMACS-an interactive cognitive assistant module for cardiac arrest cases in emergency medical service: Demo Abstract.”](https://dl.acm.org/doi/abs/10.1145/3384419.3430451)  
 M. A. Rahman, S. Preum, J. Stankovic. L. Jia, E. Mirza, R. Williams, H. Alemzadeh  
