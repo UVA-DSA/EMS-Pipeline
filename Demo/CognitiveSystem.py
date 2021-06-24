@@ -11,6 +11,7 @@ from ranking_func import rank
 from Form_Filling import textParse2
 from operator import itemgetter
 import commands
+import time
 import datetime
 import re
 
@@ -62,6 +63,7 @@ def CognitiveSystem(Window, SpeechToNLPQueue):
         else:
             #sentsList = [received.transcript]
             
+            print("\n-------------------- TEXT to SPEECH DONE ... BEGIN CONCEPT EXTRACTION !!!-------------------\n\n")
             # Use online tool to find sentence boundaries
             dummy12= received.transcript
             dummy12 = dummy12.replace('\r', '').replace('\n', '')
@@ -77,6 +79,9 @@ def CognitiveSystem(Window, SpeechToNLPQueue):
             PunctuatedAndHighlightedText = ""
             for idx, item in enumerate(sentsList):
 
+                # Time stamp of when concept extractor begins extracting concepts
+                ConceptExtractorTimerBegin = time.time()
+
                 blackboard.text = [item]
                 behaviour_tree.tick_tock(
                     sleep_ms=50,
@@ -84,7 +89,7 @@ def CognitiveSystem(Window, SpeechToNLPQueue):
                     pre_tick_handler=None,
                     post_tick_handler=None)
 
-                pr, sv_s, s = TickResults(Window, NLP_Items)
+                pr, sv_s, s = TickResults(Window, NLP_Items, ConceptExtractorTimerBegin, Tick_Counter)
 
                 PunctuatedAndHighlightedTextChunk = item
 
@@ -108,7 +113,7 @@ def CognitiveSystem(Window, SpeechToNLPQueue):
 
             
 # Function to return this recent tick's results
-def TickResults(Window, NLP_Items):
+def TickResults(Window, NLP_Items, ConceptExtractorTimerBegin, Tick_Counter):
 
     ConceptExtractionSignal = GUISignal()
     ConceptExtractionSignal.signal.connect(Window.UpdateConceptExtractionBox)
@@ -197,8 +202,13 @@ def TickResults(Window, NLP_Items):
 
     print("===============================================================")
 
+
+    ConceptExtractorTimerEnds = time.time()
+    delay = round((ConceptExtractorTimerEnds - ConceptExtractorTimerBegin),3)
+    print("\n---------------CONCEPT EXTRACTION ITERATION #%s FINISHED !!!------ Delay: %s sec ----------\n\n" % (Tick_Counter,delay))
+
     ProtocolSignal.signal.emit([protocol_candidates_str, suggestions_str])
-    ConceptExtractionSignal.signal.emit([signs_and_vitals_str])
+    ConceptExtractionSignal.signal.emit([signs_and_vitals_str, delay])
 
     return protocol_candidates, signs_and_vitals, suggestions
 

@@ -56,6 +56,7 @@ class MainWindow(QWidget):
         self.finalSpeechSegmentsSpeech = []
         self.finalSpeechSegmentsNLP = []
         self.nonFinalText = ""
+        self.latencyVals = []
 
         # Set geometry of the window
         self.setWindowTitle('CognitiveEMS Demo')
@@ -117,15 +118,20 @@ class MainWindow(QWidget):
         self.DataPanelGridLayout = QGridLayout(self.DataPanel)
         self.Grid_Layout.addWidget(self.DataPanel, 0, 2, 1, 2)
 
+        # Create a generate form button in the panel
+        self.GenerateAnalyticsButton = QPushButton('Generate Analytics', self)
+        self.GenerateAnalyticsButton.clicked.connect(self.GenerateAnalyticsButtonClick)
+        self.DataPanelGridLayout.addWidget(self.GenerateAnalyticsButton, 0, 0, 1, 1)
+
         # Create a save state button in the panel
         self.SaveButton = QPushButton('Save State', self)
         self.SaveButton.clicked.connect(self.SaveButtonClick)
-        self.DataPanelGridLayout.addWidget(self.SaveButton, 0, 0, 1, 1)
+        self.DataPanelGridLayout.addWidget(self.SaveButton, 0, 1, 1, 1)
 
         # Create a generate form button in the panel
         self.GenerateFormButton = QPushButton('Generate Form', self)
         self.GenerateFormButton.clicked.connect(self.GenerateFormButtonClick)
-        self.DataPanelGridLayout.addWidget(self.GenerateFormButton, 0, 1, 1, 1)
+        self.DataPanelGridLayout.addWidget(self.GenerateFormButton, 0, 2, 1, 1)
 
         # Create label and textbox for speech 
         self.SpeechLabel = QLabel()
@@ -175,7 +181,7 @@ class MainWindow(QWidget):
         self.ControlPanelGridLayout.addWidget(self.GoogleSpeechRadioButton, 0, 1, 1, 1)
 
         self.DeepSpeechRadioButton = QRadioButton("DeepSpeech", self)
-        self.DeepSpeechRadioButton.setEnabled(False)
+        self.DeepSpeechRadioButton.setEnabled(True)
         self.DeepSpeechRadioButton.setChecked(False)
         self.ControlPanelGridLayout.addWidget(self.DeepSpeechRadioButton, 0, 2, 1, 1)
 
@@ -295,14 +301,21 @@ class MainWindow(QWidget):
         #name = QFileDialog.getSaveFileName(self, 'Save File')
         name = str(datetime.datetime.now().strftime("%c")) + ".txt"
         file = open("./Dumps/" + name,'w')
-        mode_text = self.ComboBox.currentText()
-        speech_text = str(self.SpeechBox.toPlainText())
-        concept_extraction_text = str(self.ConceptExtraction.toPlainText())
-        protocol_text = str(self.ProtocolBox.toPlainText())
-        intervention_text = str(self.InterventionBox.toPlainText())
-        msg_text = str(self.MsgBox.toPlainText())
-        text = "Mode:\n\n" + mode_text + "\n\nSpeech: \n\n" + speech_text +"\n\nConcept Extraction:\n\n" + concept_extraction_text + "\n\nProtocol Text:\n\n" + protocol_text + "\n\nIntervention:\n\n" + intervention_text + "\n\nSystem Messages Log:\n\n" + msg_text
+        mode_text = "Mode:\n\n" + self.ComboBox.currentText()
+        speech_text = "\n\nSpeech: \n\n" + str(self.SpeechBox.toPlainText())
+        concept_extraction_text = "\n\nConcept Extraction:\n\n" + str(self.ConceptExtraction.toPlainText())
+        protocol_text = "\n\nProtocol Text:\n\n" + str(self.ProtocolBox.toPlainText())
+        intervention_text = "\n\nIntervention:\n\n" + str(self.InterventionBox.toPlainText())
+        text = mode_text + speech_text + concept_extraction_text + protocol_text + intervention_text
         file.write(text)
+        # Write Latency Values to text file as well
+        latency_text = "\n\nLatency (sec): \n\n"
+        if (len(self.latencyVals) > 0):
+            for i in range(len(self.latencyVals)):
+                latency_text += str(self.latencyVals[i]) + "\n"
+        msg_text = "\n\nSystem Messages Log:\n\n" + str(self.MsgBox.toPlainText())
+        text2 = latency_text + msg_text
+        file.write(text2)
         file.close()
         self.UpdateMsgBox(["System state dumped to \n/Dumps/" + name])
 
@@ -379,6 +392,20 @@ class MainWindow(QWidget):
         StoppableThread(target = GenerateForm.GenerateForm, args=(self, text,)).start()
 
     @pyqtSlot()
+    def GenerateAnalyticsButtonClick(self):
+        print('Generate Analytics pressed!')
+        if (len(self.latencyVals) > 0):
+            self.UpdateMsgBox(["Generating Analytics!"])
+            avg = sum(self.latencyVals)/len(self.latencyVals)
+            self.MsgBox.append("              Average Delay: " + str(round(avg,3)) + " seconds.")
+            self.MsgBox.moveCursor(QTextCursor.End)
+            for i in range(len(self.latencyVals)):
+                self.MsgBox.append("                + Delay #" + str(i+1) + ": " + str(self.latencyVals[i]))
+                self.MsgBox.moveCursor(QTextCursor.End)
+        else:
+            self.UpdateMsgBox(["Processing ..."])
+
+    @pyqtSlot()
     def ResetButtonClick(self):
         print('Reset pressed!')
         self.UpdateMsgBox(["Resetting!"])
@@ -396,6 +423,7 @@ class MainWindow(QWidget):
         self.ProtocolBox.setText('')
         self.InterventionBox.setText('')
         self.nonFinalText = ""
+        self.latencyVals = []
         self.SpeechThread = None
         self.CognitiveSystemThread = None
         time.sleep(.1)
@@ -452,7 +480,9 @@ class MainWindow(QWidget):
     # Update the Concept Extraction Box
     def UpdateConceptExtractionBox(self, input):
         item = input[0]
+        latencyVal = input[1]
         self.ConceptExtraction.setText(item)
+        self.latencyVals.append(latencyVal)
 
     # Update the Protocols and Interventions Boxes
     def UpdateProtocolBoxes(self, input):
