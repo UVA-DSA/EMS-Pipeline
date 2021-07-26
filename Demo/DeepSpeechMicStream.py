@@ -127,7 +127,7 @@ BEAM_WIDTH = 500
 LM_ALPHA = 0.75
 
 # The beta hyperparameter of the CTC decoder. Word insertion bonus.
-LM_BETA = 1.85
+LM_BETA = 1.85 #
 
 def convert_samplerate(audio_path):
     sox_cmd = 'sox {} --type raw --bits 16 --channels 1 --rate 16000 --encoding signed-integer --endian little --compression 0.0 --no-dither - '.format(quote(audio_path))
