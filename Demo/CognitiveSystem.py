@@ -1,4 +1,5 @@
 from __future__ import absolute_import, division, print_function
+from py_trees import blackboard
 from six.moves import queue
 import py_trees
 import behaviours_m as be
@@ -10,11 +11,12 @@ import text_clf_utils as utils
 from ranking_func import rank
 from Form_Filling import textParse2
 from operator import itemgetter
-import commands
-import datetime
+import subprocess
 import re
 
 # ============== Cognitive System ==============
+from behaviours_m import blackboard
+blackboard.tick_num = 0
 
 # Cognitive System Thread
 def CognitiveSystem(Window, SpeechToNLPQueue):
@@ -26,19 +28,20 @@ def CognitiveSystem(Window, SpeechToNLPQueue):
     ConceptExtractionSignal.signal.connect(Window.UpdateConceptExtractionBox)
 
     # Initialize BT framework parameters
-    execfile("bt_parameters.py")
+    exec(open("./bt_parameters.py").read())
 
     # Setup BT Framework
-    blackboard = Blackboard()
+    #blackboard = Blackboard()
+    global blackboard
     root = py_trees.composites.Sequence("Root_1")
     IG = be.InformationGathering()
     TC = be.TextCollection()
     V = be.Vectorize()
     PS = be.ProtocolSelector()
-    root.add_children([TC,IG,V,PS,be.protocols])
+    root.add_children([TC,IG,V,PS, be.protocols]) # be.protocols
     behaviour_tree = py_trees.trees.BehaviourTree(root)
     behaviour_tree.add_pre_tick_handler(pre_tick_handler)
-    behaviour_tree.setup(15)
+    behaviour_tree.setup()
     Concepts_Graph = dict()
     SpeechText = ""
     NLP_Items = []
@@ -69,7 +72,7 @@ def CognitiveSystem(Window, SpeechToNLPQueue):
             dummyP3=dummyP2.replace('\'','%27')
             dummyP=dummyP3.replace('&','%26')
             part1='curl -d text='+dummyP+' http://bark.phon.ioc.ee/punctuator'
-            op = commands.getstatusoutput(part1)
+            op = subprocess.getstatusoutput(part1)
             output = op[1].rsplit('\n', 1)[1]
             sentsList = textParse2.sent_tokenize(output) #final sentences
 
@@ -79,7 +82,7 @@ def CognitiveSystem(Window, SpeechToNLPQueue):
 
                 blackboard.text = [item]
                 behaviour_tree.tick_tock(
-                    sleep_ms=50,
+                    period_ms=50,
                     number_of_iterations=1,
                     pre_tick_handler=None,
                     post_tick_handler=None)
@@ -109,14 +112,15 @@ def CognitiveSystem(Window, SpeechToNLPQueue):
             
 # Function to return this recent tick's results
 def TickResults(Window, NLP_Items):
-
+    print(NLP_Items)
     ConceptExtractionSignal = GUISignal()
     ConceptExtractionSignal.signal.connect(Window.UpdateConceptExtractionBox)
 
     ProtocolSignal = GUISignal()
     ProtocolSignal.signal.connect(Window.UpdateProtocolBoxes)
 
-    b = Blackboard()
+    #blackboard = Blackboard()
+    global blackboard
     protocol_candidates = []
     signs_and_vitals = []
     suggestions = []
@@ -125,10 +129,10 @@ def TickResults(Window, NLP_Items):
 
     #======= Top 3 protocol candidates
     print("\n======= Top 3 protocol candidates:")
-    for p in b.protocol_flag:
-        print(p, b.protocol_flag[p])
-        binary = b.protocol_flag[p][0]
-        confidence = b.protocol_flag[p][1]
+    for p in blackboard.protocol_flag:
+        print(p, blackboard.protocol_flag[p])
+        binary = blackboard.protocol_flag[p][0]
+        confidence = blackboard.protocol_flag[p][1]
         if(binary):
             try:
                 if(confidence != 'nan' and float(confidence) > 0.0):
@@ -142,21 +146,21 @@ def TickResults(Window, NLP_Items):
     #======= Signs, symptoms, and vitals
     print("\n======= Signs, symptoms, and vitals:")
 
-    for item in b.Vitals:
-        if len(b.Vitals[item].content) > 0:
-            content = (str(b.Vitals[item].name).capitalize(), str(b.Vitals[item].binary),
-            str(b.Vitals[item].value), str(b.Vitals[item].content), 
-            str(round(b.Vitals[item].score/1000, 2)), b.Vitals[item].tick)
+    for item in blackboard.Vitals:
+        if len(blackboard.Vitals[item].content) > 0:
+            content = (str(blackboard.Vitals[item].name).capitalize(), str(blackboard.Vitals[item].binary),
+            str(blackboard.Vitals[item].value), str(blackboard.Vitals[item].content), 
+            str(round(blackboard.Vitals[item].score/1000, 2)), blackboard.Vitals[item].tick)
             print(content)
             signs_and_vitals.append(content)
             if(content not in NLP_Items):
                 NLP_Items.append(content)
     
-    for item in b.Signs:
-        if len(b.Signs[item].content) > 0:
-            content = (str(b.Signs[item].name).capitalize(), str(b.Signs[item].binary),
-            str(b.Signs[item].value), str(b.Signs[item].content),
-            str(round(b.Signs[item].score/1000, 2)), b.Signs[item].tick)
+    for item in blackboard.Signs:
+        if len(blackboard.Signs[item].content) > 0:
+            content = (str(blackboard.Signs[item].name).capitalize(), str(blackboard.Signs[item].binary),
+            str(blackboard.Signs[item].value), str(blackboard.Signs[item].content),
+            str(round(blackboard.Signs[item].score/1000, 2)), blackboard.Signs[item].tick)
             print(content)
             signs_and_vitals.append(content)
             if(content not in NLP_Items):
@@ -167,9 +171,9 @@ def TickResults(Window, NLP_Items):
 
     #======= Suggestions
     print("\n======= Suggestions:")
-    for key in b.feedback:
-        if b.feedback[key] > 0.1:
-            content = (str(key).capitalize(), str(round(b.feedback[key], 2)))
+    for key in blackboard.feedback:
+        if blackboard.feedback[key] > 0.1:
+            content = (str(key).capitalize(), str(round(blackboard.feedback[key], 2)))
             suggestions.append(content)
             print(content)
 
@@ -204,6 +208,7 @@ def TickResults(Window, NLP_Items):
 
 # Extract concept and calculate similarity
 def pre_tick_handler(behaviour_tree):
-    blackboard = Blackboard()
+    #blackboard = Blackboard()
+    global blackboard
     blackboard.tick_num += 1
 

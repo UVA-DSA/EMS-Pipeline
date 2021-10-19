@@ -1,19 +1,14 @@
 from __future__ import absolute_import, division, print_function
 from timeit import default_timer as timer
 import sys
-import os
 import pyaudio
 import time
+from google.cloud import speech_v1 as speech
 from six.moves import queue
-from google.cloud import speech
-from google.cloud.speech import enums
-from google.cloud.speech import types
-import numpy as np
-#import gui
 from classes import SpeechNLPItem, GUISignal
-import scipy
 import datetime
-import wave, struct, math
+import wave
+import numpy as np
 
 # Audio recording parameters
 RATE = 16000
@@ -137,12 +132,12 @@ def GoogleSpeech(Window, SpeechToNLPQueue):
     language_code = 'en-US'  # a BCP-47 language tag
 
     client = speech.SpeechClient()
-    config = types.RecognitionConfig(encoding = enums.RecognitionConfig.AudioEncoding.LINEAR16, sample_rate_hertz = RATE, language_code = language_code,    profanity_filter = True)
-    streaming_config = types.StreamingRecognitionConfig(config = config, interim_results = True)
+    config = speech.RecognitionConfig(encoding = speech.RecognitionConfig.AudioEncoding.LINEAR16, sample_rate_hertz = RATE, language_code = language_code,    profanity_filter = True)
+    streaming_config = speech.StreamingRecognitionConfig(config = config, interim_results = True)
 
     with MicrophoneStream(Window, RATE, CHUNK) as stream:
         audio_generator = stream.generator()
-        requests = (types.StreamingRecognizeRequest(audio_content = content) for content in audio_generator)
+        requests = (speech.StreamingRecognizeRequest(audio_content = content) for content in audio_generator)
 
         try:
             responses = client.streaming_recognize(streaming_config, requests)

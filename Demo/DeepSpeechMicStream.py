@@ -5,9 +5,6 @@ import os
 import pyaudio
 import time
 from six.moves import queue
-from google.cloud import speech
-from google.cloud.speech import enums
-from google.cloud.speech import types
 import numpy as np
 from classes import SpeechNLPItem, GUISignal
 
@@ -16,13 +13,10 @@ import argparse
 import shlex
 import subprocess
 import sys
-import wave
-import audioop
 import scipy.io.wavfile as wav
-import io
 
 
-from deepspeech import Model, printVersions
+from deepspeech import Model
 from timeit import default_timer as timer
 
 # Audio recording parameters
@@ -130,18 +124,7 @@ BEAM_WIDTH = 500
 LM_ALPHA = 0.75
 
 # The beta hyperparameter of the CTC decoder. Word insertion bonus.
-LM_BETA = 1.85
-
-
-# These constants are tied to the shape of the graph used (changing them changes
-# the geometry of the first layer), so make sure you use the same constants that
-# were used during training
-
-# Number of MFCC features to use
-N_FEATURES = 26
-
-# Size of the context window used for producing timesteps in the input vector
-N_CONTEXT = 9
+LM_BETA = 1.85 #
 
 def convert_samplerate(audio_path):
     sox_cmd = 'sox {} --type raw --bits 16 --channels 1 --rate 16000 --encoding signed-integer --endian little --compression 0.0 --no-dither - '.format(quote(audio_path))
@@ -177,24 +160,26 @@ def DeepSpeech(Window, SpeechToNLPQueue):
     MsgSignal = GUISignal()
     MsgSignal.signal.connect(Window.UpdateMsgBox)
 
-    # References to models:
-    model = 'DeepSpeech_Models/output_graph.pbmm'
-    alphabet = 'DeepSpeech_Models/alphabet.txt'
-    lm = 'DeepSpeech_Models/lm.binary'
-    trie = 'DeepSpeech_Models/trie'
+     # References to models:
+    model_path = 'DeepSpeech_Models/deepspeech-0.9.3-models.pbmm'
+    scorer_path = 'DeepSpeech_Models/deepspeech-0.9.3-models.scorer'
 
-    print('Loading model from file {}'.format(model), file=sys.stderr)
+    print('Loading model from file {}'.format(model_path), file=sys.stderr)
     model_load_start = timer()
-    ds = Model(model, N_FEATURES, N_CONTEXT, alphabet, BEAM_WIDTH)
+    ds = Model(model_path) # setting the model to be used in deepspeech
     model_load_end = timer() - model_load_start
     print('Loaded model in {:.3}s.'.format(model_load_end), file=sys.stderr)
 
-    if lm and trie:
-        print('Loading language model from files {} {}'.format(lm, trie), file=sys.stderr)
-        lm_load_start = timer()
-        ds.enableDecoderWithLM(alphabet, lm, trie, LM_ALPHA, LM_BETA)
-        lm_load_end = timer() - lm_load_start
-        print('Loaded language model in {:.3}s.'.format(lm_load_end), file=sys.stderr)
+    print('Loading language model from files {} {}'.format(scorer_path), file=sys.stderr)
+    lm_load_start = timer()
+    ds.enableExternalScorer(scorer_path)
+    lm_load_end = timer() - lm_load_start
+    print('Loaded language model in {:.3}s.'.format(lm_load_end), file=sys.stderr)
+
+    # these lines are used to help the decoder in deepspeech
+    # values are recommended by the developers
+    ds.setScorerAlphaBeta(LM_ALPHA, LM_BETA)
+    ds.setBeamWidth(BEAM_WIDTH)
 
     audio = []
     with MicrophoneStream(Window, RATE, CHUNK) as stream:

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # ============== Imports ==============
@@ -8,13 +8,12 @@ from six.moves import queue
 import sys
 import os
 import time
-import threading
 import math
 import datetime
 
-from PyQt4.QtCore import *
-from PyQt4 import QtSvg
-from PyQt4.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
 
 import numpy as np
 import pandas as pd
@@ -24,8 +23,8 @@ from StoppableThread.StoppableThread import StoppableThread
 import py_trees
 from py_trees.blackboard import Blackboard
 
-import GenerateForm
-import behaviours_m as be
+#import GenerateForm
+from behaviours_m import *
 from DSP.amplitude import Amplitude
 from classes import SpeechNLPItem, GUISignal
 import GoogleSpeechMicStream
@@ -35,11 +34,16 @@ import DeepSpeechFileStream
 import TextSpeechStream
 import CognitiveSystem
 
+import csv
+chunkdata = []
+
 # ================================================================== GUI ==================================================================
 
 #BOX_FONT_SIZE = 12
 
 # Main Window of the Application
+
+
 class MainWindow(QWidget):
 
     def __init__(self, width, height):
@@ -60,52 +64,53 @@ class MainWindow(QWidget):
         # Set geometry of the window
         self.setWindowTitle('CognitiveEMS Demo')
         self.setWindowIcon(QIcon('./Images/Logos/UVA.png'))
-        self.setGeometry(int(width * .065), int(height * .070), int(width * .9), int(height * .85))
+        self.setGeometry(int(width * .065), int(height * .070),
+                         int(width * .9), int(height * .85))
         #self.setMinimumSize(1280, 750);
         #self.setFixedSize(width, height)
-        #self.showMaximized()
+        # self.showMaximized()
 
         # Grid Layout to hold all the widgets
         self.Grid_Layout = QGridLayout(self)
 
         # Font for boxes
         #Box_Font = QFont()
-        #Box_Font.setPointSize(BOX_FONT_SIZE)
+        # Box_Font.setPointSize(BOX_FONT_SIZE)
 
         # Add disabled buttons to the of GUI to ensure spacing
         R3 = QPushButton(".\n.\n")
-        R3.setFont(QFont("Monospace"))        
+        R3.setFont(QFont("Monospace"))
         R3.setEnabled(False)
         R3.setStyleSheet("background-color:transparent;border:0;")
         #self.Grid_Layout.addWidget(R3, 3, 3, 1, 1)
 
         R6 = QPushButton(".\n.\n")
-        R6.setFont(QFont("Monospace"))        
+        R6.setFont(QFont("Monospace"))
         R6.setEnabled(False)
         R6.setStyleSheet("background-color:transparent;border:0;")
         #self.Grid_Layout.addWidget(R6, 6, 3, 1, 1)
 
         R8 = QPushButton(".\n" * int(self.height/100))
-        R8.setFont(QFont("Monospace"))        
+        R8.setFont(QFont("Monospace"))
         R8.setEnabled(False)
         R8.setStyleSheet("background-color:transparent;border:0;")
         #self.Grid_Layout.addWidget(R8, 8, 3, 1, 1)
-        
+
         C0 = QPushButton("................................")
-        C0.setFont(QFont("Monospace"))        
+        C0.setFont(QFont("Monospace"))
         C0.setEnabled(False)
         self.Grid_Layout.addWidget(C0, 13, 0, 1, 1)
 
         C1 = QPushButton("................................")
-        C1.setFont(QFont("Monospace"))        
+        C1.setFont(QFont("Monospace"))
         C1.setEnabled(False)
         self.Grid_Layout.addWidget(C1, 13, 1, 1, 1)
 
-        C2 = QPushButton("....................................................................")
-        C2.setFont(QFont("Monospace"))        
+        C2 = QPushButton(
+            "....................................................................")
+        C2.setFont(QFont("Monospace"))
         C2.setEnabled(False)
         self.Grid_Layout.addWidget(C2, 13, 2, 1, 2)
-
 
         # Create main title
         self.MainLabel = QLabel(self)
@@ -127,7 +132,7 @@ class MainWindow(QWidget):
         self.GenerateFormButton.clicked.connect(self.GenerateFormButtonClick)
         self.DataPanelGridLayout.addWidget(self.GenerateFormButton, 0, 1, 1, 1)
 
-        # Create label and textbox for speech 
+        # Create label and textbox for speech
         self.SpeechLabel = QLabel()
         self.SpeechLabel.setText("<b>Speech Recognition</b>")
         self.Grid_Layout.addWidget(self.SpeechLabel, 1, 0, 1, 1)
@@ -138,7 +143,7 @@ class MainWindow(QWidget):
 
         self.SpeechBox = QTextEdit()
         self.SpeechBox.setReadOnly(True)
-        #self.SpeechBox.setFont(Box_Font)
+        # self.SpeechBox.setFont(Box_Font)
         self.SpeechBox.setOverwriteMode(True)
         self.SpeechBox.ensureCursorVisible()
         self.Grid_Layout.addWidget(self.SpeechBox, 3, 0, 6, 1)
@@ -152,17 +157,18 @@ class MainWindow(QWidget):
         self.ComboBox = QComboBox()
         self.ComboBox.addItems(["Microphone",
                                 "000_190105",
-                                "001_190105", 
-                                "002_190105", 
-                                "003_190105", 
-                                "004_190105", 
-                                "005_190105", 
-                                "006_190105", 
-                                "007_190105", 
-                                "008_190105", 
-                                "009_190105", 
-                                "010_190105", 
+                                "001_190105",
+                                "002_190105",
+                                "003_190105",
+                                "004_190105",
+                                "005_190105",
+                                "006_190105",
+                                "007_190105",
+                                "008_190105",
+                                "009_190105",
+                                "010_190105",
                                 "011_190105",
+                                "NG1",
                                 "Other Audio File",
                                 "Text File"])
 
@@ -172,12 +178,14 @@ class MainWindow(QWidget):
         self.GoogleSpeechRadioButton = QRadioButton("Google Speech API", self)
         self.GoogleSpeechRadioButton.setEnabled(True)
         self.GoogleSpeechRadioButton.setChecked(True)
-        self.ControlPanelGridLayout.addWidget(self.GoogleSpeechRadioButton, 0, 1, 1, 1)
+        self.ControlPanelGridLayout.addWidget(
+            self.GoogleSpeechRadioButton, 0, 1, 1, 1)
 
         self.DeepSpeechRadioButton = QRadioButton("DeepSpeech", self)
         self.DeepSpeechRadioButton.setEnabled(False)
         self.DeepSpeechRadioButton.setChecked(False)
-        self.ControlPanelGridLayout.addWidget(self.DeepSpeechRadioButton, 0, 2, 1, 1)
+        self.ControlPanelGridLayout.addWidget(
+            self.DeepSpeechRadioButton, 0, 2, 1, 1)
 
         # Create a start button in the Control Panel
         self.StartButton = QPushButton('Start', self)
@@ -217,12 +225,13 @@ class MainWindow(QWidget):
         self.Grid_Layout.addWidget(self.ConceptExtractionLabel, 1, 1, 1, 1)
 
         self.ConceptExtractionSubLabel = QLabel()
-        self.ConceptExtractionSubLabel.setText("(Concept, Presence, Value, Confidence)") 
+        self.ConceptExtractionSubLabel.setText(
+            "(Concept, Presence, Value, Confidence)")
         self.Grid_Layout.addWidget(self.ConceptExtractionSubLabel, 2, 1, 1, 1)
 
         self.ConceptExtraction = QTextEdit()
         self.ConceptExtraction.setReadOnly(True)
-        #self.ConceptExtraction.setFont(Box_Font)
+        # self.ConceptExtraction.setFont(Box_Font)
         self.Grid_Layout.addWidget(self.ConceptExtraction, 3, 1, 6, 1)
 
         # Add label, textbox for protcol name
@@ -236,10 +245,10 @@ class MainWindow(QWidget):
 
         self.ProtocolBox = QTextEdit()
         self.ProtocolBox.setReadOnly(True)
-        #self.ProtocolBox.setFont(Box_Font)
+        # self.ProtocolBox.setFont(Box_Font)
         self.Grid_Layout.addWidget(self.ProtocolBox, 3, 2, 1, 2)
 
-        # Create label and textbox for interventions 
+        # Create label and textbox for interventions
         self.InterventionLabel = QLabel()
         self.InterventionLabel.setText("<b>Suggested Interventions</b>")
         self.Grid_Layout.addWidget(self.InterventionLabel, 4, 2, 1, 2)
@@ -250,7 +259,7 @@ class MainWindow(QWidget):
 
         self.InterventionBox = QTextEdit()
         self.InterventionBox.setReadOnly(True)
-        #self.InterventionBox.setFont(Box_Font)
+        # self.InterventionBox.setFont(Box_Font)
         self.Grid_Layout.addWidget(self.InterventionBox, 6, 2, 1, 2)
 
         # Create label and textbox for messages
@@ -261,11 +270,11 @@ class MainWindow(QWidget):
         self.MsgBox = QTextEdit()
         self.MsgBox.setReadOnly(True)
         self.MsgBox.setFont(QFont("Monospace"))
-        #self.MsgBox.setLineWrapMode(QTextEdit.NoWrap)
+        # self.MsgBox.setLineWrapMode(QTextEdit.NoWrap)
         self.Grid_Layout.addWidget(self.MsgBox, 8, 2, 1, 2)
 
         # Populate the Message Box with welcome message
-        System_Info_Text_File = open("./ETC/System_Info.txt", "r") 
+        System_Info_Text_File = open("./ETC/System_Info.txt", "r")
         System_Info_Text = ""
         for line in System_Info_Text_File.readlines():
             System_Info_Text += line
@@ -273,7 +282,7 @@ class MainWindow(QWidget):
         #self.MsgBox.setText(System_Info_Text + "\n" + str(datetime.datetime.now().strftime("%c")) + " - Ready to start speech recognition!")
         self.MsgBox.setText(System_Info_Text)
         #self.UpdateMsgBox(["Ready to start speech recognition!"])
-        
+
         # Add Link Lab Logo
         self.PictureBox = QLabel()
         self.PictureBox.setPixmap(QPixmap('./Images/Logos/LinkLabLogo.png'))
@@ -294,17 +303,23 @@ class MainWindow(QWidget):
     def SaveButtonClick(self):
         #name = QFileDialog.getSaveFileName(self, 'Save File')
         name = str(datetime.datetime.now().strftime("%c")) + ".txt"
-        file = open("./Dumps/" + name,'w')
+        #file = open("./Dumps/" + name,'w')
         mode_text = self.ComboBox.currentText()
         speech_text = str(self.SpeechBox.toPlainText())
         concept_extraction_text = str(self.ConceptExtraction.toPlainText())
         protocol_text = str(self.ProtocolBox.toPlainText())
         intervention_text = str(self.InterventionBox.toPlainText())
         msg_text = str(self.MsgBox.toPlainText())
-        text = "Mode:\n\n" + mode_text + "\n\nSpeech: \n\n" + speech_text +"\n\nConcept Extraction:\n\n" + concept_extraction_text + "\n\nProtocol Text:\n\n" + protocol_text + "\n\nIntervention:\n\n" + intervention_text + "\n\nSystem Messages Log:\n\n" + msg_text
-        file.write(text)
-        file.close()
-        self.UpdateMsgBox(["System state dumped to \n/Dumps/" + name])
+        #text = "Mode:\n\n" + mode_text + "\n\nSpeech: \n\n" + speech_text +"\n\nConcept Extraction:\n\n" + concept_extraction_text + "\n\nProtocol Text:\n\n" + protocol_text + "\n\nIntervention:\n\n" + intervention_text + "\n\nSystem Messages Log:\n\n" + msg_text
+        # file.write(text)
+        # file.close()
+        #self.UpdateMsgBox(["System state dumped to \n/Dumps/" + name])
+        self.UpdateMsgBox(["System results saved to results.csv"])
+        results = [speech_text, concept_extraction_text,
+                   protocol_text, intervention_text]
+        with open("results.csv", mode="a") as csv_file:
+            writer = csv.writer(csv_file, delimiter=',')
+            writer.writerow(results)
 
     @pyqtSlot()
     def StartButtonClick(self):
@@ -322,45 +337,55 @@ class MainWindow(QWidget):
         # If Microphone
         if(self.ComboBox.currentText() == 'Microphone'):
             if(self.GoogleSpeechRadioButton.isChecked()):
-                self.SpeechThread = StoppableThread(target = GoogleSpeechMicStream.GoogleSpeech, args=(self, SpeechToNLPQueue,))
+                self.SpeechThread = StoppableThread(
+                    target=GoogleSpeechMicStream.GoogleSpeech, args=(self, SpeechToNLPQueue,))
             elif(self.DeepSpeechRadioButton.isChecked()):
-                self.SpeechThread = StoppableThread(target = DeepSpeechMicStream.DeepSpeech, args=(self, SpeechToNLPQueue,))
+                self.SpeechThread = StoppableThread(
+                    target=DeepSpeechMicStream.DeepSpeech, args=(self, SpeechToNLPQueue,))
             self.SpeechThread.start()
             print('Microphone Speech Thread Started')
 
         # If Other Audio File
         elif(self.ComboBox.currentText() == 'Other Audio File'):
-            audio_fname = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\',"Wav files (*.wav)")
+            audio_fname = QFileDialog.getOpenFileName(
+                self, 'Open file', 'c:\\', "Wav files (*.wav)")
             if(self.GoogleSpeechRadioButton.isChecked()):
-                self.SpeechThread = StoppableThread(target = GoogleSpeechFileStream.GoogleSpeech, args=(self, SpeechToNLPQueue, str(audio_fname),))
+                self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
+                    self, SpeechToNLPQueue, str(audio_fname),))
             elif(self.DeepSpeechRadioButton.isChecked()):
-                self.SpeechThread = StoppableThread(target = DeepSpeechFileStream.DeepSpeech, args=(self, SpeechToNLPQueue, str(audio_fname),))
+                self.SpeechThread = StoppableThread(target=DeepSpeechFileStream.DeepSpeech, args=(
+                    self, SpeechToNLPQueue, str(audio_fname),))
             self.otheraudiofilename = str(audio_fname)
             self.SpeechThread.start()
             print("Other Audio File Speech Thread Started")
 
         # If Text File
         elif(self.ComboBox.currentText() == 'Text File'):
-            text_fname = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\',"Text files (*.txt)")
-            self.SpeechThread = StoppableThread(target = TextSpeechStream.TextSpeech, args=(self, SpeechToNLPQueue, str(text_fname),))
+            text_fname = QFileDialog.getOpenFileName(
+                self, 'Open file', 'c:\\', "Text files (*.txt)")
+            self.SpeechThread = StoppableThread(target=TextSpeechStream.TextSpeech, args=(
+                self, SpeechToNLPQueue, str(text_fname),))
             self.SpeechThread.start()
             print("Text File Speech Thread Started")
-  
+
         # If a Hard-coded Audio test file
         else:
             if(self.GoogleSpeechRadioButton.isChecked()):
-                self.SpeechThread = StoppableThread(target = GoogleSpeechFileStream.GoogleSpeech, args=(self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',))
+                self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
+                    self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',))
             elif(self.DeepSpeechRadioButton.isChecked()):
-                self.SpeechThread = StoppableThread(target = DeepSpeechFileStream.DeepSpeech, args=(self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',))
+                self.SpeechThread = StoppableThread(target=DeepSpeechFileStream.DeepSpeech, args=(
+                    self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',))
             self.SpeechThread.start()
             print("Hard-coded Audio File Speech Thread Started")
 
         # ==== Start the Cognitive System Thread
         if(self.CognitiveSystemThread == None):
             print("Cognitive System Thread Started")
-            self.CognitiveSystemThread = StoppableThread(target = CognitiveSystem.CognitiveSystem, args=(self, SpeechToNLPQueue,))
+            self.CognitiveSystemThread = StoppableThread(
+                target=CognitiveSystem.CognitiveSystem, args=(self, SpeechToNLPQueue,))
             self.CognitiveSystemThread.start()
-   
+
     @pyqtSlot()
     def StopButtonClick(self):
         print("Stop pressed!")
@@ -376,7 +401,7 @@ class MainWindow(QWidget):
         print('Generate Form pressed!')
         self.UpdateMsgBox(["Form Being Generated!"])
         text = str(self.SpeechBox.toPlainText())
-        StoppableThread(target = GenerateForm.GenerateForm, args=(self, text,)).start()
+        #StoppableThread(target = GenerateForm.GenerateForm, args=(self, text,)).start()
 
     @pyqtSlot()
     def ResetButtonClick(self):
@@ -416,12 +441,14 @@ class MainWindow(QWidget):
 
         if(item.isFinal):
             if(item.origin == 'Speech'):
-                self.finalSpeechSegmentsSpeech.append('<b>' + item.transcript + '</b>')
+                self.finalSpeechSegmentsSpeech.append(
+                    '<b>' + item.transcript + '</b>')
             elif(item.origin == 'NLP'):
-                self.finalSpeechSegmentsNLP.append('<b>' + item.transcript + '</b>')
+                self.finalSpeechSegmentsNLP.append(
+                    '<b>' + item.transcript + '</b>')
 
             text = ""
-            
+
             for a in self.finalSpeechSegmentsNLP:
                 text += a + "<br>"
 
@@ -434,7 +461,7 @@ class MainWindow(QWidget):
 
         else:
             text = ""
-            
+
             for a in self.finalSpeechSegmentsNLP:
                 text += a + "<br>"
 
@@ -444,29 +471,44 @@ class MainWindow(QWidget):
             if(not len(text)):
                 text = "<b></b>"
 
-            previousTextMinusPrinted = self.nonFinalText[:len(self.nonFinalText) - item.numPrinted]
-            self.nonFinalText =  previousTextMinusPrinted + item.transcript
+            previousTextMinusPrinted = self.nonFinalText[:len(
+                self.nonFinalText) - item.numPrinted]
+            self.nonFinalText = previousTextMinusPrinted + item.transcript
             self.SpeechBox.setText(text + self.nonFinalText)
             self.SpeechBox.moveCursor(QTextCursor.End)
 
     # Update the Concept Extraction Box
     def UpdateConceptExtractionBox(self, input):
+        global chunkdata
         item = input[0]
         self.ConceptExtraction.setText(item)
+        if item != "":
+            chunkdata.append(item)
+        else:
+            chunkdata.append("-")
 
     # Update the Protocols and Interventions Boxes
     def UpdateProtocolBoxes(self, input):
+        global chunkdata
         protocol_names = input[0]
         interventions = input[1]
         self.ProtocolBox.setText(protocol_names)
         self.InterventionBox.setText(interventions)
+
+        chunkdata.append(protocol_names)
+        chunkdata.append(interventions)
+        with open("check.csv", mode="a") as csv_file:
+            writer = csv.writer(csv_file, delimiter=',')
+            writer.writerow(chunkdata)
+        chunkdata = []
 
     # Update the System Message Box
     def UpdateMsgBox(self, input):
         item = input[0]
         #previousText = self.MsgBox.toPlainText()
         #self.MsgBox.setText(str(previousText).strip() + "\n" + str(datetime.datetime.now().strftime("%c"))[16:] + " - " + item + "\n")
-        self.MsgBox.append("<b>" + str(datetime.datetime.now().strftime("%c"))[16:] + "</b> - " + item)
+        self.MsgBox.append(
+            "<b>" + str(datetime.datetime.now().strftime("%c"))[16:] + "</b> - " + item)
 
         self.MsgBox.moveCursor(QTextCursor.End)
 
@@ -480,7 +522,7 @@ class MainWindow(QWidget):
 
             value = amp.getValue()
             value = value * 100
-            log_value = 50 * math.log10(value + 1) # Plot on a log scale
+            log_value = 50 * math.log10(value + 1)  # Plot on a log scale
 
             self.VUMeter.setValue(log_value)
         except:
@@ -490,20 +532,24 @@ class MainWindow(QWidget):
     def StartGoogle(self, input):
         item = input[0]
         if(item == 'Mic'):
-            self.SpeechThread = StoppableThread(target = GoogleSpeechMicStream.GoogleSpeech, args=(self, SpeechToNLPQueue, ))
+            self.SpeechThread = StoppableThread(
+                target=GoogleSpeechMicStream.GoogleSpeech, args=(self, SpeechToNLPQueue, ))
             self.SpeechThread.start()
         elif(item == 'File'):
             if self.ComboBox.currentText() == 'Other Audio File':
                 print("\n\nStart Again\n\n")
-                self.SpeechThread = StoppableThread(target = GoogleSpeechFileStream.GoogleSpeech, args=(self, SpeechToNLPQueue, self.otheraudiofilename,))
+                self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
+                    self, SpeechToNLPQueue, self.otheraudiofilename,))
             else:
-                self.SpeechThread = StoppableThread(target = GoogleSpeechFileStream.GoogleSpeech, args=(self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',))
+                self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
+                    self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',))
             self.SpeechThread.start()
 
     # Enabled and/or disable given buttons in a tuple (Button Object, True/False)
     def ButtonsSetEnabled(self, input):
         for item in input:
             item[0].setEnabled(item[1])
+
 
 # ================================================================== Main ==================================================================
 if __name__ == '__main__':
@@ -527,4 +573,3 @@ if __name__ == '__main__':
     Window = MainWindow(width, height)
     Window.show()
     sys.exit(app.exec_())
-

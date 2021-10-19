@@ -2,16 +2,12 @@ from __future__ import absolute_import, division, print_function
 from timeit import default_timer as timer
 import sys
 import os
-import pyaudio
 import time
 from six.moves import queue
-from google.cloud import speech
-from google.cloud.speech import enums
-from google.cloud.speech import types
+from google.cloud import speech_v1 as speech
 import numpy as np
 from classes import SpeechNLPItem, GUISignal
 import wave
-import scipy
 
 # Suppress pygame's welcome message
 with open(os.devnull, 'w') as f:
@@ -161,13 +157,13 @@ def GoogleSpeech(Window, SpeechToNLPQueue, wavefile_name):
     language_code = 'en-US'  # a BCP-47 language tag
 
     client = speech.SpeechClient()
-    config = types.RecognitionConfig(encoding = enums.RecognitionConfig.AudioEncoding.LINEAR16, sample_rate_hertz = RATE, language_code = language_code, profanity_filter = True) #,model='video')
-    streaming_config = types.StreamingRecognitionConfig(config = config, interim_results = True)
+    config = speech.RecognitionConfig(encoding = speech.RecognitionConfig.AudioEncoding.LINEAR16, sample_rate_hertz = RATE, language_code = language_code, profanity_filter = True) #,model='video')
+    streaming_config = speech.StreamingRecognitionConfig(config = config, interim_results = True)
 
 
     with FileStream(Window, RATE, CHUNK, wavefile_name) as stream:
         audio_generator = stream.generator()
-        requests = (types.StreamingRecognizeRequest(audio_content = content) for content in audio_generator)
+        requests = (speech.StreamingRecognizeRequest(audio_content = content) for content in audio_generator)
 
         try:
             responses = client.streaming_recognize(streaming_config, requests)

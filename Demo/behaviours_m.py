@@ -1,14 +1,13 @@
 import py_trees
-from pandas import Series, DataFrame
 import pandas as pd
 import numpy as np
+from py_trees import blackboard
 from scipy import spatial
-import re
 from py_trees.blackboard import Blackboard
 import ConceptExtract as CE
-import time
 from ranking_func import rank
 from collections import defaultdict
+import openpyxl
 
 def softmax(x):
     return np.exp(x) / np.sum(np.exp(x), axis=0)
@@ -24,6 +23,8 @@ class PROTOCOLi_Check(py_trees.behaviour.Behaviour):
 class PROTOCOLi_Action(py_trees.behaviour.Behaviour):
     def __init__(self, name = 'PROTOCOLi Action'):
         super(PROTOCOLi_Action, self).__init__(name)
+
+blackboard = Blackboard()
         
 # behaviors in framework
 class InformationGathering(py_trees.behaviour.Behaviour):
@@ -44,7 +45,8 @@ class InformationGathering(py_trees.behaviour.Behaviour):
         the list here is the complete list
         '''
         vcl = pd.read_csv(self.exlist)
-        blackboard = Blackboard()
+        #blackboard = Blackboard()
+        global blackboard
         self.sce = CE.ConceptExtractor(self.slist)
         self.sce.StatusInit()
         for item in vcl:
@@ -158,7 +160,8 @@ class InformationGathering(py_trees.behaviour.Behaviour):
         return True
         
     def update(self):
-        blackboard = Blackboard()
+        #blackboard = Blackboard()
+        global blackboard
         self.sce.ConceptExtract(blackboard.text)
         
         blackboard.concepts = self.sce.concepts
@@ -187,9 +190,10 @@ class Vectorize(py_trees.behaviour.Behaviour):
         self.protocols = protocols
         
     def setup(self, unused_timeout = 15):
-        blackboard = Blackboard()
+        #blackboard = Blackboard()
+        global blackboard
         PC = dict()
-        pro_df = pd.read_excel(self.protocols)
+        pro_df = pd.read_excel(self.protocols, engine="openpyxl")
         for line in pro_df.iterrows():
             line_ss = [(i.strip().lower()[:-1],i.strip().lower()[-1]) for i in line[1]['Signs&Symptoms'].split(';')]
             if not pd.isnull(line[1]['Possible signs&symptoms additions']):
@@ -197,7 +201,7 @@ class Vectorize(py_trees.behaviour.Behaviour):
             name = line[1]['Protocol']
             PC[name] = line_ss + line_ssr
         self.PV = dict()
-        for item in PC:
+        for item in PC: # PC is a dictionary where the keys are the protocols and the values are a list of the signs and symptoms
             vec = list()
             su = 0.
             for i in blackboard.Signs:
@@ -205,10 +209,10 @@ class Vectorize(py_trees.behaviour.Behaviour):
                 for j in PC[item]:
                     if i == j[0]:
                         res = 8.**int(j[1])
-                        break;
+                        break
                 su += res
                 vec.append(res)
-            for i in xrange(len(vec)):
+            for i in range(len(vec)):
                 vec[i] = vec[i] / su
             self.PV[item] = vec
         blackboard.PV = self.PV
@@ -216,7 +220,8 @@ class Vectorize(py_trees.behaviour.Behaviour):
         
     
     def update(self):
-        blackboard = Blackboard()  
+        #blackboard = Blackboard()  
+        global blackboard
         # mm confidence encoding
         TV = []
         for item in blackboard.Signs:
@@ -244,7 +249,8 @@ class ProtocolSelector(py_trees.behaviour.Behaviour):
         super(ProtocolSelector, self).__init__(name)
     
     def setup(self, unused_timeout = 15):
-        blackboard = Blackboard()
+        # blackboard = Blackboard()
+        global blackboard
         blackboard.protocol_flag = dict()
         blackboard.feedback = dict()
         for i in blackboard.PV:
@@ -254,7 +260,8 @@ class ProtocolSelector(py_trees.behaviour.Behaviour):
         return True
     
     def update(self):
-        blackboard = Blackboard()
+        #blackboard = Blackboard()
+        global blackboard
         blackboard.protocol_flag = dict()
         blackboard.feedback = dict()
         for i in blackboard.PV:
@@ -273,7 +280,8 @@ class TextCollection(py_trees.behaviour.Behaviour):
         
     def setup(self, unused_timeout = 15):
         level = 'I/P'
-        blackboard = Blackboard()
+        #blackboard = Blackboard()
+        global blackboard
         #blackboard.action = []
         blackboard.level = level
         blackboard.tick_num = 0
@@ -302,122 +310,131 @@ class TextCollection(py_trees.behaviour.Behaviour):
         blackboard = Blackboard()
         blackboard.text = self.sent_text
         '''
-        return py_trees.Status.SUCCESS
+        return py_trees.behaviours.Success
  
 # protocols' checker
 class Chestpain_Checker(py_trees.behaviour.Behaviour):
     def __init__(self, name = 'Chestpain_Checker'):
         super(Chestpain_Checker, self).__init__(name)
-        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx')
+        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx', engine="openpyxl")
         self.key = p['Protocol'][0]
     
     def update(self):
-        blackboard = Blackboard()
+        #blackboard = Blackboard()
+        global blackboard
         if blackboard.protocol_flag[self.key][0]:
-            return py_trees.Status.SUCCESS
+            return py_trees.behaviours.Success
         else:
-            return py_trees.Status.FAILURE
+            return py_trees.behaviours.Failure
 
 class Abdopain_Checker(py_trees.behaviour.Behaviour):
     def __init__(self, name = 'Abdopain_Checker'):
         super(Abdopain_Checker, self).__init__(name)
-        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx')
+        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx', engine="openpyxl")
         self.key = p['Protocol'][1]
     
     def update(self):
-        blackboard = Blackboard()
+        #blackboard = Blackboard()
+        global blackboard
         if blackboard.protocol_flag[self.key][0]:
-            return py_trees.Status.SUCCESS
+            return py_trees.behaviours.Success
         else:
-            return py_trees.Status.FAILURE
+            return py_trees.behaviours.Failure
             
 class Behavioral_Checker(py_trees.behaviour.Behaviour):
     def __init__(self, name = 'Behavioral_Checker'):
         super(Behavioral_Checker, self).__init__(name)
-        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx')
+        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx', engine="openpyxl")
         self.key = p['Protocol'][2]
     
     def update(self):
-        blackboard = Blackboard()
+        #blackboard = Blackboard()
+        global blackboard
         if blackboard.protocol_flag[self.key][0]:
-            return py_trees.Status.SUCCESS
+            return py_trees.behaviours.Success
         else:
-            return py_trees.Status.FAILURE
+            return py_trees.behaviours.Failure
             
 class Seizure_Checker(py_trees.behaviour.Behaviour):
     def __init__(self, name = 'Seizure_Checker'):
         super(Seizure_Checker, self).__init__(name)
-        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx')
+        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx', engine="openpyxl")
         self.key = p['Protocol'][3]
     
     def update(self):
-        blackboard = Blackboard()
+        #blackboard = Blackboard()
+        global blackboard
         if blackboard.protocol_flag[self.key][0]:
-            return py_trees.Status.SUCCESS
+            return py_trees.behaviours.Success
         else:
-            return py_trees.Status.FAILURE
+            return py_trees.behaviours.Failure
 
 class resp_Checker(py_trees.behaviour.Behaviour):
     def __init__(self, name = 'resp_Checker'):
         super(resp_Checker, self).__init__(name)
-        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx')
+        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx', engine="openpyxl")
         self.key = p['Protocol'][4]
     
     def update(self):
-        blackboard = Blackboard()
+        #blackboard = Blackboard()
+        global blackboard
         if blackboard.protocol_flag[self.key][0]:
-            return py_trees.Status.SUCCESS
+            return py_trees.behaviours.Success
         else:
-            return py_trees.Status.FAILURE
+            return py_trees.behaviours.Failure
             
 class AMS_Checker(py_trees.behaviour.Behaviour):
     def __init__(self, name = 'AMS_Checker'):
         super(AMS_Checker, self).__init__(name)
-        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx')
+        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx', engine="openpyxl")
         self.key = p['Protocol'][5]
     
     def update(self):
-        blackboard = Blackboard()
+        #blackboard = Blackboard()
+        global blackboard
         if blackboard.protocol_flag[self.key][0]:
-            return py_trees.Status.SUCCESS
+            return py_trees.behaviours.Success
         else:
-            return py_trees.Status.FAILURE
+            return py_trees.behaviours.Failure
             
 class Diab_Checker(py_trees.behaviour.Behaviour):
     def __init__(self, name = 'Diab_Checker'):
         super(Diab_Checker, self).__init__(name)
-        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx')
+        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx', engine="openpyxl")
         self.key = p['Protocol'][6]
     
     def update(self):
-        blackboard = Blackboard()
+        #blackboard = Blackboard()
+        global blackboard
         if blackboard.protocol_flag[self.key][0]:
-            return py_trees.Status.SUCCESS
+            return py_trees.behaviours.Success
         else:
-            return py_trees.Status.FAILURE       
+            return py_trees.behaviours.Failure       
             
 class Overdose_Checker(py_trees.behaviour.Behaviour):
     def __init__(self, name = 'Overdose_Checker'):
         super(Overdose_Checker, self).__init__(name)
-        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx')
+        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx', engine="openpyxl")
         self.key = p['Protocol'][7]
     
     def update(self):
-        blackboard = Blackboard()
+        #blackboard = Blackboard()
+        global blackboard
         if blackboard.protocol_flag[self.key][0]:
-            return py_trees.Status.SUCCESS
+            return py_trees.behaviours.Success
         else:
-            return py_trees.Status.FAILURE    
+            return py_trees.behaviours.Failure    
         
 # protocols
 class Chestpain(py_trees.behaviour.Behaviour):
     def __init__(self, name = 'Chestpain'):
         super(Chestpain, self).__init__(name)
-        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx')
+        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx', engine="openpyxl")
         self.key = p['Protocol'][0]
     
     def update(self):
-        blackboard = Blackboard()
+        #blackboard = Blackboard()
+        global blackboard
         self.posi = blackboard.protocol_flag[self.key][1]
         if self.posi == 0:
             return py_trees.Status.SUCCESS
@@ -440,7 +457,7 @@ class Chestpain(py_trees.behaviour.Behaviour):
         if  blackboard.Vitals['pain'].binary and blackboard.Inters['nitroglycerin'].binary:
           #  blackboard.feedback['morphine'] += self.posi * blackboard.Vitals['pain'].score / 1000. * blackboard.Inters['nitroglycerin'].score / 1000.
             blackboard.feedback['fentanyl'] += self.posi * blackboard.Vitals['pain'].score / 1000. * blackboard.Inters['nitroglycerin'].score / 1000.
-        return py_trees.Status.SUCCESS
+        return py_trees.behaviours.Success
 
 CP_C = Chestpain_Checker()
 CP_A = Chestpain()
@@ -449,14 +466,15 @@ CP = py_trees.composites.Sequence("Chestpain",children = [CP_C,CP_A])
 class Abdopain(py_trees.behaviour.Behaviour):
     def __init__(self, name = 'Abdopain'):
         super(Abdopain, self).__init__(name)
-        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx')
+        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx', engine="openpyxl")
         self.key = p['Protocol'][1]
     
     def update(self):
-        blackboard = Blackboard()
+        #blackboard = Blackboard()
+        global blackboard
         self.posi = blackboard.protocol_flag[self.key][1]
         if self.posi == 0:
-            return py_trees.Status.SUCCESS
+            return py_trees.behaviours.Success
         if blackboard.Signs['hypoxemia'].binary:
             blackboard.feedback['oxygen'] += self.posi * blackboard.Signs['hypoxemia'].score / 1000.
         blackboard.feedback['cardiac monitor'] += self.posi
@@ -466,7 +484,7 @@ class Abdopain(py_trees.behaviour.Behaviour):
             blackboard.feedback['ondansetron'] += self.posi * blackboard.Signs['nausea'].score / 1000.
         elif blackboard.Signs['vomiting'].binary:
             blackboard.feedback['ondansetron'] += self.posi * blackboard.Signs['vomiting'].score / 1000.
-        return py_trees.Status.SUCCESS
+        return py_trees.behaviours.Success
 
 AP_C = Abdopain_Checker()
 AP_A = Abdopain()
@@ -475,14 +493,15 @@ AP = py_trees.composites.Sequence("Abdopain",children = [AP_C,AP_A])
 class Behavioral(py_trees.behaviour.Behaviour):
     def __init__(self, name = 'Behavioral_Checker'):
         super(Behavioral, self).__init__(name)
-        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx')
+        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx', engine="openpyxl")
         self.key = p['Protocol'][2]
     
     def update(self):
-        blackboard = Blackboard()
+        #blackboard = Blackboard()
+        global blackboard
         self.posi = blackboard.protocol_flag[self.key][1]
         if self.posi == 0:
-            return py_trees.Status.SUCCESS
+            return py_trees.behaviours.Success
         if blackboard.Signs['combative'].binary:
             s = blackboard.Signs['combative'].score / 1000.
             if blackboard.Signs['hypoxemia'].binary:
@@ -507,7 +526,7 @@ class Behavioral(py_trees.behaviour.Behaviour):
         else:
         #    blackboard.feedback['encourage patient to relax'] += self.posi
             blackboard.feedback['transport'] += self.posi
-        return py_trees.Status.SUCCESS
+        return py_trees.behaviours.Success
 
 BE_C = Behavioral_Checker()
 BE_A = Behavioral()
@@ -517,14 +536,15 @@ BE = py_trees.composites.Sequence("Behavioral",children = [BE_C,BE_A])
 class Seizure(py_trees.behaviour.Behaviour):
     def __init__(self, name = 'Seizure'):
         super(Seizure, self).__init__(name)
-        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx')
+        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx', engine="openpyxl")
         self.key = p['Protocol'][3]
     
     def update(self):
-        blackboard = Blackboard()
+        #blackboard = Blackboard()
+        global blackboard
         self.posi = blackboard.protocol_flag[self.key][1]
         if self.posi == 0:
-            return py_trees.Status.SUCCESS
+            return py_trees.behaviours.Success
         if blackboard.Signs['hypoxemia'].binary:
             blackboard.feedback['oxygen'] += self.posi * blackboard.Signs['hypoxemia'].score / 1000.
         blackboard.feedback['normal saline'] += self.posi
@@ -535,7 +555,7 @@ class Seizure(py_trees.behaviour.Behaviour):
         blackboard.feedback['cardiac monitor'] += self.posi
         # recovery position?
         blackboard.feedback['transport'] += self.posi
-        return py_trees.Status.SUCCESS
+        return py_trees.behaviours.Success
 
 SZ_C = Seizure_Checker()
 SZ_A = Seizure()
@@ -551,14 +571,15 @@ class resp(py_trees.behaviour.Behaviour):
     '''
     def __init__(self, name = 'resp'):
         super(resp, self).__init__(name)
-        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx')
+        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx', engine="openpyxl")
         self.key = p['Protocol'][4]
     
     def update(self):
-        blackboard = Blackboard()
+        #blackboard = Blackboard()
+        global blackboard
         self.posi = blackboard.protocol_flag[self.key][1]
         if self.posi == 0:
-            return py_trees.Status.SUCCESS
+            return py_trees.behaviours.Success
         if blackboard.Signs['hypoxemia'].binary:
             blackboard.feedback['oxygen'] += self.posi * blackboard.Signs['hypoxemia'].score / 1000.
         # have to do?
@@ -586,7 +607,7 @@ class resp(py_trees.behaviour.Behaviour):
             blackboard.feedback['cardiac monitor'] += self.posi
         blackboard.feedback['transport'] += self.posi
     
-        return py_trees.Status.SUCCESS
+        return py_trees.behaviours.Success
         
 RE_C = resp_Checker()
 RE_A = resp()
@@ -595,20 +616,21 @@ RE = py_trees.composites.Sequence("resp",children = [RE_C,RE_A])
 class AMS(py_trees.behaviour.Behaviour):
     def __init__(self, name = 'AMS'):
         super(AMS, self).__init__(name)
-        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx')
+        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx', engine="openpyxl")
         self.key = p['Protocol'][5]
     
     def update(self):
-        blackboard = Blackboard()
+        #blackboard = Blackboard()
+        global blackboard
         self.posi = blackboard.protocol_flag[self.key][1]
         if self.posi == 0:
-            return py_trees.Status.SUCCESS
+            return py_trees.behaviours.Success
         if blackboard.Signs['hypoxemia'].binary:
             blackboard.feedback['oxygen'] += self.posi * blackboard.Signs['hypoxemia'].score / 1000.
         blackboard.feedback['normal saline'] += self.posi
         blackboard.feedback['cardiac monitor'] += self.posi
         blackboard.feedback['transport'] += self.posi
-        return py_trees.Status.SUCCESS
+        return py_trees.behaviours.Success
 
 AMS_C = AMS_Checker()
 AMS_A = AMS()
@@ -617,14 +639,15 @@ AMS = py_trees.composites.Sequence("resp",children = [AMS_C,AMS_A])
 class Diab(py_trees.behaviour.Behaviour):
     def __init__(self, name = 'Diab'):
         super(Diab, self).__init__(name)
-        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx')
+        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx', engine="openpyxl")
         self.key = p['Protocol'][6]
     
     def update(self):
-        blackboard = Blackboard()
+        #blackboard = Blackboard()
+        global blackboard
         self.posi = blackboard.protocol_flag[self.key][1]
         if self.posi == 0:
-            return py_trees.Status.SUCCESS
+            return py_trees.behaviours.Success
         if blackboard.Signs['hypoxemia'].binary:
             blackboard.feedback['oxygen'] += self.posi * blackboard.Signs['hypoxemia'].score / 1000.
         blackboard.feedback['cardiac monitor'] += self.posi
@@ -636,7 +659,7 @@ class Diab(py_trees.behaviour.Behaviour):
                 blackboard.feedback['dextrose'] += self.posi * blackboard.Signs['loss of consciousness'].score / 1000. * s
             else:
                 blackboard.feedback['oral glucose'] += self.posi * s
-        return py_trees.Status.SUCCESS
+        return py_trees.behaviours.Success
 
 DI_C = Diab_Checker()
 DI_A = Diab()
@@ -645,14 +668,15 @@ DI = py_trees.composites.Sequence("Diab",children = [DI_C,DI_A])
 class Overdose(py_trees.behaviour.Behaviour):
     def __init__(self, name = 'Overdose'):
         super(Overdose, self).__init__(name)
-        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx')
+        p = pd.read_excel('ODEMSA_Protocols_weighted.xlsx', engine="openpyxl")
         self.key = p['Protocol'][7]
     
     def update(self):
-        blackboard = Blackboard()
+        #blackboard = Blackboard()
+        global blackboard
         self.posi = blackboard.protocol_flag[self.key][1]
         if self.posi == 0:
-            return py_trees.Status.SUCCESS
+            py_trees.behaviours.Success
         if blackboard.Signs['hypoxemia'].binary:
             blackboard.feedback['oxygen'] += self.posi * blackboard.Signs['hypoxemia'].score / 1000.
         if blackboard.Vitals['bp'].binary and "/" in blackboard.Vitals['bp'].value and int(blackboard.Vitals['bp'].value.strip().split('/')[0]) <= 90:
@@ -669,13 +693,13 @@ class Overdose(py_trees.behaviour.Behaviour):
             blackboard.feedback['narcan'] += self.posi * blackboard.Signs['bradypnea'].score / 1000.
         blackboard.feedback['cardiac monitor'] += self.posi
         blackboard.feedback['transport'] += self.posi
-        return py_trees.Status.SUCCESS 
+        return py_trees.behaviours.Success
 			
 OV_C = Overdose_Checker()
 OV_A = Overdose()
 OV = py_trees.composites.Sequence("Diab",children = [OV_C,OV_A]) 
 
-protocols = py_trees.composites.Parallel('protocols',policy=py_trees.common.ParallelPolicy.SUCCESS_ON_ONE,\
+protocols = py_trees.composites.Parallel('protocols',policy=py_trees.common.ParallelPolicy.SuccessOnOne,\
                                    children = [CP,OV,DI,AMS,RE,SZ,BE,AP])
 
 

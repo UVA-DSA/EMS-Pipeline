@@ -6,6 +6,7 @@ from nltk.stem.snowball import EnglishStemmer # load the stemmer module from NLT
 import re
 import numpy as np
 import pandas as pd
+import sklearn
 
 class RAAdata(object):
     def __init__(self,text,vital,inter):
@@ -108,7 +109,7 @@ def show_results(scores):
     metrics = ['test_precision_weighted','test_recall_weighted', 'test_f1_weighted',\
             'test_precision_micro', 'test_recall_micro', 'test_f1_micro']
     for metric in metrics:
-        print metric + ':' + '%.2f' % np.average(scores[metric])
+        print(metric + ':' + '%.2f' % np.average(scores[metric]))
         
 def risk_factor(gt, probs, preds):
     risk = []
@@ -132,13 +133,13 @@ def trans_prob(probs):
     return transed_prob
 
 def show_test_results(gt, res, prob, class_weight):
-    print "precision_micro" + ':' + '%.2f' % precision_score(gt, res, average = 'micro')
-    print "recall_micro" + ':' + '%.2f' % recall_score(gt, res, average = 'micro')
-    print "f1_micro" + ':' + '%.2f' % f1_score(gt, res, average = 'micro')
-    print "precision_weighted" + ':' + '%.2f' % weighted_precision(gt, res, class_weight)
-    print "recall_weighted" + ':' + '%.2f' % weighted_recall(gt, res, class_weight)
-    print "f1_weighted" + ':' + '%.2f' % weighted_f1(gt, res, class_weight)
-    print "risk_factor" + ':' + '%.4f' % risk_factor(gt, prob, res)
+    print ("precision_micro" + ':' + '%.2f' % sklearn.metrics.precision_score(gt, res, average = 'micro'))
+    print ("recall_micro" + ':' + '%.2f' % sklearn.metrics.recall_score(gt, res, average = 'micro'))
+    print ("f1_micro" + ':' + '%.2f' % sklearn.metrics.f1_score(gt, res, average = 'micro'))
+    print ("precision_weighted" + ':' + '%.2f' % weighted_precision(gt, res, class_weight))
+    print ("recall_weighted" + ':' + '%.2f' % weighted_recall(gt, res, class_weight))
+    print ("f1_weighted" + ':' + '%.2f' % weighted_f1(gt, res, class_weight))
+    print ("risk_factor" + ':' + '%.4f' % risk_factor(gt, prob, res))
     
 def filtering(res, prob, threshold):
     for idx, case in enumerate(res):
