@@ -1,4 +1,4 @@
-from pymetamap.pymetamap.MetaMap import MetaMap
+from pymetamap.MetaMap import MetaMap
 from collections import defaultdict
 import pandas as pd
 import re
@@ -93,7 +93,7 @@ class ConceptExtractor(object):
         '''
         list_route: route of the list file
         extend list: a .csv file, two colum: required concepts and its cuis.
-        status: a dict, keys are concepts, values are corresponding informations. 
+        status: a dict, keys are concepts, values are corresponding informations.
                 Indicates the default status of the patient.
         self.CUIs: list of the requied CUIs
         self.CUI2Concept: mapping the CUIs to the concepts
@@ -102,15 +102,16 @@ class ConceptExtractor(object):
         self.R_range: range of value retrival in the text, default: 30
         self.pattern: pattern of the requied value
         '''
-        extended_concept_list = pd.read_csv(List_route, na_filter=False) # adding in na_filter helps with all the blanks columns and gives them "" value
+        extended_concept_list = pd.read_csv(
+            List_route, na_filter=False)  # adding in na_filter helps with all the blanks columns and gives them "" value
         self.seeds = list()
         self.CUIs = [item for item in extended_concept_list['CUI']]
         self.CUI2Concept = defaultdict(list)
         temp = ""
         for idx, item in enumerate(extended_concept_list['Required Concept']):
-            if item != "": # if the concept has changed, then update what temp is
+            if item != "":  # if the concept has changed, then update what temp is
                 temp = item.lower()
-            if idx > 0: # changed from item to idx because item is of type str
+            if idx > 0:  # changed from item to idx because item is of type str
                 self.seeds.append(temp)
                 self.CUI2Concept[self.CUIs[idx]].append(temp)
             else:
