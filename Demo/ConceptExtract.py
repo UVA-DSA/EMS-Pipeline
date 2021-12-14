@@ -171,11 +171,9 @@ class ConceptExtractor(object):
         deletes, pulses = check_pulse(self.concepts, self.scores, sent_text)
         if deletes != -1:
             for i in deletes:
-                # print(i)
                 self.concepts.pop(i)
                 self.scores.pop(CUI_pulse)
             for j in pulses:
-                # print(j)
                 self.concepts.append(j)
                 self.scores[CUI_pulse] = '1000'
                 break
@@ -337,7 +335,7 @@ class CEWithoutMM(object):
                     self.neg_res[int(item[0][10:])][item[1]] = item[2:]
                 else:
                     self.neg_res[int(item[0][10:])][item[1]] = None
-        fo.close()
+            fo.close()
         # allinone only
         if aio_only:
             fo = open(SS_List_route)
