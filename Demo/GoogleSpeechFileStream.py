@@ -22,10 +22,12 @@ with open(os.devnull, 'w') as f:
 RATE = 16000
 CHUNK = int(RATE / 10)  # 100ms
 
+
 class FileStream(object):
     fileSessionCounter = 0
     position = 0
     """Opens a file stream as a generator yielding the audio chunks."""
+
     def __init__(self, Window, rate, chunk, wavefile):
         FileStream.fileSessionCounter += 1
         self.Window = Window
@@ -41,37 +43,36 @@ class FileStream(object):
         # Create a thread-safe buffer of audio data
         self._buff = queue.Queue()
         self.closed = True
-    
+
     def __enter__(self):
         #self._audio_interface = pyaudio.PyAudio()
-        mixer.init(frequency = RATE)
+        mixer.init(frequency=RATE)
         #self._audio_stream = self._audio_interface.open(format = pyaudio.paInt16, channels = 1, rate = self._rate, input = True, frames_per_buffer = self._chunk, stream_callback = self._fill_buffer,)
         self.closed = False
 
-        if(FileStream.position  == 0):
+        if(FileStream.position == 0):
             mixer.music.load(self.filename)
             mixer.music.play()
 
         return self
 
     def __exit__(self, type, value, traceback):
-        #self._audio_stream.stop_stream()
-        #self._audio_stream.close()
+        # self._audio_stream.stop_stream()
+        # self._audio_stream.close()
         self.closed = True
         # Signal the generator to terminate so that the client's
         # streaming_recognize method will not block the process termination.
-        #self._buff.put(None)
-        #self._audio_interface.terminate()
+        # self._buff.put(None)
+        # self._audio_interface.terminate()
 
     def _fill_buffer(self, in_data, frame_count, time_info, status_flags):
         """Continuously collect data from the audio stream, into the buffer."""
-        #self._buff.put(in_data)
+        # self._buff.put(in_data)
         pass
         #data = self.wf.readframes(CHUNK)
 
-
-        #self._buff.put(data)
-        #return None, pyaudio.paContinue
+        # self._buff.put(data)
+        # return None, pyaudio.paContinue
 
     def generator(self):
         # Create GUI Signal Objects
@@ -94,11 +95,13 @@ class FileStream(object):
             #chunk = self._buff.get()
             time.sleep(.1)
             chunk = self.wf.readframes(CHUNK)
-            
+            # print("chunk: ", chunk)
+
             if chunk == '':
                 FileStream.position = 0
                 MsgSignal.signal.emit(["Transcription of audio file complete!"])
-                ButtonsSignal.signal.emit([(self.Window.StartButton, True), (self.Window.ComboBox, True), (self.Window.ResetButton, True)])
+                ButtonsSignal.signal.emit(
+                    [(self.Window.StartButton, True), (self.Window.ComboBox, True), (self.Window.ResetButton, True)])
                 return
 
             if chunk is None:
@@ -113,10 +116,15 @@ class FileStream(object):
 
             data = [chunk]
 
-            # VU Meter in the GUI
             signal = b''.join(data)
-            signal = np.fromstring(signal, 'Int16') 
-            VUSignal.signal.emit([signal])
+            # print(signal)
+            try:
+                signal = np.fromstring(signal, 'int16')
+                VUSignal.signal.emit([signal])
+
+            except Exception as e:
+                print("exception occurred")
+                print(e)
 
             self.samplesCounter += self._chunk
             FileStream.position += 1
@@ -138,12 +146,13 @@ class FileStream(object):
                     FileStream.position += 1
                 except queue.Empty:
                     break
- 
+
             yield b''.join(data)
 
 # Google Cloud Speech API Recognition Thread for Microphone
-def GoogleSpeech(Window, SpeechToNLPQueue, wavefile_name):
 
+
+def GoogleSpeech(Window, SpeechToNLPQueue, wavefile_name):
     # Create GUI Signal Object
     SpeechSignal = GUISignal()
     SpeechSignal.signal.connect(Window.UpdateSpeechBox)
@@ -157,21 +166,23 @@ def GoogleSpeech(Window, SpeechToNLPQueue, wavefile_name):
     language_code = 'en-US'  # a BCP-47 language tag
 
     client = speech.SpeechClient()
-    config = speech.RecognitionConfig(encoding = speech.RecognitionConfig.AudioEncoding.LINEAR16, sample_rate_hertz = RATE, language_code = language_code, profanity_filter = True) #,model='video')
-    streaming_config = speech.StreamingRecognitionConfig(config = config, interim_results = True)
-
+    config = speech.RecognitionConfig(encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+                                      sample_rate_hertz=RATE, language_code=language_code, profanity_filter=True)  # ,model='video')
+    streaming_config = speech.StreamingRecognitionConfig(config=config, interim_results=True)
 
     with FileStream(Window, RATE, CHUNK, wavefile_name) as stream:
         audio_generator = stream.generator()
-        requests = (speech.StreamingRecognizeRequest(audio_content = content) for content in audio_generator)
+        requests = (speech.StreamingRecognizeRequest(audio_content=content)
+                    for content in audio_generator)
 
         try:
             responses = client.streaming_recognize(streaming_config, requests)
-
             # Signal that streaming has started
-            print("Started speech recognition on file audio via Google Speech API.\nFile Session Counter: " + str(FileStream.fileSessionCounter))
-            MsgSignal.signal.emit(["Started speech recognition on file audio via Google Speech API.\nFile Session Counter: " + str(FileStream.fileSessionCounter)])
-            
+            print("Started speech recognition on file audio via Google Speech API.\nFile Session Counter: " +
+                  str(FileStream.fileSessionCounter))
+            MsgSignal.signal.emit(
+                ["Started speech recognition on file audio via Google Speech API.\nFile Session Counter: " + str(FileStream.fileSessionCounter)])
+
             # Now, put the transcription responses to use.
             num_chars_printed = 0
             responseTimeStamp = time.time()
@@ -198,21 +209,24 @@ def GoogleSpeech(Window, SpeechToNLPQueue, wavefile_name):
 
                 if result.is_final:
                     #print(transcript + overwrite_chars)
-                    QueueItem = SpeechNLPItem(transcript, result.is_final, confidence, num_chars_printed, 'Speech')
+                    QueueItem = SpeechNLPItem(transcript, result.is_final,
+                                              confidence, num_chars_printed, 'Speech')
                     SpeechToNLPQueue.put(QueueItem)
                     SpeechSignal.signal.emit([QueueItem])
                     num_chars_printed = 0
 
                 elif not result.is_final:
                     #sys.stdout.write(transcript + overwrite_chars + '\r')
-                    #sys.stdout.flush()
-                    QueueItem = SpeechNLPItem(transcript, result.is_final, confidence, num_chars_printed, 'Speech')
+                    # sys.stdout.flush()
+                    QueueItem = SpeechNLPItem(transcript, result.is_final,
+                                              confidence, num_chars_printed, 'Speech')
                     SpeechSignal.signal.emit([QueueItem])
                     num_chars_printed = len(transcript)
 
-
         except Exception as e:
-            MsgSignal.signal.emit(["Unable to get response from Google! Network or other issues. Please Try again!\n Exception: " + str(e)])     
-            ButtonsSignal.signal.emit([(Window.StartButton, True), (Window.ComboBox, True), (Window.ResetButton, True)])
+            # print(e)
+            MsgSignal.signal.emit(
+                ["Unable to get response from Google! Network or other issues. Please Try again!\n Exception: " + str(e)])
+            ButtonsSignal.signal.emit(
+                [(Window.StartButton, True), (Window.ComboBox, True), (Window.ResetButton, True)])
             sys.exit()
-            

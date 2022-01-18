@@ -181,6 +181,7 @@ class InformationGathering(py_trees.behaviour.Behaviour):
     def update(self):
         #blackboard = Blackboard()
         global blackboard
+        # print("global tick_num: ", blackboard.tick_num)
         self.sce.ConceptExtract(blackboard.text)
 
         blackboard.concepts = self.sce.concepts
