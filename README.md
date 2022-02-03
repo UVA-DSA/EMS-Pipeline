@@ -68,6 +68,10 @@ To launch the graphical user interface (GUI), run:
 ![GUI](ETC/GUI.png)
 
 ## Publications
+[“Information Extraction from Patient Care Reports for Intelligent Emergency Medical Services”](https://homa-alem.github.io/papers/CHASE_2021.pdf)  
+S. Kim, W. Guo, R. Williams, J. Stankovic, H. Alemzadeh  
+In the IEEE/ACM Conf. on Connected Health: Applications, Systems, and Engineering Technologies (CHASE), 2021. **(Best Paper Finalist)**
+
 [“A Review of Cognitive Assistants for Healthcare: Trends, Prospects, and Future Directions”](https://www.cs.virginia.edu/~stankovic/psfiles/CognitiveAssistantHealthSurvey_Main.pdf)  
 S. Preum, S. Munir, M. Ma, M. S. Yasar, D. J. Stone, R. Williams, H. Alemzadeh, J. Stankovic  
 In ACM Computing Surveys, 2021.  
