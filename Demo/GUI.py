@@ -14,6 +14,8 @@ import datetime
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel
+from PyQt5.QtGui import QIcon, QPixmap
 
 import numpy as np
 import pandas as pd
@@ -146,7 +148,19 @@ class MainWindow(QWidget):
         # self.SpeechBox.setFont(Box_Font)
         self.SpeechBox.setOverwriteMode(True)
         self.SpeechBox.ensureCursorVisible()
-        self.Grid_Layout.addWidget(self.SpeechBox, 3, 0, 6, 1)
+        self.Grid_Layout.addWidget(self.SpeechBox, 3, 0, 2, 1)
+        
+        #Create label and pixmap for images - added 3/7/2022
+        self.ImageLabel = QLabel()
+        self.pixmap = QPixmap('defaultImg.jpg')
+        self.pixmap2 = self.pixmap.scaled(500, 400)
+        self.ImageLabel.setPixmap(self.pixmap2)
+        self.ImageSubLabel = QLabel()
+        self.ImageSubLabel.setText("<b>Image Content<b>") #setGeometry(100,100,100,100)
+        #self.ImageLabel.setScaledContents(True)
+        self.Grid_Layout.addWidget(self.ImageSubLabel, 5, 0, 1, 1)
+        self.Grid_Layout.addWidget(self.ImageLabel, 6, 0, 3, 1)
+	
 
         # Control Panel: To hold combo box, radio, start, stop, and reset buttons
         self.ControlPanel = QWidget()
@@ -182,7 +196,7 @@ class MainWindow(QWidget):
             self.GoogleSpeechRadioButton, 0, 1, 1, 1)
 
         self.DeepSpeechRadioButton = QRadioButton("DeepSpeech", self)
-        self.DeepSpeechRadioButton.setEnabled(False)
+        self.DeepSpeechRadioButton.setEnabled(True) #changed from False to True to enable
         self.DeepSpeechRadioButton.setChecked(False)
         self.ControlPanelGridLayout.addWidget(
             self.DeepSpeechRadioButton, 0, 2, 1, 1)
