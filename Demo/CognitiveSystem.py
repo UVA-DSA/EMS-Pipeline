@@ -14,6 +14,11 @@ from operator import itemgetter
 import subprocess
 import re
 
+#added 3/18
+import nltk
+nltk.download('punkt')
+#--
+
 # ============== Cognitive System ==============
 from behaviours_m import blackboard
 blackboard.tick_num = 0
@@ -75,6 +80,7 @@ def CognitiveSystem(Window, SpeechToNLPQueue):
             dummyP = dummyP3.replace('&', '%26')
             part1 = 'curl -d text='+dummyP+' http://bark.phon.ioc.ee/punctuator'
             op = subprocess.getstatusoutput(part1)
+            print("op:  ", op)
             output = op[1].rsplit('\n', 1)[1]
             sentsList = textParse2.sent_tokenize(output)  # final sentences
 

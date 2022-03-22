@@ -161,8 +161,8 @@ def DeepSpeech(Window, SpeechToNLPQueue):
     MsgSignal.signal.connect(Window.UpdateMsgBox)
 
      # References to models:
-    model_path = 'DeepSpeech_Models/deepspeech-0.9.3-models.pbmm'
-    scorer_path = 'DeepSpeech_Models/deepspeech-0.9.3-models.scorer'
+    model_path = 'DeepSpeech_Models/deepspeech-0.9.3-models.tflite' #'DeepSpeech_Models/deepspeech-0.9.3-models.pbmm'
+    scorer_path = 'DeepSpeech_Models/brandon.scorer' #'DeepSpeech_Models/deepspeech-0.9.3-models.scorer'
 
     print('Loading model from file {}'.format(model_path), file=sys.stderr)
     model_load_start = timer()

@@ -69,8 +69,8 @@ def DeepSpeech(Window, SpeechToNLPQueue, wavefile):
     MsgSignal.signal.connect(Window.UpdateMsgBox)
 
     # References to models:
-    model_path = 'DeepSpeech_Models/deepspeech-0.9.3-models.pbmm'
-    scorer_path = 'DeepSpeech_Models/deepspeech-0.9.3-models.scorer'
+    model_path = 'DeepSpeech_Models/deepspeech-0.9.3-models.tflite' #'DeepSpeech_Models/deepspeech-0.9.3-models.pbmm'
+    scorer_path = 'DeepSpeech_Models/brandon.scorer' #'DeepSpeech_Models/deepspeech-0.9.3-models.scorer'
 
     print('Loading model from file {}'.format(model_path), file=sys.stderr)
     model_load_start = timer()
@@ -78,7 +78,7 @@ def DeepSpeech(Window, SpeechToNLPQueue, wavefile):
     model_load_end = timer() - model_load_start
     print('Loaded model in {:.3}s.'.format(model_load_end), file=sys.stderr)
 
-    print('Loading language model from files {} {}'.format(scorer_path), file=sys.stderr)
+    #print('Loading language model from files {}_{}1d'.format(scorer_path), file=sys.stderr)
     lm_load_start = timer()
     ds.enableExternalScorer(scorer_path)
     lm_load_end = timer() - lm_load_start
@@ -106,7 +106,7 @@ def DeepSpeech(Window, SpeechToNLPQueue, wavefile):
 
     print('Running inference.', file=sys.stderr)
     inference_start = timer()
-    output = (ds.stt(audio, fs))
+    output = (ds.stt(audio)) #(ds.stt(audio, fs))
     print(output)
     inference_end = timer() - inference_start
     print('Inference took %0.3fs for %0.3fs audio file.' % (inference_end, audio_length), file=sys.stderr)
