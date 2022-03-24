@@ -168,19 +168,26 @@ class MainWindow(QWidget):
         '''
         
         #Create label and media player for videos- - added 3/21/2022
+        self.player = QMediaPlayer(None, QMediaPlayer.VideoSurface)
         self.video = QVideoWidget()
+        #self.video.resize(300, 300)
+        #self.video.move(0, 0)
+
+        directory = os.getcwd() + "/Sample_Video.mp4"
+        self.player.setMedia(QMediaContent(QUrl.fromLocalFile(directory))) #(QUrl.fromLocalFile("Sample_Video.mp4")))
+        #QUrl::fromLocalFile("/home/test/beep.mp3")
+        
+        print(self.player.state())
+        self.player.play()
+        print(QMediaPlayer.PlayingState)
+
         self.playButton = QPushButton()
-        self.playButton.setEnabled(False)
+        self.playButton.setEnabled(True)
         self.playButton.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
         self.playButton.clicked.connect(self.play)
         
-        self.video.resize(300, 300)
-        self.video.move(0, 0)
-        self.player = QMediaPlayer()
         self.player.setVideoOutput(self.video)
-        self.player.setMedia(QMediaContent(QUrl.fromLocalFile("/research/EMS-Pipeline/Demo/Sample_Video.mp4"))) #(QUrl.fromLocalFile("Sample_Video.mp4")))
-        #QUrl::fromLocalFile("/home/test/beep.mp3")
-        
+
         self.VideoSubLabel = QLabel()
         self.VideoSubLabel.setText("<b>Video Content<b>") #setGeometry(100,100,100,100)
         self.Grid_Layout.addWidget(self.VideoSubLabel, 5, 0, 1, 1)
@@ -336,9 +343,11 @@ class MainWindow(QWidget):
 
     #video playing -- added 3/21/2022
     def play(self):
+        print("hello")
         if self.mediaPlayer.state() == QMediaPlayer.PlayingState:
             self.mediaPlayer.pause()
         else:
+            print("testing successful")
             self.mediaPlayer.play()
     
     # Called when closing the GUI
