@@ -8,13 +8,9 @@ The `Demo/` directory contains a demonstration of the edge device system in form
 
  The GUI is built with PyQt4 and has been succesfully tested on:
 
-`64-bit Ubuntu 16.04 LTS`  
-`Intel® Core™ i7-7700 CPU @ 3.60GHz × 8`
+`64-bit Ubuntu 16.04 LTS, Intel® Core™ i7-7700 CPU @ 3.60GHz × 8`
 
-```
-2016 MacBook Pro running macOS Monterey
-Intel Core i7 Dual-Core, 2,4 GH Dual Core
-```
+`2016 MacBook Pro running macOS Monterey, Intel Core™ i7 Dual-Core, 2.4 GH Dual Core`
 
 ### Requirements
 The branch has been tested using Python 3.8.1. You may be able to get it running on lower versions.
@@ -25,11 +21,7 @@ pip install -r requirements.txt
 ```
 
 #### PyAudio
-PyAudio is also a dependency for this project, but there have been issues installing it from pip, so it was not included in the requirements.txt file. On Linux, please run the following command:
-
-```
-sudo apt-get install python3-pyaudio
-```
+PyAudio is also a dependency for this project, but there have been issues installing it from pip, so it was not included in the requirements.txt file. On Linux, please run the following command: ```sudo apt-get install python3-pyaudio```
 
 There have also been issues with the PyQt5 GUI package on Linux. Some neccessary bindings are not installed with the pip install. To solve this issue, please run ```sudo apt install gstreamer1.0-libav ubuntu-restricted-extras```.
 
