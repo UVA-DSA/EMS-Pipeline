@@ -11,9 +11,37 @@ The `Demo/` directory contains a demonstration of the edge device system in form
 `64-bit Ubuntu 16.04 LTS`  
 `Intel® Core™ i7-7700 CPU @ 3.60GHz × 8`
 
+```
+2016 MacBook Pro running macOS Monterey
+Intel Core i7 Dual-Core, 2,4 GH Dual Core
+```
+
 ### Requirements
-The project requires Python 2.7  
-Most packages could be installed with pip. Some other requirements are:
+The branch has been tested using Python 3.8.1. You may be able to get it running on lower versions.
+A requirements.txt file containing all required Python packages is in Demo/. From the Demo folder, run the following command:
+
+```
+pip install -r requirements.txt
+```
+
+#### PyAudio
+PyAudio is also a dependency for this project, but there have been issues installing it from pip, so it was not included in the requirements.txt file. On Linux, please run the following command:
+
+```
+sudo apt-get install python3-pyaudio
+```
+
+There have also been issues with the PyQt5 GUI package on Linux. Some neccessary bindings are not installed with the pip install. To solve this issue, please run ```sudo apt install gstreamer1.0-libav ubuntu-restricted-extras```.
+
+
+On Mac OS, if you have the brew package manager installed, you can get PyAudio using the following commands:
+```
+brew install portaudio
+pip install pyaudio
+```
+[Link to StackOverflow Page](https://stackoverflow.com/questions/33851379/how-to-install-pyaudio-on-mac-using-python-3)
+
+
 
 #### MetaMap:
 **MetaMap 2016v2** needs to be installed under the `Demo/public_mm` directory. Downloads are hosted at:  
