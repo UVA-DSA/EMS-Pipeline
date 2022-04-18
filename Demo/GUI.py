@@ -157,7 +157,7 @@ class MainWindow(QWidget):
         self.SpeechBox.setOverwriteMode(True)
         self.SpeechBox.ensureCursorVisible()
         self.Grid_Layout.addWidget(self.SpeechBox, 3, 0, 2, 1)
-        
+
         #Create label and pixmap for images - added 3/7/2022
         '''
         self.ImageLabel = QLabel()
@@ -170,6 +170,7 @@ class MainWindow(QWidget):
         self.Grid_Layout.addWidget(self.ImageSubLabel, 5, 0, 1, 1)
         self.Grid_Layout.addWidget(self.ImageLabel, 6, 0, 3, 1)
         '''
+<<<<<<< HEAD
         
         # Create label and textbox for Vision Information
         self.VisionInformationLabel = QLabel()
@@ -192,18 +193,26 @@ class MainWindow(QWidget):
         #self.cnt = 0
         #self.lst = ""
         
+=======
+
+>>>>>>> 84b26594b404f4a9f1288e3e49e74816af2e6b41
         #Create label and media player for videos- - added 3/21/2022
         self.player = QMediaPlayer(None, QMediaPlayer.VideoSurface)
         self.video = QVideoWidget()
         #self.video.resize(300, 300)
         #self.video.move(0, 0)
 
-        directory = os.getcwd() + "/Sample_Video.mp4"
+        directory = os.getcwd() + "/Sample_Video_2.mp4"
         self.player.setMedia(QMediaContent(QUrl.fromLocalFile(directory))) #(QUrl.fromLocalFile("Sample_Video.mp4")))
         #QUrl::fromLocalFile("/home/test/beep.mp3")
+<<<<<<< HEAD
         
         print("state of video player: ", self.player.state())
         self.player.stateChanged.connect(self.mediaStateChanged)
+=======
+
+        print(self.player.state())
+>>>>>>> 84b26594b404f4a9f1288e3e49e74816af2e6b41
         self.player.play()
         print("state of video player: ", self.player.state())
         #print("playing state: ", QMediaPlayer.PlayingState)
@@ -214,19 +223,25 @@ class MainWindow(QWidget):
         self.playButton.setEnabled(True)
         self.playButton.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
         self.playButton.clicked.connect(self.play)
-        
+
         self.player.setVideoOutput(self.video)
         
         self.VideoSubLabel = QLabel()
         self.VideoSubLabel.setText("<b>Video Content<b>") #setGeometry(100,100,100,100)
         self.Grid_Layout.addWidget(self.VideoSubLabel, 5, 0, 1, 1)
+<<<<<<< HEAD
         self.Grid_Layout.addWidget(self.video, 6, 0, 2, 1)
         
         
+=======
+        self.Grid_Layout.addWidget(self.video, 6, 0, 3, 1)
+
+
+>>>>>>> 84b26594b404f4a9f1288e3e49e74816af2e6b41
         #self.player.setPosition(0) # to start at the beginning of the video every time
         #self.video.show()
         #self.player.play()
-        
+
         # Control Panel: To hold combo box, radio, start, stop, and reset buttons
         self.ControlPanel = QWidget()
         self.ControlPanelGridLayout = QGridLayout(self.ControlPanel)
@@ -384,6 +399,7 @@ class MainWindow(QWidget):
         else:
             print("testing successful")
             self.mediaPlayer.play()
+<<<<<<< HEAD
             
     def mediaStateChanged(self, state):
     	if self.player.state() == QMediaPlayer.StoppedState:
@@ -411,6 +427,9 @@ class MainWindow(QWidget):
     #
     #    self.show()
     
+=======
+
+>>>>>>> 84b26594b404f4a9f1288e3e49e74816af2e6b41
     # Called when closing the GUI
     def closeEvent(self, event):
         print('Closing GUI')
@@ -697,11 +716,14 @@ if __name__ == '__main__':
     print("Screen Resolution\nWidth: %s\nHeight: %s" % (width, height))
     Window = MainWindow(width, height)
     Window.show()
-    
+
     #v = VideoPlayer()
     #b = QPushButton('start')
     #b.clicked.connect(v.callback)
     #b.show()
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> 84b26594b404f4a9f1288e3e49e74816af2e6b41
     sys.exit(app.exec_())
