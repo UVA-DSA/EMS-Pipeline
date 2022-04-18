@@ -8,18 +8,22 @@ from six.moves import queue
 import sys
 import os
 import time
+import threading
 import math
 import datetime
 
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QLineEdit
 from PyQt5.QtGui import QIcon, QPixmap
 
 #from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
+
+from PyQt5.QtCore import QCoreApplication, Qt,QBasicTimer, QTimer,QPoint,QSize
+import PyQt5.QtWidgets,PyQt5.QtCore
 
 import numpy as np
 import pandas as pd
@@ -167,6 +171,27 @@ class MainWindow(QWidget):
         self.Grid_Layout.addWidget(self.ImageLabel, 6, 0, 3, 1)
         '''
         
+        # Create label and textbox for Vision Information
+        self.VisionInformationLabel = QLabel()
+        self.VisionInformationLabel.setText("<b>Activity Recognition</b>")
+        self.Grid_Layout.addWidget(self.VisionInformationLabel, 5, 1, 1, 1)
+        
+        self.VisionInformation = QTextEdit() #QLineEdit()
+        self.VisionInformation.setReadOnly(True)
+        # self.VisionInformation.setFont(Box_Font)
+        self.Grid_Layout.addWidget(self.VisionInformation, 6, 1, 2, 1)
+        
+        #line
+        #self.line_edit = QLineEdit(self)
+        #self.line_edit.setGeometry(100,100,400,35)
+        
+        #timer delay QTimer for displaying text in vision info window after a delay
+        #self.timer26 = QTimer(self)
+        #self.timer26.timeout.connect(self.timergo)
+        #self.timer26.start(900)
+        #self.cnt = 0
+        #self.lst = ""
+        
         #Create label and media player for videos- - added 3/21/2022
         self.player = QMediaPlayer(None, QMediaPlayer.VideoSurface)
         self.video = QVideoWidget()
@@ -177,21 +202,25 @@ class MainWindow(QWidget):
         self.player.setMedia(QMediaContent(QUrl.fromLocalFile(directory))) #(QUrl.fromLocalFile("Sample_Video.mp4")))
         #QUrl::fromLocalFile("/home/test/beep.mp3")
         
-        print(self.player.state())
+        print("state of video player: ", self.player.state())
+        self.player.stateChanged.connect(self.mediaStateChanged)
         self.player.play()
-        print(QMediaPlayer.PlayingState)
-
+        print("state of video player: ", self.player.state())
+        #print("playing state: ", QMediaPlayer.PlayingState)
+        if self.player.state() == 0:
+            print("video has stopped playing!")
+            self.VisionInformation.setPlainText("CPR Done\nAverage Compression Rate: 140 bpm")
         self.playButton = QPushButton()
         self.playButton.setEnabled(True)
         self.playButton.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
         self.playButton.clicked.connect(self.play)
         
         self.player.setVideoOutput(self.video)
-
+        
         self.VideoSubLabel = QLabel()
         self.VideoSubLabel.setText("<b>Video Content<b>") #setGeometry(100,100,100,100)
         self.Grid_Layout.addWidget(self.VideoSubLabel, 5, 0, 1, 1)
-        self.Grid_Layout.addWidget(self.video, 6, 0, 3, 1)
+        self.Grid_Layout.addWidget(self.video, 6, 0, 2, 1)
         
         
         #self.player.setPosition(0) # to start at the beginning of the video every time
@@ -282,7 +311,9 @@ class MainWindow(QWidget):
         self.ConceptExtraction = QTextEdit()
         self.ConceptExtraction.setReadOnly(True)
         # self.ConceptExtraction.setFont(Box_Font)
-        self.Grid_Layout.addWidget(self.ConceptExtraction, 3, 1, 6, 1)
+        self.Grid_Layout.addWidget(self.ConceptExtraction, 3, 1, 2, 1)
+        
+        
 
         # Add label, textbox for protcol name
         self.ProtcolLabel = QLabel()
@@ -346,9 +377,39 @@ class MainWindow(QWidget):
         print("hello")
         if self.mediaPlayer.state() == QMediaPlayer.PlayingState:
             self.mediaPlayer.pause()
+        if self.mediaPlayer.state() == QMediaPlayer.StoppedState:
+            print("video has stopped playing!")
+            self.VisionInformation.setPlainText("CPR Done\nAverage Compression Rate: 140 bpm")
+        
         else:
             print("testing successful")
             self.mediaPlayer.play()
+            
+    def mediaStateChanged(self, state):
+    	if self.player.state() == QMediaPlayer.StoppedState:
+            print("video has stopped playing!")
+            self.VisionInformation.setPlainText("CPR Done\nAverage Compression Rate: 140 bpm")
+        
+        #if self.mediaPlayer.state() == QMediaPlayer.PlayingState:
+        #    self.playButton.setIcon(
+        #            self.style().standardIcon(QStyle.SP_MediaPause))
+        #else:
+        #    self.playButton.setIcon(
+        #            self.style().standardIcon(QStyle.SP_MediaPlay))
+            
+    #function to display vision text after delay -- for demo purposes only 4/18/2022
+    #def timergo(self):
+    #    text = "Start"
+    #    try:
+    #        self.lst = text #text[self.cnt]
+    #        self.line_edit.setText(text)#("".join(str(self.lst[::])))
+    #        #self.cnt+=1
+    #    except:
+    #        #print ("index error in setting text in vision info window")
+    #        #or just pass
+    #        pass
+    #
+    #    self.show()
     
     # Called when closing the GUI
     def closeEvent(self, event):
@@ -496,6 +557,7 @@ class MainWindow(QWidget):
 
     # Update the Speech Box
     def UpdateSpeechBox(self, input):
+        
         item = input[0]
 
         if(item.isFinal):
@@ -535,6 +597,8 @@ class MainWindow(QWidget):
             self.nonFinalText = previousTextMinusPrinted + item.transcript
             self.SpeechBox.setText(text + self.nonFinalText)
             self.SpeechBox.moveCursor(QTextCursor.End)
+            
+            
 
     # Update the Concept Extraction Box
     def UpdateConceptExtractionBox(self, input):
@@ -545,6 +609,8 @@ class MainWindow(QWidget):
             chunkdata.append(item)
         else:
             chunkdata.append("-")
+            
+      
 
     # Update the Protocols and Interventions Boxes
     def UpdateProtocolBoxes(self, input):
@@ -636,5 +702,6 @@ if __name__ == '__main__':
     #b = QPushButton('start')
     #b.clicked.connect(v.callback)
     #b.show()
+
     
     sys.exit(app.exec_())
