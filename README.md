@@ -96,7 +96,8 @@ In ACM Computing Surveys, 2021.
 M. A. Rahman, S. Preum, J. Stankovic. L. Jia, E. Mirza, R. Williams, H. Alemzadeh  
 In the 18th Conference on Embedded Networked Sensor Systems (SenSys'20), 2020.
 
-[“EMSContExt: EMS Protocol-driven Concept Extraction for Cognitive Assistance in Emergency Response”](https://faculty.virginia.edu/alemzadeh/papers/EMSContExt_IAAI2020.pdf)  
+[“EMSContExt: EMS Protocol-driven Concept Extraction for Cognitive Assistance in Emergency Response”]
+(https://homa-alem.github.io/papers/EMSContExt_IAAI2020.pdf)  
 S. Preum, S. Shu, H. Alemzadeh, J. Stankovic  
 In the Thirty-Second Annual Conf. on Innovative Applications of Artificial Intelligence (IAAI-20), 2020.
 
