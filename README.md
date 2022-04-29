@@ -80,7 +80,7 @@ In ACM Computing Surveys, 2021.
 M. A. Rahman, S. Preum, J. Stankovic. L. Jia, E. Mirza, R. Williams, H. Alemzadeh  
 In the 18th Conference on Embedded Networked Sensor Systems (SenSys'20), 2020.
 
-[“EMSContExt: EMS Protocol-driven Concept Extraction for Cognitive Assistance in Emergency Response”](https://faculty.virginia.edu/alemzadeh/papers/EMSContExt_IAAI2020.pdf)  
+[“EMSContExt: EMS Protocol-driven Concept Extraction for Cognitive Assistance in Emergency Response”](https://homa-alem.github.io/papers/EMSContExt_IAAI2020.pdf)  
 S. Preum, S. Shu, H. Alemzadeh, J. Stankovic  
 In the Thirty-Second Annual Conf. on Innovative Applications of Artificial Intelligence (IAAI-20), 2020.
 
@@ -88,15 +88,15 @@ In the Thirty-Second Annual Conf. on Innovative Applications of Artificial Intel
 M. A. Rahman, S. M. Preum, R. Williams, H. Alemzadeh, J. Stankovic  
 In the Thirty-Second Annual Conf. on Innovative Applications of Artificial Intelligence (IAAI-20), 2020.
 
-["A Behavior Tree Cognitive Assistant System for Emergency Medical Services](http://faculty.virginia.edu/alemzadeh/papers/IROS2019.pdf)  
+["A Behavior Tree Cognitive Assistant System for Emergency Medical Services](https://homa-alem.github.io/papers/IROS2019.pdf)  
 S. Shu, S. Preum, H. M. Pitchford, R. D. Williams, J. Stankovic, H. Alemzadeh  
 In the IEEE IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2019
 
-["CognitiveEMS: A Cognitive Assistant System for Emergency Medical Services"](http://faculty.virginia.edu/alemzadeh/papers/MEDCPS_2018.pdf)  
+["CognitiveEMS: A Cognitive Assistant System for Emergency Medical Services"](https://homa-alem.github.io/papers/MEDCPS_2018.pdf)  
 S. Preum, S. Shu, M. Hotaki, R. Williams, J. Stankovic, H. Alemzadeh  
 In SIGBED Review, Special Issue on Medical Cyber Physical Systems Workshop (CPS-Week), 2018.
  Featured by the IWCE's Urgent Communications and UVA SEAS News, 2018.
  
-["Towards a Cognitive Assistant System for Emergency Response"](http://faculty.virginia.edu/alemzadeh/papers/ICCPS_Poster_2018.pdf)  
+["Towards a Cognitive Assistant System for Emergency Response"](https://homa-alem.github.io/papers/ICCPS_Poster_2018.pdf)  
 S. Preum, S. Shu, J. Ting, V. Lin, R. Williams, J. Stankovic, H. Alemzadeh  
 In the 9th ACM/IEEE International Conference on Cyber-Physical Systems (CPS-Week), 2018.
