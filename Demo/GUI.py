@@ -16,10 +16,13 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton
 from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5 import QtCore
 
 #from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
+
+from mediapipe_thread import MPThread
 
 import numpy as np
 import pandas as pd
@@ -154,49 +157,27 @@ class MainWindow(QWidget):
         self.SpeechBox.ensureCursorVisible()
         self.Grid_Layout.addWidget(self.SpeechBox, 3, 0, 2, 1)
 
-        #Create label and pixmap for images - added 3/7/2022
-        '''
-        self.ImageLabel = QLabel()
-        self.pixmap = QPixmap('defaultImg.jpg')
-        self.pixmap2 = self.pixmap.scaled(500, 400)
-        self.ImageLabel.setPixmap(self.pixmap2)
-        self.ImageSubLabel = QLabel()
-        self.ImageSubLabel.setText("<b>Image Content<b>") #setGeometry(100,100,100,100)
-        #self.ImageLabel.setScaledContents(True)
-        self.Grid_Layout.addWidget(self.ImageSubLabel, 5, 0, 1, 1)
-        self.Grid_Layout.addWidget(self.ImageLabel, 6, 0, 3, 1)
-        '''
 
-        #Create label and media player for videos- - added 3/21/2022
-        self.player = QMediaPlayer(None, QMediaPlayer.VideoSurface)
-        self.video = QVideoWidget()
-        #self.video.resize(300, 300)
-        #self.video.move(0, 0)
-
-        directory = os.getcwd() + "/Sample_Video_2.mp4"
-        self.player.setMedia(QMediaContent(QUrl.fromLocalFile(directory))) #(QUrl.fromLocalFile("Sample_Video.mp4")))
-        #QUrl::fromLocalFile("/home/test/beep.mp3")
-
-        print(self.player.state())
-        self.player.play()
-        print(QMediaPlayer.PlayingState)
-
-        self.playButton = QPushButton()
-        self.playButton.setEnabled(True)
-        self.playButton.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
-        self.playButton.clicked.connect(self.play)
-
-        self.player.setVideoOutput(self.video)
-
+        # Webcam GUI stuff
+        # Window Title
         self.VideoSubLabel = QLabel()
         self.VideoSubLabel.setText("<b>Video Content<b>") #setGeometry(100,100,100,100)
         self.Grid_Layout.addWidget(self.VideoSubLabel, 5, 0, 1, 1)
+
+        self.video = QLabel(self)
         self.Grid_Layout.addWidget(self.video, 6, 0, 3, 1)
 
+        VIDEO_WIDTH = 841
+        VIDEO_HEIGHT = 511
+        self.video.setGeometry(QtCore.QRect(0, 0, VIDEO_WIDTH, VIDEO_HEIGHT))
 
-        #self.player.setPosition(0) # to start at the beginning of the video every time
-        #self.video.show()
-        #self.player.play()
+        # self.video.setPixmap(QPixmap("test.jpg"))
+        self.video.setScaledContents(True)
+
+        th = MPThread(self)     # mediapipe thread -- see MPThread  in mediapipe_thread file
+        th.changePixmap.connect(self.setImage)
+        th.start()
+
 
         # Control Panel: To hold combo box, radio, start, stop, and reset buttons
         self.ControlPanel = QWidget()
@@ -392,6 +373,14 @@ class MainWindow(QWidget):
         self.ResetButton.setEnabled(False)
 
         # ==== Start the Speech/Text Thread
+        # hacky bypass for demo
+        # if True:
+        #     self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
+        #             self, SpeechToNLPQueue, './Audio_Scenarios/test5.wav',))
+        #     # self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
+        #     #         self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/002_190105.wav',))
+        #     self.SpeechThread.start()
+        #     print("Demo Audio Started")
 
         # If Microphone
         if(self.ComboBox.currentText() == 'Microphone'):
@@ -444,6 +433,11 @@ class MainWindow(QWidget):
             self.CognitiveSystemThread = StoppableThread(
                 target=CognitiveSystem.CognitiveSystem, args=(self, SpeechToNLPQueue,))
             self.CognitiveSystemThread.start()
+    
+    
+    @pyqtSlot(QImage)
+    def setImage(self, image):
+        self.video.setPixmap(QPixmap.fromImage(image))
 
     @pyqtSlot()
     def StopButtonClick(self):
@@ -624,6 +618,7 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     screen_resolution = app.desktop().screenGeometry()
     width, height = screen_resolution.width(), screen_resolution.height()
+
     #width = 1920
     #height = 1080
     #width = 1366
@@ -631,6 +626,8 @@ if __name__ == '__main__':
     print("Screen Resolution\nWidth: %s\nHeight: %s" % (width, height))
     Window = MainWindow(width, height)
     Window.show()
+
+    Window.StartButtonClick()
 
     #v = VideoPlayer()
     #b = QPushButton('start')
