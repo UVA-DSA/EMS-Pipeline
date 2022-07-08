@@ -1,5 +1,4 @@
 from __future__ import absolute_import, division, print_function
-from email.mime import audio
 from timeit import default_timer as timer
 import sys
 import pyaudio
