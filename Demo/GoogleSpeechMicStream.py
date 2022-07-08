@@ -1,4 +1,5 @@
 from __future__ import absolute_import, division, print_function
+from email.mime import audio
 from timeit import default_timer as timer
 import sys
 import pyaudio
@@ -17,7 +18,7 @@ CHUNK = int(RATE / 10)  # 100ms
 
 class MicrophoneStream(object):
     micSessionCounter = 0
-    audio_buffer = ""
+    audio_buffer = b""
     """Opens a recording stream as a generator yielding the audio chunks."""
     def __init__(self, Window, rate, chunk):
         MicrophoneStream.micSessionCounter += 1
@@ -66,6 +67,7 @@ class MicrophoneStream(object):
         VUSignal.signal.connect(self.Window.UpdateVUBox)
 
         while not self.closed:
+            # print("generator debug")
             # Use a blocking get() to ensure there's at least one chunk of
             # data, and stop iteration if the chunk is None, indicating the
             # end of the audio stream.
@@ -76,7 +78,7 @@ class MicrophoneStream(object):
 
             # VU Meter in the GUI
             signal = b''.join(data)
-            signal = np.fromstring(signal, 'Int16') 
+            signal = np.fromstring(signal, 'int16') 
             VUSignal.signal.emit([signal])
 
             # Stop streaming after one minute, create new thread that does recognition
@@ -113,7 +115,7 @@ class MicrophoneStream(object):
 
             #MicrophoneStream.audio_buffer = np.append(MicrophoneStream.audio_buffer, np.fromstring(b''.join(data), 'Int16'))
             MicrophoneStream.audio_buffer += b''.join(data)
-            yield b''.join(data)
+            yield b''.join(data)    # b tells python to treat string as bytes
 
 
 # Google Cloud Speech API Recognition Thread for Microphone
@@ -136,14 +138,15 @@ def GoogleSpeech(Window, SpeechToNLPQueue):
     streaming_config = speech.StreamingRecognitionConfig(config = config, interim_results = True)
 
     with MicrophoneStream(Window, RATE, CHUNK) as stream:
-        audio_generator = stream.generator()
+
+        audio_generator = stream.generator() # defined in the MicrophoneStream class above
         requests = (speech.StreamingRecognizeRequest(audio_content = content) for content in audio_generator)
 
         try:
             responses = client.streaming_recognize(streaming_config, requests)
+            # print("responses: ", responses)
 
             # Signal that streaming has started
-            print("Started speech recognition on microphone audio via Google Speech API.\nMicrophone Session counter: " + str(MicrophoneStream.micSessionCounter))
             MsgSignal.signal.emit(["Started speech recognition on microphone audio via Google Speech API.\nMicrophone Session counter: " + str(MicrophoneStream.micSessionCounter)])
             
             # Now, put the transcription responses to use.
@@ -185,6 +188,7 @@ def GoogleSpeech(Window, SpeechToNLPQueue):
                     num_chars_printed = len(transcript)
 
         except Exception as e:
+            # print(e)
             MsgSignal.signal.emit(["Unable to get response from Google! Network or other issues. Please Try again!\n Exception: " + str(e)])     
             ButtonsSignal.signal.emit([(Window.StartButton, True), (Window.ComboBox, True), (Window.ResetButton, True)])
             sys.exit()
