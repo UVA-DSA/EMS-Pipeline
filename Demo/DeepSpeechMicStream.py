@@ -16,7 +16,7 @@ import sys
 import scipy.io.wavfile as wav
 
 
-from deepspeech import Model
+#from deepspeech import Model
 from timeit import default_timer as timer
 
 # Audio recording parameters

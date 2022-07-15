@@ -23,7 +23,7 @@ from PyQt5 import QtCore
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 
-from mediapipe_thread import MPThread
+#from mediapipe_thread import MPThread
 
 from PyQt5.QtCore import QCoreApplication, Qt,QBasicTimer, QTimer,QPoint,QSize
 import PyQt5.QtWidgets,PyQt5.QtCore
@@ -169,7 +169,7 @@ class MainWindow(QWidget):
         #self.video.resize(300, 300)
         #self.video.move(0, 0)
 
-        self.player.setMedia(QMediaContent(QUrl.fromLocalFile(directory))) #(QUrl.fromLocalFile("Sample_Video.mp4")))
+        #self.player.setMedia(QMediaContent(QUrl.fromLocalFile(directory))) #(QUrl.fromLocalFile("Sample_Video.mp4")))
         #QUrl::fromLocalFile("/home/test/beep.mp3")
 
         print(self.player.state())
@@ -213,9 +213,9 @@ class MainWindow(QWidget):
         # self.video.setPixmap(QPixmap("test.jpg"))
         self.video.setScaledContents(True)
 
-        th = MPThread(self)     # mediapipe thread -- see MPThread  in mediapipe_thread file
-        th.changePixmap.connect(self.setImage)
-        th.start()
+        #th = MPThread(self)     # mediapipe thread -- see MPThread  in mediapipe_thread file
+        #th.changePixmap.connect(self.setImage)
+        #th.start()
 
 
 

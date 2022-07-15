@@ -12,7 +12,7 @@ import sys
 import wave
 
 #from deepspeech import Model, printVersions
-from deepspeech import Model
+#from deepspeech import Model
 
 from timeit import default_timer as timer
 
