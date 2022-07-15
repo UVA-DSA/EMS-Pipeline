@@ -14,24 +14,20 @@ The `Demo/` directory contains a demonstration of the edge device system in form
 
 ### Requirements
 The branch has been tested using Python 3.8.1. You may be able to get it running on lower versions.
-A requirements.txt file containing all required Python packages is in Demo/. From the Demo folder, run the following command:
+A requirements.txt file containing all required Python packages is in Demo/. From the Demo folder, run the following commands:
+
+
+```
+sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
+sudo apt-get install ffmpeg
+sudo apt-get install python3-pyaudio
+sudo apt-get install curl
+```
+
 
 ```
 pip install -r requirements.txt
 ```
-
-#### PyAudio
-PyAudio is also a dependency for this project, but there have been issues installing it from pip, so it was not included in the requirements.txt file. On Linux, please run the following command: ```sudo apt-get install python3-pyaudio```
-
-There have also been issues with the PyQt5 GUI package on Linux. Some neccessary bindings are not installed with the pip install. To solve this issue, please run ```sudo apt install gstreamer1.0-libav ubuntu-restricted-extras```.
-
-
-On Mac OS, if you have the brew package manager installed, you can get PyAudio using the following commands:
-```
-brew install portaudio
-pip install pyaudio
-```
-[Link to StackOverflow Page](https://stackoverflow.com/questions/33851379/how-to-install-pyaudio-on-mac-using-python-3)
 
 
 
