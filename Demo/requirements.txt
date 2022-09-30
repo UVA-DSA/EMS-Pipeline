@@ -17,7 +17,7 @@ googleapis-common-protos==1.56.0
 grpcio==1.44.0
 grpcio-status==1.44.0
 idna==3.3
-joblib==1.1.0
+joblib==1.2.0
 Js2Py==0.71
 kiwisolver==1.4.3
 matplotlib==3.5.2
