@@ -11,6 +11,7 @@ import time
 import threading
 import math
 import datetime
+import time
 
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
@@ -23,7 +24,7 @@ from PyQt5 import QtCore
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 
-#from mediapipe_thread import MPThread
+# from mediapipe_thread import MPThread
 
 from PyQt5.QtCore import QCoreApplication, Qt,QBasicTimer, QTimer,QPoint,QSize
 import PyQt5.QtWidgets,PyQt5.QtCore
@@ -42,26 +43,546 @@ from DSP.amplitude import Amplitude
 from classes import SpeechNLPItem, GUISignal
 import GoogleSpeechMicStream
 import GoogleSpeechFileStream
-import DeepSpeechMicStream
-import DeepSpeechFileStream
+#import DeepSpeechMicStream
+#import DeepSpeechFileStream
+# import WavVecMicStream
+# import WavVecFileStream
 import TextSpeechStream
 import CognitiveSystem
 
 import csv
 chunkdata = []
 
-# ================================================================== GUI ==================================================================
+import sys
+import cv2
+import socket
+from PIL import Image
+import io
+import numpy as np
+#import time
+#from datetime import datetime
+import struct
+import os
+import traceback
+import argparse
+from PyQt5.QtWidgets import  QWidget, QLabel, QApplication
+from PyQt5.QtCore import QThread, Qt, pyqtSignal, pyqtSlot
+from PyQt5.QtGui import QImage, QPixmap
 
-#BOX_FONT_SIZE = 12
+import mediapipe as mp
+import threading
+
+import socket
+import threading, wave, pyaudio, time, queue
+
+import matplotlib.pyplot as plt
+from scipy.signal import find_peaks,find_peaks_cwt,peak_widths
+from scipy import signal
+import datetime as dt
+import collections
+import pylab
+
+# ----------------------------------------------------SMART WATCH--------------------------------------------------------
+
+# functions for smartwatch activity
+
+def thresholding_algo(y, lag, threshold, influence):
+    signals = np.zeros(len(y))
+    filteredY = np.array(y)
+    avgFilter = [0]*len(y)
+    stdFilter = [0]*len(y)
+    avgFilter[lag - 1] = np.mean(y[0:lag])
+    stdFilter[lag - 1] = np.std(y[0:lag])
+    for i in range(lag, len(y)):
+        if abs(y[i] - avgFilter[i-1]) > threshold * stdFilter [i-1]:
+            if y[i] > avgFilter[i-1]:
+                signals[i] = 1
+            else:
+                signals[i] = -1
+
+            filteredY[i] = influence * y[i] + (1 - influence) * filteredY[i-1]
+            avgFilter[i] = np.mean(filteredY[(i-lag+1):i+1])
+            stdFilter[i] = np.std(filteredY[(i-lag+1):i+1])
+        else:
+            signals[i] = 0
+            filteredY[i] = y[i]
+            avgFilter[i] = np.mean(filteredY[(i-lag+1):i+1])
+            stdFilter[i] = np.std(filteredY[(i-lag+1):i+1])
+
+    return dict(signals = np.asarray(signals),
+                avgFilter = np.asarray(avgFilter),
+                stdFilter = np.asarray(stdFilter))
+
+def robust_peaks_detection_zscore(df,lag,threshold,influence):
+    rate = thresholding_algo(df['Value_Magnitude_XYZ'],lag,threshold,influence)
+    indices = np.where(rate['signals'] == 1)[0]
+    robust_peaks_time = df.iloc[indices]['EPOCH_Time_ms']
+    robust_peaks_value = df.iloc[indices]['Value_Magnitude_XYZ']
+    indices = np.where(rate['signals'] == -1)[0]
+    robust_valleys_time = df.iloc[indices]['EPOCH_Time_ms']
+    robust_valleys_value = df.iloc[indices]['Value_Magnitude_XYZ']
+    # # #Plotting
+    # fig = plt.figure()
+    # ax = fig.subplots()
+    # ax.plot(acc_df[‘EPOCH_Time_ms’].tolist(),acc_df[‘Value_Magnitude_XYZ’].tolist())
+    # ax.scatter(robust_valleys_time, robust_valleys_value, color = ‘gold’, s = 15, marker = ‘v’, label = ‘Minima’)
+    # ax.scatter(robust_peaks_time, robust_peaks_value, color = ‘b’, s = 15, marker = ‘X’, label = ‘Robust Peaks’)
+    # ax.legend()
+    # ax.grid()
+    # plt.show()
+    return [robust_peaks_time,robust_peaks_value,robust_valleys_time,robust_valleys_value]
+
+"""
+Function to find the peaks and valleys
+1. uses scipy find_peaks implementation.
+2. paramter tuning is highly important !!!
+3. todo
+"""
+# def find_peaks_valleys_cwt(df):
+#     peaks = find_peaks_cwt(df['Value_Magnitude_XYZ'],np.arange(100,2000))
+#     print(peaks)
+#     height = peaks[1][‘peak_heights’] #list of the heights of the peaks
+#     peak_pos = data_frame.iloc[peaks[0]] #list of the peaks positions
+#     # #Finding the minima
+#     y2 = df[‘Value_Magnitude_XYZ’]*-1
+#     minima = find_peaks(y2,height = -5, distance = 1)
+#     min_pos = data_frame.iloc[minima[0]] #list of the minima positions
+#     min_height = y2.iloc[minima[0]] #list of the mirrored minima heights
+    # return peaks
+"""
+Function to find the peaks and valleys
+1. uses scipy find_peaks implementation.
+2. paramter tuning is highly important !!!
+3. todo
+"""
+def find_peaks_valleys(df,height,distance,prominence):
+    # print("find_peaks",df)
+    peaks = find_peaks(df['Value_Magnitude_XYZ'], height = height,  distance = distance,prominence=prominence)
+    height = peaks[1]['peak_heights'] #list of the heights of the peaks
+    peak_pos = df.iloc[peaks[0]] #list of the peaks positions
+    # #Finding the minima
+    y2 = df['Value_Magnitude_XYZ']*-1
+    minima = find_peaks(y2,height = -5, distance = 1)
+    min_pos = df.iloc[minima[0]] #list of the minima positions
+    min_height = y2.iloc[minima[0]] #list of the mirrored minima heights
+    # print("Peaks",peaks)
+    return [peak_pos,min_pos,height,min_height]
+"""
+Function to calculate the CPR rate
+1. finds time differences between peaks and return the average rate per minute
+"""
+def find_cpr_rate(peaks):
+    time_diff_between_peaks=np.diff(peaks['EPOCH_Time_ms'])
+    is_not_empty=len(time_diff_between_peaks) > 0
+    if is_not_empty:
+        avg_time_btwn_peaks_in_seconds_scipy = np.average(time_diff_between_peaks)/1000
+        # print ("Average time between peaks in seconds (scipy): ", str(avg_time_btwn_peaks_in_seconds_scipy))
+        # print("CPR Rate Per Minute (scipy): ", (1/avg_time_btwn_peaks_in_seconds_scipy)*60)
+        return [(avg_time_btwn_peaks_in_seconds_scipy), ((1/avg_time_btwn_peaks_in_seconds_scipy)*60)]
+    return [0,0]
+
+""" 
+Function to preprocess data
+1. calculate magnitude of x,y,z values combined  sqrt(x^2 + y^2 + z^2) * eliminates effects from orientations
+2. todo
+"""
+def preprocess_data(df):
+    magnitude_xyz_df = np.sqrt(np.square(df[['Value_X_Axis','Value_Y_Axis','Value_Z_Axis']]).sum(axis=1))
+    df['Value_Magnitude_XYZ'] = magnitude_xyz_df
+    return df
+
+       
+# variables for getting smartwatch data via udp
+localIP     = "0.0.0.0"
+localPort   = 7889
+bufferSize  = 1024
+msgFromServer       = "Hello UDP Client"
+bytesToSend         = str.encode(msgFromServer)
+
+class Thread_Watch(QThread):
+    changeActivityRec = pyqtSignal(str)
+
+    def run(self):
+    
+        # Create a datagram socket
+        UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+        # Bind to address and ip
+        UDPServerSocket.bind((localIP, localPort))
+        print("UDP server up and listening")
+        buffer = collections.deque([])
+        # Listen for incoming datagrams
+        columns = ['EPOCH_Time_ms','Wrist_Position','Sensor_Type','Value_X_Axis','Value_Y_Axis','Value_Z_Axis']
+        self.changeActivityRec.emit('Measuring CPR Rate...')
+
+        while(True):
+            bytesAddressPair = UDPServerSocket.recvfrom(bufferSize)
+            message = bytesAddressPair[0]
+            address = bytesAddressPair[1]
+            # clientMsg = “Message from Client:{}“.format(message.decode())
+            clientIP  = "Client IP Address:{}".format(address)
+            sw_data = message.decode().split(',')
+            
+            # convert to proper types
+            sw_data[0] = int (sw_data[0])
+            sw_data[3] = float (sw_data[3])
+            sw_data[4] = float (sw_data[4])
+            sw_data[5] = float (sw_data[5])
+
+            # append accelerometer data to buffer
+            if(sw_data[2] == 'acc'):
+                buffer.append(sw_data)
+
+            current_buffer_size = len(buffer)
+            # start = time.time()
+
+            if current_buffer_size%1000 == 0:
+                data_frame = pd.DataFrame(list(buffer), columns=columns)
+
+                #preprocess dtaa to get xyz magnitude
+                data_frame = preprocess_data(data_frame)
+
+                #calculate cpr rate and avg time
+                peaks,valleys,height,min_height = find_peaks_valleys(data_frame,height=32.5,distance=1,prominence=1)
+                avg_time,cpr_rate = find_cpr_rate(peaks)
+                # print(avg_time,cpr_rate)
+
+                # if cpr rate and avg time are not 0 (i.e. valid), then display in Smartwatch activity box on GUI
+                if avg_time != 0 and cpr_rate != 0:
+                    str_output = "Average time between peaks in seconds (scipy): " + str(round(avg_time,2)) + " \n" + "CPR Rate Per Minute (scipy): " + str(round(cpr_rate,2))
+                    self.changeActivityRec.emit(str(str_output))
+
+                # clear buffer to get next 1000 data points for cpr rate calculation
+                buffer.clear()
+
+# ----------------------------------------------------AUDIO--------------------------------------------------------
+
+# AUDIO streaming variables and functions
+host_name = socket.gethostname()
+host_ip = '0.0.0.0' #socket.gethostbyname(host_name)
+port = 50005
+q = queue.Queue(maxsize=12800)
+BUFF_SIZE = 1280 #65536
+
+client_socket = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+client_socket.bind((host_ip,port))
+
+p = pyaudio.PyAudio()
+
+RATE = 16000
+CHUNK = int (RATE / 10)
+
+def audio_stream_UDP():
+    
+    #PyAudio Streeam
+    stream = p.open(format=p.get_format_from_width(2),
+                    channels=1,
+                    rate=RATE,#44100,
+                    output=True,
+                    frames_per_buffer=CHUNK)
+                    
+    # info = p.get_default_output_device_info()
+    # print(info)
+            
+    # create socket
+    message = b'Hello'
+    # client_socket.sendto(message,(host_ip,port))
+    socket_address = (host_ip,port)
+
+    # receive and put audio data in queue
+    def getAudioData():
+        while True:
+            frame,_= client_socket.recvfrom(BUFF_SIZE)
+            q.put(frame)
+            # print('Queue size...',q.qsize())
+            
+    t1 = threading.Thread(target=getAudioData, args=())
+    t1.start()
+
+    #write audio data to stream -- dtaa from this stream will be read by GoogleSpeech
+    while True:
+        frame = q.get()
+        stream.write(frame)
+
+# thread for streaming audio to the GUI 
+t1 = threading.Thread(target=audio_stream_UDP, args=())
+t1.start()
+
+# client_socket.close()
+# print('Audio stream socket closed')
+# os._exit(1)
+
+
+# ----------------------------------------------------VIDEO--------------------------------------------------------
+
+#functions and variables for getting video stream from Android camera on AR glasses
+TCP_IP = '127.0.0.1'
+TCP_PORT = 9600
+
+seq_all=0
+dropped_imgs=0
+total_imgs=0
+
+if(sys.platform=="win32"):
+    adbpath="C:\\Users\\sneha\\workspace\\platform-tools_r33.0.3-windows\\platform-tools\\adb.exe"
+#if linux
+else:
+    adbpath="adb"
+
+def connect():
+    read_int=-1
+    print("waiting for connection....")
+    while(read_int!=100):
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((TCP_IP, TCP_PORT))
+            read_int=int.from_bytes(s.recv(1),"big")
+        except Exception as e:
+            print(e)
+    print("connected")
+    return s
+
+# Media Pipe vars
+global mp_drawing, mp_drawing_styles, mp_hands, mp_face_mesh
+mp_drawing = mp.solutions.drawing_utils
+mp_drawing_styles = mp.solutions.drawing_styles
+mp_hands = mp.solutions.hands
+mp_face_mesh = mp.solutions.face_mesh
+# mp_pose = mp.solutions.pose
+
+def process_image(image):
+    """
+    Adds annotations to image for the models you have selected, 
+    For now, it just depict results from hand detection
+    """
+  
+    global mp_hands #, mp_face_mesh
+    hand_detection_results = None
+
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+    # hand detection
+    with mp_hands.Hands(
+        max_num_hands=2,
+        model_complexity=0,
+        min_detection_confidence=0.5,
+        min_tracking_confidence=0.5) as hands:
+            hand_detection_results = hands.process(image)
+
+    # annotations of results onto image
+    image.flags.writeable = True
+    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+
+    # hand-detection annotations
+    if hand_detection_results and hand_detection_results.multi_hand_landmarks:
+        for hand_landmarks in hand_detection_results.multi_hand_landmarks:
+            mp_drawing.draw_landmarks(image,hand_landmarks,mp_hands.HAND_CONNECTIONS,mp_drawing_styles.get_default_hand_landmarks_style(),mp_drawing_styles.get_default_hand_connections_style())
+
+    return image
+
+
+def get_next_image(s):
+
+    global seq_all,dropped_imgs
+    try:
+        #start = time.time()
+        d_type=int.from_bytes(s.recv(1),"big")
+        fdist=int.from_bytes(s.recv(4),"big")/100
+        if(d_type!=22):
+            return -1
+        seq=int.from_bytes(s.recv(4),"big")
+        height=int.from_bytes(s.recv(4),"big")
+        width=int.from_bytes(s.recv(4),"big")
+        size=int.from_bytes(s.recv(4),"big")
+        if(size>1000000):
+            return -1
+        img=bytearray()
+        #print('received bytes : '+str(size))
+        while(size>0):
+            read_len=min(size,1024)
+            data = s.recv(read_len)
+            size -= len(data)
+            img+=data
+            
+        image = Image.open(io.BytesIO(img))
+        img_ar=np.array(image)
+        if(seq_all==0):
+            seq_all=seq
+        elif(not(seq==(seq_all+1))):
+            dropped_imgs+=1
+        seq_all=seq
+        #end = time.time()
+        #print("time for getting next image: ", end - start)
+
+    except:
+        # print(traceback.format_exc())
+        return -1
+    return img_ar,fdist
+
+
+
+# Code for Android App -- currently streams the audio and video data
+
+#make sure the app is installed on the phone
+print("port forwarding....")
+ret=os.system(adbpath+" forward tcp:9600 tcp:9600")
+if(ret==-1):
+    print("port forwarding error. Exiting...")
+    quit()
+print("return value from OS = "+str(ret))
+
+#stopping the app (we need to restart)
+ret=os.system(adbpath + " shell am force-stop com.example.camstrm")
+if(ret==-1):
+    print("error when trying to stop the app. Exiting...")
+    quit()
+
+#start the app
+print("starting the camstream app...")
+ret=os.system(adbpath+" shell am start -n com.example.camstrm/com.example.camstrm.MainActivity --es operation " +str(0)+" --es camid " +str(0) +" --es dynamiclense " +str(1))
+if(ret==-1):
+    print("Error when starting app with adb. Exiting...")
+    quit()
+print("return value from OS = "+str(ret))
+
+now = datetime.datetime.now()
+dt_string = now.strftime("%d-%m-%Y-%H-%M-%S")
+
+s=connect()
+p = struct.pack('!i', 23)
+s.send(p)
+
+
+#Thread for streaming video to the GUI vision window
+class Thread(QThread):
+    changePixmap = pyqtSignal(QImage)
+    changeVisInfo = pyqtSignal(str)
+
+    def run(self):
+        
+        image=-1
+        #total_imgs=0
+
+        #array for y values for peak detection
+        y_vals = []
+        #array for timestamps when every image is received
+        image_times = []
+
+        self.changeVisInfo.emit(str("Measuring CPR Rate..."))
+
+        with mp_hands.Hands(
+        max_num_hands=1,
+        model_complexity=0,
+        min_detection_confidence=0.5,
+        min_tracking_confidence=0.5) as hands:
+            while(True):
+                try:
+                    #get the next image frame
+                    image=get_next_image(s) 
+                    
+                    # if image is valid
+                    if(type(image)==tuple):
+
+                        #get timestamp when getting the image frame -- for cpr rate detection
+                        curr_time = round(time.time()*1000)
+                        image_times.append(curr_time)
+
+                        height,width,layers=image[0].shape
+                        image = image[0]
+                        # annotations of results onto image
+                        image.flags.writeable = True
+
+                        #process image with mediapipe hand detection
+                        hand_detection_results = hands.process(image)
+
+                        # hand-detection annotations
+                        if hand_detection_results and hand_detection_results.multi_hand_landmarks:
+                            for hand_landmarks in hand_detection_results.multi_hand_landmarks:
+
+                                #append y_val to array for peak detection
+                                y_vals.append(hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].y)
+                                
+                                #for drawing hand annotations on image
+                                mp_drawing.draw_landmarks(image,hand_landmarks,mp_hands.HAND_CONNECTIONS,mp_drawing_styles.get_default_hand_landmarks_style(),mp_drawing_styles.get_default_hand_connections_style())
+                        else:
+                            y_vals.append(0)#(math.nan)
+
+                        #convert image to pixmap format and display on GUI
+                        RGB_img = image
+                        h, w, ch = RGB_img.shape
+                        bytesPerLine = ch * w
+                        convertToQtFormat = QImage(RGB_img.data, w, h, bytesPerLine, QImage.Format_RGB888)
+                        p = convertToQtFormat.scaled(640, 480, Qt.KeepAspectRatio)
+                        self.changePixmap.emit(p)
+               
+                        #once we have around 100 image frames, calculate cpr rate
+                        if(len(image_times) % 100 == 0):
+                            #get running mean 
+                            mean=np.convolve(y_vals, np.ones(50)/50, mode='valid')
+                            mean=np.pad(mean,(len(y_vals)-len(mean),0),'edge')
+                            #normalize by removing mean 
+                            wrist_data_norm=y_vals-mean
+                            #detect peaks for hand detection
+                            peaks, _ = find_peaks(wrist_data_norm, height=0.005)
+                            peak_times = np.take(image_times, peaks)
+
+                            #find time difference between peaks and calculate cpr rate
+                            time_diff_between_peaks=np.diff(peak_times)
+                            avg_time_btwn_peaks_in_seconds = np.average(time_diff_between_peaks)/1000
+                            avg_time = (avg_time_btwn_peaks_in_seconds)
+                            cpr_rate = (1/avg_time_btwn_peaks_in_seconds)*60
+                            # print ("Average time between peaks in seconds video): ", str(avg_time))
+                            # print("CPR Rate Per Minute (video): ", cpr_rate)
+
+                            #if cpr rate is nan, do not display nan value, instead just display a message like "measuring rate..."
+                            if(math.isnan(cpr_rate)):
+                                self.changeVisInfo.emit(str("Meauring CPR Rate..."))
+                            #if we have non nan data values (i.e. valid data), then display that to Vision Information display box on GUI
+                            else:
+                                str_output = "Average time between peaks in seconds (video): " + str(round(avg_time,2)) + " \n" + "CPR Rate Per Minute (video): " + str(round(cpr_rate,2))
+                                self.changeVisInfo.emit(str(str_output))
+                        
+                        if(len(image_times) == 10000):
+                            #Clear the arrays to get 100 more image frames for cpr rate calculation
+                            y_vals.clear()
+                            image_times.clear()
+
+                except:
+                    print(traceback.format_exc())
+                    print("error with video streaming")
+        
+
+        #print("done streaming image/video")
+        #end            
+        
+        #display prerecorded video -- for demo purposes
+        '''
+        cap = cv2.VideoCapture("Sample_Video.mp4")
+        while True:
+            start = time.time()
+            ret, frame = cap.read()
+            if ret:
+                im = process_image(frame)
+                rgbImage = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
+                h, w, ch = rgbImage.shape
+                bytesPerLine = ch * w
+                convertToQtFormat = QImage(rgbImage.data, w, h, bytesPerLine, QImage.Format_RGB888)
+                p = convertToQtFormat.scaled(640, 480, Qt.KeepAspectRatio)
+                self.changePixmap.emit(p)
+                end = time.time()
+                print("total time to process one frame: ", end - start)
+        '''
+
+
+# ================================================================== GUI ==================================================================
+        
 
 # Main Window of the Application
-
 
 class MainWindow(QWidget):
 
     def __init__(self, width, height):
         super(MainWindow, self).__init__()
-
+   
         # Fields
         self.width = width
         self.height = height
@@ -142,7 +663,7 @@ class MainWindow(QWidget):
 
         # Create a generate form button in the panel
         self.GenerateFormButton = QPushButton('Generate Form', self)
-        self.GenerateFormButton.clicked.connect(self.GenerateFormButtonClick)
+        #self.GenerateFormButton.clicked.connect(self.GenerateFormButtonClick)
         self.DataPanelGridLayout.addWidget(self.GenerateFormButton, 0, 1, 1, 1)
 
         # Create label and textbox for speech
@@ -166,41 +687,30 @@ class MainWindow(QWidget):
         #Create label and media player for videos- - added 3/21/2022
         self.player = QMediaPlayer(None, QMediaPlayer.VideoSurface)
         self.video = QVideoWidget()
-        #self.video.resize(300, 300)
-        #self.video.move(0, 0)
-
-        #self.player.setMedia(QMediaContent(QUrl.fromLocalFile(directory))) #(QUrl.fromLocalFile("Sample_Video.mp4")))
-        #QUrl::fromLocalFile("/home/test/beep.mp3")
-
-        print(self.player.state())
-        self.player.play()
-        print(QMediaPlayer.PlayingState)
-
-        self.playButton = QPushButton()
-        self.playButton.setEnabled(True)
-        self.playButton.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
-        self.playButton.clicked.connect(self.play)
-
-        self.player.setVideoOutput(self.video)
-
-
         
         # Create label and textbox for Vision Information
         self.VisionInformationLabel = QLabel()
-        self.VisionInformationLabel.setText("<b>Activity Recognition</b>")
+        self.VisionInformationLabel.setText("<b>Vision Information</b>")
         self.Grid_Layout.addWidget(self.VisionInformationLabel, 5, 1, 1, 1)
         
         self.VisionInformation = QTextEdit() #QLineEdit()
         self.VisionInformation.setReadOnly(True)
         # self.VisionInformation.setFont(Box_Font)
-        self.Grid_Layout.addWidget(self.VisionInformation, 6, 1, 2, 1)
+        self.Grid_Layout.addWidget(self.VisionInformation, 6, 1, 1, 1)
+
+        # Create label and textbox for Vision Information
+        self.SmartwatchLabel = QLabel()
+        self.SmartwatchLabel.setText("<b>Smartwatch Activity</b>")
+        self.Grid_Layout.addWidget(self.SmartwatchLabel, 7, 1, 1, 1)
+        
+        self.Smartwatch = QTextEdit() #QLineEdit()
+        self.Smartwatch.setReadOnly(True)
+        # self.VisionInformation.setFont(Box_Font)
+        self.Grid_Layout.addWidget(self.Smartwatch, 8, 1, 1, 1)
   
-
-
         self.VideoSubLabel = QLabel()
         self.VideoSubLabel.setText("<b>Video Content<b>") #setGeometry(100,100,100,100)
         self.Grid_Layout.addWidget(self.VideoSubLabel, 5, 0, 1, 1)
-
 
         self.video = QLabel(self)
 
@@ -210,18 +720,18 @@ class MainWindow(QWidget):
         VIDEO_HEIGHT = 511
         self.video.setGeometry(QtCore.QRect(0, 0, VIDEO_WIDTH, VIDEO_HEIGHT))
 
-        # self.video.setPixmap(QPixmap("test.jpg"))
-        self.video.setScaledContents(True)
+        # Threads for video and smartwatch
+        th = Thread(self)
+        th.changePixmap.connect(self.setImage)
+        th.changeVisInfo.connect(self.handle_message2)
+        th.start()
 
-        #th = MPThread(self)     # mediapipe thread -- see MPThread  in mediapipe_thread file
-        #th.changePixmap.connect(self.setImage)
-        #th.start()
+        th2 = Thread_Watch(self)
+        th2.changeActivityRec.connect(self.handle_message)
+        th2.start()
 
-
-
-
-
-
+        # th2 = ThreadAudio(self)
+        # th2.start()
 
         # Control Panel: To hold combo box, radio, start, stop, and reset buttons
         self.ControlPanel = QWidget()
@@ -249,18 +759,18 @@ class MainWindow(QWidget):
 
         self.ControlPanelGridLayout.addWidget(self.ComboBox, 0, 0, 1, 1)
 
-        # Radio Buttons Google or DeepSpeech
+        # Radio Buttons Google or Other ML Model
         self.GoogleSpeechRadioButton = QRadioButton("Google Speech API", self)
         self.GoogleSpeechRadioButton.setEnabled(True)
         self.GoogleSpeechRadioButton.setChecked(True)
         self.ControlPanelGridLayout.addWidget(
-            self.GoogleSpeechRadioButton, 0, 1, 1, 1)
-
-        self.DeepSpeechRadioButton = QRadioButton("DeepSpeech", self)
-        self.DeepSpeechRadioButton.setEnabled(True) #changed from False to True to enable
-        self.DeepSpeechRadioButton.setChecked(False)
+        self.GoogleSpeechRadioButton, 0, 1, 1, 1)
+        
+        self.MLSpeechRadioButton = QRadioButton("Wav2Vec2", self)
+        self.MLSpeechRadioButton.setEnabled(True) #changed from False to True to enable
+        self.MLSpeechRadioButton.setChecked(False)
         self.ControlPanelGridLayout.addWidget(
-            self.DeepSpeechRadioButton, 0, 2, 1, 1)
+        self.MLSpeechRadioButton, 0, 2, 1, 1)
 
         # Create a start button in the Control Panel
         self.StartButton = QPushButton('Start', self)
@@ -309,7 +819,6 @@ class MainWindow(QWidget):
         # self.ConceptExtraction.setFont(Box_Font)
         self.Grid_Layout.addWidget(self.ConceptExtraction, 3, 1, 2, 1)
         
-        
 
         # Add label, textbox for protcol name
         self.ProtcolLabel = QLabel()
@@ -356,9 +865,9 @@ class MainWindow(QWidget):
         for line in System_Info_Text_File.readlines():
             System_Info_Text += line
         System_Info_Text_File.close()
-        #self.MsgBox.setText(System_Info_Text + "\n" + str(datetime.datetime.now().strftime("%c")) + " - Ready to start speech recognition!")
+        self.MsgBox.setText(System_Info_Text + "\n" + str(datetime.datetime.now().strftime("%c")) + " - Ready to start speech recognition!")
         self.MsgBox.setText(System_Info_Text)
-        #self.UpdateMsgBox(["Ready to start speech recognition!"])
+        self.UpdateMsgBox(["Ready to start speech recognition!"])
 
         # Add Link Lab Logo
         self.PictureBox = QLabel()
@@ -367,6 +876,17 @@ class MainWindow(QWidget):
         self.Grid_Layout.addWidget(self.PictureBox, 10, 2, 1, 2)
 
     # ================================================================== GUI Functions ==================================================================
+    @pyqtSlot(QImage)
+    def setImage(self, image):
+        self.video.setPixmap(QPixmap.fromImage(image))
+
+    @pyqtSlot(str)
+    def handle_message(self, message):
+        self.Smartwatch.setText(message)
+    
+    @pyqtSlot(str)
+    def handle_message2(self, message):
+        self.VisionInformation.setText(message)
 
     #video playing -- added 3/21/2022
     def play(self):
@@ -387,29 +907,10 @@ class MainWindow(QWidget):
             print("video has stopped playing!")
             self.VisionInformation.setPlainText("CPR Done\nAverage Compression Rate: 140 bpm")
         
-        #if self.mediaPlayer.state() == QMediaPlayer.PlayingState:
-        #    self.playButton.setIcon(
-        #            self.style().standardIcon(QStyle.SP_MediaPause))
-        #else:
-        #    self.playButton.setIcon(
-        #            self.style().standardIcon(QStyle.SP_MediaPlay))
-            
-    #function to display vision text after delay -- for demo purposes only 4/18/2022
-    #def timergo(self):
-    #    text = "Start"
-    #    try:
-    #        self.lst = text #text[self.cnt]
-    #        self.line_edit.setText(text)#("".join(str(self.lst[::])))
-    #        #self.cnt+=1
-    #    except:
-    #        #print ("index error in setting text in vision info window")
-    #        #or just pass
-    #        pass
-    #
-    #    self.show()
     # Called when closing the GUI
     def closeEvent(self, event):
         print('Closing GUI')
+        # self.th2.exit()
         self.stopped = 1
         self.reset = 1
         SpeechToNLPQueue.put('Kill')
@@ -463,9 +964,9 @@ class MainWindow(QWidget):
             if(self.GoogleSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(
                     target=GoogleSpeechMicStream.GoogleSpeech, args=(self, SpeechToNLPQueue,))
-            elif(self.DeepSpeechRadioButton.isChecked()):
+            elif(self.MLSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(
-                    target=DeepSpeechMicStream.DeepSpeech, args=(self, SpeechToNLPQueue,))
+                    target=WavVecMicStream.WavVec, args=(self, SpeechToNLPQueue,))
             self.SpeechThread.start()
             print('Microphone Speech Thread Started')
 
@@ -476,9 +977,8 @@ class MainWindow(QWidget):
             if(self.GoogleSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
                     self, SpeechToNLPQueue, str(audio_fname),))
-            elif(self.DeepSpeechRadioButton.isChecked()):
-                self.SpeechThread = StoppableThread(target=DeepSpeechFileStream.DeepSpeech, args=(
-                    self, SpeechToNLPQueue, str(audio_fname),))
+            elif(self.MLSpeechRadioButton.isChecked()):
+                self.SpeechThread = StoppableThread(target=WavVecFileStream.WavVec, args=(self, SpeechToNLPQueue, str(audio_fname),)) #(target=DeepSpeechFileStream.DeepSpeech, args=(self, SpeechToNLPQueue, str(audio_fname),))
             self.otheraudiofilename = str(audio_fname)
             self.SpeechThread.start()
             print("Other Audio File Speech Thread Started")
@@ -497,9 +997,9 @@ class MainWindow(QWidget):
             if(self.GoogleSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
                     self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',))
-            elif(self.DeepSpeechRadioButton.isChecked()):
-                self.SpeechThread = StoppableThread(target=DeepSpeechFileStream.DeepSpeech, args=(
-                    self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',))
+            elif(self.MLSpeechRadioButton.isChecked()):
+                self.SpeechThread = StoppableThread(target=WavVecFileStream.WavVec, args=(
+                    self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',)) #(target=DeepSpeechFileStream.DeepSpeech, args=( self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',))
             self.SpeechThread.start()
             print("Hard-coded Audio File Speech Thread Started")
 
@@ -510,10 +1010,6 @@ class MainWindow(QWidget):
                 target=CognitiveSystem.CognitiveSystem, args=(self, SpeechToNLPQueue,))
             self.CognitiveSystemThread.start()
     
-    
-    @pyqtSlot(QImage)
-    def setImage(self, image):
-        self.video.setPixmap(QPixmap.fromImage(image))
 
     @pyqtSlot()
     def StopButtonClick(self):
@@ -565,6 +1061,7 @@ class MainWindow(QWidget):
         self.InterventionBox.setText('')
 
     # Update the Speech Box
+    #@pyqtSlot
     def UpdateSpeechBox(self, input):
         
         item = input[0]
@@ -683,7 +1180,7 @@ class MainWindow(QWidget):
     def ButtonsSetEnabled(self, input):
         for item in input:
             item[0].setEnabled(item[1])
-
+    
 
 # ================================================================== Main ==================================================================
 if __name__ == '__main__':
@@ -706,13 +1203,7 @@ if __name__ == '__main__':
     #height = 768
     print("Screen Resolution\nWidth: %s\nHeight: %s" % (width, height))
     Window = MainWindow(width, height)
+    #Window.StartButtonClick()
     Window.show()
-
-    Window.StartButtonClick()
-
-    #v = VideoPlayer()
-    #b = QPushButton('start')
-    #b.clicked.connect(v.callback)
-    #b.show()
 
     sys.exit(app.exec_())
