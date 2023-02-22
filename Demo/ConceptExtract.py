@@ -1,4 +1,4 @@
-from pymetamap.MetaMap import MetaMap
+from pymetamap import MetaMap
 from collections import defaultdict
 import pandas as pd
 import re
