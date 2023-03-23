@@ -4,6 +4,7 @@
 # Ignore node_modules folder
 public_mm/*
 *.tar.bz2
+EMSAgent/Interface/models/*
 
 # Ignore all text files
 *.txt
