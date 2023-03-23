@@ -45,7 +45,7 @@ from DSP.amplitude import Amplitude
 from classes import SpeechNLPItem, GUISignal
 import TextSpeechStream
 import CognitiveSystem
-
+from EMSAgent.Interface import EMSAgentSystem
 import GoogleSpeechMicStream
 import GoogleSpeechFileStream
 #import DeepSpeechMicStream
@@ -61,66 +61,9 @@ from smartwatch_streaming import Thread_Watch
 
 chunkdata = []
 
-# ----------------------------------------------------AUDIO--------------------------------------------------------
-
-# AUDIO streaming variables and functions
-host_name = socket.gethostname()
-host_ip = '0.0.0.0' #socket.gethostbyname(host_name)
-port = 50005
-q = queue.Queue(maxsize=12800)
-BUFF_SIZE = 1280 #65536
-
-client_socket = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-client_socket.bind((host_ip,port))
-
-p = pyaudio.PyAudio()
-
-RATE = 16000
-CHUNK = int (RATE / 10)
-
-def audio_stream_UDP():
-    
-    #PyAudio Streeam
-    stream = p.open(format=p.get_format_from_width(2),
-                    channels=1,
-                    rate=RATE,#44100,
-                    output=True,
-                    frames_per_buffer=CHUNK)
-                    
-    # info = p.get_default_output_device_info()
-    # print(info)
-            
-    # create socket
-    message = b'Hello'
-    # client_socket.sendto(message,(host_ip,port))
-    socket_address = (host_ip,port)
-
-    # receive and put audio data in queue
-    def getAudioData():
-        while True:
-            frame,_= client_socket.recvfrom(BUFF_SIZE)
-            q.put(frame)
-            # print('Queue size...',q.qsize())
-            
-    t1 = threading.Thread(target=getAudioData, args=())
-    t1.start()
-
-    #write audio data to stream -- dtaa from this stream will be read by GoogleSpeech
-    while True:
-        frame = q.get()
-        stream.write(frame)
-
-# thread for streaming audio to the GUI 
-t1 = threading.Thread(target=audio_stream_UDP, args=())
-t1.start()
-
-# client_socket.close()
-# print('Audio stream socket closed')
-# os._exit(1)
-
 
 # ================================================================== GUI ==================================================================
-        
+
 
 # Main Window of the Application
 
@@ -128,12 +71,13 @@ class MainWindow(QWidget):
 
     def __init__(self, width, height):
         super(MainWindow, self).__init__()
-   
+
         # Fields
         self.width = width
         self.height = height
         self.SpeechThread = None
         self.CognitiveSystemThread = None
+        self.EMSAgentThread = None
         self.stopped = 0
         self.reset = 0
         self.maximal = Amplitude()
@@ -233,12 +177,12 @@ class MainWindow(QWidget):
         #Create label and media player for videos- - added 3/21/2022
         self.player = QMediaPlayer(None, QMediaPlayer.VideoSurface)
         self.video = QVideoWidget()
-        
+
         # Create label and textbox for Vision Information
         self.VisionInformationLabel = QLabel()
         self.VisionInformationLabel.setText("<b>Vision Information</b>")
         self.Grid_Layout.addWidget(self.VisionInformationLabel, 5, 1, 1, 1)
-        
+
         self.VisionInformation = QTextEdit() #QLineEdit()
         self.VisionInformation.setReadOnly(True)
         # self.VisionInformation.setFont(Box_Font)
@@ -248,12 +192,12 @@ class MainWindow(QWidget):
         self.SmartwatchLabel = QLabel()
         self.SmartwatchLabel.setText("<b>Smartwatch Activity</b>")
         self.Grid_Layout.addWidget(self.SmartwatchLabel, 7, 1, 1, 1)
-        
+
         self.Smartwatch = QTextEdit() #QLineEdit()
         self.Smartwatch.setReadOnly(True)
         # self.VisionInformation.setFont(Box_Font)
         self.Grid_Layout.addWidget(self.Smartwatch, 8, 1, 1, 1)
-  
+
         self.VideoSubLabel = QLabel()
         self.VideoSubLabel.setText("<b>Video Content<b>") #setGeometry(100,100,100,100)
         self.Grid_Layout.addWidget(self.VideoSubLabel, 5, 0, 1, 1)
@@ -266,12 +210,13 @@ class MainWindow(QWidget):
         VIDEO_HEIGHT = 511
         self.video.setGeometry(QtCore.QRect(0, 0, VIDEO_WIDTH, VIDEO_HEIGHT))
 
-        # Threads for video and smartwatch
+        # Threads for video 
         th = Thread(self)
         th.changePixmap.connect(self.setImage)
         th.changeVisInfo.connect(self.handle_message2)
-        th.start()
+        # th.start()  Disabled for now
 
+        # Threads for smartwatch
         th2 = Thread_Watch(self)
         th2.changeActivityRec.connect(self.handle_message)
         th2.start()
@@ -311,7 +256,7 @@ class MainWindow(QWidget):
         self.GoogleSpeechRadioButton.setChecked(True)
         self.ControlPanelGridLayout.addWidget(
         self.GoogleSpeechRadioButton, 0, 1, 1, 1)
-        
+
         self.MLSpeechRadioButton = QRadioButton("Wav2Vec2", self)
         self.MLSpeechRadioButton.setEnabled(True) #changed from False to True to enable
         self.MLSpeechRadioButton.setChecked(False)
@@ -364,7 +309,7 @@ class MainWindow(QWidget):
         self.ConceptExtraction.setReadOnly(True)
         # self.ConceptExtraction.setFont(Box_Font)
         self.Grid_Layout.addWidget(self.ConceptExtraction, 3, 1, 2, 1)
-        
+
 
         # Add label, textbox for protcol name
         self.ProtcolLabel = QLabel()
@@ -429,7 +374,7 @@ class MainWindow(QWidget):
     @pyqtSlot(str)
     def handle_message(self, message):
         self.Smartwatch.setText(message)
-    
+
     @pyqtSlot(str)
     def handle_message2(self, message):
         self.VisionInformation.setText(message)
@@ -442,17 +387,17 @@ class MainWindow(QWidget):
         if self.mediaPlayer.state() == QMediaPlayer.StoppedState:
             print("video has stopped playing!")
             self.VisionInformation.setPlainText("CPR Done\nAverage Compression Rate: 140 bpm")
-        
+
         else:
             print("testing successful")
             self.mediaPlayer.play()
 
-            
+
     def mediaStateChanged(self, state):
     	if self.player.state() == QMediaPlayer.StoppedState:
             print("video has stopped playing!")
             self.VisionInformation.setPlainText("CPR Done\nAverage Compression Rate: 140 bpm")
-        
+
     # Called when closing the GUI
     def closeEvent(self, event):
         print('Closing GUI')
@@ -460,6 +405,7 @@ class MainWindow(QWidget):
         self.stopped = 1
         self.reset = 1
         SpeechToNLPQueue.put('Kill')
+        EMSAgentSpeechToNLPQueue.put('Kill')
         event.accept()
 
     @pyqtSlot()
@@ -509,7 +455,7 @@ class MainWindow(QWidget):
         if(self.ComboBox.currentText() == 'Microphone'):
             if(self.GoogleSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(
-                    target=GoogleSpeechMicStream.GoogleSpeech, args=(self, SpeechToNLPQueue,))
+                    target=GoogleSpeechMicStream.GoogleSpeech, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue))
             elif(self.MLSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(
                     target=WavVecMicStream.WavVec, args=(self, SpeechToNLPQueue,))
@@ -522,7 +468,7 @@ class MainWindow(QWidget):
                 self, 'Open file', 'c:\\', "Wav files (*.wav)")
             if(self.GoogleSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
-                    self, SpeechToNLPQueue, str(audio_fname),))
+                    self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, str(audio_fname),))
             elif(self.MLSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(target=WavVecFileStream.WavVec, args=(self, SpeechToNLPQueue, str(audio_fname),)) #(target=DeepSpeechFileStream.DeepSpeech, args=(self, SpeechToNLPQueue, str(audio_fname),))
             self.otheraudiofilename = str(audio_fname)
@@ -542,7 +488,7 @@ class MainWindow(QWidget):
         else:
             if(self.GoogleSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
-                    self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',))
+                    self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue,'./Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',))
             elif(self.MLSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(target=WavVecFileStream.WavVec, args=(
                     self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',)) #(target=DeepSpeechFileStream.DeepSpeech, args=( self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',))
@@ -555,7 +501,14 @@ class MainWindow(QWidget):
             self.CognitiveSystemThread = StoppableThread(
                 target=CognitiveSystem.CognitiveSystem, args=(self, SpeechToNLPQueue,))
             self.CognitiveSystemThread.start()
-    
+
+
+        # ==== Start the EMS Agent - Xueren ==== #
+        if(self.EMSAgentThread == None):
+            print("EMSAgent Thread Started")
+            self.EMSAgentThread = StoppableThread(
+                target=EMSAgentSystem.EMSAgentSystem, args=(self, EMSAgentSpeechToNLPQueue,))
+            self.EMSAgentThread.start()
 
     @pyqtSlot()
     def StopButtonClick(self):
@@ -583,6 +536,7 @@ class MainWindow(QWidget):
 
         if(self.CognitiveSystemThread != None):
             SpeechToNLPQueue.put('Kill')
+            EMSAgentSpeechToNLPQueue.put('Kill')
 
         self.VUMeter.setValue(0)
         self.finalSpeechSegmentsSpeech = []
@@ -609,7 +563,7 @@ class MainWindow(QWidget):
     # Update the Speech Box
     #@pyqtSlot
     def UpdateSpeechBox(self, input):
-        
+
         item = input[0]
 
         if(item.isFinal):
@@ -649,8 +603,8 @@ class MainWindow(QWidget):
             self.nonFinalText = previousTextMinusPrinted + item.transcript
             self.SpeechBox.setText(text + self.nonFinalText)
             self.SpeechBox.moveCursor(QTextCursor.End)
-            
-            
+
+
 
     # Update the Concept Extraction Box
     def UpdateConceptExtractionBox(self, input):
@@ -661,19 +615,22 @@ class MainWindow(QWidget):
             chunkdata.append(item)
         else:
             chunkdata.append("-")
-            
-      
+
+
 
     # Update the Protocols and Interventions Boxes
     def UpdateProtocolBoxes(self, input):
         global chunkdata
-        protocol_names = input[0]
-        interventions = input[1]
-        self.ProtocolBox.setText(protocol_names)
-        self.InterventionBox.setText(interventions)
 
+        protocol_names = input[0]
+        self.ProtocolBox.append(protocol_names)
         chunkdata.append(protocol_names)
-        chunkdata.append(interventions)
+
+        if(len(input) == 2):
+            interventions = input[1]
+            self.InterventionBox.setText(interventions)
+            chunkdata.append(interventions)
+
         with open("check.csv", mode="a") as csv_file:
             writer = csv.writer(csv_file, delimiter=',')
             writer.writerow(chunkdata)
@@ -710,23 +667,23 @@ class MainWindow(QWidget):
         item = input[0]
         if(item == 'Mic'):
             self.SpeechThread = StoppableThread(
-                target=GoogleSpeechMicStream.GoogleSpeech, args=(self, SpeechToNLPQueue, ))
+                target=GoogleSpeechMicStream.GoogleSpeech, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue ))
             self.SpeechThread.start()
         elif(item == 'File'):
             if self.ComboBox.currentText() == 'Other Audio File':
                 print("\n\nStart Again\n\n")
                 self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
-                    self, SpeechToNLPQueue, self.otheraudiofilename,))
+                    self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, self.otheraudiofilename,))
             else:
                 self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
-                    self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',))
+                    self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',))
             self.SpeechThread.start()
 
     # Enabled and/or disable given buttons in a tuple (Button Object, True/False)
     def ButtonsSetEnabled(self, input):
         for item in input:
             item[0].setEnabled(item[1])
-    
+
 
 # ================================================================== Main ==================================================================
 if __name__ == '__main__':
@@ -736,7 +693,7 @@ if __name__ == '__main__':
 
     # Create thread-safe queue for communication between Speech and Cognitive System threads
     SpeechToNLPQueue = queue.Queue()
-
+    EMSAgentSpeechToNLPQueue  = queue.Queue()
     # GUI: Create the main window, show it, and run the app
     print("Starting GUI")
     app = QApplication(sys.argv)

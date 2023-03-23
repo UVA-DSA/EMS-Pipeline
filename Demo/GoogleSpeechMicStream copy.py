@@ -39,14 +39,14 @@ def audio_stream_UDP():
         while True:
             # print("Waiting for Audio client...")
             frame,_= client_socket.recvfrom(BUFF_SIZE)
-            # print("buffer size", audio_buff.qsize())
+            print("buffer size", audio_buff.qsize())
             if (audio_buff.qsize()) < 16:
                 audio_buff.put(frame)
-                # print("frame added")
+                print("frame added")
             else:
                 with audio_buff.mutex:
                     audio_buff.queue.clear()
-                    # print("buffer cleared")
+                    print("buffer cleared")
 
             # print('Audio chunk received')
             

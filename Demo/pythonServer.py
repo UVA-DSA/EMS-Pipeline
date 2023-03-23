@@ -4,7 +4,7 @@ import threading, wave, pyaudio, time, queue
 host_name = socket.gethostname()
 host_ip = '0.0.0.0' #'172.25.149.100'#'192.168.1.102'#  socket.gethostbyname(host_name)
 print(host_ip)
-port = 50005
+port = 8888
 q = queue.Queue(maxsize=12800)
 
 def audio_stream_UDP():
@@ -32,9 +32,9 @@ def audio_stream_UDP():
             q.put(frame)
             print('Queue size...',q.qsize())
             
-    # t1 = threading.Thread(target=getAudioData, args=())
-    # t1.start()
-    # time.sleep(5)
+    t1 = threading.Thread(target=getAudioData, args=())
+    t1.start()
+    time.sleep(5)
 
     print('Now Playing...')
     while True:

@@ -1,0 +1,38 @@
+{
+    "general - cardiac arrest": {
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)": "0.9759530670542577"
+    },
+    "general - pain control": {
+        "medical - diabetic - hypoglycemia": "0.9743488502258643"
+    },
+    "injury - general trauma management (protocol 4 - 1)": {
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)": "0.9951187092960292"
+    },
+    "medical - abdominal pain (protocol 3 - 2)": {
+        "medical - diabetic - hypoglycemia": "0.9952955078052268"
+    },
+    "medical - altered mental status": {
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)": "0.9878347721067522"
+    },
+    "medical - chest pain - cardiac suspected (protocol 2 - 1)": {
+        "medical - abdominal pain (protocol 3 - 2)": "0.9952218472411485"
+    },
+    "medical - diabetic - hypoglycemia": {
+        "medical - abdominal pain (protocol 3 - 2)": "0.9952955078052268"
+    },
+    "medical - overdose/poisoning - opioid (protocol 7 - 1)": {
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)": "1.0000000000000004"
+    },
+    "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)": {
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)": "1.0000000000000004"
+    },
+    "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)": {
+        "injury - general trauma management (protocol 4 - 1)": "0.9918471103177655"
+    },
+    "medical - seizure": {
+        "medical - abdominal pain (protocol 3 - 2)": "0.9920794714475871"
+    },
+    "medical - stroke/tia (protocol 3 - 5)": {
+        "medical - abdominal pain (protocol 3 - 2)": "0.9934288720919272"
+    }
+}

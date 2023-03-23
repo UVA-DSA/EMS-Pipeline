@@ -55,17 +55,17 @@ def CognitiveSystem(Window, SpeechToNLPQueue):
     Tick_Counter = 1
 
     while True:
-
+        # continue
         # Get queue item from the Speech-to-Text Module
         received = SpeechToNLPQueue.get()
-        print("Received chunk")
+        # print("Received chunk", received.transcript)
 
         if(received == 'Kill'):
-            print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
+            # print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
             break
 
         if(Window.reset == 1):
-            print("Cognitive System Thread Received reset signal. Killing Cognitive System Thread.")
+            # print("Cognitive System Thread Received reset signal. Killing Cognitive System Thread.")
             return
 
         # If item received from queue is legitmate
@@ -80,23 +80,25 @@ def CognitiveSystem(Window, SpeechToNLPQueue):
             dummyP = dummyP3.replace('&', '%26')
             part1 = 'curl -d text='+dummyP+' http://bark.phon.ioc.ee/punctuator'
             op = subprocess.getstatusoutput(part1)
-            print("op:  ", op)
+            # print("op:  ", op)
             output = op[1].rsplit('\n', 1)[1]
             sentsList = textParse2.sent_tokenize(output)  # final sentences
 
             def print_tree(tree):
                 print(py_trees.display.unicode_tree(root=tree.root, show_status=True))
-
+                
+                
+            print("sentsList:",sentsList)
             # Processes each chunk/sentence
             PunctuatedAndHighlightedText = ""
             for idx, item in enumerate(sentsList):
-
+                
                 blackboard.text = [item]
                 behaviour_tree.tick_tock(
                     period_ms=50,
                     number_of_iterations=1,
-                    pre_tick_handler=None,
-                    post_tick_handler=print_tree)
+                    pre_tick_handler=None)
+                    # post_tick_handler=print_tree)
 
                 pr, sv_s, s = TickResults(Window, NLP_Items)
 
@@ -115,7 +117,7 @@ def CognitiveSystem(Window, SpeechToNLPQueue):
                 Tick_Counter += 1
 
                 if(Window.reset == 1):
-                    print("Cognitive System Thread Received reset signal. Killing Cognitive System Thread.")
+                    # print("Cognitive System Thread Received reset signal. Killing Cognitive System Thread.")
                     return
 
             PunctuatedAndHighlightedText = '<b>' + PunctuatedAndHighlightedText + '</b>'
@@ -125,7 +127,7 @@ def CognitiveSystem(Window, SpeechToNLPQueue):
 
 # Function to return this recent tick's results
 def TickResults(Window, NLP_Items):
-    print(NLP_Items)
+    # print(NLP_Items)
     ConceptExtractionSignal = GUISignal()
     ConceptExtractionSignal.signal.connect(Window.UpdateConceptExtractionBox)
 
@@ -138,12 +140,12 @@ def TickResults(Window, NLP_Items):
     signs_and_vitals = []
     suggestions = []
 
-    print("===============================================================")
+    # print("===============================================================")
 
     # ======= Top 3 protocol candidates
-    print("\n======= Top 3 protocol candidates:")
+    # print("\n======= Top 3 protocol candidates:")
     for p in blackboard.protocol_flag:
-        print(p, blackboard.protocol_flag[p])
+        # print(p, blackboard.protocol_flag[p])
         binary = blackboard.protocol_flag[p][0]
         confidence = blackboard.protocol_flag[p][1]
         if(binary):
@@ -157,14 +159,14 @@ def TickResults(Window, NLP_Items):
     protocol_candidates = sorted(protocol_candidates, key=itemgetter(1), reverse=True)[:3]
 
     # ======= Signs, symptoms, and vitals
-    print("\n======= Signs, symptoms, and vitals:")
+    # print("\n======= Signs, symptoms, and vitals:")
 
     for item in blackboard.Vitals:
         if len(blackboard.Vitals[item].content) > 0:
             content = (str(blackboard.Vitals[item].name).capitalize(), str(blackboard.Vitals[item].binary),
                        str(blackboard.Vitals[item].value), str(blackboard.Vitals[item].content),
                        str(round(blackboard.Vitals[item].score/1000, 2)), blackboard.Vitals[item].tick)
-            print(content)
+            # print(content)
             signs_and_vitals.append(content)
             if(content not in NLP_Items):
                 NLP_Items.append(content)
@@ -174,7 +176,7 @@ def TickResults(Window, NLP_Items):
             content = (str(blackboard.Signs[item].name).capitalize(), str(blackboard.Signs[item].binary),
                        str(blackboard.Signs[item].value), str(blackboard.Signs[item].content),
                        str(round(blackboard.Signs[item].score/1000, 2)), blackboard.Signs[item].tick)
-            print(content)
+            # print(content)
             signs_and_vitals.append(content)
             if(content not in NLP_Items):
                 NLP_Items.append(content)
@@ -183,12 +185,12 @@ def TickResults(Window, NLP_Items):
     signs_and_vitals = sorted(signs_and_vitals, key=itemgetter(5))
 
     # ======= Suggestions
-    print("\n======= Suggestions:")
+    # print("\n======= Suggestions:")
     for key in blackboard.feedback:
         if blackboard.feedback[key] > 0.1:
             content = (str(key).capitalize(), str(round(blackboard.feedback[key], 2)))
             suggestions.append(content)
-            print(content)
+            # print(content)
 
     # Sort by Concept
     suggestions = sorted(suggestions, key=itemgetter(1), reverse=True)
@@ -212,8 +214,7 @@ def TickResults(Window, NLP_Items):
     for s in suggestions:
         suggestions_str += "(" + str(s[0]) + ", <b>" + str(s[1]) + "</b>)<br>"
 
-    print("===============================================================")
-
+    # print("===============================================================")
     ProtocolSignal.signal.emit([protocol_candidates_str, suggestions_str])
     ConceptExtractionSignal.signal.emit([signs_and_vitals_str])
 

@@ -1,0 +1,198 @@
+{
+    "Naloxone (narcan) (7242)": [
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - altered mental status",
+        "general - cardiac arrest",
+        "medical - seizure",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - diabetic - hypoglycemia"
+    ],
+    "Normal saline (125464)": [
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - altered mental status",
+        "injury - general trauma management (protocol 4 - 1)",
+        "general - cardiac arrest",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "general - pain control",
+        "medical - seizure",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - diabetic - hypoglycemia",
+        "medical - stroke/tia (protocol 3 - 5)"
+    ],
+    "Fentanyl (4337)": [
+        "general - pain control",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)"
+    ],
+    "Oxygen (7806)": [
+        "general - cardiac arrest",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "general - pain control",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - altered mental status",
+        "medical - seizure",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - diabetic - hypoglycemia",
+        "medical - abdominal pain (protocol 3 - 2)"
+    ],
+    "Epi 1:10,000 (317361)": [
+        "general - cardiac arrest"
+    ],
+    "Glucose (oral forms) (4850)": [
+        "medical - diabetic - hypoglycemia",
+        "medical - altered mental status",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "general - cardiac arrest"
+    ],
+    "Aspirin (asa) (1191)": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "general - pain control",
+        "medical - seizure",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - diabetic - hypoglycemia",
+        "medical - altered mental status"
+    ],
+    "Albuterol (proventil) (435)": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "general - cardiac arrest",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - altered mental status"
+    ],
+    "Ipratropium (atrovent) (7213)": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "general - cardiac arrest",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - altered mental status"
+    ],
+    "Dexamethasone 10mg iv/im (1812079)": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - diabetic - hypoglycemia",
+        "general - cardiac arrest"
+    ],
+    "Ondansetron (zofran) (26225)": [
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "general - pain control",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - diabetic - hypoglycemia",
+        "medical - seizure",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - altered mental status"
+    ],
+    "Nitroglycerin (4917)": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - abdominal pain (protocol 3 - 2)"
+    ],
+    "Ketorolac (toradol) (35827)": [
+        "general - pain control",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)"
+    ],
+    "Dextrose 10 % injectable solution (237648)": [
+        "medical - diabetic - hypoglycemia",
+        "general - cardiac arrest",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - altered mental status",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)"
+    ],
+    "Magnesium sulfate (6585)": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Ketamine (ketalar) (6130)": [
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Terbutaline sulfate 1 mg/ml (857634)": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Dexamethasone 10mg po (48933)": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Sodium bicarbonate (36676)": [
+        "general - cardiac arrest",
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Midazolam (versed) (6960)": [
+        "medical - seizure",
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - altered mental status",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "injury - general trauma management (protocol 4 - 1)",
+        "general - pain control",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)"
+    ],
+    "Haldol (151839)": [
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)"
+    ],
+    "Amiodarone (cordarone) (703)": [
+        "general - cardiac arrest"
+    ],
+    "Glucagon (glucagen) (4832)": [
+        "medical - diabetic - hypoglycemia",
+        "medical - altered mental status",
+        "medical - seizure"
+    ],
+    "Epi 1:1,000 (328316)": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "general - cardiac arrest"
+    ],
+    "Diphenhydramine (benadryl) (3498)": [
+        "general - cardiac arrest"
+    ],
+    "10 ml calcium chloride 10 % prefilled syringe (828527)": [
+        "general - cardiac arrest",
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Generic medication placeholder (8375)": [
+        "medical - stroke/tia (protocol 3 - 5)"
+    ],
+    "Norepinephrine injection [levophed] (1745278)": [
+        "general - cardiac arrest"
+    ],
+    "Albuterol 5mg / ipratropium 0.5mg (duoneb) (214199)": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Atropine (1223)": [
+        "general - cardiac arrest"
+    ],
+    "Norepinephrine (levophed) (7512)": [
+        "general - cardiac arrest"
+    ],
+    "Oxymetazoline (afrin) (7812)": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Labetalol (normodyne) (6185)": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)"
+    ],
+    "Diprivan (196459)": [
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Insulin (5856)": [
+        "general - cardiac arrest"
+    ],
+    "Adenosine (adenocard) (296)": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - seizure"
+    ],
+    "Ziprasidone 20 mg/ml injectable solution [geodon] (352228)": [
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)"
+    ],
+    "Furosemide 10 mg/ml (1719286)": [
+        "medical - abdominal pain (protocol 3 - 2)"
+    ]
+}
