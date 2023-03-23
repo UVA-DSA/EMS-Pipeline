@@ -1,0 +1,15 @@
+# Ignore Mac system files
+.DS_store
+
+# Ignore node_modules folder
+public_mm/*
+*.tar.bz2
+
+# Ignore all text files
+*.txt
+
+# Ignore files related to API keys
+.env
+
+# Ignore SASS config files
+.sass-cache
