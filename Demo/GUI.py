@@ -96,7 +96,9 @@ class MainWindow(QWidget):
 
         # Grid Layout to hold all the widgets
         self.Grid_Layout = QGridLayout(self)
-
+        self.Grid_Layout.setColumnStretch(0, 1)
+        self.Grid_Layout.setColumnStretch(1, 1)
+        self.Grid_Layout.setColumnStretch(2, 1)
         # Font for boxes
         #Box_Font = QFont()
         # Box_Font.setPointSize(BOX_FONT_SIZE)
@@ -178,25 +180,45 @@ class MainWindow(QWidget):
         self.player = QMediaPlayer(None, QMediaPlayer.VideoSurface)
         self.video = QVideoWidget()
 
+
+        self.Box = QVBoxLayout()
+        self.Grid_Layout.addLayout(self.Box, 8, 1, 1, 1)
+
         # Create label and textbox for Vision Information
         self.VisionInformationLabel = QLabel()
+        self.VisionInformationLabel.setFixedHeight(50)
+        # self.VisionInformationLabel.move(50,50)
+        self.VisionInformationLabel.setGeometry(20, 20, 100, 50)
         self.VisionInformationLabel.setText("<b>Vision Information</b>")
-        self.Grid_Layout.addWidget(self.VisionInformationLabel, 5, 1, 1, 1)
+        self.Box.addWidget(self.VisionInformationLabel) #7,1,1,1
 
         self.VisionInformation = QTextEdit() #QLineEdit()
+        self.VisionInformation.setFixedHeight(150)
         self.VisionInformation.setReadOnly(True)
         # self.VisionInformation.setFont(Box_Font)
-        self.Grid_Layout.addWidget(self.VisionInformation, 6, 1, 1, 1)
+        self.Box.addWidget(self.VisionInformation) #8,1,1,1
 
-        # Create label and textbox for Vision Information
+        # self.Box.setMargin(0)
+        self.Box.setSpacing(0)
+        self.Box.setContentsMargins(0,0,0,0)
+        self.Box.addStretch()
+        # self.Box.sizePolicy.setHorizontalStretch(1)
+        # Create label and textbox for Smartwatch
+        self.Box2 = QVBoxLayout()
+        self.Grid_Layout.addLayout(self.Box2, 7, 1, 1, 1)
+
         self.SmartwatchLabel = QLabel()
         self.SmartwatchLabel.setText("<b>Smartwatch Activity</b>")
-        self.Grid_Layout.addWidget(self.SmartwatchLabel, 7, 1, 1, 1)
+        self.Box2.addWidget(self.SmartwatchLabel) #5,1,1,1
 
         self.Smartwatch = QTextEdit() #QLineEdit()
+        # self.Smartwatch.setFixedHeight(150)
         self.Smartwatch.setReadOnly(True)
+        self.Smartwatch.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         # self.VisionInformation.setFont(Box_Font)
-        self.Grid_Layout.addWidget(self.Smartwatch, 8, 1, 1, 1)
+        self.Box2.addWidget(self.Smartwatch) # 6, 1, 1, 1
+        # self.Box2.addStretch()
+        # self.Box2.sizePolicy.setHorizontalStretch(1)
 
         self.VideoSubLabel = QLabel()
         self.VideoSubLabel.setText("<b>Video Content<b>") #setGeometry(100,100,100,100)
@@ -214,7 +236,7 @@ class MainWindow(QWidget):
         th = Thread(self)
         th.changePixmap.connect(self.setImage)
         th.changeVisInfo.connect(self.handle_message2)
-        # th.start()  Disabled for now
+        th.start()  #Disabled for now
 
         # Threads for smartwatch
         th2 = Thread_Watch(self)
@@ -308,7 +330,7 @@ class MainWindow(QWidget):
         self.ConceptExtraction = QTextEdit()
         self.ConceptExtraction.setReadOnly(True)
         # self.ConceptExtraction.setFont(Box_Font)
-        self.Grid_Layout.addWidget(self.ConceptExtraction, 3, 1, 2, 1)
+        self.Grid_Layout.addWidget(self.ConceptExtraction, 3, 1, 4, 1)
 
 
         # Add label, textbox for protcol name
@@ -343,12 +365,15 @@ class MainWindow(QWidget):
         self.MsgBoxLabel = QLabel()
         self.MsgBoxLabel.setText("<b>System Messages Log</b>")
         self.Grid_Layout.addWidget(self.MsgBoxLabel, 7, 2, 1, 2)
+        # self.MsgBoxLabel.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
         self.MsgBox = QTextEdit()
         self.MsgBox.setReadOnly(True)
         self.MsgBox.setFont(QFont("Monospace"))
         # self.MsgBox.setLineWrapMode(QTextEdit.NoWrap)
+        # self.MsgBox.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.Grid_Layout.addWidget(self.MsgBox, 8, 2, 1, 2)
+        # self.Grid_Layout.setRowStretch(7, 0)
 
         # Populate the Message Box with welcome message
         System_Info_Text_File = open("./ETC/System_Info.txt", "r")
@@ -366,6 +391,19 @@ class MainWindow(QWidget):
         self.PictureBox.setAlignment(Qt.AlignCenter)
         self.Grid_Layout.addWidget(self.PictureBox, 10, 2, 1, 2)
 
+        # self.Grid_Layout.addStretch()
+        # self.Grid_Layout.setRowStretch(self.Grid_Layout.rowCount(), 2)
+        # self.Grid_Layout.setColumnStretch(self.Grid_Layout.columnCount(), 2)
+        vspacer = PyQt5.QtWidgets.QSpacerItem(
+            PyQt5.QtWidgets.QSizePolicy.Minimum, PyQt5.QtWidgets.QSizePolicy.Expanding)
+        self.Grid_Layout.addItem(vspacer, 11, 0, 1, -1)
+
+        hspacer = PyQt5.QtWidgets.QSpacerItem(
+            PyQt5.QtWidgets.QSizePolicy.Expanding, PyQt5.QtWidgets.QSizePolicy.Minimum)
+        self.Grid_Layout.addItem(hspacer, 0, 2, -1, 1)
+
+        # self.Grid_Layout.setSpacing(0)
+        # self.Grid_Layout.setContentsMargins(0, 0, 0, 0)
     # ================================================================== GUI Functions ==================================================================
     @pyqtSlot(QImage)
     def setImage(self, image):

@@ -143,6 +143,7 @@ class Thread(QThread):
 
                     # hand-detection annotations
                     if hand_detection_results and hand_detection_results.multi_hand_landmarks:
+                        self.changeVisInfo.emit(str("Hand Detected! Wrist Position Identified."))
                         for hand_landmarks in hand_detection_results.multi_hand_landmarks:
 
                             #append y_val to array for peak detection
@@ -151,6 +152,7 @@ class Thread(QThread):
                             #for drawing hand annotations on image
                             mp_drawing.draw_landmarks(image,hand_landmarks,mp_hands.HAND_CONNECTIONS,mp_drawing_styles.get_default_hand_landmarks_style(),mp_drawing_styles.get_default_hand_connections_style())
                     else:
+                        self.changeVisInfo.emit(str("Detecting Hands..."))
                         y_vals.append(0)#(math.nan)
 
 
