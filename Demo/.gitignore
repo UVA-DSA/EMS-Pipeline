@@ -6,6 +6,8 @@ public_mm/*
 *.tar.bz2
 EMSAgent/Interface/models/*
 
+service-account.json
+
 # Ignore all text files
 *.txt
 
