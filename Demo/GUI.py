@@ -205,19 +205,19 @@ class MainWindow(QWidget):
         # self.Box.sizePolicy.setHorizontalStretch(1)
         # Create label and textbox for Smartwatch
         self.Box2 = QVBoxLayout()
-        self.Grid_Layout.addLayout(self.Box2, 7, 1, 1, 1)
+        self.Grid_Layout.addLayout(self.Box2, 6, 1, 2, 1)
 
         self.SmartwatchLabel = QLabel()
         self.SmartwatchLabel.setText("<b>Smartwatch Activity</b>")
         self.Box2.addWidget(self.SmartwatchLabel) #5,1,1,1
 
         self.Smartwatch = QTextEdit() #QLineEdit()
-        # self.Smartwatch.setFixedHeight(150)
+        self.Smartwatch.setFixedHeight(470)
         self.Smartwatch.setReadOnly(True)
         self.Smartwatch.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         # self.VisionInformation.setFont(Box_Font)
         self.Box2.addWidget(self.Smartwatch) # 6, 1, 1, 1
-        # self.Box2.addStretch()
+        self.Box2.addStretch()
         # self.Box2.sizePolicy.setHorizontalStretch(1)
 
         self.VideoSubLabel = QLabel()
@@ -328,9 +328,10 @@ class MainWindow(QWidget):
         self.Grid_Layout.addWidget(self.ConceptExtractionSubLabel, 2, 1, 1, 1)
 
         self.ConceptExtraction = QTextEdit()
+        self.ConceptExtraction.setFixedHeight(820)
         self.ConceptExtraction.setReadOnly(True)
         # self.ConceptExtraction.setFont(Box_Font)
-        self.Grid_Layout.addWidget(self.ConceptExtraction, 3, 1, 4, 1)
+        self.Grid_Layout.addWidget(self.ConceptExtraction, 3, 1, 2, 1)
 
 
         # Add label, textbox for protcol name
@@ -343,6 +344,7 @@ class MainWindow(QWidget):
         self.Grid_Layout.addWidget(self.ProtcolSubLabel, 2, 2, 1, 2)
 
         self.ProtocolBox = QTextEdit()
+        # self.ProtocolBox.setFixedHeight(700)
         self.ProtocolBox.setReadOnly(True)
         # self.ProtocolBox.setFont(Box_Font)
         self.Grid_Layout.addWidget(self.ProtocolBox, 3, 2, 1, 2)
@@ -350,21 +352,24 @@ class MainWindow(QWidget):
         # Create label and textbox for interventions
         self.InterventionLabel = QLabel()
         self.InterventionLabel.setText("<b>Suggested Interventions</b>")
-        self.Grid_Layout.addWidget(self.InterventionLabel, 4, 2, 1, 2)
+        self.Grid_Layout.addWidget(self.InterventionLabel, 5, 2, 1, 2)
 
         self.InterventionSubLabel = QLabel()
         self.InterventionSubLabel.setText("(Intervention, Confidence)")
-        self.Grid_Layout.addWidget(self.InterventionSubLabel, 5, 2, 1, 2)
+        self.Grid_Layout.addWidget(self.InterventionSubLabel, 6, 2, 1, 2)
 
         self.InterventionBox = QTextEdit()
         self.InterventionBox.setReadOnly(True)
         # self.InterventionBox.setFont(Box_Font)
-        self.Grid_Layout.addWidget(self.InterventionBox, 6, 2, 1, 2)
+        self.Grid_Layout.addWidget(self.InterventionBox, 7, 2, 1, 2)
+
+        self.Box3 = QVBoxLayout()
+        self.Grid_Layout.addLayout(self.Box3, 8, 2, 1, 1)
 
         # Create label and textbox for messages
         self.MsgBoxLabel = QLabel()
         self.MsgBoxLabel.setText("<b>System Messages Log</b>")
-        self.Grid_Layout.addWidget(self.MsgBoxLabel, 7, 2, 1, 2)
+        self.Box3.addWidget(self.MsgBoxLabel)#, 7, 2, 1, 2)
         # self.MsgBoxLabel.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
         self.MsgBox = QTextEdit()
@@ -372,7 +377,7 @@ class MainWindow(QWidget):
         self.MsgBox.setFont(QFont("Monospace"))
         # self.MsgBox.setLineWrapMode(QTextEdit.NoWrap)
         # self.MsgBox.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        self.Grid_Layout.addWidget(self.MsgBox, 8, 2, 1, 2)
+        self.Box3.addWidget(self.MsgBox)#, 8, 2, 1, 2)
         # self.Grid_Layout.setRowStretch(7, 0)
 
         # Populate the Message Box with welcome message

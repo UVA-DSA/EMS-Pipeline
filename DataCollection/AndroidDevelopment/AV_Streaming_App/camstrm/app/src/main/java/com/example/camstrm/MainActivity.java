@@ -13,12 +13,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
     private static final String[] CAMERA_PERMISSION = new String[]{Manifest.permission.CAMERA};
     private static final int CAMERA_REQUEST_CODE = 10;
     protected static final String TAG = "cam_stream";
     public static TcpClient mTcpClient;
+    String serverip = "";
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,40 +30,57 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getWindow(). addFlags (WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         Log.i(TAG,"in main");
+        mContext = this;
 
-        // start server that sends frames to computer over ADB
-//        Server server=new Server();
-//        server.startServer();
+        //button to close+exit app
+        Button btn1 = (Button) findViewById(R.id.btn1);
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                System.exit(0);
+            }
+        });
 
-        new ConnectTask().execute("");
+        //button to close+exit app
+        Button startbtn = (Button) findViewById(R.id.startbtn);
+        startbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText serverEditText = (EditText) findViewById(R.id.serverip_input);
+                serverip = serverEditText.getText().toString();
 
+                // start server that sends frames to computer over ADB
+                //        Server server=new Server();
+                //        server.startServer();
 
+                new ConnectTask().execute("");
 
-        //chack of the user has given permission for this app to use camera
-        checkPermissionsOrRequest();
+                //chack of the user has given permission for this app to use camera
+                checkPermissionsOrRequest();
 
-        if (hasCameraPermission()) {
-            Intent cameraServiceIntent = new Intent(MainActivity.this, Camera2Service.class);
-            Log.i(TAG,"starting cam..");
+                if (hasCameraPermission()) {
+                    Intent cameraServiceIntent = new Intent(MainActivity.this, Camera2Service.class);
+                    Log.i(TAG,"starting cam..");
 
-            // camera apis expect the cameraId to be a string
-            // from testing, regular lens = 0, wide angle = 1
-            String idString = Integer.toString(1);
-            cameraServiceIntent.putExtra("cameraId", idString);
-            Log.i(TAG,"starting service...");
-            startService(cameraServiceIntent);
-            //start service which access the camera and the stream of camera image frames
-            //see the class Camera2Service.java class
-            ContextCompat.startForegroundService(this, cameraServiceIntent);
-        } else {
-            //if the user has not granted permission, request it
-            requestPermission();
-        }
+                    // camera apis expect the cameraId to be a string
+                    // from testing, regular lens = 0, wide angle = 1
+                    String idString = Integer.toString(1);
+                    cameraServiceIntent.putExtra("cameraId", idString);
+                    Log.i(TAG,"starting service...");
+                    startService(cameraServiceIntent);
+                    //start service which access the camera and the stream of camera image frames
+                    //see the class Camera2Service.java class
+                    ContextCompat.startForegroundService(mContext, cameraServiceIntent);
+                } else {
+                    //if the user has not granted permission, request it
+                    requestPermission();
+                }
 
-
-        AudioStreamService audioStreamService = new AudioStreamService(this, getString(R.string.server_ip),  Integer.parseInt(getString(R.string.audio_server_port)));
-        audioStreamService.startStreaming();
-
+                AudioStreamService audioStreamService = new AudioStreamService(mContext, serverip,  Integer.parseInt(getString(R.string.audio_server_port)));
+                audioStreamService.startStreaming();
+            }
+        });
     }
 
     private void checkPermissionsOrRequest() {
@@ -70,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA,
+                Manifest.permission.RECORD_AUDIO,
                 Manifest.permission.WAKE_LOCK,
                 Manifest.permission.ACCESS_NETWORK_STATE
         };
@@ -121,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                     //this method calls the onProgressUpdate
                     publishProgress(message);
                 }
-            }, getString(R.string.server_ip), Integer.parseInt(getString(R.string.video_server_port)));
+            }, serverip, Integer.parseInt(getString(R.string.video_server_port)));
             mTcpClient.run();
 
             return null;
