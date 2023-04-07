@@ -1,4 +1,5 @@
 from __future__ import absolute_import, division, print_function
+import os
 from py_trees import blackboard
 from six.moves import queue
 import py_trees
@@ -26,7 +27,8 @@ blackboard.tick_num = 0
 # Cognitive System Thread
 
 
-def CognitiveSystem(Window, SpeechToNLPQueue):
+def CognitiveSystem(Window, SpeechToNLPQueue, data_path_str):
+
     # Create GUI signal objects
     SpeechSignal = GUISignal()
     SpeechSignal.signal.connect(Window.UpdateSpeechBox)
@@ -74,15 +76,20 @@ def CognitiveSystem(Window, SpeechToNLPQueue):
 
             # Use online tool to find sentence boundaries
             dummy12 = received.transcript
-            dummy12 = dummy12.replace('\r', '').replace('\n', '')
-            dummyP2 = dummy12.replace(' ', '%20')
-            dummyP3 = dummyP2.replace('\'', '%27')
-            dummyP = dummyP3.replace('&', '%26')
-            part1 = 'curl -d text='+dummyP+' http://bark.phon.ioc.ee/punctuator'
-            op = subprocess.getstatusoutput(part1)
-            # print("op:  ", op)
-            output = op[1].rsplit('\n', 1)[1]
-            sentsList = textParse2.sent_tokenize(output)  # final sentences
+            # dummy12 = dummy12.replace('\r', '').replace('\n', '')
+            # dummyP2 = dummy12.replace(' ', '%20')
+            # dummyP3 = dummyP2.replace('\'', '%27')
+            # dummyP = dummyP3.replace('&', '%26')
+            # part1 = 'curl -d text='+dummyP+' http://bark.phon.ioc.ee/punctuator'
+            # op = subprocess.getstatusoutput(part1)
+            # # print("op:  ", op)
+            # output = op[1].rsplit('\n', 1)[1]
+            # sentsList = textParse2.sent_tokenize(output)  # final sentences
+            # print("original: ",received.transcript)
+            # print("online_tool: ",output)
+            # print("sentsList: ",sentsList)
+            sentsList = [received.transcript]
+            
 
             def print_tree(tree):
                 print(py_trees.display.unicode_tree(root=tree.root, show_status=True))
@@ -100,7 +107,7 @@ def CognitiveSystem(Window, SpeechToNLPQueue):
                     pre_tick_handler=None)
                     # post_tick_handler=print_tree)
 
-                pr, sv_s, s = TickResults(Window, NLP_Items)
+                pr, sv_s, s = TickResults(Window, NLP_Items, data_path_str)
 
                 PunctuatedAndHighlightedTextChunk = item
 
@@ -126,8 +133,16 @@ def CognitiveSystem(Window, SpeechToNLPQueue):
 
 
 # Function to return this recent tick's results
-def TickResults(Window, NLP_Items):
+def TickResults(Window, NLP_Items, data_path_str):
     # print(NLP_Items)
+    if not os.path.exists(data_path_str + "conceptextractiondata/"):
+        os.makedirs(data_path_str+"conceptextractiondata/")
+    CE_outputfile = open(data_path_str +"conceptextractiondata/"+ "cedata.txt", 'w')
+
+    if not os.path.exists(data_path_str + "interventiondata/"):
+        os.makedirs(data_path_str+"interventiondata/")
+    Intervention_outputfile = open(data_path_str +"interventiondata/" + "interventiondata.txt", 'w')
+
     ConceptExtractionSignal = GUISignal()
     ConceptExtractionSignal.signal.connect(Window.UpdateConceptExtractionBox)
 
@@ -215,8 +230,14 @@ def TickResults(Window, NLP_Items):
         suggestions_str += "(" + str(s[0]) + ", <b>" + str(s[1]) + "</b>)<br>"
 
     # print("===============================================================")
+    # ProtocolSignal.signal.emit([protocol_candidates_str, suggestions_str])
     ProtocolSignal.signal.emit([protocol_candidates_str, suggestions_str])
+    #write data to file for data collection
+    Intervention_outputfile.write(suggestions_str)
+
     ConceptExtractionSignal.signal.emit([signs_and_vitals_str])
+    #write data to file for data collection
+    CE_outputfile.write(signs_and_vitals_str)
 
     return protocol_candidates, signs_and_vitals, suggestions
 

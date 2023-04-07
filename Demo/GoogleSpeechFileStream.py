@@ -19,7 +19,7 @@ with open(os.devnull, 'w') as f:
     sys.stdout = oldstdout
 
 # Audio recording parameters
-RATE = 16000
+RATE = 44100
 CHUNK = int(RATE / 10)  # 100ms
 
 
@@ -107,12 +107,12 @@ class FileStream(object):
             if chunk is None:
                 return
 
-            if self.samplesCounter/self._rate > 60:
-                #FileStream.position -= 3
-                GoogleSignal.signal.emit(["File"])
-                print((self.samplesCounter)/self._rate)
-                MsgSignal.signal.emit(["API's 1 minute limit reached. Restablishing connection!"])
-                break
+            # if self.samplesCounter/self._rate > 60:
+            #     #FileStream.position -= 3
+            #     GoogleSignal.signal.emit(["File"])
+            #     print((self.samplesCounter)/self._rate)
+            #     MsgSignal.signal.emit(["API's 1 minute limit reached. Restablishing connection!"])
+            #     break
 
             data = [chunk]
 
@@ -129,6 +129,10 @@ class FileStream(object):
             self.samplesCounter += self._chunk
             FileStream.position += 1
 
+            print("self sample counter: ",self.samplesCounter)
+
+
+
             if self.Window.stopped == 1:
                 print('File Speech Tread Killed')
                 mixer.music.stop()
@@ -140,19 +144,27 @@ class FileStream(object):
                 try:
                     chunk = self._buff.get(block=False)
                     if chunk is None:
+                        print("return")
                         return
                     data.append(chunk)
                     self.samplesCounter += self._chunk
                     FileStream.position += 1
                 except queue.Empty:
+                    print("empty")
                     break
+
+            # if self.samplesCounter > 0 and self.samplesCounter%160000 == 0:
+            #     print('File Speech Thread paused')
+            #     # FileStream.position = 0
+            #     mixer.music.stop()
+            #     return
 
             yield b''.join(data)
 
 # Google Cloud Speech API Recognition Thread for Microphone
 
 
-def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, wavefile_name):
+def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, wavefile_name, data_path_str):
     # Create GUI Signal Object
     SpeechSignal = GUISignal()
     SpeechSignal.signal.connect(Window.UpdateSpeechBox)
@@ -165,16 +177,25 @@ def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, wavefile_nam
 
     language_code = 'en-US'  # a BCP-47 language tag
 
+
+    if("CPR" in wavefile_name):
+        RATE = 44100
+    else:
+        RATE = 16000
+    CHUNK = int(RATE)/10
+    
     client = speech.SpeechClient()
     config = speech.RecognitionConfig(encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
                                       sample_rate_hertz=RATE, language_code=language_code, profanity_filter=True)  # ,model='video')
     streaming_config = speech.StreamingRecognitionConfig(config=config, interim_results=True)
 
     with FileStream(Window, RATE, CHUNK, wavefile_name) as stream:
+        print("audio file name: ", wavefile_name)
         audio_generator = stream.generator()
         requests = (speech.StreamingRecognizeRequest(audio_content=content)
                     for content in audio_generator)
 
+            
         try:
             responses = client.streaming_recognize(streaming_config, requests)
             # Signal that streaming has started
@@ -222,6 +243,9 @@ def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, wavefile_nam
                     # sys.stdout.flush()
                     QueueItem = SpeechNLPItem(transcript, result.is_final,
                                               confidence, num_chars_printed, 'Speech')
+                    # SpeechToNLPQueue.put(QueueItem)
+                    # EMSAgentSpeechToNLPQueue.put(QueueItem)
+
                     SpeechSignal.signal.emit([QueueItem])
                     num_chars_printed = len(transcript)
 
@@ -232,3 +256,11 @@ def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, wavefile_nam
             ButtonsSignal.signal.emit(
                 [(Window.StartButton, True), (Window.ComboBox, True), (Window.ResetButton, True)])
             sys.exit()
+
+
+'''
+
+12:16:44 PM - Unable to get response from Google! Network or other issues. 
+Please Try again! Exception: 403 Cloud Speech-to-Text API has not been used in project 430309206876 before or it is disabled. 
+If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry. 
+'''

@@ -1,5 +1,7 @@
 #Thread for streaming video to the GUI vision window
 
+import csv
+import os
 import time
 import math
 import datetime
@@ -41,9 +43,6 @@ seq_all=0
 dropped_imgs=0
 total_imgs=0
 
-now = datetime.datetime.now()
-dt_string = now.strftime("%d-%m-%Y-%H-%M-%S")
-
 
 def process_image(image):
     """
@@ -78,10 +77,18 @@ def process_image(image):
 
 
 class Thread(QThread):
+    def __init__(self, var):
+        self.data_path_str = var + "videodata/"
+        super().__init__()
+
     changePixmap = pyqtSignal(QImage)
     changeVisInfo = pyqtSignal(str)
+        
+   
 
     def run(self):
+        recording_enabled = True
+        frame_index = 0
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
         sock.bind(('0.0.0.0', TCP_PORT))  
@@ -92,86 +99,122 @@ class Thread(QThread):
         connection,address = sock.accept()  
         print("Client connected: ",address)
 
+       
         #for peak detection
         y_vals = []
 
         #array for timestamps when every image is received
         image_times = []
 
+        curr_date = datetime.datetime.now()
+        dt_string = curr_date.strftime("%d-%m-%Y-%H-%M-%S")
+
         with mp_hands.Hands(
         max_num_hands=1,
         model_complexity=0,
         min_detection_confidence=0.5,
         min_tracking_confidence=0.5) as hands:
-            while True:
-                if( int.from_bytes(connection.recv(1),"big") == 22):
-                    # print("Image received")
+            if not os.path.exists(self.data_path_str + dt_string):
+                os.makedirs(self.data_path_str + dt_string)
+            with open(self.data_path_str + "viddata.csv", 'w', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow(["frame", "recieved_ts", "origin_ts"])
+                is_video_created = False
+            
+                while True:
+                    if( int.from_bytes(connection.recv(1),"big") == 22):
+                        # print("Image received")
 
-                    timestamp = int.from_bytes(connection.recv(8),"big")
-                    # print("Got timestamp:" , timestamp)
+                        timestamp = int.from_bytes(connection.recv(8),"big")
+                        # print("Got timestamp:" , timestamp)
 
-                    img_byte_length = int.from_bytes(connection.recv(8),"big")
-                    # print("Got Num of bytes in the image:" , img_byte_length)
+                        img_byte_length = int.from_bytes(connection.recv(8),"big")
+                        # print("Got Num of bytes in the image:" , img_byte_length)
 
-                    # img_buffer_size = math.ceil(img_byte_length/1024)*1024
-                    img_buffer_size = img_byte_length
-                    # print("Buff Size Should Be: ", img_buffer_size)
+                        # img_buffer_size = math.ceil(img_byte_length/1024)*1024
+                        img_buffer_size = img_byte_length
+                        # print("Buff Size Should Be: ", img_buffer_size)
 
-                    # if(img_buffer_size > 180000 or img_buffer_size < 10000):
-                    #     continue
+                        # if(img_buffer_size > 180000 or img_buffer_size < 10000):
+                        #     continue
 
-                    img_bytes = bytearray()
+                        img_bytes = bytearray()
 
-                    while(img_buffer_size>0):
-                        read_len=min(img_buffer_size,10240)
-                        data = connection.recv(read_len)
-                        img_buffer_size -= len(data)
-                        img_bytes+=data
-                        # print("Remaining buffer size: ",img_buffer_size)
+                        while(img_buffer_size>0):
+                            read_len=min(img_buffer_size,10240)
+                            data = connection.recv(read_len)
+                            img_buffer_size -= len(data)
+                            img_bytes+=data
+                            # print("Remaining buffer size: ",img_buffer_size)
 
-                    #get timestamp when getting the image frame -- for cpr rate detection
-                    curr_time = round(time.time()*1000)
-                    image_times.append(curr_time)
+                        #get timestamp when getting the image frame -- for cpr rate detection
+                        curr_time = round(time.time()*1000)
+                        image_times.append(curr_time)
 
-                    image = Image.open(io.BytesIO(img_bytes))
-                    img_ar=np.array(image)
-                    image = img_ar
+                        image = Image.open(io.BytesIO(img_bytes))
+                        img_ar=np.array(image)
+                        image = img_ar
 
-                    
-                    #process image with mediapipe hand detection
-                    hand_detection_results = hands.process(image)
+                        
+                        #process image with mediapipe hand detection
+                        hand_detection_results = hands.process(image)
 
-                    # hand-detection annotations
-                    if hand_detection_results and hand_detection_results.multi_hand_landmarks:
-                        self.changeVisInfo.emit(str("Hand Detected! Wrist Position Identified."))
-                        for hand_landmarks in hand_detection_results.multi_hand_landmarks:
+                        # hand-detection annotations
+                        if hand_detection_results and hand_detection_results.multi_hand_landmarks:
+                            self.changeVisInfo.emit(str("Hand Detected! Wrist Position Identified."))
+                            for hand_landmarks in hand_detection_results.multi_hand_landmarks:
 
-                            #append y_val to array for peak detection
-                            y_vals.append(hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].y)
-                            
-                            #for drawing hand annotations on image
-                            mp_drawing.draw_landmarks(image,hand_landmarks,mp_hands.HAND_CONNECTIONS,mp_drawing_styles.get_default_hand_landmarks_style(),mp_drawing_styles.get_default_hand_connections_style())
+                                #append y_val to array for peak detection
+                                y_vals.append(hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].y)
+                                
+                                #for drawing hand annotations on image
+                                mp_drawing.draw_landmarks(image,hand_landmarks,mp_hands.HAND_CONNECTIONS,mp_drawing_styles.get_default_hand_landmarks_style(),mp_drawing_styles.get_default_hand_connections_style())
+                        else:
+                            self.changeVisInfo.emit(str("Detecting Hands..."))
+                            y_vals.append(0)#(math.nan)
+
+
+                        #convert image to pixmap format and display on GUI
+                        RGB_img = image
+                        RGB_img = cv2.rotate(RGB_img, cv2.ROTATE_180)
+
+                        #write to file
+                        if(recording_enabled and not is_video_created):
+
+                            height,width,layers=img_ar.shape
+                            fourcc = cv2.VideoWriter_fourcc('M','J','P','G')
+                            video = cv2.VideoWriter(self.data_path_str+'/'+dt_string+'.avi', fourcc, 30, (width, height))
+                            is_video_created = True
+
+                        if(recording_enabled):
+                            now = time.time()*1e3
+
+                            cv2.imwrite(self.data_path_str+ dt_string + '/img_'+str(frame_index)+'.jpg', img_ar)
+                            video.write(RGB_img)
+                            writer.writerow([frame_index, now, timestamp])
+                            frame_index += 1
+                        
+                        h, w, ch = RGB_img.shape
+                        # print("Image Size",h,w)
+                        bytesPerLine = ch * w
+                        convertToQtFormat = QImage(RGB_img.data, w, h, bytesPerLine, QImage.Format_RGB888)
+                        p = convertToQtFormat.scaled(2*640, 2*480, Qt.KeepAspectRatio)
+                        self.changePixmap.emit(p)
+                        
+                        if(len(image_times) == 10000):
+                            #Clear the arrays to get 100 more image frames for cpr rate calculation
+                            y_vals.clear()
+                            image_times.clear()
+
                     else:
-                        self.changeVisInfo.emit(str("Detecting Hands..."))
-                        y_vals.append(0)#(math.nan)
+                        # continue
+                        print("Reconnecting to a client...")
+                        connection.close()
+                
 
-
-                    #convert image to pixmap format and display on GUI
-                    RGB_img = image
-                    h, w, ch = RGB_img.shape
-                    # print("Image Size",h,w)
-                    bytesPerLine = ch * w
-                    convertToQtFormat = QImage(RGB_img.data, w, h, bytesPerLine, QImage.Format_RGB888)
-                    p = convertToQtFormat.scaled(2*640, 2*480, Qt.KeepAspectRatio)
-                    self.changePixmap.emit(p)
+                        connection,address = sock.accept()  
+                        print("Client connected: ",address)
                     
-                    if(len(image_times) == 10000):
-                        #Clear the arrays to get 100 more image frames for cpr rate calculation
-                        y_vals.clear()
-                        image_times.clear()
-
-                else:
-                    continue
 
 
 

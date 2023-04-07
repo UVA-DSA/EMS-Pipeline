@@ -1,4 +1,5 @@
 from __future__ import absolute_import, division, print_function
+import os
 from timeit import default_timer as timer
 import sys
 import pyaudio
@@ -14,13 +15,13 @@ import socket
 
 # Audio recording parameters
 RATE = 16000
-CHUNK = int(RATE / 10)  # 100ms
+CHUNK = int(RATE / 20)  # 100ms #50ms
 #CHUNK = int(RATE * 5)  # 100ms
 
 audio_buff = queue.Queue(maxsize=16)
 
 def audio_stream_UDP():
-        # AUDIO streaming variables and functions
+    # AUDIO streaming variables and functions
     host_name = socket.gethostname()
     host_ip = '0.0.0.0' #socket.gethostbyname(host_name)
     port = 8888
@@ -34,6 +35,7 @@ def audio_stream_UDP():
     CHUNK = int (RATE / 10)
     print("Audio Thread Created!")
 
+        
     # receive and put audio data in queue
     def getAudioData():
         while True:
@@ -47,8 +49,7 @@ def audio_stream_UDP():
                 with audio_buff.mutex:
                     audio_buff.queue.clear()
                     # print("buffer cleared")
-
-            # print('Audio chunk received')
+        # print('Audio chunk received')
             
     t2 = threading.Thread(target=getAudioData, args=())
     t2.start()
@@ -61,7 +62,7 @@ class MicrophoneStream(object):
     micSessionCounter = 0
     audio_buffer = b""
     """Opens a recording stream as a generator yielding the audio chunks."""
-    def __init__(self, Window, rate, chunk):
+    def __init__(self, Window, rate, chunk, data_path_str):
         MicrophoneStream.micSessionCounter += 1
         self.Window = Window
         self._rate = rate
@@ -69,14 +70,14 @@ class MicrophoneStream(object):
         self.samplesCounter = 0
         self.start_time = time.time()
         self.client_socket = None
-
+        self.data_path_str = data_path_str + "audiodata/"
+        if not os.path.exists(self.data_path_str):
+            os.makedirs(self.data_path_str)
         # Create a thread-safe buffer of audio data
         self._buff = queue.Queue()
         self.closed = True
 
 
-
-    
     def __enter__(self):
         # self._audio_interface = pyaudio.PyAudio()
         # Run the audio stream asynchronously to fill the buffer object.
@@ -122,6 +123,7 @@ class MicrophoneStream(object):
             # end of the audio stream.
             chunk = audio_buff.get()
             if chunk is None:
+                print('### Speech Paused')
                 return
             data = [chunk]
 
@@ -131,10 +133,10 @@ class MicrophoneStream(object):
             VUSignal.signal.emit([signal])
 
             # Stop streaming after one minute, create new thread that does recognition
-            if time.time() > (self.start_time + (60)):
-                GoogleSignal.signal.emit(["Mic"])
-                MsgSignal.signal.emit(["API's 1 minute limit reached. Restablishing connection!"])
-                break
+            # if time.time() > (self.start_time + (60)):
+            #     GoogleSignal.signal.emit(["Mic"])
+            #     MsgSignal.signal.emit(["API's 1 minute limit reached. Restablishing connection!"])
+            #     break
 
             self.samplesCounter += self._chunk
 
@@ -142,12 +144,13 @@ class MicrophoneStream(object):
                 print('Speech Tread Killed')
            
                 # Dump file to disk
-                output_audio = wave.open("./Dumps/" + str(datetime.datetime.now().strftime("%c")) + ".wav",'wb')
+                output_audio = wave.open(self.data_path_str+ "audiodata.wav",'wb')
                 output_audio.setnchannels(1) # mono
                 output_audio.setsampwidth(2)
                 output_audio.setframerate(RATE)
                 output_audio.writeframesraw( MicrophoneStream.audio_buffer )
                 output_audio.close()
+                print("audio written")
 
                 MicrophoneStream.audio_buffer = ""
                 return
@@ -157,6 +160,7 @@ class MicrophoneStream(object):
                 try:
                     chunk = audio_buff.get(block=False)
                     if chunk is None:
+                        print('### Speech Paused')
                         return
                     data.append(chunk)
                 except queue.Empty:
@@ -165,10 +169,20 @@ class MicrophoneStream(object):
             #MicrophoneStream.audio_buffer = np.append(MicrophoneStream.audio_buffer, np.fromstring(b''.join(data), 'Int16'))
             MicrophoneStream.audio_buffer += b''.join(data)
             yield b''.join(data)    # b tells python to treat string as bytes
+        
+        
+            # Dump file to  if generator closed -- because the if self.Window.stopped == 1: condition is not happening when closing GUI or ctrl C
+            output_audio = wave.open(self.data_path_str+ "audiodata.wav",'wb')
+            output_audio.setnchannels(1) # mono
+            output_audio.setsampwidth(2)
+            output_audio.setframerate(RATE)
+            output_audio.writeframesraw( MicrophoneStream.audio_buffer )
+            output_audio.close()
+            print("audio written")
 
 
 # Google Cloud Speech API Recognition Thread for Microphone
-def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue):
+def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, data_path_str):
 
     # Create GUI Signal Object
     SpeechSignal = GUISignal()
@@ -183,10 +197,11 @@ def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue):
     language_code = 'en-US'  # a BCP-47 language tag
 
     client = speech.SpeechClient()
-    config = speech.RecognitionConfig(encoding = speech.RecognitionConfig.AudioEncoding.LINEAR16, sample_rate_hertz = RATE, language_code = language_code,    profanity_filter = True)
+    # config = speech.RecognitionConfig(encoding = speech.RecognitionConfig.AudioEncoding.LINEAR16, sample_rate_hertz = RATE, language_code = language_code,    profanity_filter = True)
+    config = speech.RecognitionConfig(encoding = speech.RecognitionConfig.AudioEncoding.LINEAR16, sample_rate_hertz = RATE, language_code = language_code,    profanity_filter = True, model= "medical_dictation")
     streaming_config = speech.StreamingRecognitionConfig(config = config, interim_results = True)
 
-    with MicrophoneStream(Window, RATE, CHUNK) as stream:
+    with MicrophoneStream(Window, RATE, CHUNK, data_path_str) as stream:
 
         audio_generator = stream.generator() # defined in the MicrophoneStream class above
         requests = (speech.StreamingRecognizeRequest(audio_content = content) for content in audio_generator)
@@ -213,6 +228,7 @@ def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue):
                 result = response.results[0]
                 if not result.alternatives:
                     continue
+                            
 
                 # Display the transcription of the top alternative.
                 transcript = result.alternatives[0].transcript
