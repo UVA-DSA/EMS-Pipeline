@@ -62,7 +62,7 @@ class MicrophoneStream(object):
     micSessionCounter = 0
     audio_buffer = b""
     """Opens a recording stream as a generator yielding the audio chunks."""
-    def __init__(self, Window, rate, chunk, data_path_str):
+    def __init__(self, Window, rate, chunk, data_path_str, audioStreamBool, transcriptStreamBool):
         MicrophoneStream.micSessionCounter += 1
         self.Window = Window
         self._rate = rate
@@ -70,9 +70,12 @@ class MicrophoneStream(object):
         self.samplesCounter = 0
         self.start_time = time.time()
         self.client_socket = None
+        self.audioStreamBool = audioStreamBool
         self.data_path_str = data_path_str + "audiodata/"
-        if not os.path.exists(self.data_path_str):
-            os.makedirs(self.data_path_str)
+        
+        if audioStreamBool == True:
+            if not os.path.exists(self.data_path_str):
+                os.makedirs(self.data_path_str)
         # Create a thread-safe buffer of audio data
         self._buff = queue.Queue()
         self.closed = True
@@ -144,13 +147,14 @@ class MicrophoneStream(object):
                 print('Speech Tread Killed')
            
                 # Dump file to disk
-                output_audio = wave.open(self.data_path_str+ "audiodata.wav",'wb')
-                output_audio.setnchannels(1) # mono
-                output_audio.setsampwidth(2)
-                output_audio.setframerate(RATE)
-                output_audio.writeframesraw( MicrophoneStream.audio_buffer )
-                output_audio.close()
-                print("audio written")
+                if self.audioStreamBool == True:
+                    output_audio = wave.open(self.data_path_str+ "audiodata.wav",'wb')
+                    output_audio.setnchannels(1) # mono
+                    output_audio.setsampwidth(2)
+                    output_audio.setframerate(RATE)
+                    output_audio.writeframesraw( MicrophoneStream.audio_buffer )
+                    output_audio.close()
+                # print("audio written")
 
                 MicrophoneStream.audio_buffer = ""
                 return
@@ -170,19 +174,19 @@ class MicrophoneStream(object):
             MicrophoneStream.audio_buffer += b''.join(data)
             yield b''.join(data)    # b tells python to treat string as bytes
         
-        
-            # Dump file to  if generator closed -- because the if self.Window.stopped == 1: condition is not happening when closing GUI or ctrl C
-            output_audio = wave.open(self.data_path_str+ "audiodata.wav",'wb')
-            output_audio.setnchannels(1) # mono
-            output_audio.setsampwidth(2)
-            output_audio.setframerate(RATE)
-            output_audio.writeframesraw( MicrophoneStream.audio_buffer )
-            output_audio.close()
-            print("audio written")
+            if self.audioStreamBool == True:
+                # Dump file to  if generator closed -- because the if self.Window.stopped == 1: condition is not happening when closing GUI or ctrl C
+                output_audio = wave.open(self.data_path_str+ "audiodata.wav",'wb')
+                output_audio.setnchannels(1) # mono
+                output_audio.setsampwidth(2)
+                output_audio.setframerate(RATE)
+                output_audio.writeframesraw( MicrophoneStream.audio_buffer )
+                output_audio.close()
+                # print("audio written")
 
 
 # Google Cloud Speech API Recognition Thread for Microphone
-def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, data_path_str):
+def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, data_path_str, audioStreamBool, transcriptStreamBool):
 
     # Create GUI Signal Object
     SpeechSignal = GUISignal()
@@ -201,7 +205,7 @@ def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, data_path_st
     config = speech.RecognitionConfig(encoding = speech.RecognitionConfig.AudioEncoding.LINEAR16, sample_rate_hertz = RATE, language_code = language_code,    profanity_filter = True, model= "medical_dictation")
     streaming_config = speech.StreamingRecognitionConfig(config = config, interim_results = True)
 
-    with MicrophoneStream(Window, RATE, CHUNK, data_path_str) as stream:
+    with MicrophoneStream(Window, RATE, CHUNK, data_path_str, audioStreamBool, transcriptStreamBool) as stream:
 
         audio_generator = stream.generator() # defined in the MicrophoneStream class above
         requests = (speech.StreamingRecognizeRequest(audio_content = content) for content in audio_generator)
@@ -209,6 +213,14 @@ def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, data_path_st
 
 
         try:
+            
+            #open file to write speech to text data 
+            # data_path_str_transcript = data_path_str + "speechtext_transcript/"
+            if transcriptStreamBool == True:
+                if not os.path.exists(data_path_str + "speechtext_transcript/"):
+                    os.makedirs(data_path_str+"speechtext_transcript/")
+                speechtext_outputfile = open(data_path_str +"speechtext_transcript/" + "speechtotextdata.txt", 'w')
+
             responses = client.streaming_recognize(streaming_config, requests)
             print("responses: ", responses)
 
@@ -242,6 +254,9 @@ def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, data_path_st
 
                 if result.is_final:
                     print(transcript + overwrite_chars)
+                    if transcriptStreamBool == True:
+                        speechtext_outputfile.write(transcript)
+
                     QueueItem = SpeechNLPItem(transcript, result.is_final, confidence, num_chars_printed, 'Speech')
                     SpeechToNLPQueue.put(QueueItem)
                     EMSAgentSpeechToNLPQueue.put(QueueItem)

@@ -109,7 +109,7 @@ class EMSAgent(nn.Module):
         return pred_protocol, logits[preds]
 
 
-def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, data_path_str):
+def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, data_path_str, protocolStreamBool):
 
 
     ProtocolSignal = GUISignal()
@@ -138,12 +138,46 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, data_path_str):
     # call the model
     # narrative = """ATF 64 yom unresponsive in bathroom, delay in accessing patient due to bathroom door being locked with no key.Patient family states he went to the bathroom at appx 2000 hrs, they realized that they hadn't seen him in while, so they checked on him, heard him snoring, and he wouldn't respond, so they called us. Upon our arrival it was appx 2115 hrs. Patient had paraphenalia laying beside him. Patient has history of heroin use.ATF 64 yom laying in bathroom. Patient unresponsive with snoring type respirations, spoon and needle laying next to him. Remainder of assessment held until after given. Patient AAOx4, ABC's intact, GCS 15. Patient admits to heroin use, states he has been off for the last couple years, but has relapsed for the last three day. Patient pupils 2mm RTL, skin normal, warm, and dry. Patient has symmetrical facial features with no slurring or droop noted. Patient has no obvious trauma, but has dirt and wood chips to forehead from laying on bathroom floor. Patient reports to have headache 9/10 to entire head. Patient has no signs of respiratory distress, no JVD. Lung sound clear. Patient has no chest pain, no abdominal pain, no shortness of breath. Patient has good PMS to all extremities, but does report that he has some pain to both knees from where he fell yesterday (he tripped over rug)"""
     narrative = ""
-    if not os.path.exists(data_path_str + "protocoldata_XuerenModel/"):
-        os.makedirs(data_path_str + "protocoldata_XuerenModel/")
-    
-    with open(data_path_str + "protocoldata_XuerenModel/emsagentlog.txt", 'w') as f:
-        while True:
 
+    if protocolStreamBool == True:
+        if not os.path.exists(data_path_str + "protocoldata_XuerenModel/"):
+            os.makedirs(data_path_str + "protocoldata_XuerenModel/")
+        
+        with open(data_path_str + "protocoldata_XuerenModel/emsagentlog.txt", 'w') as f:
+            while True:
+
+                # Get queue item from the Speech-to-Text Module
+                received = EMSAgentSpeechToNLPQueue.get()
+
+                if(received == 'Kill'):
+                    # print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
+                    break
+
+                if(Window.reset == 1):
+                    # print("Cognitive System Thread Received reset signal. Killing Cognitive System Thread.")
+                    return
+
+                # If item received from queue is legitmate
+                else:
+                    print("Received chunk", received.transcript)
+                    narrative += received.transcript
+                    start = time.time()
+                    pred, prob = model(narrative)
+                    end = time.time()
+                    ProtocolSignal.signal.emit(["(Xueren Model: " +str(pred) + " : " +str(prob) +")"])
+                    print('executation time: {:.4f}'.format(end - start))
+                    print(pred, prob)
+
+                    #write data to file for data collection
+                    f.write(narrative+" : ")
+                    f.write(str(pred))
+                    f.write(str(prob))
+                    f.write("\n")
+                    
+            f.close()
+            
+    if protocolStreamBool == False:
+        while True:
             # Get queue item from the Speech-to-Text Module
             received = EMSAgentSpeechToNLPQueue.get()
 
@@ -165,15 +199,7 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, data_path_str):
                 ProtocolSignal.signal.emit(["(Xueren Model: " +str(pred) + " : " +str(prob) +")"])
                 print('executation time: {:.4f}'.format(end - start))
                 print(pred, prob)
-
-                #write data to file for data collection
-                f.write(narrative+" : ")
-                f.write(str(pred))
-                f.write(str(prob))
-                f.write("\n")
-                
-        f.close()
-                
+            
                 
 
 

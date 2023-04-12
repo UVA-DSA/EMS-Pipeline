@@ -61,6 +61,15 @@ from smartwatch_streaming import Thread_Watch
 
 chunkdata = []
 
+datacollection = False
+videostream = False
+audiostream = False
+smartwatchStream = False
+conceptExtractionStream = False
+protocolStream = False
+interventionStream = False
+transcriptStream = False
+
 curr_date = datetime.datetime.now()
 dt_string = curr_date.strftime("%d-%m-%Y-%H-%M-%S")
 
@@ -248,13 +257,13 @@ class MainWindow(QWidget):
         self.video.setGeometry(QtCore.QRect(0, 0, VIDEO_WIDTH, VIDEO_HEIGHT))
 
         # Threads for video 
-        th = Thread(data_path)
+        th = Thread(data_path, videostream)
         th.changePixmap.connect(self.setImage)
         th.changeVisInfo.connect(self.handle_message2)
         th.start()  #Disabled for now
 
         # Threads for smartwatch
-        th2 = Thread_Watch(data_path)
+        th2 = Thread_Watch(data_path, smartwatchStream)
         th2.changeActivityRec.connect(self.handle_message)
         th2.start()
 
@@ -516,7 +525,7 @@ class MainWindow(QWidget):
         if(self.ComboBox.currentText() == 'Microphone'):
             if(self.GoogleSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(
-                    target=GoogleSpeechMicStream.GoogleSpeech, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, data_path,))
+                    target=GoogleSpeechMicStream.GoogleSpeech, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, data_path, audiostream, transcriptStream,))
             elif(self.MLSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(
                     target=WavVecMicStream.WavVec, args=(self, SpeechToNLPQueue,))
@@ -529,7 +538,7 @@ class MainWindow(QWidget):
                 self, 'Open file', 'c:\\', "Wav files (*.wav)")
             if(self.GoogleSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
-                    self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, str(audio_fname), data_path,))
+                    self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, str(audio_fname), data_path, audiostream, transcriptStream,))
             elif(self.MLSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(target=WavVecFileStream.WavVec, args=(self, SpeechToNLPQueue, str(audio_fname),)) #(target=DeepSpeechFileStream.DeepSpeech, args=(self, SpeechToNLPQueue, str(audio_fname),))
             self.otheraudiofilename = str(audio_fname)
@@ -549,7 +558,7 @@ class MainWindow(QWidget):
         else:
             if(self.GoogleSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
-                    self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue,'./Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav', data_path,))
+                    self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue,'./Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav', data_path, audiostream, transcriptStream,))
             elif(self.MLSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(target=WavVecFileStream.WavVec, args=(
                     self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',)) #(target=DeepSpeechFileStream.DeepSpeech, args=( self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',))
@@ -560,7 +569,7 @@ class MainWindow(QWidget):
         if(self.CognitiveSystemThread == None):
             print("Cognitive System Thread Started")
             self.CognitiveSystemThread = StoppableThread(
-                target=CognitiveSystem.CognitiveSystem, args=(self, SpeechToNLPQueue, data_path))
+                target=CognitiveSystem.CognitiveSystem, args=(self, SpeechToNLPQueue, data_path, conceptExtractionStream, interventionStream,))
             self.CognitiveSystemThread.start()
 
 
@@ -568,7 +577,7 @@ class MainWindow(QWidget):
         if(self.EMSAgentThread == None):
             print("EMSAgent Thread Started")
             self.EMSAgentThread = StoppableThread(
-                target=EMSAgentSystem.EMSAgentSystem, args=(self, EMSAgentSpeechToNLPQueue, data_path))
+                target=EMSAgentSystem.EMSAgentSystem, args=(self, EMSAgentSpeechToNLPQueue, data_path, protocolStream))
             self.EMSAgentThread.start()
 
     @pyqtSlot()
@@ -730,16 +739,16 @@ class MainWindow(QWidget):
         item = input[0]
         if(item == 'Mic'):
             self.SpeechThread = StoppableThread(
-                target=GoogleSpeechMicStream.GoogleSpeech, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, data_path, ))
+                target=GoogleSpeechMicStream.GoogleSpeech, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, data_path, audiostream, transcriptStream))
             self.SpeechThread.start()
         elif(item == 'File'):
             if self.ComboBox.currentText() == 'Other Audio File':
                 print("\n\nStart Again\n\n")
                 self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
-                    self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, self.otheraudiofilename, data_path))
+                    self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, self.otheraudiofilename, data_path, audiostream, transcriptStream))
             else:
                 self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
-                    self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav', data_path,))
+                    self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav', data_path, audiostream, transcriptStream))
             self.SpeechThread.start()
 
     # Enabled and/or disable given buttons in a tuple (Button Object, True/False)
@@ -777,6 +786,81 @@ def get_resolution_multiple_screens():
 
 # ================================================================== Main ==================================================================
 if __name__ == '__main__':
+
+    #run with arguments
+    #options:
+        # --datacollect --> "1" or "0" for collect data or not
+        # --streams --> "all" or list of specific streams (options are audio, video, smartwatch, conceptextract, protocol, intervention, transcript)
+    #if no arguments given, default options are "0" for data collection and "all" for streams
+
+    arg_count = len(sys.argv)
+    
+    print(f"Arguments count: {arg_count}")
+    for i, arg in enumerate(sys.argv):
+        print(f"Argument {i:>6}: {arg}")
+
+    if(arg_count >= 3): 
+        if sys.argv[1] == "--datacollect":
+            if sys.argv[2] == "1":
+                datacollection = True
+                videostream = True
+                audiostream = True
+                smartwatchStream = True
+                conceptExtractionStream = True
+                protocolStream = True
+                interventionStream = True
+                transcriptStream = True
+            else: #sys.argv[2] == 0
+                datacollection = False
+                videostream = False
+                audiostream = False
+                smartwatchStream = False
+                conceptExtractionStream = False
+                protocolStream = False
+                interventionStream = False
+                transcriptStream = False
+            if (arg_count > 3):
+                if sys.argv[3] == "--streams":
+                    videostream = False
+                    audiostream = False
+                    smartwatchStream = False
+                    conceptExtractionStream = False
+                    protocolStream = False
+                    interventionStream = False
+                    transcriptStream = False
+                    print("User is specifying streams")
+                    for i in range(4, len(sys.argv)):
+                        if sys.argv[i] == "audio":
+                            audiostream = True
+                        if sys.argv[i] == "video":
+                            videostream = True
+                        if sys.argv[i] == "smartwatch":
+                            smartwatchStream = True
+                        if sys.argv[i] == "conceptextract":
+                            conceptExtractionStream = True
+                        if sys.argv[i] == "protocol":
+                            protocolStream = True
+                        if sys.argv[i] == "intervention":
+                            interventionStream = True
+                        if sys.argv[i] == "transcript":
+                            transcriptStream = True
+                        if sys.argv[i] == "all":
+                            videostream = True
+                            audiostream = True
+                            smartwatchStream = True
+                            conceptExtractionStream = True
+                            protocolStream = True
+                            interventionStream = True
+                            transcriptStream = True
+
+        else: #if arguments specified but --datacollect is not specified then user should enter option for --datacollect
+            print("User Error: Please use --datacollect 1 or --datacollect 0 to specifiy if you want data collected with the data collection algorithm.")
+            print("Default data collection will collect all streams, but you may also specify streams with the --streams option")
+            exit()
+    else:
+        print("No data collection arguments specified -- defaulting to no data collection")
+
+    print("stream bools: ", audiostream, videostream, smartwatchStream, conceptExtractionStream, protocolStream, interventionStream, transcriptStream)
 
     # Set the Google Speech API service-account key environment variable
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "service-account.json"

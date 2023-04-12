@@ -27,7 +27,7 @@ blackboard.tick_num = 0
 # Cognitive System Thread
 
 
-def CognitiveSystem(Window, SpeechToNLPQueue, data_path_str):
+def CognitiveSystem(Window, SpeechToNLPQueue, data_path_str, conceptBool, interventionBool):
 
     # Create GUI signal objects
     SpeechSignal = GUISignal()
@@ -107,7 +107,7 @@ def CognitiveSystem(Window, SpeechToNLPQueue, data_path_str):
                     pre_tick_handler=None)
                     # post_tick_handler=print_tree)
 
-                pr, sv_s, s = TickResults(Window, NLP_Items, data_path_str)
+                pr, sv_s, s = TickResults(Window, NLP_Items, data_path_str, conceptBool, interventionBool)
 
                 PunctuatedAndHighlightedTextChunk = item
 
@@ -133,15 +133,17 @@ def CognitiveSystem(Window, SpeechToNLPQueue, data_path_str):
 
 
 # Function to return this recent tick's results
-def TickResults(Window, NLP_Items, data_path_str):
+def TickResults(Window, NLP_Items, data_path_str, conceptBool, interventionBool):
     # print(NLP_Items)
-    if not os.path.exists(data_path_str + "conceptextractiondata/"):
-        os.makedirs(data_path_str+"conceptextractiondata/")
-    CE_outputfile = open(data_path_str +"conceptextractiondata/"+ "cedata.txt", 'w')
+    if conceptBool == True:
+        if not os.path.exists(data_path_str + "conceptextractiondata/"):
+            os.makedirs(data_path_str+"conceptextractiondata/")
+        CE_outputfile = open(data_path_str +"conceptextractiondata/"+ "cedata.txt", 'w')
 
-    if not os.path.exists(data_path_str + "interventiondata/"):
-        os.makedirs(data_path_str+"interventiondata/")
-    Intervention_outputfile = open(data_path_str +"interventiondata/" + "interventiondata.txt", 'w')
+    if interventionBool == True:
+        if not os.path.exists(data_path_str + "interventiondata/"):
+            os.makedirs(data_path_str+"interventiondata/")
+        Intervention_outputfile = open(data_path_str +"interventiondata/" + "interventiondata.txt", 'w')
 
     ConceptExtractionSignal = GUISignal()
     ConceptExtractionSignal.signal.connect(Window.UpdateConceptExtractionBox)
@@ -232,12 +234,16 @@ def TickResults(Window, NLP_Items, data_path_str):
     # print("===============================================================")
     # ProtocolSignal.signal.emit([protocol_candidates_str, suggestions_str])
     ProtocolSignal.signal.emit([protocol_candidates_str, suggestions_str])
-    #write data to file for data collection
-    Intervention_outputfile.write(suggestions_str)
+
+    if interventionBool == True:
+        #write data to file for data collection
+        Intervention_outputfile.write(suggestions_str)
 
     ConceptExtractionSignal.signal.emit([signs_and_vitals_str])
-    #write data to file for data collection
-    CE_outputfile.write(signs_and_vitals_str)
+
+    if conceptBool == True:
+        #write data to file for data collection
+        CE_outputfile.write(signs_and_vitals_str)
 
     return protocol_candidates, signs_and_vitals, suggestions
 
