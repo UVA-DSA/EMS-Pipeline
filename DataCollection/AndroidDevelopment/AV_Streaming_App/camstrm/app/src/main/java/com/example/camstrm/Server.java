@@ -49,7 +49,7 @@ public class Server {
 
     static class ServerStart implements Runnable {
         public ServerSocket mSocketServer = null;
-        public static final String SERVER_IP = "172.27.142.191"; //server IP address
+        public static final String SERVER_IP = "172.27.164.148"; //server IP address
         public static final int SERVER_PORT = 8899;
         public Socket tcpSocket = null;
 

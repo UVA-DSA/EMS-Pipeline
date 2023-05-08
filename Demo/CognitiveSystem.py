@@ -24,10 +24,18 @@ nltk.download('punkt')
 from behaviours_m import blackboard
 blackboard.tick_num = 0
 
+# ------------ For Feedback ------------
+class FeedbackObj:
+    def __init__(self, intervention, protocol, concept):
+        super(FeedbackObj, self).__init__()
+        self.intervention = intervention
+        self.protocol = protocol
+        self.concept = concept
+
+# ------------ End Feedback Obj Class ------------
+
 # Cognitive System Thread
-
-
-def CognitiveSystem(Window, SpeechToNLPQueue, data_path_str, conceptBool, interventionBool):
+def CognitiveSystem(Window, SpeechToNLPQueue, FeedbackQueue, data_path_str, conceptBool, interventionBool):
 
     # Create GUI signal objects
     SpeechSignal = GUISignal()
@@ -107,7 +115,7 @@ def CognitiveSystem(Window, SpeechToNLPQueue, data_path_str, conceptBool, interv
                     pre_tick_handler=None)
                     # post_tick_handler=print_tree)
 
-                pr, sv_s, s = TickResults(Window, NLP_Items, data_path_str, conceptBool, interventionBool)
+                pr, sv_s, s = TickResults(Window, NLP_Items, data_path_str, conceptBool, interventionBool, FeedbackQueue)
 
                 PunctuatedAndHighlightedTextChunk = item
 
@@ -133,7 +141,7 @@ def CognitiveSystem(Window, SpeechToNLPQueue, data_path_str, conceptBool, interv
 
 
 # Function to return this recent tick's results
-def TickResults(Window, NLP_Items, data_path_str, conceptBool, interventionBool):
+def TickResults(Window, NLP_Items, data_path_str, conceptBool, interventionBool, FeedbackQueue):
     # print(NLP_Items)
     if conceptBool == True:
         if not os.path.exists(data_path_str + "conceptextractiondata/"):
@@ -218,22 +226,39 @@ def TickResults(Window, NLP_Items, data_path_str, conceptBool, interventionBool)
         protocol_candidates_str += "(" + p[0] + ", <b>" + str(round(p[1], 2)) + "</b>)<br>"
 
     signs_and_vitals_str = ""
+    signs_and_vitals_str_fb = ""
+
     for sv in NLP_Items:
         signs_and_vitals_str += "("
         for i, t in enumerate(sv):
             if(i != 3 and i != 4 and i != 5):
                 signs_and_vitals_str += str(t)[0:len(str(t))] + ", "
+                signs_and_vitals_str_fb += str(t)[0:len(str(t))] + ", "
             if(i == 4):
                 signs_and_vitals_str += "<b>" + str(t)[0:len(str(t))] + "</b>, "
+                signs_and_vitals_str_fb += str(t)[0:len(str(t))] + ", "
+
         signs_and_vitals_str = signs_and_vitals_str[:-2] + ")<br>"
 
     suggestions_str = ""
+    suggestions_str_fb = ""
     for s in suggestions:
         suggestions_str += "(" + str(s[0]) + ", <b>" + str(s[1]) + "</b>)<br>"
+        suggestions_str_fb += "(" + str(s[0]) + ", " + str(s[1]) + ")  | "
 
     # print("===============================================================")
+
+    #Feedback
+    interventionFB =  FeedbackObj(suggestions_str_fb, "", "")
+    FeedbackQueue.put(interventionFB)
+
+    conceptFB =  FeedbackObj("", "", signs_and_vitals_str_fb)
+    FeedbackQueue.put(conceptFB)
+
+
     # ProtocolSignal.signal.emit([protocol_candidates_str, suggestions_str])
     ProtocolSignal.signal.emit([protocol_candidates_str, suggestions_str])
+
 
     if interventionBool == True:
         #write data to file for data collection

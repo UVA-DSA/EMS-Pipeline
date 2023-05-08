@@ -31,7 +31,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class SendSensorDataWorker extends Worker {
 
     private static final String DEBUG_TAG = "Worker";
-    private String serverIPAddress = "172.27.162.26";
+    private String serverIPAddress = "172.27.159.100";
     private String message = "Hello Android!" ;
     public boolean isStopped = false;
     private int port = 7889;

@@ -1,36 +1,74 @@
 package com.example.camstrm;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.nio.file.attribute.FileTime;
 
 public class MainActivity extends AppCompatActivity {
     private static final String[] CAMERA_PERMISSION = new String[]{Manifest.permission.CAMERA};
     private static final int CAMERA_REQUEST_CODE = 10;
     protected static final String TAG = "cam_stream";
     public static TcpClient mTcpClient;
-    String serverip = "";
+    String serverip = "172.27.164.148";
     private Context mContext;
+
+    ImageView imageView;
+    ActivityResultLauncher<Intent> activityResultLauncher;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        LayoutInflater inflater = LayoutInflater.from(MainActivity.this); // or (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View viewMyLayout = inflater.inflate(R.layout.activity_main, null);
+        setContentView(viewMyLayout);
+//        setContentView(R.layout.activity_main);
         getWindow(). addFlags (WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         Log.i(TAG,"in main");
         mContext = this;
+
+//        Intent intent = getIntent();
+//        Bundle extras = getIntent().getExtras();
+//        String userName;
+//
+//        if (extras != null) {
+////            userName = extras.getString("name");
+//            Uri myUri = Uri.parse(extras.getString("uri"));
+////            ImageView img = new ImageView(this);
+//            ImageView imageView= (ImageView) findViewById(R.id.image_view);
+//            imageView.setImageURI(null);
+//            imageView.setImageURI(myUri);
+//        }
 
         //button to close+exit app
         Button btn1 = (Button) findViewById(R.id.btn1);
@@ -47,14 +85,14 @@ public class MainActivity extends AppCompatActivity {
         startbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText serverEditText = (EditText) findViewById(R.id.serverip_input);
-                serverip = serverEditText.getText().toString();
+//                EditText serverEditText = (EditText) findViewById(R.id.serverip_input);
+//                serverip = serverEditText.getText().toString();
 
                 // start server that sends frames to computer over ADB
                 //        Server server=new Server();
                 //        server.startServer();
 
-                new ConnectTask().execute("");
+                new ConnectTask().execute();
 
                 //chack of the user has given permission for this app to use camera
                 checkPermissionsOrRequest();
@@ -72,6 +110,28 @@ public class MainActivity extends AppCompatActivity {
                     //start service which access the camera and the stream of camera image frames
                     //see the class Camera2Service.java class
                     ContextCompat.startForegroundService(mContext, cameraServiceIntent);
+
+                    //this was for updating image view based on intent
+//                    Bundle extras = getIntent().getExtras(); //result.getData().getExtras();
+//                    Uri imageUri;
+//                    byte[] byteArray = getIntent().getByteArrayExtra("image");
+//
+//                    if (byteArray != null) {
+//                        Bitmap imageBitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+//                        //                    Bitmap imageBitmap = (Bitmap) extras.get("data");
+//                        Log.i(TAG, "got image data from intent:  ");
+//                        WeakReference<Bitmap> result_1 = new WeakReference<>(Bitmap.createScaledBitmap(imageBitmap,
+//                                        imageBitmap.getWidth(), imageBitmap.getHeight(), false).
+//                                copy(Bitmap.Config.RGB_565, true));
+//
+//                        Bitmap bm = result_1.get();
+//                        imageUri = saveImage(bm, MainActivity.this);
+//                        Log.i(TAG, "uri to set: " + String.valueOf(imageUri));
+//                        imageView.setImageURI(imageUri);
+//                        //                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                        //                    activityResultLauncher.launch(cameraIntent);
+//                    }
+
                 } else {
                     //if the user has not granted permission, request it
                     requestPermission();
@@ -81,6 +141,46 @@ public class MainActivity extends AppCompatActivity {
                 audioStreamService.startStreaming();
             }
         });
+
+//        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+//
+//            @Override
+//            public void onActivityResult(ActivityResult result) {
+//                Bundle extras = result.getData().getExtras();
+//                Uri imageUri;
+//                Bitmap imageBitmap = (Bitmap) extras.get("data");
+//                WeakReference<Bitmap> result_1 = new WeakReference<>(Bitmap.createScaledBitmap(imageBitmap,
+//                                imageBitmap.getWidth(), imageBitmap.getHeight(), false).
+//                        copy(Bitmap.Config.RGB_565, true));
+//
+//                Bitmap bm = result_1.get();
+//                imageUri = saveImage(bm, MainActivity.this);
+//                imageView.setImageURI(imageUri);
+//
+//            }
+//
+//        });
+    }
+
+    private Uri saveImage(Bitmap image, MainActivity context) {
+
+        File imagefolder = new File(context.getCacheDir(), "images");
+        Uri uri = null;
+        try{
+            imagefolder.mkdirs();
+            File file = new File(imagefolder, "captured_image.jpg");
+            FileOutputStream stream = new FileOutputStream(file);
+            image.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            stream.flush();
+            stream.close();
+            uri = FileProvider.getUriForFile(context.getApplicationContext(), "com.allcodingtutorial.camerafull1"+".provider", file);
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return uri ;
     }
 
     private void checkPermissionsOrRequest() {
@@ -129,31 +229,40 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
-    public class ConnectTask extends AsyncTask<String, String, TcpClient> {
+    public class ConnectTask extends AsyncTask<byte[], byte[], TcpClient> {
 
         @Override
-        protected TcpClient doInBackground(String... message) {
+        protected TcpClient doInBackground(byte[]... message) {
 
 
             //we create a TCPClient object
             mTcpClient = new TcpClient(new TcpClient.OnMessageReceived()  {
                 @Override
                 //here the messageReceived method is implemented
-                public void messageReceived(String message) {
+                public void messageReceived(byte[] message) {
                     //this method calls the onProgressUpdate
+                    Log.d("main", "publish progress is being called - should call onProgessUpdate");
                     publishProgress(message);
                 }
-            }, serverip, Integer.parseInt(getString(R.string.video_server_port)));
+            }, serverip, Integer.parseInt(getString(R.string.video_server_port)), MainActivity.this);
             mTcpClient.run();
 
             return null;
         }
 
-        @Override
-        protected void onProgressUpdate(String... values) {
+//        @Override
+        protected void onProgressUpdate(byte... values) {
             super.onProgressUpdate(values);
             //response received from server
-            Log.d("test", "response " + values[0]);
+//            Log.d("test", "response " + values[0]);
+
+            //if receiving bytes instead:
+            Log.d("main", "on progress update is being called in main ");
+            Bitmap bmp = BitmapFactory.decodeByteArray(values, 0, values.length);
+            ImageView image = (ImageView) findViewById(R.id.image_view);
+            image.setImageBitmap(Bitmap.createScaledBitmap(bmp, image.getWidth(), image.getHeight(), false));
+
+
             //process server response here....
 
         }

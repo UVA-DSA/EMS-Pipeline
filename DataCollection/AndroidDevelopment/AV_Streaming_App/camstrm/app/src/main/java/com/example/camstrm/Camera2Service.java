@@ -4,6 +4,7 @@ package com.example.camstrm;
 import static com.example.camstrm.MainActivity.mTcpClient;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -25,6 +26,9 @@ import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 import android.util.Range;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -50,6 +54,10 @@ public class Camera2Service extends Service {
     private static final int ID_SERVICE = 101;
     public static volatile ArrayList<ImageData> img_list=new ArrayList<ImageData>();
     private boolean isTaskStarted = false;
+
+//    LayoutInflater inflater = LayoutInflater.from(MainActivity.this); // or (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//    View viewMyLayout = inflater.inflate(R.layout.activity_main, null);
+//    ImageView imageView1 = (ImageView)viewMyLayout.findViewById(R.id.image_view);
     protected CameraDevice.StateCallback cameraStateCallback = new CameraDevice.StateCallback() {
         @Override
         public void onOpened(@NonNull CameraDevice camera) {
@@ -119,33 +127,32 @@ public class Camera2Service extends Service {
         @Override
         public void onImageAvailable(ImageReader reader) {
             Image img = null;
+//            Intent img_intent = new Intent(Camera2Service.this.getApplicationContext(), MainActivity.class);
 
             try{
 
                 Long timestamp = System.currentTimeMillis();
                 img = reader.acquireLatestImage();
-
                 if(img.getPlanes().length == 0){
                     return;
                 }
-
                 ByteBuffer buf = img.getPlanes()[0].getBuffer();
 
                 byte[] bytes = new byte[buf.remaining()];
                 buf.get(bytes);
 
-
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     img.setTimestamp(timestamp);
                 }
-
                 if(img_list.size() < 10){
-
                     ImageData imageData=new ImageData(seq,img.getHeight(),img.getWidth(),bytes.length,bytes, img.getTimestamp());
                     img_list.add(imageData);
+
+//                    Log.e(TAG, "Trying to put imageData into an Intent to pass to Main activity");
+//                    img_intent.putExtra("uri", imageData.data.toString());
+//                    img_intent.putExtra("image", bytes);
+
 //                    mTcpClient.sendImage(imageData);
-
-
                 }
 
 

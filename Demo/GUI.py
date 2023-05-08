@@ -46,6 +46,7 @@ from classes import SpeechNLPItem, GUISignal
 import TextSpeechStream
 import CognitiveSystem
 from EMSAgent.Interface import EMSAgentSystem
+import Feedback
 import GoogleSpeechMicStream
 import GoogleSpeechFileStream
 #import DeepSpeechMicStream
@@ -85,14 +86,13 @@ class MainWindow(QWidget):
     def __init__(self, width, height):
         super(MainWindow, self).__init__()
 
-
-
         # Fields
         self.width = width
         self.height = height
         self.SpeechThread = None
         self.CognitiveSystemThread = None
         self.EMSAgentThread = None
+        self.FeedbackThread = None
         self.stopped = 0
         self.reset = 0
         self.maximal = Amplitude()
@@ -476,6 +476,7 @@ class MainWindow(QWidget):
         self.reset = 1
         SpeechToNLPQueue.put('Kill')
         EMSAgentSpeechToNLPQueue.put('Kill')
+        FeedbackQueue.put('Kill')
         event.accept()
 
     @pyqtSlot()
@@ -569,7 +570,7 @@ class MainWindow(QWidget):
         if(self.CognitiveSystemThread == None):
             print("Cognitive System Thread Started")
             self.CognitiveSystemThread = StoppableThread(
-                target=CognitiveSystem.CognitiveSystem, args=(self, SpeechToNLPQueue, data_path, conceptExtractionStream, interventionStream,))
+                target=CognitiveSystem.CognitiveSystem, args=(self, SpeechToNLPQueue, FeedbackQueue, data_path, conceptExtractionStream, interventionStream,))
             self.CognitiveSystemThread.start()
 
 
@@ -577,8 +578,15 @@ class MainWindow(QWidget):
         if(self.EMSAgentThread == None):
             print("EMSAgent Thread Started")
             self.EMSAgentThread = StoppableThread(
-                target=EMSAgentSystem.EMSAgentSystem, args=(self, EMSAgentSpeechToNLPQueue, data_path, protocolStream))
+                target=EMSAgentSystem.EMSAgentSystem, args=(self, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path, protocolStream))
             self.EMSAgentThread.start()
+
+         # ==== Start the Feedback Thread ==== #
+        if(self.FeedbackThread == None):
+            print("Feedback Thread Started")
+            self.FeedbackThread = StoppableThread(
+                target=Feedback.Feedback, args=(self, data_path, FeedbackQueue))
+            self.FeedbackThread.start()
 
     @pyqtSlot()
     def StopButtonClick(self):
@@ -607,6 +615,7 @@ class MainWindow(QWidget):
         if(self.CognitiveSystemThread != None):
             SpeechToNLPQueue.put('Kill')
             EMSAgentSpeechToNLPQueue.put('Kill')
+            FeedbackQueue.put('Kill')
 
         self.VUMeter.setValue(0)
         self.finalSpeechSegmentsSpeech = []
@@ -619,6 +628,7 @@ class MainWindow(QWidget):
         self.SpeechThread = None
         self.CognitiveSystemThread = None
         self.EMSAgentThread = None
+        self.FeedbackThread = None
         time.sleep(.1)
         self.StartButton.setEnabled(True)
 
@@ -868,6 +878,7 @@ if __name__ == '__main__':
     # Create thread-safe queue for communication between Speech and Cognitive System threads
     SpeechToNLPQueue = queue.Queue()
     EMSAgentSpeechToNLPQueue  = queue.Queue()
+    FeedbackQueue = queue.Queue()
     # GUI: Create the main window, show it, and run the app
     print("Starting GUI")
     app = QApplication(sys.argv)

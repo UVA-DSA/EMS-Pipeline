@@ -17,6 +17,15 @@ from tqdm import tqdm
 warnings.filterwarnings("ignore")
 from classes import  GUISignal
 
+# ------------ For Feedback ------------
+class FeedbackObj:
+    def __init__(self, intervention, protocol, concept):
+        super(FeedbackObj, self).__init__()
+        self.intervention = intervention
+        self.protocol = protocol
+        self.concept = concept
+
+# ------------ End Feedback Obj Class ------------
 
 class EMSAgent(nn.Module):
     def __init__(self, config, date):
@@ -109,7 +118,7 @@ class EMSAgent(nn.Module):
         return pred_protocol, logits[preds]
 
 
-def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, data_path_str, protocolStreamBool):
+def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_str, protocolStreamBool):
 
 
     ProtocolSignal = GUISignal()
@@ -168,6 +177,11 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, data_path_str, protocolStre
                     print('executation time: {:.4f}'.format(end - start))
                     print(pred, prob)
 
+                    #Feedback
+                    protocolFB =  FeedbackObj("", str(pred) + " : " +str(prob), "")
+                    FeedbackQueue.put(protocolFB)
+
+
                     #write data to file for data collection
                     f.write(narrative+" : ")
                     f.write(str(pred))
@@ -199,6 +213,10 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, data_path_str, protocolStre
                 ProtocolSignal.signal.emit(["(Xueren Model: " +str(pred) + " : " +str(prob) +")"])
                 print('executation time: {:.4f}'.format(end - start))
                 print(pred, prob)
+
+                #Feedback
+                protocolFB =  FeedbackObj("", str(pred) + " : " +str(prob), "")
+                FeedbackQueue.put(protocolFB)
             
                 
 

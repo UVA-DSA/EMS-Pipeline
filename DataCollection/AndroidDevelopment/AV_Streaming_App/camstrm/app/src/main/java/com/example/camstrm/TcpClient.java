@@ -1,7 +1,12 @@
 package com.example.camstrm;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -20,6 +25,7 @@ import java.util.TimerTask;
 public class TcpClient {
 
     public static final String TAG = TcpClient.class.getSimpleName();
+    private Context context = null;
     public  String SERVER_IP; //server IP address
     public  int SERVER_PORT;
     // message to send to the server
@@ -40,10 +46,11 @@ public class TcpClient {
     /**
      * Constructor of the class. OnMessagedReceived listens for the messages received from server
      */
-    public TcpClient(OnMessageReceived listener, String SERVER_IP, int SERVER_PORT) {
+    public TcpClient(OnMessageReceived listener, String SERVER_IP, int SERVER_PORT, Context context) {
         mMessageListener = listener;
         this.SERVER_IP = SERVER_IP;
         this.SERVER_PORT = SERVER_PORT;
+        this.context = context;
     }
 
 
@@ -68,42 +75,48 @@ public class TcpClient {
         thread.start();
     }
 
-    private TimerTask timerTask = new TimerTask() {
+    private TimerTaskk timerTask = new TimerTaskk(context);
+        public class TimerTaskk extends TimerTask {
+            Context ctxObject = null;
 
-        @Override
-        public void run() {
-            if (mBufferImageOut != null) {
+            public TimerTaskk(Context ctx) {
+                ctxObject = ctx;
+            }
 
-                try {
+            @Override
+            public void run() {
+                if (mBufferImageOut != null) {
 
-
-                    if(Camera2Service.img_list.size() > 0){
-                        Log.d(TAG, "Sending Image");
-
-
-                        ImageData image = Camera2Service.img_list.remove(0);
+                    try {
 
 
-                        mBufferImageOut.write(22);
+                        if (Camera2Service.img_list.size() > 0) {
+                            Log.d(TAG, "Sending Image");
 
-                        mBufferImageOut.writeInt(image.seq);
-                        mBufferImageOut.writeLong(image.timestamp);
-                        mBufferImageOut.writeInt(image.width);
-                        mBufferImageOut.writeInt(image.byte_len);
-                        mBufferImageOut.write(image.data);
-                        mBufferImageOut.flush();
+
+                            ImageData image = Camera2Service.img_list.remove(0);
+
+
+                            mBufferImageOut.write(22);
+
+                            mBufferImageOut.writeInt(image.seq);
+                            mBufferImageOut.writeLong(image.timestamp);
+                            mBufferImageOut.writeInt(image.width);
+                            mBufferImageOut.writeInt(image.byte_len);
+                            mBufferImageOut.write(image.data);
+                            mBufferImageOut.flush();
+
+                        }
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
 
                     }
 
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-
                 }
-
             }
         }
-    };
 
     public void start() {
         if(timer != null) {
@@ -127,17 +140,13 @@ public class TcpClient {
                     Log.d(TAG, "Sending Image");
 
                     try {
-
                         mBufferImageOut.write(22);
-
 //                        mBufferImageOut.writeInt(image.seq);
                         mBufferImageOut.writeLong(image.timestamp);
 //                        mBufferImageOut.writeInt(image.width);
                         mBufferImageOut.writeLong(image.byte_len);
                         mBufferImageOut.write(image.data);
                         mBufferImageOut.flush();
-
-//                        Thread.sleep(33);
                         return 0;
 
                     } catch (IOException e) {
@@ -219,7 +228,18 @@ public class TcpClient {
                     if(Camera2Service.img_list.size() > 0){
 
                         ImageData img = Camera2Service.img_list.remove(Camera2Service.img_list.size()-1);
+
+                        //if using intent in run method:
+//                        Intent img_intent = new Intent(context, MainActivity.class);
+//                        Log.d("intent", "trying to sen img via Intent to Main");
+//                        img_intent.putExtra("img", img.data);
+//                        context.startActivity(img_intent);
+//                        ((Activity)context).finish();
+
                         status = sendImage(img);
+
+                        //if values was bytes for message received:
+                        mMessageListener.messageReceived(img.data);
 
                         Camera2Service.img_list.clear();
 
@@ -262,7 +282,7 @@ public class TcpClient {
     //Declare the interface. The method messageReceived(String message) will must be implemented in the Activity
     //class at on AsyncTask doInBackground
     public interface OnMessageReceived {
-        public void messageReceived(String message);
+        public void messageReceived(byte[] message);
     }
 
 }

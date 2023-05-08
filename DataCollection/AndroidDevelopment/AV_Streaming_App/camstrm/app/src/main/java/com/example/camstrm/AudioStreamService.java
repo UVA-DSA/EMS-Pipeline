@@ -72,10 +72,8 @@ public class AudioStreamService {
                     while(audioStreamStatus == true) {
                         //reading data from MIC into buffer
                         BUFFER_SIZE = recorder.read(buffer, 0, buffer.length);
-
                         //putting buffer in the packet
                         packet = new DatagramPacket (buffer,buffer.length,destination,port);
-
                         socket.send(packet);
                         //System.out.println("MinBufferSize: " +BUFFER_SIZE);
                     }

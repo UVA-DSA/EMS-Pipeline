@@ -93,3 +93,143 @@ Xueren: medical - altered mental status0.26622877
 "(Gender, True, man, <b>0.81</b>)<br>(Age, True, 55, <b>0.65</b>)<br>(Loss of consciousness, True, unconscious, <b>0.77</b>)<br>(Bp, True, 160/130, <b>0.77</b>)<br>(Hypertension, True, 160, <b>0.77</b>)<br>","(Medical - Altered Mental Status, <b>0.94</b>)<br>(Medical - Overdose/Poisoning - Opioid, <b>0.05</b>)<br>(Medical - Diabetic - Hypoglycemia, <b>0.01</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>(Normal saline, <b>0.94</b>)<br>"
 "(Gender, True, man, <b>0.81</b>)<br>(Age, True, 55, <b>0.65</b>)<br>(Loss of consciousness, True, unconscious, <b>0.77</b>)<br>(Bp, True, 160/130, <b>0.77</b>)<br>(Hypertension, True, 160, <b>0.77</b>)<br>",(Xueren Model: medical - altered mental status : 0.1713362)
 "(Medical - Altered Mental Status, <b>0.63</b>)<br>(Medical - Overdose/Poisoning - Opioid, <b>0.32</b>)<br>(Medical - Diabetic - Hypoglycemia, <b>0.05</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>(Normal saline, <b>0.63</b>)<br>"
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Xueren Model: general - cardiac arrest : 0.42541143)
+(Xueren Model: general - cardiac arrest : 0.7298147)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Xueren Model: general - cardiac arrest : 0.8256511)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+(Xueren Model: medical - overdose/poisoning - opioid (protocol 7 - 1) : 0.19750622)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Xueren Model: general - cardiac arrest : 0.7618792)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Gender, True, male, <b>0.81</b>)<br>(Age, True, 25, <b>0.65</b>)<br>",(Xueren Model: general - cardiac arrest : 0.89096665)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Gender, True, male, <b>0.81</b>)<br>(Age, True, 25, <b>0.65</b>)<br>",(Xueren Model: general - cardiac arrest : 0.8899079)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Gender, True, male, <b>0.81</b>)<br>(Age, True, 25, <b>0.65</b>)<br>",(Xueren Model: general - cardiac arrest : 0.79218876)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Gender, True, male, <b>0.81</b>)<br>(Age, True, 25, <b>0.65</b>)<br>",(Xueren Model: general - cardiac arrest : 0.7833294)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Gender, True, male, <b>0.81</b>)<br>(Age, True, 25, <b>0.65</b>)<br>",(Xueren Model: general - cardiac arrest : 0.86978287)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Gender, True, male, <b>0.81</b>)<br>(Age, True, 25, <b>0.65</b>)<br>",(Xueren Model: general - cardiac arrest : 0.88525635)
+"(Transport, <b>1.0</b>)<br>(Normal saline, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Gender, True, male, <b>0.81</b>)<br>(Age, True, 25, <b>0.65</b>)<br>(Pulse, True, 3, <b>0.75</b>)<br>(Bradycardia, True, 3, <b>0.75</b>)<br>",(Xueren Model: general - cardiac arrest : 0.907131)
+"(Transport, <b>1.0</b>)<br>(Normal saline, <b>0.13</b>)<br>(Cardiac monitor, <b>0.13</b>)<br>"
+"(Gender, True, male, <b>0.81</b>)<br>(Age, True, 25, <b>0.65</b>)<br>(Pulse, True, 3, <b>0.75</b>)<br>(Bradycardia, True, 3, <b>0.75</b>)<br>(Wheezing, True, breath sounds, <b>0.76</b>)<br>",(Xueren Model: general - cardiac arrest : 0.9163003)
+"(Transport, <b>1.0</b>)<br>(Normal saline, <b>0.13</b>)<br>(Cardiac monitor, <b>0.13</b>)<br>"
+"(Gender, True, male, <b>0.81</b>)<br>(Age, True, 25, <b>0.65</b>)<br>(Pulse, True, 3, <b>0.75</b>)<br>(Bradycardia, True, 3, <b>0.75</b>)<br>(Wheezing, True, breath sounds, <b>0.76</b>)<br>",(Xueren Model: general - cardiac arrest : 0.9173133)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.57</b>)<br>"
+"(Gender, True, male, <b>0.81</b>)<br>(Age, True, 25, <b>0.65</b>)<br>(Pulse, True, 3, <b>0.75</b>)<br>(Bradycardia, True, 3, <b>0.75</b>)<br>(Wheezing, True, breath sounds, <b>0.76</b>)<br>(Pale, True, pale, <b>0.69</b>)<br>",(Xueren Model: general - cardiac arrest : 0.9312731)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.57</b>)<br>"
+"(Gender, True, male, <b>0.81</b>)<br>(Age, True, 25, <b>0.65</b>)<br>(Pulse, True, 3, <b>0.75</b>)<br>(Bradycardia, True, 3, <b>0.75</b>)<br>(Wheezing, True, breath sounds, <b>0.76</b>)<br>(Pale, True, pale, <b>0.69</b>)<br>",(Xueren Model: general - cardiac arrest : 0.919859)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.57</b>)<br>"
+"(Gender, True, male, <b>0.81</b>)<br>(Age, True, 25, <b>0.65</b>)<br>(Pulse, True, 3, <b>0.75</b>)<br>(Bradycardia, True, 3, <b>0.75</b>)<br>(Wheezing, True, breath sounds, <b>0.76</b>)<br>(Pale, True, pale, <b>0.69</b>)<br>",(Xueren Model: general - cardiac arrest : 0.919859)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.57</b>)<br>"
+"(Gender, True, male, <b>0.81</b>)<br>(Age, True, 25, <b>0.65</b>)<br>(Pulse, True, 3, <b>0.75</b>)<br>(Bradycardia, True, 3, <b>0.75</b>)<br>(Wheezing, True, breath sounds, <b>0.76</b>)<br>(Pale, True, pale, <b>0.69</b>)<br>",(Xueren Model: general - cardiac arrest : 0.919859)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.57</b>)<br>"
+"(Gender, True, male, <b>0.81</b>)<br>(Age, True, 25, <b>0.65</b>)<br>(Pulse, True, 3, <b>0.75</b>)<br>(Bradycardia, True, 3, <b>0.75</b>)<br>(Wheezing, True, breath sounds, <b>0.76</b>)<br>(Pale, True, pale, <b>0.69</b>)<br>",(Xueren Model: general - cardiac arrest : 0.919859)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.57</b>)<br>"
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Bp, True, 13, <b>0.9</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+(Xueren Model: general - cardiac arrest : 0.29284927)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Xueren Model: general - cardiac arrest : 0.25435716)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Bp, True, 16, <b>0.86</b>)<br>",(Xueren Model: general - cardiac arrest : 0.33130065)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+(Xueren Model: medical - altered mental status : 0.21519199)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Xueren Model: medical - abdominal pain (protocol 3 - 2) : 0.18769208)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+(Xueren Model: medical - altered mental status : 0.21519199)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Xueren Model: general - cardiac arrest : 0.32089347)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Xueren Model: general - cardiac arrest : 0.32089347)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+(Xueren Model: medical - abdominal pain (protocol 3 - 2) : 0.18827218)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Xueren Model: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.24562033)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Xueren Model: general - cardiac arrest : 0.37093335)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Xueren Model: general - cardiac arrest : 0.38133308)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Pulse, True, pulseless, <b>1.0</b>)<br>",(Xueren Model: general - cardiac arrest : 0.38133308)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Pulse, True, pulseless, <b>1.0</b>)<br>",(Xueren Model: general - cardiac arrest : 0.38133308)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Pulse, True, pulseless, <b>1.0</b>)<br>",(Xueren Model: general - cardiac arrest : 0.524972)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Pulse, True, pulseless, <b>1.0</b>)<br>",(Xueren Model: general - cardiac arrest : 0.524972)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Pulse, True, pulseless, <b>1.0</b>)<br>",(Xueren Model: general - cardiac arrest : 0.5730139)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+(Xueren Model: general - cardiac arrest : 0.2073218)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Xueren Model: general - cardiac arrest : 0.38328528)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Pulse, True, pulseless, <b>1.0</b>)<br>",(Xueren Model: general - cardiac arrest : 0.32982603)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Pulse, True, pulseless, <b>1.0</b>)<br>",(Xueren Model: general - cardiac arrest : 0.3488091)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Pulse, True, pulseless, <b>1.0</b>)<br>(Bp, True, 120, <b>0.9</b>)<br>",(Xueren Model: general - cardiac arrest : 0.49222264)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Pulse, True, pulseless, <b>1.0</b>)<br>(Bp, True, 120, <b>0.9</b>)<br>",(Xueren Model: general - cardiac arrest : 0.49222264)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Pulse, True, pulseless, <b>1.0</b>)<br>(Bp, True, 120, <b>0.9</b>)<br>",(Xueren Model: general - cardiac arrest : 0.5162826)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Pulse, True, pulseless, <b>1.0</b>)<br>(Bp, True, 120, <b>0.9</b>)<br>(Bp, True, blood pressure, <b>0.9</b>)<br>",(Xueren Model: general - cardiac arrest : 0.6145624)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+(Xueren Model: general - cardiac arrest : 0.2073218)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Xueren Model: general - cardiac arrest : 0.3017442)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Xueren Model: general - cardiac arrest : 0.42434168)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+(Xueren Model: general - cardiac arrest : 0.2073218)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Xueren Model: general - cardiac arrest : 0.1804402)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Bp, True, 160, <b>1.0</b>)<br>",(Xueren Model: general - cardiac arrest : 0.1804402)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Bp, True, 160, <b>1.0</b>)<br>",(Xueren Model: general - cardiac arrest : 0.1804402)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Bp, True, 160, <b>1.0</b>)<br>",(Xueren Model: general - cardiac arrest : 0.1804402)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Bp, True, 160, <b>1.0</b>)<br>",(Xueren Model: general - cardiac arrest : 0.1804402)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Bp, True, 160, <b>1.0</b>)<br>",(Xueren Model: general - cardiac arrest : 0.1804402)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+(Xueren Model: general - cardiac arrest : 0.2073218)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Xueren Model: general - cardiac arrest : 0.1804402)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Bp, True, 160, <b>1.0</b>)<br>",(Xueren Model: general - cardiac arrest : 0.38111582)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Bp, True, 160, <b>1.0</b>)<br>",(Xueren Model: general - cardiac arrest : 0.52726936)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Bp, True, 160, <b>1.0</b>)<br>(Pulse, True, pulseless, <b>1.0</b>)<br>",(Xueren Model: general - cardiac arrest : 0.6329952)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Bp, True, 160, <b>1.0</b>)<br>(Pulse, True, pulseless, <b>1.0</b>)<br>(Pulse, True, pulseless, <b>1.0</b>)<br>",(Xueren Model: general - cardiac arrest : 0.6329952)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+(Xueren Model: general - cardiac arrest : 0.29284927)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Xueren Model: general - cardiac arrest : 0.28377807)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Bp, True, 160, <b>1.0</b>)<br>",(Xueren Model: general - cardiac arrest : 0.33540526)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Bp, True, 160, <b>1.0</b>)<br>(Pulse, True, pulses, <b>1.0</b>)<br>",(Xueren Model: general - cardiac arrest : 0.26338506)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Bp, True, 160, <b>1.0</b>)<br>(Pulse, True, pulses, <b>1.0</b>)<br>",(Xueren Model: general - cardiac arrest : 0.3920194)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
