@@ -16,3 +16,10 @@ service-account.json
 
 # Ignore SASS config files
 .sass-cache
+
+
+data_collection_folder/*
+
+__pycache__/*
+
+*.~lock.*
