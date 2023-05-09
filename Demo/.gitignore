@@ -23,3 +23,5 @@ data_collection_folder/*
 __pycache__/*
 
 *.~lock.*
+
+*/camstrm/.gradle/*

@@ -32,6 +32,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.nio.charset.Charset;
 import java.nio.file.attribute.FileTime;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int CAMERA_REQUEST_CODE = 10;
     protected static final String TAG = "cam_stream";
     public static TcpClient mTcpClient;
+    public static FeedbackClient mFeedbackClient;
+
     String serverip = "172.27.164.148";
     private Context mContext;
 
@@ -93,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 //        server.startServer();
 
                 new ConnectTask().execute();
+                new FeedbackTask().execute();
 
                 //chack of the user has given permission for this app to use camera
                 checkPermissionsOrRequest();
@@ -265,6 +269,49 @@ public class MainActivity extends AppCompatActivity {
 
             //process server response here....
 
+        }
+    }
+
+
+    public class FeedbackTask extends AsyncTask<byte[], byte[], FeedbackClient> {
+
+        @Override
+        protected FeedbackClient doInBackground(byte[]... message) {
+
+            // Create a TCPClient object
+            mFeedbackClient = new FeedbackClient(new FeedbackClient.OnMessageReceived() {
+
+                @Override
+                // Implementation of messageReceived method
+                public void messageReceived(byte[] message) {
+                    publishProgress(message); // calls the onProgressUpdate method
+                }
+
+            });
+
+            mFeedbackClient.run();
+            Log.d("feedback", "running Feedback client: ");
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(byte[]... values) {
+            super.onProgressUpdate(values);
+
+            byte b[] = values[0];
+
+            // update edittext
+            String str = new String(b, Charset.forName("UTF-8"));
+            Log.d("feedback", "Feedback Data received: " + str);
+
+
+//            for (int i = 0; i < b.length; i++) {
+//                int c = b[i] & 0xFF;
+//                Log.d(TAG, "c: " + c);
+//
+//                // Further processing where data is needed as byte[]
+//
+//            }
         }
     }
 }
