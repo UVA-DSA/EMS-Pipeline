@@ -32,6 +32,7 @@ public class FeedbackClient {
      */
     public void run() {
         mRun = true;
+        Log.e("FeedbackClient", "Executing run()");
 
         try {
             // Server address:
@@ -46,7 +47,6 @@ public class FeedbackClient {
             try {
                 // Input stream from server:
                 input = new BufferedInputStream(socket.getInputStream());
-
                 while(true) {
 
                     String feedbackOuptut = "";

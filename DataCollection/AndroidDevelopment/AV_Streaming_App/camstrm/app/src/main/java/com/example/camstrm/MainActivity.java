@@ -80,10 +80,14 @@ public class MainActivity extends AppCompatActivity implements ImageViewCallback
         startbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Log.d("startup", "execute Feedback client: ");
 
                 new ConnectTask().execute();
-                new FeedbackTask().execute();
+
+                // AsyncTasks are executed in order. ConnectTask takes time and thus FeedbackTask taking longer.
+                // Soln - execute parallely using a thread pool
+                FeedbackTask feedbackTask = new FeedbackTask();
+                feedbackTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 //chack of the user has given permission for this app to use camera
                 checkPermissionsOrRequest();
@@ -265,9 +269,9 @@ public class MainActivity extends AppCompatActivity implements ImageViewCallback
                 }
 
             });
+            Log.d("feedback", "running Feedback client: ");
 
             mFeedbackClient.run();
-            Log.d("feedback", "running Feedback client: ");
             return null;
         }
 

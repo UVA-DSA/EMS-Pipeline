@@ -189,6 +189,7 @@ public class TcpClient {
     }
 
     public void run() {
+        Log.e("TcpClient", "Executing run()");
 
         mRun = true;
 
