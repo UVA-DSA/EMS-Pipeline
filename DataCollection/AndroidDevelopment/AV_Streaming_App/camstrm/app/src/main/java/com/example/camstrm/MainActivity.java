@@ -26,6 +26,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -33,6 +34,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.nio.file.attribute.FileTime;
 
 public class MainActivity extends AppCompatActivity implements ImageViewCallback{
@@ -40,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements ImageViewCallback
     private static final int CAMERA_REQUEST_CODE = 10;
     protected static final String TAG = "cam_stream";
     public static TcpClient mTcpClient;
+    public static FeedbackClient mFeedbackClient;
+
     String serverip = "172.27.164.148";
     private Context mContext;
 
@@ -79,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements ImageViewCallback
 
 
                 new ConnectTask().execute();
+                new FeedbackTask().execute();
 
                 //chack of the user has given permission for this app to use camera
                 checkPermissionsOrRequest();
@@ -98,7 +103,6 @@ public class MainActivity extends AppCompatActivity implements ImageViewCallback
                     ContextCompat.startForegroundService(mContext, cameraServiceIntent);
 
 
-
                 } else {
                     //if the user has not granted permission, request it
                     requestPermission();
@@ -108,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements ImageViewCallback
                 audioStreamService.startStreaming();
             }
         });
-
 
     }
 
@@ -242,6 +245,45 @@ public class MainActivity extends AppCompatActivity implements ImageViewCallback
 
 
             //process server response here....
+
+        }
+    }
+
+
+    public class FeedbackTask extends AsyncTask<byte[], byte[], FeedbackClient> {
+
+        @Override
+        protected FeedbackClient doInBackground(byte[]... message) {
+
+            // Create a TCPClient object
+            mFeedbackClient = new FeedbackClient(new FeedbackClient.OnMessageReceived() {
+
+                @Override
+                // Implementation of messageReceived method
+                public void messageReceived(byte[] message) {
+                    publishProgress(message); // calls the onProgressUpdate method
+                }
+
+            });
+
+            mFeedbackClient.run();
+            Log.d("feedback", "running Feedback client: ");
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(byte[]... values) {
+            super.onProgressUpdate(values);
+
+            byte b[] = values[0];
+
+            // update edittext
+            String str = new String(b, Charset.forName("UTF-8"));
+            Log.d("feedback", "Feedback Data received: " + str);
+
+            TextView serverEditText = (TextView) findViewById(R.id.output);
+            serverEditText.setText(str);
+
 
         }
     }
