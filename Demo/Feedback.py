@@ -1,3 +1,4 @@
+import json
 import pickle
 import socket
 import time
@@ -14,8 +15,9 @@ class FeedbackObj:
 
 def sendMessage(feedbackObj, connection):
 
-    data_string = pickle.dumps(feedbackObj)     
-    # print("dtaa string to send from feedback: ", data_string)   
+    data_string = pickle.dumps(feedbackObj)   
+    data_string = json.dumps(feedbackObj)  
+    print("data string to send from feedback: ", data_string)   
 
     sent = connection.send(data_string) #b"hello from server"
     print("sent: ", sent)

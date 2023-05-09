@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">camstrm</string>
     <string name="server_ip">172.27.164.148</string>
-    <string name="audio_server_port">8888</string>
-    <string name="video_server_port">8899</string>
+    <string name="audio_server_port">1234</string>
+    <string name="video_server_port">5678</string>
     <string name="my_image_description">image decp here</string>
 
 </resources>
