@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
 import android.util.Log;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,6 +24,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class TcpClient {
+
+    ImageViewCallback imageViewCallback = null;
+
 
     public static final String TAG = TcpClient.class.getSimpleName();
     private Context context = null;
@@ -46,11 +50,12 @@ public class TcpClient {
     /**
      * Constructor of the class. OnMessagedReceived listens for the messages received from server
      */
-    public TcpClient(OnMessageReceived listener, String SERVER_IP, int SERVER_PORT, Context context) {
+    public TcpClient(OnMessageReceived listener, String SERVER_IP, int SERVER_PORT, Context context, ImageViewCallback imageViewCallback) {
         mMessageListener = listener;
         this.SERVER_IP = SERVER_IP;
         this.SERVER_PORT = SERVER_PORT;
         this.context = context;
+        this.imageViewCallback = imageViewCallback;
     }
 
 
@@ -138,6 +143,10 @@ public class TcpClient {
 //            public void run() {
                 if (mBufferImageOut != null && image != null) {
                     Log.d(TAG, "Sending Image");
+                    if(imageViewCallback != null){
+                        imageViewCallback.updateImageView(image.data);
+                    }
+
 
                     try {
                         mBufferImageOut.write(22);
@@ -192,6 +201,8 @@ public class TcpClient {
 
             socket = new Socket(serverAddr, SERVER_PORT);
             Log.d("TCP Client", "C: Connected!");
+
+
 //
 //            while(true){
 //
@@ -229,35 +240,16 @@ public class TcpClient {
 
                         ImageData img = Camera2Service.img_list.remove(Camera2Service.img_list.size()-1);
 
-                        //if using intent in run method:
-//                        Intent img_intent = new Intent(context, MainActivity.class);
-//                        Log.d("intent", "trying to sen img via Intent to Main");
-//                        img_intent.putExtra("img", img.data);
-//                        context.startActivity(img_intent);
-//                        ((Activity)context).finish();
+
 
                         status = sendImage(img);
 
-                        //if values was bytes for message received:
-//                        mMessageListener.messageReceived(img.data);
 
                         Camera2Service.img_list.clear();
 
                         if(status == -1){
                             socket.close();
 
-//                            while (status == -1){
-//                                try{
-//                                    //create a socket to make the connection with the server
-//                                    socket = new Socket(serverAddr, SERVER_PORT);
-//                                    Log.d("TCP Client", "C: Connected!");
-//                                    break;
-//                                }catch (IOException e){
-//                                    Thread.sleep(1000);
-//                                    Log.d("TCP Client", "C: Retrying...");
-//
-//                                }
-//                            }
                         }
 
                     }
@@ -284,5 +276,7 @@ public class TcpClient {
     public interface OnMessageReceived {
         public void messageReceived(byte[] message);
     }
+
+
 
 }

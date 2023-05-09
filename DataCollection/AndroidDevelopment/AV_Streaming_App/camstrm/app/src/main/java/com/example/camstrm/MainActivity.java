@@ -32,9 +32,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.nio.ByteBuffer;
 import java.nio.file.attribute.FileTime;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ImageViewCallback{
     private static final String[] CAMERA_PERMISSION = new String[]{Manifest.permission.CAMERA};
     private static final int CAMERA_REQUEST_CODE = 10;
     protected static final String TAG = "cam_stream";
@@ -57,18 +58,8 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG,"in main");
         mContext = this;
 
-//        Intent intent = getIntent();
-//        Bundle extras = getIntent().getExtras();
-//        String userName;
-//
-//        if (extras != null) {
-////            userName = extras.getString("name");
-//            Uri myUri = Uri.parse(extras.getString("uri"));
-////            ImageView img = new ImageView(this);
-//            ImageView imageView= (ImageView) findViewById(R.id.image_view);
-//            imageView.setImageURI(null);
-//            imageView.setImageURI(myUri);
-//        }
+        this.serverip = getString(R.string.server_ip);
+
 
         //button to close+exit app
         Button btn1 = (Button) findViewById(R.id.btn1);
@@ -85,12 +76,7 @@ public class MainActivity extends AppCompatActivity {
         startbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                EditText serverEditText = (EditText) findViewById(R.id.serverip_input);
-//                serverip = serverEditText.getText().toString();
 
-                // start server that sends frames to computer over ADB
-                //        Server server=new Server();
-                //        server.startServer();
 
                 new ConnectTask().execute();
 
@@ -111,26 +97,7 @@ public class MainActivity extends AppCompatActivity {
                     //see the class Camera2Service.java class
                     ContextCompat.startForegroundService(mContext, cameraServiceIntent);
 
-                    //this was for updating image view based on intent
-//                    Bundle extras = getIntent().getExtras(); //result.getData().getExtras();
-//                    Uri imageUri;
-//                    byte[] byteArray = getIntent().getByteArrayExtra("image");
-//
-//                    if (byteArray != null) {
-//                        Bitmap imageBitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-//                        //                    Bitmap imageBitmap = (Bitmap) extras.get("data");
-//                        Log.i(TAG, "got image data from intent:  ");
-//                        WeakReference<Bitmap> result_1 = new WeakReference<>(Bitmap.createScaledBitmap(imageBitmap,
-//                                        imageBitmap.getWidth(), imageBitmap.getHeight(), false).
-//                                copy(Bitmap.Config.RGB_565, true));
-//
-//                        Bitmap bm = result_1.get();
-//                        imageUri = saveImage(bm, MainActivity.this);
-//                        Log.i(TAG, "uri to set: " + String.valueOf(imageUri));
-//                        imageView.setImageURI(imageUri);
-//                        //                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                        //                    activityResultLauncher.launch(cameraIntent);
-//                    }
+
 
                 } else {
                     //if the user has not granted permission, request it
@@ -142,24 +109,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-//
-//            @Override
-//            public void onActivityResult(ActivityResult result) {
-//                Bundle extras = result.getData().getExtras();
-//                Uri imageUri;
-//                Bitmap imageBitmap = (Bitmap) extras.get("data");
-//                WeakReference<Bitmap> result_1 = new WeakReference<>(Bitmap.createScaledBitmap(imageBitmap,
-//                                imageBitmap.getWidth(), imageBitmap.getHeight(), false).
-//                        copy(Bitmap.Config.RGB_565, true));
-//
-//                Bitmap bm = result_1.get();
-//                imageUri = saveImage(bm, MainActivity.this);
-//                imageView.setImageURI(imageUri);
-//
-//            }
-//
-//        });
+
     }
 
     private Uri saveImage(Bitmap image, MainActivity context) {
@@ -229,6 +179,34 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
+    @Override
+    public void updateImageView(byte[] bytes) {
+
+
+//        byte[] bytes = new byte[buffer.capacity()];
+//        buffer.get(bytes);
+
+        runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+
+                // Stuff that updates the UI
+                Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, null);
+//
+                ImageView simpleImageView=(ImageView)  findViewById(R.id.image_view);
+                simpleImageView.setImageBitmap(bitmapImage);//set the source in java class
+
+
+            }
+        });
+
+//                ImageView simpleImageView=(ImageView)  findViewById(R.id.image_view);
+//        simpleImageView.setImageResource(R.drawable.bkgrnd);//set the source in java class
+
+    }
+
+
     public class ConnectTask extends AsyncTask<byte[], byte[], TcpClient> {
 
         @Override
@@ -244,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("main", "publish progress is being called - should call onProgessUpdate");
                     publishProgress(message);
                 }
-            }, serverip, Integer.parseInt(getString(R.string.video_server_port)), MainActivity.this);
+            }, serverip, Integer.parseInt(getString(R.string.video_server_port)), MainActivity.this,MainActivity.this);
             mTcpClient.run();
 
             return null;

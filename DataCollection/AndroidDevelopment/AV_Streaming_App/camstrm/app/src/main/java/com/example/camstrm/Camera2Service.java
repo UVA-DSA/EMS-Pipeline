@@ -41,6 +41,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
 public class Camera2Service extends Service {
+
+
     protected static final int CAMERA_CALIBRATION_DELAY = 5000;
     protected static final String TAG = "camera2Service";
     protected static final int CAMERACHOICE = CameraCharacteristics.LENS_FACING_FRONT;
@@ -144,6 +146,8 @@ public class Camera2Service extends Service {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     img.setTimestamp(timestamp);
                 }
+
+
                 if(img_list.size() < 10){
                     ImageData imageData=new ImageData(seq,img.getHeight(),img.getWidth(),bytes.length,bytes, img.getTimestamp());
                     img_list.add(imageData);
