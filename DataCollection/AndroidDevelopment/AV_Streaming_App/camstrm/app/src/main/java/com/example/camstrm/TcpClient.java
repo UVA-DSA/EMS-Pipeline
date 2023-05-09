@@ -239,7 +239,7 @@ public class TcpClient {
                         status = sendImage(img);
 
                         //if values was bytes for message received:
-                        mMessageListener.messageReceived(img.data);
+//                        mMessageListener.messageReceived(img.data);
 
                         Camera2Service.img_list.clear();
 
