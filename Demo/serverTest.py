@@ -23,9 +23,11 @@ print("Connected to android: ",address)
 #     sendMessage(example, connection)
 #     time.sleep(1)
 
+count = 0
+
 while True:
     # print("data string to send from feedback: ", data_string)   
-    data_string = b"Hello from cogEMS!" + b'\0'
+    data_string = b"Hello from cogEMS! " +str.encode(str(count)) + b'\0'
     num_bytes = len(data_string)
     # connection.send(num_bytes.to_bytes())
 
@@ -33,7 +35,8 @@ while True:
     # sent = connection.send(getsizeof(data_string)) #b"hello from server"
     sent = connection.send(data_string) #b"hello from server"
 
-    # print("sent: ", sent)
-    time.sleep(1)
+    print("sent: ", sent)
+    count += 1
+    time.sleep(0.2)
     # break
 

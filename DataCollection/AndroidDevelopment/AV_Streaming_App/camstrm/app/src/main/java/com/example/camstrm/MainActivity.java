@@ -26,6 +26,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -115,26 +116,6 @@ public class MainActivity extends AppCompatActivity {
                     //see the class Camera2Service.java class
                     ContextCompat.startForegroundService(mContext, cameraServiceIntent);
 
-                    //this was for updating image view based on intent
-//                    Bundle extras = getIntent().getExtras(); //result.getData().getExtras();
-//                    Uri imageUri;
-//                    byte[] byteArray = getIntent().getByteArrayExtra("image");
-//
-//                    if (byteArray != null) {
-//                        Bitmap imageBitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-//                        //                    Bitmap imageBitmap = (Bitmap) extras.get("data");
-//                        Log.i(TAG, "got image data from intent:  ");
-//                        WeakReference<Bitmap> result_1 = new WeakReference<>(Bitmap.createScaledBitmap(imageBitmap,
-//                                        imageBitmap.getWidth(), imageBitmap.getHeight(), false).
-//                                copy(Bitmap.Config.RGB_565, true));
-//
-//                        Bitmap bm = result_1.get();
-//                        imageUri = saveImage(bm, MainActivity.this);
-//                        Log.i(TAG, "uri to set: " + String.valueOf(imageUri));
-//                        imageView.setImageURI(imageUri);
-//                        //                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                        //                    activityResultLauncher.launch(cameraIntent);
-//                    }
 
                 } else {
                     //if the user has not granted permission, request it
@@ -146,24 +127,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-//
-//            @Override
-//            public void onActivityResult(ActivityResult result) {
-//                Bundle extras = result.getData().getExtras();
-//                Uri imageUri;
-//                Bitmap imageBitmap = (Bitmap) extras.get("data");
-//                WeakReference<Bitmap> result_1 = new WeakReference<>(Bitmap.createScaledBitmap(imageBitmap,
-//                                imageBitmap.getWidth(), imageBitmap.getHeight(), false).
-//                        copy(Bitmap.Config.RGB_565, true));
-//
-//                Bitmap bm = result_1.get();
-//                imageUri = saveImage(bm, MainActivity.this);
-//                imageView.setImageURI(imageUri);
-//
-//            }
-//
-//        });
     }
 
     private Uri saveImage(Bitmap image, MainActivity context) {
@@ -304,14 +267,10 @@ public class MainActivity extends AppCompatActivity {
             String str = new String(b, Charset.forName("UTF-8"));
             Log.d("feedback", "Feedback Data received: " + str);
 
+            TextView serverEditText = (TextView) findViewById(R.id.output);
+            serverEditText.setText(str);
 
-//            for (int i = 0; i < b.length; i++) {
-//                int c = b[i] & 0xFF;
-//                Log.d(TAG, "c: " + c);
-//
-//                // Further processing where data is needed as byte[]
-//
-//            }
+
         }
     }
 }

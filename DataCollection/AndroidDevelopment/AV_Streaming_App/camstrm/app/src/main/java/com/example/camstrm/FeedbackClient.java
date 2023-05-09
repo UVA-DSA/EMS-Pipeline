@@ -35,7 +35,7 @@ public class FeedbackClient {
 
         try {
             // Server address:
-            InetAddress serverAddr = InetAddress.getByName("172.27.164.148");
+            InetAddress serverAddr = InetAddress.getByName("172.27.142.69");
 
             Log.e("feedback TCP Client", "C: Connecting...");
 
@@ -68,33 +68,14 @@ public class FeedbackClient {
 
                     }
                     Log.d("feedback", "Feedback string " + feedbackOuptut);
+                    serverMessage = feedbackOuptut.getBytes(StandardCharsets.UTF_8);
+                    if (serverMessage != null && mMessageListener != null) {
+                        mMessageListener.messageReceived(serverMessage);
+                    }
+
+                    serverMessage = null; // reset serverMessage
                 }
-//                BufferedReader input =
-//                        new BufferedReader(
-//                                new InputStreamReader(socket.getInputStream()));
 
-                // Read data from the server until we finish reading the document
-
-
-                // Listen for messages from server:
-//                while (mRun) {
-////                    int bytesRead = input.read();
-////                    Log.d("feedback", "bytes read: " + bytesRead);
-////                    byte[] arr = new byte[128];
-////                    input.read(arr);
-////                    serverMessage = new byte[bytesRead];
-////                    String str = new String(arr, StandardCharsets.UTF_8);
-//                    String str = input.readLine();
-//                    Log.d("feedback", "Feedback Data received in Client: " + str);
-//
-//                    input.close();
-//
-//                    if (serverMessage != null && mMessageListener != null) {
-//                        mMessageListener.messageReceived(serverMessage);
-//                    }
-//
-//                    serverMessage = null; // reset serverMessage
-//                }
             } catch (Exception e) {
                 Log.e("TCP feedback", "S: Error", e);
             } finally {
