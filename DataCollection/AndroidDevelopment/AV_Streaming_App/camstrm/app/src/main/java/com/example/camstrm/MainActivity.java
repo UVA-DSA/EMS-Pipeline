@@ -284,9 +284,18 @@ public class MainActivity extends AppCompatActivity implements ImageViewCallback
             // update edittext
             String str = new String(b, Charset.forName("UTF-8"));
             Log.d("feedback", "Feedback Data received: " + str);
-
-            TextView serverEditText = (TextView) findViewById(R.id.output);
-            serverEditText.setText(str);
+            if(str.startsWith("Protocol")){
+                TextView serverPEditText = (TextView) findViewById(R.id.protocol_output);
+                serverPEditText.setText(str);
+            }
+            else if(str.startsWith("Intervention")){
+                TextView serverIEditText = (TextView) findViewById(R.id.intervention_output);
+                serverIEditText.setText(str);
+            }
+            else if(str.startsWith("Concept")){
+                TextView serverCEditText = (TextView) findViewById(R.id.concept_output);
+                serverCEditText.setText(str);
+            }
 
 
         }

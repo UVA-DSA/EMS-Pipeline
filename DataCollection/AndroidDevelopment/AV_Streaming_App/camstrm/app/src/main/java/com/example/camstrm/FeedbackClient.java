@@ -24,6 +24,7 @@ public class FeedbackClient {
      *  OnMessagedReceived listens for the messages received from server.
      */
     public FeedbackClient(OnMessageReceived listener) {
+
         mMessageListener = listener;
     }
 
@@ -36,7 +37,7 @@ public class FeedbackClient {
 
         try {
             // Server address:
-            InetAddress serverAddr = InetAddress.getByName("172.27.142.69");
+            InetAddress serverAddr = InetAddress.getByName("172.27.151.228");
 
             Log.e("feedback TCP Client", "C: Connecting...");
 

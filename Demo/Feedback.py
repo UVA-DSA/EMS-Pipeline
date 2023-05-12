@@ -14,13 +14,28 @@ class FeedbackObj:
 
 
 def sendMessage(feedbackObj, connection):
+    count = 0
+    data_string = b""
+    # data_string = pickle.dumps(feedbackObj)   
+    # data_string = json.dumps(feedbackObj)
+    
+    if feedbackObj.concept != "":
+        data_string = b"Concepts: " + feedbackObj.concept.encode('ascii') + b'\0'
+    elif feedbackObj.intervention != "":
+        data_string = b"Intervention: " + feedbackObj.intervention.encode('ascii') + b'\0'
+    elif feedbackObj.protocol != "":
+        data_string = b"Protocol: " + feedbackObj.protocol.encode('ascii') + b'\0'
+   
+    #just for testing, delete later
+    # data_string = b"Hello from cogEMS! " +str.encode(str(count)) + b'\0'
 
-    data_string = pickle.dumps(feedbackObj)   
-    data_string = json.dumps(feedbackObj)  
     print("data string to send from feedback: ", data_string)   
 
     sent = connection.send(data_string) #b"hello from server"
     print("sent: ", sent)
+
+    count += 1
+    time.sleep(0.2)
             
 
 def Feedback (Window, data_path, FeedbackQueue):
