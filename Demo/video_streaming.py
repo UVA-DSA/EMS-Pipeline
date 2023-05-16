@@ -179,6 +179,8 @@ class Thread(QThread):
                             #convert image to pixmap format and display on GUI
                             RGB_img = image
                             RGB_img = cv2.rotate(RGB_img, cv2.ROTATE_180)
+                            vid_img = cv2.cvtColor(RGB_img, cv2.COLOR_BGR2RGB)
+                            
 
                             #write to file
                             if(recording_enabled and not is_video_created):
@@ -192,7 +194,7 @@ class Thread(QThread):
                                 now = time.time()*1e3
 
                                 cv2.imwrite(self.data_path_str+ dt_string + '/img_'+str(frame_index)+'.jpg', img_ar)
-                                video.write(RGB_img)
+                                video.write(vid_img)
                                 writer.writerow([frame_index, now, timestamp])
                                 frame_index += 1
                             
