@@ -16,16 +16,19 @@ public class FeedbackClient {
     private OnMessageReceived mMessageListener = null;
     private BufferedInputStream input;
     private byte[] serverMessage; // message received from server
-
+    public  String SERVER_IP; //server IP address
+    public  int SERVER_PORT;
     private boolean mRun = false;
 
     /**
      *  Constructor:
      *  OnMessagedReceived listens for the messages received from server.
      */
-    public FeedbackClient(OnMessageReceived listener) {
+    public FeedbackClient(OnMessageReceived listener, String serverIP, int serverPort) {
 
         mMessageListener = listener;
+        this.SERVER_IP = serverIP;
+        this.SERVER_PORT = serverPort;
     }
 
     /**
@@ -37,12 +40,12 @@ public class FeedbackClient {
 
         try {
             // Server address:
-            InetAddress serverAddr = InetAddress.getByName("172.27.151.228");
+            InetAddress serverAddr = InetAddress.getByName(this.SERVER_IP);
 
             Log.e("feedback TCP Client", "C: Connecting...");
 
             // Connection socket:
-            Socket socket = new Socket(serverAddr, 7088);
+            Socket socket = new Socket(serverAddr, this.SERVER_PORT);
             Log.d("feedback tcp Client", "C: Connected!");
 
             try {

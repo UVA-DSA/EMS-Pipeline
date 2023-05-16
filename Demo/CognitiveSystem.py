@@ -103,7 +103,7 @@ def CognitiveSystem(Window, SpeechToNLPQueue, FeedbackQueue, data_path_str, conc
                 print(py_trees.display.unicode_tree(root=tree.root, show_status=True))
                 
                 
-            print("sentsList:",sentsList)
+            # print("sentsList:",sentsList)
             # Processes each chunk/sentence
             PunctuatedAndHighlightedText = ""
             for idx, item in enumerate(sentsList):

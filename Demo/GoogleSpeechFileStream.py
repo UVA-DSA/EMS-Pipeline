@@ -164,7 +164,7 @@ class FileStream(object):
 # Google Cloud Speech API Recognition Thread for Microphone
 
 
-def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, wavefile_name, data_path_str):
+def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, wavefile_name, data_path_str, audioStreamBool, transcriptStreamBool):
     # Create GUI Signal Object
     SpeechSignal = GUISignal()
     SpeechSignal.signal.connect(Window.UpdateSpeechBox)

@@ -41,10 +41,8 @@ def sendMessage(feedbackObj, connection):
 def Feedback (Window, data_path, FeedbackQueue):
     #initialize tcp connection
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
-
     sock.bind(("0.0.0.0", TCP_PORT))  
-    sock.listen(5)  
-
+    sock.listen(5) 
     print("Waiting for client in feedback...")
 
     connection,address = sock.accept()  
@@ -62,7 +60,13 @@ def Feedback (Window, data_path, FeedbackQueue):
 
         if(received == 'Kill'):
             # print("Thread received Kill Signal. Killing Feedback Thread.")
-            break
+            connection.close()
+            print("Terminated feedback client connection!")
+
+            print("Retrying to connect to a feedback client....")
+            connection,address = sock.accept()  
+            print("Client connected for feedback: ",address)
+            
 
         if(Window.reset == 1):
             # print("Cognitive System Thread Received reset signal. Killing Feedback Thread.")

@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements ImageViewCallback
     public static FeedbackClient mFeedbackClient;
 
     String serverip = "172.27.164.148";
+    int audioPort;
+    int videoPort;
+    int feedbackPort;
     private Context mContext;
 
     ImageView imageView;
@@ -63,6 +66,9 @@ public class MainActivity extends AppCompatActivity implements ImageViewCallback
         mContext = this;
 
         this.serverip = getString(R.string.server_ip);
+        this.audioPort = Integer.parseInt(getString(R.string.audio_server_port));
+        this.videoPort = Integer.parseInt(getString(R.string.video_server_port));
+        this.feedbackPort = Integer.parseInt(getString(R.string.feedback_server_port));
 
 
         //button to close+exit app
@@ -112,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements ImageViewCallback
                     requestPermission();
                 }
 
-                AudioStreamService audioStreamService = new AudioStreamService(mContext, serverip,  Integer.parseInt(getString(R.string.audio_server_port)));
+                AudioStreamService audioStreamService = new AudioStreamService(mContext, serverip, audioPort);
                 audioStreamService.startStreaming();
             }
         });
@@ -229,7 +235,7 @@ public class MainActivity extends AppCompatActivity implements ImageViewCallback
                     Log.d("main", "publish progress is being called - should call onProgessUpdate");
                     publishProgress(message);
                 }
-            }, serverip, Integer.parseInt(getString(R.string.video_server_port)), MainActivity.this,MainActivity.this);
+            }, serverip, videoPort, MainActivity.this,MainActivity.this);
             mTcpClient.run();
 
             return null;
@@ -268,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements ImageViewCallback
                     publishProgress(message); // calls the onProgressUpdate method
                 }
 
-            });
+            }, serverip, feedbackPort);
             Log.d("feedback", "running Feedback client: ");
 
             mFeedbackClient.run();
