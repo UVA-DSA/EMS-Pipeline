@@ -18,14 +18,14 @@ def sendMessage(feedbackObj, connection):
     data_string = b""
     # data_string = pickle.dumps(feedbackObj)   
     # data_string = json.dumps(feedbackObj)
+    if feedbackObj:
+        if feedbackObj.concept != "":
+            data_string = b"Concepts: " + feedbackObj.concept.encode('ascii') + b'\0'
+        elif feedbackObj.intervention != "":
+            data_string = b"Intervention: " + feedbackObj.intervention.encode('ascii') + b'\0'
+        elif feedbackObj.protocol != "":
+            data_string = b"Protocol: " + feedbackObj.protocol.encode('ascii') + b'\0'
     
-    if feedbackObj.concept != "":
-        data_string = b"Concepts: " + feedbackObj.concept.encode('ascii') + b'\0'
-    elif feedbackObj.intervention != "":
-        data_string = b"Intervention: " + feedbackObj.intervention.encode('ascii') + b'\0'
-    elif feedbackObj.protocol != "":
-        data_string = b"Protocol: " + feedbackObj.protocol.encode('ascii') + b'\0'
-   
     #just for testing, delete later
     # data_string = b"Hello from cogEMS! " +str.encode(str(count)) + b'\0'
 
@@ -76,11 +76,12 @@ def Feedback (Window, data_path, FeedbackQueue):
         else:
             print("Received chunk", received)
         
-        print("sending message: ", received)
-        sendMessage(received, connection)
+
+
 
         try:
             # connection.send("some more data")
+            print("sending message: ", received)
             sendMessage(received, connection)
         except:
             print("Reconnecting to a client...")
