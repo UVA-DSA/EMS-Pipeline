@@ -1,0 +1,433 @@
+Recording,Ground Truth,Extracted Output WOC,Extracted Output WC,Precision - WC,Recall - WC,F1 - WC
+000_190105.wav,"age, True, 55;
+gender, True, male;
+loss of consciousness, True, unconscious;
+pale, True, pale;
+resp, True, 5;
+bradypnea, True, 5;
+pulse, True, 118;
+tachycardia, True, 118;
+bp, True, 205/119;
+hypertension, True, 205/119;
+glucose, True, 126;
+spo2, True, 94;","(Pulse, True, 118)
+(Resp, True, breathing)
+(Bp, True, 205/119)
+(Spo2, True, 94)
+(Gender, True, male)
+(Age, True, 55)
+(Tachycardia, True, 118)
+(Loss of consciousness, True, unconscious)
+(Hypertension, True, 205)","(Gender, True, male)
+(Age, True, 55)
+(Loss of consciousness, True, unconscious)
+(Pulse, True, 118)
+(Resp, True, 5)
+(Bp, True, 205/19)
+(Bradypnea, True, 5)
+(Tachycardia, True, 118)
+(Hypertension, True, 205)
+(Spo2, True, 94)",,,
+001_190105.wav,"age, True, 51;
+gender, True, female;
+shortness of breath, True, shortness of breath;
+chest pain, True, chest fullness;
+headache, True, headache;
+dizziness, True, dizziness;
+hypertension, True, hypertension;
+wheezing, True, wheezing;
+ekg, True, ekg;
+dysrhythmia, False, ekg;","(Pain, False, headache)
+(Gender, True, female)
+(Age, True, 51)
+(Headache, False, headache)
+(Lightheadedness, True, dizziness)
+(Shortness of breath, True, of shortness breath)
+(Dizziness, True, dizziness)
+(Hypertension, False, hypertension)
+(Wheezing, True, lungs sound)","(Gender, True, female)
+(Age, True, 51)
+(Shortness of breath, True, of shortness breath)
+(Gender, True, female)
+(Shortness of breath, True, shortness of breath)
+(Shortness of breath, True, shortness of breath)
+(Pain, False, headache)
+(Headache, False, headache)
+(Dizziness, False, dizziness)
+(Hypertension, True, hypertension)
+(Wheezing, True, wheezing)",,,
+002_190105.wav,"age, True, 35;
+gender, True, female;
+abdominal pain, True, abdominal pain;
+pain, True, pain;
+nausea, True, nausesa;
+pregnant, True, pregnant;
+chest pain, False, chest pain;
+pulse, True, 82;
+resp, True, 18;
+bp, True, 118/72;
+gcs, true, 15;
+spo2, True, 100;
+pain, True, 8;
+pain severity, True, 8;
+ekg, True, ekg;
+dysrhythmia, False, dysrhythmia;","(Pain, True, abdominal pain)
+(Gender, True, female)
+(Age, True, 35)
+(Abdominal pain, True, abdominal pain)
+(Pregnancy, True, miscarriages)
+(Pulse, True, 82)
+(Resp, True, 18)
+(Bp, True, 118/72)
+(Gcs, True, 15)
+(Spo2, True, 100)
+(Pain, False, chest pain)
+(Ekg, True, electrocardiogram)
+(Wheezing, True, lung sounds)
+(Chest pain, False, chest pain)
+(Dysrhythmia, False, electrocardiogram)","(Pain, True, abdominal pain)
+(Gender, True, female)
+(Age, True, 35)
+(Abdominal pain, True, abdominal pain)
+(Nausea, True, nausea)
+(Pregnancy, True, miscarriages)
+(Pain, False, chest pain)
+(Wheezing, True, lung sounds)
+(Chest pain, False, chest pain)
+(Resp, True, 18)
+(Bp, True, 118/72)
+(Gcs, True, glasgow coma score)
+(Spo2, True, 100)
+(Ekg, True, electrocardiogram)
+(Dysrhythmia, False, electrocardiogram)",,,
+003_190105.wav,"vomiting, True, vomiting;
+gcs, True, 10;
+decreased mental status, True, 10;
+tachycardia, True, 110;
+pulse, True, 110;
+resp, True, 16;
+bp, True, 122/67;
+glucose, True, 89;
+spo2, True, 94;
+pain, True, 0;
+pain severity, True, 0;
+combative, True, combative;
+","(Resp, True, 16)
+(Bp, True, 122/67)
+(Glucose, True, 89)
+(Spo2, True, 94)
+(Pain, True, painful)
+(Vomiting, True, vomiting)
+(Combative, True, combative)","(Pain, True, painful)
+(Vomiting, True, vomiting)
+(Pulse, True, 122)
+(Bp, True, 122/67)
+(Glucose, True, 89)
+(Tachycardia, True, 122)
+(Spo2, True, 94)
+(Combative, True, combative)",,,
+004_190105.wav,"gender, True, male;
+seizures, True, seizures;
+gcs, True, 14;
+decreased mental status, True, 14;
+fever, True, fever;
+pulse, True, 90;
+resp, True, 16;
+bp, True, 139/82;
+glucose, True, 150;
+spo2, True, 98;","(Gcs, False, 14)
+(Gender, True, male)
+(Seizure, True, seizure)
+(Convulsions, True, seizure)
+(Decreased mental status, True, 14)","(Seizure, True, seizures)
+(Convulsions, True, seizures)
+(Gcs, False, 14)
+(Seizure, False, seizure)
+(Convulsions, False, seizure)
+(Decreased mental status, True, 14)
+(Seizure, True, seizures)
+(Convulsions, True, seizures)
+(Pulse, True, heart rate)
+(Resp, True, 16)
+(Bp, True, 139/82)
+(Gcs, True, glasgow coma score)",,,
+005_190105.wav,"age, True, 89;
+gender, True, female;
+shortness of breath, True, shortness of breath;
+pain, False, pain;
+gcs, True, 15;
+pulse, True, 99;
+resp, True, 30;
+tachypnea, True, 30;
+bp, True, 186/87;
+spo2, True, 96;
+ekg, True, 12-lead;","(Gender, True, female)
+(Age, True, 89)
+(Wheezing, True, lung sounds)
+(Shortness of breath, True, of shortness breath)
+(Resp, True, 30)
+(Bp, True, 186/87)
+(Tachypnea, True, 30)
+(Hypertension, True, 186)","(Gender, True, female)
+(Age, True, 89)
+(Shortness of breath, True, of shortness breath)
+(Pulse, True, 99)
+(Resp, True, 30)
+(Bp, True, 186/87)
+(Tachypnea, True, 30)
+(Hypertension, True, 186)",,,
+006_190105.wav,"gender, True, female;
+chest pain, True, chest pain;
+nausea, False, nausea;
+trauma, False, trauma;
+pregnancy, False, pregnancy;
+anxiety, True, anxious;
+ekg, True, 12-lead;
+dysrhythmia, False, 12-lead;
+bp, True, 126/77;
+gcs, True, 15;
+glucose, True, 82;
+spo2, True, 100;
+resp, True, 18;
+pulse, True, 58;
+pain, True, 10;
+pain severity, True, 10/10;
+","(Pain, True, 15)
+(Gender, True, adult female)
+(Pain severity, True, 15)
+(Pregnancy, True, pregnancy)
+(Trauma, False, trauma)
+(Chest pain, False, pain substernal)
+(Nausea, False, symptoms nausea)
+(Pulse, True, 58)
+(Resp, True, 18)
+(Bp, False, 126/77)
+(Gcs, True, 18)
+(Glucose, True, 82)
+(Spo2, True, 100)
+(Anxiety, True, anxious)","(Pain, True, 15)
+(Gender, True, adult female)
+(Pain severity, True, 15)
+(Pulse, True, 50)
+(Resp, True, 18)
+(Spo2, True, 100)
+(Bradycardia, True, 50)
+(Chest pain, False, pain substernal)
+(Pregnancy, True, pregnancy)
+(Trauma, False, trauma)
+(Nausea, False, symptoms nausea)
+(Anxiety, True, anxious)
+(Bp, True, 126/77)
+(Glucose, True, 82)",,,
+007_190105.wav,"chest pain, True, chest pain;
+age, True, 57;
+gender, True, female;
+cough, True, cough;
+malaise, True, discomfort;
+shortness of breath, False, shortness of breath;
+ekg, True, ecg;
+pulse, True, 106;
+tachycardia, True, 106;
+resp, True, 18;
+bp, True, 163/81;
+hypertension, True, 163/81;
+gcs, True, 15;
+spo2, True, 100;","(Pulse, True, 100)
+(Bp, True, 163/8)
+(Gcs, True, 15)
+(Spo2, True, 100)
+(Pain, True, 57)
+(Gender, True, 5)
+(Age, True, 57)
+(Pain severity, True, 57)
+(Wheezing, True, 12)
+(Chest pain, True, 57)
+(Shortness of breath, True, shortness of breath)
+(Malaise, False, discomfort)
+(Hypertension, True, 163)","(Age, True, 57)
+(Malaise, False, discomfort)
+(Shortness of breath, True, shortness of breatH)
+(Pulse, True, 106)
+(Wheezing, True, 12)
+(Tachycardia, True, 106)
+(Pulse, True, pulse)
+(Gcs, True, 15)",,,
+008_190105.wav,"age, True, 26;
+gender, True, male;
+confusion, True, confusion;
+gcs, True, 14;
+decreased mental status, True, 14;
+chest pain, False, chest pain;
+malaise, False, discomfort;
+pain, False, pain;
+glucose, True, 81;
+pulse, True, 110;
+tachycardia, True, 110;
+resp, True, 16;
+bp, True, 115/77;
+spo2, True, 98;
+ekg, True, ekg;
+dysrhythmia, False, ekg;
+","(Gender, True, male)
+(Age, True, 26)
+(Confusion, True, confusion)
+(Resp, True, 16)
+(Bp, True, 115/77)
+(Glucose, True, 81)
+(Pain, False, of chest pain)
+(Wheezing, True, breath sounds)
+(Malaise, False, discomfort)","(Gender, True, male)
+(Age, True, 46)
+(Confusion, True, confusion)
+(Wheezing, True, breath sounds)
+(Pain, False, of chest pain)
+(Malaise, False, discomfort)
+(Pulse, True, 110)
+(Tachycardia, True, 110)
+(Resp, True, 16)
+(Bp, True, 115/77)",,,
+009_190105.wav,"gender, True, female;
+abdominal pain, True, abdominal pain;
+pain, True, 7;
+pain severity, True, 7;
+nausea, True, nausea;
+vomiting, True, vomiting;
+chest pain, False, chest pain;
+shortness of breath, False, shortness of breath;
+diarrhea, False, diarrhea;
+pulse, True, 89;
+resp, True, 18;
+bp, True, 193/77;
+hypertension, True, 193/77;
+gcs, True, 15;
+glucose, True, 147;
+spo2, True, 97;
+ekg, True, ekg;
+dysrhythmia, False, dysrhythmia;
+","(Pain, True, abdominal pain)
+(Gender, True, adult female)
+(Abdominal pain, True, abdominal pain)
+(Resp, True, 18)
+(Bp, True, 193/77)
+(Gcs, True, 15)
+(Spo2, True, 97)
+(Pain, False, chest pain)
+(Chest pain, False, chest pain)
+(Vomiting, True, vomiting)
+(Nausea, True, nausea)
+(Shortness of breath, True, shortness of breath)
+(Hypertension, True, 193)","(Pain, True, abdominal pain)
+(Gender, True, adult female)
+(Abdominal pain, True, abdominal pain)
+(Pain, True, abdominal pain)
+(Abdominal pain, True, abdominal pain)
+(Pain, False, chest pain)
+(Chest pain, False, chest pain)
+(Vomiting, True, vomiting)
+(Nausea, True, nausea)
+(Shortness of breath, True, shortness of breath)
+(Pulse, True, 86)
+(Resp, True, rate respiratory)
+(Bp, True, 193/77)
+(Gcs, True, 15)
+(Hypertension, True, 193)
+(Spo2, True, 97)",,,
+010_190105.wav,"age, True, 97;
+gender, True, female;
+malaise, True, malaise;
+weakness, True, weakness;
+vomiting, True, vomiting;
+abdominal pain, False, abdominal pain;
+nausea, True, nauseated;
+chest pain, False, chest pain;
+shortness of breath, False, shortness of breath;
+diarrhea, False, diarrhea;
+headache, False, headache;
+gcs, True, 14;
+decreased mental status, True, 14;
+pulse, True, 76;
+resp, True, 16;
+bp, True, 161/94;
+hypertension, True, 161/94;
+spo2, True, 97;
+","(Resp, True, 16)
+(Bp, True, 161/94)
+(Glucose, True, blood glucose)
+(Spo2, True, 97)
+(Pain, False, chest pain)
+(Age, True, 97)
+(Abdominal pain, False, abdominal pain)
+(Diarrhea, False, diarrhea)
+(Weakness, True, general weakness)
+(Headache, False, headache)
+(Chest pain, False, chest pain)
+(Vomiting, True, vomiting)
+(Nausea, True, nauseated)
+(Shortness of breath, True, shortness of breath)
+(Malaise, True, malaise)
+(Hypertension, True, 161)","(Gender, True, female)
+(Age, True, 97)
+(Weakness, True, general weakness)
+(Malaise, True, malaise)
+(Vomiting, True, vomiting)
+(Pain, True, abdominal pain)
+(Abdominal pain, True, abdominal pain)
+(Vomiting, True, vomiting)
+(Nausea, True, nauseated)
+(Pain, False, chest pain)
+(Chest pain, False, chest pain)
+(Pain, True, headache)
+(Diarrhea, True, diarrhea)
+(Headache, True, headache)
+(Resp, True, 16)
+(Glucose, True, blood glucose)
+(Spo2, True, 9)
+(Hypoxemia, True, 9)",,,
+011_190105.wav,"shortness of breath, True, shortness of breath;
+cough, True, cough;
+trauma, False, trauma;
+loss of consciousness, False, loss of consciousness;
+chest pain, False, chest pain;
+abdominal pain, False, abdominal pain;
+nausea, False, nausea;
+vomiting, False, vomiting;
+diarrhea, False, diarrhea;
+suicidal ideation, False, suicidal ideation;
+homicidal ideation, False, homicidal ideation;
+pulse, True, 91;
+resp, True, 16;
+bp, True, 137/73;
+glucose, True, 136;
+gcs, True, 15;
+spo2, True, 99;
+ekg, True, ekg;
+dysrhythmia, False, dysrhythmia;","(Pain, True, chest pain)
+(Abdominal pain, True, pain abdominal nausea)
+(Cough, True, productive cough)
+(Suicidal thought, True, suicidal ideation)
+(Homicidal thoughts, True, homicidal ideation)
+(Trauma, True, traumatic injury)
+(Chest pain, True, chest pain)
+(Loss of consciousness, True, loss of consciousness)
+(Shortness of breath, True, of shortness breath)
+(Dizziness, True, vertigo)
+(Resp, True, 16)
+(Bp, True, 137/73)
+(Glucose, True, 136)
+(Spo2, True, 99)
+(Ekg, True, ekg rhythm)
+(Dysrhythmia, False, ekg rhythm)","(Gender, True, woman)
+(Resp, True, 16)
+(Bp, True, 130)
+(Glucose, True, 136)
+(Spo2, True, 99)
+(Shortness of breath, True, breathing difficulties)
+(Cough, True, productive cough)
+(Shortness of breath, True, of shortness breath)
+(Wheezing, True, lung sounds)
+(Trauma, False, traumatic injury)
+(Pain, True, chest pain)
+(Abdominal pain, True, abdominal pain nausea)
+(Suicidal thought, True, suicidal ideation)
+(Chest pain, True, chest pain)
+(Loss of consciousness, True, syncope)",,,
