@@ -870,6 +870,10 @@ if __name__ == '__main__':
     else:
         print("No data collection arguments specified -- defaulting to no data collection")
 
+    conceptExtractionStream = True
+    protocolStream = True
+    interventionStream = True
+    transcriptStream = True
     print("stream bools: ", audiostream, videostream, smartwatchStream, conceptExtractionStream, protocolStream, interventionStream, transcriptStream)
 
     # audiostream = True # harcode audio saving

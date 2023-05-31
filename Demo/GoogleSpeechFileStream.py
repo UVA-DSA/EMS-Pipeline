@@ -8,6 +8,7 @@ from google.cloud import speech_v1 as speech
 import numpy as np
 from classes import SpeechNLPItem, GUISignal
 import wave
+import io
 
 # Suppress pygame's welcome message
 with open(os.devnull, 'w') as f:
@@ -129,7 +130,7 @@ class FileStream(object):
             self.samplesCounter += self._chunk
             FileStream.position += 1
 
-            print("self sample counter: ",self.samplesCounter)
+            # print("self sample counter: ",self.samplesCounter)
 
 
 
@@ -150,7 +151,7 @@ class FileStream(object):
                     self.samplesCounter += self._chunk
                     FileStream.position += 1
                 except queue.Empty:
-                    print("empty")
+                    # print("empty")
                     break
 
             # if self.samplesCounter > 0 and self.samplesCounter%160000 == 0:
@@ -189,78 +190,116 @@ def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, wavefile_nam
                                       sample_rate_hertz=RATE, language_code=language_code, profanity_filter=True)  # ,model='video')
     streaming_config = speech.StreamingRecognitionConfig(config=config, interim_results=True)
 
-    with FileStream(Window, RATE, CHUNK, wavefile_name) as stream:
-        print("audio file name: ", wavefile_name)
-        audio_generator = stream.generator()
-        requests = (speech.StreamingRecognizeRequest(audio_content=content)
-                    for content in audio_generator)
 
-            
-        try:
-            responses = client.streaming_recognize(streaming_config, requests)
-            # Signal that streaming has started
-            print("Started speech recognition on file audio via Google Speech API.\nFile Session Counter: " +
-                  str(FileStream.fileSessionCounter))
-            MsgSignal.signal.emit(
-                ["Started speech recognition on file audio via Google Speech API.\nFile Session Counter: " + str(FileStream.fileSessionCounter)])
+    print("Wavefile_name: ",wavefile_name)
 
-            # Now, put the transcription responses to use.
-            num_chars_printed = 0
-            responseTimeStamp = time.time()
+    # if(wavefile_name)
 
-            for response in responses:
-                if not response.results:
-                    continue
-                # The `results` list is DeepSpeechconsecutive. For streaming, we only care about
-                # the first result being considered, since once it's `is_final`, it
-                # moves on to considering the next utterance.
-                result = response.results[0]
-                if not result.alternatives:
-                    continue
+    # # assign directory
+    directory = './Audio_Scenarios/2019_Test/chunked_recordings/011_190105'
+    
 
-                # Display the transcription of the top alternative.
-                transcript = result.alternatives[0].transcript
-                confidence = result.alternatives[0].confidence
+    # iterate over files in
+    # that directory
+    for filename in sorted(os.listdir(directory)):
+        f = os.path.join(directory, filename)
+        # checking if it is a file
+        if os.path.isfile(f):
 
-                # Display interim results, but with a carriage return at the end of the
-                # line, so subsequent lines will overwrite them.
-                # If the previous result was longer than this one, we need to print
-                # some extra spaces to overwrite the previous result
-                overwrite_chars = ' ' * (num_chars_printed - len(transcript))
+            file_name = f
 
-                if result.is_final:
-                    #print(transcript + overwrite_chars)
-                    QueueItem = SpeechNLPItem(transcript, result.is_final,
-                                              confidence, num_chars_printed, 'Speech')
-                    SpeechToNLPQueue.put(QueueItem)
-                    EMSAgentSpeechToNLPQueue.put(QueueItem)
+            # with FileStream(Window, RATE, CHUNK, wavefile_name) as stream:
+            #     print("audio file name: ", wavefile_name)
+            #     audio_generator = stream.generator()
 
-                    SpeechSignal.signal.emit([QueueItem])
+
+            with io.open(file_name, "rb") as audio_file:
+                content = audio_file.read()
+                # audio = speech.RecognitionAudio(content=content)
+
+                stream = [content]
+
+                requests = (speech.StreamingRecognizeRequest(audio_content=chunk) for chunk in stream)
+
+                    
+                try:
+                    start_t = time.time_ns()
+
+                    responses = client.streaming_recognize(streaming_config, requests)
+                    # Signal that streaming has started
+                    print("Started speech recognition on file audio via Google Speech API.\nFile Session Counter: " +
+                        str(FileStream.fileSessionCounter))
+                    
+
+                    MsgSignal.signal.emit(
+                        ["Started speech recognition on file audio via Google Speech API.\nFile Session Counter: " + str(FileStream.fileSessionCounter)])
+
+                    # Now, put the transcription responses to use.
                     num_chars_printed = 0
+                    responseTimeStamp = time.time()
 
-                elif not result.is_final:
-                    #sys.stdout.write(transcript + overwrite_chars + '\r')
-                    # sys.stdout.flush()
-                    QueueItem = SpeechNLPItem(transcript, result.is_final,
-                                              confidence, num_chars_printed, 'Speech')
-                    # SpeechToNLPQueue.put(QueueItem)
-                    # EMSAgentSpeechToNLPQueue.put(QueueItem)
+                    for response in responses:
+                        if not response.results:
+                            continue
+                        # The `results` list is DeepSpeechconsecutive. For streaming, we only care about
+                        # the first result being considered, since once it's `is_final`, it
+                        # moves on to considering the next utterance.
+                        result = response.results[0]
+                        if not result.alternatives:
+                            continue
 
-                    SpeechSignal.signal.emit([QueueItem])
-                    num_chars_printed = len(transcript)
+                        # Display the transcription of the top alternative.
+                        transcript = result.alternatives[0].transcript
+                        confidence = result.alternatives[0].confidence
 
-        except Exception as e:
-            # print(e)
-            MsgSignal.signal.emit(
-                ["Unable to get response from Google! Network or other issues. Please Try again!\n Exception: " + str(e)])
-            ButtonsSignal.signal.emit(
-                [(Window.StartButton, True), (Window.ComboBox, True), (Window.ResetButton, True)])
-            sys.exit()
+                        # Display interim results, but with a carriage return at the end of the
+                        # line, so subsequent lines will overwrite them.
+                        # If the previous result was longer than this one, we need to print
+                        # some extra spaces to overwrite the previous result
+                        overwrite_chars = ' ' * (num_chars_printed - len(transcript))
+
+                        if result.is_final:
+                            #print(transcript + overwrite_chars)
+                            end_t = time.time_ns()
+                            print("Google-Speech-Text-FileStream Execution Time: ",(end_t-start_t)/1e6)
+                            QueueItem = SpeechNLPItem(transcript, result.is_final,
+                                                    confidence, num_chars_printed, 'Speech')
+                            SpeechToNLPQueue.put(QueueItem)
+                            EMSAgentSpeechToNLPQueue.put(QueueItem)
+
+                            SpeechSignal.signal.emit([QueueItem])
+                            num_chars_printed = 0
 
 
-'''
+                        elif not result.is_final:
+                            #sys.stdout.write(transcript + overwrite_chars + '\r')
+                            # sys.stdout.flush()
+                            end_t = time.time_ns()
+                            print("Google-Speech-Text-FileStream Intermediate execution Time: ",(end_t-start_t)/1e6)
+                            print("Google-Speech-Text-FileStream Intermediate transcript: ",transcript)
 
-12:16:44 PM - Unable to get response from Google! Network or other issues. 
-Please Try again! Exception: 403 Cloud Speech-to-Text API has not been used in project 430309206876 before or it is disabled. 
-If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry. 
-'''
+                            QueueItem = SpeechNLPItem(transcript, result.is_final,
+                                                    confidence, num_chars_printed, 'Speech')
+                            # SpeechToNLPQueue.put(QueueItem)
+                            # EMSAgentSpeechToNLPQueue.put(QueueItem)
+
+                            SpeechSignal.signal.emit([QueueItem])
+                            num_chars_printed = len(transcript)
+
+                except Exception as e:
+                    # print(e)
+                    MsgSignal.signal.emit(
+                        ["Unable to get response from Google! Network or other issues. Please Try again!\n Exception: " + str(e)])
+                    ButtonsSignal.signal.emit(
+                        [(Window.StartButton, True), (Window.ComboBox, True), (Window.ResetButton, True)])
+                    sys.exit()
+                finally:
+                    print("GoogleSpeechSystem: Finish!")
+
+
+    '''
+
+    12:16:44 PM - Unable to get response from Google! Network or other issues. 
+    Please Try again! Exception: 403 Cloud Speech-to-Text API has not been used in project 430309206876 before or it is disabled. 
+    If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry. 
+    '''

@@ -152,7 +152,7 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_st
         if not os.path.exists(data_path_str + "protocoldata_XuerenModel/"):
             os.makedirs(data_path_str + "protocoldata_XuerenModel/")
         
-        with open(data_path_str + "protocoldata_XuerenModel/emsagentlog.txt", 'w') as f:
+        with open(data_path_str + "protocoldata_XuerenModel/emsagentlog.txt", 'a+') as f:
             while True:
 
                 # Get queue item from the Speech-to-Text Module
@@ -170,10 +170,12 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_st
                 else:
                     print("Received chunk", received.transcript)
                     narrative += received.transcript
+                    print("Current Transcript", narrative)
+
                     start = time.time()
                     pred, prob = model(narrative)
                     end = time.time()
-                    ProtocolSignal.signal.emit(["(Xueren Model: " +str(pred) + " : " +str(prob) +")"])
+                    ProtocolSignal.signal.emit(["(" +str(pred) + " : " +str(prob) +")"])
                     print('executation time: {:.4f}'.format(end - start))
                     print(pred, prob)
 
@@ -207,17 +209,18 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_st
             else:
                 print("Received chunk", received.transcript)
                 narrative += received.transcript
-                start = time.time()
-                pred, prob = model(narrative)
-                end = time.time()
-                ProtocolSignal.signal.emit(["(Xueren Model: " +str(pred) + " : " +str(prob) +")"])
-                print('executation time: {:.4f}'.format(end - start))
-                print(pred, prob)
+                start = time.time_ns()
+                if(narrative != ""):
+                    pred, prob = model(narrative)
+                    end = time.time_ns()
+                    ProtocolSignal.signal.emit(["( " +str(pred) + " : " +str(prob) +" )"])
+                    print('EMSAgentSystem - Execution Time: ',((end - start)/1e6))
+                    print(pred, prob)
 
-                #Feedback
-                protocolFB =  FeedbackObj("", str(pred) + " : " +str(prob), "")
-                FeedbackQueue.put(protocolFB)
-            
+                    #Feedback
+                    protocolFB =  FeedbackObj("", str(pred) + " : " +str(prob), "")
+                    FeedbackQueue.put(protocolFB)
+                
                 
 
 

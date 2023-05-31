@@ -14,6 +14,7 @@ from Form_Filling import textParse2
 from operator import itemgetter
 import subprocess
 import re
+import time
 
 #added 3/18
 import nltk
@@ -68,6 +69,7 @@ def CognitiveSystem(Window, SpeechToNLPQueue, FeedbackQueue, data_path_str, conc
         # continue
         # Get queue item from the Speech-to-Text Module
         received = SpeechToNLPQueue.get()
+        start_t = time.time_ns()
         # print("Received chunk", received.transcript)
 
         if(received == 'Kill'):
@@ -138,6 +140,11 @@ def CognitiveSystem(Window, SpeechToNLPQueue, FeedbackQueue, data_path_str, conc
             PunctuatedAndHighlightedText = '<b>' + PunctuatedAndHighlightedText + '</b>'
             SpeechSignal.signal.emit([SpeechNLPItem(
                 PunctuatedAndHighlightedText, received.isFinal, received.confidence, received.numPrinted, 'NLP')])
+            end_t = time.time_ns()
+            
+            print("CognitiveSytem - Execution Time: ",(end_t-start_t)/1e6)
+            print("")
+            
 
 
 # Function to return this recent tick's results
@@ -146,12 +153,12 @@ def TickResults(Window, NLP_Items, data_path_str, conceptBool, interventionBool,
     if conceptBool == True:
         if not os.path.exists(data_path_str + "conceptextractiondata/"):
             os.makedirs(data_path_str+"conceptextractiondata/")
-        CE_outputfile = open(data_path_str +"conceptextractiondata/"+ "cedata.txt", 'w')
+        CE_outputfile = open(data_path_str +"conceptextractiondata/"+ "cedata.txt", 'a+')
 
     if interventionBool == True:
         if not os.path.exists(data_path_str + "interventiondata/"):
             os.makedirs(data_path_str+"interventiondata/")
-        Intervention_outputfile = open(data_path_str +"interventiondata/" + "interventiondata.txt", 'w')
+        Intervention_outputfile = open(data_path_str +"interventiondata/" + "interventiondata.txt", 'a+')
 
     ConceptExtractionSignal = GUISignal()
     ConceptExtractionSignal.signal.connect(Window.UpdateConceptExtractionBox)
@@ -262,13 +269,14 @@ def TickResults(Window, NLP_Items, data_path_str, conceptBool, interventionBool,
 
     if interventionBool == True:
         #write data to file for data collection
-        Intervention_outputfile.write(suggestions_str)
+        Intervention_outputfile.write("\n" + suggestions_str)
 
     ConceptExtractionSignal.signal.emit([signs_and_vitals_str])
 
     if conceptBool == True:
         #write data to file for data collection
-        CE_outputfile.write(signs_and_vitals_str)
+        print("CognitiveSytem - Extracted Concepts: ",signs_and_vitals_str)
+        CE_outputfile.write("\n" + signs_and_vitals_str)
 
     return protocol_candidates, signs_and_vitals, suggestions
 

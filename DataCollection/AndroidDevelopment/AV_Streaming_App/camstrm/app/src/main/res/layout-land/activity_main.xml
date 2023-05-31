@@ -38,6 +38,7 @@ tools:context=".MainActivity" >
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
+                android:rotation="180"
                 android:layout_gravity="center"
                 android:contentDescription="@string/my_image_description"
             />
