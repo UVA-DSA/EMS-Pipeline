@@ -189,19 +189,29 @@ public class TcpClient {
     }
 
     public void run() {
-        Log.e("TcpClient", "Executing run()");
+        Log.e("Video TCP Client", "Executing run()");
 
         mRun = true;
 
         try {
             //here you must put your computer's IP address.
+
             InetAddress serverAddr = InetAddress.getByName(SERVER_IP);
             Socket socket = null;
+            Log.d("Video TCP Client", "C: Connecting...");
 
-            Log.d("TCP Client", "C: Connecting...");
+            while (true){
+                try{
+                    socket = new Socket(serverAddr, SERVER_PORT);
+                    Log.d("Video TCP Client", "C: Connected!");
+                    break;
+                }
+                catch(Exception e){
+                    Thread.sleep(100);
+                    Log.d("Video TCP Client", "C: Retrying!");
+                }
+            }
 
-            socket = new Socket(serverAddr, SERVER_PORT);
-            Log.d("TCP Client", "C: Connected!");
 
 
 //
@@ -256,10 +266,10 @@ public class TcpClient {
                     }
                 }
 
-                Log.d("RESPONSE FROM SERVER", "S: Received Message: '" + mServerMessage + "'");
+                Log.d("Video TCP Client", "S: Received Message: '" + mServerMessage + "'");
 
             } catch (Exception e) {
-                Log.e("TCP", "S: Error", e);
+                Log.e("Video TCP Client", "S: Error", e);
             } finally {
                 //the socket must be closed. It is not possible to reconnect to this socket
                 // after it is closed, which means a new socket instance has to be created.
@@ -267,7 +277,7 @@ public class TcpClient {
             }
 
         } catch (Exception e) {
-            Log.e("TCP", "C: Error", e);
+            Log.e("Video TCP Client", "C: Error", e);
         }
 
     }

@@ -129,7 +129,7 @@ class FileStream(object):
             self.samplesCounter += self._chunk
             FileStream.position += 1
 
-            print("self sample counter: ",self.samplesCounter)
+            # print("self sample counter: ",self.samplesCounter)
 
 
 
@@ -150,7 +150,7 @@ class FileStream(object):
                     self.samplesCounter += self._chunk
                     FileStream.position += 1
                 except queue.Empty:
-                    print("empty")
+                    # print("empty")
                     break
 
             # if self.samplesCounter > 0 and self.samplesCounter%160000 == 0:

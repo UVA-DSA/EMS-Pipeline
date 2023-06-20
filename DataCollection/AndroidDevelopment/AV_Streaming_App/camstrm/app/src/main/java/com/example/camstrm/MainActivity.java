@@ -294,13 +294,13 @@ public class MainActivity extends AppCompatActivity implements ImageViewCallback
                 TextView serverPEditText = (TextView) findViewById(R.id.protocol_output);
                 serverPEditText.setText(str);
             }
-            else if(str.startsWith("Intervention")){
+            if(str.startsWith("Intervention")){
                 TextView serverIEditText = (TextView) findViewById(R.id.intervention_output);
                 serverIEditText.setText(str);
             }
-            else if(str.startsWith("Concept")){
-                TextView serverCEditText = (TextView) findViewById(R.id.concept_output);
-                serverCEditText.setText(str);
+            if(str.startsWith("Concept")){
+//                TextView serverCEditText = (TextView) findViewById(R.id.concept_output);
+//                serverCEditText.setText(str);
             }
 
 

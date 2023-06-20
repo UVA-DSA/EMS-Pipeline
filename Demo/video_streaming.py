@@ -154,10 +154,11 @@ class Thread(QThread):
                             image_times.append(curr_time)
 
                             image = Image.open(io.BytesIO(img_bytes))
+                            original_img = Image.open(io.BytesIO(img_bytes))
                             img_ar=np.array(image)
+                            original_img=np.array(original_img)
                             image = img_ar
 
-                            
                             #process image with mediapipe hand detection
                             hand_detection_results = hands.process(image)
 
@@ -193,7 +194,12 @@ class Thread(QThread):
                             if(recording_enabled):
                                 now = time.time()*1e3
 
+                                img_ar = cv2.cvtColor(img_ar, cv2.COLOR_BGR2RGB)
+
                                 cv2.imwrite(self.data_path_str+ dt_string + '/img_'+str(frame_index)+'.jpg', img_ar)
+                                original_img = cv2.cvtColor(original_img, cv2.COLOR_BGR2RGB)
+
+                                cv2.imwrite(self.data_path_str+ dt_string + '/img_'+str(frame_index)+'_original.jpg', original_img)
                                 video.write(vid_img)
                                 writer.writerow([frame_index, now, timestamp])
                                 frame_index += 1

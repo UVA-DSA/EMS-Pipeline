@@ -43,10 +43,23 @@ public class FeedbackClient {
             InetAddress serverAddr = InetAddress.getByName(this.SERVER_IP);
 
             Log.e("feedback TCP Client", "C: Connecting...");
-
+            Socket socket = null;
             // Connection socket:
-            Socket socket = new Socket(serverAddr, this.SERVER_PORT);
-            Log.d("feedback tcp Client", "C: Connected!");
+            while (true){
+                try{
+                    socket = new Socket(serverAddr, this.SERVER_PORT);
+                    Log.d("Feedback TCP Client", "C: Connected!");
+                    break;
+                }
+                catch(Exception e){
+                    Thread.sleep(100);
+                    Log.d("Feedback TCP Client", "C: Retrying!");
+                }
+
+            }
+
+
+
 
             try {
                 // Input stream from server:

@@ -58,23 +58,24 @@ def Feedback (Window, data_path, FeedbackQueue):
         # Get queue item from the Speech-to-Text Module
         received = FeedbackQueue.get()
 
-        if(received == 'Kill'):
-            # print("Thread received Kill Signal. Killing Feedback Thread.")
-            connection.close()
-            print("Terminated feedback client connection!")
+        # if(received == 'Kill'):
+        #     # print("Thread received Kill Signal. Killing Feedback Thread.")
+        #     connection.close()
+        #     print("Terminated feedback client connection!")
 
-            print("Retrying to connect to a feedback client....")
-            connection,address = sock.accept()  
-            print("Client connected for feedback: ",address)
+        #     print("Retrying to connect to a feedback client....")
+        #     connection,address = sock.accept()  
+        #     print("Client connected for feedback: ",address)
             
 
-        if(Window.reset == 1):
-            # print("Cognitive System Thread Received reset signal. Killing Feedback Thread.")
-            return
+        # if(Window.reset == 1):
+        #     # print("Cognitive System Thread Received reset signal. Killing Feedback Thread.")
+        #     return
 
-        # If item received from queue is legitmate
-        else:
-            print("Received chunk", received)
+        # # If item received from queue is legitmate
+        # else:
+            
+        print("Feedback: Received chunk", received)
         
 
 

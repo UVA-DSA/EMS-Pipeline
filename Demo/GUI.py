@@ -615,7 +615,7 @@ class MainWindow(QWidget):
         if(self.CognitiveSystemThread != None):
             SpeechToNLPQueue.put('Kill')
             EMSAgentSpeechToNLPQueue.put('Kill')
-            FeedbackQueue.put('Kill')
+            # FeedbackQueue.put('Kill')
 
         self.VUMeter.setValue(0)
         self.finalSpeechSegmentsSpeech = []

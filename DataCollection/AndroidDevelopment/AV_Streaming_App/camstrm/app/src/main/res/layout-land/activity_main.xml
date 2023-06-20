@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-tools:context=".MainActivity" >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,14 +18,14 @@ tools:context=".MainActivity" >
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:text="start"
-        />
+            />
         <Button
             android:id="@+id/btn1"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:text="close"
-        />
+            />
     </LinearLayout>
 
     <RelativeLayout
@@ -33,51 +33,64 @@ tools:context=".MainActivity" >
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal" >
-            <ImageView
-                android:id="@+id/image_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:layout_gravity="center"
-                android:contentDescription="@string/my_image_description"
-            />
-        <TextView
-            android:id="@+id/concept_output"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="5dp"
-            android:gravity="center"
-            android:text="Concept"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:textColor="#FFC300"
 
-            />
+        <!--        <TextView-->
+<!--            android:id="@+id/concept_output"-->
+<!--            android:layout_width="430dp"-->
+<!--            android:layout_height="170dp"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:layout_marginStart="20dp"-->
+<!--            android:layout_marginEnd="11dp"-->
+<!--            android:layout_marginBottom="181dp"-->
+<!--            android:layout_toEndOf="@+id/protocol_output"-->
+<!--            android:gravity="center"-->
+
+<!--            android:text="Concept"-->
+<!--            android:textColor="#FFC300"-->
+<!--            android:textSize="30sp"-->
+<!--            android:textStyle="bold" />-->
+
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:contentDescription="@string/my_image_description"
+            android:rotation="180"
+            android:scaleType="fitCenter" />
+
         <TextView
             android:id="@+id/intervention_output"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="362dp"
+            android:layout_height="321dp"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginBottom="33dp"
             android:gravity="center"
+            android:maxLines="5"
             android:text="Intervention"
-            android:textSize="30sp"
-            android:textStyle="bold"
             android:textColor="#00FFFF"
 
-            />
+
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/protocol_output"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="376dp"
+            android:layout_height="322dp"
+            android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="75dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginEnd="114dp"
+            android:layout_marginBottom="30dp"
+            android:layout_toStartOf="@+id/intervention_output"
             android:gravity="center"
             android:text="Protocol"
-            android:textSize="30sp"
-            android:textStyle="bold"
             android:textColor="#00FF00"
-            />
+            android:textSize="30sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 </LinearLayout>
