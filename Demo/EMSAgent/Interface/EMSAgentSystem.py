@@ -79,6 +79,7 @@ class EMSAgent(nn.Module):
         return {'ids': ids, 'mask': mask, 'meta_ids': meta_ids, 'meta_mask': meta_mask}
 
     def eval_fn(self, data):
+
         with torch.no_grad():
             if data['ids'] != None:
                 ids = data["ids"].to(device, dtype=torch.long).unsqueeze(0)
@@ -147,7 +148,6 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_st
     # call the model
     # narrative = """ATF 64 yom unresponsive in bathroom, delay in accessing patient due to bathroom door being locked with no key.Patient family states he went to the bathroom at appx 2000 hrs, they realized that they hadn't seen him in while, so they checked on him, heard him snoring, and he wouldn't respond, so they called us. Upon our arrival it was appx 2115 hrs. Patient had paraphenalia laying beside him. Patient has history of heroin use.ATF 64 yom laying in bathroom. Patient unresponsive with snoring type respirations, spoon and needle laying next to him. Remainder of assessment held until after given. Patient AAOx4, ABC's intact, GCS 15. Patient admits to heroin use, states he has been off for the last couple years, but has relapsed for the last three day. Patient pupils 2mm RTL, skin normal, warm, and dry. Patient has symmetrical facial features with no slurring or droop noted. Patient has no obvious trauma, but has dirt and wood chips to forehead from laying on bathroom floor. Patient reports to have headache 9/10 to entire head. Patient has no signs of respiratory distress, no JVD. Lung sound clear. Patient has no chest pain, no abdominal pain, no shortness of breath. Patient has good PMS to all extremities, but does report that he has some pain to both knees from where he fell yesterday (he tripped over rug)"""
     narrative = ""
-    outputs = None
     
     if protocolStreamBool == True:
         if not os.path.exists(data_path_str + "protocoldata_XuerenModel/"):
@@ -169,26 +169,33 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_st
 
                 # If item received from queue is legitmate
                 else:
-                    print("Received chunk", received.transcript)
-                    narrative += received.transcript
-                    start = time.time()
-                    pred, prob = model(narrative)
-                    end = time.time()
-                    ProtocolSignal.signal.emit(["(Protocol: " +str(pred) + " : " +str(prob) +")"])
-                    print('executation time: {:.4f}'.format(end - start))
-                    print(pred, prob)
+                    print("Received chunk", received.transcript, str.isspace(received.transcript))
+                    if(not str.isspace(received.transcript)):
 
-                    #Feedback
-                    protocolFB =  FeedbackObj("", str(pred) + " : " +str(round(prob,2)), "")
-                    FeedbackQueue.put(protocolFB)
+                        narrative += received.transcript
+
+                        try:
+                                
+                            start = time.time()
+                            
+                            pred, prob = model(narrative)
+                            end = time.time()
+                            ProtocolSignal.signal.emit(["(Protocol: " +str(pred) + " : " +str(prob) +")"])
+                            print('executation time: {:.4f}'.format(end - start))
+                            print(pred, prob)
+
+                            #Feedback
+                            protocolFB =  FeedbackObj(None, str(pred) + " : " +str(round(prob,2)), None)
+                            FeedbackQueue.put(protocolFB)
 
 
-                    #write data to file for data collection
-                    f.write(narrative+" : ")
-                    f.write(str(pred))
-                    f.write(str(prob))
-                    f.write("\n")
-                    
+                            #write data to file for data collection
+                            f.write(narrative+" : ")
+                            f.write(str(pred))
+                            f.write(str(prob))
+                            f.write("\n")
+                        except:
+                            print("Protocol Prediction Failure!")
             f.close()
             
     if protocolStreamBool == False:
@@ -206,18 +213,24 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_st
 
             # If item received from queue is legitmate
             else:
-                print("Received chunk", received.transcript)
-                narrative += received.transcript
-                start = time.time()
-                pred, prob = model(narrative)
-                end = time.time()
-                ProtocolSignal.signal.emit(["(Protocol: " +str(pred) + " : " +str(prob) +")"])
-                print('executation time: {:.4f}'.format(end - start))
-                print(pred, prob)
+                print("Received chunk", received.transcript, str.isspace(received.transcript))
+                if(not str.isspace(received.transcript)):
+                    narrative += received.transcript
+                    try:
+                        start = time.time()
+                        pred, prob = model(narrative)
+                        end = time.time()
+                        ProtocolSignal.signal.emit(["(Protocol: " +str(pred) + " : " +str(prob) +")"])
+                        print('executation time: {:.4f}'.format(end - start))
+                        print(pred, prob)
 
-                #Feedback
-                protocolFB =  FeedbackObj("", str(pred) + " : " +str(prob), "")
-                FeedbackQueue.put(protocolFB)
+                        #Feedback
+                        protocolFB =  FeedbackObj("", str(pred) + " : " +str(prob), "")
+                        FeedbackQueue.put(protocolFB)
+
+                    except:
+                        print("Protocol Prediction Failure!")
+
             
                 
 

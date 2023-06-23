@@ -13,17 +13,18 @@ class FeedbackObj:
         self.concept = concept
 
 
-def sendMessage(feedbackObj, connection):
+def sendMessage(feedbackObj:FeedbackObj, connection):
     count = 0
     data_string = b""
     # data_string = pickle.dumps(feedbackObj)   
     # data_string = json.dumps(feedbackObj)
     if feedbackObj:
-        if feedbackObj.concept != "":
+        print("Feedback Object: ",feedbackObj.concept, feedbackObj.intervention, feedbackObj.protocol)
+        if feedbackObj.concept:
             data_string = b"Concepts: " + feedbackObj.concept.encode('ascii') + b'\0'
-        elif feedbackObj.intervention != "":
+        if feedbackObj.intervention:
             data_string = b"Intervention: " + feedbackObj.intervention.encode('ascii') + b'\0'
-        elif feedbackObj.protocol != "":
+        if feedbackObj.protocol:
             data_string = b"Protocol: " + feedbackObj.protocol.encode('ascii') + b'\0'
     
     #just for testing, delete later
@@ -41,6 +42,7 @@ def sendMessage(feedbackObj, connection):
 def Feedback (Window, data_path, FeedbackQueue):
     #initialize tcp connection
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.bind(("0.0.0.0", TCP_PORT))  
     sock.listen(5) 
     print("Waiting for client in feedback...")
@@ -58,19 +60,20 @@ def Feedback (Window, data_path, FeedbackQueue):
         # Get queue item from the Speech-to-Text Module
         received = FeedbackQueue.get()
 
-        # if(received == 'Kill'):
-        #     # print("Thread received Kill Signal. Killing Feedback Thread.")
-        #     connection.close()
-        #     print("Terminated feedback client connection!")
+        if(received == 'Kill'):
+            # print("Thread received Kill Signal. Killing Feedback Thread.")
+            connection.close()
+            print("Terminated feedback client connection!")
 
-        #     print("Retrying to connect to a feedback client....")
-        #     connection,address = sock.accept()  
-        #     print("Client connected for feedback: ",address)
+            # print("Retrying to connect to a feedback client....")
+            # connection,address = sock.accept()  
+            # print("Client connected for feedback: ",address)
             
 
-        # if(Window.reset == 1):
-        #     # print("Cognitive System Thread Received reset signal. Killing Feedback Thread.")
-        #     return
+        if(Window.reset == 1):
+            print("Cognitive System Thread Received reset signal. Killing Feedback Thread.")
+            connection.close()
+            return
 
         # # If item received from queue is legitmate
         # else:
@@ -84,7 +87,8 @@ def Feedback (Window, data_path, FeedbackQueue):
             # connection.send("some more data")
             print("sending message: ", received)
             sendMessage(received, connection)
-        except:
+        except Exception as e:
+            print("Feedback: Exception: ",e)
             print("Reconnecting to a client...")
             connection.close()
 
@@ -95,9 +99,8 @@ def Feedback (Window, data_path, FeedbackQueue):
             # sock.listen(5)  
 
             connection,address = sock.accept()  
-            print("Client connected: ",address)
-            print("Client connected for feedback: ",address)
-            sendMessage(received, connection)
+            print("Client reconnected for feedback: ",address)
+            # sendMessage(received, connection)
             # connection.send("some more data")
 
 

@@ -249,10 +249,10 @@ def TickResults(Window, NLP_Items, data_path_str, conceptBool, interventionBool,
     # print("===============================================================")
 
     #Feedback
-    interventionFB =  FeedbackObj(suggestions_str_fb, "", "")
+    interventionFB =  FeedbackObj(suggestions_str_fb, None, None)
     FeedbackQueue.put(interventionFB)
 
-    conceptFB =  FeedbackObj("", "", signs_and_vitals_str_fb)
+    conceptFB =  FeedbackObj(None,None, signs_and_vitals_str_fb)
     FeedbackQueue.put(conceptFB)
 
 
