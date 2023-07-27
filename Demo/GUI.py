@@ -293,6 +293,7 @@ class MainWindow(QWidget):
                                 "CPR_transcript1",
                                 "CPR_transcript2",
                                 "CPR_transcript3",
+                                "CPR_Kay",
                                 "NG1",
                                 "Other Audio File",
                                 "Text File"])
@@ -874,6 +875,7 @@ if __name__ == '__main__':
 
     print("stream bools: ", audiostream, videostream, smartwatchStream, conceptExtractionStream, protocolStream, interventionStream, transcriptStream)
 
+    smartwatchStream = True
     # audiostream = True # harcode audio saving
     # Set the Google Speech API service-account key environment variable
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "service-account.json"

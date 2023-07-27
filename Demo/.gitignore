@@ -1,6 +1,8 @@
 # Ignore Mac system files
 .DS_store
 
+.gradle/*
+
 # Ignore node_modules folder
 public_mm/*
 *.tar.bz2

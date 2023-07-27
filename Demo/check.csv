@@ -1071,3 +1071,468 @@ Xueren: medical - altered mental status0.26622877
 "(Gender, True, female, <b>0.81</b>)<br>(Age, True, 55, <b>0.65</b>)<br>(Loss of consciousness, True, unconscious, <b>1.0</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
 -,(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.19910854)
 "(Transport, <b>1.0</b>)<br>(Normal saline, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.6</b>)<br>(Normal saline, <b>0.25</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>(Pulse, True, 106, <b>0.81</b>)<br>(Bp, True, 163/81, <b>1.0</b>)<br>(Gcs, True, glasgow coma score, <b>1.0</b>)<br>(Wheezing, True, 12, <b>0.98</b>)<br>(Tachycardia, True, 106, <b>0.81</b>)<br>(Shortness of breath, True, shortness of breath, <b>1.0</b>)<br>(Hypertension, True, 163, <b>1.0</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.6</b>)<br>(Normal saline, <b>0.25</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>(Pulse, True, 106, <b>0.81</b>)<br>(Bp, True, 163/81, <b>1.0</b>)<br>(Gcs, True, glasgow coma score, <b>1.0</b>)<br>(Wheezing, True, 12, <b>0.98</b>)<br>(Tachycardia, True, 106, <b>0.81</b>)<br>(Shortness of breath, True, shortness of breath, <b>1.0</b>)<br>(Hypertension, True, 163, <b>1.0</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.6</b>)<br>(Normal saline, <b>0.25</b>)<br>"
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9883996)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9810302)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.6</b>)<br>(Normal saline, <b>0.25</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>(Pulse, True, 106, <b>0.81</b>)<br>(Bp, True, 163/81, <b>1.0</b>)<br>(Gcs, True, 15, <b>0.92</b>)<br>(Spo2, True, 100, <b>0.86</b>)<br>(Wheezing, True, 12, <b>0.98</b>)<br>(Tachycardia, True, 106, <b>0.81</b>)<br>(Shortness of breath, True, shortness of breath, <b>1.0</b>)<br>(Hypertension, True, 163, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.96969604)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.6</b>)<br>(Normal saline, <b>0.25</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>(Pulse, True, 106, <b>0.81</b>)<br>(Bp, True, 163/81, <b>1.0</b>)<br>(Gcs, True, 15, <b>0.92</b>)<br>(Spo2, True, 100, <b>0.86</b>)<br>(Wheezing, True, 12, <b>0.98</b>)<br>(Tachycardia, True, 106, <b>0.81</b>)<br>(Shortness of breath, True, shortness of breath, <b>1.0</b>)<br>(Hypertension, True, 163, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9601388)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.6</b>)<br>(Normal saline, <b>0.25</b>)<br>"
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Protocol: medical - altered mental status : 0.19848819)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9199155)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9199155)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.96937627)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9199155)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9675578)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Malaise, False, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9839262)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.48</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Malaise, False, 2, <b>0.79</b>)<br>(Wheezing, True, lung sounds, <b>0.98</b>)<br>(Shortness of breath, True, shortness of breath, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9868103)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.6</b>)<br>(Normal saline, <b>0.25</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Malaise, False, 2, <b>0.79</b>)<br>(Wheezing, True, lung sounds, <b>0.98</b>)<br>(Shortness of breath, True, shortness of breath, <b>1.0</b>)<br>(Pulse, True, 106, <b>0.81</b>)<br>(Bp, True, 163/81, <b>1.0</b>)<br>(Gcs, True, 15, <b>0.81</b>)<br>(Spo2, True, 100, <b>1.0</b>)<br>(Tachycardia, True, 106, <b>0.81</b>)<br>(Hypertension, True, 163, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.90421504)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.6</b>)<br>(Normal saline, <b>0.25</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Malaise, False, 2, <b>0.79</b>)<br>(Wheezing, True, lung sounds, <b>0.98</b>)<br>(Shortness of breath, True, shortness of breath, <b>1.0</b>)<br>(Pulse, True, 106, <b>0.81</b>)<br>(Bp, True, 163/81, <b>1.0</b>)<br>(Gcs, True, 15, <b>0.81</b>)<br>(Spo2, True, 100, <b>1.0</b>)<br>(Tachycardia, True, 106, <b>0.81</b>)<br>(Hypertension, True, 163, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98462534)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.6</b>)<br>(Normal saline, <b>0.25</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Malaise, False, 2, <b>0.79</b>)<br>(Wheezing, True, lung sounds, <b>0.98</b>)<br>(Shortness of breath, True, shortness of breath, <b>1.0</b>)<br>(Pulse, True, 106, <b>0.81</b>)<br>(Bp, True, 163/81, <b>1.0</b>)<br>(Gcs, True, 15, <b>0.81</b>)<br>(Spo2, True, 100, <b>1.0</b>)<br>(Tachycardia, True, 106, <b>0.81</b>)<br>(Hypertension, True, 163, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98462534)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.6</b>)<br>(Normal saline, <b>0.25</b>)<br>"
+(Protocol: medical - overdose/poisoning/toxic ingestion (protocol 9 - 9) : 0.48095778)
+"(Transport, <b>1.0</b>)<br>(Normal saline, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9199155)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9675578)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Malaise, False, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9839262)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.48</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Malaise, False, 2, <b>0.79</b>)<br>(Wheezing, True, lung sounds, <b>0.98</b>)<br>(Shortness of breath, True, shortness of breath, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9868103)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.6</b>)<br>(Normal saline, <b>0.25</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Malaise, False, 2, <b>0.79</b>)<br>(Wheezing, True, lung sounds, <b>0.98</b>)<br>(Shortness of breath, True, shortness of breath, <b>1.0</b>)<br>(Pulse, True, 106, <b>0.81</b>)<br>(Bp, True, 163/81, <b>1.0</b>)<br>(Gcs, True, 15, <b>0.81</b>)<br>(Spo2, True, 100, <b>1.0</b>)<br>(Tachycardia, True, 106, <b>0.81</b>)<br>(Hypertension, True, 163, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.90421504)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.6</b>)<br>(Normal saline, <b>0.25</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Malaise, False, 2, <b>0.79</b>)<br>(Wheezing, True, lung sounds, <b>0.98</b>)<br>(Shortness of breath, True, shortness of breath, <b>1.0</b>)<br>(Pulse, True, 106, <b>0.81</b>)<br>(Bp, True, 163/81, <b>1.0</b>)<br>(Gcs, True, 15, <b>0.81</b>)<br>(Spo2, True, 100, <b>1.0</b>)<br>(Tachycardia, True, 106, <b>0.81</b>)<br>(Hypertension, True, 163, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98462534)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.6</b>)<br>(Normal saline, <b>0.25</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Malaise, False, 2, <b>0.79</b>)<br>(Wheezing, True, lung sounds, <b>0.98</b>)<br>(Shortness of breath, True, shortness of breath, <b>1.0</b>)<br>(Pulse, True, 106, <b>0.81</b>)<br>(Bp, True, 163/81, <b>1.0</b>)<br>(Gcs, True, 15, <b>0.81</b>)<br>(Spo2, True, 100, <b>1.0</b>)<br>(Tachycardia, True, 106, <b>0.81</b>)<br>(Hypertension, True, 163, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98462534)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.6</b>)<br>(Normal saline, <b>0.25</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Malaise, False, 2, <b>0.79</b>)<br>(Wheezing, True, lung sounds, <b>0.98</b>)<br>(Shortness of breath, True, shortness of breath, <b>1.0</b>)<br>(Pulse, True, 106, <b>0.81</b>)<br>(Bp, True, 163/81, <b>1.0</b>)<br>(Gcs, True, 15, <b>0.81</b>)<br>(Spo2, True, 100, <b>1.0</b>)<br>(Tachycardia, True, 106, <b>0.81</b>)<br>(Hypertension, True, 163, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9864389)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.6</b>)<br>(Normal saline, <b>0.25</b>)<br>"
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9199155)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9337556)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.19910854)
+"(Transport, <b>1.0</b>)<br>(Normal saline, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Gender, True, female, <b>0.81</b>)<br>(Age, True, 55, <b>0.65</b>)<br>(Loss of consciousness, True, unconscious, <b>1.0</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.19910854)
+"(Transport, <b>1.0</b>)<br>(Normal saline, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Gender, True, female, <b>0.81</b>)<br>(Age, True, 55, <b>0.65</b>)<br>(Loss of consciousness, True, unconscious, <b>1.0</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.19910854)
+"(Transport, <b>1.0</b>)<br>(Normal saline, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Gender, True, female, <b>0.81</b>)<br>(Age, True, 55, <b>0.65</b>)<br>(Loss of consciousness, True, unconscious, <b>1.0</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.19910854)
+"(Transport, <b>1.0</b>)<br>(Normal saline, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Gender, True, female, <b>0.81</b>)<br>(Age, True, 55, <b>0.65</b>)<br>(Loss of consciousness, True, unconscious, <b>1.0</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.19910854)
+"(Transport, <b>1.0</b>)<br>(Normal saline, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.53227633)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.53227633)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.5818153)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>1.0</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>1.0</b>)<br>(Chest pain, True, 57, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.97800887)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.22840959)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9658712)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>1.0</b>)<br>(Gender, True, female, <b>0.81</b>)<br>(Age, True, 57, <b>0.65</b>)<br>(Pain severity, True, 57, <b>1.0</b>)<br>(Chest pain, True, 57, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.96415085)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>1.0</b>)<br>(Gender, True, female, <b>0.81</b>)<br>(Age, True, 57, <b>0.65</b>)<br>(Pain severity, True, 57, <b>1.0</b>)<br>(Chest pain, True, 57, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98480576)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>1.0</b>)<br>(Gender, True, female, <b>0.81</b>)<br>(Age, True, 57, <b>0.65</b>)<br>(Pain severity, True, 57, <b>1.0</b>)<br>(Chest pain, True, 57, <b>1.0</b>)<br>(Pain, True, chest pain, <b>1.0</b>)<br>(Chest pain, True, chest pain, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9861136)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>1.0</b>)<br>(Gender, True, female, <b>0.81</b>)<br>(Age, True, 57, <b>0.65</b>)<br>(Pain severity, True, 57, <b>1.0</b>)<br>(Chest pain, True, 57, <b>1.0</b>)<br>(Pain, True, chest pain, <b>1.0</b>)<br>(Chest pain, True, chest pain, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98491216)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>1.0</b>)<br>(Gender, True, female, <b>0.81</b>)<br>(Age, True, 57, <b>0.65</b>)<br>(Pain severity, True, 57, <b>1.0</b>)<br>(Chest pain, True, 57, <b>1.0</b>)<br>(Pain, True, chest pain, <b>1.0</b>)<br>(Chest pain, True, chest pain, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9883823)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>1.0</b>)<br>(Gender, True, female, <b>0.81</b>)<br>(Age, True, 57, <b>0.65</b>)<br>(Pain severity, True, 57, <b>1.0</b>)<br>(Chest pain, True, 57, <b>1.0</b>)<br>(Pain, True, chest pain, <b>1.0</b>)<br>(Chest pain, True, chest pain, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98938304)
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98938304)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>1.0</b>)<br>(Gender, True, female, <b>0.81</b>)<br>(Age, True, 57, <b>0.65</b>)<br>(Pain severity, True, 57, <b>1.0</b>)<br>(Chest pain, True, 57, <b>1.0</b>)<br>(Pain, True, chest pain, <b>1.0</b>)<br>(Chest pain, True, chest pain, <b>1.0</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>1.0</b>)<br>(Gender, True, female, <b>0.81</b>)<br>(Age, True, 57, <b>0.65</b>)<br>(Pain severity, True, 57, <b>1.0</b>)<br>(Chest pain, True, 57, <b>1.0</b>)<br>(Pain, True, chest pain, <b>1.0</b>)<br>(Chest pain, True, chest pain, <b>1.0</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Protocol: medical - altered mental status : 0.1889653)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Protocol: medical - altered mental status : 0.1889653)
+(Protocol: medical - altered mental status : 0.1761438)
+(Protocol: medical - altered mental status : 0.1761438)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.16133632)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9830876)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9830876)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9870511)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, False, 57, <b>0.67</b>)<br>(Age, True, 57, <b>0.74</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, False, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9868526)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, False, 57, <b>0.67</b>)<br>(Age, True, 57, <b>0.74</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, False, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98756903)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, False, 57, <b>0.67</b>)<br>(Age, True, 57, <b>0.74</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, False, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98762983)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, False, 57, <b>0.67</b>)<br>(Age, True, 57, <b>0.74</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, False, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9862067)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, False, 57, <b>0.67</b>)<br>(Age, True, 57, <b>0.74</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, False, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9862067)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>",(Protocol: medical - altered mental status : 0.18581171)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.36947066)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.36947066)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.36947066)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.36947066)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.4230252)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.4230252)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.4230252)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.4230252)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.42464918)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.42464918)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.4307998)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.4307998)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.4307998)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.4307998)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.4307998)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.4307998)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.32242274)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.32242274)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.32242274)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.32242274)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.34256244)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.4000258)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.42867753)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.44227588)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.44227588)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.44227588)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.44227588)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.44227588)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.44227588)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.44227588)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.44227588)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.44227588)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.44227588)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.4471192)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.43861866)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>(Glucose, True, glucose, <b>0.86</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.43861866)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>(Glucose, True, glucose, <b>0.86</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.43008775)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>(Glucose, True, glucose, <b>0.86</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.46222815)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>(Glucose, True, glucose, <b>0.86</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.46222815)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>(Glucose, True, glucose, <b>0.86</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.46222815)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>(Glucose, True, glucose, <b>0.86</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.46222815)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.49492562)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>(Glucose, True, glucose, <b>0.86</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>(Glucose, True, glucose, <b>0.86</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.49492562)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>(Glucose, True, glucose, <b>0.86</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.49492562)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>(Glucose, True, glucose, <b>0.86</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.49492562)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>(Glucose, True, glucose, <b>0.86</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.49630544)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>(Glucose, True, glucose, <b>0.86</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.49630544)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>(Glucose, True, glucose, <b>0.86</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.49630544)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>(Glucose, True, glucose, <b>0.86</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.49630544)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>(Glucose, True, glucose, <b>0.86</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.49630544)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.52949834)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>(Glucose, True, glucose, <b>0.86</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>(Glucose, True, glucose, <b>0.86</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.49302688)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>(Glucose, True, glucose, <b>0.86</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.49302688)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>(Glucose, True, glucose, <b>0.86</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.49302688)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Weakness, True, weakness, <b>1.0</b>)<br>(Glucose, True, glucose, <b>0.86</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.49302688)
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.49302688)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.5931229)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9314808)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9314808)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9177618)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9845173)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9256484)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.62</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.62</b>)<br>(Chest pain, True, 57, <b>0.62</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.8030322)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.62</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.62</b>)<br>(Chest pain, True, 57, <b>0.62</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.57744247)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.62</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.62</b>)<br>(Chest pain, True, 57, <b>0.62</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.57744247)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.62</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.62</b>)<br>(Chest pain, True, 57, <b>0.62</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.55366576)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.62</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.62</b>)<br>(Chest pain, True, 57, <b>0.62</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.5936563)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.62</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.62</b>)<br>(Chest pain, True, 57, <b>0.62</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.5659477)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.96671826)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98316145)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9884935)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.68</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Pain, True, chest pain, <b>1.0</b>)<br>(Cough, True, chronic cough, <b>1.0</b>)<br>(Chest pain, True, chest pain, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98354715)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.68</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Pain, True, chest pain, <b>1.0</b>)<br>(Cough, True, chronic cough, <b>1.0</b>)<br>(Chest pain, True, chest pain, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98778826)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.68</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Pain, True, chest pain, <b>1.0</b>)<br>(Cough, True, chronic cough, <b>1.0</b>)<br>(Chest pain, True, chest pain, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98332316)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.68</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Pain, True, chest pain, <b>1.0</b>)<br>(Cough, True, chronic cough, <b>1.0</b>)<br>(Chest pain, True, chest pain, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.982653)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.68</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Pain, True, chest pain, <b>1.0</b>)<br>(Cough, True, chronic cough, <b>1.0</b>)<br>(Chest pain, True, chest pain, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.982653)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.68</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Pain, True, chest pain, <b>1.0</b>)<br>(Cough, True, chronic cough, <b>1.0</b>)<br>(Chest pain, True, chest pain, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.982653)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.68</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Pain, True, chest pain, <b>1.0</b>)<br>(Cough, True, chronic cough, <b>1.0</b>)<br>(Chest pain, True, chest pain, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9681807)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.68</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>(Pain, True, chest pain, <b>1.0</b>)<br>(Cough, True, chronic cough, <b>1.0</b>)<br>(Chest pain, True, chest pain, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9681807)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.68</b>)<br>"
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.17774536)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Age, True, 57, <b>0.64</b>)<br>",(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.17774536)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+(Protocol: medical - altered mental status : 0.20278624)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9252488)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9878033)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+(Protocol: medical - altered mental status : 0.5767135)
+(Protocol: medical - altered mental status : 0.5767135)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Age, True, 57, <b>0.58</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Age, True, 57, <b>0.58</b>)<br>",(Protocol: medical - altered mental status : 0.5767135)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Age, True, 57, <b>0.58</b>)<br>",(Protocol: medical - altered mental status : 0.5896593)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Age, True, 57, <b>0.58</b>)<br>",(Protocol: medical - altered mental status : 0.5706247)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.7794227)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9884849)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9907358)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.99091)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9909496)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9908022)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98925614)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98925614)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98925614)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9887657)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9866121)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98880076)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98966354)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98966354)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9897885)
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9897885)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9897222)
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9897222)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9897222)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9897222)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9884851)
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9884851)
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9884851)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9884851)
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9878243)
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9880107)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98737806)
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98737806)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98737806)
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98737806)
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98737806)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98737806)
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98788875)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9881506)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9881506)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9881506)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9882947)
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9882947)
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9882665)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9882665)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98819286)
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98819286)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9869048)
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9869048)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98848665)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, chest pain, <b>0.67</b>)<br>(Chest pain, True, chest pain, <b>0.67</b>)<br>(Malaise, True, 2, <b>0.79</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9439158)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9439158)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9569426)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9858197)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.62</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.62</b>)<br>(Chest pain, True, 57, <b>0.62</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9891082)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.62</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.62</b>)<br>(Chest pain, True, 57, <b>0.62</b>)<br>(Malaise, True, discomfort, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9822709)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.6</b>)<br>(Normal saline, <b>0.25</b>)<br>"
+"(Pain, True, 57, <b>0.62</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.62</b>)<br>(Chest pain, True, 57, <b>0.62</b>)<br>(Malaise, True, discomfort, <b>1.0</b>)<br>(Pulse, True, 106, <b>0.81</b>)<br>(Bp, True, 163/81, <b>1.0</b>)<br>(Gcs, True, 15, <b>0.84</b>)<br>(Spo2, True, 100, <b>0.86</b>)<br>(Wheezing, True, 12, <b>0.98</b>)<br>(Tachycardia, True, 106, <b>0.81</b>)<br>(Shortness of breath, True, shortness of breath, <b>1.0</b>)<br>(Hypertension, True, 163, <b>1.0</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98221576)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.6</b>)<br>(Normal saline, <b>0.25</b>)<br>"
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.64520633)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9583495)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9732231)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9732231)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9896528)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9892251)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9900388)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.99073225)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.99095434)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9859511)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 57, <b>0.67</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 57, <b>0.75</b>)<br>(Pain severity, True, 57, <b>0.67</b>)<br>(Chest pain, True, 57, <b>0.67</b>)<br>",(Protocol: medical - altered mental status : 0.18619089)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.32148847)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.32148847)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.7393198)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>(Normal saline, <b>0.38</b>)<br>(Ondansetron, <b>0.32</b>)<br>"
+"(Pain, True, chest pain, <b>0.9</b>)<br>(Chest pain, True, chest pain, <b>0.9</b>)<br>(Nausea, True, nausea, <b>0.86</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.92302537)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>(Normal saline, <b>0.38</b>)<br>(Ondansetron, <b>0.32</b>)<br>"
+(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.19379663)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Protocol: medical - abdominal pain (protocol 3 - 2) : 0.1962427)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98859966)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 70, <b>0.83</b>)<br>(Gender, True, female, <b>0.81</b>)<br>(Age, True, 70, <b>0.65</b>)<br>(Pain severity, True, 70, <b>0.83</b>)<br>(Chest pain, True, 70, <b>0.83</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9899295)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 70, <b>0.83</b>)<br>(Gender, True, female, <b>0.81</b>)<br>(Age, True, 70, <b>0.65</b>)<br>(Pain severity, True, 70, <b>0.83</b>)<br>(Chest pain, True, 70, <b>0.83</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.9882025)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 70, <b>0.83</b>)<br>(Gender, True, female, <b>0.81</b>)<br>(Age, True, 70, <b>0.65</b>)<br>(Pain severity, True, 70, <b>0.83</b>)<br>(Chest pain, True, 70, <b>0.83</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98960084)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 70, <b>0.83</b>)<br>(Gender, True, female, <b>0.81</b>)<br>(Age, True, 70, <b>0.65</b>)<br>(Pain severity, True, 70, <b>0.83</b>)<br>(Chest pain, True, 70, <b>0.83</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98960084)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 70, <b>0.83</b>)<br>(Gender, True, female, <b>0.81</b>)<br>(Age, True, 70, <b>0.65</b>)<br>(Pain severity, True, 70, <b>0.83</b>)<br>(Chest pain, True, 70, <b>0.83</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98960084)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 70, <b>0.83</b>)<br>(Gender, True, female, <b>0.81</b>)<br>(Age, True, 70, <b>0.65</b>)<br>(Pain severity, True, 70, <b>0.83</b>)<br>(Chest pain, True, 70, <b>0.83</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98858833)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 70, <b>0.83</b>)<br>(Gender, True, female, <b>0.81</b>)<br>(Age, True, 70, <b>0.65</b>)<br>(Pain severity, True, 70, <b>0.83</b>)<br>(Chest pain, True, 70, <b>0.83</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98914087)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Pain, True, 70, <b>0.83</b>)<br>(Gender, True, female, <b>0.81</b>)<br>(Age, True, 70, <b>0.65</b>)<br>(Pain severity, True, 70, <b>0.83</b>)<br>(Chest pain, True, 70, <b>0.83</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98914087)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
