@@ -876,6 +876,7 @@ if __name__ == '__main__':
     print("stream bools: ", audiostream, videostream, smartwatchStream, conceptExtractionStream, protocolStream, interventionStream, transcriptStream)
 
     smartwatchStream = True
+    videostream = True
     # audiostream = True # harcode audio saving
     # Set the Google Speech API service-account key environment variable
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "service-account.json"

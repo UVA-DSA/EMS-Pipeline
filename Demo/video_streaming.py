@@ -200,7 +200,8 @@ class Thread(QThread):
                                 original_img = cv2.cvtColor(original_img, cv2.COLOR_BGR2RGB)
 
                                 cv2.imwrite(self.data_path_str+ dt_string + '/img_'+str(frame_index)+'_original.jpg', original_img)
-                                video.write(vid_img)
+                                # video.write(vid_img)
+                                video.write(original_img)
                                 writer.writerow([frame_index, now, timestamp])
                                 frame_index += 1
                             

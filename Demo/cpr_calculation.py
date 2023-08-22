@@ -120,7 +120,7 @@ def vid_streaming_Cpr(y_vals, image_times):
     #normalize by removing mean 
     wrist_data_norm=y_vals-mean
     #detect peaks for hand detection
-    peaks, _ = find_peaks(wrist_data_norm, height=0.002)
+    peaks, _ = find_peaks(wrist_data_norm, height=0.005)
     peak_times = np.take(image_times, peaks)
 
     #find time difference between peaks and calculate cpr rate

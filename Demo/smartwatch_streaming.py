@@ -12,6 +12,13 @@ import pandas as pd
 import socket
 import collections
 from cpr_calculation import preprocess_data, find_cpr_rate, find_peaks_valleys
+import math
+import numpy as np
+
+from scipy.fft import fft, rfft, fftfreq, rfftfreq, ifft, fftshift
+from scipy.signal import lombscargle, spectrogram
+
+
 
 # variables for getting smartwatch data via udp
 localIP     = "0.0.0.0"
@@ -79,24 +86,84 @@ class Thread_Watch(QThread):
                     current_buffer_size = len(buffer)
                     # start = time.time()
 
-                    if current_buffer_size%500 == 0:
+                    # kays method
+
+
+                    if current_buffer_size%512 == 0:
                         # self.changeActivityRec.emit('Measuring CPR Rate...')
                         data_frame = pd.DataFrame(list(buffer), columns=columns)
-
-                        #preprocess dtaa to get xyz magnitude
+                        # #preprocess dtaa to get xyz magnitude
                         data_frame = preprocess_data(data_frame)
 
-                        #calculate cpr rate and avg time
-                        peaks,valleys,height,min_height = find_peaks_valleys(data_frame,height=32.5,distance=1,prominence=1)
-                        avg_time,cpr_rate = find_cpr_rate(peaks)
-                        # print(avg_time,cpr_rate)
+                        # Kays method begins
+                        window = 256   # larger window gives higher resolution
+                        stride = 3
+
+                        norm = (data_frame['Value_Magnitude_XYZ']-data_frame['Value_Magnitude_XYZ'].mean())/data_frame['Value_Magnitude_XYZ'].std()
+                        signal = np.array(norm)
+                        timestamps = np.array(data_frame.EPOCH_Time_ms)/1e3
+                        timestamps = timestamps - timestamps[0]
+
+                        # calculate max number of steps in the given data
+                        steps = math.floor((len(signal)-window)/stride)
+
+                        allFreqs = [] #[[]]*steps
+                        allMags = [] #[[]]*steps
+                        allSteps = [] #[[]]*steps
+                        cprRates = [[]]*steps
+
+
+                                                # loop over steps
+                        # for step in range(steps):
+                        # get windowed signal and timestamps
+                        # start = step*stride
+                        # stop = start+window
+                        x = signal
+                        t = timestamps
+                        # Apply Lomb-Scargle
+                        n = len(t)
+                        duration = t.ptp()
+                        freqs = np.linspace(1/duration, n/duration, 5*n)
+                        periodogram = lombscargle(t, x, freqs)
+                        mags = periodogram
+                        # convert freqs in rad/s to Hz
+                        freqs = freqs/(2*math.pi)
+
+                        # Concatenate to lists        
+                        allFreqs += list(freqs)
+                        allMags += list(mags)
+       
+
+                        # find peak point for cpr rate at this step
+                        # use [1:] to ignore DC component at 0 Hz and
+                        # apply to both mags and freqs lists
+                        peakPoint = np.argmax(mags[1:])
+                        # print(peakPoint)
+                        # print(freqs[peakPoint])
+                        cprRates = freqs[1:][peakPoint]
+
+                        cprRatePM = cprRates*60
+
+                        print("Kay CPR: ",cprRatePM)
+
+                        # Old method
+
+
+
+                        # #calculate cpr rate and avg time
+                        # peaks,valleys,height,min_height = find_peaks_valleys(data_frame,height=32.5,distance=1,prominence=1)
+                        # avg_time,cpr_rate = find_cpr_rate(peaks)
+                        # # print(avg_time,cpr_rate)
 
                         # if cpr rate and avg time are not 0 (i.e. valid), then display in Smartwatch activity box on GUI
-                        if avg_time != 0 and cpr_rate > 40:
-                            str_output = "Average time between peaks in seconds (scipy): " + str(round(avg_time,2)) + " \n" + "CPR Rate Per Minute (scipy): " + str(round(cpr_rate,2))
+                        if cprRatePM > 40:
+                            str_output =  "CPR Rate Per Minute: " + str(round(cprRatePM,2))
                             self.changeActivityRec.emit(str(str_output))
 
                         # clear buffer to get next 1000 data points for cpr rate calculation
+
+
+
                         buffer.clear()
                         
         else: #smartwatch stream bool = false --> no data collection
@@ -131,15 +198,79 @@ class Thread_Watch(QThread):
                     #preprocess dtaa to get xyz magnitude
                     data_frame = preprocess_data(data_frame)
 
-                    #calculate cpr rate and avg time
-                    peaks,valleys,height,min_height = find_peaks_valleys(data_frame,height=32.5,distance=1,prominence=1)
-                    avg_time,cpr_rate = find_cpr_rate(peaks)
-                    # print(avg_time,cpr_rate)
 
-                    # if cpr rate and avg time are not 0 (i.e. valid), then display in Smartwatch activity box on GUI
-                    if avg_time != 0 and cpr_rate > 40:
-                        str_output = "Average time between peaks in seconds (scipy): " + str(round(avg_time,2)) + " \n" + "CPR Rate Per Minute (scipy): " + str(round(cpr_rate,2))
+
+                    # Kays method begins
+                    window = 256   # larger window gives higher resolution
+                    stride = 3
+
+                    norm = (data_frame['Value_Magnitude_XYZ']-data_frame['Value_Magnitude_XYZ'].mean())/data_frame['Value_Magnitude_XYZ'].std()
+                    signal = np.array(norm)
+                    timestamps = np.array(data_frame.EPOCH_Time_ms)/1e3
+                    timestamps = timestamps - timestamps[0]
+
+                    # calculate max number of steps in the given data
+                    steps = math.floor((len(signal)-window)/stride)
+
+                    allFreqs = [] #[[]]*steps
+                    allMags = [] #[[]]*steps
+                    allSteps = [] #[[]]*steps
+                    cprRates = [[]]*steps
+
+
+                                            # loop over steps
+                    # for step in range(steps):
+                    # get windowed signal and timestamps
+                    # start = step*stride
+                    # stop = start+window
+                    x = signal
+                    t = timestamps
+                    # Apply Lomb-Scargle
+                    n = len(t)
+                    duration = t.ptp()
+                    freqs = np.linspace(1/duration, n/duration, 5*n)
+                    periodogram = lombscargle(t, x, freqs)
+                    mags = periodogram
+                    # convert freqs in rad/s to Hz
+                    freqs = freqs/(2*math.pi)
+
+                    # Concatenate to lists        
+                    allFreqs += list(freqs)
+                    allMags += list(mags)
+    
+
+                    # find peak point for cpr rate at this step
+                    # use [1:] to ignore DC component at 0 Hz and
+                    # apply to both mags and freqs lists
+                    peakPoint = np.argmax(mags[1:])
+                    # print(peakPoint)
+                    # print(freqs[peakPoint])
+                    cprRates = freqs[1:][peakPoint]
+
+                    cprRatePM = cprRates*60
+
+                    print("Kay CPR: ",cprRatePM)
+
+                    # Kays method ends
+
+
+
+                    # old method
+
+                    # #calculate cpr rate and avg time
+                    # peaks,valleys,height,min_height = find_peaks_valleys(data_frame,height=32.5,distance=1,prominence=1)
+                    # avg_time,cpr_rate = find_cpr_rate(peaks)
+                    # # print(avg_time,cpr_rate)
+
+                    # # if cpr rate and avg time are not 0 (i.e. valid), then display in Smartwatch activity box on GUI
+                    # if avg_time != 0 and cpr_rate > 40:
+                    #     str_output = "Average time between peaks in seconds (scipy): " + str(round(avg_time,2)) + " \n" + "CPR Rate Per Minute (scipy): " + str(round(cpr_rate,2))
+                    #     self.changeActivityRec.emit(str(str_output))
+
+                    if cprRatePM > 40:
+                        str_output =  "CPR Rate Per Minute: " + str(round(cprRatePM,2))
                         self.changeActivityRec.emit(str(str_output))
+
 
                     # clear buffer to get next 1000 data points for cpr rate calculation
                     buffer.clear()
