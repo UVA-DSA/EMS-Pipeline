@@ -19,12 +19,17 @@ service-account.json
 # Ignore SASS config files
 .sass-cache
 
+*/*.local.properties
+
+*/PKG-INFO
 
 data_collection_folder/*
 
-__pycache__/*
+*/__pycache__/*
 
 *.~lock.*
+*.egg
+*.pyc
 
 */.gradle
 */.idea

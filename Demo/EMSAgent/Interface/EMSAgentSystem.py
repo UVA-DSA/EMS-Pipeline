@@ -33,12 +33,13 @@ class EMSAgent(nn.Module):
         self.config = config
         self.tokenizer = BertTokenizer.from_pretrained(self.config.backbone, do_lower_Case=True)
         self.clean_model_date = date
-        self.save_model_root = os.path.join('./EMSAgent/Interface/models', '{}'.format(self.clean_model_date))
+        self.save_model_root = os.path.join('../../EMSAgent/Interface/models', '{}'.format(self.clean_model_date))
+        print(self.save_model_root)
         if self.config.graph == 'hetero':
-            signs_df = pd.read_excel('./EMSAgent/Interface/config_file/All Protocols Mapping.xlsx')
-            impre_df = pd.read_excel('./EMSAgent/Interface/config_file/Impression Protocol.xlsx')
-            med_df = pd.read_excel('./EMSAgent/Interface/config_file/Medication Protocol.xlsx')
-            proc_df = pd.read_excel('./EMSAgent/Interface/config_file/Procedure Protocol.xlsx')
+            signs_df = pd.read_excel('../EMSAgent/Interface/config_file/All Protocols Mapping.xlsx')
+            impre_df = pd.read_excel('../EMSAgent/Interface/config_file/Impression Protocol.xlsx')
+            med_df = pd.read_excel('../EMSAgent/Interface/config_file/Medication Protocol.xlsx')
+            proc_df = pd.read_excel('../EMSAgent/Interface/config_file/Procedure Protocol.xlsx')
             HGraph = HeteroGraph(backbone=self.config.backbone, mode=self.config.cluster)
             self.graph = HGraph(signs_df, impre_df, med_df, proc_df)
         else:
