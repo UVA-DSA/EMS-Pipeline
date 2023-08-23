@@ -104,47 +104,26 @@ class MainWindow(QWidget):
         self.setWindowTitle('CognitiveEMS Demo')
         self.setWindowIcon(QIcon('./Images/Logos/UVA.png'))
         self.setGeometry(int(width * .065), int(height * .070),
-                         int(width * .9), int(height * .85))
-        #self.setMinimumSize(1280, 750);
-        #self.setFixedSize(width, height)
-        # self.showMaximized()
-                # setting  the geometry of window
-        # this will hide the title bar
-        # self.setWindowFlag(Qt.FramelessWindowHint)
-        # self.setAttribute(Qt.WA_TranslucentBackground)
+                         int(width * .9), int(height * .9))
         
-        # setting  the geometry of window
-        # self.setGeometry(100, 100, 400, 300)
-        # self.showFullScreen()
-        # self.setFixedHeight(int(height*1))
-        # self.setFixedWidth(int(width*1))
         # Grid Layout to hold all the widgets
         self.Grid_Layout = QGridLayout(self)
-        self.Grid_Layout.setColumnStretch(0, 1)
-        self.Grid_Layout.setColumnStretch(1, 1)
-        self.Grid_Layout.setColumnStretch(2, 1)
-        # Font for boxes
-        #Box_Font = QFont()
-        # Box_Font.setPointSize(BOX_FONT_SIZE)
 
         # Add disabled buttons to the of GUI to ensure spacing
         R3 = QPushButton(".\n.\n")
         R3.setFont(QFont("Monospace"))
         R3.setEnabled(False)
         R3.setStyleSheet("background-color:transparent;border:0;")
-        #self.Grid_Layout.addWidget(R3, 3, 3, 1, 1)
 
         R6 = QPushButton(".\n.\n")
         R6.setFont(QFont("Monospace"))
         R6.setEnabled(False)
         R6.setStyleSheet("background-color:transparent;border:0;")
-        #self.Grid_Layout.addWidget(R6, 6, 3, 1, 1)
 
         R8 = QPushButton(".\n" * int(self.height/100))
         R8.setFont(QFont("Monospace"))
         R8.setEnabled(False)
         R8.setStyleSheet("background-color:transparent;border:0;")
-        #self.Grid_Layout.addWidget(R8, 8, 3, 1, 1)
 
         C0 = QPushButton("................................")
         C0.setFont(QFont("Monospace"))
@@ -179,7 +158,6 @@ class MainWindow(QWidget):
 
         # Create a generate form button in the panel
         self.GenerateFormButton = QPushButton('Generate Form', self)
-        #self.GenerateFormButton.clicked.connect(self.GenerateFormButtonClick)
         self.DataPanelGridLayout.addWidget(self.GenerateFormButton, 0, 1, 1, 1)
 
         # Create label and textbox for speech
@@ -193,40 +171,26 @@ class MainWindow(QWidget):
 
         self.SpeechBox = QTextEdit()
         self.SpeechBox.setReadOnly(True)
-        # self.SpeechBox.setFont(Box_Font)
         self.SpeechBox.setOverwriteMode(True)
         self.SpeechBox.ensureCursorVisible()
         self.Grid_Layout.addWidget(self.SpeechBox, 3, 0, 2, 1)
 
-
-
         #Create label and media player for videos- - added 3/21/2022
         self.player = QMediaPlayer(None, QMediaPlayer.VideoSurface)
         self.video = QVideoWidget()
-
 
         self.Box = QVBoxLayout()
         self.Grid_Layout.addLayout(self.Box, 8, 1, 1, 1)
 
         # Create label and textbox for Vision Information
         self.VisionInformationLabel = QLabel()
-        self.VisionInformationLabel.setFixedHeight(50)
-        # self.VisionInformationLabel.move(50,50)
-        self.VisionInformationLabel.setGeometry(20, 20, 100, 50)
         self.VisionInformationLabel.setText("<b>Vision Information</b>")
         self.Box.addWidget(self.VisionInformationLabel) #7,1,1,1
 
         self.VisionInformation = QTextEdit() #QLineEdit()
-        self.VisionInformation.setFixedHeight(150)
         self.VisionInformation.setReadOnly(True)
-        # self.VisionInformation.setFont(Box_Font)
         self.Box.addWidget(self.VisionInformation) #8,1,1,1
 
-        # self.Box.setMargin(0)
-        self.Box.setSpacing(0)
-        self.Box.setContentsMargins(0,0,0,0)
-        self.Box.addStretch()
-        # self.Box.sizePolicy.setHorizontalStretch(1)
         # Create label and textbox for Smartwatch
         self.Box2 = QVBoxLayout()
         self.Grid_Layout.addLayout(self.Box2, 6, 1, 2, 1)
@@ -236,14 +200,10 @@ class MainWindow(QWidget):
         self.Box2.addWidget(self.SmartwatchLabel) #5,1,1,1
 
         self.Smartwatch = QTextEdit() #QLineEdit()
-        self.Smartwatch.setFixedHeight(470)
         self.Smartwatch.setReadOnly(True)
         self.Smartwatch.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        # self.VisionInformation.setFont(Box_Font)
         self.Box2.addWidget(self.Smartwatch) # 6, 1, 1, 1
-        self.Box2.addStretch()
-        # self.Box2.sizePolicy.setHorizontalStretch(1)
-
+ 
         self.VideoSubLabel = QLabel()
         self.VideoSubLabel.setText("<b>Video Content<b>") #setGeometry(100,100,100,100)
         self.Grid_Layout.addWidget(self.VideoSubLabel, 5, 0, 1, 1)
@@ -356,9 +316,7 @@ class MainWindow(QWidget):
         self.Grid_Layout.addWidget(self.ConceptExtractionSubLabel, 2, 1, 1, 1)
 
         self.ConceptExtraction = QTextEdit()
-        self.ConceptExtraction.setFixedHeight(820)
         self.ConceptExtraction.setReadOnly(True)
-        # self.ConceptExtraction.setFont(Box_Font)
         self.Grid_Layout.addWidget(self.ConceptExtraction, 3, 1, 2, 1)
 
 
@@ -372,9 +330,7 @@ class MainWindow(QWidget):
         self.Grid_Layout.addWidget(self.ProtcolSubLabel, 2, 2, 1, 2)
 
         self.ProtocolBox = QTextEdit()
-        # self.ProtocolBox.setFixedHeight(700)
         self.ProtocolBox.setReadOnly(True)
-        # self.ProtocolBox.setFont(Box_Font)
         self.Grid_Layout.addWidget(self.ProtocolBox, 3, 2, 1, 2)
 
         # Create label and textbox for interventions
@@ -388,7 +344,6 @@ class MainWindow(QWidget):
 
         self.InterventionBox = QTextEdit()
         self.InterventionBox.setReadOnly(True)
-        # self.InterventionBox.setFont(Box_Font)
         self.Grid_Layout.addWidget(self.InterventionBox, 7, 2, 1, 2)
 
         self.Box3 = QVBoxLayout()
@@ -398,15 +353,11 @@ class MainWindow(QWidget):
         self.MsgBoxLabel = QLabel()
         self.MsgBoxLabel.setText("<b>System Messages Log</b>")
         self.Box3.addWidget(self.MsgBoxLabel)#, 7, 2, 1, 2)
-        # self.MsgBoxLabel.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
         self.MsgBox = QTextEdit()
         self.MsgBox.setReadOnly(True)
         self.MsgBox.setFont(QFont("Monospace"))
-        # self.MsgBox.setLineWrapMode(QTextEdit.NoWrap)
-        # self.MsgBox.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.Box3.addWidget(self.MsgBox)#, 8, 2, 1, 2)
-        # self.Grid_Layout.setRowStretch(7, 0)
 
         # Populate the Message Box with welcome message
         System_Info_Text_File = open("./ETC/System_Info.txt", "r")
@@ -424,9 +375,6 @@ class MainWindow(QWidget):
         self.PictureBox.setAlignment(Qt.AlignCenter)
         self.Grid_Layout.addWidget(self.PictureBox, 10, 2, 1, 2)
 
-        # self.Grid_Layout.addStretch()
-        # self.Grid_Layout.setRowStretch(self.Grid_Layout.rowCount(), 2)
-        # self.Grid_Layout.setColumnStretch(self.Grid_Layout.columnCount(), 2)
         vspacer = PyQt5.QtWidgets.QSpacerItem(
             PyQt5.QtWidgets.QSizePolicy.Minimum, PyQt5.QtWidgets.QSizePolicy.Expanding)
         self.Grid_Layout.addItem(vspacer, 11, 0, 1, -1)
@@ -435,8 +383,6 @@ class MainWindow(QWidget):
             PyQt5.QtWidgets.QSizePolicy.Expanding, PyQt5.QtWidgets.QSizePolicy.Minimum)
         self.Grid_Layout.addItem(hspacer, 0, 2, -1, 1)
 
-        # self.Grid_Layout.setSpacing(0)
-        # self.Grid_Layout.setContentsMargins(0, 0, 0, 0)
     # ================================================================== GUI Functions ==================================================================
     @pyqtSlot(QImage)
     def setImage(self, image):
@@ -889,7 +835,8 @@ if __name__ == '__main__':
     print("Starting GUI")
     app = QApplication(sys.argv)
     screen_resolution = app.desktop().screenGeometry()
-    width, height = screen_resolution.width(), screen_resolution.height()
+    print(screen_resolution)
+    width, height = screen_resolution.width(), screen_resolution.height() 
 
     #width = 1920
     #height = 1080
