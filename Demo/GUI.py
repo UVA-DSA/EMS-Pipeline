@@ -11,6 +11,7 @@ import time
 import threading
 import math
 import datetime
+import traceback
 
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
@@ -44,6 +45,9 @@ import GoogleSpeechMicStream
 import GoogleSpeechFileStream
 import DeepSpeechMicStream
 import DeepSpeechFileStream
+import WhisperFileStream
+import WhisperMicStream
+
 import TextSpeechStream
 import CognitiveSystem
 
@@ -254,13 +258,19 @@ class MainWindow(QWidget):
         self.GoogleSpeechRadioButton.setEnabled(True)
         self.GoogleSpeechRadioButton.setChecked(True)
         self.ControlPanelGridLayout.addWidget(
-            self.GoogleSpeechRadioButton, 0, 1, 1, 1)
+        self.GoogleSpeechRadioButton, 0, 1, 1, 1)
+
+        self.WhisperRadioButton = QRadioButton("OpenAI Whisper", self)
+        self.WhisperRadioButton.setEnabled(True)  # Set the initial state
+        self.WhisperRadioButton.setChecked(False)  # Set the initial checked state
+        self.ControlPanelGridLayout.addWidget(self.WhisperRadioButton, 0, 3, 1, 1)  # Adjust column index as needed
 
         self.DeepSpeechRadioButton = QRadioButton("DeepSpeech", self)
         self.DeepSpeechRadioButton.setEnabled(True) #changed from False to True to enable
         self.DeepSpeechRadioButton.setChecked(False)
         self.ControlPanelGridLayout.addWidget(
             self.DeepSpeechRadioButton, 0, 2, 1, 1)
+
 
         # Create a start button in the Control Panel
         self.StartButton = QPushButton('Start', self)
@@ -463,9 +473,15 @@ class MainWindow(QWidget):
             if(self.GoogleSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(
                     target=GoogleSpeechMicStream.GoogleSpeech, args=(self, SpeechToNLPQueue,))
+            
+            elif(self.WhisperRadioButton.isChecked()):
+                self.SpeechThread = StoppableThread(
+                    target=WhisperMicStream.Whisper, args=(self, SpeechToNLPQueue))
+
             elif(self.DeepSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(
                     target=DeepSpeechMicStream.DeepSpeech, args=(self, SpeechToNLPQueue,))
+            
             self.SpeechThread.start()
             print('Microphone Speech Thread Started')
 
@@ -476,6 +492,11 @@ class MainWindow(QWidget):
             if(self.GoogleSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
                     self, SpeechToNLPQueue, str(audio_fname),))
+            
+            elif(self.WhisperRadioButton.isChecked()):
+                self.SpeechThread = StoppableThread(
+                    target=WhisperFileStream.Whisper, args=(self, SpeechToNLPQueue, str(audio_fname),))
+
             elif(self.DeepSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(target=DeepSpeechFileStream.DeepSpeech, args=(
                     self, SpeechToNLPQueue, str(audio_fname),))
@@ -497,6 +518,11 @@ class MainWindow(QWidget):
             if(self.GoogleSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
                     self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',))
+
+            elif (self.WhisperRadioButton.isChecked()):
+                self.SpeechThread = StoppableThread(
+                    target=WhisperFileStream.Whisper, args=(self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',))
+
             elif(self.DeepSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(target=DeepSpeechFileStream.DeepSpeech, args=(
                     self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',))
