@@ -63,7 +63,7 @@ def CognitiveSystem(Window, SpeechToNLPQueue, FeedbackQueue, data_path_str, conc
     SpeechText = ""
     NLP_Items = []
     Tick_Counter = 1
-
+# ================== HERE ================================================================
     while True:
         # continue
         # Get queue item from the Speech-to-Text Module
@@ -84,26 +84,11 @@ def CognitiveSystem(Window, SpeechToNLPQueue, FeedbackQueue, data_path_str, conc
 
             # Use online tool to find sentence boundaries
             dummy12 = received.transcript
-            # dummy12 = dummy12.replace('\r', '').replace('\n', '')
-            # dummyP2 = dummy12.replace(' ', '%20')
-            # dummyP3 = dummyP2.replace('\'', '%27')
-            # dummyP = dummyP3.replace('&', '%26')
-            # part1 = 'curl -d text='+dummyP+' http://bark.phon.ioc.ee/punctuator'
-            # op = subprocess.getstatusoutput(part1)
-            # # print("op:  ", op)
-            # output = op[1].rsplit('\n', 1)[1]
-            # sentsList = textParse2.sent_tokenize(output)  # final sentences
-            # print("original: ",received.transcript)
-            # print("online_tool: ",output)
-            # print("sentsList: ",sentsList)
             sentsList = [received.transcript]
             
-
             def print_tree(tree):
                 print(py_trees.display.unicode_tree(root=tree.root, show_status=True))
                 
-                
-            # print("sentsList:",sentsList)
             # Processes each chunk/sentence
             PunctuatedAndHighlightedText = ""
             for idx, item in enumerate(sentsList):

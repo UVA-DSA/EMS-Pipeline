@@ -64,7 +64,7 @@ class FileStream(object):
         # streaming_recognize method will not block the process termination.
         # self._buff.put(None)
         # self._audio_interface.terminate()
-
+# ========================= HERE ===================================================================
     def _fill_buffer(self, in_data, frame_count, time_info, status_flags):
         """Continuously collect data from the audio stream, into the buffer."""
         # self._buff.put(in_data)
@@ -207,6 +207,8 @@ def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, wavefile_nam
             # Now, put the transcription responses to use.
             num_chars_printed = 0
             responseTimeStamp = time.time()
+            len_previous_transcript = 0
+
 
             for response in responses:
                 if not response.results:
@@ -227,27 +229,38 @@ def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, wavefile_nam
                 # If the previous result was longer than this one, we need to print
                 # some extra spaces to overwrite the previous result
                 overwrite_chars = ' ' * (num_chars_printed - len(transcript))
-
-                if result.is_final:
-                    #print(transcript + overwrite_chars)
+#===================HERE==============================================================================
+                # Sion - consider interim results for intervention suggestion
+                if len(transcript) > len_previous_transcript + 10:
                     QueueItem = SpeechNLPItem(transcript, result.is_final,
-                                              confidence, num_chars_printed, 'Speech')
+                                                  confidence, num_chars_printed, 'Speech')
                     SpeechToNLPQueue.put(QueueItem)
                     EMSAgentSpeechToNLPQueue.put(QueueItem)
-
                     SpeechSignal.signal.emit([QueueItem])
-                    num_chars_printed = 0
+                    num_chars_printed = 0 if result.is_final else len(transcript)
+                    len_previous_transcript = len(transcript)
+                    
+                # if result.is_final:
+                #     #print(transcript + overwrite_chars)
+                #     QueueItem = SpeechNLPItem(transcript, result.is_final,
+                #                               confidence, num_chars_printed, 'Speech')
+                #     SpeechToNLPQueue.put(QueueItem)
+                #     EMSAgentSpeechToNLPQueue.put(QueueItem)                    
 
-                elif not result.is_final:
-                    #sys.stdout.write(transcript + overwrite_chars + '\r')
-                    # sys.stdout.flush()
-                    QueueItem = SpeechNLPItem(transcript, result.is_final,
-                                              confidence, num_chars_printed, 'Speech')
-                    # SpeechToNLPQueue.put(QueueItem)
-                    # EMSAgentSpeechToNLPQueue.put(QueueItem)
 
-                    SpeechSignal.signal.emit([QueueItem])
-                    num_chars_printed = len(transcript)
+                #     SpeechSignal.signal.emit([QueueItem])
+                #     num_chars_printed = 0
+
+                # elif not result.is_final:
+                #     #sys.stdout.write(transcript + overwrite_chars + '\r')
+                #     # sys.stdout.flush()
+                #     QueueItem = SpeechNLPItem(transcript, result.is_final,
+                #                               confidence, num_chars_printed, 'Speech')
+                #     # SpeechToNLPQueue.put(QueueItem)
+                #     # EMSAgentSpeechToNLPQueue.put(QueueItem)
+
+                #     SpeechSignal.signal.emit([QueueItem])
+                #     num_chars_printed = len(transcript)
 
         except Exception as e:
             # print(e)

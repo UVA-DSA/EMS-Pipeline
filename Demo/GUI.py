@@ -173,6 +173,7 @@ class MainWindow(QWidget):
         self.SpeechBox.setReadOnly(True)
         self.SpeechBox.setOverwriteMode(True)
         self.SpeechBox.ensureCursorVisible()
+        QTextCursor(self.SpeechBox.textCursor()).insertBlock()
         self.Grid_Layout.addWidget(self.SpeechBox, 3, 0, 2, 1)
 
         #Create label and media player for videos- - added 3/21/2022
@@ -318,7 +319,6 @@ class MainWindow(QWidget):
         self.ConceptExtraction = QTextEdit()
         self.ConceptExtraction.setReadOnly(True)
         self.Grid_Layout.addWidget(self.ConceptExtraction, 3, 1, 2, 1)
-
 
         # Add label, textbox for protcol name
         self.ProtcolLabel = QLabel()
@@ -595,7 +595,17 @@ class MainWindow(QWidget):
     def UpdateSpeechBox(self, input):
 
         item = input[0]
+        text = ""
+        # make text with previously finalized segments
+        for final_segment in self.finalSpeechSegmentsNLP:
+            text += final_segment + "<br>"
+        for final_segment in self.finalSpeechSegmentsSpeech[len(self.finalSpeechSegmentsNLP):]:
+            text += final_segment + "<br>"
+        # add currently received segment 
+        text += item.transcript
+        self.SpeechBox.setHtml(text)
 
+        # if received segment is final, store it
         if(item.isFinal):
             if(item.origin == 'Speech'):
                 self.finalSpeechSegmentsSpeech.append(
@@ -603,37 +613,6 @@ class MainWindow(QWidget):
             elif(item.origin == 'NLP'):
                 self.finalSpeechSegmentsNLP.append(
                     '<b>' + item.transcript + '</b>')
-
-            text = ""
-
-            for a in self.finalSpeechSegmentsNLP:
-                text += a + "<br>"
-
-            for a in self.finalSpeechSegmentsSpeech[len(self.finalSpeechSegmentsNLP):]:
-                text += a + "<br>"
-
-            self.SpeechBox.setText('<b>' + text + '</b>')
-            self.SpeechBox.moveCursor(QTextCursor.End)
-            self.nonFinalText = ""
-
-        else:
-            text = ""
-
-            for a in self.finalSpeechSegmentsNLP:
-                text += a + "<br>"
-
-            for a in self.finalSpeechSegmentsSpeech[len(self.finalSpeechSegmentsNLP):]:
-                text += a + "<br>"
-
-            if(not len(text)):
-                text = "<b></b>"
-
-            previousTextMinusPrinted = self.nonFinalText[:len(
-                self.nonFinalText) - item.numPrinted]
-            self.nonFinalText = previousTextMinusPrinted + item.transcript
-            self.SpeechBox.setText(text + self.nonFinalText)
-            self.SpeechBox.moveCursor(QTextCursor.End)
-
 
 
     # Update the Concept Extraction Box
@@ -823,6 +802,7 @@ if __name__ == '__main__':
 
     smartwatchStream = True
     videostream = True
+    audiostream = True
     # audiostream = True # harcode audio saving
     # Set the Google Speech API service-account key environment variable
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "service-account.json"
@@ -835,18 +815,9 @@ if __name__ == '__main__':
     print("Starting GUI")
     app = QApplication(sys.argv)
     screen_resolution = app.desktop().screenGeometry()
-    print(screen_resolution)
     width, height = screen_resolution.width(), screen_resolution.height() 
 
-    #width = 1920
-    #height = 1080
-    #width = 1366
-    #height = 768
-    print("Screen Resolution\nWidth: %s\nHeight: %s" % (width, height))
     Window = MainWindow(width, height)
-    #Window.StartButtonClick()
-    # monitor =  app.desktop().screenGeometry(1)
-    # Window.move(monitor.left(), monitor.top())
     Window.show()
 
     sys.exit(app.exec_())
