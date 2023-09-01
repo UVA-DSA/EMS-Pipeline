@@ -61,6 +61,7 @@ from video_streaming import Thread
 from smartwatch_streaming import Thread_Watch
 
 chunkdata = []
+ConceptDict = dict()
 
 datacollection = False
 videostream = False
@@ -318,6 +319,7 @@ class MainWindow(QWidget):
 
         self.ConceptExtraction = QTextEdit()
         self.ConceptExtraction.setReadOnly(True)
+        self.ConceptExtraction.setOverwriteMode(True)
         self.Grid_Layout.addWidget(self.ConceptExtraction, 3, 1, 2, 1)
 
         # Add label, textbox for protcol name
@@ -591,35 +593,47 @@ class MainWindow(QWidget):
         self.InterventionBox.setText('')
 
     # Update the Speech Box
+    # NOTE: we are only updating speech box from raw transcripts.
+    # TODO: Update this to show metamap highlights after they return
     #@pyqtSlot
     def UpdateSpeechBox(self, input):
-
         item = input[0]
         text = ""
-        # make text with previously finalized segments
-        for final_segment in self.finalSpeechSegmentsNLP:
-            text += final_segment + "<br>"
-        for final_segment in self.finalSpeechSegmentsSpeech[len(self.finalSpeechSegmentsNLP):]:
-            text += final_segment + "<br>"
-        # add currently received segment 
-        text += item.transcript
-        self.SpeechBox.setHtml(text)
+        if item.origin == 'Speech': #TODO: Remove this line
+            if item.isFinal:
+                # if received segment is final, store it first
+                # 'Speech' origin is raw transcription text from Google Speech to Text API
+                if(item.origin == 'Speech'):
+                    self.finalSpeechSegmentsSpeech.append(
+                        '<b>' + item.transcript + '</b>')
+                # 'NLP' origin is highlighted/bolded text with concept extracted using Metamap
+                elif(item.origin == 'NLP'):
+                    self.finalSpeechSegmentsNLP.append(
+                        '<b>' + item.transcript + '</b>')
+            # make speech text, starting with final segments
+            # if highlighted text from Metamap (NLP array) is available, use that
+            # else, use raw transcription from Google Speech (Speech array) to Text API
+            # num_final_segments = max(len(self.finalSpeechSegmentsNLP), len(self.finalSpeechSegmentsSpeech))
+            for i in range(max(len(self.finalSpeechSegmentsNLP), len(self.finalSpeechSegmentsSpeech))):
+                if i < len(self.finalSpeechSegmentsNLP):
+                    text += self.finalSpeechSegmentsNLP[i] + "<br>"
+                else:
+                    text += self.finalSpeechSegmentsSpeech[i] + "<br>"
 
-        # if received segment is final, store it
-        if(item.isFinal):
-            if(item.origin == 'Speech'):
-                self.finalSpeechSegmentsSpeech.append(
-                    '<b>' + item.transcript + '</b>')
-            elif(item.origin == 'NLP'):
-                self.finalSpeechSegmentsNLP.append(
-                    '<b>' + item.transcript + '</b>')
+            # If currently received segment is interim result, add it to text
+            # Only display intermin results for raw speech text 
+            if not item.isFinal: text += item.transcript
+
+            # Set SpeechBox text
+            self.SpeechBox.setHtml(text)
 
 
     # Update the Concept Extraction Box
     def UpdateConceptExtractionBox(self, input):
         global chunkdata
+        global ConceptDict
         item = input[0]
-        self.ConceptExtraction.setText(item)
+        self.ConceptExtraction.setHtml(item)
         if item != "":
             chunkdata.append(item)
         else:

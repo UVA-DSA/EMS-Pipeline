@@ -68,14 +68,13 @@ def CognitiveSystem(Window, SpeechToNLPQueue, FeedbackQueue, data_path_str, conc
         # continue
         # Get queue item from the Speech-to-Text Module
         received = SpeechToNLPQueue.get()
-        # print("Received chunk", received.transcript)
 
         if(received == 'Kill'):
-            # print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
+            print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
             break
 
         if(Window.reset == 1):
-            # print("Cognitive System Thread Received reset signal. Killing Cognitive System Thread.")
+            print("Cognitive System Thread Received reset signal. Killing Cognitive System Thread.")
             return
 
         # If item received from queue is legitmate
@@ -120,13 +119,13 @@ def CognitiveSystem(Window, SpeechToNLPQueue, FeedbackQueue, data_path_str, conc
                     # print("Cognitive System Thread Received reset signal. Killing Cognitive System Thread.")
                     return
 
-            PunctuatedAndHighlightedText = '<b>' + PunctuatedAndHighlightedText + '</b>'
             SpeechSignal.signal.emit([SpeechNLPItem(
                 PunctuatedAndHighlightedText, received.isFinal, received.confidence, received.numPrinted, 'NLP')])
 
 
 # Function to return this recent tick's results
 def TickResults(Window, NLP_Items, data_path_str, conceptBool, interventionBool, FeedbackQueue):
+    Concepts_Graph = dict()
     # print(NLP_Items)
     if conceptBool == True:
         if not os.path.exists(data_path_str + "conceptextractiondata/"):
@@ -212,8 +211,12 @@ def TickResults(Window, NLP_Items, data_path_str, conceptBool, interventionBool,
 
     signs_and_vitals_str = ""
     signs_and_vitals_str_fb = ""
-
+    
+    # Store in dictionary to take out duplicates of the same concept with out of date confidence
     for sv in NLP_Items:
+        Concepts_Graph[sv[0]] = sv
+    
+    for sv in Concepts_Graph.values():
         signs_and_vitals_str += "("
         for i, t in enumerate(sv):
             if(i != 3 and i != 4 and i != 5):
