@@ -5,6 +5,8 @@ import os
 import time
 from six.moves import queue
 from WhisperAPI import WhisperAPI
+from naiveWhisperAPI import naiveWhisperAPI
+from WhisperAPIv2 import WhisperAPIv2
 import numpy as np
 from classes import SpeechNLPItem, GUISignal
 import wave
@@ -163,7 +165,9 @@ def Whisper(Window, SpeechToNLPQueue, wavefile_name, model="tiny.en"):
     ButtonsSignal = GUISignal()
     ButtonsSignal.signal.connect(Window.ButtonsSetEnabled)
 
-    whisper = WhisperAPI()
+    # whisper = WhisperAPI()
+    # whisper = naiveWhisperAPI()
+    whisper = WhisperAPIv2()
 
     with FileStream(Window, RATE, CHUNK, wavefile_name) as stream:
         audio_generator = stream.generator()
