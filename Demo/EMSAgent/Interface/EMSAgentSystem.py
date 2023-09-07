@@ -2,17 +2,16 @@ import json
 import torch.nn as nn
 import torch
 import os
-from .default_sets import seed_everything, device, p_node
+from default_sets import seed_everything, device, p_node
 import numpy as np
 import warnings
 import yaml
 import re
-from .utils import AttrDict, onehot2p
-from .Heterogeneous_graph import HeteroGraph
-from .model import EMSMultiModel
+from utils import AttrDict, onehot2p
+from Heterogeneous_graph import HeteroGraph
+from model import EMSMultiModel
 from transformers import BertTokenizer
 import pandas as pd
-import time
 from tqdm import tqdm
 warnings.filterwarnings("ignore")
 from classes import  GUISignal
@@ -25,8 +24,6 @@ class FeedbackObj:
         self.protocol = protocol
         self.concept = concept
 
-# ------------ End Feedback Obj Class ------------
-
 class EMSAgent(nn.Module):
     def __init__(self, config, date):
         super(EMSAgent, self).__init__()
@@ -34,28 +31,25 @@ class EMSAgent(nn.Module):
         self.tokenizer = BertTokenizer.from_pretrained(self.config.backbone, do_lower_Case=True)
         self.clean_model_date = date
         self.save_model_root = os.path.join('../../EMSAgent/Interface/models', '{}'.format(self.clean_model_date))
-        print(self.save_model_root)
         if self.config.graph == 'hetero':
-            signs_df = pd.read_excel('../EMSAgent/Interface/config_file/All Protocols Mapping.xlsx')
-            impre_df = pd.read_excel('../EMSAgent/Interface/config_file/Impression Protocol.xlsx')
-            med_df = pd.read_excel('../EMSAgent/Interface/config_file/Medication Protocol.xlsx')
-            proc_df = pd.read_excel('../EMSAgent/Interface/config_file/Procedure Protocol.xlsx')
+            signs_df = pd.read_excel('./config_file/All Protocols Mapping.xlsx')
+            impre_df = pd.read_excel('./config_file/Impression Protocol.xlsx')
+            med_df = pd.read_excel('./config_file/Medication Protocol.xlsx')
+            proc_df = pd.read_excel('./config_file/Procedure Protocol.xlsx')
             HGraph = HeteroGraph(backbone=self.config.backbone, mode=self.config.cluster)
             self.graph = HGraph(signs_df, impre_df, med_df, proc_df)
         else:
             self.graph = None
-        self.model = EMSMultiModel(self.config.backbone, self.config.dropout, self.config.max_len, self.config.attn,
-                                   self.config.cluster, self.config.cls, self.graph)
-
+        self.model = EMSMultiModel(self.config.backbone, self.config.max_len, self.config.attn,
+                                   self.config.cluster, self.config.fusion, self.config.cls, self.config.graph)
 
         model_path = os.path.join(self.save_model_root, 'model.pt')
-        checkpoint = torch.load(model_path)
+        checkpoint = torch.load(model_path, map_location='cpu')
         self.model.load_state_dict(checkpoint)
         self.model.to(device)
 
-    def initData(self, text, meta_kn=None):
+    def initData(self, text):
         ids, mask = None, None
-        meta_ids, meta_mask = None, None
         if text:
             inputs = self.tokenizer.__call__(text,
                                               None,
@@ -66,58 +60,47 @@ class EMSAgent(nn.Module):
                                               )
             ids = torch.tensor(inputs["input_ids"], dtype=torch.long)
             mask = torch.tensor(inputs["attention_mask"], dtype=torch.long)
-        if meta_kn:
-            meta_inputs = self.tokenizer.__call__(meta_kn,
-                                                  None,
-                                                  add_special_tokens=True,
-                                                  max_length=self.config.max_len,
-                                                  padding="max_length",
-                                                  truncation=True,
-                                                  )
-            meta_ids = torch.tensor(meta_inputs["input_ids"], dtype=torch.long)
-            meta_mask = torch.tensor(meta_inputs["attention_mask"], dtype=torch.long)
 
-        return {'ids': ids, 'mask': mask, 'meta_ids': meta_ids, 'meta_mask': meta_mask}
+
+        return {'ids': ids, 'mask': mask}
 
     def eval_fn(self, data):
-
         with torch.no_grad():
             if data['ids'] != None:
                 ids = data["ids"].to(device, dtype=torch.long).unsqueeze(0)
                 mask = data["mask"].to(device, dtype=torch.long).unsqueeze(0)
-                outputs, feats, meta_feats, graph_feats = self.model(ids=ids, mask=mask,
-                                                        meta_kn_ids=None, meta_kn_mask=None,
-                                                        G=self.graph)
+                outputs, text_feats, graph_feats = self.model(ids=ids, mask=mask, G=self.graph)
 
-            if data['meta_ids'] != None:
-                meta_ids = data["meta_ids"].to(device, dtype=torch.long).unsqueeze(0)
-                meta_mask = data["meta_mask"].to(device, dtype=torch.long).unsqueeze(0)
-                outputs, feats, meta_feats, graph_feats = self.model(ids=None, mask=None,
-                                                        meta_kn_ids=meta_ids, meta_kn_mask=meta_mask,
-                                                        G=self.graph)
 
             # if it's multi-class classification
-            _, preds = torch.max(outputs, dim=1)
+            # outputs = torch.softmax(outputs, dim=-1)
+            # _, preds = torch.max(outputs, dim=1)
 
-            # # if it's multi-label classification
-            # outputs = torch.sigmoid(outputs).squeeze()
-            # preds = np.where(outputs.cpu().numpy() > 0.5, 1, 0)
-            # if not preds.any():
-            #     idx = torch.argmax(outputs).cpu().numpy()
-            #     preds[idx] = 1
+            # if it's multi-label classification
+            outputs = torch.sigmoid(outputs).squeeze()
+            preds = np.where(outputs.cpu().numpy() > 0.5, 1, 0)
+            if not preds.any():
+                idx = torch.argmax(outputs).cpu().numpy()
+                preds[idx] = 1
 
 
         return preds, outputs
 
-    def forward(self, text, meta_kn=None):
-        input = self.initData(text, meta_kn)
-        preds, logits, = self.eval_fn(input)
-        logits = torch.softmax(logits, dim=-1)
+    def forward(self, text):
+        input = self.initData(text)
+        preds, logits = self.eval_fn(input)
 
-        logits = logits.cpu().numpy()[0]
-        preds = preds.cpu().numpy().item()
-        pred_protocol = p_node[preds]
-        return pred_protocol, logits[preds]
+        ### multi-class classification
+        # logits = logits.cpu().numpy()[0]
+        # pred_protocol = p_node[preds]
+        # pred_prob = logits[preds]
+
+        ### multi-label classification
+        logits = logits.cpu().numpy()
+        pred_protocol = np.array(p_node)[np.where(preds == 1)]
+        pred_prob = logits[np.where(preds == 1)]
+
+        return pred_protocol, pred_prob
 
 
 def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_str, protocolStreamBool):
@@ -126,24 +109,24 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_st
     ProtocolSignal = GUISignal()
     ProtocolSignal.signal.connect(Window.UpdateProtocolBoxes)
 
+
     # initialize
     seed_everything(3407)
     loader = yaml.SafeLoader
     loader.add_implicit_resolver(
         u'tag:yaml.org,2002:float',
         re.compile(u'''^(?:
-         [-+]?(?:[0-9][0-9_]*)\\.[0-9_]*(?:[eE][-+]?[0-9]+)?
+        [-+]?(?:[0-9][0-9_]*)\\.[0-9_]*(?:[eE][-+]?[0-9]+)?
         |[-+]?(?:[0-9][0-9_]*)(?:[eE][-+]?[0-9]+)
         |\\.[0-9_]+(?:[eE][-+][0-9]+)?
         |[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+\\.[0-9_]*
         |[-+]?\\.(?:inf|Inf|INF)
         |\\.(?:nan|NaN|NAN))$''', re.X),
         list(u'-+0123456789.'))
-    with open('./EMSAgent/Interface/config.yaml', 'r') as f:
+    with open('./config.yaml', 'r') as f:
         config = yaml.load(f, Loader=loader)
-    config['parameters'].update({'iter_num': {'value': 0}})
     config = AttrDict(config['parameters'])
-    date = '2023-03-01-09_52_18' #[2023-03-01-09_52_18, 2023-03-01-10_06_45]
+    from default_sets import date
     model = EMSAgent(config, date)
 
     # call the model
@@ -221,6 +204,9 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_st
                         start = time.time()
                         pred, prob = model(narrative)
                         end = time.time()
+                        # convert list to string
+                        pred = ','.join(pred)
+                        prob = ','.join(str(p) for p in prob)
                         ProtocolSignal.signal.emit(["(Protocol: " +str(pred) + " : " +str(prob) +")"])
                         print('executation time: {:.4f}'.format(end - start))
                         print(pred, prob)
@@ -232,7 +218,30 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_st
                     except:
                         print("Protocol Prediction Failure!")
 
-            
-                
 
 
+if __name__ == '__main__':
+    # initialize
+    seed_everything(3407)
+    loader = yaml.SafeLoader
+    loader.add_implicit_resolver(
+        u'tag:yaml.org,2002:float',
+        re.compile(u'''^(?:
+         [-+]?(?:[0-9][0-9_]*)\\.[0-9_]*(?:[eE][-+]?[0-9]+)?
+        |[-+]?(?:[0-9][0-9_]*)(?:[eE][-+]?[0-9]+)
+        |\\.[0-9_]+(?:[eE][-+][0-9]+)?
+        |[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+\\.[0-9_]*
+        |[-+]?\\.(?:inf|Inf|INF)
+        |\\.(?:nan|NaN|NAN))$''', re.X),
+        list(u'-+0123456789.'))
+    with open('./config.yaml', 'r') as f:
+        config = yaml.load(f, Loader=loader)
+    config = AttrDict(config['parameters'])
+    from default_sets import date
+    model = EMSAgent(config, date)
+
+    narrative = """Dispatched for seizure, arrived to find woman flagging down the ambulance at 12th and Canal St with man on the ground next to her. She reported she was his co-worker and he had seizure. few other coworkers from the Omni arrived on scene shortly after EMS arrived to the scene. The patient was moved into the ambulance with two people assisting him into an upright position and then he was sat onto the stretcher.The patient's coworker stated the patient was smoking cigarette with her during break when he stood up suddenly, shouted out, and then fell to the ground. He had seizure on the ground which lasted for about minute. The seizure was over at the time of EMS arrival."""
+
+    # the output is array
+    pred, prob = model(narrative)
+    print(pred, prob)

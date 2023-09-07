@@ -1,9 +1,18 @@
 import torch
 import numpy as np
 from transformers import BertTokenizer, BertModel
-from .default_sets import device, p_node, reverse_group_p_dict
+from default_sets import dataset, SAVE_RESULT_ROOT
+if dataset == 'EMS':
+    from default_sets import device, p_node, reverse_group_p_dict, ungroup_p_node, group_hier, ungroup_hier, p2hier
+elif dataset == 'MIMIC3':
+    from default_sets import ICD9_DIAG
 import re
-from collections import OrderedDict
+import default_sets
+from collections import OrderedDict, defaultdict
+import os
+import json
+import pandas as pd
+
 
 class AttrDict(dict):
     def __getattr__(self, attr):
@@ -11,22 +20,26 @@ class AttrDict(dict):
     def __setattr__(self, attr, value):
         self[attr] = value
 
-# class AttrDict(dict):
-#     def __init__(self, *args, **kwargs):
-#         super(AttrDict, self).__init__(*args, **kwargs)
-#         self.__dict__ = self
+def cnt_instance_per_label(df):
+    label_cnt = {}
 
-def sharpen(probabilities, T):
-    if probabilities.ndim == 1:
-        tempered = torch.pow(probabilities, 1 / T)
-        tempered = (
-            tempered
-            / (torch.pow((1 - probabilities), 1 / T) + tempered)
-        )
+    if dataset == 'EMS':
+        column_name = 'Ungrouped Protocols'
+    elif dataset == 'MIMIC3':
+        column_name = 'ICD9_DIAG'
     else:
-        tempered = torch.pow(probabilities, 1 / T)
-        tempered = tempered / tempered.sum(dim=-1, keepdim=True)
-    return tempered.cpu().numpy()
+        raise Exception('check dataset in default_sets.py')
+
+    for i in range(len(df)):
+        if type(df[column_name][i]) == float:
+            continue
+        ps = df[column_name][i].strip()
+        for p in ps.split(';'):
+            p = p.strip()
+            label_cnt[p] = label_cnt.get(p, 0) + 1
+    return label_cnt
+
+
 
 
 def convertListToStr(l):
@@ -35,7 +48,6 @@ def convertListToStr(l):
     for each in l:
         s += str(each) + ';'
     return s[:-1]
-
 
 def checkOnehot(X):
     for x in X:
@@ -62,6 +74,19 @@ def ungroup(age, protocols):
             ungroup_protocols.append(p)
     return convertListToStr(ungroup_protocols)
 
+def p2onehot(ps, ref_list):
+    '''
+    :param ps: list of protocols, e.g.: ['medical - altered mental status (protocol 3 - 15)']
+    :param ref_list: p_node, ungroup_p_node
+    :return: onehot encoding
+    '''
+    ohe = [0] * len(ref_list)
+    for p in ps:
+        idx = ref_list.index(p)
+        ohe[idx] = 1
+    return ohe
+
+
 def onehot2p(onehot):
     pred = []
     for i in range(len(onehot)):
@@ -70,15 +95,17 @@ def onehot2p(onehot):
             pred.append(p_name)
     return convertListToStr(pred)
 
-def onehot2logits(onehot, logits):
-    prob = logits[np.where(onehot)]
-
 def removePunctuation(sentence):
-    sentence = re.sub(r'[?|!|\'|"|;|:|#]', r'', sentence)
-    sentence = re.sub(r'[.|,|)|(|\|/]', r' ', sentence)
+    sentence = re.sub(r'[?|!|\'|"|;|:|#|&|-]', r' ', sentence)
+    sentence = re.sub(r'[.|,|)|(|\|/|_|~|<|>]', r' ', sentence)
+    sentence = re.sub(r"[\([{})\]]", r' ', sentence)
+    sentence = re.sub(r"[*]", r' ', sentence)
+    sentence = re.sub(r"[%]", r' percentage', sentence)
     sentence = sentence.strip()
     sentence = sentence.replace("\n", " ")
     return sentence
+
+
 
 def text_remove_double_space(text):
     text = text.lower()
@@ -87,101 +114,240 @@ def text_remove_double_space(text):
         res = res + word + ' '
     return res.strip()
 
+'''
+The following codes from https://github.com/MemoriesJ/KAMG/blob/6618c6633bbe40de7447d5ae7338784b5233aa6a/NeuralNLP-NeuralClassifier-KAMG/evaluate/classification_evaluate.py
+'''
 
-def deterConf(preds, targets, path):
-    logits = [t.cpu().detach().numpy().tolist() for t in preds]
-    labels = [t.cpu().detach().numpy().tolist() for t in targets]
+def ranking_precision_score(y_true, y_score, k=10):
+    """Precision at rank k
+    Parameters
+    ----------
+    y_true : array-like, shape = [n_samples]
+        Ground truth (true relevance labels).
+    y_score : array-like, shape = [n_samples]
+        Predicted scores.
+    k : int
+        Rank.
+    Returns
+    -------
+    precision @k : float
+    """
+    unique_y = np.unique(y_true)
 
-    pair = []
-    unpair = []
-    for i in range(len(logits)):
-        index = np.where(np.array(labels[i]) == 1)[0]
-        pred_index = np.where(np.array(logits[i]) > 0.5)[0]
-        if str(index) == str(pred_index):
-            pair.append((logits[i], labels[i]))
-        else:
-            unpair.append((logits[i], labels[i]))
-    values = []
-    for i in range(len(pair)):
-        logits = pair[i][0]
-        indices = np.where(np.array(logits) > 0.5)[0]
-        value = [logits[idx] for idx in indices]
-        values.extend(value)
+    if len(unique_y) == 1:
+        return ValueError("The score cannot be approximated.")
+    elif len(unique_y) > 2:
+        raise ValueError("Only supported for two relevance levels.")
 
-    unvalues = []
-    for i in range(len(unpair)):
-        logits = unpair[i][0]
-        indices = np.where(np.array(logits) > 0.5)[0]
-        value = [logits[idx] for idx in indices]
-        unvalues.extend(value)
+    pos_label = unique_y[1]
 
-    correct_counts, correct_bins = np.histogram(values, bins=5)
-    incorrect_counts, incorrect_bins = np.histogram(unvalues, bins=5)
-    # SET DEFAULT CONFIDENCE SCORE AS 0.9
-    confidence_score = 0.9
-    for i in range(len(correct_counts)):
-        if correct_counts[i] / incorrect_counts[i] - 1 > 0.5:
-            confidence_score = correct_bins[i]
-            break
-    return confidence_score
+    order = np.argsort(y_score)[::-1]
+    y_true = np.take(y_true, order[:k])
+    n_relevant = np.sum(y_true == pos_label)
 
+    return float(n_relevant) / k
 
-def anchor(model, backbone, G, df):
-    tokenizers = BertTokenizer.from_pretrained(backbone, do_lower_Case=True)
-    overviews = []
-    names = []
-    for i in range(len(default_sets.p_node)):
-        for j in range(len(df)):
-            name = df.Protocols[j] + ' (' + df['Protocol ID'][j] +')'
-            name = name.strip().lower()
+def get_precision_at_k(y_true, y_score, k=10):
+    """Mean precision at rank k
+    Parameters
+    ----------
+    y_true : array-like, shape = [n_samples]
+        Ground truth (true relevance labels).
+    y_score : array-like, shape = [n_samples]
+        Predicted scores.
+    k : int
+        Rank.
+    Returns
+    -------
+    mean precision @k : float
+    """
 
-            if name in default_sets.group_p_dict:
-                name = default_sets.group_p_dict[name]
+    p_ks = []
+    for y_t, y_s in zip(y_true, y_score):
+        if np.sum(y_t == 1):
+            p_ks.append(ranking_precision_score(y_t, y_s, k=k))
 
-            if name == default_sets.p_node[i] and name not in names:
-                # overviews.append(df.Overview[j])
-                names.append(name)
+    return np.mean(p_ks)
 
-                inputs = tokenizers.__call__(df.Overview[j],
-                                    None,
-                                    add_special_tokens=True,
-                                    max_length=256,
-                                    padding="max_length",
-                                    truncation=True,
-                                    )
+def ranking_recall_score(y_true, y_score, k=10):
+    # https://ils.unc.edu/courses/2013_spring/inls509_001/lectures/10-EvaluationMetrics.pdf
+    """Recall at rank k
+    Parameters
+    ----------
+    y_true : array-like, shape = [n_samples]
+        Ground truth (true relevance labels).
+    y_score : array-like, shape = [n_samples]
+        Predicted scores.
+    k : int
+        Rank.
+    Returns
+    -------
+    precision @k : float
+    """
+    unique_y = np.unique(y_true)
 
-                ids = torch.tensor(inputs["input_ids"], dtype=torch.long).to(device)
-                ids = ids.unsqueeze(0)
-                mask = torch.tensor(inputs["attention_mask"], dtype=torch.long).to(device)
-                mask = mask.unsqueeze(0)
-                _, feats, _ = model(ids, mask, None, None, G)
-                overviews.append(feats)
-                break
+    if len(unique_y) == 1:
+        return ValueError("The score cannot be approximated.")
+    elif len(unique_y) > 2:
+        raise ValueError("Only supported for two relevance levels.")
 
-    overviews = torch.stack(overviews).squeeze()
-    return overviews
+    pos_label = unique_y[1]
+    n_pos = np.sum(y_true == pos_label)
 
-if __name__ =='__main__':
-    import pandas as pd
-    from model import EMSMultiModel
-    from Heterogeneous_graph import HeteroGraph
-    from default_sets import device
+    order = np.argsort(y_score)[::-1]
+    y_true = np.take(y_true, order[:k])
+    n_relevant = np.sum(y_true == pos_label)
 
-    signs_df = pd.read_excel('./data/Protocol_Impression files/All Protocols Mapping.xlsx')
-    impre_df = pd.read_excel('./data/Protocol_Impression files/Impression Protocol.xlsx')
-    med_df = pd.read_excel('./data/Protocol_Impression files/Medication Protocol.xlsx')
-    proc_df = pd.read_excel('./data/Protocol_Impression files/Procedure Protocol.xlsx')
-    HGraph = HeteroGraph(backbone='bvanaken/CORe-clinical-outcome-biobert-v1', mode='group')
-    graph = HGraph(signs_df, impre_df, med_df, proc_df)
+    return float(n_relevant) / n_pos
 
-    df = pd.read_excel('./data/Protocol_Impression files/All Protocols Mapping.xlsx')
-    model = EMSMultiModel('bvanaken/CORe-clinical-outcome-biobert-v1',
-                          512,
-                          'la',
-                          None,
-                          None,
-                          graph)
-    model.to(device)
-    anchor_feats = anchor(model, 'bvanaken/CORe-clinical-outcome-biobert-v1', graph, df)
-    print(anchor_feats.shape)
+def get_recall_at_k(y_true, y_score, k=10):
+    """Mean recall at rank k
+    Parameters
+    ----------
+    y_true : array-like, shape = [n_samples]
+        Ground truth (true relevance labels).
+    y_score : array-like, shape = [n_samples]
+        Predicted scores.
+    k : int
+        Rank.
+    Returns
+    -------
+    mean recall @k : float
+    """
+
+    r_ks = []
+    for y_t, y_s in zip(y_true, y_score):
+        if np.sum(y_t == 1):
+            r_ks.append(ranking_recall_score(y_t, y_s, k=k))
+
+    return np.mean(r_ks)
+
+def ranking_rprecision_score(y_true, y_score, k=10):
+    """Precision at rank k
+    Parameters
+    ----------
+    y_true : array-like, shape = [n_samples]
+        Ground truth (true relevance labels).
+    y_score : array-like, shape = [n_samples]
+        Predicted scores.
+    k : int
+        Rank.
+    Returns
+    -------
+    precision @k : float
+    """
+    unique_y = np.unique(y_true)
+
+    if len(unique_y) == 1:
+        return ValueError("The score cannot be approximated.")
+    elif len(unique_y) > 2:
+        raise ValueError("Only supported for two relevance levels.")
+
+    pos_label = unique_y[1]
+    n_pos = np.sum(y_true == pos_label)
+
+    order = np.argsort(y_score)[::-1]
+    y_true = np.take(y_true, order[:k])
+    n_relevant = np.sum(y_true == pos_label)
+
+    # Divide by min(n_pos, k) such that the best achievable score is always 1.0.
+    return float(n_relevant) / min(k, n_pos)
+
+def get_r_precision_at_k(y_true, y_score, k=10):
+    """Mean precision at rank k
+    Parameters
+    ----------
+    y_true : array-like, shape = [n_samples]
+        Ground truth (true relevance labels).
+    y_score : array-like, shape = [n_samples]
+        Predicted scores.
+    k : int
+        Rank.
+    Returns
+    -------
+    mean precision @k : float
+    """
+
+    p_ks = []
+    for y_t, y_s in zip(y_true, y_score):
+        if np.sum(y_t == 1):
+            p_ks.append(ranking_rprecision_score(y_t, y_s, k=k))
+
+    return np.mean(p_ks)
+
+def dcg_score(y_true, y_score, k=10, gains="exponential"):
+    """Discounted cumulative gain (DCG) at rank k
+    Parameters
+    ----------
+    y_true : array-like, shape = [n_samples]
+        Ground truth (true relevance labels).
+    y_score : array-like, shape = [n_samples]
+        Predicted scores.
+    k : int
+        Rank.
+    gains : str
+        Whether gains should be "exponential" (default) or "linear".
+    Returns
+    -------
+    DCG @k : float
+    """
+    order = np.argsort(y_score)[::-1]
+    y_true = np.take(y_true, order[:k])
+
+    if gains == "exponential":
+        gains = 2 ** y_true - 1
+    elif gains == "linear":
+        gains = y_true
+    else:
+        raise ValueError("Invalid gains option.")
+
+    # highest rank is 1 so +2 instead of +1
+    discounts = np.log2(np.arange(len(y_true)) + 2)
+    return np.sum(gains / discounts)
+
+def ndcg_score(y_true, y_score, k=10, gains="exponential"):
+    """Normalized discounted cumulative gain (NDCG) at rank k
+    Parameters
+    ----------
+    y_true : array-like, shape = [n_samples]
+        Ground truth (true relevance labels).
+    y_score : array-like, shape = [n_samples]
+        Predicted scores.
+    k : int
+        Rank.
+    gains : str
+        Whether gains should be "exponential" (default) or "linear".
+    Returns
+    -------
+    NDCG @k : float
+    """
+    best = dcg_score(y_true, y_true, k, gains)
+    actual = dcg_score(y_true, y_score, k, gains)
+    return actual / best
+
+def get_ndcg_at_k(y_true, y_predict_score, k, gains="exponential"):
+
+    """Normalized discounted cumulative gain (NDCG) at rank k
+        Parameters
+        ----------
+        y_true : array-like, shape = [n_samples]
+            Ground truth (true relevance labels).
+        y_predict_score : array-like, shape = [n_samples]
+            Predicted scores.
+        k : int
+            Rank.
+        gains : str
+            Whether gains should be "exponential" (default) or "linear".
+        Returns
+        -------
+        Mean NDCG @k : float
+        """
+
+    ndcg_s = []
+    for y_t, y_s in zip(y_true, y_predict_score):
+        if np.sum(y_t == 1):
+            ndcg_s.append(ndcg_score(y_t, y_s, k=k, gains=gains))
+
+    return np.mean(ndcg_s)
+
 

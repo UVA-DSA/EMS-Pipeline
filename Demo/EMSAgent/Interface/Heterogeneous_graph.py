@@ -5,11 +5,15 @@ import torch
 import torch.nn as nn
 import pandas as pd
 from collections import defaultdict
-from .utils import sortby
+from utils import sortby, removePunctuation
 import numpy as np
 from tqdm import tqdm
-from transformers import BertTokenizer, BertModel
-from .default_sets import p_node, group_p_dict, ungrouped_p_node, device, hier, p2hier
+from transformers import AutoTokenizer, AutoModel
+from default_sets import device, groupby, dataset, SAVE_RESULT_ROOT
+if dataset =='EMS':
+    from default_sets import p_node, group_p_dict, ungroup_p_node, group_hier, ungroup_hier, p2hier, group_hier_dict
+elif dataset == 'MIMIC3':
+    from default_sets import ICD9_DIAG, MIMIC_3_DIR, ICD9_DIAG_GROUP, group_ICD9_dict
 import os
 import json
 
@@ -17,7 +21,15 @@ class bertEmbedding():
     def __init__(self, tokenizer, model):
         self.tokenizer = tokenizer
         self.model = model
-        self.max_len = 256
+        if self.tokenizer.pad_token is None:
+            self.tokenizer.pad_token = tokenizer.eos_token
+        if dataset == 'EMS':
+            self.max_len = 256
+        elif dataset == 'MIMIC3':
+            self.max_len = 32
+        else:
+            raise Exception('check dataset in default_sets.py')
+        # self.max_len = 256
 
     def tokenization(self, sentence):
         ids, segs = [], []
@@ -56,7 +68,7 @@ class bertEmbedding():
         ids, segs = self.tokenization(node)
         self.model.eval()
         with torch.no_grad():
-            output = self.model(ids, segs)
+            output = self.model(input_ids=ids, attention_mask=segs)
         token_embeddings = torch.stack(output.hidden_states, dim=0)
         token_embeddings = torch.squeeze(token_embeddings, dim=1)
         token_embeddings = token_embeddings.permute(1, 0, 2)
@@ -67,13 +79,37 @@ class bertEmbedding():
 class HeteroGraph(nn.Module):
     def __init__(self, backbone, mode):
         super(HeteroGraph, self).__init__()
-        if mode == 'group':
-            self.p_node = p_node #[hier, p_node]
-        elif mode == 'ungroup':
-            self.p_node = ungrouped_p_node
+        if dataset == 'EMS':
+            if mode == 'group':
+                if groupby == 'hierarchy':
+                    self.p_node = group_hier #[hier, p_node]
+                    for k, v in p2hier.items():
+                        if v in group_hier_dict.keys():
+                            p2hier[k] = group_hier_dict[v]
+                    self.group_p_dict = p2hier  # [p2hier, group_p_dict]
+                elif groupby == 'age':
+                    self.p_node = p_node
+                    self.group_p_dict = group_p_dict  # [p2hier, group_p_dict]
+            elif mode == 'ungroup':
+                self.p_node = ungroup_p_node
+                self.group_p_dict = None
+            else:
+                raise Exception('mode can only be [group, ungroup]')
+        elif dataset == 'MIMIC3':
+            if mode == 'ungroup':
+                self.p_node = list(ICD9_DIAG.keys())
+                self.group_p_dict = None
+            elif mode == 'group':
+                self.p_node = ICD9_DIAG_GROUP
+                self.group_p_dict = group_ICD9_dict
+            else:
+                raise Exception('mode can only be [group, ungroup]')
+            fname = '%s/ICD9_descriptions.json' % MIMIC_3_DIR
+            with open(fname, 'r') as f:
+                self.ICD9_description = json.load(f)
         else:
-            raise Exception('mode can only be [group, ungroup]')
-        self.group_p_dict = group_p_dict #[p2hier, group_p_dict]
+            raise Exception('check dataset in default_sets.py')
+
         self.sign_node = []
         self.med_node = []
         self.proc_node = []
@@ -81,7 +117,10 @@ class HeteroGraph(nn.Module):
         self.s2idx = {}
         self.m2idx = {}
         self.proc2idx = {}
-        self.backbone = backbone
+        if backbone == 'CNN':
+            self.backbone = 'dmis-lab/biobert-v1.1'
+        else:
+            self.backbone = backbone
         self.mode = mode
         self.device = device
 
@@ -108,7 +147,7 @@ class HeteroGraph(nn.Module):
     def p2signs(signs_df, mode, group_p_dict):
         # create mapping (protocol --- signs)
         p2s = defaultdict(list)
-        p2s_d = defaultdict(dict)
+        # p2s_d = defaultdict(dict)
         s2p = defaultdict(list)
         for i in range(len(signs_df)):
             ss = signs_df['Signs and Symptoms(in impression list)'][i]
@@ -123,17 +162,17 @@ class HeteroGraph(nn.Module):
 
             for s in ss.split(';'):
                 s = s.strip().capitalize()
-                p2s_d[pname][s] = p2s_d[pname].get(s, 0) + 1
+                # p2s_d[pname][s] = p2s_d[pname].get(s, 0) + 1
                 if pname not in s2p[s]:
                     s2p[s].append(pname)
                 if s not in p2s[pname]:
                     p2s[pname].append(s)
-        return p2s, s2p, p2s_d
+        return p2s, s2p
 
     @staticmethod
     def p2impre(impre_df, mode, group_p_dict):
         p2impre = defaultdict(list)
-        p2impre_d = defaultdict(dict)
+        # p2impre_d = defaultdict(dict)
         impre2p = defaultdict(list)
         for i in range(len(impre_df)):
             ps = impre_df['Protocol_name'][i]
@@ -148,7 +187,7 @@ class HeteroGraph(nn.Module):
                         if p in group_p_dict:
                             p = group_p_dict[p]
 
-                    p2impre_d[p][impre] = p2impre_d[p].get(impre, 0) + 1
+                    # p2impre_d[p][impre] = p2impre_d[p].get(impre, 0) + 1
                     if impre not in p2impre[p]:
                         p2impre[p].append(impre)
                     if p not in impre2p[impre]:
@@ -161,18 +200,18 @@ class HeteroGraph(nn.Module):
                         if c_p in group_p_dict:
                             c_p = group_p_dict[c_p]
 
-                    p2impre_d[c_p][impre] = p2impre_d[c_p].get(impre, 0) + 1
+                    # p2impre_d[c_p][impre] = p2impre_d[c_p].get(impre, 0) + 1
                     if impre not in p2impre[c_p]:
                         p2impre[c_p].append(impre)
                     if c_p not in impre2p[impre]:
                         impre2p[impre].append(c_p)
-        return p2impre, impre2p, p2impre_d
+        return p2impre, impre2p
 
     @staticmethod
     def p2med(med_df, mode, group_p_dict):
         # create mapping (protocol --- medication)
         p2m = defaultdict(list)
-        p2m_d = defaultdict(dict)
+        # p2m_d = defaultdict(dict)
         m2p = defaultdict(list)
         med_filter = ['Oxygen (7806)', 'Normal saline (125464)']
         for i in range(len(med_df)):
@@ -197,18 +236,18 @@ class HeteroGraph(nn.Module):
 
                 if p == '':
                     continue
-                p2m_d[p][med_name] = p2m_d[p].get(med_name, 0) + 1
+                # p2m_d[p][med_name] = p2m_d[p].get(med_name, 0) + 1
                 if med_name not in p2m[p]:
                     p2m[p].append(med_name)
                 if p not in m2p[med_name]:
                     m2p[med_name].append(p)
-        return p2m, m2p, p2m_d
+        return p2m, m2p
 
     @staticmethod
     def p2proc(proc_df, mode, group_p_dict):
         # create mapping (protocol --- procedure)
         p2proc = defaultdict(list)
-        p2proc_d = defaultdict(dict)
+        # p2proc_d = defaultdict(dict)
         proc2p = defaultdict(list)
         proc_filter = ['Assess airway', 'Ecg', 'Iv', 'Move patient', 'Bvm', 'Assess - pain assessment',
                        'Im/sq injection']
@@ -226,60 +265,20 @@ class HeteroGraph(nn.Module):
                     if p in group_p_dict:
                         p = group_p_dict[p]
 
-                p2proc_d[p][procedure] = p2proc_d[p].get(procedure, 0) + 1
+                # p2proc_d[p][procedure] = p2proc_d[p].get(procedure, 0) + 1
                 if procedure not in p2proc[p]:
                     p2proc[p].append(procedure)
                 if p not in proc2p[procedure]:
                     proc2p[procedure].append(p)
-        return p2proc, proc2p, p2proc_d
-
-    # the following mapping relations are generated from RAA dataset
-    @staticmethod
-    def p2impre_data(mode):
-        root = './json files/TF-IDF/{}'.format(mode)
-        with open(os.path.join(root, 'impre2p.json'), 'r') as f:
-            impre2p = json.load(f)
-
-        with open(os.path.join(root, 'p2impre.json'), 'r') as f:
-            p2impre_d = json.load(f)
-        p2impre = {}
-        for k, v in p2impre_d.items():
-            p2impre[k] = list(v.keys())
-        return p2impre, impre2p, p2impre_d
-
-    @staticmethod
-    def p2med_data(mode):
-        root = './json files/TF-IDF/{}'.format(mode)
-        with open(os.path.join(root, 'med2p.json'), 'r') as f:
-            m2p = json.load(f)
-
-        with open(os.path.join(root, 'p2med.json'), 'r') as f:
-            p2m_d = json.load(f)
-        p2m = {}
-        for k, v in p2m_d.items():
-            p2m[k] = list(v.keys())
-        return p2m, m2p, p2m_d
-
-    @staticmethod
-    def p2proc_data(mode):
-        root = './json files/TF-IDF/{}'.format(mode)
-        with open(os.path.join(root, 'proc2p.json'), 'r') as f:
-            proc2p = json.load(f)
-
-        with open(os.path.join(root, 'p2proc.json'), 'r') as f:
-            p2proc_d = json.load(f)
-        p2proc = {}
-        for k, v in p2proc_d.items():
-            p2proc[k] = list(v.keys())
-        return p2proc, proc2p, p2proc_d
+        return p2proc, proc2p
 
     def _genNode(self, p2overview, s2p, m2p, proc2p):
         for k, v in s2p.items():
             # check if sign-mapped protocols is in p_node
             for i in v:
                 if self.mode == 'group':
-                    if i in group_p_dict:
-                        i = group_p_dict[i]
+                    if i in self.group_p_dict:
+                        i = self.group_p_dict[i]
                 if i in self.p_node and k not in self.sign_node:
                     self.sign_node.append(k)
                     break
@@ -288,8 +287,8 @@ class HeteroGraph(nn.Module):
             # check if medicine-mapped protocols is in p_node
             for i in v:
                 if self.mode == 'group':
-                    if i in group_p_dict:
-                        i = group_p_dict[i]
+                    if i in self.group_p_dict:
+                        i = self.group_p_dict[i]
                 if i in self.p_node and k not in self.med_node:
                     self.med_node.append(k)
                     break
@@ -298,8 +297,8 @@ class HeteroGraph(nn.Module):
             # check if procdure-mapped protocols is in p_node
             for i in v:
                 if self.mode == 'group':
-                    if i in group_p_dict:
-                        i = group_p_dict[i]
+                    if i in self.group_p_dict:
+                        i = self.group_p_dict[i]
                 if i in self.p_node and k not in self.proc_node:
                     self.proc_node.append(k)
                     break
@@ -309,42 +308,86 @@ class HeteroGraph(nn.Module):
         node.extend(self.med_node)
         node.extend(self.proc_node)
 
-        nodes_attr = []
-        tokenizer = BertTokenizer.from_pretrained(self.backbone, do_lower_Case=True)
-        model = BertModel.from_pretrained(self.backbone, output_hidden_states=True)
-        b_embed = bertEmbedding(tokenizer, model)
-        q, w, e, r = 0, 0, 0, 0
-        for i, n in enumerate(tqdm(node, desc='Generate Node Embedding')):
-            attr = {}
-            if n in self.p_node:
-                n_type = 'protocol'
-                n_features = []
-                for view in p2overview[n]:
-                    n_features.append(b_embed.getPreEmbedding(view))
-                n_feature = list(np.mean(n_features, axis=0))
-                self.p2idx[i] = q
-                q += 1
-            elif n in self.sign_node:
-                n_type = 'sign'
-                n_feature = b_embed.getPreEmbedding(n)
-                self.s2idx[i] = w
-                w += 1
-            elif n in self.med_node:
-                n_type = 'medication'
-                n_feature = b_embed.getPreEmbedding(n)
-                self.m2idx[i] = e
-                e += 1
-            elif n in self.proc_node:
-                n_type = 'procedure'
-                n_feature = b_embed.getPreEmbedding(n)
-                self.proc2idx[i] = r
-                r += 1
-            else:
-                raise Exception('Node type is incorrect, recheck node type')
-            attr[n_type] = n
-            attr['node_type'] = n_type
-            attr['node_feature'] = n_feature
-            nodes_attr.append((i, attr))
+        pre_trained_embed_root = os.path.join(SAVE_RESULT_ROOT, 'pre-trained embedding')
+        if not os.path.exists(pre_trained_embed_root):
+            os.makedirs(pre_trained_embed_root)
+        backbone_name = self.backbone.split('/')[-1]
+        nodes_attr_cache = os.path.join(pre_trained_embed_root,
+                                        '{}_node_embedding_{}_{}.json'.format(dataset, backbone_name, self.mode))
+
+        if not os.path.exists(nodes_attr_cache):
+            raise Exception('No pretrained embedding found when integrating knowledge graph.')
+            # cache_dict = {}
+            # nodes_attr = []
+            # tokenizer = AutoTokenizer.from_pretrained(self.backbone, do_lower_Case=True)
+            # model = AutoModel.from_pretrained(self.backbone, output_hidden_states=True)
+            # b_embed = bertEmbedding(tokenizer, model)
+            # q, w, e, r = 0, 0, 0, 0
+            # for i, n in enumerate(tqdm(node, desc='build heterogeneous graph')):
+            #     attr = {}
+            #     if n in self.p_node:
+            #         n_type = 'protocol'
+            #         n_features = []
+            #         for view in p2overview[n]:
+            #             view = preprocess(view)
+            #             n_features.append(b_embed.getPreEmbedding(view))
+            #         n_feature = list(np.mean(n_features, axis=0))
+            #         self.p2idx[i] = q
+            #         q += 1
+            #     elif n in self.sign_node:
+            #         n_type = 'sign'
+            #         n_feature = b_embed.getPreEmbedding(preprocess(n))
+            #         self.s2idx[i] = w
+            #         w += 1
+            #     elif n in self.med_node:
+            #         n_type = 'medication'
+            #         n_feature = b_embed.getPreEmbedding(preprocess(n))
+            #         self.m2idx[i] = e
+            #         e += 1
+            #     elif n in self.proc_node:
+            #         n_type = 'procedure'
+            #         n_feature = b_embed.getPreEmbedding(preprocess(n))
+            #         self.proc2idx[i] = r
+            #         r += 1
+            #     else:
+            #         raise Exception('Node type is incorrect, recheck node type')
+            #     attr[n_type] = n
+            #     attr['node_type'] = n_type
+            #     attr['node_feature'] = n_feature
+            #     nodes_attr.append((i, attr))
+            #     cache_dict[n] = n_feature
+            # with open(nodes_attr_cache, 'w') as f:
+            #     json.dump(cache_dict, f, indent=4)
+        else:
+            with open(nodes_attr_cache, 'r') as f:
+                nodes_attr_ = json.load(f)
+            nodes_attr = []
+            q, w, e, r = 0, 0, 0, 0
+            for i, n in enumerate(tqdm(node, desc='build heterogeneous graph')):
+                attr = {}
+                if n in self.p_node:
+                    n_type = 'protocol'
+                    self.p2idx[i] = q
+                    q += 1
+                elif n in self.sign_node:
+                    n_type = 'sign'
+                    self.s2idx[i] = w
+                    w += 1
+                elif n in self.med_node:
+                    n_type = 'medication'
+                    self.m2idx[i] = e
+                    e += 1
+                elif n in self.proc_node:
+                    n_type = 'procedure'
+                    self.proc2idx[i] = r
+                    r += 1
+                else:
+                    raise Exception('Node type is incorrect, recheck node type')
+                n_feature = nodes_attr_[n]
+                attr[n_type] = n
+                attr['node_type'] = n_type
+                attr['node_feature'] = n_feature
+                nodes_attr.append((i, attr))
         return node, nodes_attr
 
     def __checkEdges(self, node, src_node, dic):
@@ -449,31 +492,23 @@ class HeteroGraph(nn.Module):
         label_hetero['procedure', 'is taken by', 'protocol'].edge_index = torch.tensor([ptp_dst, ptp_src]).to(self.device)
         return label_hetero
 
-    def forward(self, signs_df, impre_df, med_df, proc_df):
-        p2overview = self.p2overview(signs_df, self.mode, self.group_p_dict)
-        # p2s, s2p, _ = self.p2signs(signs_df, self.mode, self.group_p_dict)
-        p2impre, impre2p, _ = self.p2impre(impre_df, self.mode, self.group_p_dict)
-        p2m, m2p, _ = self.p2med(med_df, self.mode, self.group_p_dict)
-        p2proc, proc2p, _ = self.p2proc(proc_df, self.mode, self.group_p_dict)
+    def forward(self, signs_df=None, impre_df=None, med_df=None, proc_df=None):
+        if dataset == 'EMS':
+            p2overview = self.p2overview(signs_df, self.mode, self.group_p_dict)
+            p2sign, sign2p = self.p2impre(impre_df, self.mode, self.group_p_dict)
+            p2med, med2p = self.p2med(med_df, self.mode, self.group_p_dict)
+            p2proc, proc2p = self.p2proc(proc_df, self.mode, self.group_p_dict)
+        elif dataset == 'MIMIC3':
+            p2overview = self.diag2overview(self.ICD9_description, self.mode, self.group_p_dict)
+            p2sign, sign2p = self.diag2sign(self.ICD9_description, self.mode, self.group_p_dict)
+            p2med, med2p = self.diag2med(self.ICD9_description, self.mode, self.group_p_dict)
+            p2proc, proc2p = self.diag2proc(self.ICD9_description, self.mode, self.group_p_dict)
+        else:
+            raise Exception('check dataset in default_sets.py')
 
-        # p2impre, impre2p, _ = self.p2impre_data(self.mode)
-        # p2m, m2p, _ = self.p2med_data(self.mode)
-        # p2proc, proc2p, _ = self.p2proc_data(self.mode)
-
-        node, nodes_attr = self._genNode(p2overview, impre2p, m2p, proc2p)
-        edges = self._genEdge(node, p2impre, p2m, p2proc)
+        node, nodes_attr = self._genNode(p2overview, sign2p, med2p, proc2p)
+        edges = self._genEdge(node, p2sign, p2med, p2proc)
         graph = self._genGraph(nodes_attr, edges)
         return graph
 
-if __name__ == '__main__':
-    ##### define the sequence of protocol as p_node
-    # in total 44 grouped protocols
-    signs_df = pd.read_excel('./data/Protocol_Impression files/All Protocols Mapping.xlsx')
-    impre_df = pd.read_excel('./data/Protocol_Impression files/Impression Protocol.xlsx')
-    med_df = pd.read_excel('./data/Protocol_Impression files/Medication Protocol.xlsx')
-    proc_df = pd.read_excel('./data/Protocol_Impression files/Procedure Protocol.xlsx')
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    HGraph = HeteroGraph(backbone='bvanaken/CORe-clinical-outcome-biobert-v1', mode='group')
-    G = HGraph(signs_df, impre_df, med_df, proc_df)
-    # HGraph.gen_TF_IDF(signs_df, impre_df, med_df, proc_df)
-    print(G)
+

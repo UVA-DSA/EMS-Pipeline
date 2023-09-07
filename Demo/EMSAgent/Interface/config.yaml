@@ -4,7 +4,7 @@ metric:
   goal: maximize
 parameters:
   learning_rate:
-    value: 1e-5
+    value: 1e-4
 
   batch_size:
     value: 16
@@ -22,19 +22,19 @@ parameters:
     value: 512
 
   loss_func:
-    value: CE
+    value: BCE
 
   #bvanaken/CORe-clinical-outcome-biobert-v1, dmis-lab/biobert-v1.1
   backbone:
-    value: bvanaken/CORe-clinical-outcome-biobert-v1
+    value: nlpie/tiny-clinicalbert
 
   #la
   attn:
-    value:
+    value: la
 
   #hetero
   graph:
-    value:
+    value: hetero
 
   cluster:
     value: group
@@ -50,6 +50,3 @@ parameters:
 
   lamb:
     value: 0.4
-
-  pretrain_path:
-    value: ./models/2022-12-08-11_11_54/iter:0_lr:1e-05_bs:16_epoch:15_lossfn:BCE_backbone:bvanaken/CORe-clinical-outcome-biobert-v1_graph:hetero_fusion:None_cls:fc_attn:la
