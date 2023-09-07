@@ -1,0 +1,254 @@
+{
+    "airway - failed (protocol 3 - 16)": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "airway - obstruction/foreign body (protocol 9 - 4)": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "environmental - heat exposure/heat exhaustion environmental - heat stroke (protocol 5 - 2)": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "environmental - hypothermia (protocol 5 - 1)": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "general - behavioral/patient restraint (protocol 3 - 4)": {
+        "precision": 0.9680851063829787,
+        "recall": 0.9837837837837838,
+        "f1-score": 0.9758713136729222,
+        "support": 370
+    },
+    "general - cardiac arrest": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "general - fever (protocol 9 - 3)": {
+        "precision": 0.9272727272727272,
+        "recall": 1.0,
+        "f1-score": 0.9622641509433962,
+        "support": 204
+    },
+    "general - pain control": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "hemorrhage control (protocol 4 - 14)": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "injury - abdominal trauma": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "injury - burns - thermal": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "injury - crush syndrome (protocol 4 - 4)": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "injury - general trauma management (protocol 4 - 1)": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "injury - head": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "injury - thoracic (protocol 4 - 11)": {
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1-score": 0.8571428571428571,
+        "support": 3
+    },
+    "medical - abdominal pain (protocol 3 - 2)": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "medical - allergic reaction/anaphylaxis": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "medical - altered mental status": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "medical - bradycardia": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "medical - chest pain - cardiac suspected (protocol 2 - 1)": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "medical - diabetic - hyperglycemia": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "medical - diabetic - hypoglycemia": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "medical - hypotension/shock (nontrauma)": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "medical - nausea/vomiting": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "medical - overdose/poisoning - calcium channel blocker (protocol 7 - 5)": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "medical - overdose/poisoning - opioid (protocol 7 - 1)": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "medical - overdose/poisoning - stimulant (protocol 7 - 2)": {
+        "precision": 0.7568627450980392,
+        "recall": 1.0,
+        "f1-score": 0.8616071428571428,
+        "support": 193
+    },
+    "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "medical - pulmonary edema/chf (protocol 2 - 3)": {
+        "precision": 1.0,
+        "recall": 0.9880952380952381,
+        "f1-score": 0.9940119760479043,
+        "support": 84
+    },
+    "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress - croup/epiglottits) (protocol 9 - 11)": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "medical - seizure": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "medical - st elevation myocardial infarction (acs/ami) (protocol 2 - 2)": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 2
+    },
+    "medical - stroke/tia (protocol 3 - 5)": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "medical - supraventricular tachycardia (including atrial fibrillation) medical - tachycardia medical - ventricular tachycardia with a pulse": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "ob/gyn - childbirth/labor/delivery (protocol 6 - 2)": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "ob/gyn - pre-term labor (pre-term labor) (protocol 6 - 12)": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "spinal motion restriction (protocol 4 - 13)": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0
+    },
+    "micro avg": {
+        "precision": 0.7369791666666666,
+        "recall": 0.991822429906542,
+        "f1-score": 0.8456175298804781,
+        "support": 856
+    },
+    "macro avg": {
+        "precision": 0.14216369944088803,
+        "recall": 0.15715471110207954,
+        "f1-score": 0.14870782738590058,
+        "support": 856
+    },
+    "weighted avg": {
+        "precision": 0.9131771443098831,
+        "recall": 0.991822429906542,
+        "f1-score": 0.948286081755041,
+        "support": 856
+    },
+    "samples avg": {
+        "precision": 0.26843086632243257,
+        "recall": 0.2887263339070568,
+        "f1-score": 0.27518646012621917,
+        "support": 856
+    }
+}

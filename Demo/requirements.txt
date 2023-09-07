@@ -21,7 +21,7 @@ joblib==1.1.0
 Js2Py==0.71
 kiwisolver==1.4.3
 matplotlib==3.5.2
-mediapipe==0.8.10
+# mediapipe==0.8.10
 nltk==3.7
 numpy==1.22.3
 opencv-contrib-python==4.6.0.66

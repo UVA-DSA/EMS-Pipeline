@@ -1,4 +1,4 @@
-from pymetamap.MetaMap import MetaMap
+from pymetamap import MetaMap
 from collections import defaultdict
 import pandas as pd
 import re
@@ -39,10 +39,10 @@ CUI_oximetry = "C0523807"
 
 def check_pulse(concepts, scores, text):
     if not CUI_pulse in scores:  # if no pulses found
-        print("Check initial")
+        # print("Check initial")
         return -1, 0
     if not CUI_ox in scores and not CUI_oximetry in scores:  # pulse but no spo2
-        print("Check A")
+        # print("Check A")
         return -1, 0
     text = text[0]
     regex = re.compile(r'([Pp]ulse),? (ox)?')
@@ -54,15 +54,15 @@ def check_pulse(concepts, scores, text):
     for match in results:
         names.append(match.group(2))
         spans.append(match.span())
-    print(names)
+    # print(names)
     if names[0] == None:  # pulse before pulse ox
-        print("Check B")
+        # print("Check B")
         return -1, 0
-    print(len(names))
+    # print(len(names))
     if not "None" in names:  # spo2 but no pulse
         for i in range(len(concepts)):
             if "pulse" in concepts[i][3]:
-                print("Check D")
+                # print("Check D")
                 deletes.append(i)
         return deletes, pulses
     pulses = []
@@ -74,7 +74,7 @@ def check_pulse(concepts, scores, text):
     for j in range(len(concepts)):
         if concepts[j][3] == "Physiological pulse":
             deletes.append[j]
-    print("Check C")
+    # print("Check C")
     return deletes, pulses
 
 
@@ -226,14 +226,14 @@ class ConceptExtractor(object):
         for concept in self.concepts:
             if concept[1] == 'AA':
                 continue
-            print(concept)
+            # print(concept)
             normalized_trigger_name = concept[6].split(
                 '-')[3].strip('"').lower()
             # last part of "trigger" field, 1 means negation is detected
             # negation = False if negation is detected
             negation = concept[6].split('-')[-1].rstrip(']') == '0'
             CUI = concept[4]
-            print("Concept: " + normalized_trigger_name + " CUI: " + CUI)
+            # print("Concept: " + normalized_trigger_name + " CUI: " + CUI)
             #score = float(concept[2])
             score = float(self.scores[CUI])
             # print(concept[8])
@@ -262,7 +262,7 @@ class ConceptExtractor(object):
                         former_strPiece = sent_text[0][beginPt -
                                                        self.R_range:beginPt]
                     mapped_concepts = self.CUI2Concept[CUI]
-                    print(mapped_concepts)
+                    # print(mapped_concepts)
                     for mapped_concept in mapped_concepts:
                         if mapped_concept in self.Status:
                             self.Status[mapped_concept].tick = tick_num
@@ -276,7 +276,8 @@ class ConceptExtractor(object):
                                 value = re.findall(
                                     self.pattern, latter_strPiece)
                                 if mapped_concept == "spo2":
-                                    print(value)
+                                    # print(value)
+                                    print()
                             if len(value) > 0:
                                 if mapped_concept == 'bp':
                                     if len(value) >= 2:
@@ -303,7 +304,7 @@ class ConceptExtractor(object):
                     str(self.Status[item].value)+';'+self.Status[item].content+';' +\
                     str(self.Status[item].score)+';' + \
                     str(self.Status[item].tick)+')'
-                print(content)
+                # print(content)
 
 
 class CEWithoutMM(object):
@@ -515,5 +516,5 @@ class CEWithoutMM(object):
                     str(self.Status[item].value)+';'+self.Status[item].content+';' +\
                     str(self.Status[item].score)+';' + \
                     str(self.Status[item].tick)+')'
-                print(content)
-        print("------------------------------------------------")
+                # print(content)
+        # print("------------------------------------------------")

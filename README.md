@@ -81,6 +81,14 @@ To launch the graphical user interface (GUI), run:
 
 `Python GUI.py`
 
+For data collection:
+
+Running `python GUI.py` will default to no data collection.
+Please use --datacollect 1 or --datacollect 0 to specifiy if you want data collected with the data collection scripts
+Default data collection will collect all streams, but you may also specify streams with the --streams option
+Arguments for the --streams option include "all" for all streams, "audio" for microphone data, "video" for video data, "smartwatch", for smartwatch data, "conceptextract" for concept extraction data, "intervention" for intervention suggestions data, "protocol" for protocol results data, and "transcript" for the speech to text transcript.
+
+
 ![GUI](ETC/GUI.png)
 
 ## Publications
