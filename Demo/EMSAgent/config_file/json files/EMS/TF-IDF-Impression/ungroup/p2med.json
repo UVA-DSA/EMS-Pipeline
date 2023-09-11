@@ -1,0 +1,167 @@
+{
+    "medical - overdose/poisoning - opioid (protocol 7 - 1)": {
+        "Naloxone (narcan)": 0.4294996024936639,
+        "Oxygen": 0.02262628335599135,
+        "Haldol": 0.016143665778098098,
+        "Ondansetron (zofran)": 0.0038214243104655182,
+        "Midazolam (versed)": 0.003623867616638158,
+        "Normal saline": 0.0018999169230221745
+    },
+    "medical - altered mental status (protocol 3 - 15)": {
+        "Naloxone (narcan)": 0.1758800872211554,
+        "Glucose (oral forms)": 0.03263401150992309,
+        "Normal saline": 0.01980404312670205,
+        "Oxygen": 0.01939987898125915,
+        "Albuterol (proventil)": 0.016317005754961544,
+        "Ipratropium (atrovent)": 0.016317005754961544,
+        "Glucagon (glucagen)": 0.014267107756641806,
+        "Dextrose 10 % injectable solution": 0.013886051664375483,
+        "Midazolam (versed)": 0.00847985022293329,
+        "Ondansetron (zofran)": 0.00715370630919145,
+        "Aspirin (asa)": 0.005025145349175868
+    },
+    "injury - general trauma management (protocol 4 - 1)": {
+        "Fentanyl": 0.49190973231869356,
+        "Ketamine (ketalar)": 0.08332980423694754,
+        "Ketorolac (toradol)": 0.02837096044973187,
+        "Diprivan": 0.027776601412315843,
+        "Midazolam (versed)": 0.018705551962352844,
+        "Normal saline": 0.017830771122480837,
+        "Oxygen": 0.01129282171090453,
+        "Aspirin (asa)": 0.007389919631140982,
+        "Ondansetron (zofran)": 0.005260078168523125
+    },
+    "general - pain control (protocol 3 - 10)": {
+        "Fentanyl": 0.7342652589732693,
+        "Ketorolac (toradol)": 0.11130146022587119,
+        "Aspirin (asa)": 0.011596489267328926,
+        "Midazolam (versed)": 0.009784442564923028,
+        "Oxygen": 0.008394178405352518,
+        "Ondansetron (zofran)": 0.00825427651060552,
+        "Normal saline": 0.007461491915868904
+    },
+    "general - cardiac arrest (protocol 2 - 7)": {
+        "Epi 1:10,000": 1.3883067170998689,
+        "Sodium bicarbonate": 0.08928943616202475,
+        "Amiodarone (cordarone)": 0.04957170050165654,
+        "Naloxone (narcan)": 0.04057990860707296,
+        "10 ml calcium chloride 10 % prefilled syringe": 0.011439623192689971,
+        "Dextrose 10 % injectable solution": 0.011213500671097294,
+        "Norepinephrine (levophed)": 0.007626415461793314,
+        "Oxygen": 0.007506682647526252,
+        "Epi 1:1,000": 0.0057606087846467586,
+        "Normal saline": 0.004895662596212773,
+        "Diphenhydramine (benadryl)": 0.003813207730896657,
+        "Norepinephrine injection [levophed]": 0.003813207730896657,
+        "Atropine": 0.003813207730896657,
+        "Insulin": 0.003813207730896657,
+        "Albuterol (proventil)": 0.0032941465184982924,
+        "Ipratropium (atrovent)": 0.0032941465184982924,
+        "Dexamethasone 10mg iv/im": 0.0023345909224604393,
+        "Glucose (oral forms)": 0.0016470732592491462
+    },
+    "medical - diabetic - hypoglycemia (protocol 3 - 8)": {
+        "Dextrose 10 % injectable solution": 0.5319656482935212,
+        "Glucose (oral forms)": 0.31694903265033214,
+        "Glucagon (glucagen)": 0.20015007284497496,
+        "Dexamethasone 10mg iv/im": 0.012479144283367672,
+        "Aspirin (asa)": 0.005422818722132232,
+        "Naloxone (narcan)": 0.005422818722132232,
+        "Oxygen": 0.004361483583916175,
+        "Ondansetron (zofran)": 0.003859913476182437,
+        "Normal saline": 0.0017445934335664703
+    },
+    "medical - chest pain - cardiac suspected (protocol 2 - 1)": {
+        "Aspirin (asa)": 0.5191069959761864,
+        "Nitroglycerin": 0.09690865646020848,
+        "Albuterol (proventil)": 0.016163071738405303,
+        "Ipratropium (atrovent)": 0.016163071738405303,
+        "Fentanyl": 0.011545051241718072,
+        "Ondansetron (zofran)": 0.00708621851382172,
+        "Oxygen": 0.00686316473393602,
+        "Labetalol (normodyne)": 0.00534568555482305,
+        "Adenosine (adenocard)": 0.00534568555482305,
+        "Normal saline": 0.0050329874715530805,
+        "Midazolam (versed)": 0.0023999576102641386
+    },
+    "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)": {
+        "Albuterol (proventil)": 0.34117375669465044,
+        "Ipratropium (atrovent)": 0.2867837375114453,
+        "Dexamethasone 10mg iv/im": 0.19039728756111873,
+        "Terbutaline sulfate 1 mg/ml": 0.07822339872478441,
+        "Magnesium sulfate": 0.038157755475504596,
+        "Dexamethasone 10mg po": 0.038157755475504596,
+        "Oxygen": 0.017922026247417438,
+        "Albuterol 5mg / ipratropium 0.5mg (duoneb)": 0.00763155109510092,
+        "Nitroglycerin": 0.0072056099781019215,
+        "Epi 1:1,000": 0.004323365986861153,
+        "Oxymetazoline (afrin)": 0.00381577554755046,
+        "Aspirin (asa)": 0.0025379521965534684,
+        "Normal saline": 0.0007756685619611191,
+        "Ondansetron (zofran)": 0.00036129829844401264
+    },
+    "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)": {
+        "Naloxone (narcan)": 0.4233512862661862,
+        "Midazolam (versed)": 0.020328408068675693,
+        "Oxygen": 0.016055835914854887,
+        "Normal saline": 0.006920618928816762,
+        "Ondansetron (zofran)": 0.0061247485523899395,
+        "Dextrose 10 % injectable solution": 0.0047554971453340695
+    },
+    "general - pain control (protocol 9 - 8)": {
+        "Fentanyl": 0.7648596447638223,
+        "Ketorolac (toradol)": 0.09043243643352034,
+        "Ondansetron (zofran)": 0.03353299832433492,
+        "Normal saline": 0.007578077727054355,
+        "Oxygen": 0.0037890388635271775
+    },
+    "medical - seizure (protocol 3 - 12)": {
+        "Midazolam (versed)": 0.22446662354823416,
+        "Oxygen": 0.02292527715747536,
+        "Normal saline": 0.013245715690985763,
+        "Naloxone (narcan)": 0.01266843365338454,
+        "Ondansetron (zofran)": 0.006762957645244018,
+        "Aspirin (asa)": 0.00633421682669227
+    },
+    "medical - stroke/tia (protocol 3 - 5)": {
+        "Generic medication placeholder": 0.07870037066822823,
+        "Naloxone (narcan)": 0.06281431686469835,
+        "Glucose (oral forms)": 0.03399376198950321,
+        "Oxygen": 0.031996328180896164,
+        "Dextrose 10 % injectable solution": 0.028929274300782255,
+        "Normal saline": 0.01515615545410871,
+        "Ondansetron (zofran)": 0.01490355481081552
+    },
+    "medical - seizure (protocol 9 - 12)": {
+        "Midazolam (versed)": 0.23622439906742737,
+        "Oxygen": 0.031178376934166484,
+        "Ondansetron (zofran)": 0.007664685331276553,
+        "Normal saline": 0.005196396155694415
+    },
+    "medical - abdominal pain (protocol 3 - 2)": {
+        "Ondansetron (zofran)": 0.0804791959784038,
+        "Fentanyl": 0.06993002466412089,
+        "Ketorolac (toradol)": 0.06201081355441394,
+        "Aspirin (asa)": 0.03230450581613058,
+        "Normal saline": 0.024249848726573937,
+        "Glucose (oral forms)": 0.017482506166030223,
+        "Albuterol (proventil)": 0.017482506166030223,
+        "Ipratropium (atrovent)": 0.017482506166030223,
+        "Oxygen": 0.006928528207592553
+    },
+    "medical - altered mental status (protocol 9 - 14)": {
+        "Midazolam (versed)": 0.18171107620571333,
+        "Normal saline": 0.03464264103796277,
+        "Oxygen": 0.008660660259490692
+    },
+    "general - cardiac arrest (protocol 8 - 2)": {
+        "Epi 1:10,000": 1.5768908573130416,
+        "Sodium bicarbonate": 0.05631753061832291,
+        "Naloxone (narcan)": 0.03967220012507264,
+        "Oxygen": 0.00797692392321511,
+        "Normal saline": 0.003190769569286044
+    },
+    "medical - diabetic - hypoglycemia (protocol 9 - 6)": {
+        "Dextrose 10 % injectable solution": 1.0414538748281612
+    }
+}

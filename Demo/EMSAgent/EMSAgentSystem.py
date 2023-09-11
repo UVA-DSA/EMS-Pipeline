@@ -2,19 +2,21 @@ import json
 import torch.nn as nn
 import torch
 import os
-from default_sets import seed_everything, device, p_node
+from EMSAgent.default_sets import seed_everything, device, p_node
 import numpy as np
 import warnings
 import yaml
 import re
-from utils import AttrDict, onehot2p
-from Heterogeneous_graph import HeteroGraph
-from model import EMSMultiModel
+from EMSAgent.utils import AttrDict, onehot2p
+from EMSAgent.Heterogeneous_graph import HeteroGraph
+from EMSAgent.model import EMSMultiModel
 from transformers import BertTokenizer
 import pandas as pd
 from tqdm import tqdm
 warnings.filterwarnings("ignore")
 from classes import  GUISignal
+import time
+
 
 # ------------ For Feedback ------------
 class FeedbackObj:
@@ -32,10 +34,10 @@ class EMSAgent(nn.Module):
         self.clean_model_date = date
         self.save_model_root = os.path.join('../../EMSAgent/Interface/models', '{}'.format(self.clean_model_date))
         if self.config.graph == 'hetero':
-            signs_df = pd.read_excel('./config_file/All Protocols Mapping.xlsx')
-            impre_df = pd.read_excel('./config_file/Impression Protocol.xlsx')
-            med_df = pd.read_excel('./config_file/Medication Protocol.xlsx')
-            proc_df = pd.read_excel('./config_file/Procedure Protocol.xlsx')
+            signs_df = pd.read_excel('./EMSAgent/config_file/All Protocols Mapping.xlsx')
+            impre_df = pd.read_excel('./EMSAgent/config_file/Impression Protocol.xlsx')
+            med_df = pd.read_excel('./EMSAgent/config_file/Medication Protocol.xlsx')
+            proc_df = pd.read_excel('./EMSAgent/config_file/Procedure Protocol.xlsx')
             HGraph = HeteroGraph(backbone=self.config.backbone, mode=self.config.cluster)
             self.graph = HGraph(signs_df, impre_df, med_df, proc_df)
         else:
@@ -123,10 +125,12 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_st
         |[-+]?\\.(?:inf|Inf|INF)
         |\\.(?:nan|NaN|NAN))$''', re.X),
         list(u'-+0123456789.'))
-    with open('./config.yaml', 'r') as f:
+    
+    root = os.path.dirname(os.path.realpath(__file__))
+    with open(os.path.join(root, 'config.yaml'), 'r') as f:
         config = yaml.load(f, Loader=loader)
     config = AttrDict(config['parameters'])
-    from default_sets import date
+    from EMSAgent.default_sets import date
     model = EMSAgent(config, date)
 
     # call the model
@@ -163,10 +167,12 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_st
                             start = time.time()
                             
                             pred, prob = model(narrative)
+                            pred = ','.join(pred)
+                            prob = ','.join(str(p) for p in prob)
+                            print(pred, prob)
                             end = time.time()
                             ProtocolSignal.signal.emit(["(Protocol: " +str(pred) + " : " +str(prob) +")"])
                             print('executation time: {:.4f}'.format(end - start))
-                            print(pred, prob)
 
                             #Feedback
                             protocolFB =  FeedbackObj(None, str(pred) + " : " +str(round(prob,2)), None)
@@ -217,31 +223,3 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_st
 
                     except:
                         print("Protocol Prediction Failure!")
-
-
-
-if __name__ == '__main__':
-    # initialize
-    seed_everything(3407)
-    loader = yaml.SafeLoader
-    loader.add_implicit_resolver(
-        u'tag:yaml.org,2002:float',
-        re.compile(u'''^(?:
-         [-+]?(?:[0-9][0-9_]*)\\.[0-9_]*(?:[eE][-+]?[0-9]+)?
-        |[-+]?(?:[0-9][0-9_]*)(?:[eE][-+]?[0-9]+)
-        |\\.[0-9_]+(?:[eE][-+][0-9]+)?
-        |[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+\\.[0-9_]*
-        |[-+]?\\.(?:inf|Inf|INF)
-        |\\.(?:nan|NaN|NAN))$''', re.X),
-        list(u'-+0123456789.'))
-    with open('./config.yaml', 'r') as f:
-        config = yaml.load(f, Loader=loader)
-    config = AttrDict(config['parameters'])
-    from default_sets import date
-    model = EMSAgent(config, date)
-
-    narrative = """Dispatched for seizure, arrived to find woman flagging down the ambulance at 12th and Canal St with man on the ground next to her. She reported she was his co-worker and he had seizure. few other coworkers from the Omni arrived on scene shortly after EMS arrived to the scene. The patient was moved into the ambulance with two people assisting him into an upright position and then he was sat onto the stretcher.The patient's coworker stated the patient was smoking cigarette with her during break when he stood up suddenly, shouted out, and then fell to the ground. He had seizure on the ground which lasted for about minute. The seizure was over at the time of EMS arrival."""
-
-    # the output is array
-    pred, prob = model(narrative)
-    print(pred, prob)

@@ -1,17 +1,13 @@
 import torch
 import numpy as np
 from transformers import BertTokenizer, BertModel
-from default_sets import dataset, SAVE_RESULT_ROOT
+from EMSAgent.default_sets import dataset, SAVE_RESULT_ROOT
 if dataset == 'EMS':
-    from default_sets import device, p_node, reverse_group_p_dict, ungroup_p_node, group_hier, ungroup_hier, p2hier
+    from EMSAgent.default_sets import device, p_node, reverse_group_p_dict, ungroup_p_node, group_hier, ungroup_hier, p2hier
 elif dataset == 'MIMIC3':
-    from default_sets import ICD9_DIAG
+    from EMSAgent.default_sets import ICD9_DIAG
 import re
-import default_sets
-from collections import OrderedDict, defaultdict
-import os
-import json
-import pandas as pd
+from collections import OrderedDict
 
 
 class AttrDict(dict):

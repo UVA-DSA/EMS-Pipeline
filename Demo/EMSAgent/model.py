@@ -4,11 +4,11 @@ import torch.nn.functional as F
 import torch
 import numpy as np
 from transformers import AutoModel, AutoConfig, AutoModelForSequenceClassification
-from default_sets import device, multi_graph, dataset
+from EMSAgent.default_sets import device, multi_graph, dataset
 if dataset == 'EMS':
-    from default_sets import p_node, ungroup_p_node, group_hier, ungroup_hier, groupby, EMS_DIR
+    from EMSAgent.default_sets import p_node, ungroup_p_node, group_hier, ungroup_hier, groupby, EMS_DIR
 elif dataset == 'MIMIC3':
-    from default_sets import ICD9_DIAG, ICD9_DIAG_GROUP, MIMIC_3_DIR
+    from EMSAgent.default_sets import ICD9_DIAG, ICD9_DIAG_GROUP, MIMIC_3_DIR
 
 
 class GAT(torch.nn.Module):

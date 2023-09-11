@@ -44,7 +44,7 @@ from py_trees.blackboard import Blackboard
 from behaviours_m import *
 from DSP.amplitude import Amplitude
 from classes import SpeechNLPItem, GUISignal
-
+from EMSAgent import EMSAgentSystem
 import GoogleSpeechMicStream
 import GoogleSpeechFileStream
 import DeepSpeechMicStream
@@ -54,7 +54,10 @@ import WhisperMicStream
 
 import TextSpeechStream
 import CognitiveSystem
-from EMSAgent.Interface import EMSAgentSystem
+import importlib.util
+import os
+
+
 import Feedback
 
 #import DeepSpeechMicStream
