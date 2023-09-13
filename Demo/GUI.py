@@ -497,7 +497,7 @@ class MainWindow(QWidget):
             
             elif(self.WhisperRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(
-                    target=WhisperMicStream.Whisper, args=(self, SpeechToNLPQueue))
+                    target=WhisperMicStream.Whisper, args=(self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue))
 
             elif(self.DeepSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(
@@ -521,7 +521,7 @@ class MainWindow(QWidget):
             
             elif(self.WhisperRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(
-                    target=WhisperFileStream.Whisper, args=(self, SpeechToNLPQueue, str(audio_fname),))
+                    target=WhisperFileStream.Whisper, args=(self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, str(audio_fname),))
 
             elif(self.DeepSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(target=DeepSpeechFileStream.DeepSpeech, args=(
@@ -552,7 +552,7 @@ class MainWindow(QWidget):
 
             elif (self.WhisperRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(
-                    target=WhisperFileStream.Whisper, args=(self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',))
+                    target=WhisperFileStream.Whisper, args=(self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav',))
 
             elif(self.DeepSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(target=DeepSpeechFileStream.DeepSpeech, args=(

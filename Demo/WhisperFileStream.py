@@ -5,8 +5,6 @@ import os
 import time
 from six.moves import queue
 from WhisperAPI import WhisperAPI
-from naiveWhisperAPI import naiveWhisperAPI
-from WhisperAPIv2 import WhisperAPIv2
 import numpy as np
 from classes import SpeechNLPItem, GUISignal
 import wave
@@ -154,7 +152,7 @@ class FileStream(object):
 
 
 
-def Whisper(Window, SpeechToNLPQueue, wavefile_name, model="tiny.en"):
+def Whisper(Window, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, wavefile_name, model="tiny.en"):
     # Create GUI Signal Object
     SpeechSignal = GUISignal()
     SpeechSignal.signal.connect(Window.UpdateSpeechBox)
@@ -165,23 +163,18 @@ def Whisper(Window, SpeechToNLPQueue, wavefile_name, model="tiny.en"):
     ButtonsSignal = GUISignal()
     ButtonsSignal.signal.connect(Window.ButtonsSetEnabled)
 
-    # whisper = WhisperAPI()
-    # whisper = naiveWhisperAPI()
-    whisper = WhisperAPIv2()
+    whisper = WhisperAPI()
 
     with FileStream(Window, RATE, CHUNK, wavefile_name) as stream:
         audio_generator = stream.generator()
 
         try:
             responses = whisper.transcribe_stream(audio_generator)
-            print("Started speech recognition on file audio via Google Speech API.\nFile Session Counter: " +
-                  str(FileStream.fileSessionCounter))
-            
-            MsgSignal.signal.emit(
-                ["Started speech recognition on file audio via Google Speech API.\nFile Session Counter: " + str(FileStream.fileSessionCounter)])
-
             # Signal that streaming has started
-            MsgSignal.signal.emit(["Started speech recognition on microphone audio locally with OpenAI Whisper.\nMicrophone Session counter: " + str(FileStream.fileSessionCounter)])
+            print("Started speech recognition on file audio locally with OpenAI Whisper.\nFile Session Counter: " +
+                  str(FileStream.fileSessionCounter))
+            MsgSignal.signal.emit(
+                ["Started speech recognition on file audio locally with OpenAI Whisper.\nFile Session Counter: " + str(FileStream.fileSessionCounter)])
 
             # Now, put the transcription responses to use.
             num_chars_printed = 0
@@ -207,6 +200,7 @@ def Whisper(Window, SpeechToNLPQueue, wavefile_name, model="tiny.en"):
                 # finalized_transcript = response['finalized_transcript']
 
                 QueueItem = SpeechNLPItem(transcript, result['finalized'], -1, num_chars_printed, 'Speech')
+                EMSAgentSpeechToNLPQueue.put(QueueItem)
                 SpeechToNLPQueue.put(QueueItem)
                 SpeechSignal.signal.emit([QueueItem])
                 num_chars_printed = 0 if result['finalized'] else len(transcript)
