@@ -10,9 +10,6 @@ EMSAgent/Interface/models/*
 
 service-account.json
 
-# Ignore all text files
-*.txt
-
 # Ignore files related to API keys
 .env
 
@@ -25,7 +22,7 @@ service-account.json
 
 data_collection_folder/*
 
-*/__pycache__/*
+__pycache__/
 
 *.~lock.*
 *.egg
@@ -73,3 +70,6 @@ obj/
 .externalNativeBuild
 
 */camstrm/.gradle/*
+
+check.csv
+chunk.csv
