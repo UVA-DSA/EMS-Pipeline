@@ -1,5 +1,5 @@
-model_name = "whisper-tiny.en"
-VAD_threshold = 0.93 # threshold for VAD to register sound as speech (not currently used)
+model_name = "whisper-small.en"
+VAD_threshold = 0.93 # threshold for VAD to register sound as speech
 PATH_TO_WHISPER_CPP_FOLDER = "/home/cogems_nist/Desktop/CogEMS_NIST/whisper.cpp"
 # mode = "huggingface"
 mode = "whispercpp"

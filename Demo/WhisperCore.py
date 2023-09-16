@@ -9,16 +9,20 @@ import whisper_config
 import soundfile as sf
 import subprocess
 import queue
+import threading
 
 class WhisperCore():
     def __init__(self, audio_queue, pipe_conn):
+        self.previous_segments = []
+        self.previous_segments_lock = threading.lock()
+
         # set variables read from whisper_config.py
         self.model_name = whisper_config.model_name
         self.VAD_THRESHOLD = whisper_config.VAD_threshold
-        self.CHUNK_DURATION_LIMIT = whisper_config.AUDIO_SEGMENT_DURATION_LIMIT
+        self.AUDIO_SEGMENT_LENGTH = whisper_config.AUDIO_SEGMENT_DURATION_LIMIT
 
-        self.new_audio = []
-        self.new_audio_duration = 0
+        self.new_chunk = []
+        self.new_chunk_duration = 0
         self.transcription = ""
 
         self.queue = audio_queue
@@ -30,9 +34,9 @@ class WhisperCore():
                                     force_reload=True)
 
         self.transcription_queue = queue.Queue()  # queue to transfer transcriptions to WhisperAPI
-        self.current_chunk = []
-        self.new_audio = []
-        self.current_chunk_duration = 0
+        self.current_segment = []
+        self.new_chunk = []
+        self.current_segment_duration = 0
 
         # load huggingface models
         if whisper_config.mode == "huggingface":
@@ -80,30 +84,59 @@ class WhisperCore():
         # print("ingesting audio")
         audio_frame = self.int2float(np.frombuffer(audio_frame,np.int16))
         speech_prob = self.vad_model(audio_frame, 16000)
-        self.new_audio.extend(audio_frame)
+        self.new_chunk.extend(audio_frame)
 
-        # if the new audio is long enough, add it to the transcription queue
-        if self.current_chunk_duration >= self.CHUNK_DURATION_LIMIT:
-            self.transcription_queue.put(self.current_chunk)
-            self.current_chunk = self.new_audio
-            self.current_chunk_duration = self.calculate_duration_of_buffer(self.current_chunk)
-            self.new_audio = []
+        # # if the new audio is long enough, add it to the transcription queue
+        # if self.current_segment_duration >= self.AUDIO_SEGMENT_LENGTH:
+        #     self.transcription_queue.put(self.current_segment)
+        #     self.current_segment = self.new_chunk
+        #     self.current_segment_duration = self.calculate_duration_of_buffer(self.current_segment)
+        #     self.new_chunk = []
 
-        # if the frame is classified as non-speech, try adding saved audio to the current chunk
-        elif speech_prob < self.VAD_THRESHOLD: # if silence detected
-            # if adding new_audio to current_chunk results in chunk duration < 30 seconds, create new chunk
-            # otherwise, add it to the current chunk
+        # if the frame is classified as silence (meaning chunk ends on silence), try adding audio chunk to current segment.
+        if speech_prob <= self.VAD_THRESHOLD: # if silence detected
+            # if adding new_chunk to current_segment results in the current segment length > SEGMENT_LENGTH_LIMIT, start new segment
+            # otherwise, append new_chunk to the current segment
 
-            if self.calculate_duration_of_buffer(self.new_audio) + self.current_chunk_duration < self.CHUNK_DURATION_LIMIT:
-                self.current_chunk.extend(self.new_audio)
-                self.current_chunk_duration += self.calculate_duration_of_buffer(self.new_audio)
+            if self.calculate_duration_of_buffer(self.new_chunk) + self.current_segment_duration <= self.AUDIO_SEGMENT_LENGTH:
+                self.current_segment.extend(self.new_chunk)
+                self.current_segment_duration += self.calculate_duration_of_buffer(self.new_chunk)
 
             else:
-                self.transcription_queue.put(self.current_chunk)
-                self.current_chunk = self.new_audio
-                self.current_chunk_duration = self.calculate_duration_of_buffer(self.current_chunk)
+                # self.transcription_queue.put(self.current_segment)
+                with self.prev_segments_lock:
+                    self.previous_segments.append(self.current_segment)
+                self.current_segment = self.new_chunk
+                self.current_segment_duration = self.calculate_duration_of_buffer(self.current_segment)
 
-            self.new_audio = []
+            self.new_chunk = []
+    
+
+    def get_audio_input_to_transcribe(self):
+        audio = []
+        segment_index = 0
+        input_duration = 0
+        with self.previous_segments_lock:
+            while segment_index < len(self.previous_segments):
+                curr_segment = self.previous_segments[segment_index]
+                current_segment_duration = self.calculate_duration_of_buffer()
+                if current_segment_duration + input_duration < 30:
+                    audio += curr_segment
+                    segment_index += 1
+                else:
+                    # we've reached the 30 second limit, so we need to cut out the corresponding audio segments from prev_segments
+                    prev_segments = prev_segments[segment_index:]
+                    break
+
+        return audio
+
+        # # make sure audio input to whipser is <= 30 seconds
+        # for i in range(30 // whisper_config.AUDIO_SEGMENT_DURATION_LIMIT):
+        #     if not self.transcription_queue.empty():
+        #         # aggregate audio segments 
+        #         audio += self.transcription_queue.get()
+        # return audio
+
 
     # audio normalization code provided by Alexander Veysov in silero-vad repository
     def int2float(self, sound):
@@ -141,22 +174,7 @@ class WhisperCore():
     def read_from_file(self, file_path):
             # read the audio data from a file - helper method for interacting with whispercpp
             with open(file_path, "r") as file:
-                return file.read()
-
-
-    def get_longest_audio_chunk_to_transcribe(self):
-        count = 0
-        audio = []
-        for i in range(30 // whisper_config.AUDIO_SEGMENT_DURATION_LIMIT):
-            if self.transcription_queue.empty():
-                # self.transcription += " Running WhisperCPP on " + str(count) + " chunks of audio. \n\n"
-                return audio
-            else:
-                count += 1
-                audio += self.transcription_queue.get()
-        # self.transcription += " Running WhisperCPP on " + str(count) + " chunks of audio. \n\n"
-        return audio
-        
+                return file.read()        
 
     def transcription_worker(self):
         while True:
@@ -165,11 +183,11 @@ class WhisperCore():
                 continue
             
             if whisper_config.mode == "whispercpp":
-                transcription = self.transcribe_with_whispercpp(self.get_longest_audio_chunk_to_transcribe())
+                transcription = self.transcribe_with_whispercpp(self.get_audio_input_to_transcribe())
                 self.transcription += transcription + " "
 
             elif whisper_config.mode == "huggingface":
-                transcription = self.transcribe_with_huggingface(self.get_longest_audio_chunk_to_transcribe())
+                transcription = self.transcribe_with_huggingface(self.get_audio_input_to_transcribe())
                 self.transcription += transcription + " "
         
 
@@ -206,11 +224,13 @@ class WhisperCore():
                         INTERMEDIATE_TRANSCRIPTION_TEXT_FILE[:-4], # remove .txt from the end of the file name
                         "--threads",   # number of threads
                         str(num_threads),
+                        "--print-colors", # display color of confidence value for word
+                        "--log-score", # write confidence value for each token in score.txt file
                         "-f",
                         INTERMEDIATE_AUDIO_FILE] # output file name
                     
                     # print("Running the following command: ", " ".join(commands))
-                    subprocess.run(commands, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)   # run cpp executable with the commands
+                    subprocess.run(commands)   # run cpp executable with the commands
                 finally:
                     transcription = self.read_from_file(INTERMEDIATE_TRANSCRIPTION_TEXT_FILE)
 

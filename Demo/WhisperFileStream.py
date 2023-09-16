@@ -1,5 +1,4 @@
 from __future__ import absolute_import, division, print_function
-from timeit import default_timer as timer
 import sys
 import os
 import time
@@ -178,7 +177,6 @@ def Whisper(Window, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, wavefile_name, m
 
             # Now, put the transcription responses to use.
             num_chars_printed = 0
-            responseTimeStamp = time.time()
 
             for result in responses:
                 if not result['transcript']:
@@ -192,8 +190,6 @@ def Whisper(Window, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, wavefile_name, m
                 
                 with open("transcript.txt", "a") as f:
                     f.write(transcript + "\n")
-
-                overwrite_chars = ' ' * (num_chars_printed - len(transcript))
 
 
                 # unfinalized_transcript = response['unfinalized_transcript']
