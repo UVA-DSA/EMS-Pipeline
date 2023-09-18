@@ -182,19 +182,8 @@ def Whisper(Window, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, wavefile_name, m
                 if not result['transcript']:
                     continue
                 
-                # Display interim results, but with a carriage return at the end of the
-                # line, so subsequent lines will overwrite them.
-                # If the previous result was longer than this one, we need to print
-                # some extra spaces to overwrite the previous result
                 transcript = result['transcript']
                 
-                with open("transcript.txt", "a") as f:
-                    f.write(transcript + "\n")
-
-
-                # unfinalized_transcript = response['unfinalized_transcript']
-                # finalized_transcript = response['finalized_transcript']
-
                 QueueItem = SpeechNLPItem(transcript, result['finalized'], -1, num_chars_printed, 'Speech')
                 EMSAgentSpeechToNLPQueue.put(QueueItem)
                 SpeechToNLPQueue.put(QueueItem)

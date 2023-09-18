@@ -8,17 +8,16 @@ audio_frame_queue = multiprocessing.Queue()    # queue to transfer audio frames 
 class WhisperAPI():
     # make sure to start all processes as stoppable threads
     def __init__(self):
-        self.transcription_output = []
-        # self.transcription_output_lock = threading.Lock()
+        self.transcription_output_queue = []
+        self.stop_event = multiprocessing.Event()
+
+
         
     def read_pipe(self, pipe_conn):
         # responsible for reading pipe for transcription outputs and updated the transcription_output variable
         while True:
-            transcription = pipe_conn.recv()
-            if transcription == "STOP":
-                break
-            # with self.transcription_output_lock:
-            self.transcription_output.append(transcription)
+            transcription_data = pipe_conn.recv()
+            self.transcription_output_queue.append(transcription_data)
 
 
     def populate_audio_queue(self, audio_generator):
@@ -37,7 +36,7 @@ class WhisperAPI():
         parent_conn, child_conn = multiprocessing.Pipe()
 
         # create a process to run WhisperCore
-        whisper_core_process = multiprocessing.Process(target=self.run_whisper_core, args=(audio_frame_queue, child_conn))
+        whisper_core_process = multiprocessing.Process(target=self.run_whisper_core, args=(audio_frame_queue, child_conn, self.stop_event))
         whisper_core_process.start()
 
         # create a thread to read from the pipe and update the transcription
@@ -55,25 +54,21 @@ class WhisperAPI():
 
 
     def generate_output_to_yield(self):
-        if len(self.transcription_output) > 0:
-            # with self.transcription_output_lock:
-            transcription = " ".join(self.transcription_output)
-            self.transcription_output = []
-
+        if len(self.transcription_output_queue) == 0:
             return {
-                "transcript": transcription,
-                "finalized": True
+                "transcript": None,
+                "finalized": False
             }
         
+        transcription, finalized = self.transcription_output_queue[0]
+        self.transcription_output_queue = self.transcription_output_queue[1:]
         return {
-            "transcript": None,
-            "finalized": False
+            "transcript": transcription,
+            "finalized": finalized
         }
-
-
-    def run_whisper_core(self, audio_frame_queue, pipe_conn):
-
+        
+    def run_whisper_core(self, audio_frame_queue, pipe_conn, stop_event):
         # responsible for running WhisperCore as  
         print("running whisper core from api")
-        whisper_core = WhisperCore(audio_frame_queue, pipe_conn)
+        whisper_core = WhisperCore(audio_frame_queue, pipe_conn, stop_event)
         whisper_core.run()

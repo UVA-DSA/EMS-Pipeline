@@ -12,14 +12,17 @@ import queue
 import threading
 
 class WhisperCore():
-    def __init__(self, audio_queue, pipe_conn):
+    def __init__(self, audio_queue, pipe_conn, stop_event):
         self.previous_segments = []
-        self.previous_segments_lock = threading.lock()
+        self.previous_segments_lock = threading.Lock()
+        self.stop_event = stop_event
 
         # set variables read from whisper_config.py
         self.model_name = whisper_config.model_name
         self.VAD_THRESHOLD = whisper_config.VAD_threshold
+        self.USE_VAD = whisper_config.use_vad
         self.AUDIO_SEGMENT_LENGTH = whisper_config.AUDIO_SEGMENT_DURATION_LIMIT
+        self.FINALIZATION_LIMIT = whisper_config.finalization_limit
 
         self.new_chunk = []
         self.new_chunk_duration = 0
@@ -50,11 +53,10 @@ class WhisperCore():
         # responsible for writing to the pipe
         while True:
             time.sleep(0.4)
-            if len(self.transcription) > 0:
+            if not self.transcription_queue.empty():
                 # print("hello from write_pipe")
-                print(self.transcription, end=" ")
-                pipe_conn.send(self.transcription)
-                self.transcription = ""
+                # print(self.transcription, end=" ")
+                pipe_conn.send(self.transcription_queue.get())
 
 
     def run(self):
@@ -86,15 +88,8 @@ class WhisperCore():
         speech_prob = self.vad_model(audio_frame, 16000)
         self.new_chunk.extend(audio_frame)
 
-        # # if the new audio is long enough, add it to the transcription queue
-        # if self.current_segment_duration >= self.AUDIO_SEGMENT_LENGTH:
-        #     self.transcription_queue.put(self.current_segment)
-        #     self.current_segment = self.new_chunk
-        #     self.current_segment_duration = self.calculate_duration_of_buffer(self.current_segment)
-        #     self.new_chunk = []
-
         # if the frame is classified as silence (meaning chunk ends on silence), try adding audio chunk to current segment.
-        if speech_prob <= self.VAD_THRESHOLD: # if silence detected
+        if not self.USE_VAD or speech_prob <= self.VAD_THRESHOLD: # if silence detected
             # if adding new_chunk to current_segment results in the current segment length > SEGMENT_LENGTH_LIMIT, start new segment
             # otherwise, append new_chunk to the current segment
 
@@ -103,8 +98,7 @@ class WhisperCore():
                 self.current_segment_duration += self.calculate_duration_of_buffer(self.new_chunk)
 
             else:
-                # self.transcription_queue.put(self.current_segment)
-                with self.prev_segments_lock:
+                with self.previous_segments_lock:
                     self.previous_segments.append(self.current_segment)
                 self.current_segment = self.new_chunk
                 self.current_segment_duration = self.calculate_duration_of_buffer(self.current_segment)
@@ -113,29 +107,36 @@ class WhisperCore():
     
 
     def get_audio_input_to_transcribe(self):
+        # this method is used to generate a segment of audio to transcribe.
+        # it is called in transcription_worker
         audio = []
         segment_index = 0
         input_duration = 0
         with self.previous_segments_lock:
+
+            is_final = False    # variable storing whether this will be the last time we are seeing the audio samples involved
+
             while segment_index < len(self.previous_segments):
                 curr_segment = self.previous_segments[segment_index]
-                current_segment_duration = self.calculate_duration_of_buffer()
-                if current_segment_duration + input_duration < 30:
+                current_segment_duration = self.calculate_duration_of_buffer(curr_segment)
+
+                if self.FINALIZATION_LIMIT == -1:   # immediate finalization
+                    audio = curr_segment
+                    self.previous_segments = self.previous_segments[segment_index+1:]
+                    return curr_segment, True
+
+                elif current_segment_duration + input_duration < self.FINALIZATION_LIMIT:
                     audio += curr_segment
+                    input_duration += current_segment_duration
                     segment_index += 1
+
                 else:
-                    # we've reached the 30 second limit, so we need to cut out the corresponding audio segments from prev_segments
-                    prev_segments = prev_segments[segment_index:]
+                    # we've reached the finaliaztion limit, so we need to cut out the corresponding audio segments from prev_segments
+                    self.previous_segments = self.previous_segments[segment_index:]
+                    is_final = True
                     break
 
-        return audio
-
-        # # make sure audio input to whipser is <= 30 seconds
-        # for i in range(30 // whisper_config.AUDIO_SEGMENT_DURATION_LIMIT):
-        #     if not self.transcription_queue.empty():
-        #         # aggregate audio segments 
-        #         audio += self.transcription_queue.get()
-        # return audio
+        return audio, is_final
 
 
     # audio normalization code provided by Alexander Veysov in silero-vad repository
@@ -176,19 +177,20 @@ class WhisperCore():
             with open(file_path, "r") as file:
                 return file.read()        
 
-    def transcription_worker(self):
-        while True:
-            time.sleep(0.1)
-            if self.transcription_queue.empty():
-                continue
-            
-            if whisper_config.mode == "whispercpp":
-                transcription = self.transcribe_with_whispercpp(self.get_audio_input_to_transcribe())
-                self.transcription += transcription + " "
 
-            elif whisper_config.mode == "huggingface":
-                transcription = self.transcribe_with_huggingface(self.get_audio_input_to_transcribe())
-                self.transcription += transcription + " "
+    def transcription_worker(self):
+        while not self.stop_event.is_set():
+            time.sleep(0.1)
+            if len(self.previous_segments) > 0:
+                audio, finalized_status = self.get_audio_input_to_transcribe()
+                if whisper_config.mode == "whispercpp":
+                    transcription = self.transcribe_with_whispercpp(audio)
+
+                elif whisper_config.mode == "huggingface":
+                    transcription = self.transcribe_with_huggingface(audio)
+            
+                self.transcription_queue.put((transcription, finalized_status))
+
         
 
     def transcribe_with_huggingface(self, audio_data):
@@ -225,7 +227,7 @@ class WhisperCore():
                         "--threads",   # number of threads
                         str(num_threads),
                         "--print-colors", # display color of confidence value for word
-                        "--log-score", # write confidence value for each token in score.txt file
+                        # "--log-score", # write confidence value for each token in score.txt file
                         "-f",
                         INTERMEDIATE_AUDIO_FILE] # output file name
                     
