@@ -227,7 +227,7 @@ class WhisperCore():
                         "--threads",   # number of threads
                         str(num_threads),
                         "--print-colors", # display color of confidence value for word
-                        # "--log-score", # write confidence value for each token in score.txt file
+                        "--log-score", # write confidence value for each token in score.txt file
                         "-f",
                         INTERMEDIATE_AUDIO_FILE] # output file name
                     
