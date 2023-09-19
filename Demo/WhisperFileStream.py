@@ -3,11 +3,11 @@ import sys
 import os
 import time
 from six.moves import queue
-from WhisperAPI import WhisperAPI
 import numpy as np
 from classes import SpeechNLPItem, GUISignal
 import wave
-import traceback
+import pyaudio
+import os
 
 # Suppress pygame's welcome message
 with open(os.devnull, 'w') as f:
@@ -45,9 +45,9 @@ class FileStream(object):
         self.closed = True
 
     def __enter__(self):
-        #self._audio_interface = pyaudio.PyAudio()
+        self._audio_interface = pyaudio.PyAudio()
         mixer.init(frequency=RATE)
-        #self._audio_stream = self._audio_interface.open(format = pyaudio.paInt16, channels = 1, rate = self._rate, input = True, frames_per_buffer = self._chunk, stream_callback = self._fill_buffer,)
+        self._audio_stream = self._audio_interface.open(format = pyaudio.paInt16, channels = 1, rate = self._rate, input = True, frames_per_buffer = self._chunk, stream_callback = self._fill_buffer, output=True)
         self.closed = False
 
         if(FileStream.position == 0):
@@ -57,22 +57,22 @@ class FileStream(object):
         return self
 
     def __exit__(self, type, value, traceback):
-        # self._audio_stream.stop_stream()
-        # self._audio_stream.close()
+        self._audio_stream.stop_stream()
+        self._audio_stream.close()
         self.closed = True
         # Signal the generator to terminate so that the client's
         # streaming_recognize method will not block the process termination.
         # self._buff.put(None)
-        # self._audio_interface.terminate()
+        self._audio_interface.terminate()
 
     def _fill_buffer(self, in_data, frame_count, time_info, status_flags):
         """Continuously collect data from the audio stream, into the buffer."""
-        # self._buff.put(in_data)
+        self._buff.put(in_data)
         pass
         #data = self.wf.readframes(CHUNK)
 
         # self._buff.put(data)
-        # return None, pyaudio.paContinue
+        return None, pyaudio.paContinue
 
     def generator(self):
         # Create GUI Signal Objects
@@ -162,43 +162,28 @@ def Whisper(Window, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, wavefile_name, m
     ButtonsSignal = GUISignal()
     ButtonsSignal.signal.connect(Window.ButtonsSetEnabled)
 
-    whisper = WhisperAPI()
 
     with FileStream(Window, RATE, CHUNK, wavefile_name) as stream:
-        audio_generator = stream.generator()
-
+        
+        fifo_path = "/tmp/myfifo"  # Replace with your named pipe path
         try:
-            responses = whisper.transcribe_stream(audio_generator)
-            # Signal that streaming has started
-            print("Started speech recognition on file audio locally with OpenAI Whisper.\nFile Session Counter: " +
-                  str(FileStream.fileSessionCounter))
-            MsgSignal.signal.emit(
-                ["Started speech recognition on file audio locally with OpenAI Whisper.\nFile Session Counter: " + str(FileStream.fileSessionCounter)])
+            os.mkfifo(fifo_path)  # Create the named pipe if it doesn't exist
+        except FileExistsError:
+            pass  # Named pipe already exists
 
-            # Now, put the transcription responses to use.
-            num_chars_printed = 0
-
-            for result in responses:
-                if not result['transcript']:
-                    continue
+        with open(fifo_path, 'r') as fifo:
+            while True:
+                transcript = fifo.readline().strip()  # Read a line of data from the named pipe
+                if not transcript:
+                    break  # Exit if no more data (e.g., when the writer closes)
                 
-                transcript = result['transcript']
-                
-                QueueItem = SpeechNLPItem(transcript, result['finalized'], -1, num_chars_printed, 'Speech')
+                num_chars_printed = 0
+                finalized_status = True
+                QueueItem = SpeechNLPItem(transcript, finalized_status, -1, num_chars_printed, 'Speech')
                 EMSAgentSpeechToNLPQueue.put(QueueItem)
                 SpeechToNLPQueue.put(QueueItem)
                 SpeechSignal.signal.emit([QueueItem])
-                num_chars_printed = 0 if result['finalized'] else len(transcript)
-
-            
-        except Exception as e:            
-            exception_string = traceback.format_exc()
-            print(exception_string)
-
-            MsgSignal.signal.emit(["Exception with Whisper model! Network or other issues. Please Try again!\n Exception: " + str(e)])     
-            ButtonsSignal.signal.emit([(Window.StartButton, True), (Window.ComboBox, True), (Window.ResetButton, True)])
-            sys.exit()
-
+                num_chars_printed = 0 if finalized_status else len(transcript)
                 
             
 
