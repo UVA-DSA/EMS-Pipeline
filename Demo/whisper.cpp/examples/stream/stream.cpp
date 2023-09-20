@@ -131,7 +131,7 @@ void whisper_print_usage(int /*argc*/, char ** argv, const whisper_params & para
 
 int main(int argc, char ** argv) {
     int fd;
-    const char *myfifo = "/tmp/fifopipe";
+    const char *myfifo = "/tmp/myfifo";
         /* create the FIFO (named pipe) */
     mkfifo(myfifo, 0666);
 
@@ -357,8 +357,8 @@ int main(int argc, char ** argv) {
                     if (params.no_timestamps) {
                         printf("%s", text);
 
-                        fd = open(myfifo, O_WRONLY | O_NONBLOCK );
-                        (void) write(fd, text, strlen(text) + 1);
+                        fd = ::open(myfifo, O_WRONLY | O_NONBLOCK );
+                        ::write(fd, text, strlen(text) + 1);
                         close(fd);
 
 
