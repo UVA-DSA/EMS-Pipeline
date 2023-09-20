@@ -69,9 +69,6 @@ class FileStream(object):
         """Continuously collect data from the audio stream, into the buffer."""
         self._buff.put(in_data)
         pass
-        #data = self.wf.readframes(CHUNK)
-
-        # self._buff.put(data)
         return None, pyaudio.paContinue
 
     def generator(self):
@@ -92,10 +89,8 @@ class FileStream(object):
             # Use a blocking get() to ensure there's at least one chunk of
             # data, and stop iteration if the chunk is None, indicating the
             # end of the audio stream.
-            #chunk = self._buff.get()
             time.sleep(.1)
             chunk = self.wf.readframes(CHUNK)
-            # print("chunk: ", chunk)
 
             if chunk == '':
                 FileStream.position = 0

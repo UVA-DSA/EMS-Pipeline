@@ -45,6 +45,7 @@ __pycache__/
 # generated files
 bin/
 gen/
+/whisper.cpp/models/*.bin
                             
 # Local configuration file (sdk path, etc)
 local.properties

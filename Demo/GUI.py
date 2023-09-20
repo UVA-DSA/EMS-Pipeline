@@ -50,7 +50,7 @@ import GoogleSpeechFileStream
 import DeepSpeechMicStream
 import DeepSpeechFileStream
 import WhisperFileStream
-import WhisperMicStream
+# import WhisperMicStream
 
 import TextSpeechStream
 import CognitiveSystem
@@ -495,9 +495,9 @@ class MainWindow(QWidget):
                 self.SpeechThread = StoppableThread(
                     target=GoogleSpeechMicStream.GoogleSpeech, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, data_path, audiostream, transcriptStream,))
             
-            elif(self.WhisperRadioButton.isChecked()):
-                self.SpeechThread = StoppableThread(
-                    target=WhisperMicStream.Whisper, args=(self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue))
+            # elif(self.WhisperRadioButton.isChecked()):
+            #     self.SpeechThread = StoppableThread(
+            #         target=WhisperMicStream.Whisper, args=(self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue))
 
             elif(self.DeepSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(
