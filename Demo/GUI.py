@@ -11,18 +11,11 @@ import os
 import time
 import math
 import datetime
-import traceback
-import numpy as np
-import pandas as pd
 import csv
 import sys
-import cv2
-import socket
-from PIL import Image
 import os
-import socket
-import threading, wave, pyaudio, time, queue
-import datetime as dt
+import time, queue
+import subprocess
 
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
@@ -43,7 +36,6 @@ from py_trees.blackboard import Blackboard
 
 from behaviours_m import *
 from DSP.amplitude import Amplitude
-from classes import SpeechNLPItem, GUISignal
 from EMSAgent import EMSAgentSystem
 import GoogleSpeechMicStream
 import GoogleSpeechFileStream
@@ -51,10 +43,10 @@ import DeepSpeechMicStream
 import DeepSpeechFileStream
 import WhisperFileStream
 # import WhisperMicStream
+import whisper_config
 
 import TextSpeechStream
 import CognitiveSystem
-import importlib.util
 import os
 
 
@@ -105,6 +97,7 @@ class MainWindow(QWidget):
         self.CognitiveSystemThread = None
         self.EMSAgentThread = None
         self.FeedbackThread = None
+        self.WhisperSubprocess = None
         self.stopped = 0
         self.reset = 0
         self.maximal = Amplitude()
@@ -444,6 +437,7 @@ class MainWindow(QWidget):
         SpeechToNLPQueue.put('Kill')
         EMSAgentSpeechToNLPQueue.put('Kill')
         FeedbackQueue.put('Kill')
+        if self.WhisperSubprocess != None: self.WhisperSubprocess.kill()
         event.accept()
 
     @pyqtSlot()
@@ -479,29 +473,42 @@ class MainWindow(QWidget):
         self.ComboBox.setEnabled(False)
         self.ResetButton.setEnabled(False)
 
-        # ==== Start the Speech/Text Thread
-        # hacky bypass for demo
-        # if True:
-        #     self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
-        #             self, SpeechToNLPQueue, './Audio_Scenarios/test5.wav',))
-        #     # self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
-        #     #         self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/002_190105.wav',))
-        #     self.SpeechThread.start()
-        #     print("Demo Audio Started")
+        # ====== Start Whisper 
+        if (self.WhisperRadioButton.isChecked()):
+            whispercommand = [
+                "./stream",
+                "-m",                                              # use specific whisper model
+                f"models/ggml-{whisper_config.model_size}.bin",    # the whisper model to be used
+                "--threads",                                       # use certain number of threads
+                str(whisper_config.num_threads),                   # number of threads to use
+                "--step",                          
+                str(whisper_config.step),
+                "--length",
+                str(whisper_config.length),
+            ]
+            # If a Hard-coded Audio test file, use virtual mic to capture the recording
+            if(self.ComboBox.currentText() not in {'Microphone', 'Other Audio File', 'Text File'}):
+                whispercommand.append("--capture")
+                whispercommand.append("5") #random number needed here - TODO: fix later
+            # Start subprocess
+            self.WhisperSubprocess = subprocess.Popen(whispercommand, cwd='whisper.cpp/')
 
+        time.sleep(3)
+
+        # ==== Start the Speech/Text Thread
         # If Microphone
         if(self.ComboBox.currentText() == 'Microphone'):
             if(self.GoogleSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(
                     target=GoogleSpeechMicStream.GoogleSpeech, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, data_path, audiostream, transcriptStream,))
             
-            # elif(self.WhisperRadioButton.isChecked()):
-            #     self.SpeechThread = StoppableThread(
-            #         target=WhisperMicStream.Whisper, args=(self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue))
-
-            elif(self.DeepSpeechRadioButton.isChecked()):
+            elif(self.WhisperRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(
-                    target=DeepSpeechMicStream.DeepSpeech, args=(self, SpeechToNLPQueue,))
+                    target=WhisperMicStream.Whisper, args=(self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue))
+
+            # elif(self.DeepSpeechRadioButton.isChecked()):
+            #     self.SpeechThread = StoppableThread(
+            #         target=DeepSpeechMicStream.DeepSpeech, args=(self, SpeechToNLPQueue,))
             
             
             elif(self.MLSpeechRadioButton.isChecked()):
@@ -564,6 +571,7 @@ class MainWindow(QWidget):
 
             self.SpeechThread.start()
             print("Hard-coded Audio File Speech Thread Started")
+
 
         # ==== Start the Cognitive System Thread
         if(self.CognitiveSystemThread == None):
@@ -762,6 +770,7 @@ class MainWindow(QWidget):
 
 
     # fire up a temporary QApplication
+
 def get_resolution_multiple_screens():
 
     app = QGuiApplication(sys.argv)
@@ -875,6 +884,7 @@ if __name__ == '__main__':
     SpeechToNLPQueue = queue.Queue()
     EMSAgentSpeechToNLPQueue  = queue.Queue()
     FeedbackQueue = queue.Queue()
+
     # GUI: Create the main window, show it, and run the app
     print("Starting GUI")
     app = QApplication(sys.argv)

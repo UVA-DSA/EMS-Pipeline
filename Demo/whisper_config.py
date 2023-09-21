@@ -1,4 +1,4 @@
-model_name = "whisper-small.en"
+model_size = "tiny.en"
 
 use_vad = False # set this variable to false if you don't want to use voice activity detection
 VAD_threshold = 0.93 # threshold for VAD to register sound as speech
@@ -11,3 +11,7 @@ finalization_limit = -1 # finalize transcript after this many seconds (setting t
 # mode = "huggingface"
 mode = "whispercpp"
 AUDIO_SEGMENT_DURATION_LIMIT = 3 # length of segments processed by whisper
+
+num_threads = 4
+step = 3000
+length = 3000

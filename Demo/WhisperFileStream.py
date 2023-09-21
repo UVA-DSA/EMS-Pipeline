@@ -8,6 +8,7 @@ from classes import SpeechNLPItem, GUISignal
 import wave
 import pyaudio
 import os
+import re
 
 # Suppress pygame's welcome message
 with open(os.devnull, 'w') as f:
@@ -46,7 +47,7 @@ class FileStream(object):
 
     def __enter__(self):
         self._audio_interface = pyaudio.PyAudio()
-        mixer.init(frequency=RATE)
+        mixer.init(frequency=RATE)        
         self._audio_stream = self._audio_interface.open(format = pyaudio.paInt16, channels = 1, rate = self._rate, input = True, frames_per_buffer = self._chunk, stream_callback = self._fill_buffer, output=True)
         self.closed = False
 
@@ -144,7 +145,17 @@ class FileStream(object):
 
             yield b''.join(data)
 
+def remove_strings_in_parentheses_and_asterisks(input_string):
+    # used to remove the background noise transcriptions from Whisper output
+    # Remove strings enclosed within parentheses
+    input_string = re.sub(r'\([^)]*\)', '', input_string)
+    # Remove strings enclosed within asterisks
+    input_string = re.sub(r'\*[^*]*\*', '', input_string)
+    # Remove strings enclosed within brackets
+    input_string = re.sub(r'\[[^\]]*\]', '', input_string)
 
+    input_string = re.sub(r'\[[^\]]*\]', '', input_string) 
+    return input_string
 
 def Whisper(Window, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, wavefile_name, model="tiny.en"):
     # Create GUI Signal Object
@@ -156,30 +167,26 @@ def Whisper(Window, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, wavefile_name, m
 
     ButtonsSignal = GUISignal()
     ButtonsSignal.signal.connect(Window.ButtonsSetEnabled)
-
+    num_chars_printed = 0
 
     with FileStream(Window, RATE, CHUNK, wavefile_name) as stream:
         
         fifo_path = "/tmp/myfifo"  # Replace with your named pipe path
-        try:
-            os.mkfifo(fifo_path)  # Create the named pipe if it doesn't exist
-        except FileExistsError:
-            pass  # Named pipe already exists
 
-        with open(fifo_path, 'r') as fifo:
-            while True:
-                transcript = fifo.readline().strip()  # Read a line of data from the named pipe
-                if not transcript:
-                    break  # Exit if no more data (e.g., when the writer closes)
-                
-                num_chars_printed = 0
-                finalized_status = True
-                QueueItem = SpeechNLPItem(transcript, finalized_status, -1, num_chars_printed, 'Speech')
-                EMSAgentSpeechToNLPQueue.put(QueueItem)
-                SpeechToNLPQueue.put(QueueItem)
-                SpeechSignal.signal.emit([QueueItem])
-                num_chars_printed = 0 if finalized_status else len(transcript)
-                
+        while True:
+            try:
+                with open(fifo_path, 'r') as fifo:
+                    transcript = fifo.read().strip()  # Read the message from the named pipe
+                    transcript = remove_strings_in_parentheses_and_asterisks(transcript)
+                    finalized_status = True
+                    QueueItem = SpeechNLPItem(transcript, finalized_status, -1, num_chars_printed, 'Speech')
+                    EMSAgentSpeechToNLPQueue.put(QueueItem)
+                    SpeechToNLPQueue.put(QueueItem)
+                    SpeechSignal.signal.emit([QueueItem])
+                    num_chars_printed = 0 if finalized_status else len(transcript)
+
+            except Exception as e:
+                print("exception",e)                
             
 
 

@@ -155,7 +155,7 @@ class ConceptExtractor(object):
                                              ignore_stop_phrases=True)
 
         with open("chunk.csv", "a") as f:
-            writer = csv.writer(f, delimiter=',')
+            writer = csv.writer(f, delimiter=',', escapechar='\\')
             writer.writerow(sent_text)
 
         check1, ob1 = get_bp(self.scores, sent_text)
