@@ -1,5 +1,0 @@
-cow	ANIMAL
-goat	ANIMAL
-sheep	ANIMAL
-boat	O
-Arif	O

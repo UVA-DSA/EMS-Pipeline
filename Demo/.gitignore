@@ -22,7 +22,7 @@ service-account.json
 
 data_collection_folder/*
 
-__pycache__/*
+__pycache__/
 
 *.~lock.*
 
@@ -68,3 +68,6 @@ obj/
 .externalNativeBuild
 
 */camstrm/.gradle/*
+
+# whisper wieghts 
+/whisper.cpp/models/*.bin

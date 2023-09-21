@@ -1536,3 +1536,12 @@ Xueren: medical - altered mental status0.26622877
 "(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
 "(Pain, True, 70, <b>0.83</b>)<br>(Gender, True, female, <b>0.81</b>)<br>(Age, True, 70, <b>0.65</b>)<br>(Pain severity, True, 70, <b>0.83</b>)<br>(Chest pain, True, 70, <b>0.83</b>)<br>",(Protocol: medical - chest pain - cardiac suspected (protocol 2 - 1) : 0.98914087)
 "(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>"
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
