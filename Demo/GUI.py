@@ -489,7 +489,6 @@ class MainWindow(QWidget):
             # If a Hard-coded Audio test file, use virtual mic to capture the recording
             if(self.ComboBox.currentText() not in {'Microphone', 'Other Audio File', 'Text File'}):
                 whispercommand.append("--capture")
-                whispercommand.append("5") #random number needed here - TODO: fix later
             # Start subprocess
             self.WhisperSubprocess = subprocess.Popen(whispercommand, cwd='whisper.cpp/')
 
