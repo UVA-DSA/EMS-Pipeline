@@ -70,8 +70,6 @@ output.json
 obj/
 .externalNativeBuild
 
-*/camstrm/.gradle/*
-
 check.csv
 chunk.csv
 transcript.txt

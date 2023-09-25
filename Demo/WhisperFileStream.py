@@ -153,8 +153,9 @@ def remove_strings_in_parentheses_and_asterisks(input_string):
     input_string = re.sub(r'\*[^*]*\*', '', input_string)
     # Remove strings enclosed within brackets
     input_string = re.sub(r'\[[^\]]*\]', '', input_string)
+    # Remove null terminator since it does not display properly in Speech Box
+    input_string = input_string.replace("\x00", " ")
 
-    input_string = re.sub(r'\[[^\]]*\]', '', input_string) 
     return input_string
 
 def Whisper(Window, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, wavefile_name, model="tiny.en"):
@@ -176,7 +177,7 @@ def Whisper(Window, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, wavefile_name, m
         while True:
             try:
                 with open(fifo_path, 'r') as fifo:
-                    transcript = fifo.read().strip()  # Read the message from the named pipe
+                    transcript = fifo.read().strip()  # Read the message from the named 
                     transcript = remove_strings_in_parentheses_and_asterisks(transcript)
                     finalized_status = True
                     QueueItem = SpeechNLPItem(transcript, finalized_status, -1, num_chars_printed, 'Speech')
