@@ -492,8 +492,6 @@ class MainWindow(QWidget):
             # Start subprocess
             self.WhisperSubprocess = subprocess.Popen(whispercommand, cwd='whisper.cpp/')
 
-        time.sleep(3)
-
         # ==== Start the Speech/Text Thread
         # If Microphone
         if(self.ComboBox.currentText() == 'Microphone'):
@@ -662,11 +660,11 @@ class MainWindow(QWidget):
                 # 'Speech' origin is raw transcription text from Google Speech to Text API
                 if(item.origin == 'Speech'):
                     self.finalSpeechSegmentsSpeech.append(
-                        '<b>' + item.transcript + '</b>')
+                        '<b>' + f'{item.transcript} ({item.confidence:.3f})' + '</b>')
                 # 'NLP' origin is highlighted/bolded text with concept extracted using Metamap
                 elif(item.origin == 'NLP'):
                     self.finalSpeechSegmentsNLP.append(
-                        '<b>' + item.transcript + '</b>')
+                        '<b>' + f'{item.transcript} ({item.confidence:.3f})' + '</b>')
             # make speech text, starting with final segments
             # if highlighted text from Metamap (NLP array) is available, use that
             # else, use raw transcription from Google Speech (Speech array) to Text API
@@ -679,7 +677,7 @@ class MainWindow(QWidget):
 
             # If currently received segment is interim result, add it to text
             # Only display intermin results for raw speech text 
-            if not item.isFinal: text += item.transcript
+            if not item.isFinal: text += f'{item.transcript} ({item.confidence:.3f})'
 
             # Set SpeechBox text
             self.SpeechBox.setHtml(text)

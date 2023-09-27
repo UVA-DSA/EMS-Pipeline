@@ -145,7 +145,7 @@ class FileStream(object):
 
             yield b''.join(data)
 
-def remove_strings_in_parentheses_and_asterisks(input_string):
+def process_transcript_score(input_string):
     # used to remove the background noise transcriptions from Whisper output
     # Remove strings enclosed within parentheses
     input_string = re.sub(r'\([^)]*\)', '', input_string)
@@ -156,7 +156,13 @@ def remove_strings_in_parentheses_and_asterisks(input_string):
     # Remove null terminator since it does not display properly in Speech Box
     input_string = input_string.replace("\x00", " ")
 
-    return input_string
+    # separate transcript and confidence score
+    start = input_string.find('{')
+    end = input_string.find('}')
+    transcript = input_string[:start]
+    avg_p = float(input_string[start+1:end])
+
+    return transcript, avg_p
 
 def Whisper(Window, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, wavefile_name, model="tiny.en"):
     # Create GUI Signal Object
@@ -177,10 +183,10 @@ def Whisper(Window, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, wavefile_name, m
         while True:
             try:
                 with open(fifo_path, 'r') as fifo:
-                    transcript = fifo.read().strip()  # Read the message from the named 
-                    transcript = remove_strings_in_parentheses_and_asterisks(transcript)
+                    transcript_score = fifo.read().strip()  # Read the message from the named 
+                    transcript, avg_p = process_transcript_score(transcript_score)
                     finalized_status = True
-                    QueueItem = SpeechNLPItem(transcript, finalized_status, -1, num_chars_printed, 'Speech')
+                    QueueItem = SpeechNLPItem(transcript, finalized_status, avg_p, num_chars_printed, 'Speech')
                     EMSAgentSpeechToNLPQueue.put(QueueItem)
                     SpeechToNLPQueue.put(QueueItem)
                     SpeechSignal.signal.emit([QueueItem])
