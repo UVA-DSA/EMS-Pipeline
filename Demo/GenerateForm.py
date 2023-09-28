@@ -1,4 +1,3 @@
-import commands
 from Form_Filling import textParse2
 from Form_Filling import prescription_form2
 from classes import GUISignal
@@ -22,7 +21,7 @@ def GenerateForm(Window, text):
     dummyP3=dummyP2.replace('\'','%27')
     dummyP=dummyP3.replace('&','%26')
     part1='curl -d text='+dummyP+' http://bark.phon.ioc.ee/punctuator'
-    op = commands.getstatusoutput(part1)
+    op = subprocess.getstatusoutput(part1)
     output = op[1].rsplit('\n', 1)[1]
     sentsList = textParse2.sent_tokenize(output) #final sentences
     wordsList = textParse2.word_tokenize(output) #final words

@@ -3,7 +3,8 @@ calculating, adding and displaying. '''
 
 import math
 import struct
-from vu_constants import SHORT_NORMALIZE
+from .vu_constants import SHORT_NORMALIZE
+
 
 class Amplitude(object):
     ''' an abstraction for Amplitudes (with an underlying float value)
@@ -56,5 +57,3 @@ class Amplitude(object):
 
     def getValue(self):
         return self.value
-
-      

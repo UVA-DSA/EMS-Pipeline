@@ -1,13 +1,10 @@
 from __future__ import absolute_import, division, print_function
 from timeit import default_timer as timer
-import sys
-import os
 import time
-from six.moves import queue
 import numpy as np
 from classes import SpeechNLPItem, GUISignal
 from Form_Filling import textParse2
-import commands
+import subprocess
 
 BETWEEN_CHARACTERS_PAUSE = .06
 BETWEEN_WORDS_PAUSE = .1
@@ -35,15 +32,19 @@ def TextSpeech(Window, SpeechToNLPQueue, textfile_name):
     counter = 0
     
     # Break into sentences
-    dummy12= text
-    dummy12 = dummy12.replace('\r', '').replace('\n', '')
-    dummyP2=dummy12.replace(' ','%20')
-    dummyP3=dummyP2.replace('\'','%27')
-    dummyP=dummyP3.replace('&','%26')
-    part1='curl -d text='+dummyP+' http://bark.phon.ioc.ee/punctuator'
-    op = commands.getstatusoutput(part1)
-    output = op[1].rsplit('\n', 1)[1]
-    sentsList = textParse2.sent_tokenize(output) #final sentences
+    auto_chunk = True
+    if auto_chunk:
+    	dummy12= text
+    	dummy12 = dummy12.replace('\r', '').replace('\n', '')
+    	dummyP2=dummy12.replace(' ','%20')
+    	dummyP3=dummyP2.replace('\'','%27')
+    	dummyP=dummyP3.replace('&','%26')
+    	part1='curl -d text='+dummyP+' http://bark.phon.ioc.ee/punctuator'
+    	op = subprocess.getstatusoutput(part1)
+    	output = op[1].rsplit('\n', 1)[1]
+    	sentsList = textParse2.sent_tokenize(output) #final sentences
+    else:
+	    sentsList = text.split("###")
 
     # Stream text
     num_chars_printed = 0

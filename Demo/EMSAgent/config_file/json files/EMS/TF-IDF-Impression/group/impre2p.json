@@ -1,0 +1,775 @@
+{
+    "Abuse of narcotic": [
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - altered mental status",
+        "general - cardiac arrest",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - stroke/tia (protocol 3 - 5)"
+    ],
+    "Altered mental status": [
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - altered mental status",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - diabetic - hypoglycemia",
+        "general - cardiac arrest",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - seizure",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "general - pain control"
+    ],
+    "Behavioral - strange and inexplicable behavior": [
+        "medical - altered mental status",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - diabetic - hypoglycemia",
+        "medical - seizure",
+        "general - cardiac arrest",
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Intracranial - tia (transient ischemic attack)": [
+        "medical - stroke/tia (protocol 3 - 5)"
+    ],
+    "Headache": [
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - seizure",
+        "medical - altered mental status",
+        "general - cardiac arrest",
+        "general - pain control",
+        "medical - diabetic - hypoglycemia",
+        "medical - abdominal pain (protocol 3 - 2)"
+    ],
+    "Cardiac arrhythmia/dysrhythmia": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - altered mental status",
+        "general - cardiac arrest",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - diabetic - hypoglycemia"
+    ],
+    "Hypoglycemia - diabetic": [
+        "medical - diabetic - hypoglycemia",
+        "medical - altered mental status",
+        "general - cardiac arrest"
+    ],
+    "Injury - shoulder or upper arm": [
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - altered mental status",
+        "general - pain control",
+        "medical - stroke/tia (protocol 3 - 5)"
+    ],
+    "Injury - not otherwise listed": [
+        "injury - general trauma management (protocol 4 - 1)",
+        "general - pain control",
+        "general - cardiac arrest"
+    ],
+    "Pain - abdomen acute onset": [
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Pain - abdominal generalized": [
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - altered mental status",
+        "general - pain control",
+        "medical - seizure",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "general - cardiac arrest"
+    ],
+    "Injury - hip": [
+        "general - pain control",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - altered mental status"
+    ],
+    "Chest pain - angina": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - seizure",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)"
+    ],
+    "Chest pain - cardiac": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "general - cardiac arrest",
+        "medical - seizure"
+    ],
+    "Intracranial - stroke (cva) hemorrhagic": [
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - altered mental status"
+    ],
+    "Intracranial - stroke (cva) infarction": [
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - altered mental status"
+    ],
+    "Cardiac arrest": [
+        "general - cardiac arrest",
+        "medical - altered mental status",
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Respiratory failure": [
+        "general - cardiac arrest",
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - seizure"
+    ],
+    "Respiratory - copd exacerbation": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "general - cardiac arrest",
+        "medical - altered mental status"
+    ],
+    "Respiratory distress - acute onset": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "general - cardiac arrest",
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - altered mental status",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "general - pain control"
+    ],
+    "Pain - not elsewhere mentioned sudden onset": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "general - pain control",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - seizure",
+        "medical - altered mental status",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Respiratory - asthma exacerbation": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "general - cardiac arrest",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)"
+    ],
+    "Abuse of cocaine": [
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - altered mental status",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "general - cardiac arrest",
+        "medical - seizure"
+    ],
+    "Pain - chest pain (non-cardiac)": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "general - pain control",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "general - cardiac arrest",
+        "medical - diabetic - hypoglycemia"
+    ],
+    "Syncopal episode": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - altered mental status",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - seizure",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - diabetic - hypoglycemia"
+    ],
+    "Seizure": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - seizure",
+        "medical - altered mental status",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - diabetic - hypoglycemia"
+    ],
+    "Injury - wrist  hand  or fingers": [
+        "general - pain control",
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Environmental - poisoning or drug ingestion - other": [
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - altered mental status",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - seizure",
+        "medical - stroke/tia (protocol 3 - 5)"
+    ],
+    "Pneumonia": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - altered mental status",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Anxiety disorder": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - seizure",
+        "medical - altered mental status",
+        "medical - stroke/tia (protocol 3 - 5)"
+    ],
+    "Infectious disease unspecified": [
+        "medical - altered mental status",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "general - cardiac arrest",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)"
+    ],
+    "Encephalitis or encephalomyelitis": [
+        "medical - altered mental status"
+    ],
+    "Gi bleed - melena": [
+        "medical - abdominal pain (protocol 3 - 2)"
+    ],
+    "Injury - head": [
+        "general - cardiac arrest",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - altered mental status",
+        "medical - seizure",
+        "general - pain control",
+        "medical - diabetic - hypoglycemia"
+    ],
+    "Cv - cardiac arrest/obvious death": [
+        "general - cardiac arrest"
+    ],
+    "Respiratory - bronchospasm acute onset": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - altered mental status"
+    ],
+    "Infectious - sepsis": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - altered mental status",
+        "medical - stroke/tia (protocol 3 - 5)"
+    ],
+    "Abuse of alcohol - intoxication": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - altered mental status",
+        "medical - seizure",
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "general - cardiac arrest"
+    ],
+    "Respiratory disorder unspecified": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - altered mental status",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - seizure"
+    ],
+    "Burn - full thickness": [
+        "injury - general trauma management (protocol 4 - 1)",
+        "general - cardiac arrest"
+    ],
+    "Infectious - influenza (flu like symptoms)": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - altered mental status",
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Major depressive disorder": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)"
+    ],
+    "General - examination no complaint (none)": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - altered mental status",
+        "medical - seizure",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "general - pain control",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - diabetic - hypoglycemia",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "general - cardiac arrest"
+    ],
+    "Injury - face": [
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - seizure",
+        "general - cardiac arrest"
+    ],
+    "Edema - general": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)"
+    ],
+    "Injury - elbow": [
+        "injury - general trauma management (protocol 4 - 1)",
+        "general - pain control",
+        "medical - altered mental status"
+    ],
+    "Injury - forearm": [
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - altered mental status"
+    ],
+    "Nausea and vomiting": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "general - pain control",
+        "medical - altered mental status",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - seizure",
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)"
+    ],
+    "Pain - back": [
+        "general - pain control",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - altered mental status",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - diabetic - hypoglycemia"
+    ],
+    "Sickle cell crisis": [
+        "general - pain control",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)"
+    ],
+    "Hypertension": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - altered mental status",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "general - pain control",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - stroke/tia (protocol 3 - 5)"
+    ],
+    "Pain - pelvic or perineal": [
+        "injury - general trauma management (protocol 4 - 1)",
+        "general - pain control",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)"
+    ],
+    "Injury - pelvis": [
+        "injury - general trauma management (protocol 4 - 1)",
+        "general - pain control"
+    ],
+    "Hyperglycemia - diabetic": [
+        "medical - seizure",
+        "medical - altered mental status",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - diabetic - hypoglycemia",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - stroke/tia (protocol 3 - 5)"
+    ],
+    "Respiratory - pulmonary edema acute onset": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - altered mental status",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)"
+    ],
+    "Seizure with status epilepticus": [
+        "medical - seizure",
+        "medical - altered mental status",
+        "medical - diabetic - hypoglycemia"
+    ],
+    "Injury - abdomen": [
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "general - cardiac arrest"
+    ],
+    "Injury - lower back": [
+        "injury - general trauma management (protocol 4 - 1)",
+        "general - pain control",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "general - cardiac arrest"
+    ],
+    "Diarrhea": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - altered mental status",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "general - pain control"
+    ],
+    "Dehydration": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - altered mental status",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - diabetic - hypoglycemia"
+    ],
+    "Behavioral - homicidal/suicidal ideations": [
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - altered mental status",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)"
+    ],
+    "Behavioral - hostility": [
+        "medical - seizure",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - diabetic - hypoglycemia"
+    ],
+    "Behavioral - violent behavior": [
+        "medical - seizure",
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)"
+    ],
+    "Disorientation  unspecified": [
+        "medical - seizure",
+        "medical - altered mental status",
+        "medical - diabetic - hypoglycemia",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Injury - thorax (upper chest)": [
+        "general - pain control",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)"
+    ],
+    "Injury - lower leg": [
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - altered mental status",
+        "general - pain control"
+    ],
+    "Injury - thigh (upper leg)": [
+        "injury - general trauma management (protocol 4 - 1)",
+        "general - pain control"
+    ],
+    "Malaise - sick person": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - altered mental status",
+        "medical - diabetic - hypoglycemia",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "general - cardiac arrest",
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - seizure",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)"
+    ],
+    "Pain - chronic": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "general - pain control",
+        "medical - altered mental status",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Abuse of alcohol - withdrawal": [
+        "medical - seizure",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - altered mental status",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)"
+    ],
+    "Behavioral - hallucinations - visual": [
+        "medical - seizure",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)"
+    ],
+    "Fever": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - altered mental status",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - seizure",
+        "general - pain control",
+        "medical - abdominal pain (protocol 3 - 2)"
+    ],
+    "Injury - neck": [
+        "injury - general trauma management (protocol 4 - 1)",
+        "general - pain control",
+        "general - cardiac arrest",
+        "medical - seizure"
+    ],
+    "Constipation": [
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Chest pain - stemi of inferior wall": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - altered mental status"
+    ],
+    "Cv - abdominal aortic aneurysm": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)"
+    ],
+    "Abuse of alcohol": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - altered mental status",
+        "medical - seizure"
+    ],
+    "Abuse of stimulant (amphetamines  etc.)": [
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "general - cardiac arrest",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - altered mental status"
+    ],
+    "Injury - concussion with l.o.c.": [
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Behavioral / psychiatric disorder": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - seizure",
+        "medical - diabetic - hypoglycemia",
+        "medical - altered mental status"
+    ],
+    "Injury - epidural hemorrhage from trauma": [
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Ob - preterm labor without delivery": [
+        "medical - abdominal pain (protocol 3 - 2)"
+    ],
+    "Hypotension": [
+        "medical - altered mental status",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - diabetic - hypoglycemia",
+        "medical - seizure",
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Congestive heart failure (chf)": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "general - cardiac arrest",
+        "medical - altered mental status",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)"
+    ],
+    "Need for assistance with personal care": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - diabetic - hypoglycemia",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - altered mental status",
+        "medical - abdominal pain (protocol 3 - 2)"
+    ],
+    "Respiratory condition due to chemicals  gases  fumes  or vapors": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Chest pain - stemi of other sites": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "general - cardiac arrest"
+    ],
+    "Abuse of sedative  hypnotic or anxiolytic": [
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - altered mental status",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)"
+    ],
+    "Vaginal bleeding": [
+        "medical - abdominal pain (protocol 3 - 2)"
+    ],
+    "Injury - ankle": [
+        "general - pain control",
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Chest pain - stemi of anterior wall": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - stroke/tia (protocol 3 - 5)"
+    ],
+    "Vomiting": [
+        "medical - altered mental status",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - seizure",
+        "general - cardiac arrest",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)"
+    ],
+    "Vomiting  unspecified": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - seizure",
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - altered mental status",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - abdominal pain (protocol 3 - 2)"
+    ],
+    "Injury - lung hemothorax - traumatic": [
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Injury - lung pneumothorax - traumatic": [
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Gi bleed - hematemesis": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - altered mental status",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)"
+    ],
+    "Pain - appendicitis acute onset": [
+        "medical - abdominal pain (protocol 3 - 2)"
+    ],
+    "Injury - concussion without l.o.c.": [
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Infectious - common cold": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - altered mental status"
+    ],
+    "Gerd (reflux)": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)"
+    ],
+    "Infectious - bronchitis - acute": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)"
+    ],
+    "Pulmonary embolism": [
+        "general - cardiac arrest",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Injury - nose": [
+        "injury - general trauma management (protocol 4 - 1)",
+        "general - cardiac arrest"
+    ],
+    "Suicidal ideations": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - altered mental status",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)"
+    ],
+    "Abuse of psychoactive substance": [
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - altered mental status",
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)"
+    ],
+    "Suicide attempt": [
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Hyperkalemia": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Abuse of hallucinogen": [
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - altered mental status"
+    ],
+    "Injury - ear": [
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Injury - foot": [
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Environmental - toxic exposure (accidental)": [
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - altered mental status"
+    ],
+    "Hypoglycemia - non-diabetic": [
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - altered mental status"
+    ],
+    "Injury - genitalia": [
+        "medical - seizure",
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Visual disturbance": [
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)"
+    ],
+    "Chest pain - myocardial infarction (non-stemi)": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Epistaxis": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Injury - intracranial injury not otherwise specified.": [
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Foreign body genitourinary tract": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - abdominal pain (protocol 3 - 2)"
+    ],
+    "Injury - eye and/or orbit": [
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Pain - eye": [
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - altered mental status"
+    ],
+    "Paralysis - hemiplegia": [
+        "medical - stroke/tia (protocol 3 - 5)"
+    ],
+    "Headache - migraine": [
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - seizure",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)"
+    ],
+    "Obesity": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "general - cardiac arrest"
+    ],
+    "Abuse of inhalant substances (huffing)": [
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)"
+    ],
+    "Dental/tooth pain": [
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Not applicable general - examination no complaint (none)": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)"
+    ],
+    "Environment - heatstroke/sunstroke": [
+        "medical - stroke/tia (protocol 3 - 5)"
+    ],
+    "Shock - hypovolemic": [
+        "injury - general trauma management (protocol 4 - 1)",
+        "general - cardiac arrest"
+    ],
+    "Bleeding or hematoma from procedure/medical device": [
+        "medical - seizure"
+    ],
+    "Metabolic disorder - other": [
+        "medical - altered mental status"
+    ],
+    "Environment - heat exhaustion": [
+        "medical - altered mental status"
+    ],
+    "Auditory hallucinations": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)"
+    ],
+    "Hypovolemia": [
+        "general - cardiac arrest"
+    ],
+    "Environment - hypothermia": [
+        "medical - altered mental status"
+    ],
+    "Injury - subarachnoid hemorrhage from trauma": [
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Injury - subdural hemorrhage from trauma": [
+        "injury - general trauma management (protocol 4 - 1)"
+    ]
+}

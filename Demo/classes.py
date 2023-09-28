@@ -1,7 +1,6 @@
-from PyQt4.QtCore import *
-from PyQt4 import QtSvg
-from PyQt4.QtGui import *
-import numpy as np
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
 
 # ============== Custom Speech to NLP Queue Item Class ==============
 

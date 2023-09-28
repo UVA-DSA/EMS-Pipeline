@@ -2,16 +2,12 @@ from __future__ import absolute_import, division, print_function
 from timeit import default_timer as timer
 import sys
 import os
-import pyaudio
 import time
 from six.moves import queue
-from google.cloud import speech
-from google.cloud.speech import enums
-from google.cloud.speech import types
+from google.cloud import speech_v1 as speech
 import numpy as np
 from classes import SpeechNLPItem, GUISignal
 import wave
-import scipy
 
 # Suppress pygame's welcome message
 with open(os.devnull, 'w') as f:
@@ -23,13 +19,14 @@ with open(os.devnull, 'w') as f:
     sys.stdout = oldstdout
 
 # Audio recording parameters
-RATE = 16000
+RATE = 44100
 CHUNK = int(RATE / 10)  # 100ms
 
 class FileStream(object):
     fileSessionCounter = 0
     position = 0
     """Opens a file stream as a generator yielding the audio chunks."""
+
     def __init__(self, Window, rate, chunk, wavefile):
         FileStream.fileSessionCounter += 1
         self.Window = Window
@@ -45,37 +42,36 @@ class FileStream(object):
         # Create a thread-safe buffer of audio data
         self._buff = queue.Queue()
         self.closed = True
-    
+
     def __enter__(self):
         #self._audio_interface = pyaudio.PyAudio()
-        mixer.init(frequency = RATE)
+        mixer.init(frequency=RATE)
         #self._audio_stream = self._audio_interface.open(format = pyaudio.paInt16, channels = 1, rate = self._rate, input = True, frames_per_buffer = self._chunk, stream_callback = self._fill_buffer,)
         self.closed = False
 
-        if(FileStream.position  == 0):
+        if(FileStream.position == 0):
             mixer.music.load(self.filename)
             mixer.music.play()
 
         return self
 
     def __exit__(self, type, value, traceback):
-        #self._audio_stream.stop_stream()
-        #self._audio_stream.close()
+        # self._audio_stream.stop_stream()
+        # self._audio_stream.close()
         self.closed = True
         # Signal the generator to terminate so that the client's
         # streaming_recognize method will not block the process termination.
-        #self._buff.put(None)
-        #self._audio_interface.terminate()
-
+        # self._buff.put(None)
+        # self._audio_interface.terminate()
+# ========================= HERE ===================================================================
     def _fill_buffer(self, in_data, frame_count, time_info, status_flags):
         """Continuously collect data from the audio stream, into the buffer."""
-        #self._buff.put(in_data)
+        # self._buff.put(in_data)
         pass
         #data = self.wf.readframes(CHUNK)
 
-
-        #self._buff.put(data)
-        #return None, pyaudio.paContinue
+        # self._buff.put(data)
+        # return None, pyaudio.paContinue
 
     def generator(self):
         # Create GUI Signal Objects
@@ -98,32 +94,43 @@ class FileStream(object):
             #chunk = self._buff.get()
             time.sleep(.1)
             chunk = self.wf.readframes(CHUNK)
-            
+            # print("chunk: ", chunk)
+
             if chunk == '':
                 FileStream.position = 0
                 MsgSignal.signal.emit(["Transcription of audio file complete!"])
-                ButtonsSignal.signal.emit([(self.Window.StartButton, True), (self.Window.ComboBox, True), (self.Window.ResetButton, True)])
+                ButtonsSignal.signal.emit(
+                    [(self.Window.StartButton, True), (self.Window.ComboBox, True), (self.Window.ResetButton, True)])
                 return
 
             if chunk is None:
                 return
 
-            if self.samplesCounter/self._rate > 60:
-                #FileStream.position -= 3
-                GoogleSignal.signal.emit(["File"])
-                print((self.samplesCounter)/self._rate)
-                MsgSignal.signal.emit(["API's 1 minute limit reached. Restablishing connection!"])
-                break
+            # if self.samplesCounter/self._rate > 60:
+            #     #FileStream.position -= 3
+            #     GoogleSignal.signal.emit(["File"])
+            #     print((self.samplesCounter)/self._rate)
+            #     MsgSignal.signal.emit(["API's 1 minute limit reached. Restablishing connection!"])
+            #     break
 
             data = [chunk]
 
-            # VU Meter in the GUI
             signal = b''.join(data)
-            signal = np.fromstring(signal, 'Int16') 
-            VUSignal.signal.emit([signal])
+            # print(signal)
+            try:
+                signal = np.fromstring(signal, 'int16')
+                VUSignal.signal.emit([signal])
+
+            except Exception as e:
+                print("exception occurred")
+                print(e)
 
             self.samplesCounter += self._chunk
             FileStream.position += 1
+
+            # print("self sample counter: ",self.samplesCounter)
+
+
 
             if self.Window.stopped == 1:
                 print('File Speech Tread Killed')
@@ -136,18 +143,34 @@ class FileStream(object):
                 try:
                     chunk = self._buff.get(block=False)
                     if chunk is None:
+                        print("return")
                         return
                     data.append(chunk)
                     self.samplesCounter += self._chunk
                     FileStream.position += 1
                 except queue.Empty:
+                    # print("empty")
                     break
- 
+
+            # if self.samplesCounter > 0 and self.samplesCounter%160000 == 0:
+            #     print('File Speech Thread paused')
+            #     # FileStream.position = 0
+            #     mixer.music.stop()
+            #     return
+
             yield b''.join(data)
 
 # Google Cloud Speech API Recognition Thread for Microphone
-def GoogleSpeech(Window, SpeechToNLPQueue, wavefile_name):
 
+
+def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, wavefile_name, data_path_str, audioStreamBool, transcriptStreamBool):
+    
+    def numberWords(s):
+        count = 0
+        for c in s:
+            if c == ' ': count += 1
+        return count
+    
     # Create GUI Signal Object
     SpeechSignal = GUISignal()
     SpeechSignal.signal.connect(Window.UpdateSpeechBox)
@@ -160,25 +183,40 @@ def GoogleSpeech(Window, SpeechToNLPQueue, wavefile_name):
 
     language_code = 'en-US'  # a BCP-47 language tag
 
-    client = speech.SpeechClient()
-    config = types.RecognitionConfig(encoding = enums.RecognitionConfig.AudioEncoding.LINEAR16, sample_rate_hertz = RATE, language_code = language_code, profanity_filter = True) #,model='video')
-    streaming_config = types.StreamingRecognitionConfig(config = config, interim_results = True)
 
+    if("CPR" in wavefile_name):
+        RATE = 44100
+    else:
+        RATE = 16000
+    CHUNK = int(RATE)/10
+
+    # Define a transcript chunk to be a certain number of words 
+    WORDS_PER_CHUNK = 3
+    
+    client = speech.SpeechClient()
+    config = speech.RecognitionConfig(encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+                                      sample_rate_hertz=RATE, language_code=language_code, profanity_filter=True)  # ,model='video')
+    streaming_config = speech.StreamingRecognitionConfig(config=config, interim_results=True)
 
     with FileStream(Window, RATE, CHUNK, wavefile_name) as stream:
+        print("audio file name: ", wavefile_name)
         audio_generator = stream.generator()
-        requests = (types.StreamingRecognizeRequest(audio_content = content) for content in audio_generator)
+        requests = (speech.StreamingRecognizeRequest(audio_content=content)
+                    for content in audio_generator)
 
+            
         try:
             responses = client.streaming_recognize(streaming_config, requests)
-
             # Signal that streaming has started
-            print("Started speech recognition on file audio via Google Speech API.\nFile Session Counter: " + str(FileStream.fileSessionCounter))
-            MsgSignal.signal.emit(["Started speech recognition on file audio via Google Speech API.\nFile Session Counter: " + str(FileStream.fileSessionCounter)])
-            
+            print("Started speech recognition on file audio via Google Speech API.\nFile Session Counter: " +
+                  str(FileStream.fileSessionCounter))
+            MsgSignal.signal.emit(
+                ["Started speech recognition on file audio via Google Speech API.\nFile Session Counter: " + str(FileStream.fileSessionCounter)])
+
             # Now, put the transcription responses to use.
             num_chars_printed = 0
             responseTimeStamp = time.time()
+            prev_num_words = 0
 
             for response in responses:
                 if not response.results:
@@ -194,29 +232,32 @@ def GoogleSpeech(Window, SpeechToNLPQueue, wavefile_name):
                 transcript = result.alternatives[0].transcript
                 confidence = result.alternatives[0].confidence
 
-                # Display interim results, but with a carriage return at the end of the
-                # line, so subsequent lines will overwrite them.
-                # If the previous result was longer than this one, we need to print
-                # some extra spaces to overwrite the previous result
-                overwrite_chars = ' ' * (num_chars_printed - len(transcript))
-
-                if result.is_final:
-                    #print(transcript + overwrite_chars)
-                    QueueItem = SpeechNLPItem(transcript, result.is_final, confidence, num_chars_printed, 'Speech')
+#=================== Sion - consider interim results for intervention suggestion==============================================================================
+                new_num_words = numberWords(transcript)
+                # process per new chunk, and always process final segments
+                if (new_num_words - prev_num_words >= WORDS_PER_CHUNK) or result.is_final:
+                    QueueItem = SpeechNLPItem(transcript, result.is_final,
+                                                    confidence, num_chars_printed, 'Speech')
+                    # send all transcripts (interim and final) to Xueren's Model
+                    EMSAgentSpeechToNLPQueue.put(QueueItem)
+                    # send all transcripts (interim and final) to Metamap
                     SpeechToNLPQueue.put(QueueItem)
+                    # signal GUI SpeechBox that transcript has been received and queued 
                     SpeechSignal.signal.emit([QueueItem])
-                    num_chars_printed = 0
-
-                elif not result.is_final:
-                    #sys.stdout.write(transcript + overwrite_chars + '\r')
-                    #sys.stdout.flush()
-                    QueueItem = SpeechNLPItem(transcript, result.is_final, confidence, num_chars_printed, 'Speech')
-                    SpeechSignal.signal.emit([QueueItem])
-                    num_chars_printed = len(transcript)
-
-
+                prev_num_words = new_num_words
+                    
         except Exception as e:
-            MsgSignal.signal.emit(["Unable to get response from Google! Network or other issues. Please Try again!\n Exception: " + str(e)])     
-            ButtonsSignal.signal.emit([(Window.StartButton, True), (Window.ComboBox, True), (Window.ResetButton, True)])
+            # print(e)
+            MsgSignal.signal.emit(
+                ["Unable to get response from Google! Network or other issues. Please Try again!\n Exception: " + str(e)])
+            ButtonsSignal.signal.emit(
+                [(Window.StartButton, True), (Window.ComboBox, True), (Window.ResetButton, True)])
             sys.exit()
-            
+
+
+'''
+
+12:16:44 PM - Unable to get response from Google! Network or other issues. 
+Please Try again! Exception: 403 Cloud Speech-to-Text API has not been used in project 430309206876 before or it is disabled. 
+If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry. 
+'''

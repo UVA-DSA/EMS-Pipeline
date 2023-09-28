@@ -8,12 +8,28 @@ The `Demo/` directory contains a demonstration of the edge device system in form
 
  The GUI is built with PyQt4 and has been succesfully tested on:
 
-`64-bit Ubuntu 16.04 LTS`  
-`Intel® Core™ i7-7700 CPU @ 3.60GHz × 8`
+`64-bit Ubuntu 16.04 LTS, Intel® Core™ i7-7700 CPU @ 3.60GHz × 8`
+
+`2016 MacBook Pro running macOS Monterey, Intel Core™ i7 Dual-Core, 2.4 GH Dual Core`
 
 ### Requirements
-The project requires Python 2.7  
-Most packages could be installed with pip. Some other requirements are:
+The branch has been tested using Python 3.8.1. You may be able to get it running on lower versions.
+A requirements.txt file containing all required Python packages is in Demo/. From the Demo folder, run the following commands:
+
+
+```
+sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
+sudo apt-get install ffmpeg
+sudo apt-get install python3-pyaudio
+sudo apt-get install curl
+```
+
+
+```
+pip install -r requirements.txt
+```
+
+
 
 #### MetaMap:
 **MetaMap 2016v2** needs to be installed under the `Demo/public_mm` directory. Downloads are hosted at:  
@@ -64,6 +80,14 @@ To run MetaMap, run (this step needs to repeated after every reboot):
 To launch the graphical user interface (GUI), run:
 
 `Python GUI.py`
+
+For data collection:
+
+Running `python GUI.py` will default to no data collection.
+Please use --datacollect 1 or --datacollect 0 to specifiy if you want data collected with the data collection scripts
+Default data collection will collect all streams, but you may also specify streams with the --streams option
+Arguments for the --streams option include "all" for all streams, "audio" for microphone data, "video" for video data, "smartwatch", for smartwatch data, "conceptextract" for concept extraction data, "intervention" for intervention suggestions data, "protocol" for protocol results data, and "transcript" for the speech to text transcript.
+
 
 ![GUI](ETC/GUI.png)
 

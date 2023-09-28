@@ -26,7 +26,7 @@ class SubprocessBackend(MetaMap):
 
     def extract_concepts(self, sentences=None, ids=None,
                          composite_phrase=4, filename=None,
-                         file_format='sldi',mmi_output = True, allow_acronym_variants=False,
+                         file_format='sldi', mmi_output=True, allow_acronym_variants=False,
                          word_sense_disambiguation=False, allow_large_n=False,
                          strict_model=False, relaxed_model=False,
                          allow_overmatches=False, allow_concept_gaps=False,
@@ -175,6 +175,7 @@ class SubprocessBackend(MetaMap):
             concepts = Corpus.load(output.splitlines())
         else:
             strings = output.splitlines()
+            # print("strings from Subprocess: ", strings)
             filtered_strings = []
             concepts = {}
             for item in strings:
@@ -183,4 +184,5 @@ class SubprocessBackend(MetaMap):
             for item in filtered_strings:
                 temp = item.split(':')[0].split()
                 concepts[temp[-1]] = temp[0]
+        # print("concepts from subprocess: ", concepts)
         return (concepts, error)
