@@ -145,7 +145,7 @@ class FileStream(object):
 
             yield b''.join(data)
 
-def process_transcript_score(input_string):
+def process_whisper_response(input_string):
     # used to remove the background noise transcriptions from Whisper output
     # Remove strings enclosed within parentheses
     input_string = re.sub(r'\([^)]*\)', '', input_string)
@@ -160,9 +160,10 @@ def process_transcript_score(input_string):
     start = input_string.find('{')
     end = input_string.find('}')
     transcript = input_string[:start]
-    avg_p = float(input_string[start+1:end])
+    isFinal = True if input_string[start+1:start+2] == '1' else False
+    avg_p = float(input_string[start+3:end])
 
-    return transcript, avg_p
+    return transcript, isFinal, avg_p
 
 def Whisper(Window, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, wavefile_name, model="tiny.en"):
     # Create GUI Signal Object
@@ -184,13 +185,12 @@ def Whisper(Window, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, wavefile_name, m
             try:
                 with open(fifo_path, 'r') as fifo:
                     transcript_score = fifo.read().strip()  # Read the message from the named 
-                    transcript, avg_p = process_transcript_score(transcript_score)
-                    finalized_status = True
-                    QueueItem = SpeechNLPItem(transcript, finalized_status, avg_p, num_chars_printed, 'Speech')
+                    transcript, isFinal, avg_p = process_whisper_response(transcript_score)
+                    QueueItem = SpeechNLPItem(transcript, isFinal, avg_p, num_chars_printed, 'Speech')
                     EMSAgentSpeechToNLPQueue.put(QueueItem)
                     SpeechToNLPQueue.put(QueueItem)
                     SpeechSignal.signal.emit([QueueItem])
-                    num_chars_printed = 0 if finalized_status else len(transcript)
+                    num_chars_printed = 0 if isFinal else len(transcript)
 
             except Exception as e:
                 print("exception",e)                

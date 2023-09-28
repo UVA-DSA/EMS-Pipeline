@@ -415,6 +415,8 @@ int main(int argc, char **argv)
                 fprintf(stderr, "%s: failed to process audio\n", argv[0]);
                 return 6;
             }
+            ++n_iter;
+
 
             // print result;
             {
@@ -441,14 +443,16 @@ int main(int argc, char **argv)
                 for (int i = 0; i < n_segments; ++i)
                 {
                     // get segment text
-                    std::string text = whisper_full_get_segment_text(ctx, i);
+                    const std::string text = whisper_full_get_segment_text(ctx, i);
+                    // see if text is final
+                    const std::string is_final = (!use_vad && (n_iter % n_new_line) == 0) ? "1," : "0,";
                     // get confidence scores
                     float sum_scores = 0;
                     const int n_tokens = whisper_full_n_tokens(ctx, i);
                     for (int j = 0; j < n_tokens; j++) {
                         sum_scores += whisper_full_get_token_p(ctx, i, j);
                     }
-                    std::string text_score = text + " {" + std::to_string(sum_scores/n_tokens) + "}";
+                    std::string text_score = text + " {" + is_final + std::to_string(sum_scores/n_tokens) + "}";
                     const char *ctext_score = text_score.c_str();
 
                     if (params.no_timestamps)
@@ -502,8 +506,6 @@ int main(int argc, char **argv)
                 }
             }
 
-            ++n_iter;
-
             if (!use_vad && (n_iter % n_new_line) == 0)
             {
                 printf("\n");
@@ -516,7 +518,7 @@ int main(int argc, char **argv)
                 {
                     prompt_tokens.clear();
 
-                    const int n_segments = whisper_full_n_segments(ctx);
+                    const int n_segments = whispisFinaler_full_n_segments(ctx);
                     for (int i = 0; i < n_segments; ++i)
                     {
                         const int token_count = whisper_full_n_tokens(ctx, i);

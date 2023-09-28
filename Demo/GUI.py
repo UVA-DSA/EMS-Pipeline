@@ -478,7 +478,7 @@ class MainWindow(QWidget):
             whispercommand = [
                 "./stream",
                 "-m",                                              # use specific whisper model
-                f"models/ggml-{whisper_config.model_size}.bin",    # the whisper model to be used
+                f"models/ggml-{whisper_config.model_size}-finetuned.bin",    # the whisper model to be used
                 "--threads",                                       # use certain number of threads
                 str(whisper_config.num_threads),                   # number of threads to use
                 "--step",                          
