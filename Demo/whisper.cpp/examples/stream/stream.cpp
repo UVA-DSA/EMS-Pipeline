@@ -518,7 +518,7 @@ int main(int argc, char **argv)
                 {
                     prompt_tokens.clear();
 
-                    const int n_segments = whispisFinaler_full_n_segments(ctx);
+                    const int n_segments = whisper_full_n_segments(ctx);
                     for (int i = 0; i < n_segments; ++i)
                     {
                         const int token_count = whisper_full_n_tokens(ctx, i);

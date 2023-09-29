@@ -16,6 +16,7 @@ import sys
 import os
 import time, queue
 import subprocess
+import test_collection
 
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
@@ -24,15 +25,12 @@ from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QLineEdi
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5 import QtCore
 from PyQt5.QtMultimediaWidgets import QVideoWidget
-from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
+from PyQt5.QtMultimedia import QMediaPlayer
 from PyQt5.QtWidgets import  QWidget, QLabel, QApplication
-from PyQt5.QtCore import QThread, Qt, pyqtSignal, pyqtSlot
+from PyQt5.QtCore import Qt, pyqtSlot
 from PyQt5.QtGui import QImage, QPixmap, QGuiApplication
-from PyQt5.QtCore import QCoreApplication, Qt,QBasicTimer, QTimer,QPoint,QSize
+from PyQt5.QtCore import Qt
 import PyQt5.QtWidgets,PyQt5.QtCore
-
-import py_trees
-from py_trees.blackboard import Blackboard
 
 from behaviours_m import *
 from DSP.amplitude import Amplitude
@@ -430,6 +428,18 @@ class MainWindow(QWidget):
 
     # Called when closing the GUI
     def closeEvent(self, event):
+        # write data for evals
+        # writing to csv file 
+        with open(f'test_eval_data/{self.ComboBox.currentText()}.csv', 'w') as csvfile: 
+            # creating a csv writer object 
+            csvwriter = csv.writer(csvfile) 
+                
+            # writing the fields 
+            csvwriter.writerow(test_collection.fields) 
+                
+            # writing the data rows 
+            csvwriter.writerows(test_collection.rows)
+
         print('Closing GUI')
         # self.th2.exit()
         self.stopped = 1
@@ -438,6 +448,7 @@ class MainWindow(QWidget):
         EMSAgentSpeechToNLPQueue.put('Kill')
         FeedbackQueue.put('Kill')
         if self.WhisperSubprocess != None: self.WhisperSubprocess.kill()
+        self.SpeechThread.join()
         event.accept()
 
     @pyqtSlot()

@@ -16,6 +16,10 @@ from tqdm import tqdm
 warnings.filterwarnings("ignore")
 from classes import  GUISignal
 import time
+import sys
+
+sys.path.append('../Demo')
+import test_collection
 
 
 # ------------ For Feedback ------------
@@ -146,6 +150,8 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_st
 
                 # Get queue item from the Speech-to-Text Module
                 received = EMSAgentSpeechToNLPQueue.get()
+                transcript_received_EMSAgent = time.perf_counter()
+                print("==========EMSAgentSystem.py: deqeued transcript", transcript_received_EMSAgent)
 
                 if(received == 'Kill'):
                     # print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
@@ -157,22 +163,22 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_st
 
                 # If item received from queue is legitmate
                 else:
-                    print("Received chunk", received.transcript, str.isspace(received.transcript))
                     if(not str.isspace(received.transcript)):
 
                         narrative += received.transcript
 
                         try:
                                 
-                            start = time.time()
-                            
+                            input_protocol_model = time.perf_counter()
+                            print("==========EMSAgentSystem.py: input transcript into protocol model", input_protocol_model)
                             pred, prob = model(narrative)
+                            output_protocol_model = time.perf_counter()
+                            print("==========EMSAgentSystem.py: output result from protocol model", output_protocol_model)
                             pred = ','.join(pred)
                             prob = ','.join(str(p) for p in prob)
-                            print(pred, prob)
-                            end = time.time()
                             ProtocolSignal.signal.emit(["(Protocol: " +str(pred) + " : " +str(prob) +")"])
-                            print('executation time: {:.4f}'.format(end - start))
+                            protocol_signal_sent = time.perf_counter()
+                            print("==========EMSAgentSystem.py: signal protocol suggestion", protocol_signal_sent)
 
                             #Feedback
                             protocolFB =  FeedbackObj(None, str(pred) + " : " +str(round(prob,2)), None)
@@ -186,12 +192,20 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_st
                             f.write("\n")
                         except:
                             print("Protocol Prediction Failure!")
+            # save times
+            test_collection.curr_iter += [transcript_received_EMSAgent,input_protocol_model,output_protocol_model,protocol_signal_sent]
+            test_collection.rows.append(test_collection.curr_iter)
+            test_collection.curr_iter = []
+
             f.close()
             
     if protocolStreamBool == False:
         while True:
             # Get queue item from the Speech-to-Text Module
             received = EMSAgentSpeechToNLPQueue.get()
+            transcript_received_EMSAgent = time.perf_counter()
+            print("==========EMSAgentSystem.py: deqeued transcript", transcript_received_EMSAgent)
+
 
             if(received == 'Kill'):
                 # print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
@@ -203,19 +217,19 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_st
 
             # If item received from queue is legitmate
             else:
-                print("Received chunk", received.transcript, str.isspace(received.transcript))
                 if(not str.isspace(received.transcript)):
                     narrative += received.transcript
                     try:
-                        start = time.time()
+                        input_protocol_model = time.perf_counter()
+                        print("==========EMSAgentSystem.py: input transcript into protocol model", input_protocol_model)
                         pred, prob = model(narrative)
-                        end = time.time()
-                        # convert list to string
+                        output_protocol_model = time.perf_counter()
+                        print("==========EMSAgentSystem.py: output result from protocol model", output_protocol_model)
                         pred = ','.join(pred)
                         prob = ','.join(str(p) for p in prob)
                         ProtocolSignal.signal.emit(["(Protocol: " +str(pred) + " : " +str(prob) +")"])
-                        print('executation time: {:.4f}'.format(end - start))
-                        print(pred, prob)
+                        protocol_signal_sent = time.perf_counter()
+                        print("==========EMSAgentSystem.py: signal protocol suggestion", protocol_signal_sent)
 
                         #Feedback
                         protocolFB =  FeedbackObj("", str(pred) + " : " +str(prob), "")
@@ -223,3 +237,8 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_st
 
                     except:
                         print("Protocol Prediction Failure!")
+            
+            # save times
+            test_collection.curr_iter += [transcript_received_EMSAgent,input_protocol_model,output_protocol_model,protocol_signal_sent]
+            test_collection.rows.append(test_collection.curr_iter)
+            test_collection.curr_iter = []    

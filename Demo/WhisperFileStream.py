@@ -9,6 +9,7 @@ import wave
 import pyaudio
 import os
 import re
+import test_collection
 
 # Suppress pygame's welcome message
 with open(os.devnull, 'w') as f:
@@ -165,7 +166,7 @@ def process_whisper_response(input_string):
 
     return transcript, isFinal, avg_p
 
-def Whisper(Window, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, wavefile_name, model="tiny.en"):
+def Whisper(Window, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, wavefile_name):
     # Create GUI Signal Object
     SpeechSignal = GUISignal()
     SpeechSignal.signal.connect(Window.UpdateSpeechBox)
@@ -177,7 +178,9 @@ def Whisper(Window, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, wavefile_name, m
     ButtonsSignal.signal.connect(Window.ButtonsSetEnabled)
     num_chars_printed = 0
 
-    with FileStream(Window, RATE, CHUNK, wavefile_name) as stream:
+    with FileStream(Window, RATE, CHUNK, wavefile_name):
+        start = time.perf_counter()
+        print("=============WhisperFileStream.py: Audio file stream started", start)
         
         fifo_path = "/tmp/myfifo"  # Replace with your named pipe path
 
@@ -185,6 +188,8 @@ def Whisper(Window, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, wavefile_name, m
             try:
                 with open(fifo_path, 'r') as fifo:
                     transcript_score = fifo.read().strip()  # Read the message from the named 
+                    transcript_received = time.perf_counter()
+                    print("===============WhisperFileStream.py: transcript received", transcript_received)
                     transcript, isFinal, avg_p = process_whisper_response(transcript_score)
                     QueueItem = SpeechNLPItem(transcript, isFinal, avg_p, num_chars_printed, 'Speech')
                     EMSAgentSpeechToNLPQueue.put(QueueItem)
@@ -192,8 +197,11 @@ def Whisper(Window, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, wavefile_name, m
                     SpeechSignal.signal.emit([QueueItem])
                     num_chars_printed = 0 if isFinal else len(transcript)
 
+                    test_collection.curr_iter += [start, transcript_received, transcript, avg_p]
+                    start = transcript_received 
+
             except Exception as e:
-                print("exception",e)                
+                print("exception",e)                               
             
 
 
