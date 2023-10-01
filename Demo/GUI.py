@@ -64,15 +64,6 @@ from smartwatch_streaming import Thread_Watch
 chunkdata = []
 ConceptDict = dict()
 
-datacollection = False
-videostream = False
-audiostream = False
-smartwatchStream = False
-conceptExtractionStream = False
-protocolStream = False
-interventionStream = False
-transcriptStream = False
-
 curr_date = datetime.datetime.now()
 dt_string = curr_date.strftime("%d-%m-%Y-%H-%M-%S")
 
@@ -92,16 +83,6 @@ class MainWindow(QWidget):
         self.width = width
         self.height = height
         self.SpeechThread = None
-        self.CognitiveSystemThread = None
-        self.EMSAgentThread = None
-        self.FeedbackThread = None
-        self.WhisperSubprocess = None
-        self.stopped = 0
-        self.reset = 0
-        self.maximal = Amplitude()
-        self.finalSpeechSegmentsSpeech = []
-        self.finalSpeechSegmentsNLP = []
-        self.nonFinalText = ""
 
         # Set geometry of the window
         self.setWindowTitle('CognitiveEMS Demo')
@@ -444,9 +425,6 @@ class MainWindow(QWidget):
         # self.th2.exit()
         self.stopped = 1
         self.reset = 1
-        SpeechToNLPQueue.put('Kill')
-        EMSAgentSpeechToNLPQueue.put('Kill')
-        FeedbackQueue.put('Kill')
         if self.WhisperSubprocess != None: self.WhisperSubprocess.kill()
         self.SpeechThread.join()
         event.accept()
@@ -498,9 +476,8 @@ class MainWindow(QWidget):
                 str(whisper_config.length),
             ]
             # If a Hard-coded Audio test file, use virtual mic to capture the recording
-            if(self.ComboBox.currentText() not in {'Microphone', 'Other Audio File', 'Text File'}):
-                whispercommand.append("--capture")
-            # Start subprocess
+            if whisper_config.hardcoded: whispercommand.append("--capture")
+            # Start whisper subprocess
             self.WhisperSubprocess = subprocess.Popen(whispercommand, cwd='whisper.cpp/')
 
         # ==== Start the Speech/Text Thread
@@ -593,7 +570,7 @@ class MainWindow(QWidget):
         if(self.EMSAgentThread == None):
             print("EMSAgent Thread Started")
             self.EMSAgentThread = StoppableThread(
-                target=EMSAgentSystem.EMSAgentSystem, args=(self, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path, protocolStream))
+                target=EMSAgentSystem.EMSAgentSystem, args=(self, EMSAgentSpeechToNLPQueue, FeedbackQueue))
             self.EMSAgentThread.start()
 
          # ==== Start the Feedback Thread ==== #
@@ -779,127 +756,3 @@ class MainWindow(QWidget):
 
     # fire up a temporary QApplication
 
-def get_resolution_multiple_screens():
-
-    app = QGuiApplication(sys.argv)
-    #QtWidgets.QtGui
-    all_screens = app.screens()
-
-    for s in all_screens:
-
-        print()
-        print(s.name())
-        print(s.availableGeometry())
-        print(s.availableGeometry().width())
-        print(s.availableGeometry().height())
-        print(s.size())
-        print(s.size().width())
-        print(s.size().height())
-
-    print()
-    print('primary:', app.primaryScreen())
-    print('primary:', app.primaryScreen().availableGeometry().width())
-    print('primary:', app.primaryScreen().availableGeometry().height())
-
-    # now choose one
-
-# ================================================================== Main ==================================================================
-if __name__ == '__main__':
-
-    #run with arguments
-    #options:
-        # --datacollect --> "1" or "0" for collect data or not
-        # --streams --> "all" or list of specific streams (options are audio, video, smartwatch, conceptextract, protocol, intervention, transcript)
-    #if no arguments given, default options are "0" for data collection and "all" for streams
-
-    arg_count = len(sys.argv)
-    
-    print(f"Arguments count: {arg_count}")
-    for i, arg in enumerate(sys.argv):
-        print(f"Argument {i:>6}: {arg}")
-
-    if(arg_count >= 3): 
-        if sys.argv[1] == "--datacollect":
-            if sys.argv[2] == "1":
-                datacollection = True
-                videostream = True
-                audiostream = True
-                smartwatchStream = True
-                conceptExtractionStream = True
-                protocolStream = True
-                interventionStream = True
-                transcriptStream = True
-            else: #sys.argv[2] == 0
-                datacollection = False
-                videostream = False
-                audiostream = False
-                smartwatchStream = False
-                conceptExtractionStream = False
-                protocolStream = False
-                interventionStream = False
-                transcriptStream = False
-            if (arg_count > 3):
-                if sys.argv[3] == "--streams":
-                    videostream = False
-                    audiostream = False
-                    smartwatchStream = False
-                    conceptExtractionStream = False
-                    protocolStream = False
-                    interventionStream = False
-                    transcriptStream = False
-                    print("User is specifying streams")
-                    for i in range(4, len(sys.argv)):
-                        if sys.argv[i] == "audio":
-                            audiostream = True
-                        if sys.argv[i] == "video":
-                            videostream = True
-                        if sys.argv[i] == "smartwatch":
-                            smartwatchStream = True
-                        if sys.argv[i] == "conceptextract":
-                            conceptExtractionStream = True
-                        if sys.argv[i] == "protocol":
-                            protocolStream = True
-                        if sys.argv[i] == "intervention":
-                            interventionStream = True
-                        if sys.argv[i] == "transcript":
-                            transcriptStream = True
-                        if sys.argv[i] == "all":
-                            videostream = True
-                            audiostream = True
-                            smartwatchStream = True
-                            conceptExtractionStream = True
-                            protocolStream = True
-                            interventionStream = True
-                            transcriptStream = True
-
-        else: #if arguments specified but --datacollect is not specified then user should enter option for --datacollect
-            print("User Error: Please use --datacollect 1 or --datacollect 0 to specifiy if you want data collected with the data collection algorithm.")
-            print("Default data collection will collect all streams, but you may also specify streams with the --streams option")
-            exit()
-    else:
-        print("No data collection arguments specified -- defaulting to no data collection")
-
-    print("stream bools: ", audiostream, videostream, smartwatchStream, conceptExtractionStream, protocolStream, interventionStream, transcriptStream)
-
-    smartwatchStream = True
-    videostream = True
-    audiostream = True
-    # audiostream = True # harcode audio saving
-    # Set the Google Speech API service-account key environment variable
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "service-account.json"
-
-    # Create thread-safe queue for communication between Speech and Cognitive System threads
-    SpeechToNLPQueue = queue.Queue()
-    EMSAgentSpeechToNLPQueue  = queue.Queue()
-    FeedbackQueue = queue.Queue()
-
-    # GUI: Create the main window, show it, and run the app
-    print("Starting GUI")
-    app = QApplication(sys.argv)
-    screen_resolution = app.desktop().screenGeometry()
-    width, height = screen_resolution.width(), screen_resolution.height() 
-
-    Window = MainWindow(width, height)
-    Window.show()
-
-    sys.exit(app.exec_())

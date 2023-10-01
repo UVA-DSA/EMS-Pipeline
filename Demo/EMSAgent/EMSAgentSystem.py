@@ -1,4 +1,3 @@
-import json
 import torch.nn as nn
 import torch
 import os
@@ -19,7 +18,7 @@ import time
 import sys
 
 sys.path.append('../Demo')
-import test_collection
+import pipeline_config
 
 
 # ------------ For Feedback ------------
@@ -109,12 +108,11 @@ class EMSAgent(nn.Module):
         return pred_protocol, pred_prob
 
 
-def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_str, protocolStreamBool):
+def EMSAgentSystem(EMSAgentSpeechToNLPQueue, FeedbackQueue):
 
 
     ProtocolSignal = GUISignal()
-    ProtocolSignal.signal.connect(Window.UpdateProtocolBoxes)
-
+    # ProtocolSignal.signal.connect(Window.UpdateProtocolBoxes)
 
     # initialize
     seed_everything(3407)
@@ -141,104 +139,42 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_st
     # narrative = """ATF 64 yom unresponsive in bathroom, delay in accessing patient due to bathroom door being locked with no key.Patient family states he went to the bathroom at appx 2000 hrs, they realized that they hadn't seen him in while, so they checked on him, heard him snoring, and he wouldn't respond, so they called us. Upon our arrival it was appx 2115 hrs. Patient had paraphenalia laying beside him. Patient has history of heroin use.ATF 64 yom laying in bathroom. Patient unresponsive with snoring type respirations, spoon and needle laying next to him. Remainder of assessment held until after given. Patient AAOx4, ABC's intact, GCS 15. Patient admits to heroin use, states he has been off for the last couple years, but has relapsed for the last three day. Patient pupils 2mm RTL, skin normal, warm, and dry. Patient has symmetrical facial features with no slurring or droop noted. Patient has no obvious trauma, but has dirt and wood chips to forehead from laying on bathroom floor. Patient reports to have headache 9/10 to entire head. Patient has no signs of respiratory distress, no JVD. Lung sound clear. Patient has no chest pain, no abdominal pain, no shortness of breath. Patient has good PMS to all extremities, but does report that he has some pain to both knees from where he fell yesterday (he tripped over rug)"""
     narrative = ""
     
-    if protocolStreamBool == True:
-        if not os.path.exists(data_path_str + "protocoldata_XuerenModel/"):
-            os.makedirs(data_path_str + "protocoldata_XuerenModel/")
+    while True:
+        # Get queue item from the Speech-to-Text Module
+        received = EMSAgentSpeechToNLPQueue.get()
+        # print("==========EMSAgentSystem.py: deqeued transcript", transcript_received_EMSAgent)
+
+        if(received == 'Kill'):
+            # print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
+            break
+
+        # if(Window.reset == 1):
+        #     # print("Cognitive System Thread Received reset signal. Killing Cognitive System Thread.")
+        #     return
+
+        # If item received from queue is legitmate
+        else:
+            if(not str.isspace(received.transcript)):
+                narrative += received.transcript
+                try:
+                    start = time.perf_counter()
+                    pred, prob = model(narrative)
+                    end = time.perf_counter()
+                    pred = ','.join(pred)
+                    prob = ','.join(str(p) for p in prob)
+                    ProtocolSignal.signal.emit(["(Protocol: " +str(pred) + " : " +str(prob) +")"])
+                    # print("==========EMSAgentSystem.py: signal protocol suggestion", protocol_signal_sent)
+                    print('[Protocol suggestion:' +str(pred) + " : " +str(prob) + ']')
+
+                    #Feedback
+                    protocolFB =  FeedbackObj("", str(pred) + " : " +str(prob), "")
+                    FeedbackQueue.put(protocolFB)
+
+                    # save times
+                    pipeline_config.curr_segment += [end-start,pred,prob]
+                    pipeline_config.rows_trial.append(pipeline_config.curr_segment)
+                    pipeline_config.curr_segment = []    
+
+                except Exception as e:
+                    print(e, 'Protocol is not suggested')        
         
-        with open(data_path_str + "protocoldata_XuerenModel/emsagentlog.txt", 'w') as f:
-            while True:
-
-                # Get queue item from the Speech-to-Text Module
-                received = EMSAgentSpeechToNLPQueue.get()
-                transcript_received_EMSAgent = time.perf_counter()
-                print("==========EMSAgentSystem.py: deqeued transcript", transcript_received_EMSAgent)
-
-                if(received == 'Kill'):
-                    # print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
-                    break
-
-                if(Window.reset == 1):
-                    # print("Cognitive System Thread Received reset signal. Killing Cognitive System Thread.")
-                    return
-
-                # If item received from queue is legitmate
-                else:
-                    if(not str.isspace(received.transcript)):
-
-                        narrative += received.transcript
-
-                        try:
-                                
-                            input_protocol_model = time.perf_counter()
-                            print("==========EMSAgentSystem.py: input transcript into protocol model", input_protocol_model)
-                            pred, prob = model(narrative)
-                            output_protocol_model = time.perf_counter()
-                            print("==========EMSAgentSystem.py: output result from protocol model", output_protocol_model)
-                            pred = ','.join(pred)
-                            prob = ','.join(str(p) for p in prob)
-                            ProtocolSignal.signal.emit(["(Protocol: " +str(pred) + " : " +str(prob) +")"])
-                            protocol_signal_sent = time.perf_counter()
-                            print("==========EMSAgentSystem.py: signal protocol suggestion", protocol_signal_sent)
-
-                            #Feedback
-                            protocolFB =  FeedbackObj(None, str(pred) + " : " +str(round(prob,2)), None)
-                            FeedbackQueue.put(protocolFB)
-
-
-                            #write data to file for data collection
-                            f.write(narrative+" : ")
-                            f.write(str(pred))
-                            f.write(str(prob))
-                            f.write("\n")
-                        except:
-                            print("Protocol Prediction Failure!")
-            # save times
-            test_collection.curr_iter += [transcript_received_EMSAgent,input_protocol_model,output_protocol_model,protocol_signal_sent]
-            test_collection.rows.append(test_collection.curr_iter)
-            test_collection.curr_iter = []
-
-            f.close()
-            
-    if protocolStreamBool == False:
-        while True:
-            # Get queue item from the Speech-to-Text Module
-            received = EMSAgentSpeechToNLPQueue.get()
-            transcript_received_EMSAgent = time.perf_counter()
-            print("==========EMSAgentSystem.py: deqeued transcript", transcript_received_EMSAgent)
-
-
-            if(received == 'Kill'):
-                # print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
-                break
-
-            if(Window.reset == 1):
-                # print("Cognitive System Thread Received reset signal. Killing Cognitive System Thread.")
-                return
-
-            # If item received from queue is legitmate
-            else:
-                if(not str.isspace(received.transcript)):
-                    narrative += received.transcript
-                    try:
-                        input_protocol_model = time.perf_counter()
-                        print("==========EMSAgentSystem.py: input transcript into protocol model", input_protocol_model)
-                        pred, prob = model(narrative)
-                        output_protocol_model = time.perf_counter()
-                        print("==========EMSAgentSystem.py: output result from protocol model", output_protocol_model)
-                        pred = ','.join(pred)
-                        prob = ','.join(str(p) for p in prob)
-                        ProtocolSignal.signal.emit(["(Protocol: " +str(pred) + " : " +str(prob) +")"])
-                        protocol_signal_sent = time.perf_counter()
-                        print("==========EMSAgentSystem.py: signal protocol suggestion", protocol_signal_sent)
-
-                        #Feedback
-                        protocolFB =  FeedbackObj("", str(pred) + " : " +str(prob), "")
-                        FeedbackQueue.put(protocolFB)
-
-                    except:
-                        print("Protocol Prediction Failure!")
-            
-            # save times
-            test_collection.curr_iter += [transcript_received_EMSAgent,input_protocol_model,output_protocol_model,protocol_signal_sent]
-            test_collection.rows.append(test_collection.curr_iter)
-            test_collection.curr_iter = []    
