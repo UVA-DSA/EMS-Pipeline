@@ -10,34 +10,31 @@ transcriptStream = True
 
 # -- Audio Recording Option -----
 hardcoded = True
-recording_name = '000_190105.wav'
+recording_name = '000_190105'
 
 # -- Whisper configuration ---
-model_size = "tiny"
+model_size = "base-finetuned"
 PATH_TO_WHISPER_CPP_FOLDER = "/home/cogems_nist/Desktop/CogEMS_NIST/whisper.cpp"
 num_threads = 4
-step = 3000
-length = 3000
+step = 1000
+length = 30000
 
-# --- End to End eval configs --------
+# --- End to End evaluation testing configs --------
 recordings_to_test = [
-    '000_190105.wav',
-    # '001_190105.wav',
-    # '002_190105.wav',
-    # '003_190105.wav',
-    # '004_190105.wav',
-    # '005_190105.wav',
-    # '006_190105.wav',
-    # '007_190105.wav',
-    # '008_190105.wav',
-    # '009_190105.wav',
-    # '010_190105.wav',
-    # '011_190105.wav',
-    # 'CPR_transcript1.wav',
-    # 'CPR_transcript2.wav',
-    # 'CPR_transcript3.wav'
+    '000_190105',
+    # '001_190105',
+    # '002_190105',
+    # '003_190105',
+    # '004_190105',
+    # '005_190105',
+    # '006_190105',
+    # '007_190105',
+    # '008_190105',
+    # '009_190105',
+    # '010_190105',
+    # '011_190105'
 ]
-num_trials_per_recording = 2
+num_trials_per_recording = 1
 
 # --- global variables used during end to end eval ----
 curr_segment = []

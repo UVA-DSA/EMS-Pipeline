@@ -4,12 +4,12 @@ import os
 import time
 from six.moves import queue
 import numpy as np
-from classes import SpeechNLPItem, GUISignal
+from classes import TranscriptItem, GUISignal
 import wave
 import pyaudio
 import os
-import pipeline_config
 import re
+import traceback
 
 # Suppress pygame's welcome message
 with open(os.devnull, 'w') as f:
@@ -72,28 +72,37 @@ class FileStream(object):
                 if event.type == self.RECORDING_END: self.closed = True
         return None, pyaudio.paContinue
 
+'''
+This method processes the whisper response we receive from fifo pipe 
+The response is type string, and is in the format 'block{isFinal,avg_p}'
+We remove background noise strings from the block (such as *crash* and [DOOR OPENS]) 
+And separate out the parts of response into block, isFinal, and avg_p
 
-def process_whisper_response(input_string):
+block : speech converted into text
+isFinal : '1' = the block is a final block. '0' = the block is a interim block
+avg_p : 'float' of inclusive range [0,1]. the average confidence probability of all the tokens in the block
+'''
+def process_whisper_response(response):
     # used to remove the background noise transcriptions from Whisper output
     # Remove strings enclosed within parentheses
-    input_string = re.sub(r'\([^)]*\)', '', input_string)
+    response = re.sub(r'\([^)]*\)', '', response)
     # Remove strings enclosed within asterisks
-    input_string = re.sub(r'\*[^*]*\*', '', input_string)
+    response = re.sub(r'\*[^*]*\*', '', response)
     # Remove strings enclosed within brackets
-    input_string = re.sub(r'\[[^\]]*\]', '', input_string)
+    response = re.sub(r'\[[^\]]*\]', '', response)
     # Remove null terminator since it does not display properly in Speech Box
-    input_string = input_string.replace("\x00", " ")
+    response = response.replace("\x00", " ")
 
     # separate transcript and confidence score
-    # start = input_string.find('{')
-    # end = input_string.find('}')
-    # transcript = input_string[:start]
-    # isFinal = True if input_string[start+1:start+2] == '1' else False
-    # avg_p = float(input_string[start+3:end])
+    start = response.find('{')
+    end = response.find('}')
+    block = response[:start]
+    isFinal = True if response[start+1:start+2] == '1' else False
+    avg_p = float(response[start+3:end])
 
-    return input_string, 0, 1#, isFinal, avg_p
+    return block, isFinal, avg_p
 
-def Whisper(SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, wavefile_name):
+def Whisper(SpeechToNLPQueue, EMSAgentQueue, wavefile_name):
     # # Create GUI Signal Object
     # SpeechSignal = GUISignal()
     # SpeechSignal.signal.connect(Window.UpdateSpeechBox)
@@ -104,6 +113,7 @@ def Whisper(SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, wavefile_name):
     # ButtonsSignal = GUISignal()
     # ButtonsSignal.signal.connect(Window.ButtonsSetEnabled)
     # num_chars_printed = 0
+    finalized_blocks = ''
 
     with FileStream(RATE, CHUNK, wavefile_name) as fs:
         start = time.perf_counter()
@@ -112,25 +122,24 @@ def Whisper(SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, wavefile_name):
         fifo_path = "/tmp/myfifo"  # Replace with your named pipe path
 
         while not fs.closed:
-            print("==================================")
             try:
                 with open(fifo_path, 'r') as fifo:
-                    transcript_score = fifo.read().strip()  # Read the message from the named 
+                    response = fifo.read().strip()  # Read the message from the named 
                     end = time.perf_counter()
-                    # print("===============WhisperFileStream.py: transcript received", transcript_received)
-                    transcript, isFinal, avg_p = process_whisper_response(transcript_score)
-                    print('[Transcript received by Audiostream', transcript, ']')
-                    QueueItem = SpeechNLPItem(transcript, isFinal, avg_p, 0, 'Speech')
-                    EMSAgentSpeechToNLPQueue.put(QueueItem)
-                    SpeechToNLPQueue.put(QueueItem)
-
-                    pipeline_config.curr_segment += [end-start, transcript, avg_p]
+                    block, isFinal, avg_p = process_whisper_response(response) #isFinal = False means block is interim block
+                    transcript = finalized_blocks + block
+                    # if received block is finalized, then save to finalized blocks
+                    if isFinal: finalized_blocks += block
+                    transcriptItem = TranscriptItem(transcript, isFinal, avg_p, end-start)
+                    EMSAgentQueue.put(transcriptItem)
+                    SpeechToNLPQueue.put(transcriptItem)
                     start = end 
 
             except Exception as e:
                 print("Exception in Audiostream", e)
-
-    EMSAgentSpeechToNLPQueue.put('Kill')
+                print(traceback.format_exc())
+                
+    EMSAgentQueue.put('Kill')
     return                               
             
 

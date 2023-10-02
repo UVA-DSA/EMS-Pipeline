@@ -6,12 +6,13 @@ import pipeline_config #rename pipeline_config
 import WhisperFileStream
 from EMSAgent import EMSAgentSystem
 from threading import Thread
+from time import sleep
 
 def Pipeline(recording=pipeline_config.recording_name):
 # Set the Google Speech API service-account key environment variable
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "service-account.json"
 
-# ===== Create thread-safe queues for communication between modules ============
+# ===== Create thread-safe queues to pass on transcript and communication between modules ============
     SpeechToNLPQueue = queue.Queue()
     EMSAgentQueue  = queue.Queue()
     FeedbackQueue = queue.Queue()
@@ -20,7 +21,7 @@ def Pipeline(recording=pipeline_config.recording_name):
     whispercppcommand = [
     "./stream",
     "-m", # use specific whisper model
-    f"models/ggml-{pipeline_config.model_size}-finetuned.bin", 
+    f"models/ggml-{pipeline_config.model_size}.bin", 
     "--threads",
     str(pipeline_config.num_threads),
     "--step",                          
@@ -34,14 +35,17 @@ def Pipeline(recording=pipeline_config.recording_name):
     # Start subprocess
     WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='whisper.cpp/')
 
-# ===== Start Audiostream module =========================================
-    Audiostream = Thread(
-                    target=WhisperFileStream.Whisper, args=(SpeechToNLPQueue, EMSAgentQueue, './Audio_Scenarios/2019_Test/' + str(recording)))
-    Audiostream.start()
-
 # ===== Start EMSAgent module =================================================
     EMSAgent = Thread(target=EMSAgentSystem.EMSAgentSystem, args=(EMSAgentQueue, FeedbackQueue))
     EMSAgent.start()
+
+# ===== Sleep for 3 seconds to finish starting Whisper module and EMSAgent module =====
+    sleep(3)
+
+# ===== Start Audiostream module =========================================
+    Audiostream = Thread(
+                    target=WhisperFileStream.Whisper, args=(SpeechToNLPQueue, EMSAgentQueue, f'./Audio_Scenarios/2019_Test/{recording}.wav'))
+    Audiostream.start()
 
 # ===== Exiting Program ====================================================
     '''

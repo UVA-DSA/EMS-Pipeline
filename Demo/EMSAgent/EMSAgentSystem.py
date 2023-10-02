@@ -13,21 +13,12 @@ from transformers import BertTokenizer
 import pandas as pd
 from tqdm import tqdm
 warnings.filterwarnings("ignore")
-from classes import  GUISignal
+from classes import  GUISignal, FeedbackObj
 import time
 import sys
 
 sys.path.append('../Demo')
 import pipeline_config
-
-
-# ------------ For Feedback ------------
-class FeedbackObj:
-    def __init__(self, intervention, protocol, concept):
-        super(FeedbackObj, self).__init__()
-        self.intervention = intervention
-        self.protocol = protocol
-        self.concept = concept
 
 class EMSAgent(nn.Module):
     def __init__(self, config, date):
@@ -108,8 +99,7 @@ class EMSAgent(nn.Module):
         return pred_protocol, pred_prob
 
 
-def EMSAgentSystem(EMSAgentSpeechToNLPQueue, FeedbackQueue):
-
+def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
 
     ProtocolSignal = GUISignal()
     # ProtocolSignal.signal.connect(Window.UpdateProtocolBoxes)
@@ -135,46 +125,55 @@ def EMSAgentSystem(EMSAgentSpeechToNLPQueue, FeedbackQueue):
     from EMSAgent.default_sets import date
     model = EMSAgent(config, date)
 
-    # call the model
-    # narrative = """ATF 64 yom unresponsive in bathroom, delay in accessing patient due to bathroom door being locked with no key.Patient family states he went to the bathroom at appx 2000 hrs, they realized that they hadn't seen him in while, so they checked on him, heard him snoring, and he wouldn't respond, so they called us. Upon our arrival it was appx 2115 hrs. Patient had paraphenalia laying beside him. Patient has history of heroin use.ATF 64 yom laying in bathroom. Patient unresponsive with snoring type respirations, spoon and needle laying next to him. Remainder of assessment held until after given. Patient AAOx4, ABC's intact, GCS 15. Patient admits to heroin use, states he has been off for the last couple years, but has relapsed for the last three day. Patient pupils 2mm RTL, skin normal, warm, and dry. Patient has symmetrical facial features with no slurring or droop noted. Patient has no obvious trauma, but has dirt and wood chips to forehead from laying on bathroom floor. Patient reports to have headache 9/10 to entire head. Patient has no signs of respiratory distress, no JVD. Lung sound clear. Patient has no chest pain, no abdominal pain, no shortness of breath. Patient has good PMS to all extremities, but does report that he has some pain to both knees from where he fell yesterday (he tripped over rug)"""
-    narrative = ""
-    
+
+    # call the model    
     while True:
         # Get queue item from the Speech-to-Text Module
-        received = EMSAgentSpeechToNLPQueue.get()
-        # print("==========EMSAgentSystem.py: deqeued transcript", transcript_received_EMSAgent)
+        received = EMSAgentQueue.get()
 
+        # TODO: make thread exit while True loop based on threading module event
         if(received == 'Kill'):
             # print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
             break
-
-        # if(Window.reset == 1):
-        #     # print("Cognitive System Thread Received reset signal. Killing Cognitive System Thread.")
-        #     return
-
-        # If item received from queue is legitmate
         else:
+            print('=============================================================')
+            print(f'[Protocol model received transcript: {received.transcript}]')
+            # initialize variables
+            start = None
+            end = None
+            pred = None
+            prob = None
             if(not str.isspace(received.transcript)):
-                narrative += received.transcript
                 try:
                     start = time.perf_counter()
-                    pred, prob = model(narrative)
+                    pred, prob = model(received.transcript)
                     end = time.perf_counter()
                     pred = ','.join(pred)
                     prob = ','.join(str(p) for p in prob)
-                    ProtocolSignal.signal.emit(["(Protocol: " +str(pred) + " : " +str(prob) +")"])
-                    # print("==========EMSAgentSystem.py: signal protocol suggestion", protocol_signal_sent)
-                    print('[Protocol suggestion:' +str(pred) + " : " +str(prob) + ']')
+                    ProtocolSignal.signal.emit([f"(Protocol:{pred}:{prob})"])
+                    print(f'[Protocol suggestion:{pred}:{prob}]')
 
                     #Feedback
                     protocolFB =  FeedbackObj("", str(pred) + " : " +str(prob), "")
                     FeedbackQueue.put(protocolFB)
 
-                    # save times
-                    pipeline_config.curr_segment += [end-start,pred,prob]
-                    pipeline_config.rows_trial.append(pipeline_config.curr_segment)
-                    pipeline_config.curr_segment = []    
-
                 except Exception as e:
-                    print(e, 'Protocol is not suggested')        
+                    pred = 'Protocol is not suggested due to exception'
+                    print(e, f'[{pred}]')
+            else:
+                pred = 'Protocol is not suggested due to receiving blank space as transcript'
+                print(f'[{pred}]')
+
+ # ===== save end to end pipeline results for this segment =========================================================================
+            # 'wer' and 'cer' calcluated and replaced later in EndToEndEval.py
+            pipeline_config.curr_segment += [received.transcriptionDuration, received.transcript, received.confidence, 'wer', 'cer']
+            # if we never made a protocol prediction
+            if start != None and end != None:
+                pipeline_config.curr_segment += [end-start, pred, prob, 'correct?'] # see if protocol prediction is correct later in EndToEndEval.py
+            else:
+                pipeline_config.curr_segment += [-1, pred, -1, -1]
+            pipeline_config.rows_trial.append(pipeline_config.curr_segment)
+            pipeline_config.curr_segment = []
+
+                
         
