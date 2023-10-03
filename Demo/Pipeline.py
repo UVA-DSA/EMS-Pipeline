@@ -27,7 +27,9 @@ def Pipeline(recording=pipeline_config.recording_name):
     "--step",                          
     str(pipeline_config.step),
     "--length",
-    str(pipeline_config.length)
+    str(pipeline_config.length),
+    "--keep",
+    str(pipeline_config.keep_ms)
     ]
     # If a Hard-coded Audio test file, use virtual mic to capture the recording
     if(pipeline_config.hardcoded):

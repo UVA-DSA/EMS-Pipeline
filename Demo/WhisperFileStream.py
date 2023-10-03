@@ -1,76 +1,13 @@
-from __future__ import absolute_import, division, print_function
-import sys
-import os
-import time
-from six.moves import queue
-import numpy as np
-from classes import TranscriptItem, GUISignal
 import wave
 import pyaudio
-import os
+import time
 import re
+from classes import TranscriptItem
 import traceback
 
-# Suppress pygame's welcome message
-with open(os.devnull, 'w') as f:
-    # disable stdout
-    oldstdout = sys.stdout
-    sys.stdout = f
-    import pygame
-    # enable stdout
-    sys.stdout = oldstdout
-
-# Audio recording parameters
+# Wavefile recording parameters
 RATE = 16000
-CHUNK = int(RATE / 10)  # 100ms
-
-class FileStream(object):
-    # fileSessionCounter = 0
-    # position = 0
-    """Opens a file stream as a generator yielding the audio chunks."""
-
-    def __init__(self, rate, chunk, wavefile):
-        self._rate = rate
-        self._chunk = chunk
-        self.filename = wavefile
-
-        self.samplesCounter = 0
-        self.start_time = time.time()
-
-        # Create a thread-safe buffer of audio data
-        self._buff = queue.Queue()
-        self.closed = False
-
-        # initialize pygame and recording end event
-        pygame.init()
-        pygame.mixer.init(frequency=RATE)  
-        self.RECORDING_END = pygame.USEREVENT+1
-        pygame.mixer.music.set_endevent(self.RECORDING_END)
-
-    def __enter__(self):
-        self._audio_interface = pyaudio.PyAudio()
-
-        self._audio_stream = self._audio_interface.open(format = pyaudio.paInt16, channels = 1, rate = self._rate, input = True, frames_per_buffer = self._chunk, stream_callback = self._fill_buffer, output=True)
-
-        pygame.mixer.music.load(self.filename)
-        pygame.mixer.music.play()
-
-        return self
-
-    def __exit__(self, type, value, traceback):
-        self._audio_stream.stop_stream()
-        self._audio_stream.close()
-        # Signal the generator to terminate so that the client's
-        # streaming_recognize method will not block the process termination.
-        self._audio_interface.terminate()
-
-    def _fill_buffer(self, in_data, frame_count, time_info, status_flags):
-        """Continuously collect data from the audio stream, into the buffer."""
-        self._buff.put(in_data)
-        while not self.closed:
-            for event in pygame.event.get():
-                if event.type == self.RECORDING_END: self.closed = True
-        return None, pyaudio.paContinue
+CHUNK = RATE // 10  # 100ms
 
 '''
 This method processes the whisper response we receive from fifo pipe 
@@ -98,11 +35,58 @@ def process_whisper_response(response):
     end = response.find('}')
     block = response[:start]
     isFinal = True if response[start+1:start+2] == '1' else False
-    avg_p = float(response[start+3:end])
+    avg_p = float(p_string:=response[start+3:end])
+    # print(p_string)
 
     return block, isFinal, avg_p
 
 def Whisper(SpeechToNLPQueue, EMSAgentQueue, wavefile_name):
+    fifo_path = "/tmp/myfifo"
+    finalized_blocks = ''
+        
+    with open(fifo_path, 'r') as fifo:
+        with wave.open(wavefile_name, 'rb') as wf:
+            try:
+                # Instantiate PyAudio and initialize PortAudio system resources (1)
+                p = pyaudio.PyAudio()
+                info = p.get_default_host_api_info()
+                device_index = info.get('deviceCount') - 1 # get default device as output device
+                    
+                stream = p.open(format = pyaudio.paInt16, channels = 1, rate = RATE, output = True, frames_per_buffer = CHUNK, output_device_index=device_index)
+                
+                start = time.perf_counter()
+                old_response = ""
+                # Play samples from the wave file (3)
+                while len(data:=wf.readframes(CHUNK)):  # Requires Python 3.8+ for :=
+                    stream.write(data)
+                    response = fifo.read().strip()  # Read the message from the named pipe
+
+                    if(response != old_response):
+                        if(response != ""):
+                            end = time.perf_counter()
+                            block, isFinal, avg_p = process_whisper_response(response) #isFinal = False means block is interim block
+                            transcript = finalized_blocks + block
+                            # if received block is finalized, then save to finalized blocks
+                            if isFinal: finalized_blocks += block
+                            transcriptItem = TranscriptItem(transcript, isFinal, avg_p, end-start)
+                            EMSAgentQueue.put(transcriptItem)
+                            SpeechToNLPQueue.put(transcriptItem)  
+                            print("--- Latency:", end-start)
+                            start = end   
+                            old_response = response                
+                # Close stream (4)
+                stream.close()
+
+                EMSAgentQueue.put('Kill')
+
+                # Release PortAudio system resources (5)
+                p.terminate()
+
+            except Exception as e:
+                print("EXCEPTION: ", e)
+                traceback.print_exception(e)
+
+
     # # Create GUI Signal Object
     # SpeechSignal = GUISignal()
     # SpeechSignal.signal.connect(Window.UpdateSpeechBox)
@@ -113,34 +97,34 @@ def Whisper(SpeechToNLPQueue, EMSAgentQueue, wavefile_name):
     # ButtonsSignal = GUISignal()
     # ButtonsSignal.signal.connect(Window.ButtonsSetEnabled)
     # num_chars_printed = 0
-    finalized_blocks = ''
+    
 
-    with FileStream(RATE, CHUNK, wavefile_name) as fs:
-        start = time.perf_counter()
-        # print("=============WhisperFileStream.py: Audio file stream started", start)
+    # with FileStream(RATE, CHUNK, wavefile_name) as fs:
+    #     start = time.perf_counter()
+    #     # print("=============WhisperFileStream.py: Audio file stream started", start)
         
-        fifo_path = "/tmp/myfifo"  # Replace with your named pipe path
+    #     fifo_path = "/tmp/myfifo"  # Replace with your named pipe path
 
-        while not fs.closed:
-            try:
-                with open(fifo_path, 'r') as fifo:
-                    response = fifo.read().strip()  # Read the message from the named 
-                    end = time.perf_counter()
-                    block, isFinal, avg_p = process_whisper_response(response) #isFinal = False means block is interim block
-                    transcript = finalized_blocks + block
-                    # if received block is finalized, then save to finalized blocks
-                    if isFinal: finalized_blocks += block
-                    transcriptItem = TranscriptItem(transcript, isFinal, avg_p, end-start)
-                    EMSAgentQueue.put(transcriptItem)
-                    SpeechToNLPQueue.put(transcriptItem)
-                    start = end 
+    #     while not fs.closed:
+    #         try:
+    #             with open(fifo_path, 'r') as fifo:
+    #                 response = fifo.read().strip()  # Read the message from the named 
+    #                 end = time.perf_counter()
+    #                 block, isFinal, avg_p = process_whisper_response(response) #isFinal = False means block is interim block
+    #                 transcript = finalized_blocks + block
+    #                 # if received block is finalized, then save to finalized blocks
+    #                 if isFinal: finalized_blocks += block
+    #                 transcriptItem = TranscriptItem(transcript, isFinal, avg_p, end-start)
+    #                 EMSAgentQueue.put(transcriptItem)
+    #                 SpeechToNLPQueue.put(transcriptItem)
+    #                 start = end 
 
-            except Exception as e:
-                print("Exception in Audiostream", e)
-                print(traceback.format_exc())
-                
-    EMSAgentQueue.put('Kill')
-    return                               
+    #         except Exception as e:
+    #             print("Exception in Audiostream", e)
+    #             # print(traceback.format_exc())
+
+    # EMSAgentQueue.put('Kill')
+    # return                               
             
 
 

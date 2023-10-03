@@ -67,7 +67,6 @@ class EMSAgent(nn.Module):
                 mask = data["mask"].to(device, dtype=torch.long).unsqueeze(0)
                 outputs, text_feats, graph_feats = self.model(ids=ids, mask=mask, G=self.graph)
 
-
             # if it's multi-class classification
             # outputs = torch.softmax(outputs, dim=-1)
             # _, preds = torch.max(outputs, dim=1)
@@ -143,7 +142,7 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
             end = None
             pred = None
             prob = None
-            if(not str.isspace(received.transcript)):
+            if len(received.transcript):
                 try:
                     start = time.perf_counter()
                     pred, prob = model(received.transcript)

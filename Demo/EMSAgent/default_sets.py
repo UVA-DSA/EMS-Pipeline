@@ -15,7 +15,7 @@ task = 'multi_label'
 dataset = 'EMS' #EMS, MIMIC3
 multi_graph = False #if use multi graph (KAMG)
 groupby = 'age'  #['age', 'hierarchy', None]
-device = 'cpu' # torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device = 'cuda' # torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 SAVE_RESULT_ROOT = os.path.dirname(os.path.realpath(__file__))
 # SAVE_RESULT_ROOT = '/gpfs/gpfs0/scratch/zar8jw'
 

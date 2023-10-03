@@ -16,8 +16,9 @@ recording_name = '000_190105'
 model_size = "base-finetuned"
 PATH_TO_WHISPER_CPP_FOLDER = "/home/cogems_nist/Desktop/CogEMS_NIST/whisper.cpp"
 num_threads = 4
-step = 1000
+step = 1500
 length = 30000
+keep_ms = 500 #audio to keep from previous step in ms
 
 # --- End to End evaluation testing configs --------
 recordings_to_test = [

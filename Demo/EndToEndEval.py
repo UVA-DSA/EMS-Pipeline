@@ -3,6 +3,7 @@
 from Pipeline import Pipeline
 import pipeline_config
 import csv
+from jiwer import wer, cer
 
 
 # --- helper methods -----------------
@@ -19,31 +20,11 @@ def get_ground_truth_protocol(recording):
 
 def calc_wer(recording, transcript):
     ground_truth = get_ground_truth_transcript(recording)
-    ref_words = ground_truth.split()
-    hyp_words = transcript.split()
-	# Counting the number of substitutions, deletions, and insertions
-    substitutions = sum(1 for ref, hyp in zip(ref_words, hyp_words) if ref != hyp)
-    deletions = len(ref_words) - len(hyp_words)
-    insertions = len(hyp_words) - len(ref_words)
-	# Total number of words in the reference text
-    total_words = len(ref_words)
-	# Calculating the Word Error Rate (WER)
-    wer = (substitutions + deletions + insertions) / total_words
-    return wer
+    return wer(reference=ground_truth, hypothesis=transcript)
     
 def calc_cer(recording, transcript):
     ground_truth = get_ground_truth_transcript(recording)
-    ref_chars = list(ground_truth)
-    hyp_chars = list(transcript)
-	# Counting the number of substitutions, deletions, and insertions
-    substitutions = sum(1 for ref, hyp in zip(ref_chars, hyp_chars) if ref != hyp)
-    deletions = len(ref_chars) - len(hyp_chars)
-    insertions = len(hyp_chars) - len(ref_chars)
-	# Total number of chars in the reference text
-    total_chars = len(ref_chars)
-	# Calculating the Character Error Rate (CER)
-    cer = (substitutions + deletions + insertions) / total_chars
-    return cer
+    return cer(reference=ground_truth, hypothesis=transcript)
 
 def check_protocol_correct(recording, protocol):
     if protocol == -1: return -1
@@ -59,7 +40,7 @@ if __name__ == '__main__':
     to either 'cpu' (for CPU) or 'cuda' (for GPU)
     TODO: make device variable part of config file so you don't have to change it in two files
     '''
-    device = 'cpu' # or cuda
+    device = 'cuda' # or cuda
         
     for recording in pipeline_config.recordings_to_test:
         # run one trial of the pipeline 
@@ -80,7 +61,7 @@ if __name__ == '__main__':
                 row[8] = check_protocol_correct(recording, row[6])
                 
             # Write data to csv
-            with open (f'evaluation_results/{device}/{recording}-all-trials/{recording}-trial-{i}.csv', 'w') as csvFile:
+            with open (f'evaluation_results/{device}/{pipeline_config.model_size}/{recording}-all-trials/{recording}-trial-{i}.csv', 'w') as csvFile:
                 writer = csv.writer(csvFile)
                 writer.writerow(fields)
                 writer.writerows(pipeline_config.rows_trial)
