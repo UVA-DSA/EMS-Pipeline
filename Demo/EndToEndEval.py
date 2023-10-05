@@ -4,10 +4,24 @@ from Pipeline import Pipeline
 import pipeline_config
 import csv
 # from jiwer import wer, cer
+from transformers import WhisperProcessor
+from evaluate import load
+
+# -- static helper variables ---------------------------------------
+# initialize processor depending on whisper model size 
+if pipeline_config.whisper_model_size == 'base-finetuned':
+    Processor = WhisperProcessor.from_pretrained("saahith/whisper-base.en-combined-v10")
+elif pipeline_config.whisper_model_size == 'base.en':
+    Processor = WhisperProcessor.from_pretrained("openai/whisper-base.en")
+elif pipeline_config.whisper_model_size == 'tiny-finetuned':
+    Processor = WhisperProcessor.from_pretrained("saahith/whisper-tiny.en-combined-v10")
+elif pipeline_config.whisper_model_size == 'tiny.en':
+    Processor = WhisperProcessor.from_pretrained("openai/whisper-tiny.en")
+wer_metric = load("wer")
+cer_metric = load("cer")
 
 
 # --- helper methods -----------------
-
 def get_ground_truth_transcript(recording):
     with open(f'Audio_Scenarios/2019_Test_Ground_Truth/{recording}-transcript.txt') as f:
         ground_truth = f.read()
@@ -18,15 +32,12 @@ def get_ground_truth_protocol(recording):
         ground_truth = f.read()
     return ground_truth
 
-def calc_wer(recording, transcript):
-    ground_truth = get_ground_truth_transcript(recording)
-    # return wer(reference=ground_truth, hypothesis=transcript)
-    return 1
-    
-def calc_cer(recording, transcript):
-    ground_truth = get_ground_truth_transcript(recording)
-    # return cer(reference=ground_truth, hypothesis=transcript)
-    return 1
+def get_wer_and_cer(recording, transcript):
+    tokenized_reference_text = Processor.tokenizer._normalize(get_ground_truth_transcript(recording))
+    tokenized_prediction_text = Processor.tokenizer._normalize(transcript)
+    wer = wer_metric.compute(references=[tokenized_reference_text], predictions=[tokenized_prediction_text])
+    cer = cer_metric.compute(references=[tokenized_reference_text], predictions=[tokenized_prediction_text])
+    return wer, cer
 
 def check_protocol_correct(recording, protocol):
     if protocol == -1: return -1
@@ -43,7 +54,7 @@ if __name__ == '__main__':
     TODO: make device variable part of config file so you don't have to change it in two files
     '''
     device = 'cuda' # or cuda
-        
+    
     for recording in pipeline_config.recordings_to_test:
         # run one trial of the pipeline 
         for i in range(1,pipeline_config.num_trials_per_recording+1):
@@ -53,17 +64,18 @@ if __name__ == '__main__':
             # data rows of csv file for this run
             pipeline_config.curr_segment = []
             pipeline_config.rows_trial = []
+
+            # run pipeline
             Pipeline(recording=recording)
 
             # calculate wer and cer after pipeline run is finished
             # check if protocol prediction is correct
             for row in pipeline_config.rows_trial:
-                row[3] = calc_wer(recording, row[1])
-                row[4] = calc_cer(recording, row[1])
+                row[3], row[4] = get_wer_and_cer(recording, row[1])
                 row[8] = check_protocol_correct(recording, row[6])
                 
             # Write data to csv
-            with open (f'evaluation_results/{device}/{pipeline_config.model_size}/{recording}-all-trials/{recording}-trial-{i}.csv', 'w') as csvFile:
+            with open (f'evaluation_results/{device}/{pipeline_config.whisper_model_size}/{recording}-all-trials/{recording}-trial-{i}.csv', 'w') as csvFile:
                 writer = csv.writer(csvFile)
                 writer.writerow(fields)
                 writer.writerows(pipeline_config.rows_trial)

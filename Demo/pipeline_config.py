@@ -13,7 +13,7 @@ hardcoded = True
 recording_name = '000_190105'
 
 # -- Whisper configuration ---
-model_size = "base-finetuned"
+whisper_model_size = "base-finetuned"
 PATH_TO_WHISPER_CPP_FOLDER = "/home/cogems_nist/Desktop/CogEMS_NIST/whisper.cpp"
 num_threads = 4
 step = 1500

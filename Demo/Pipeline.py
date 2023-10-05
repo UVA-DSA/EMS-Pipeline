@@ -21,7 +21,7 @@ def Pipeline(recording=pipeline_config.recording_name):
     whispercppcommand = [
     "./stream",
     "-m", # use specific whisper model
-    f"models/ggml-{pipeline_config.model_size}.bin", 
+    f"models/ggml-{pipeline_config.whisper_model_size}.bin", 
     "--threads",
     str(pipeline_config.num_threads),
     "--step",                          
