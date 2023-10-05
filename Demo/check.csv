@@ -1545,3 +1545,19 @@ Xueren: medical - altered mental status0.26622877
 -,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
 "(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
 -,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+-,"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.67</b>)<br>(Normal saline, <b>0.33</b>)<br>"
+"(Bp, True, 122/67, <b>1.0</b>)<br>(Spo2, True, 94, <b>1.0</b>)<br>","(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>(Normal saline, <b>0.89</b>)<br>"
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>(Normal saline, <b>0.89</b>)<br>"
+(Protocol: medical - overdose/poisoning - opioid (protocol 7 - 1) : 0.51576483)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>1.0</b>)<br>(Normal saline, <b>0.63</b>)<br>"
+"(Pulse, True, 118, <b>1.0</b>)<br>(Resp, True, breathing, <b>0.75</b>)<br>(Bp, True, 205/119, <b>1.0</b>)<br>(Spo2, True, 94, <b>1.0</b>)<br>(Gender, True, male, <b>0.81</b>)<br>(Age, True, 55, <b>0.65</b>)<br>(Tachycardia, True, 118, <b>1.0</b>)<br>(Loss of consciousness, True, unconscious, <b>0.74</b>)<br>(Hypertension, True, 205, <b>1.0</b>)<br>",(Protocol: medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11) : 0.8737876)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.29</b>)<br>(Normal saline, <b>0.17</b>)<br>"
+"(Pain, False, headache, <b>0.77</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 51, <b>0.57</b>)<br>(Headache, False, headache, <b>0.77</b>)<br>(Lightheadedness, True, dizziness, <b>0.69</b>)<br>(Shortness of breath, True, of shortness breath, <b>0.86</b>)<br>(Dizziness, True, dizziness, <b>0.69</b>)<br>(Hypertension, False, hypertension, <b>0.58</b>)<br>",(Protocol: medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11) : 0.9784158)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.19</b>)<br>(Normal saline, <b>0.11</b>)<br>"
+"(Pain, False, headache, <b>0.77</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 51, <b>0.57</b>)<br>(Headache, False, headache, <b>0.77</b>)<br>(Lightheadedness, True, dizziness, <b>0.69</b>)<br>(Shortness of breath, True, of shortness breath, <b>0.86</b>)<br>(Dizziness, True, dizziness, <b>0.69</b>)<br>(Hypertension, False, hypertension, <b>0.58</b>)<br>(Wheezing, True, lungs sound, <b>0.62</b>)<br>",(Protocol: medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11) : 0.9811109)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.19</b>)<br>(Normal saline, <b>0.11</b>)<br>"
+"(Pain, False, headache, <b>0.77</b>)<br>(Gender, True, female, <b>0.75</b>)<br>(Age, True, 51, <b>0.57</b>)<br>(Headache, False, headache, <b>0.77</b>)<br>(Lightheadedness, True, dizziness, <b>0.69</b>)<br>(Shortness of breath, True, of shortness breath, <b>0.86</b>)<br>(Dizziness, True, dizziness, <b>0.69</b>)<br>(Hypertension, False, hypertension, <b>0.58</b>)<br>(Wheezing, True, lungs sound, <b>0.62</b>)<br>",(Protocol: medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11) : 0.9811109)
+"(Transport, <b>1.0</b>)<br>(Cardiac monitor, <b>0.19</b>)<br>(Normal saline, <b>0.11</b>)<br>"

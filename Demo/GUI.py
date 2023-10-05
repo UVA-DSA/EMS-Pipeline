@@ -104,28 +104,8 @@ class MainWindow(QWidget):
         self.setWindowTitle('CognitiveEMS Demo')
         self.setWindowIcon(QIcon('./Images/Logos/UVA.png'))
         self.setGeometry(int(width * .065), int(height * .070),
-                         int(width * .9), int(height * .85))
-        #self.setMinimumSize(1280, 750);
-        #self.setFixedSize(width, height)
-        # self.showMaximized()
-                # setting  the geometry of window
-        # this will hide the title bar
-        # self.setWindowFlag(Qt.FramelessWindowHint)
-        # self.setAttribute(Qt.WA_TranslucentBackground)
-        
-        # setting  the geometry of window
-        # self.setGeometry(100, 100, 400, 300)
-        # self.showFullScreen()
-        # self.setFixedHeight(int(height*1))
-        # self.setFixedWidth(int(width*1))
-        # Grid Layout to hold all the widgets
+                         int(width * .9), int(height * .9))
         self.Grid_Layout = QGridLayout(self)
-        self.Grid_Layout.setColumnStretch(0, 1)
-        self.Grid_Layout.setColumnStretch(1, 1)
-        self.Grid_Layout.setColumnStretch(2, 1)
-        # Font for boxes
-        #Box_Font = QFont()
-        # Box_Font.setPointSize(BOX_FONT_SIZE)
 
         # Add disabled buttons to the of GUI to ensure spacing
         R3 = QPushButton(".\n.\n")
@@ -144,7 +124,6 @@ class MainWindow(QWidget):
         R8.setFont(QFont("Monospace"))
         R8.setEnabled(False)
         R8.setStyleSheet("background-color:transparent;border:0;")
-        #self.Grid_Layout.addWidget(R8, 8, 3, 1, 1)
 
         C0 = QPushButton("................................")
         C0.setFont(QFont("Monospace"))
@@ -210,14 +189,11 @@ class MainWindow(QWidget):
 
         # Create label and textbox for Vision Information
         self.VisionInformationLabel = QLabel()
-        self.VisionInformationLabel.setFixedHeight(50)
         # self.VisionInformationLabel.move(50,50)
-        self.VisionInformationLabel.setGeometry(20, 20, 100, 50)
         self.VisionInformationLabel.setText("<b>Vision Information</b>")
         self.Box.addWidget(self.VisionInformationLabel) #7,1,1,1
 
         self.VisionInformation = QTextEdit() #QLineEdit()
-        self.VisionInformation.setFixedHeight(150)
         self.VisionInformation.setReadOnly(True)
         # self.VisionInformation.setFont(Box_Font)
         self.Box.addWidget(self.VisionInformation) #8,1,1,1
@@ -236,7 +212,6 @@ class MainWindow(QWidget):
         self.Box2.addWidget(self.SmartwatchLabel) #5,1,1,1
 
         self.Smartwatch = QTextEdit() #QLineEdit()
-        self.Smartwatch.setFixedHeight(470)
         self.Smartwatch.setReadOnly(True)
         self.Smartwatch.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         # self.VisionInformation.setFont(Box_Font)
@@ -356,7 +331,6 @@ class MainWindow(QWidget):
         self.Grid_Layout.addWidget(self.ConceptExtractionSubLabel, 2, 1, 1, 1)
 
         self.ConceptExtraction = QTextEdit()
-        self.ConceptExtraction.setFixedHeight(820)
         self.ConceptExtraction.setReadOnly(True)
         # self.ConceptExtraction.setFont(Box_Font)
         self.Grid_Layout.addWidget(self.ConceptExtraction, 3, 1, 2, 1)
@@ -372,9 +346,7 @@ class MainWindow(QWidget):
         self.Grid_Layout.addWidget(self.ProtcolSubLabel, 2, 2, 1, 2)
 
         self.ProtocolBox = QTextEdit()
-        # self.ProtocolBox.setFixedHeight(700)
         self.ProtocolBox.setReadOnly(True)
-        # self.ProtocolBox.setFont(Box_Font)
         self.Grid_Layout.addWidget(self.ProtocolBox, 3, 2, 1, 2)
 
         # Create label and textbox for interventions
@@ -409,7 +381,7 @@ class MainWindow(QWidget):
         # self.Grid_Layout.setRowStretch(7, 0)
 
         # Populate the Message Box with welcome message
-        System_Info_Text_File = open("./ETC/System_Info.txt", "r")
+        System_Info_Text_File = open("../ETC/System_Info.txt", "r")
         System_Info_Text = ""
         for line in System_Info_Text_File.readlines():
             System_Info_Text += line
