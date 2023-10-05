@@ -1,0 +1,6 @@
+Interface: 15 protocols + COReBERT + group age + la
+
+
+{'method': 'grid', 'metric': {'name': 'auc_micro', 'goal': 'maximize'}, 'parameters': {'learning_rate': {'value': 1e-05}, 'batch_size': {'value': 16}, 'epochs': {'value': 15}, 'weight_decay': {'value': 1e-05}, 'dropout': {'value': 0.4}, 'max_len': {'value': 512}, 'loss_func': {'value': 'CE'}, 'backbone': {'value': 'bvanaken/CORe-clinical-outcome-biobert-v1'}, 'attn': {'value': 'la'}, 'graph': {'value': 'hetero'}, 'cluster': {'value': 'group'}, 'fusion': {'value': None}, 'cls': {'value': 'fc'}, 'temp': {'value': 0.07}, 'lamb': {'value': 0.4}, 'pretrain_path': {'value': './models/2022-12-08-11_11_54/iter:0_lr:1e-05_bs:16_epoch:15_lossfn:BCE_backbone:bvanaken/CORe-clinical-outcome-biobert-v1_graph:hetero_fusion:None_cls:fc_attn:la'}}}
+
+

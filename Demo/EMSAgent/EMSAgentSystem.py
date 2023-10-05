@@ -26,7 +26,7 @@ class EMSAgent(nn.Module):
         self.config = config
         self.tokenizer = BertTokenizer.from_pretrained(self.config.backbone, do_lower_Case=True)
         self.clean_model_date = date
-        self.save_model_root = os.path.join('../../EMSAgent/Interface/models', '{}'.format(self.clean_model_date))
+        self.save_model_root = os.path.join('EMSAgent/models', '{}'.format(self.clean_model_date))
         if self.config.graph == 'hetero':
             signs_df = pd.read_excel('./EMSAgent/config_file/All Protocols Mapping.xlsx')
             impre_df = pd.read_excel('./EMSAgent/config_file/Impression Protocol.xlsx')
@@ -41,7 +41,7 @@ class EMSAgent(nn.Module):
 
         model_path = os.path.join(self.save_model_root, 'model.pt')
         checkpoint = torch.load(model_path, map_location='cpu')
-        self.model.load_state_dict(checkpoint)
+        self.model.load_state_dict(checkpoint, strict=False)
         self.model.to(device)
 
     def initData(self, text):

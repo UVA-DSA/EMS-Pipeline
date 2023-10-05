@@ -3,7 +3,7 @@
 from Pipeline import Pipeline
 import pipeline_config
 import csv
-from jiwer import wer, cer
+# from jiwer import wer, cer
 
 
 # --- helper methods -----------------
@@ -20,11 +20,13 @@ def get_ground_truth_protocol(recording):
 
 def calc_wer(recording, transcript):
     ground_truth = get_ground_truth_transcript(recording)
-    return wer(reference=ground_truth, hypothesis=transcript)
+    # return wer(reference=ground_truth, hypothesis=transcript)
+    return 1
     
 def calc_cer(recording, transcript):
     ground_truth = get_ground_truth_transcript(recording)
-    return cer(reference=ground_truth, hypothesis=transcript)
+    # return cer(reference=ground_truth, hypothesis=transcript)
+    return 1
 
 def check_protocol_correct(recording, protocol):
     if protocol == -1: return -1

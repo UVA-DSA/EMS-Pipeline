@@ -1,0 +1,89 @@
+  377  git clone https://github.com/UVA-DSA/EMS-Pipeline.git
+  381  cd EMS-Pipeline/
+
+conda create --name EMS-Pipeline python=3.8
+  395  conda activate EMS-Pipeline
+  396  conda list
+  397  python --version
+  398  python3 --version
+  399  conda install python
+  400  python --version
+  401  clear
+  402  conda list
+  403  cd Demo/
+  404  python EndToEndEval.py 
+  405  conda install pyaudio
+  406  conda uninstall python
+  407  conda install python=3.8
+  408  conda list
+  409  conda install pyaudio
+  410  python EndToEndEval.py 
+  411  conda install --help
+  412  conda install pyqt 
+  413  clear
+  414  python EndToEndEval.py 
+  415  conda install torch
+  416  pip install torchvision 
+  417  conda lis
+  418  conda list
+  419  conda uninstall pyqt5
+  420  conda uninstall pyqt 
+  421  python EndToEndEval.py 
+  422  conda install yaml
+  423  python EndToEndEval.py 
+  424  conda uninstall yaml
+  425  
+  426  pip install pyyaml
+  427* 
+  428  pip install transformers
+  429  python EndToEndEval.py 
+  430  conda uninstall torch
+  431  pip uninstall torchvision 
+  432  conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
+  433  clear
+  434  python EndToEndEval.py 
+  435  pip install chardet
+  436  python EndToEndEval.py 
+  437  pip install torch-geometric
+  438  python EndToEndEval.py 
+  439  conda install pandas
+  440  python EndToEndEval.py 
+  441  pip install pyqt5
+  442  python EndToEndEval.py 
+  443  conda install -c conda-forge gxx_linux-64
+  444  python EndToEndEval.py 
+  445  conda uninstall gxx_linux-64
+  446  sudo apt-get install software-properties-common
+  447  python EndToEndEval.py 
+  448  conda uninstall pandas
+  449  pip install pandas
+  450  python EndToEndEval.py 
+  451  pip install pandas
+  452  python EndToEndEval.py 
+  453  pip install openpyxl
+  454  python EndToEndEval.py 
+  455  clear
+  456  python EndToEndEval.py 
+  457  clear
+  458  python EndToEndEval.py 
+  459  clear
+  460  python EndToEndEval.py 
+  461  clear
+  462  python EndToEndEval.py 
+  463  clear
+  464  cd whisper.cpp/models/
+  465  ./download-ggml-model.sh tiny.en
+  466  ./download-ggml-model.sh base.en
+  467  cd ../..
+  468  python EndToEndEval.py 
+  469  clera
+  470  clear
+  471  ./metamap.sh
+  472  cd ..
+  473  ./metamap.sh
+  474  clear
+  475  python EndToEndEval.py 
+  476  cd Demo/
+  477  python EndToEndEval.py 
+  478  history
+  479  history > bash_his.txt
