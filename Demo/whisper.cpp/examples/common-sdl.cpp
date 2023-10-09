@@ -61,18 +61,22 @@ bool audio_async::init(int capture_id, int sample_rate) {
     };
     capture_spec_requested.userdata = this;
 
-    if(capture_id != -1 && virtual_capture_id >= 0) // this means we want to use virtual mic input (For transcribing recordings)
+    fprintf(stderr, "Capture ID Argument:%d\n",capture_id);
+
+    if(capture_id == 1 && virtual_capture_id >= 0) // this means we want to use virtual mic input (For transcribing recordings)
         capture_id = virtual_capture_id;
 
     // else we want to use actual microphone
 
-    if (capture_id >= 0) {
+    if (capture_id == 1) {
         fprintf(stderr, "%s: attempt to open virtual capture device %d : '%s' ...\n", __func__, capture_id, SDL_GetAudioDeviceName(capture_id, SDL_TRUE));
         m_dev_id_in = SDL_OpenAudioDevice(SDL_GetAudioDeviceName(capture_id, 1), 1, &capture_spec_requested, &capture_spec_obtained, SDL_AUDIO_ALLOW_FORMAT_CHANGE);
     } else {
         fprintf(stderr, "%s: attempt to open default capture device ...\n", __func__);
         m_dev_id_in = SDL_OpenAudioDevice(nullptr, SDL_TRUE, &capture_spec_requested, &capture_spec_obtained, 0);
     }
+
+        // m_dev_id_in = SDL_OpenAudioDevice(nullptr, SDL_TRUE, &capture_spec_requested, &capture_spec_obtained, 0);
 
     if (!m_dev_id_in) {
         fprintf(stderr, "%s: couldn't open an audio device for capture: %s!\n", __func__, SDL_GetError());

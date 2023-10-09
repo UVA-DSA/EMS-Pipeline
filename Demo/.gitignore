@@ -1,6 +1,7 @@
 # Ignore Mac system files
 .DS_store
 
+
 .gradle/*
 
 # Ignore node_modules folder
@@ -72,3 +73,13 @@ obj/
 check.csv
 chunk.csv
 transcript.txt
+
+
+#Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+
+whisper.cpp/models/*

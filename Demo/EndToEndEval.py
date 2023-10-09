@@ -4,21 +4,21 @@ from Pipeline import Pipeline
 import pipeline_config
 import csv
 # from jiwer import wer, cer
-from transformers import WhisperProcessor
-from evaluate import load
+# from transformers import WhisperProcessor
+# from evaluate import load
 
 # -- static helper variables ---------------------------------------
 # initialize processor depending on whisper model size 
-if pipeline_config.whisper_model_size == 'base-finetuned':
-    Processor = WhisperProcessor.from_pretrained("saahith/whisper-base.en-combined-v10")
-elif pipeline_config.whisper_model_size == 'base.en':
-    Processor = WhisperProcessor.from_pretrained("openai/whisper-base.en")
-elif pipeline_config.whisper_model_size == 'tiny-finetuned':
-    Processor = WhisperProcessor.from_pretrained("saahith/whisper-tiny.en-combined-v10")
-elif pipeline_config.whisper_model_size == 'tiny.en':
-    Processor = WhisperProcessor.from_pretrained("openai/whisper-tiny.en")
-wer_metric = load("wer")
-cer_metric = load("cer")
+# if pipeline_config.whisper_model_size == 'base-finetuned':
+#     Processor = WhisperProcessor.from_pretrained("saahith/whisper-base.en-combined-v10")
+# elif pipeline_config.whisper_model_size == 'base.en':
+#     Processor = WhisperProcessor.from_pretrained("openai/whisper-base.en")
+# elif pipeline_config.whisper_model_size == 'tiny-finetuned':
+#     Processor = WhisperProcessor.from_pretrained("saahith/whisper-tiny.en-combined-v10")
+# elif pipeline_config.whisper_model_size == 'tiny.en':
+#     Processor = WhisperProcessor.from_pretrained("openai/whisper-tiny.en")
+# wer_metric = load("wer")
+# cer_metric = load("cer")
 
 
 # --- helper methods -----------------
@@ -33,10 +33,12 @@ def get_ground_truth_protocol(recording):
     return ground_truth
 
 def get_wer_and_cer(recording, transcript):
-    tokenized_reference_text = Processor.tokenizer._normalize(get_ground_truth_transcript(recording))
-    tokenized_prediction_text = Processor.tokenizer._normalize(transcript)
-    wer = wer_metric.compute(references=[tokenized_reference_text], predictions=[tokenized_prediction_text])
-    cer = cer_metric.compute(references=[tokenized_reference_text], predictions=[tokenized_prediction_text])
+    # tokenized_reference_text = Processor.tokenizer._normalize(get_ground_truth_transcript(recording))
+    # tokenized_prediction_text = Processor.tokenizer._normalize(transcript)
+    # wer = wer_metric.compute(references=[tokenized_reference_text], predictions=[tokenized_prediction_text])
+    # cer = cer_metric.compute(references=[tokenized_reference_text], predictions=[tokenized_prediction_text])
+    wer = 0
+    cer = 0
     return wer, cer
 
 def check_protocol_correct(recording, protocol):

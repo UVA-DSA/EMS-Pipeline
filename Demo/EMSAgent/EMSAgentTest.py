@@ -6,6 +6,12 @@ import numpy as np
 import warnings
 import yaml
 import re
+
+import sys
+
+print(sys.path)
+
+
 from EMSAgent.utils import AttrDict, onehot2p
 from EMSAgent.Heterogeneous_graph import HeteroGraph
 from EMSAgent.model import EMSMultiModel
@@ -16,12 +22,11 @@ warnings.filterwarnings("ignore")
 from classes import   FeedbackObj
 # from classes import  GUISignal, FeedbackObj
 import time
-import sys
 
-sys.path.append('../Demo')
+# sys.path.append('../Demo')
 import pipeline_config
 
-class EMSAgent(nn.Module):
+class EMSAgentModel(nn.Module):
     def __init__(self, config, date):
         super(EMSAgent, self).__init__()
         self.config = config
@@ -107,7 +112,7 @@ class EMSAgent(nn.Module):
         return pred_protocol, pred_prob
 
 
-def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
+def EMSAgentSystem():
 
     # ProtocolSignal = GUISignal()
 
@@ -132,62 +137,12 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
         config = yaml.load(f, Loader=loader)
     config = AttrDict(config['parameters'])
     from EMSAgent.default_sets import date
-    model = EMSAgent(config, date)
+    model = EMSAgentModel(config, date)
 
-    print('================= Warmup Protocol Model =================')
-    print(f'[Protocol warm up done!: {model("Warup Text")}]')
+    text = "55 year old female found"
+    start = time.perf_counter()
+    pred, prob = model(text)
+    end = time.perf_counter()
 
-    # call the model    
-    while True:
-        # Get queue item from the Speech-to-Text Module
-        received = EMSAgentQueue.get()
 
-        # TODO: make thread exit while True loop based on threading module event
-        if(received == 'Kill'):
-            # print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
-            break
-        else:
-            print('=============================================================')
-            print(f'[Protocol model received transcript: {received.transcript}]')
-            # initialize variables
-            start = None
-            end = None
-            pred = None
-            prob = None
-            # received.transcript = "55 year old male found unconscious driver side passenger seat of his car his wife reported that he snorted a line of heroin before just prior to losing to consciousness patient originally presented unresponsive and pale with shallow ineffective respirations at a rate of about 5 with heart rate was 118 his blood pressure was 205 over 119 his blood glucose levels 126 his O2 saturations was were 94% patient required bag mask ventilation with with attached oxygen however after 0.25 mg of naloxone intravenously patient is now awake and breathing normally with Improvement in Vital Signs and respiratory status and no longer needs supplemental oxygen"
-            received.transcript = "55 year old male found unconscious driver "
-
-            if len(received.transcript):
-                try:
-                    start = time.perf_counter()
-                    pred, prob = model(received.transcript)
-                    end = time.perf_counter()
-                    pred = ','.join(pred)
-                    prob = ','.join(str(p) for p in prob)
-                    # ProtocolSignal.signal.emit([f"(Protocol:{pred}:{prob})"])
-                    print(f'[Latency: {(end-start)}Protocol suggestion:{pred}:{prob}]')
-
-                    #Feedback
-                    protocolFB =  FeedbackObj("", str(pred) + " : " +str(prob), "")
-                    FeedbackQueue.put(protocolFB)
-
-                except Exception as e:
-                    pred = 'Protocol is not suggested due to exception'
-                    print(e, f'[{pred}]')
-            else:
-                pred = 'Protocol is not suggested due to receiving blank space as transcript'
-                print(f'[{pred}]')
-
- # ===== save end to end pipeline results for this segment =========================================================================
-            # 'wer' and 'cer' calcluated and replaced later in EndToEndEval.py
-            pipeline_config.curr_segment += [received.transcriptionDuration, received.transcript, received.confidence, 'wer', 'cer']
-            # if we never made a protocol prediction
-            if start != None and end != None:
-                pipeline_config.curr_segment += [end-start, pred, prob, 'correct?'] # see if protocol prediction is correct later in EndToEndEval.py
-            else:
-                pipeline_config.curr_segment += [-1, pred, -1, -1]
-            pipeline_config.rows_trial.append(pipeline_config.curr_segment)
-            pipeline_config.curr_segment = []
-
-                
-        
+EMSAgentSystem()

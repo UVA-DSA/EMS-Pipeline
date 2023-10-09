@@ -29,7 +29,9 @@ def Pipeline(recording=pipeline_config.recording_name):
     "--length",
     str(pipeline_config.length),
     "--keep",
-    str(pipeline_config.keep_ms)
+    str(pipeline_config.keep_ms),
+    "-ac",
+    str(pipeline_config.audio_ctx)
     ]
     # If a Hard-coded Audio test file, use virtual mic to capture the recording
     if(pipeline_config.hardcoded):
@@ -42,7 +44,10 @@ def Pipeline(recording=pipeline_config.recording_name):
     EMSAgent.start()
 
 # ===== Sleep for 3 seconds to finish starting Whisper module and EMSAgent module =====
-    sleep(3)
+    print("======================= Warmup Phase ======================")
+    sleep(60)
+    print("======================= Warmup Done ======================")
+
 
 # ===== Start Audiostream module =========================================
     Audiostream = Thread(

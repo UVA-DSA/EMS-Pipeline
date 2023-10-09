@@ -19,7 +19,7 @@ parameters:
     value: 0.4
 
   max_len:
-    value: 512
+    value: 128
 
   loss_func:
     value: BCE

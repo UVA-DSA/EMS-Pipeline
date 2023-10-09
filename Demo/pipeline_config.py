@@ -9,16 +9,18 @@ interventionStream = True
 transcriptStream = True
 
 # -- Audio Recording Option -----
-hardcoded = True
+hardcoded = False
 recording_name = '000_190105'
 
 # -- Whisper configuration ---
 whisper_model_size = "base-finetuned"
+whisper_model_size = "tiny.en"
 PATH_TO_WHISPER_CPP_FOLDER = "/home/cogems_nist/Desktop/CogEMS_NIST/whisper.cpp"
-num_threads = 4
-step = 1500
-length = 30000
+num_threads = 3
+step = 4000
+length = 8000
 keep_ms = 500 #audio to keep from previous step in ms
+audio_ctx = 512 #audio to keep from previous step in ms
 
 # --- End to End evaluation testing configs --------
 recordings_to_test = [

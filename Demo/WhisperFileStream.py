@@ -35,7 +35,8 @@ def process_whisper_response(response):
     end = response.find('}')
     block = response[:start]
     isFinal = True if response[start+1:start+2] == '1' else False
-    avg_p = float(p_string:=response[start+3:end])
+    p_string=response[start+3:end]
+    avg_p = float(p_string)
     # print(p_string)
 
     return block, isFinal, avg_p
@@ -57,10 +58,11 @@ def Whisper(SpeechToNLPQueue, EMSAgentQueue, wavefile_name):
                 start = time.perf_counter()
                 old_response = ""
                 # Play samples from the wave file (3)
-                while len(data:=wf.readframes(CHUNK)):  # Requires Python 3.8+ for :=
+                data = wf.readframes(CHUNK)
+                while len(data):  # Requires Python 3.8+ for :=
                     stream.write(data)
                     response = fifo.read().strip()  # Read the message from the named pipe
-
+                    data = wf.readframes(CHUNK)
                     if(response != old_response):
                         if(response != ""):
                             end = time.perf_counter()
