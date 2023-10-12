@@ -9,7 +9,7 @@ from EMSAgent.utils import sortby, removePunctuation
 import numpy as np
 from tqdm import tqdm
 from transformers import AutoTokenizer, AutoModel
-from EMSAgent.default_sets import device, groupby, dataset, SAVE_RESULT_ROOT
+from EMSAgent.default_sets import device, dataset, SAVE_RESULT_ROOT
 if dataset =='EMS':
     from EMSAgent.default_sets import p_node, group_p_dict, ungroup_p_node, group_hier, ungroup_hier, p2hier, group_hier_dict
 elif dataset == 'MIMIC3':
@@ -81,15 +81,8 @@ class HeteroGraph(nn.Module):
         super(HeteroGraph, self).__init__()
         if dataset == 'EMS':
             if mode == 'group':
-                if groupby == 'hierarchy':
-                    self.p_node = group_hier #[hier, p_node]
-                    for k, v in p2hier.items():
-                        if v in group_hier_dict.keys():
-                            p2hier[k] = group_hier_dict[v]
-                    self.group_p_dict = p2hier  # [p2hier, group_p_dict]
-                elif groupby == 'age':
-                    self.p_node = p_node
-                    self.group_p_dict = group_p_dict  # [p2hier, group_p_dict]
+                self.p_node = p_node
+                self.group_p_dict = group_p_dict  # [p2hier, group_p_dict]
             elif mode == 'ungroup':
                 self.p_node = ungroup_p_node
                 self.group_p_dict = None

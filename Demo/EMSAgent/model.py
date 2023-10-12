@@ -6,7 +6,7 @@ import numpy as np
 from transformers import AutoModel, AutoConfig, AutoModelForSequenceClassification
 from EMSAgent.default_sets import device, multi_graph, dataset
 if dataset == 'EMS':
-    from EMSAgent.default_sets import p_node, ungroup_p_node, group_hier, ungroup_hier, groupby, EMS_DIR
+    from EMSAgent.default_sets import p_node, ungroup_p_node, EMS_DIR
 elif dataset == 'MIMIC3':
     from EMSAgent.default_sets import ICD9_DIAG, ICD9_DIAG_GROUP, MIMIC_3_DIR
 
@@ -112,12 +112,7 @@ class EMSMultiModel(nn.Module):
         self.cluster = cluster
         if dataset == 'EMS':
             if self.cluster == 'group':
-                if groupby == 'hierarchy':
-                    self.num_class = len(group_hier)
-                elif groupby == 'age':
-                    self.num_class = len(p_node) #[group_hier, p_node]
-                else:
-                    self.num_class = None
+                self.num_class = len(p_node)
             elif self.cluster == 'ungroup':
                 self.num_class = len(ungroup_p_node)
             else:
@@ -223,36 +218,6 @@ class EMSMultiModel(nn.Module):
                 else:
                     input_dim = self.hidden_size
             self.fc = nn.Linear(input_dim, self.num_class)
-
-
-    def _fusion(self, text_feat, graph_feat):
-        # text_feat: batch_size * class_num * hidden_size(768) or batch_size(16) * hidden_size(768)
-        # graph_feat: class_num * 768
-        # element-wise dot product -> sum
-        out = None
-        if self.fusion == 'element-wise product':
-            b = text_feat.shape[0]
-            graph_feat = graph_feat.unsqueeze(0).repeat(b, 1, 1)
-            out = torch.mul(text_feat, graph_feat)  # (batch_size, class_num, hidden_size)
-        # element-wise add -> sum
-        elif self.fusion == 'element-wise add':
-            b = text_feat.shape[0]
-            graph_feat = graph_feat.unsqueeze(0).repeat(b, 1, 1)
-            out = torch.add(text_feat, graph_feat)  # (batch_size, class_num, hidden_size)
-        elif self.fusion == 'linear approximation':
-            b = text_feat.shape[0]
-            graph_feat = graph_feat.unsqueeze(0).repeat(b, 1, 1)  # (batch_size, class_num, hidden_size)
-            gram = torch.bmm(graph_feat, graph_feat.permute(0, 2, 1))  # (batch_size, num_class, num_class)
-            weights = torch.bmm(text_feat, graph_feat.permute(0, 2, 1))  # (batch_size, num_class, num_class)
-            weights = torch.bmm(weights, torch.inverse(gram))  # (batch_size, num_class, num_class)
-            out = torch.bmm(weights, graph_feat)  # (batch_size, num_class, hidden_size)
-        elif self.fusion == 'concatenate':
-            b = text_feat.shape[0]
-            graph_feat = graph_feat.unsqueeze(0).repeat(b, 1, 1)
-            out = torch.cat((text_feat, graph_feat), dim=-1)
-        else:
-            raise Exception('mode can only be [element-wise product, element-wise add]')
-        return out
 
     def attn_network(self, last_hidden_state, label_feat):
         attn_output = None

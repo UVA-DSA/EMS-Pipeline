@@ -3,7 +3,7 @@ import numpy as np
 from transformers import BertTokenizer, BertModel
 from EMSAgent.default_sets import dataset, SAVE_RESULT_ROOT
 if dataset == 'EMS':
-    from EMSAgent.default_sets import device, p_node, reverse_group_p_dict, ungroup_p_node, group_hier, ungroup_hier, p2hier
+    from EMSAgent.default_sets import p_node, group_p_dict, reverse_group_p_dict, ungroup_p_node, group_hier, ungroup_hier, p2hier
 elif dataset == 'MIMIC3':
     from EMSAgent.default_sets import ICD9_DIAG
 import re
@@ -12,9 +12,84 @@ from collections import OrderedDict
 
 class AttrDict(dict):
     def __getattr__(self, attr):
-        return self[attr]['value']
+        return self[attr]
     def __setattr__(self, attr, value):
         self[attr] = value
+
+
+
+def convert_label(labels, ages, logits=None):
+    '''
+    labels: [[ohe], [ohe], [ohe]]
+    logits: [[logit], [logit], [logit]]
+    ages: [tensor, tensor, tensor]
+    convert clustered labels to exact labels
+    p_node contains protocol names (the sequence order the same with labels).
+    '''
+
+    encodings = []
+    encoding_logits = []
+
+    base_node = p_node
+    refer_node = ungroup_p_node #[ungroup_p_node, ungroup_hier]
+    convert_dict = reverse_group_p_dict #[reverse_group_p_dict, reverse_group_hier_dict]
+    map_dict = group_p_dict
+
+    # ages = [age.numpy() for age in ages]
+    for i, label in enumerate(labels):
+        label_name = [base_node[j] for j in range(len(label)) if label[j] == 1]
+        label_name_indices = [j for j in range(len(label)) if label[j] == 1]
+        # convert the name 2 according to another sequence
+        encoding = [0] * len(refer_node)
+        encoding_logit = [0] * len(refer_node)
+        for k, n in enumerate(label_name):
+            if n in refer_node:
+                idx = refer_node.index(n)
+            # use age to determine
+            else:
+                age = int(ages[i])
+                ### if it's pediatric ###
+                if age < 18:
+                    p_name = convert_dict[n][1]
+                    if p_name in refer_node:
+                        idx = refer_node.index(p_name)
+                    else:
+                        idx = refer_node.index(convert_dict[n][0])
+                ### if it's adult ###
+                else:
+                    p_name = convert_dict[n][0]
+                    if p_name in refer_node:
+                        idx = refer_node.index(p_name)
+                    else:
+                        idx = refer_node.index(convert_dict[n][1])
+            if type(logits) == np.ndarray:
+                encoding_logit[idx] = logits[i][label_name_indices[k]]
+            encoding[idx] = 1
+        encodings.append(np.array(encoding))
+        
+        ##### convert logits #####
+        if type(logits) == list:
+            for l in range(len(encoding_logit)):
+                if encoding_logit[l] == 0:
+                    if refer_node[l] in base_node:
+                        q = base_node.index(refer_node[l])
+                        encoding_logit[l] = logits[i][q]
+                    else:
+                        group_p_name = map_dict[refer_node[l]]
+                        logit = logits[i][base_node.index(group_p_name)]
+                        age = int(ages[i])
+                        if age < 18:
+                            if convert_dict[group_p_name][1] in refer_node:
+                                encoding_logit[refer_node.index(convert_dict[group_p_name][1])] = logit
+                            else:
+                                encoding_logit[refer_node.index(convert_dict[group_p_name][0])] = logit
+                        else:
+                            if convert_dict[group_p_name][0] in refer_node:
+                                encoding_logit[refer_node.index(convert_dict[group_p_name][0])] = logit
+                            else:
+                                encoding_logit[refer_node.index(convert_dict[group_p_name][1])] = logit
+        encoding_logits.append(np.array(encoding_logit))
+    return encodings, encoding_logits
 
 def cnt_instance_per_label(df):
     label_cnt = {}

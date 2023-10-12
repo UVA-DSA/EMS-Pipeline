@@ -3,9 +3,11 @@
 from Pipeline import Pipeline
 import pipeline_config
 import csv
-# from jiwer import wer, cer
 from transformers import WhisperProcessor
 from evaluate import load
+import numpy as np
+from sklearn.metrics import classification_report, confusion_matrix
+from EMSAgent.default_sets import ungroup_p_node
 
 # -- static helper variables ---------------------------------------
 # initialize processor depending on whisper model size 
@@ -32,6 +34,11 @@ def get_ground_truth_protocol(recording):
         ground_truth = f.read()
     return ground_truth
 
+def get_ground_truth_one_hot_vector(recording):
+    ground_truth = get_ground_truth_protocol(recording)
+    one_hot_vector = [1 if label.lower() == ground_truth.lower() else 0 for label in ungroup_p_node]
+    return np.array(one_hot_vector)
+
 def get_wer_and_cer(recording, transcript):
     tokenized_reference_text = Processor.tokenizer._normalize(get_ground_truth_transcript(recording))
     tokenized_prediction_text = Processor.tokenizer._normalize(transcript)
@@ -46,20 +53,18 @@ def check_protocol_correct(recording, protocol):
 
 # --- main ---------------------------
 if __name__ == '__main__':
-    '''
-    this variable simply decides under which folder the evaluation runs are saved 
-    change this variable, then to specifcy which device the protocol model runs on
-    go to EMSAgent/default_sets.py and change the device variable on line 18 manually 
-    to either 'cpu' (for CPU) or 'cuda' (for GPU)
-    TODO: make device variable part of config file so you don't have to change it in two files
-    '''
-    device = 'cuda' # or cuda
+
+    one_hot_pred_all_recordings = []
+    one_hot_gt_all_recordings = []
     
     for recording in pipeline_config.recordings_to_test:
         # run one trial of the pipeline 
-        for i in range(1,pipeline_config.num_trials_per_recording+1):
+        for trial_num in range(1,pipeline_config.num_trials_per_recording+1):
             # field names
-            fields = ['time audio->transcript (s)', 'transcript', 'whisper confidence', 'WER', 'CER', 'time protocol input->output (s)', 'protocol prediction', 'protocol confidence', 'protocol correct? (1 = True, 0 = False, -1=None given)'] 
+            fields = ['time audio->transcript (s)', 'transcript', 'whisper confidence', 'WER', 'CER', #4
+                      'time protocol input->output (s)', 'protocol prediction', 'protocol confidence', #7
+                      'protocol correct? (1 = True, 0 = False, -1=None given)', #8
+                      'one hot prediction', 'one hot GT', 'tn', 'fp', 'fn', 'tp'] 
 
             # data rows of csv file for this run
             pipeline_config.curr_segment = []
@@ -67,26 +72,52 @@ if __name__ == '__main__':
 
             # run pipeline
             Pipeline(recording=recording)
-
-            # calculate wer and cer after pipeline run is finished
-            # check if protocol prediction is correct
-            for row in pipeline_config.rows_trial:
+            
+            # get data
+            rows_trial = pipeline_config.rows_trial
+            # get ground truth one hot vector
+            gt = get_ground_truth_one_hot_vector(recording)
+            # evaluate metrics
+            for i in range(len(rows_trial)):
+                row = rows_trial[i]
+                # WER, CER
                 row[3], row[4] = get_wer_and_cer(recording, row[1])
+                # protocol correct? (1 = True, 0 = False, -1=None given) 
                 row[8] = check_protocol_correct(recording, row[6])
-                
+                # if protocol given, evaluate protocol model
+                if row[8] != -1:
+                    pred = np.array(row[9])
+                    print('gt', gt)
+                    print('pred', pred)
+                    # one hot prediction
+                    row[9] = str(pred)
+                    # one hot GT
+                    row[10] = str(gt)
+                    # tn, fp, fn, tp
+                    row[11], row[12], row[13], row[14] = confusion_matrix(gt, pred).ravel()
+            
+            # save last one hot vectors
+            one_hot_pred_all_recordings.append(pred)
+            one_hot_gt_all_recordings.append(gt)
+            
             # Write data to csv
-            with open (f'evaluation_results/{device}/{pipeline_config.whisper_model_size}/{recording}-all-trials/{recording}-trial-{i}.csv', 'w') as csvFile:
+            with open (f'Evaluation_Results/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{pipeline_config.whisper_model_size}/{recording}-trial-{trial_num}.csv', 'w') as csvFile:
                 writer = csv.writer(csvFile)
                 writer.writerow(fields)
-                writer.writerows(pipeline_config.rows_trial)
+                writer.writerows(rows_trial)
         # TODO
     #     # find average of all trials for the recording
-    #     with open (f'evaluation_results/{device}/{recording}-average-{i}.csv', 'w') as csvFile:
+    #     with open (f'Evaluation_Results/{device}/{recording}-average-{i}.csv', 'w') as csvFile:
     #         fields = ['time audio->transcript (s)', 'whisper confidence', 'WER', 'CER', 'time protocol input->output (s)', 'protocol prediction', 'protocol confidence', 'protocol accuracy'] 
     #         pass
     # # TODO
-    # # find average of ALL RECORDINGS
-    # with open (f'evaluation_results/{device}/all-recordings-average-{i}.csv', 'w') as csvFile:
+    # evalation for ALL RECORDINGS
+    report = classification_report(one_hot_gt_all_recordings, one_hot_pred_all_recordings, target_names=ungroup_p_node, output_dict=True)
+    with open(f'Evaluation_Results/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{pipeline_config.whisper_model_size}/protocol-model-evaluation-report.txt', 'w') as f:
+        f.write(str(report))
+
+
+    # with open (f'Evaluation_Results/{device}/all-recordings-average-{i}.csv', 'w') as csvFile:
     #     fields = ['time audio->transcript (s)', 'whisper confidence', 'WER', 'CER', 'time protocol input->output (s)', 'protocol prediction', 'protocol confidence', 'protocol accuracy'] 
     #     pass
 

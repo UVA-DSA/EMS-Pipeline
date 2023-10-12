@@ -1,12 +1,12 @@
 import torch.nn as nn
 import torch
 import os
-from EMSAgent.default_sets import seed_everything, device, p_node
+from EMSAgent.default_sets import seed_everything, device, ungroup_p_node
 import numpy as np
 import warnings
 import yaml
 import re
-from EMSAgent.utils import AttrDict, onehot2p
+from EMSAgent.utils import AttrDict, onehot2p, convert_label
 from EMSAgent.Heterogeneous_graph import HeteroGraph
 from EMSAgent.model import EMSMultiModel
 from transformers import BertTokenizer
@@ -74,6 +74,7 @@ class EMSAgent(nn.Module):
             # if it's multi-label classification
             outputs = torch.sigmoid(outputs).squeeze()
             preds = np.where(outputs.cpu().numpy() > 0.5, 1, 0)
+
             if not preds.any():
                 idx = torch.argmax(outputs).cpu().numpy()
                 preds[idx] = 1
@@ -84,7 +85,7 @@ class EMSAgent(nn.Module):
     def forward(self, text):
         input = self.initData(text)
         preds, logits = self.eval_fn(input)
-
+        one_hot = preds
         ### multi-class classification
         # logits = logits.cpu().numpy()[0]
         # pred_protocol = p_node[preds]
@@ -92,10 +93,15 @@ class EMSAgent(nn.Module):
 
         ### multi-label classification
         logits = logits.cpu().numpy()
-        pred_protocol = np.array(p_node)[np.where(preds == 1)]
+        if self.config.cluster == 'group':
+            preds, logits = convert_label([preds], ages=[55], logits=[logits])
+            preds, logits = preds[0], logits[0]
+            one_hot = preds
+
+        pred_protocol = np.array(ungroup_p_node)[np.where(preds == 1)]
         pred_prob = logits[np.where(preds == 1)]
 
-        return pred_protocol, pred_prob
+        return pred_protocol, pred_prob, one_hot
 
 
 def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
@@ -105,24 +111,29 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
 
     # initialize
     seed_everything(3407)
-    loader = yaml.SafeLoader
-    loader.add_implicit_resolver(
-        u'tag:yaml.org,2002:float',
-        re.compile(u'''^(?:
-        [-+]?(?:[0-9][0-9_]*)\\.[0-9_]*(?:[eE][-+]?[0-9]+)?
-        |[-+]?(?:[0-9][0-9_]*)(?:[eE][-+]?[0-9]+)
-        |\\.[0-9_]+(?:[eE][-+][0-9]+)?
-        |[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+\\.[0-9_]*
-        |[-+]?\\.(?:inf|Inf|INF)
-        |\\.(?:nan|NaN|NAN))$''', re.X),
-        list(u'-+0123456789.'))
-    
-    root = os.path.dirname(os.path.realpath(__file__))
-    with open(os.path.join(root, 'config.yaml'), 'r') as f:
-        config = yaml.load(f, Loader=loader)
-    config = AttrDict(config['parameters'])
-    from EMSAgent.default_sets import date
-    model = EMSAgent(config, date)
+    from EMSAgent.default_sets import model_name
+
+    config = {
+        'max_len': 512,
+        'fusion': None,
+        'cls': 'fc'
+    }
+    if model_name == 'EMSAssist':
+        config['backbone'] = 'google/mobilebert-uncased'
+        config['cluster'] = 'ungroup'
+        config['attn'] = None
+        config['graph'] = None
+    elif model_name == 'DKEC-TinyClinicalBERT':
+        config['backbone'] = 'nlpie/tiny-clinicalbert'
+        config['cluster'] = 'group'
+        config['attn'] = 'la'
+        config['graph'] = 'hetero'
+    else:
+        raise Exception('wrong model name')
+    config = AttrDict(config)
+
+
+    model = EMSAgent(config, model_name)
 
 
     # call the model    
@@ -143,22 +154,22 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
             pred = None
             prob = None
             if len(received.transcript):
-                try:
-                    start = time.perf_counter()
-                    pred, prob = model(received.transcript)
-                    end = time.perf_counter()
-                    pred = ','.join(pred)
-                    prob = ','.join(str(p) for p in prob)
-                    ProtocolSignal.signal.emit([f"(Protocol:{pred}:{prob})"])
-                    print(f'[Protocol suggestion:{pred}:{prob}]')
+                # try:
+                start = time.perf_counter()
+                pred, prob, one_hot = model(received.transcript)
+                end = time.perf_counter()
+                pred = ','.join(pred)
+                prob = ','.join(str(p) for p in prob)
+                ProtocolSignal.signal.emit([f"(Protocol:{pred}:{prob})"])
+                print(f'[Protocol suggestion:{pred}:{prob}]')
 
-                    #Feedback
-                    protocolFB =  FeedbackObj("", str(pred) + " : " +str(prob), "")
-                    FeedbackQueue.put(protocolFB)
+                #Feedback
+                protocolFB =  FeedbackObj("", str(pred) + " : " +str(prob), "")
+                FeedbackQueue.put(protocolFB)
 
-                except Exception as e:
-                    pred = 'Protocol is not suggested due to exception'
-                    print(e, f'[{pred}]')
+                # except Exception as e:
+                #     pred = 'Protocol is not suggested due to exception'
+                #     print(e, f'[{pred}]')
             else:
                 pred = 'Protocol is not suggested due to receiving blank space as transcript'
                 print(f'[{pred}]')
@@ -166,11 +177,12 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
  # ===== save end to end pipeline results for this segment =========================================================================
             # 'wer' and 'cer' calcluated and replaced later in EndToEndEval.py
             pipeline_config.curr_segment += [received.transcriptionDuration, received.transcript, received.confidence, 'wer', 'cer']
-            # if we never made a protocol prediction
+            # if we made a protocol prediction
             if start != None and end != None:
-                pipeline_config.curr_segment += [end-start, pred, prob, 'correct?'] # see if protocol prediction is correct later in EndToEndEval.py
+                pipeline_config.curr_segment += [end-start, pred, prob, 'correct?', one_hot, 'one hot GT', 'tn', 'fp', 'fn', 'tp'] # see if protocol prediction is correct later in EndToEndEval.py
             else:
-                pipeline_config.curr_segment += [-1, pred, -1, -1]
+                # if no suggesion, save one hot vector of all 0's
+                pipeline_config.curr_segment += [-1, pred, -1, -1, -1, -1, -1, -1, -1, -1]
             pipeline_config.rows_trial.append(pipeline_config.curr_segment)
             pipeline_config.curr_segment = []
 
