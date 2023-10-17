@@ -7,10 +7,6 @@ import warnings
 import yaml
 import re
 
-import sys
-
-print(sys.path)
-
 
 from EMSAgent.utils import AttrDict, onehot2p
 from EMSAgent.Heterogeneous_graph import HeteroGraph

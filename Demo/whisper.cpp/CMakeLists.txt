@@ -65,7 +65,6 @@ else()
     option(WHISPER_BLAS_VENDOR           "whisper: BLAS library vendor" Generic)
     option(WHISPER_OPENBLAS              "whisper: prefer OpenBLAS"     OFF)
     option(WHISPER_CUBLAS                "whisper: support for cuBLAS"  OFF)
-    option(WHISPER_HIPBLAS               "whisper: support for hipBLAS" OFF)
     option(WHISPER_CLBLAST               "whisper: use CLBlast"         OFF)
 endif()
 
@@ -157,7 +156,6 @@ if (WHISPER_BLAS)
         if(BLAS_FOUND)
             message(STATUS "BLAS compatible library found")
             message(STATUS "Libraries ${BLAS_LIBRARIES}")
-            find_path(BLAS_INCLUDE_DIRS cblas.h /usr/include/openblas /usr/local/include/openblas $ENV{BLAS_HOME}/include)
             set(WHISPER_EXTRA_FLAGS ${WHISPER_EXTRA_FLAGS} -DGGML_USE_OPENBLAS)
             include_directories(${BLAS_INCLUDE_DIRS})
             set(WHISPER_EXTRA_LIBS ${WHISPER_EXTRA_LIBS} ${BLAS_LIBRARIES})
@@ -189,37 +187,6 @@ if (WHISPER_CUBLAS)
 
     else()
         message(WARNING "cuBLAS not found")
-    endif()
-endif()
-
-
-if (WHISPER_HIPBLAS)
-    list(APPEND CMAKE_PREFIX_PATH /opt/rocm)
-    if (NOT ${CMAKE_C_COMPILER_ID} MATCHES "Clang")
-        message(WARNING "Only LLVM is supported for HIP, hint: CC=/opt/rocm/llvm/bin/clang")
-    endif()
-    if (NOT ${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
-        message(WARNING "Only LLVM is supported for HIP, hint: CXX=/opt/rocm/llvm/bin/clang++")
-    endif()
-
-    find_package(hip)
-    find_package(hipblas)
-    find_package(rocblas)
-
-    if (${hipblas_FOUND} AND ${hip_FOUND})
-        message(STATUS "HIP and hipBLAS found")
-        add_compile_definitions(GGML_USE_HIPBLAS GGML_USE_CUBLAS)
-        add_library(ggml-rocm OBJECT ggml-cuda.cu ggml-cuda.h)
-        set_property(TARGET ggml-rocm PROPERTY POSITION_INDEPENDENT_CODE ON)
-        set_source_files_properties(ggml-cuda.cu PROPERTIES LANGUAGE CXX)
-        target_link_libraries(ggml-rocm PRIVATE hip::device PUBLIC hip::host roc::rocblas roc::hipblas)
-
-        if (WHISPER_STATIC)
-            message(FATAL_ERROR "Static linking not supported for HIP/ROCm")
-        endif()
-        set(WHISPER_EXTRA_LIBS ${WHISPER_EXTRA_LIBS} ggml-rocm)
-    else()
-        message(WARNING "hipBLAS or HIP not found. Try setting CMAKE_PREFIX_PATH=/opt/rocm")
     endif()
 endif()
 
@@ -281,8 +248,6 @@ message(STATUS "CMAKE_SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}")
 
 if (${CMAKE_SYSTEM_PROCESSOR} MATCHES "arm" OR ${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
     message(STATUS "ARM detected")
-elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES "ppc64le")
-    message(STATUS "PowerPC detected")
 else()
     message(STATUS "x86 detected")
     if (MSVC)
@@ -305,64 +270,21 @@ else()
             set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -pthread")
             set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
         else()
-            if(NOT WHISPER_NO_AVX)
+            if(__AVX__)
                 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mavx")
             endif()
-            if(NOT WHISPER_NO_AVX2)
+            if(__AVX2__)
                 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mavx2")
             endif()
-            if(NOT WHISPER_NO_FMA)
+            if(__FMA__)
                 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mfma")
             endif()
-            if(NOT WHISPER_NO_F16C)
+            if(__F16C__)
                 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mf16c")
             endif()
         endif()
     endif()
 endif()
-
-# clock_gettime came in POSIX.1b (1993)
-# CLOCK_MONOTONIC came in POSIX.1-2001 / SUSv3 as optional
-# posix_memalign came in POSIX.1-2001 / SUSv3
-# M_PI is an XSI extension since POSIX.1-2001 / SUSv3, came in XPG1 (1985)
-add_compile_definitions(_XOPEN_SOURCE=600)
-
-# Somehow in OpenBSD whenever POSIX conformance is specified
-# some string functions rely on locale_t availability,
-# which was introduced in POSIX.1-2008, forcing us to go higher
-IF (CMAKE_SYSTEM_NAME MATCHES "OpenBSD")
-    remove_definitions(-D_XOPEN_SOURCE=600)
-    add_compile_definitions(_XOPEN_SOURCE=700)
-ENDIF()
-
-# Data types, macros and functions related to controlling CPU affinity
-# are available on Linux through GNU extensions in libc
-IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
-    add_compile_definitions(_GNU_SOURCE)
-ENDIF()
-
-# RLIMIT_MEMLOCK came in BSD, is not specified in POSIX.1,
-# and on macOS its availability depends on enabling Darwin extensions
-# similarly on DragonFly, enabling BSD extensions is necessary
-IF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
-    add_compile_definitions(_DARWIN_C_SOURCE)
-ENDIF()
-IF (CMAKE_SYSTEM_NAME MATCHES "DragonFly")
-    add_compile_definitions(_DARWIN_C_SOURCE)
-ENDIF()
-
-# alloca is a non-standard interface that is not visible on BSDs when
-# POSIX conformance is specified, but not all of them provide a clean way
-# to enable it in such cases
-IF (CMAKE_SYSTEM_NAME MATCHES "FreeBSD")
-    add_compile_definitions(__BSD_VISIBLE)
-ENDIF()
-IF (CMAKE_SYSTEM_NAME MATCHES "NetBSD")
-    add_compile_definitions(_NETBSD_SOURCE)
-ENDIF()
-IF (CMAKE_SYSTEM_NAME MATCHES "OpenBSD")
-    add_compile_definitions(_BSD_SOURCE)
-ENDIF()
 
 if (WHISPER_PERF)
     set(WHISPER_EXTRA_FLAGS ${WHISPER_EXTRA_FLAGS} -DGGML_PERF)

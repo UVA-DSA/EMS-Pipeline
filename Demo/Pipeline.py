@@ -30,14 +30,12 @@ def Pipeline(recording=pipeline_config.recording_name):
     str(pipeline_config.length),
     "--keep",
     str(pipeline_config.keep_ms),
-    "-ac",
-    str(pipeline_config.audio_ctx)
+    # "-ac",
+    # str(pipeline_config.audio_ctx)
     ]
     # If a Hard-coded Audio test file, use virtual mic to capture the recording
     if(pipeline_config.hardcoded):
         whispercppcommand.append("--capture")
-    # Start subprocess
-    WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='whisper.cpp/')
 
 # ===== Start EMSAgent module =================================================
     EMSAgent = Thread(target=EMSAgentSystem.EMSAgentSystem, args=(EMSAgentQueue, FeedbackQueue))
@@ -45,14 +43,61 @@ def Pipeline(recording=pipeline_config.recording_name):
 
 # ===== Sleep for 3 seconds to finish starting Whisper module and EMSAgent module =====
     print("======================= Warmup Phase ======================")
-    sleep(60)
+    signal = FeedbackQueue.get()
+    while (signal.protocol != 'wd'):
+        print('.',end="")
+        sleep(0.1)
     print("======================= Warmup Done ======================")
 
 
-# ===== Start Audiostream module =========================================
-    Audiostream = Thread(
-                    target=WhisperFileStream.Whisper, args=(SpeechToNLPQueue, EMSAgentQueue, f'./Audio_Scenarios/2019_Test/{recording}.wav'))
-    Audiostream.start()
+
+
+
+
+
+# ===== Start Whisper Subprocess module =================================================
+
+
+    # Start subprocess
+    print("======================= Whisper Warmup ======================")
+ 
+    if pipeline_config.whisper_model_size == 'tiny-finetuned-q5':
+
+    # # ===== Start Audio Streaming Subprocess module =================================================
+
+    #     audiostreamcommand = [
+    #     "./stream-file",
+    #     "-f", # uspecify which wavefile
+    #     f"{recording}.wav", 
+    #     ]
+        
+    #     AudioStreamSubprocess = subprocess.Popen(audiostreamcommand, cwd='whisper.cpp/')
+
+                # ===== Start Audiostream module =========================================
+        Audiostream = Thread(
+                        target=WhisperFileStream.Whisper, args=(SpeechToNLPQueue, EMSAgentQueue, f'./Audio_Scenarios/2019_Test/{recording}.wav'))
+        Audiostream.start()
+
+        sleep(5)
+        WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='whisper.cpp/')
+    else:
+
+        WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='whisper.cpp/')
+
+                # ===== Start Audiostream module =========================================
+        Audiostream = Thread(
+                        target=WhisperFileStream.Whisper, args=(SpeechToNLPQueue, EMSAgentQueue, f'./Audio_Scenarios/2019_Test/{recording}.wav'))
+        Audiostream.start()
+
+
+
+
+    print("======================= Whisper Warmup Done ======================")
+
+
+
+
+
 
 # ===== Exiting Program ====================================================
     '''
@@ -63,6 +108,7 @@ def Pipeline(recording=pipeline_config.recording_name):
     Audiostream.join()
     EMSAgent.join()
     WhisperSubprocess.terminate()
+    # AudioStreamSubprocess.terminate()
 
 
 if __name__ == '__main__':

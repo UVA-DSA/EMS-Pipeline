@@ -7,7 +7,7 @@ import traceback
 
 # Wavefile recording parameters
 RATE = 16000
-CHUNK = RATE // 10  # 100ms
+CHUNK = RATE // 20  # 100ms
 
 '''
 This method processes the whisper response we receive from fifo pipe 
@@ -34,12 +34,56 @@ def process_whisper_response(response):
     start = response.find('{')
     end = response.find('}')
     block = response[:start]
-    isFinal = True if response[start+1:start+2] == '1' else False
-    p_string=response[start+3:end]
+    stats = response[start+1:end]
+
+    stats = stats.split(',')
+    isFinal = True if stats[0] == '1' else False
+    p_string=stats[1]
+    latency=stats[2]
     avg_p = float(p_string)
     # print(p_string)
 
-    return block, isFinal, avg_p
+    return block, isFinal, avg_p, latency
+
+# def Whisper(SpeechToNLPQueue, EMSAgentQueue, wavefile_name):
+#     fifo_path = "/tmp/myfifo"
+#     finalized_blocks = ''
+        
+#     with open(fifo_path, 'r') as fifo:
+#         try:
+#             print('Speech pipe opened!')
+
+#             old_response = ""
+#             # Play samples from the wave file (3)
+#             while True:  # Requires Python 3.8+ for :=
+#                 response = fifo.read().strip()  # Read the message from the named pipe
+#                 if(response != old_response):
+#                     if(response != ""):
+#                         if("does not include pressure;" in response):
+#                             continue
+#                         block, isFinal, avg_p, latency = process_whisper_response(response) #isFinal = False means block is interim block
+#                         transcript = finalized_blocks + block
+#                         # if received block is finalized, then save to finalized blocks
+#                         if isFinal: finalized_blocks += block
+#                         transcriptItem = TranscriptItem(transcript, isFinal, avg_p, latency)
+#                         EMSAgentQueue.put(transcriptItem)
+#                         SpeechToNLPQueue.put(transcriptItem)  
+#                         print("--- Speech Latency:", latency,'ms')
+#                         old_response = response                
+
+
+#             EMSAgentQueue.put('Kill')
+
+
+#         except Exception as e:
+#             print("EXCEPTION: ", e)
+#             # traceback.print_exception(e)
+
+
+
+
+# backup
+
 
 def Whisper(SpeechToNLPQueue, EMSAgentQueue, wavefile_name):
     fifo_path = "/tmp/myfifo"
@@ -48,14 +92,15 @@ def Whisper(SpeechToNLPQueue, EMSAgentQueue, wavefile_name):
     with open(fifo_path, 'r') as fifo:
         with wave.open(wavefile_name, 'rb') as wf:
             try:
+                print('Speech pipe opened!')
+
                 # Instantiate PyAudio and initialize PortAudio system resources (1)
                 p = pyaudio.PyAudio()
                 info = p.get_default_host_api_info()
                 device_index = info.get('deviceCount') - 1 # get default device as output device
                     
                 stream = p.open(format = pyaudio.paInt16, channels = 1, rate = RATE, output = True, frames_per_buffer = CHUNK, output_device_index=device_index)
-                
-                start = time.perf_counter()
+
                 old_response = ""
                 # Play samples from the wave file (3)
                 data = wf.readframes(CHUNK)
@@ -65,16 +110,16 @@ def Whisper(SpeechToNLPQueue, EMSAgentQueue, wavefile_name):
                     data = wf.readframes(CHUNK)
                     if(response != old_response):
                         if(response != ""):
-                            end = time.perf_counter()
-                            block, isFinal, avg_p = process_whisper_response(response) #isFinal = False means block is interim block
+                            if("does not include pressure;" in response):
+                                continue
+                            block, isFinal, avg_p, latency = process_whisper_response(response) #isFinal = False means block is interim block
                             transcript = finalized_blocks + block
                             # if received block is finalized, then save to finalized blocks
                             if isFinal: finalized_blocks += block
-                            transcriptItem = TranscriptItem(transcript, isFinal, avg_p, end-start)
+                            transcriptItem = TranscriptItem(transcript, isFinal, avg_p, latency)
                             EMSAgentQueue.put(transcriptItem)
                             SpeechToNLPQueue.put(transcriptItem)  
-                            print("--- Latency:", end-start)
-                            start = end   
+                            print("--- Speech Latency:", latency,'ms')
                             old_response = response                
                 # Close stream (4)
                 stream.close()
@@ -86,7 +131,24 @@ def Whisper(SpeechToNLPQueue, EMSAgentQueue, wavefile_name):
 
             except Exception as e:
                 print("EXCEPTION: ", e)
-                traceback.print_exception(e)
+                # traceback.print_exception(e)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     # # Create GUI Signal Object

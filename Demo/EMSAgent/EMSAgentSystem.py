@@ -135,8 +135,12 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
     model = EMSAgent(config, date)
 
     print('================= Warmup Protocol Model =================')
-    print(f'[Protocol warm up done!: {model("Warup Text")}]')
+    print(f'[Protocol warm up done!: {model("Warmup Text")}]')
 
+    #Signal warmup done
+    protocolFB =  FeedbackObj("wd", "wd", "wd")
+    FeedbackQueue.put(protocolFB)
+    
     # call the model    
     while True:
         # Get queue item from the Speech-to-Text Module
@@ -155,7 +159,7 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
             pred = None
             prob = None
             # received.transcript = "55 year old male found unconscious driver side passenger seat of his car his wife reported that he snorted a line of heroin before just prior to losing to consciousness patient originally presented unresponsive and pale with shallow ineffective respirations at a rate of about 5 with heart rate was 118 his blood pressure was 205 over 119 his blood glucose levels 126 his O2 saturations was were 94% patient required bag mask ventilation with with attached oxygen however after 0.25 mg of naloxone intravenously patient is now awake and breathing normally with Improvement in Vital Signs and respiratory status and no longer needs supplemental oxygen"
-            received.transcript = "55 year old male found unconscious driver "
+            # received.transcript = "55 year old male found unconscious driver "
 
             if len(received.transcript):
                 try:

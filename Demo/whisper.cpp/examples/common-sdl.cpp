@@ -22,25 +22,12 @@ bool audio_async::init(int capture_id, int sample_rate) {
 
     SDL_SetHintWithPriority(SDL_HINT_AUDIO_RESAMPLING_MODE, "medium", SDL_HINT_OVERRIDE);
 
-    int virtual_capture_id =  -100; // default value
-    const char *virtual_capture_device_name = "virtual_mic";
-
     {
-        int nDevices = SDL_GetNumAudioDevices(1);
+        int nDevices = SDL_GetNumAudioDevices(SDL_TRUE);
         fprintf(stderr, "%s: found %d capture devices:\n", __func__, nDevices);
         for (int i = 0; i < nDevices; i++) {
-            fprintf(stderr, "%s:    - Capture device #%d: '%s'\n", __func__, i, SDL_GetAudioDeviceName(i, 1));
-            if(strcmp(SDL_GetAudioDeviceName(i, 1), virtual_capture_device_name) == 0){
-                fprintf(stderr, "Succesfully found virtual mic!\n");
-                virtual_capture_id  = i;
-            }
-
+            fprintf(stderr, "%s:    - Capture device #%d: '%s'\n", __func__, i, SDL_GetAudioDeviceName(i, SDL_TRUE));
         }
-
-        if(virtual_capture_id == -100){ // couldn't find virtual mic.
-                fprintf(stderr, "Virtual mic not found! Please check your setup!\n");
-        }
-
     }
 
     SDL_AudioSpec capture_spec_requested;
@@ -50,8 +37,6 @@ bool audio_async::init(int capture_id, int sample_rate) {
     SDL_zero(capture_spec_obtained);
 
     capture_spec_requested.freq     = sample_rate;
-    fprintf(stderr, "%d: Sample Rate \n", sample_rate);
-
     capture_spec_requested.format   = AUDIO_F32;
     capture_spec_requested.channels = 1;
     capture_spec_requested.samples  = 1024;
@@ -61,22 +46,13 @@ bool audio_async::init(int capture_id, int sample_rate) {
     };
     capture_spec_requested.userdata = this;
 
-    fprintf(stderr, "Capture ID Argument:%d\n",capture_id);
-
-    if(capture_id == 1 && virtual_capture_id >= 0) // this means we want to use virtual mic input (For transcribing recordings)
-        capture_id = virtual_capture_id;
-
-    // else we want to use actual microphone
-
-    if (capture_id == 1) {
-        fprintf(stderr, "%s: attempt to open virtual capture device %d : '%s' ...\n", __func__, capture_id, SDL_GetAudioDeviceName(capture_id, SDL_TRUE));
-        m_dev_id_in = SDL_OpenAudioDevice(SDL_GetAudioDeviceName(capture_id, 1), 1, &capture_spec_requested, &capture_spec_obtained, SDL_AUDIO_ALLOW_FORMAT_CHANGE);
+    if (capture_id >= 0) {
+        fprintf(stderr, "%s: attempt to open capture device %d : '%s' ...\n", __func__, capture_id, SDL_GetAudioDeviceName(capture_id, SDL_TRUE));
+        m_dev_id_in = SDL_OpenAudioDevice(SDL_GetAudioDeviceName(capture_id, SDL_TRUE), SDL_TRUE, &capture_spec_requested, &capture_spec_obtained, 0);
     } else {
         fprintf(stderr, "%s: attempt to open default capture device ...\n", __func__);
         m_dev_id_in = SDL_OpenAudioDevice(nullptr, SDL_TRUE, &capture_spec_requested, &capture_spec_obtained, 0);
     }
-
-        // m_dev_id_in = SDL_OpenAudioDevice(nullptr, SDL_TRUE, &capture_spec_requested, &capture_spec_obtained, 0);
 
     if (!m_dev_id_in) {
         fprintf(stderr, "%s: couldn't open an audio device for capture: %s!\n", __func__, SDL_GetError());

@@ -3,6 +3,7 @@
 from Pipeline import Pipeline
 import pipeline_config
 import csv
+import os
 # from jiwer import wer, cer
 # from transformers import WhisperProcessor
 # from evaluate import load
@@ -77,7 +78,11 @@ if __name__ == '__main__':
                 row[8] = check_protocol_correct(recording, row[6])
                 
             # Write data to csv
-            with open (f'evaluation_results/{device}/{pipeline_config.whisper_model_size}/{recording}-all-trials/{recording}-trial-{i}.csv', 'w') as csvFile:
+            directory = f'evaluation_results/{device}/{pipeline_config.whisper_model_size}/{recording}-all-trials/'
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+            print(f'Evaluation Results stored in {directory}')
+            with open (f'{directory}{recording}-trial-{i}.csv', 'w+') as csvFile:
                 writer = csv.writer(csvFile)
                 writer.writerow(fields)
                 writer.writerows(pipeline_config.rows_trial)

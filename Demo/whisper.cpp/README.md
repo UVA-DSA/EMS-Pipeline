@@ -61,7 +61,7 @@ Or you can even run it straight in the browser: [talk.wasm](examples/talk.wasm)
 - Various other examples are available in the [examples](examples) folder
 
 The tensor operators are optimized heavily for Apple silicon CPUs. Depending on the computation size, Arm Neon SIMD
-intrinsics or CBLAS Accelerate framework routines are used. The latter are especially effective for bigger sizes since
+instrisics or CBLAS Accelerate framework routines are used. The latter are especially effective for bigger sizes since
 the Accelerate framework utilizes the special-purpose AMX coprocessor available in modern Apple products.
 
 ## Quick start
@@ -287,8 +287,8 @@ speed-up - more than x3 faster compared with CPU-only execution. Here are the in
   WHISPER_COREML=1 make -j
 
   # using CMake
-  cmake -B build -DWHISPER_COREML=1
-  cmake --build build -j --config Release
+  cd build
+  cmake -DWHISPER_COREML=1 ..
   ```
 
 - Run the examples as usual. For example:
@@ -366,8 +366,8 @@ This can result in significant speedup in encoder performance. Here are the inst
 
   And then build the project using cmake:
   ```bash
-  cmake -B build -DWHISPER_OPENVINO=1
-  cmake --build build -j --config Release
+  cd build
+  cmake -DWHISPER_OPENVINO=1 ..
   ```
 
 - Run the examples as usual. For example:
@@ -418,9 +418,11 @@ make clean
 WHISPER_CLBLAST=1 make -j
 
 CMake:
-cd whisper.cpp
-cmake -B build -DWHISPER_CLBLAST=ON
-cmake --build build -j --config Release
+cd whisper.cpp ; mkdir build ; cd build
+cmake -DWHISPER_CLBLAST=ON  ..
+make clean
+make -j
+cp bin/* ../ 
 ```
 
 

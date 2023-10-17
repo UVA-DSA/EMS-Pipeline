@@ -1,0 +1,14 @@
+time audio->transcript (s),transcript,whisper confidence,WER,CER,time protocol input->output (s),protocol prediction,protocol confidence,"protocol correct? (1 = True, 0 = False, -1=None given)"
+3258,,0.875178,0,0,-1,Protocol is not suggested due to receiving blank space as transcript,-1,0
+2970,,0.875178,0,0,-1,Protocol is not suggested due to receiving blank space as transcript,-1,0
+13559,ogami m Mossover idk ,0.249311,0,0,0.340993996999714,medical - altered mental status,0.44995093,0
+13898,"ogami m Mossover idk put in the bleeding of stabbing pain from her naval, down to her pukeprettyOOOOOgendrenton associated with the skin. ",0.514936,0,0,0.11180358599995088,hemorrhage control (protocol 4 - 14),0.38686532,0
+7819,"ogami m Mossover idk put in the bleeding of stabbing pain from her naval, down to her pukeprettyOOOOOgendrenton associated with the skin. rhythmic pregnancy 
+
+ patient denies any chance. ",0.746975,0,0,0.12590314799990665,ob/gyn - pre-term labor (pre-term labor) (protocol 6 - 12),0.6066526,0
+3186,"ogami m Mossover idk put in the bleeding of stabbing pain from her naval, down to her pukeprettyOOOOOgendrenton associated with the skin. rhythmic pregnancy 
+
+ patient denies any chance. And each per vital signs include a heart rate of 82 respiratory rate of 18. ",0.799621,0,0,0.05661586099995475,ob/gyn - pre-term labor (pre-term labor) (protocol 6 - 12),0.6872081,0
+3217,"ogami m Mossover idk put in the bleeding of stabbing pain from her naval, down to her pukeprettyOOOOOgendrenton associated with the skin. rhythmic pregnancy 
+
+ patient denies any chance. And each per vital signs include a heart rate of 82 respiratory rate of 18. of blood pressure of 118 over 72 and a Glasgow Coma score. ",0.837685,0,0,0.05968031800011886,ob/gyn - pre-term labor (pre-term labor) (protocol 6 - 12),0.69224507,0
