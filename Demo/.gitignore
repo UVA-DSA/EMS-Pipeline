@@ -1,6 +1,9 @@
 # Ignore Mac system files
 .DS_store
+.vscode
 
+
+Evaluation_Results/
 evaluation_results/
 
 EMSAgent/models

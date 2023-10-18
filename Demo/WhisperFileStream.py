@@ -35,14 +35,14 @@ def process_whisper_response(response):
     start = response.find('{')
     end = response.find('}')
     block = response[:start]
-    isFinal_str, avg_p_str, latency_str = response[start:end].split(",")
+    isFinal_str, avg_p_str, latency_str = response[start+1:end].split(",")
     isFinal = True if isFinal_str == '1' else False
     avg_p = float(avg_p_str)
     latency = int(latency_str)
 
     return block, isFinal, avg_p, latency
 
-def Whisper(SpeechToNLPQueue, EMSAgentQueue, wavefile_name):
+def Whisper(SpeechToNLPQueue,VideoSignalQueue, wavefile_name):
     fifo_path = "/tmp/myfifo"
     finalized_blocks = ''
         
@@ -61,24 +61,30 @@ def Whisper(SpeechToNLPQueue, EMSAgentQueue, wavefile_name):
                 while len(data:=wf.readframes(CHUNK)):  # Requires Python 3.8+ for :=
                     stream.write(data)
                     response = fifo.read().strip()  # Read the message from the named pipe
+                    VideoSignalQueue.put('Proceed')
 
                     if response != old_response and response != "":
                         block, isFinal, avg_p, latency = process_whisper_response(response) #isFinal = False means block is interim block
                         transcript = finalized_blocks + block
                         # if received block is finalized, then save to finalized blocks
+                        
                         if isFinal: finalized_blocks += block
                         transcriptItem = TranscriptItem(transcript, isFinal, avg_p, latency)
-                        EMSAgentQueue.put(transcriptItem)
+                        # EMSAgentQueue.put(transcriptItem)
                         SpeechToNLPQueue.put(transcriptItem)  
+                        
                         print("--- Whisper Latency:", latency)
                         old_response = response                
                 # Close stream (4)
                 stream.close()
 
-                EMSAgentQueue.put('Kill')
+                SpeechToNLPQueue.put('Kill')
+                VideoSignalQueue.put('Kill')
 
                 # Release PortAudio system resources (5)
                 p.terminate()
+
+                print("Audio Stream Thread Sent Kill Signal. Bye!")
 
             except Exception as e:
                 print("EXCEPTION: ", e)

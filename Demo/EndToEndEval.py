@@ -8,6 +8,7 @@ from evaluate import load
 import numpy as np
 from sklearn.metrics import classification_report, confusion_matrix
 from EMSAgent.default_sets import ungroup_p_node
+import os
 
 # -- static helper variables ---------------------------------------
 # initialize processor depending on whisper model size 
@@ -98,8 +99,11 @@ if __name__ == '__main__':
         one_hot_pred_all_recordings.append(pred)
         one_hot_gt_all_recordings.append(gt)
         
+        directory = f"Evaluation_Results/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{pipeline_config.whisper_model_size}/"
+        if not os.path.exists(directory):
+            os.makedirs(directory)
         # Write data to csv
-        with open (f'Evaluation_Results/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{pipeline_config.whisper_model_size}/{recording}.csv', 'w') as csvFile:
+        with open (f'{directory}{recording}.csv', 'w') as csvFile:
             writer = csv.writer(csvFile)
             writer.writerow(fields)
             writer.writerows(rows_trial)

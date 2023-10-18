@@ -11,10 +11,11 @@ class TranscriptItem:
 
 # ------------ For Feedback ------------
 class FeedbackObj:
-    def __init__(self, intervention, protocol, concept):
+    def __init__(self, intervention, protocol, protocol_confidence, concept):
         super(FeedbackObj, self).__init__()
         self.intervention = intervention
         self.protocol = protocol
+        self.protocol_confidence = protocol_confidence
         self.concept = concept
 
 # ============== Custom Speech to NLP Queue Item Class ==============
