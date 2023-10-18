@@ -1,6 +1,11 @@
 # Ignore Mac system files
 .DS_store
 
+evaluation_results/
+
+EMSAgent/models
+
+whisper.cpp/models
 .gradle/*
 
 # Ignore node_modules folder
