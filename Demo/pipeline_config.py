@@ -13,8 +13,9 @@ hardcoded = False
 recording_name = '000_190105'
 
 # -- Whisper configuration ---
-#whisper_model_size = "tiny-finetuned-q5"
-whisper_model_size = "tiny-q5"
+whisper_model_size = "tiny-finetuned-v2"
+# whisper_model_size = "tiny-finetuned-q5"
+# whisper_model_size = "tiny-q5"
 #whisper_model_size = "tiny-finetuned"
 #whisper_model_size = "tiny.en"
 #whisper_model_size = "base.en"
@@ -28,6 +29,7 @@ length = 8000
 keep_ms = 200 #audio to keep from previous step in ms
 # audio_ctx = 512 #audio to keep from previous step in ms
 vth = 0.8 #voice activity
+max_tokens = 10 #voice activity
 is_streaming = False
 
 # -- EMS Agent configuration ------

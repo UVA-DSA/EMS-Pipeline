@@ -37,6 +37,8 @@ def Pipeline(recording=pipeline_config.recording_name):
     # str(pipeline_config.vth),
     # "-ac",
     # str(pipeline_config.audio_ctx)
+    "-mt",
+    str(pipeline_config.max_tokens)
     ]
     # If a Hard-coded Audio test file, use virtual mic to capture the recording
     if(pipeline_config.hardcoded):

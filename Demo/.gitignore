@@ -1,10 +1,11 @@
-*/evaluation_results/*
+evaluation_results
 
 *.zip
 
 # Ignore Mac system files
 .DS_store
 
+EMSAgent/models
 
 .gradle/*
 

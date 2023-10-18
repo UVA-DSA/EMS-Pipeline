@@ -1,7 +1,0 @@
-time audio->transcript (s),transcript,whisper confidence,WER,CER,time protocol input->output (s),protocol prediction,protocol confidence,"protocol correct? (1 = True, 0 = False, -1=None given)",onehot
-3741,,0.875178,0,0,-1,Protocol is not suggested due to receiving blank space as transcript,-1,0,-1,-1,-1,-1,-1,-1
-3447,,0.575628,0,0,-1,Protocol is not suggested due to receiving blank space as transcript,-1,0,-1,-1,-1,-1,-1,-1
-3721,We were dispatched for an adult female complaining of chest pain that started ,0.773286,0,0,0.13836419000290334,ob/gyn - pre-term labor (pre-term labor) (protocol 6 - 12),0.4745405912399292,0,"[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 1 0]",one hot GT,tn,fp,fn,tp
-9503,We were dispatched for an adult female complaining of chest pain that started 30 approximately 15 minutes prior to our arrival we found her in her bedroom. ,0.909705,0,0,0.14198137899802532,environmental - heat exposure/heat exhaustion environmental - heat stroke (protocol 5 - 2),0.11864545941352844,0,"[0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0]",one hot GT,tn,fp,fn,tp
