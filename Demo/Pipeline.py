@@ -4,9 +4,11 @@ import queue
 import subprocess
 import pipeline_config #rename pipeline_config
 import WhisperFileStream
+import FIFOStreamClient
 from EMSAgent import EMSAgentSystem
 from threading import Thread
-from time import sleep
+from time import sleep,time
+
 
 def Pipeline(recording=pipeline_config.recording_name):
 # Set the Google Speech API service-account key environment variable
@@ -16,6 +18,7 @@ def Pipeline(recording=pipeline_config.recording_name):
     SpeechToNLPQueue = queue.Queue()
     EMSAgentQueue  = queue.Queue()
     FeedbackQueue = queue.Queue()
+    SignalQueue = queue.Queue()
 
 # ===== Start Whisper module ===================================================
     whispercppcommand = [
@@ -30,6 +33,8 @@ def Pipeline(recording=pipeline_config.recording_name):
     str(pipeline_config.length),
     "--keep",
     str(pipeline_config.keep_ms),
+    # "-vth",
+    # str(pipeline_config.vth),
     # "-ac",
     # str(pipeline_config.audio_ctx)
     ]
@@ -63,32 +68,75 @@ def Pipeline(recording=pipeline_config.recording_name):
  
     if pipeline_config.whisper_model_size == 'tiny-finetuned-q5':
 
+        is_streaming = True
+
     # # ===== Start Audio Streaming Subprocess module =================================================
 
-    #     audiostreamcommand = [
-    #     "./stream-file",
-    #     "-f", # uspecify which wavefile
-    #     f"{recording}.wav", 
-    #     ]
+        # audiostreamcommand = [
+        # "./stream-file",
+        # "-f", # uspecify which wavefile
+        # f"{recording}.wav", 
+        # ]
         
-    #     AudioStreamSubprocess = subprocess.Popen(audiostreamcommand, cwd='whisper.cpp/')
+        # AudioStreamSubprocess = subprocess.Popen(audiostreamcommand, cwd='whisper.cpp/')
 
-                # ===== Start Audiostream module =========================================
+
+    # ===== Start Audiostream module =========================================
         Audiostream = Thread(
-                        target=WhisperFileStream.Whisper, args=(SpeechToNLPQueue, EMSAgentQueue, f'./Audio_Scenarios/2019_Test/{recording}.wav'))
+                        target=WhisperFileStream.Whisper, args=(SpeechToNLPQueue, EMSAgentQueue, f'./Audio_Scenarios/2019_Test/{recording}.wav', is_streaming, SignalQueue))
         Audiostream.start()
 
-        sleep(5)
+        sleep(3)
+
         WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='whisper.cpp/')
+
+
+    # ===== Start FIFO reading module =========================================
+        FIFOStream = Thread(
+                        target=FIFOStreamClient.Fifo, args=(SpeechToNLPQueue, EMSAgentQueue, SignalQueue))
+        FIFOStream.start()
+
+        
+
+
     else:
 
+        is_streaming = True
+
+   
         WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='whisper.cpp/')
 
-                # ===== Start Audiostream module =========================================
+        sleep(5)
+
+  
+     # ===== Start Audiostream module =========================================
         Audiostream = Thread(
-                        target=WhisperFileStream.Whisper, args=(SpeechToNLPQueue, EMSAgentQueue, f'./Audio_Scenarios/2019_Test/{recording}.wav'))
+                        target=WhisperFileStream.Whisper, args=(SpeechToNLPQueue, EMSAgentQueue, f'./Audio_Scenarios/2019_Test/{recording}.wav', is_streaming, SignalQueue))
         Audiostream.start()
 
+
+    # # ===== Start Audio Streaming Subprocess module =================================================
+
+        # audiostreamcommand = [
+        # "./stream-file",
+        # "-f", # uspecify which wavefile
+        # f"{recording}.wav", 
+        # ]
+        
+        # AudioStreamSubprocess = subprocess.Popen(audiostreamcommand, cwd='whisper.cpp/')
+
+
+
+
+
+
+
+        # ===== Start FIFO reading module =========================================
+        FIFOStream = Thread(
+                        target=FIFOStreamClient.Fifo, args=(SpeechToNLPQueue, EMSAgentQueue, SignalQueue))
+        FIFOStream.start()
+
+        
 
 
 
@@ -106,6 +154,7 @@ def Pipeline(recording=pipeline_config.recording_name):
     TODO: Make a Event() from Threading module to use as flag signal instead of queueing the string 'Kill'
     '''
     Audiostream.join()
+    FIFOStream.join()
     EMSAgent.join()
     WhisperSubprocess.terminate()
     # AudioStreamSubprocess.terminate()

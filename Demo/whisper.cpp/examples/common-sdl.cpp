@@ -39,7 +39,7 @@ bool audio_async::init(int capture_id, int sample_rate) {
     capture_spec_requested.freq     = sample_rate;
     capture_spec_requested.format   = AUDIO_F32;
     capture_spec_requested.channels = 1;
-    capture_spec_requested.samples  = 1024;
+    capture_spec_requested.samples  = 2048;
     capture_spec_requested.callback = [](void * userdata, uint8_t * stream, int len) {
         audio_async * audio = (audio_async *) userdata;
         audio->callback(stream, len);

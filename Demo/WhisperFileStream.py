@@ -4,10 +4,11 @@ import time
 import re
 from classes import TranscriptItem
 import traceback
-
+import os
 # Wavefile recording parameters
 RATE = 16000
-CHUNK = RATE // 20  # 100ms
+# CHUNK = RATE // 50  # 320 samples
+CHUNK = 2048  # 320 samples
 
 '''
 This method processes the whisper response we receive from fifo pipe 
@@ -85,29 +86,55 @@ def process_whisper_response(response):
 # backup
 
 
-def Whisper(SpeechToNLPQueue, EMSAgentQueue, wavefile_name):
+def Whisper(SpeechToNLPQueue, EMSAgentQueue, wavefile_name, is_streaming, SignalQueue):
     fifo_path = "/tmp/myfifo"
     finalized_blocks = ''
-        
-    with open(fifo_path, 'r') as fifo:
-        with wave.open(wavefile_name, 'rb') as wf:
+
+    
+    print("here1")
+    if(is_streaming):        
+            with wave.open(wavefile_name, 'rb') as wf:
+                print("here3")
+
+                try:
+                    # Instantiate PyAudio and initialize PortAudio system resources (1)
+                    p = pyaudio.PyAudio()
+                    info = p.get_default_host_api_info()
+                    device_index = info.get('deviceCount') - 1 # get default device as output device
+                        
+                    stream = p.open(format = pyaudio.paInt16, channels = 1, rate = RATE, output = True, frames_per_buffer = CHUNK, output_device_index=device_index)
+
+                    # Play samples from the wave file (3)
+                    data = wf.readframes(CHUNK)
+                    while len(data):  # Requires Python 3.8+ for :=
+                        stream.write(data)
+                        data = wf.readframes(CHUNK)
+                        SignalQueue.put('Progress')
+                        
+
+                    stream.close()
+                    
+                    SignalQueue.put('Done')
+                    EMSAgentQueue.put('Kill')
+
+                    # Release PortAudio system resources (5)
+                    p.terminate()
+
+                except Exception as e:
+                    print("EXCEPTION: ", e)
+                    # traceback.print_exception(e)
+
+
+    else:
+
+        with open(fifo_path, 'r') as fifo:
             try:
                 print('Speech pipe opened!')
 
-                # Instantiate PyAudio and initialize PortAudio system resources (1)
-                p = pyaudio.PyAudio()
-                info = p.get_default_host_api_info()
-                device_index = info.get('deviceCount') - 1 # get default device as output device
-                    
-                stream = p.open(format = pyaudio.paInt16, channels = 1, rate = RATE, output = True, frames_per_buffer = CHUNK, output_device_index=device_index)
-
                 old_response = ""
                 # Play samples from the wave file (3)
-                data = wf.readframes(CHUNK)
-                while len(data):  # Requires Python 3.8+ for :=
-                    stream.write(data)
+                while True:  # Requires Python 3.8+ for :=
                     response = fifo.read().strip()  # Read the message from the named pipe
-                    data = wf.readframes(CHUNK)
                     if(response != old_response):
                         if(response != ""):
                             if("does not include pressure;" in response):
@@ -121,19 +148,14 @@ def Whisper(SpeechToNLPQueue, EMSAgentQueue, wavefile_name):
                             SpeechToNLPQueue.put(transcriptItem)  
                             print("--- Speech Latency:", latency,'ms')
                             old_response = response                
-                # Close stream (4)
-                stream.close()
+
 
                 EMSAgentQueue.put('Kill')
 
-                # Release PortAudio system resources (5)
-                p.terminate()
 
             except Exception as e:
                 print("EXCEPTION: ", e)
                 # traceback.print_exception(e)
-
-
 
 
 

@@ -4,18 +4,16 @@ import os
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 import torch
 import numpy as np
-import time
 import json
-import itertools
 import torch.multiprocessing
+import pipeline_config
 torch.multiprocessing.set_sharing_strategy('file_system')
-date = '2023-08-10-11_40_22'
+model_name = pipeline_config.protocol_model_type
 
 task = 'multi_label'
 dataset = 'EMS' #EMS, MIMIC3
 multi_graph = False #if use multi graph (KAMG)
-groupby = 'age'  #['age', 'hierarchy', None]
-device = 'cuda' # torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device = pipeline_config.protocol_model_device
 SAVE_RESULT_ROOT = os.path.dirname(os.path.realpath(__file__))
 # SAVE_RESULT_ROOT = '/gpfs/gpfs0/scratch/zar8jw'
 

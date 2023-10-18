@@ -1,5 +1,7 @@
 */evaluation_results/*
 
+*.zip
+
 # Ignore Mac system files
 .DS_store
 

@@ -33,6 +33,12 @@ def get_ground_truth_protocol(recording):
         ground_truth = f.read()
     return ground_truth
 
+def get_ground_truth_one_hot_vector(recording):
+    ground_truth = get_ground_truth_protocol(recording)
+    one_hot_vector = [1 if label.lower() == ground_truth.lower() else 0 for label in ungroup_p_node]
+    return np.array(one_hot_vector)
+
+
 def get_wer_and_cer(recording, transcript):
     # tokenized_reference_text = Processor.tokenizer._normalize(get_ground_truth_transcript(recording))
     # tokenized_prediction_text = Processor.tokenizer._normalize(transcript)
@@ -62,7 +68,7 @@ if __name__ == '__main__':
         # run one trial of the pipeline 
         for i in range(1,pipeline_config.num_trials_per_recording+1):
             # field names
-            fields = ['time audio->transcript (s)', 'transcript', 'whisper confidence', 'WER', 'CER', 'time protocol input->output (s)', 'protocol prediction', 'protocol confidence', 'protocol correct? (1 = True, 0 = False, -1=None given)'] 
+            fields = ['time audio->transcript (s)', 'transcript', 'whisper confidence', 'WER', 'CER', 'time protocol input->output (s)', 'protocol prediction', 'protocol confidence', 'protocol correct? (1 = True, 0 = False, -1=None given)','onehot'] 
 
             # data rows of csv file for this run
             pipeline_config.curr_segment = []

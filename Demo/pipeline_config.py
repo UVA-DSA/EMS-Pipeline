@@ -13,8 +13,8 @@ hardcoded = False
 recording_name = '000_190105'
 
 # -- Whisper configuration ---
-whisper_model_size = "tiny-finetuned-q5"
-#whisper_model_size = "tiny-q5"
+#whisper_model_size = "tiny-finetuned-q5"
+whisper_model_size = "tiny-q5"
 #whisper_model_size = "tiny-finetuned"
 #whisper_model_size = "tiny.en"
 #whisper_model_size = "base.en"
@@ -22,11 +22,20 @@ whisper_model_size = "tiny-finetuned-q5"
 #whisper_model_size = "base-finetuned"
 #whisper_model_size = "base-finetuned-q5"
 PATH_TO_WHISPER_CPP_FOLDER = "/home/cogems_nist/Desktop/CogEMS_NIST/whisper.cpp"
-num_threads = 4
+num_threads = 3
 step = 4000
 length = 8000
 keep_ms = 200 #audio to keep from previous step in ms
 # audio_ctx = 512 #audio to keep from previous step in ms
+vth = 0.8 #voice activity
+is_streaming = False
+
+# -- EMS Agent configuration ------
+protocol_model_device = 'cuda' # 'cuda' or 'cpu'
+protocol_model_type = 'DKEC-TinyClinicalBERT' #DKEC-TinyClinicalBERT, EMSAssist
+#protocol_model_type = 'EMSAssist' #DKEC-TinyClinicalBERT, EMSAssist
+
+
 
 # --- End to End evaluation testing configs --------
 recordings_to_test = [

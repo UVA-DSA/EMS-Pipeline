@@ -142,6 +142,17 @@ int main(int argc, char ** argv) {
     const char *myfifo = "/tmp/myfifo";
     /* create the FIFO (named pipe) */
     mkfifo(myfifo, 0666);
+
+
+//    const char *init_message = "whisper.cpp pipe opened!";
+//
+//    fd = ::open(myfifo, O_WRONLY | O_NONBLOCK);
+//    ::write(fd, init_message, strlen(init_message) + 1);
+//    close(fd);
+
+//    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+
+
     whisper_params params;
 
     if (whisper_params_parse(argc, argv, params) == false) {
