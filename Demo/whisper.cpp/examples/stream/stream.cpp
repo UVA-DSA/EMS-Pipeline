@@ -384,6 +384,8 @@ int main(int argc, char **argv)
             t_last = t_now;
         }
 
+        const auto t_inf_last = std::chrono::high_resolution_clock::now();
+
         // run the inference
         {
             whisper_full_params wparams = whisper_full_default_params(WHISPER_SAMPLING_GREEDY);
@@ -417,6 +419,9 @@ int main(int argc, char **argv)
             }
             ++n_iter;
 
+            const auto t_inf_now = std::chrono::high_resolution_clock::now();
+            const auto t_inf_diff = std::chrono::duration_cast<std::chrono::milliseconds>(t_inf_now - t_inf_last).count();
+
 
             // print result;
             {
@@ -445,14 +450,15 @@ int main(int argc, char **argv)
                     // get segment text
                     const std::string text = whisper_full_get_segment_text(ctx, i);
                     // see if text is final
-                    const std::string is_final = (!use_vad && (n_iter % n_new_line) == 0) ? "1," : "0,";
+                    const std::string is_final = (!use_vad && (n_iter % n_new_line) == 0) ? "1" : "0";
                     // get confidence scores
                     float sum_scores = 0;
                     const int n_tokens = whisper_full_n_tokens(ctx, i);
                     for (int j = 0; j < n_tokens; j++) {
                         sum_scores += whisper_full_get_token_p(ctx, i, j);
                     }
-                    std::string text_score = text + " {" + is_final + std::to_string(sum_scores/n_tokens) + "}";
+                    // 'block{isFinal:avg_p,latency}'
+                    std::string text_score = text + " {" + is_final + "," + std::to_string(sum_scores/n_tokens) + "," + std::to_string(t_inf_diff) + "}";
                     const char *ctext_score = text_score.c_str();
 
                     if (params.no_timestamps)

@@ -11,13 +11,14 @@ CHUNK = RATE // 10  # 100ms
 
 '''
 This method processes the whisper response we receive from fifo pipe 
-The response is type string, and is in the format 'block{isFinal,avg_p}'
+The response is type string, and is in the format 'block{isFinal,avg_p,latency}'
 We remove background noise strings from the block (such as *crash* and [DOOR OPENS]) 
-And separate out the parts of response into block, isFinal, and avg_p
+And separate out the parts of response into block, isFinal, avg_p, and latency
 
 block : speech converted into text
 isFinal : '1' = the block is a final block. '0' = the block is a interim block
 avg_p : 'float' of inclusive range [0,1]. the average confidence probability of all the tokens in the block
+latency : latency of whisper streaming per block in milliseconds
 '''
 def process_whisper_response(response):
     # used to remove the background noise transcriptions from Whisper output
@@ -34,11 +35,12 @@ def process_whisper_response(response):
     start = response.find('{')
     end = response.find('}')
     block = response[:start]
-    isFinal = True if response[start+1:start+2] == '1' else False
-    avg_p = float(p_string:=response[start+3:end])
-    # print(p_string)
+    isFinal_str, avg_p_str, latency_str = response[start:end].split(",")
+    isFinal = True if isFinal_str == '1' else False
+    avg_p = float(avg_p_str)
+    latency = int(latency_str)
 
-    return block, isFinal, avg_p
+    return block, isFinal, avg_p, latency
 
 def Whisper(SpeechToNLPQueue, EMSAgentQueue, wavefile_name):
     fifo_path = "/tmp/myfifo"
@@ -54,26 +56,22 @@ def Whisper(SpeechToNLPQueue, EMSAgentQueue, wavefile_name):
                     
                 stream = p.open(format = pyaudio.paInt16, channels = 1, rate = RATE, output = True, frames_per_buffer = CHUNK, output_device_index=device_index)
                 
-                start = time.perf_counter()
                 old_response = ""
                 # Play samples from the wave file (3)
                 while len(data:=wf.readframes(CHUNK)):  # Requires Python 3.8+ for :=
                     stream.write(data)
                     response = fifo.read().strip()  # Read the message from the named pipe
 
-                    if(response != old_response):
-                        if(response != ""):
-                            end = time.perf_counter()
-                            block, isFinal, avg_p = process_whisper_response(response) #isFinal = False means block is interim block
-                            transcript = finalized_blocks + block
-                            # if received block is finalized, then save to finalized blocks
-                            if isFinal: finalized_blocks += block
-                            transcriptItem = TranscriptItem(transcript, isFinal, avg_p, end-start)
-                            EMSAgentQueue.put(transcriptItem)
-                            SpeechToNLPQueue.put(transcriptItem)  
-                            print("--- Latency:", end-start)
-                            start = end   
-                            old_response = response                
+                    if response != old_response and response != "":
+                        block, isFinal, avg_p, latency = process_whisper_response(response) #isFinal = False means block is interim block
+                        transcript = finalized_blocks + block
+                        # if received block is finalized, then save to finalized blocks
+                        if isFinal: finalized_blocks += block
+                        transcriptItem = TranscriptItem(transcript, isFinal, avg_p, latency)
+                        EMSAgentQueue.put(transcriptItem)
+                        SpeechToNLPQueue.put(transcriptItem)  
+                        print("--- Whisper Latency:", latency)
+                        old_response = response                
                 # Close stream (4)
                 stream.close()
 
@@ -84,48 +82,7 @@ def Whisper(SpeechToNLPQueue, EMSAgentQueue, wavefile_name):
 
             except Exception as e:
                 print("EXCEPTION: ", e)
-                traceback.print_exception(e)
-
-
-    # # Create GUI Signal Object
-    # SpeechSignal = GUISignal()
-    # SpeechSignal.signal.connect(Window.UpdateSpeechBox)
-
-    # MsgSignal = GUISignal()
-    # MsgSignal.signal.connect(Window.UpdateMsgBox)
-
-    # ButtonsSignal = GUISignal()
-    # ButtonsSignal.signal.connect(Window.ButtonsSetEnabled)
-    # num_chars_printed = 0
-    
-
-    # with FileStream(RATE, CHUNK, wavefile_name) as fs:
-    #     start = time.perf_counter()
-    #     # print("=============WhisperFileStream.py: Audio file stream started", start)
-        
-    #     fifo_path = "/tmp/myfifo"  # Replace with your named pipe path
-
-    #     while not fs.closed:
-    #         try:
-    #             with open(fifo_path, 'r') as fifo:
-    #                 response = fifo.read().strip()  # Read the message from the named 
-    #                 end = time.perf_counter()
-    #                 block, isFinal, avg_p = process_whisper_response(response) #isFinal = False means block is interim block
-    #                 transcript = finalized_blocks + block
-    #                 # if received block is finalized, then save to finalized blocks
-    #                 if isFinal: finalized_blocks += block
-    #                 transcriptItem = TranscriptItem(transcript, isFinal, avg_p, end-start)
-    #                 EMSAgentQueue.put(transcriptItem)
-    #                 SpeechToNLPQueue.put(transcriptItem)
-    #                 start = end 
-
-    #         except Exception as e:
-    #             print("Exception in Audiostream", e)
-    #             # print(traceback.format_exc())
-
-    # EMSAgentQueue.put('Kill')
-    # return                               
-            
+                traceback.print_exception(e)            
 
 
 

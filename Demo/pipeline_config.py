@@ -39,7 +39,6 @@ recordings_to_test = [
     '010_190105',
     '011_190105'
 ]
-num_trials_per_recording = 1
 
 # --- global variables used during end to end eval ----
 curr_segment = []
