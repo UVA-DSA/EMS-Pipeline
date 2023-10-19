@@ -48,9 +48,15 @@ def get_wer_and_cer(recording, transcript):
     return wer, cer
 
 def check_protocol_correct(recording, protocol):
+    print('check protocol correct:',protocol)
     if protocol == -1: return -1
     ground_truth = get_ground_truth_protocol(recording)
     return int(protocol.lower() == ground_truth.lower())
+
+def is_singleton_array(arr):
+    shape = arr.shape
+    # Check if all dimensions have size 1
+    return all(dim == 1 for dim in shape)
 
 # --- main ---------------------------
 if __name__ == '__main__':
@@ -84,7 +90,7 @@ if __name__ == '__main__':
                 # WER, CER
                 row[3], row[4] = get_wer_and_cer(recording, row[1])
                 # protocol correct? (1 = True, 0 = False, -1=None given) 
-                row[8] = check_protocol_correct(recording, row[6])
+                row[8] = check_protocol_correct(recording, row[7]) #6 is prediction a string. bug
                 # if protocol given, evaluate protocol model
                 if row[8] != -1:
                     pred = np.array(row[9])
@@ -95,8 +101,8 @@ if __name__ == '__main__':
                     # one hot GT
                     row[10] = str(gt)
                     # tn, fp, fn, tp
-                    row[11], row[12], row[13], row[14] = confusion_matrix(gt, pred).ravel()
             
+                    row[11], row[12], row[13], row[14] = confusion_matrix(gt, pred).ravel()
             # save last one hot vectors
             one_hot_pred_all_recordings.append(pred)
             one_hot_gt_all_recordings.append(gt)
