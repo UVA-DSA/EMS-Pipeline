@@ -5,7 +5,6 @@ from EMSAgent.default_sets import seed_everything, device, ungroup_p_node
 import numpy as np
 import warnings
 import yaml
-import re
 from EMSAgent.utils import AttrDict, onehot2p, convert_label
 from EMSAgent.Heterogeneous_graph import HeteroGraph
 from EMSAgent.model import EMSMultiModel
@@ -16,6 +15,7 @@ warnings.filterwarnings("ignore")
 from classes import  GUISignal, FeedbackObj
 import time
 import sys
+from re import match
 
 sys.path.append('../Demo')
 import pipeline_config
@@ -91,17 +91,31 @@ class EMSAgent(nn.Module):
         # pred_protocol = p_node[preds]
         # pred_prob = logits[preds]
 
+        # find age
+        regex = '[0-9]+ (y.?r.?s?|years? old)'
+        output = match(regex, text)
+        if output:
+            age_s, _ = output.group().split('y')
+            age = int(age_s)
+        else:
+            age = 39 #assume adult if age not given - 39 is median age for adults in US
+
         ### multi-label classification
         logits = logits.cpu().numpy()
         if self.config.cluster == 'group':
-            preds, logits = convert_label([preds], ages=[55], logits=[logits])
+            preds, logits = convert_label([preds], ages=[age], logits=[logits])
             preds, logits = preds[0], logits[0]
             one_hot = preds
 
         pred_protocol = np.array(ungroup_p_node)[np.where(preds == 1)]
         pred_prob = logits[np.where(preds == 1)]
 
-        return pred_protocol, pred_prob, one_hot
+        # get the protocol prediction with highest confidence value
+        max_prob_index = np.argmax(pred_prob)
+        prob = pred_prob[max_prob_index]
+        protocol = pred_protocol[max_prob_index]
+
+        return protocol, prob, one_hot, logits
 
 
 def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
@@ -134,7 +148,13 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
 
 
     model = EMSAgent(config, model_name)
+    
+    print('================= Warmup Protocol Model =================')
+    print(f'[Protocol warm up done!: {model("Warmup Text")}]')
 
+    #Signal warmup done
+    protocolFB =  FeedbackObj("protocol model warmup done", "protocol model warmup done", "protocol model warmup done")
+    FeedbackQueue.put(protocolFB)
 
     # call the model    
     while True:
@@ -153,13 +173,11 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
             end = None
             pred = None
             prob = None
-            if len(received.transcript):
+            if len(received.transcript) and not received.transcript.isspace():
                 # try:
-                start = time.perf_counter()
-                pred, prob, one_hot = model(received.transcript)
-                end = time.perf_counter()
-                pred = ','.join(pred)
-                prob = ','.join(str(p) for p in prob)
+                start = time.perf_counter_ns()
+                pred, prob, one_hot, logits = model(received.transcript)
+                end = time.perf_counter_ns()
                 ProtocolSignal.signal.emit([f"(Protocol:{pred}:{prob})"])
                 print(f'[Protocol suggestion:{pred}:{prob}]')
 
@@ -167,9 +185,6 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
                 protocolFB =  FeedbackObj("", str(pred) + " : " +str(prob), "")
                 FeedbackQueue.put(protocolFB)
 
-                # except Exception as e:
-                #     pred = 'Protocol is not suggested due to exception'
-                #     print(e, f'[{pred}]')
             else:
                 pred = 'Protocol is not suggested due to receiving blank space as transcript'
                 print(f'[{pred}]')
@@ -179,10 +194,10 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
             pipeline_config.curr_segment += [received.transcriptionDuration, received.transcript, received.confidence, 'wer', 'cer']
             # if we made a protocol prediction
             if start != None and end != None:
-                pipeline_config.curr_segment += [end-start, pred, prob, 'correct?', one_hot, 'one hot GT', 'tn', 'fp', 'fn', 'tp'] # see if protocol prediction is correct later in EndToEndEval.py
+                pipeline_config.curr_segment += [(end-start)/1000000, pred, prob, 'correct?', one_hot, 'one hot GT', 'tn', 'fp', 'fn', 'tp', logits] # see if protocol prediction is correct later in EndToEndEval.py
             else:
                 # if no suggesion, save one hot vector of all 0's
-                pipeline_config.curr_segment += [-1, pred, -1, -1, -1, -1, -1, -1, -1, -1]
+                pipeline_config.curr_segment += [-1, pred, -1, -1, -1, -1, -1, -1, -1, -1, -1]
             pipeline_config.rows_trial.append(pipeline_config.curr_segment)
             pipeline_config.curr_segment = []
 

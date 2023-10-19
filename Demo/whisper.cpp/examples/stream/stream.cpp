@@ -457,7 +457,7 @@ int main(int argc, char **argv)
                     for (int j = 0; j < n_tokens; j++) {
                         sum_scores += whisper_full_get_token_p(ctx, i, j);
                     }
-                    // 'block{isFinal:avg_p,latency}'
+                    // 'block{isFinal,avg_p,latency}'
                     std::string text_score = text + " {" + is_final + "," + std::to_string(sum_scores/n_tokens) + "," + std::to_string(t_inf_diff) + "}";
                     const char *ctext_score = text_score.c_str();
 

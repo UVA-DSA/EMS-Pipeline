@@ -37,12 +37,17 @@ def Pipeline(recording=pipeline_config.recording_name):
     # Start subprocess
     WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='whisper.cpp/')
 
-# ===== Start EMSAgent module =================================================
+# ===== Start Protocol module =================================================
     EMSAgent = Thread(target=EMSAgentSystem.EMSAgentSystem, args=(EMSAgentQueue, FeedbackQueue))
     EMSAgent.start()
 
-# ===== Sleep for 3 seconds to finish starting Whisper module and EMSAgent module =====
-    sleep(3)
+# ===== Warm up Protocol module =====
+    print("======================= Warmup Phase ======================")
+    signal = FeedbackQueue.get()
+    while (signal.protocol != 'protocol model warmup done'):
+        print('.',end="")
+        sleep(0.1)
+    print("======================= Warmup Done ======================")
 
 # ===== Start Audiostream module =========================================
     Audiostream = Thread(
