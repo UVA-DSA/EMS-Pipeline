@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import classification_report, confusion_matrix
 from EMSAgent.default_sets import ungroup_p_node
+import os
 from EMSAgent.utils import get_precision_at_k, get_recall_at_k, get_r_precision_at_k, get_ndcg_at_k
 
 # -- static helper variables ---------------------------------------
@@ -48,9 +49,15 @@ def get_wer_and_cer(recording, transcript):
     return wer, cer
 
 def check_protocol_correct(recording, protocol):
+    print('check protocol correct:',protocol)
     if protocol == -1: return -1
     ground_truth = get_ground_truth_protocol(recording)
     return int(protocol.lower() == ground_truth.lower())
+
+def is_singleton_array(arr):
+    shape = arr.shape
+    # Check if all dimensions have size 1
+    return all(dim == 1 for dim in shape)
 
 # --- main ---------------------------
 if __name__ == '__main__':
@@ -165,6 +172,6 @@ if __name__ == '__main__':
 
 
 
-    
+        
 
     

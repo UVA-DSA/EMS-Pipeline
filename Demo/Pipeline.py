@@ -8,7 +8,10 @@ from EMSAgent import EMSAgentSystem
 from threading import Thread
 from time import sleep
 
-def Pipeline(recording=pipeline_config.recording_name):
+from EMSVision import EMSVisionSystem
+import VideoFileStream
+
+def Pipeline(recording=pipeline_config.recording_name, videofile=pipeline_config.video_name, whisper_model=pipeline_config.whisper_model_sizes[0]):
 # Set the Google Speech API service-account key environment variable
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "service-account.json"
 
@@ -16,12 +19,15 @@ def Pipeline(recording=pipeline_config.recording_name):
     SpeechToNLPQueue = queue.Queue()
     EMSAgentQueue  = queue.Queue()
     FeedbackQueue = queue.Queue()
+    VideoDataQueue = queue.Queue()
+    SpeechSignalQueue = queue.Queue()
+    VideoSignalQueue = queue.Queue()
 
 # ===== Start Whisper module ===================================================
     whispercppcommand = [
     "./stream",
     "-m", # use specific whisper model
-    f"models/ggml-{pipeline_config.whisper_model_size}.bin", 
+    f"models/ggml-{whisper_model}.bin", 
     "--threads",
     str(pipeline_config.num_threads),
     "--step",                          
@@ -51,8 +57,20 @@ def Pipeline(recording=pipeline_config.recording_name):
 
 # ===== Start Audiostream module =========================================
     Audiostream = Thread(
-                    target=WhisperFileStream.Whisper, args=(SpeechToNLPQueue, EMSAgentQueue, f'./Audio_Scenarios/2019_Test/{recording}.wav'))
+                    target=WhisperFileStream.Whisper, args=(SpeechToNLPQueue,VideoSignalQueue, f'./Audio_Scenarios/2019_Test/{recording}.wav'))
     Audiostream.start()
+    
+# # ===== Start Video Streaming module =========================================
+    Videostream = Thread(
+                    target=VideoFileStream.VideoStream, args=(VideoDataQueue, VideoSignalQueue, f'./Video_Scenarios/2023_Test/{videofile}.MOV'))
+    Videostream.start()
+    
+    
+# ===== Start Video Action Recognition module =========================================
+    EMSVision = Thread(
+                    target=EMSVisionSystem.EMSVision, args=(FeedbackQueue, VideoDataQueue))
+    EMSVision.start()
+    
 
 # ===== Exiting Program ====================================================
     '''
@@ -61,6 +79,8 @@ def Pipeline(recording=pipeline_config.recording_name):
     TODO: Make a Event() from Threading module to use as flag signal instead of queueing the string 'Kill'
     '''
     Audiostream.join()
+    Videostream.join()
+    EMSVision.join()
     EMSAgent.join()
     WhisperSubprocess.terminate()
 

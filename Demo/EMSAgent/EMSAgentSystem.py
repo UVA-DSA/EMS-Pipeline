@@ -117,8 +117,19 @@ class EMSAgent(nn.Module):
 
         return protocol, prob, one_hot, logits
 
+def add_new_parts(old_string, new_string):
+    # Split the strings into words
+    words1 = old_string.split()
+    words2 = new_string.split()
 
-def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
+    # Find new words in string2
+    new_words = [word for word in words2 if word not in words1]
+
+    # Update string1 with new words
+    old_string += " " + " ".join(new_words)
+    return old_string
+
+def EMSAgentSystem(SpeechToNLPQueue, FeedbackQueue):
 
     ProtocolSignal = GUISignal()
     # ProtocolSignal.signal.connect(Window.UpdateProtocolBoxes)
@@ -159,30 +170,33 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
     # call the model    
     while True:
         # Get queue item from the Speech-to-Text Module
-        received = EMSAgentQueue.get()
+        received = SpeechToNLPQueue.get()
 
         # TODO: make thread exit while True loop based on threading module event
         if(received == 'Kill'):
-            # print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
+            print("EMSAgent Thread received Kill Signal. Bye!")
             break
         else:
-            print('=============================================================')
-            print(f'[Protocol model received transcript: {received.transcript}]')
+            
+            full_transcript = received.transcript
+            print(f'\n[Protocol model received transcript: {full_transcript}]')
             # initialize variables
             start = None
             end = None
             pred = None
             prob = None
-            if len(received.transcript) and not received.transcript.isspace():
+            if len(received.transcript):
                 # try:
-                start = time.perf_counter_ns()
-                pred, prob, one_hot, logits = model(received.transcript)
-                end = time.perf_counter_ns()
+                start = time.perf_counter()
+                pred, prob, one_hot = model(received.transcript)
+                end = time.perf_counter()
+                pred = ','.join(pred)
+                prob = ','.join(str(p) for p in prob)
                 ProtocolSignal.signal.emit([f"(Protocol:{pred}:{prob})"])
                 print(f'[Protocol suggestion:{pred}:{prob}]')
 
                 #Feedback
-                protocolFB =  FeedbackObj("", str(pred) + " : " +str(prob), "")
+                protocolFB =  FeedbackObj("", str(pred),str(prob),"")
                 FeedbackQueue.put(protocolFB)
 
             else:
@@ -200,6 +214,10 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
                 pipeline_config.curr_segment += [-1, pred, -1, -1, -1, -1, -1, -1, -1, -1, -1]
             pipeline_config.rows_trial.append(pipeline_config.curr_segment)
             pipeline_config.curr_segment = []
+            
+            
+    FeedbackQueue.put("Kill")
+            
 
                 
         
