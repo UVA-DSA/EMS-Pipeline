@@ -11,7 +11,7 @@ from time import sleep
 from EMSVision import EMSVisionSystem
 import VideoFileStream
 
-def Pipeline(recording=pipeline_config.recording_name, videofile=pipeline_config.video_name):
+def Pipeline(recording=pipeline_config.recording_name, videofile=pipeline_config.video_name, whisper_model=pipeline_config.whisper_model_sizes[0]):
 # Set the Google Speech API service-account key environment variable
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "service-account.json"
 
@@ -27,7 +27,7 @@ def Pipeline(recording=pipeline_config.recording_name, videofile=pipeline_config
     whispercppcommand = [
     "./stream",
     "-m", # use specific whisper model
-    f"models/ggml-{pipeline_config.whisper_model_size}.bin", 
+    f"models/ggml-{whisper_model}.bin", 
     "--threads",
     str(pipeline_config.num_threads),
     "--step",                          

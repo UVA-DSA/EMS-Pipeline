@@ -11,9 +11,6 @@ def EMSVision(FeedbackQueue, VisionDataQueue):
     classifier = pipeline("zero-shot-image-classification", model = model_name, device=0)
 
     while True:
-        
-     
-
         try:
             
             protocol_msg = FeedbackQueue.get()

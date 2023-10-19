@@ -145,7 +145,7 @@ def EMSAgentSystem(SpeechToNLPQueue, FeedbackQueue):
 
 
     model = EMSAgent(config, model_name)
-
+    
     full_transcript = ""
     # call the model    
     while True:
