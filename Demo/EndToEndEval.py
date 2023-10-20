@@ -80,10 +80,12 @@ if __name__ == '__main__':
             # Pipeline(recording=recording, video_file=video, whisper_model=whisper_model)
             Pipeline(recording=recording, whisper_model=whisper_model)
             
+            
             # get data
             rows_trial = pipeline_config.rows_trial
             # get ground truth one hot vector
             gt = get_ground_truth_one_hot_vector(recording)
+            pred = []
             # evaluate metrics
             for i in range(len(rows_trial)):
                 row = rows_trial[i]
@@ -107,22 +109,24 @@ if __name__ == '__main__':
             one_hot_pred_all_recordings.append(pred)
             one_hot_gt_all_recordings.append(gt)
             
-            directory = f"Evaluation_Results/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{whisper_model}/"
-            if not os.path.exists(directory):
-                os.makedirs(directory)
-            # Write data to csv
-            with open (f'{directory}{recording}.csv', 'w') as csvFile:
-                writer = csv.writer(csvFile)
-                writer.writerow(fields)
-                writer.writerows(rows_trial)
+            if(pipeline_config.data_save):
+                directory = f"Evaluation_Results/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{whisper_model}/"
+                if not os.path.exists(directory):
+                    os.makedirs(directory)
+                # Write data to csv
+                with open (f'{directory}{recording}.csv', 'w') as csvFile:
+                    writer = csv.writer(csvFile)
+                    writer.writerow(fields)
+                    writer.writerows(rows_trial)
 
         # # TODO
         # evalation for ALL RECORDINGS
 
         # protocol model report
-        report = classification_report(one_hot_gt_all_recordings, one_hot_pred_all_recordings, target_names=ungroup_p_node, output_dict=True)
-        with open(f'Evaluation_Results/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{pipeline_config.whisper_model_size}/protocol-model-evaluation-report.txt', 'w') as f:
-            f.write(str(report))
+        if(pipeline_config.data_save and pipeline_config.speech_model == "whisper"):
+            report = classification_report(one_hot_gt_all_recordings, one_hot_pred_all_recordings, target_names=ungroup_p_node, output_dict=True)
+            with open(f'Evaluation_Results/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{whisper_model}/protocol-model-evaluation-report.txt', 'w') as f:
+                f.write(str(report))
 
         # end to end report
         fields = [

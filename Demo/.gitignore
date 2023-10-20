@@ -3,6 +3,9 @@
 .vscode
 
 
+*.h5
+*.tflite
+
 Evaluation_Results/
 evaluation_results/
 
