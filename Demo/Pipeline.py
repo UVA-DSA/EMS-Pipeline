@@ -10,7 +10,9 @@ from time import sleep
 
 from EMSVision import EMSVisionSystem
 import VideoFileStream
+from EMSWhisper import WhisperAgent
 
+import multiprocessing
 
 
 if pipeline_config.speech_model != 'whisper':
@@ -66,39 +68,59 @@ def Pipeline(recording=pipeline_config.recording_name, videofile=pipeline_config
         
         sleep(3)
     
-  
                 # Start subprocess
         WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='whisper.cpp/')
         
         sleep(2)
-                       # ===== Start Whisper Audiostream and Read module =========================================
+        
+        
+         # ===== Start Whisper Audiostream and Read module =========================================
+        if pipeline_config.endtoendspv:
+            recording_dir = f'./Audio_Scenarios/2023_Test/{recording}.wav'
+        else:
+            recording_dir = f'./Audio_Scenarios/2019_Test/{recording}.wav'
+            
         Audiostream = Thread(
-                        target=WhisperFileStream.SDStream, args=(SpeechSignalQueue, f'./Audio_Scenarios/2019_Test/{recording}.wav'))
+                        target=WhisperFileStream.Whisper, args=(SpeechToNLPQueue,VideoSignalQueue, recording_dir))
         Audiostream.start()
         
+        
+        # #                # ===== Start Whisper Audiostream and Read module =========================================
+        # Audiostream = Thread(
+        #                 target=WhisperFileStream.PyAudioStream, args=(SpeechSignalQueue, f'./Audio_Scenarios/2019_Test/{recording}.wav'))
+        # Audiostream.start()
+        
+        #         #  # ===== Start Whisper HuggingFace Pipeline module =========================================
+        # WhisperPipeline = Thread(
+        #                 target=WhisperAgent.WhisperPipeline, args=(SpeechToNLPQueue,SpeechSignalQueue))
+        # WhisperPipeline.start()
+        
            
-                             # ===== Start Whisper Audiostream and Read module =========================================
-        FIFOStream = Thread(
-                        target=WhisperFileStream.ReadPipe, args=(SpeechToNLPQueue,VideoSignalQueue,SpeechSignalQueue))
-        FIFOStream.start()
+        #                      # ===== Start Whisper Audiostream and Read module =========================================
+        # FIFOStream = Thread(
+        #                 target=WhisperFileStream.ReadPipe, args=(SpeechToNLPQueue,VideoSignalQueue,SpeechSignalQueue))
+        # FIFOStream.start()
           
-        
-
-    #     # # ===== Start Video Streaming module =========================================
-    #     Videostream = Thread(
-    #                     target=VideoFileStream.VideoStream, args=(VideoDataQueue, VideoSignalQueue, f'./Video_Scenarios/2023_Test/{videofile}.MOV'))
-    #     Videostream.start()
-        
-        
-    # # ===== Start Video Action Recognition module =========================================
-    #     EMSVision = Thread(
-    #                     target=EMSVisionSystem.EMSVision, args=(FeedbackQueue, VideoDataQueue))
-    #     EMSVision.start()
-    
+        if pipeline_config.endtoendspv:
+            # # ===== Start Video Streaming module =========================================
+            Videostream = Thread(
+                            target=VideoFileStream.VideoStream, args=(VideoDataQueue, VideoSignalQueue, f'./Video_Scenarios/2023_Test/{recording}.avi'))
+            Videostream.start()
             
+            
+        # ===== Start Video Action Recognition module =========================================
+            EMSVision = Thread(
+                            target=EMSVisionSystem.EMSVision, args=(FeedbackQueue, VideoDataQueue))
+            EMSVision.start()
+        
+                
     else:
                     
-
+      # ===== Start EMSAgent module =================================================
+        EMSAgent = Thread(target=EMSAgentSystem.EMSAgentSystem, args=(SpeechToNLPQueue, FeedbackQueue))
+        EMSAgent.start()
+        
+        sleep(3)
     
         EMSConformer = Thread(target=run_tflite_model_in_files_easy.main, args=(SpeechToNLPQueue,ConformerSignalQueue, f"./EMSConformer/speech_models/{pipeline_config.conformer_model_type}"))
         EMSConformer.start()
@@ -125,12 +147,14 @@ def Pipeline(recording=pipeline_config.recording_name, videofile=pipeline_config
 
     if(pipeline_config.speech_model == 'whisper'):    
         Audiostream.join()
-        FIFOStream.join()
-        # Videostream.join()
-        # EMSVision.join()
+        # WhisperPipeline.join()
+        if(pipeline_config.endtoendspv):
+            Videostream.join()
+            EMSVision.join()
         EMSAgent.join()
         WhisperSubprocess.terminate()   
     else: 
+        EMSAgent.join()
         EMSConformer.join()
         Audiostream.join()
 

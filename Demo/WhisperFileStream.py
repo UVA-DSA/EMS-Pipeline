@@ -1,11 +1,12 @@
+import pipeline_config
 import wave
 import pyaudio
 import time
 import re
 from classes import TranscriptItem
 import traceback
-import sounddevice as sd
-import soundfile as sf
+# import sounddevice as sd
+# import soundfile as sf
 
 import queue
 
@@ -15,8 +16,14 @@ import threading
 
 # Wavefile recording parameters
 RATE = 16000
-CHUNK = 1024  # 100ms
+CHUNK = 1600  # 100ms
 
+                
+if(pipeline_config.endtoendspv):
+    RATE = 44100
+    CHUNK = RATE//10
+    
+                    
 SIGNAL = False
 
 '''
@@ -55,9 +62,7 @@ def process_whisper_response(response):
 
 def SDStream(SpeechSignalQueue,wavefile_name):
 
-
-    
-    blocksize = 2048
+    blocksize = 1024
     buffersize = 20
     device = len(sd.query_devices()) -1
 
@@ -65,6 +70,7 @@ def SDStream(SpeechSignalQueue,wavefile_name):
     event = threading.Event()
     print("Audio Streaming Started! ",wavefile_name)
     
+    SpeechSignalQueue.put("Proceed")
 
     def callback(outdata, frames, time, status):
         assert frames == blocksize
@@ -107,7 +113,9 @@ def SDStream(SpeechSignalQueue,wavefile_name):
                 event.wait()  # Wait until playback is finished
                 
                 print("Audio streaming over!")
+                SpeechSignalQueue.empty()
                 SpeechSignalQueue.put("Kill")
+                
     except KeyboardInterrupt:
         print('\nInterrupted by user')
     except queue.Full:
@@ -132,6 +140,50 @@ def SDStream(SpeechSignalQueue,wavefile_name):
     # print("Audio Stream Done Playing. Sent Kill Signal. Bye!")
     
 
+def PyAudioStream(SpeechSignalQueue,wavefile_name):
+    with wave.open(wavefile_name, 'rb') as wf:
+        try:
+            # Instantiate PyAudio and initialize PortAudio system resources (1)
+            p = pyaudio.PyAudio()
+            info = p.get_default_host_api_info()
+            device_index = info.get('deviceCount') - 1 # get default device as output device
+                
+            stream = p.open(format = pyaudio.paInt16, channels = 1, rate = RATE, output = True, frames_per_buffer = CHUNK, output_device_index=device_index)
+            
+            # Play samples from the wave file (3)
+            while len(data:=wf.readframes(CHUNK)):  # Requires Python 3.8+ for :=
+                stream.write(data)
+                # VideoSignalQueue.put('Proceed')
+                SpeechSignalQueue.put("Proceed")
+
+            # Close stream (4)
+            stream.close()
+
+            SpeechSignalQueue.empty()
+            SpeechSignalQueue.put('Kill')
+            # VideoSignalQueue.put('Kill')
+
+            # Release PortAudio system resources (5)
+            p.terminate()
+
+            print("Audio Stream Thread Sent Kill Signal. Bye!")
+
+        except Exception as e:
+            print("EXCEPTION: ", e)
+            traceback.print_exception(e)            
+
+
+
+            
+    
+
+
+
+
+   
+    
+    
+    
 def ReadPipe(SpeechToNLPQueue,VideoSignalQueue, SpeechSignalQueue):
     
     fifo_path = "/tmp/myfifo"
@@ -155,6 +207,8 @@ def ReadPipe(SpeechToNLPQueue,VideoSignalQueue, SpeechSignalQueue):
                     
                     
                 if response != old_response and response != "":
+                    if(response.count("}")> 2 or response.count("{") > 2):
+                        continue
                     block, isFinal, avg_p, latency = process_whisper_response(response) #isFinal = False means block is interim block
                     transcript = finalized_blocks + block
                     # if received block is finalized, then save to finalized blocks
@@ -192,8 +246,8 @@ def Whisper(SpeechToNLPQueue,VideoSignalQueue, wavefile_name):
                 p = pyaudio.PyAudio()
                 info = p.get_default_host_api_info()
                 device_index = info.get('deviceCount') - 1 # get default device as output device
-                    
-                stream = p.open(format = pyaudio.paFloat32, channels = 1, rate = RATE, output = True, frames_per_buffer = CHUNK, output_device_index=device_index)
+
+                stream = p.open(format = pyaudio.paInt16, channels = 1, rate = RATE, output = True, frames_per_buffer = CHUNK, output_device_index=device_index)
                 
                 old_response = ""
                 # Play samples from the wave file (3)

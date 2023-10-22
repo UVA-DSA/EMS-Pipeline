@@ -9,7 +9,7 @@ import numpy as np
 from sklearn.metrics import classification_report, confusion_matrix
 from EMSAgent.default_sets import ungroup_p_node
 import os
-
+from time import sleep
 # -- static helper variables ---------------------------------------
 # initialize processor depending on whisper model size 
 if pipeline_config.whisper_model_size == 'base-finetuned':
@@ -41,11 +41,11 @@ def get_ground_truth_one_hot_vector(recording):
     return np.array(one_hot_vector)
 
 def get_wer_and_cer(recording, transcript):
-    tokenized_reference_text = Processor.tokenizer._normalize(get_ground_truth_transcript(recording))
-    tokenized_prediction_text = Processor.tokenizer._normalize(transcript)
-    wer = wer_metric.compute(references=[tokenized_reference_text], predictions=[tokenized_prediction_text])
-    cer = cer_metric.compute(references=[tokenized_reference_text], predictions=[tokenized_prediction_text])
-    return wer, cer
+    # tokenized_reference_text = Processor.tokenizer._normalize(get_ground_truth_transcript(recording))
+    # tokenized_prediction_text = Processor.tokenizer._normalize(transcript)
+    # wer = wer_metric.compute(references=[tokenized_reference_text], predictions=[tokenized_prediction_text])
+    # cer = cer_metric.compute(references=[tokenized_reference_text], predictions=[tokenized_prediction_text])
+    return 0, 0
 
 def check_protocol_correct(recording, protocol):
     print('check protocol correct:',protocol)
@@ -64,80 +64,107 @@ if __name__ == '__main__':
     one_hot_pred_all_recordings = []
     one_hot_gt_all_recordings = []
     
-    for whisper_model in pipeline_config.whisper_model_sizes:
-        for recording in pipeline_config.recordings_to_test:
-            # field names
-            fields = ['time audio->transcript (s)', 'transcript', 'whisper confidence', 'WER', 'CER', #4
-                        'time protocol input->output (s)', 'protocol prediction', 'protocol confidence', #7
-                        'protocol correct? (1 = True, 0 = False, -1=None given)', #8
-                        'one hot prediction', 'one hot GT', 'tn', 'fp', 'fn', 'tp'] 
+    for trial in range(pipeline_config.num_trials):
+        for whisper_model in pipeline_config.whisper_model_sizes:
+            for recording in pipeline_config.recordings_to_test:
+                # field names
+                fields = ['time audio->transcript (s)', 'transcript', 'whisper confidence', 'WER', 'CER', #4
+                            'time protocol input->output (s)', 'protocol prediction', 'protocol confidence', #7
+                            'protocol correct? (1 = True, 0 = False, -1=None given)', #8
+                            'one hot prediction', 'one hot GT', 'tn', 'fp', 'fn', 'tp','intervention recognition','intervention latency'] 
 
-            # data rows of csv file for this run
-            pipeline_config.curr_segment = []
-            pipeline_config.rows_trial = []
+                # data rows of csv file for this run
+                pipeline_config.curr_segment = []
+                pipeline_config.rows_trial = []
 
-            # run pipeline
-            # Pipeline(recording=recording, video_file=video, whisper_model=whisper_model)
-            Pipeline(recording=recording, whisper_model=whisper_model)
+                # run pipeline
+                # Pipeline(recording=recording, video_file=video, whisper_model=whisper_model)
+                print("Running E2E Evaluation for Recording: ",recording)
+                Pipeline(recording=recording, whisper_model=whisper_model)
+                
+                print("Vision stats:",pipeline_config.vision_rows_trial)
+                # get data
+                rows_trial = pipeline_config.rows_trial
+                # get ground truth one hot vector
+                if(not pipeline_config.endtoendspv): gt = get_ground_truth_one_hot_vector(recording)
+                else: gt = get_ground_truth_one_hot_vector("000_190105")
+                pred = []
+                # evaluate metrics
+                for i in range(len(rows_trial)):
+                    row = rows_trial[i]
+                    # WER, CER
+                    if(not pipeline_config.endtoendspv):
+                        row[3], row[4] = get_wer_and_cer(recording, row[1])
+                        row[8] = check_protocol_correct(recording, row[7]) #6 is prediction a string. bug
+                        
+                    else: 
+                        row[3], row[4] = get_wer_and_cer("000_190105", row[1])
+                        row[8] = check_protocol_correct("000_190105", row[7]) #6 is prediction a string. bug
+                        
+                    # protocol correct? (1 = True, 0 = False, -1=None given) 
+                    # if protocol given, evaluate protocol model
+                    if row[8] != -1:
+                        pred = np.array(row[9])
+                        print('gt', gt)
+                        print('pred', pred)
+                        # one hot prediction
+                        row[9] = str(pred)
+                        # one hot GT
+                        row[10] = str(gt)
+                        # tn, fp, fn, tp
+                
+                        row[11], row[12], row[13], row[14] = confusion_matrix(gt, pred).ravel()
+                # save last one hot vectors
+                one_hot_pred_all_recordings.append(pred)
+                one_hot_gt_all_recordings.append(gt)
+                
+                if(pipeline_config.data_save):
+                    
+                    if(pipeline_config.speech_model == "whisper"):
+                        directory = f"Evaluation_Results/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{whisper_model}/"
+                        if not os.path.exists(directory):
+                            os.makedirs(directory)
+                        # Write data to csv
+                        with open (f'{directory}T{trial}_{recording}.csv', 'w') as csvFile:
+                            writer = csv.writer(csvFile)
+                            writer.writerow(fields)
+                            writer.writerows(rows_trial)
+
+                    else:
+                        directory = f"Evaluation_Results/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{pipeline_config.speech_model}/"
+                        print("Writing Results to ",directory)
+                        
+                        if not os.path.exists(directory):
+                            os.makedirs(directory)
+                        # Write data to csv
+                        with open (f'{directory}T{trial}_{recording}.csv', 'w') as csvFile:
+                            writer = csv.writer(csvFile)
+                            writer.writerow(fields)
+                            writer.writerows(rows_trial)            
+            # # TODO
+            # evalation for ALL RECORDINGS
+
+            # protocol model report
+            if(pipeline_config.data_save and pipeline_config.speech_model == "whisper" and not pipeline_config.endtoendspv):
+                report = classification_report(one_hot_gt_all_recordings, one_hot_pred_all_recordings, target_names=ungroup_p_node, output_dict=True)
+                with open(f'Evaluation_Results/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{whisper_model}/protocol-model-evaluation-report.txt', 'w') as f:
+                    f.write(str(report))
+
+            # end to end report
+            fields = [
+                'avg time audio->transcript (s)',  # average of all segment latencies
+                'avg whisper confidence', # average of LAST CONFIDENCE for each recording
+                'avg WER', # average of LAST WER for each recording
+                'avg CER', # average of LAST CER for each recording
+                'avg time protocol input->output (s)', 'avg protocol confidence',  # average of all segment latencies
+                'percent protocol correct? (1 = True, 0 = False, -1=None given)' # number of LAST predictions correct for each recording / number of recordings
+            ]
             
+            if(pipeline_config.speech_model == 'conformer'): break
             
-            # get data
-            rows_trial = pipeline_config.rows_trial
-            # get ground truth one hot vector
-            gt = get_ground_truth_one_hot_vector(recording)
-            pred = []
-            # evaluate metrics
-            for i in range(len(rows_trial)):
-                row = rows_trial[i]
-                # WER, CER
-                row[3], row[4] = get_wer_and_cer(recording, row[1])
-                # protocol correct? (1 = True, 0 = False, -1=None given) 
-                row[8] = check_protocol_correct(recording, row[7]) #6 is prediction a string. bug
-                # if protocol given, evaluate protocol model
-                if row[8] != -1:
-                    pred = np.array(row[9])
-                    print('gt', gt)
-                    print('pred', pred)
-                    # one hot prediction
-                    row[9] = str(pred)
-                    # one hot GT
-                    row[10] = str(gt)
-                    # tn, fp, fn, tp
+            sleep(10)
+
+        sleep(10)
             
-                    row[11], row[12], row[13], row[14] = confusion_matrix(gt, pred).ravel()
-            # save last one hot vectors
-            one_hot_pred_all_recordings.append(pred)
-            one_hot_gt_all_recordings.append(gt)
-            
-            if(pipeline_config.data_save):
-                directory = f"Evaluation_Results/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{whisper_model}/"
-                if not os.path.exists(directory):
-                    os.makedirs(directory)
-                # Write data to csv
-                with open (f'{directory}{recording}.csv', 'w') as csvFile:
-                    writer = csv.writer(csvFile)
-                    writer.writerow(fields)
-                    writer.writerows(rows_trial)
-
-        # # TODO
-        # evalation for ALL RECORDINGS
-
-        # protocol model report
-        if(pipeline_config.data_save and pipeline_config.speech_model == "whisper"):
-            report = classification_report(one_hot_gt_all_recordings, one_hot_pred_all_recordings, target_names=ungroup_p_node, output_dict=True)
-            with open(f'Evaluation_Results/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{whisper_model}/protocol-model-evaluation-report.txt', 'w') as f:
-                f.write(str(report))
-
-        # end to end report
-        fields = [
-            'avg time audio->transcript (s)',  # average of all segment latencies
-            'avg whisper confidence', # average of LAST CONFIDENCE for each recording
-            'avg WER', # average of LAST WER for each recording
-            'avg CER', # average of LAST CER for each recording
-            'avg time protocol input->output (s)', 'avg protocol confidence',  # average of all segment latencies
-            'percent protocol correct? (1 = True, 0 = False, -1=None given)' # number of LAST predictions correct for each recording / number of recordings
-        ]
 
         
-
-    

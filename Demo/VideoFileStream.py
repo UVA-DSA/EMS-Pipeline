@@ -78,3 +78,5 @@ def VideoStream(VisionDataQueue,VideoSignalQueue, video_file_name):
     # Closes all the frames
     cv2.destroyAllWindows()
     
+    print("[Video Stream Thread Died. Sending Kill Signal. Bye!]")
+    VisionDataQueue.put({"signal":"Kill","image":None})

@@ -13,7 +13,7 @@ from transformers import BertTokenizer
 import pandas as pd
 from tqdm import tqdm
 warnings.filterwarnings("ignore")
-from classes import  GUISignal, FeedbackObj
+from classes import   FeedbackObj
 import time
 import sys
 
@@ -117,9 +117,7 @@ def add_new_parts(old_string, new_string):
 
 def EMSAgentSystem(SpeechToNLPQueue, FeedbackQueue):
 
-    ProtocolSignal = GUISignal()
     # ProtocolSignal.signal.connect(Window.UpdateProtocolBoxes)
-
     # initialize
     seed_everything(3407)
     from EMSAgent.default_sets import model_name
@@ -172,7 +170,6 @@ def EMSAgentSystem(SpeechToNLPQueue, FeedbackQueue):
                 end = time.perf_counter()
                 pred = ','.join(pred)
                 prob = ','.join(str(p) for p in prob)
-                ProtocolSignal.signal.emit([f"(Protocol:{pred}:{prob})"])
                 print(f'[Protocol suggestion:{pred}:{prob}]')
 
                 #Feedback
