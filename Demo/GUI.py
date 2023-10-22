@@ -41,7 +41,7 @@ import DeepSpeechMicStream
 import DeepSpeechFileStream
 import WhisperFileStream
 # import WhisperMicStream
-import whisper_config
+import pipeline_config
 
 import TextSpeechStream
 import CognitiveSystem

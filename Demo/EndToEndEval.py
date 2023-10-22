@@ -2,21 +2,22 @@
 
 from Pipeline import Pipeline
 import pipeline_config
-import csv
 from transformers import WhisperProcessor
 from evaluate import load
 import numpy as np
+import pandas as pd
 from sklearn.metrics import classification_report, confusion_matrix
 from EMSAgent.default_sets import ungroup_p_node
 import os
 from time import sleep
+from EMSAgent.utils import get_precision_at_k, get_recall_at_k, get_r_precision_at_k, get_ndcg_at_k
 # -- static helper variables ---------------------------------------
 # initialize processor depending on whisper model size 
 if pipeline_config.whisper_model_size == 'base-finetuned':
     Processor = WhisperProcessor.from_pretrained("saahith/whisper-base.en-combined-v10")
 elif pipeline_config.whisper_model_size == 'base.en':
     Processor = WhisperProcessor.from_pretrained("openai/whisper-base.en")
-elif pipeline_config.whisper_model_size == 'tiny-finetuned':
+elif pipeline_config.whisper_model_size in {'tiny-finetuned', 'tiny-finetuned-v2'}:
     Processor = WhisperProcessor.from_pretrained("saahith/whisper-tiny.en-combined-v10")
 elif pipeline_config.whisper_model_size == 'tiny.en':
     Processor = WhisperProcessor.from_pretrained("openai/whisper-tiny.en")
@@ -63,7 +64,9 @@ if __name__ == '__main__':
 
     one_hot_pred_all_recordings = []
     one_hot_gt_all_recordings = []
-    
+    logits_all_recordings = []
+    df_all_recordings = []
+
     for trial in range(pipeline_config.num_trials):
         for whisper_model in pipeline_config.whisper_model_sizes:
             for recording in pipeline_config.recordings_to_test:
@@ -116,7 +119,7 @@ if __name__ == '__main__':
                         
                     # protocol correct? (1 = True, 0 = False, -1=None given) 
                     # if protocol given, evaluate protocol model
-                    if row[8] != -1:
+                    if row[7] > 0:
                         pred = np.array(row[9])
                         print('gt', gt)
                         print('pred', pred)
@@ -127,57 +130,48 @@ if __name__ == '__main__':
                         # tn, fp, fn, tp
                 
                         row[11], row[12], row[13], row[14] = confusion_matrix(gt, pred).ravel()
-                # save last one hot vectors
+                
+                # save last one hot vectors and logit
                 one_hot_pred_all_recordings.append(pred)
                 one_hot_gt_all_recordings.append(gt)
+                logits_all_recordings.append(logits)
+
+                # save dataframe
+                df = pd.DataFrame(rows_trial, columns=fields)
+                df_all_recordings.append(df)
                 
+                # Write to csv
                 if(pipeline_config.data_save):
-                    
-                    if(pipeline_config.speech_model == "whisper"):
-                        directory = f"Evaluation_Results/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{whisper_model}/"
-                        if not os.path.exists(directory):
-                            os.makedirs(directory)
-                        # Write data to csv
-                        with open (f'{directory}T{trial}_{recording}.csv', 'w') as csvFile:
-                            writer = csv.writer(csvFile)
-                            writer.writerow(fields)
-                            writer.writerows(rows_trial)
-
-                    else:
-                        directory = f"Evaluation_Results/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{pipeline_config.speech_model}/"
-                        print("Writing Results to ",directory)
-                        
-                        if not os.path.exists(directory):
-                            os.makedirs(directory)
-                        # Write data to csv
-                        with open (f'{directory}T{trial}_{recording}.csv', 'w') as csvFile:
-                            writer = csv.writer(csvFile)
-                            writer.writerow(fields)
-                            writer.writerows(rows_trial)            
-            # # TODO
-            # evalation for ALL RECORDINGS
-
-            # protocol model report
+                  if(pipeline_config.speech_model == "whisper"):
+                    directory = f"Evaluation_Results/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{whisper_model}/"
+                  else:
+                    directory = f"Evaluation_Results/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{pipeline_config.speech_model}/"
+                  if not os.path.exists(directory):
+                    os.makedirs(directory)
+                  df.to_csv(f'{directory}T{trial}_{recording}.csv')
+                         
+            # protocol model report for ALL recordings
             if(pipeline_config.data_save and pipeline_config.speech_model == "whisper" and not pipeline_config.endtoendspv):
                 report = classification_report(one_hot_gt_all_recordings, one_hot_pred_all_recordings, target_names=ungroup_p_node, output_dict=True)
                 with open(f'Evaluation_Results/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{whisper_model}/protocol-model-evaluation-report.txt', 'w') as f:
                     f.write(str(report))
+                    
+            # protocol model report
+            report = classification_report(one_hot_gt_all_recordings, one_hot_pred_all_recordings, target_names=ungroup_p_node, output_dict=True)
+            p1 = get_precision_at_k(np.array(one_hot_gt_all_recordings), np.array(logits_all_recordings), k=1)
+            r1 = get_recall_at_k(np.array(one_hot_gt_all_recordings), np.array(logits_all_recordings), k=1)
+            dcg1 = get_ndcg_at_k(np.array(one_hot_gt_all_recordings), np.array(logits_all_recordings), k=1)
+            rprecision1 = get_r_precision_at_k(np.array(one_hot_gt_all_recordings), np.array(logits_all_recordings), k=1)
+            report['P@1'] = p1
+            report['R@1'] = r1
+            report['nDCG@1'] = dcg1
+            report['R-Precision@1'] = rprecision1
 
-            # end to end report
-            fields = [
-                'avg time audio->transcript (s)',  # average of all segment latencies
-                'avg whisper confidence', # average of LAST CONFIDENCE for each recording
-                'avg WER', # average of LAST WER for each recording
-                'avg CER', # average of LAST CER for each recording
-                'avg time protocol input->output (s)', 'avg protocol confidence',  # average of all segment latencies
-                'percent protocol correct? (1 = True, 0 = False, -1=None given)' # number of LAST predictions correct for each recording / number of recordings
-            ]
+            df = pd.DataFrame(report).T
+            df.to_csv(f'{directory}protocol-model-evaluation-report.csv')
             
             if(pipeline_config.speech_model == 'conformer'): break
             
             sleep(10)
 
         sleep(10)
-            
-
-        

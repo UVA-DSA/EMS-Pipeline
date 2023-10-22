@@ -51,9 +51,21 @@ def Pipeline(recording=pipeline_config.recording_name, videofile=pipeline_config
     # If a Hard-coded Audio test file, use virtual mic to capture the recording
     if(pipeline_config.hardcoded):
         whispercppcommand.append("--capture")
-        
-    
 
+    # Start subprocess
+    WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='whisper.cpp/')
+
+# ===== Start Protocol module =================================================
+    EMSAgent = Thread(target=EMSAgentSystem.EMSAgentSystem, args=(EMSAgentQueue, FeedbackQueue))
+    EMSAgent.start()
+
+# ===== Warm up Protocol module =====
+    print("======================= Warmup Phase ======================")
+    signal = FeedbackQueue.get()
+    while (signal.protocol != 'protocol model warmup done'):
+        print('.',end="")
+        sleep(0.1)
+    print("======================= Warmup Done ======================")
 
     
     # ===== Start Speech Recognition module =================================================

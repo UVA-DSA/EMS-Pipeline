@@ -53,7 +53,7 @@ def process_whisper_response(response):
     end = response.find('}')
     block = response[:start]
     isFinal_str, avg_p_str, latency_str = response[start+1:end].split(",")
-    isFinal = True if isFinal_str == '1' else False
+    isFinal = int(isFinal_str)
     avg_p = float(avg_p_str)
     latency = int(latency_str)
 
@@ -267,7 +267,7 @@ def Whisper(SpeechToNLPQueue,VideoSignalQueue, wavefile_name):
                         SpeechToNLPQueue.put(transcriptItem)  
                         
                         print("--- Whisper Latency:", latency)
-                        old_response = response                
+                        old_response = response
                 # Close stream (4)
                 stream.close()
 
