@@ -231,10 +231,6 @@ def ReadPipe(SpeechToNLPQueue,VideoSignalQueue, SpeechSignalQueue):
         except Exception as e:
             print("EXCEPTION: ", e)
 
-
-
-
-
 def Whisper(SpeechToNLPQueue,VideoSignalQueue, wavefile_name):
     fifo_path = "/tmp/myfifo"
     finalized_blocks = ''
@@ -253,7 +249,10 @@ def Whisper(SpeechToNLPQueue,VideoSignalQueue, wavefile_name):
                 # Play samples from the wave file (3)
                 while len(data:=wf.readframes(CHUNK)):  # Requires Python 3.8+ for :=
                     stream.write(data)
-                    response = fifo.read().strip()  # Read the message from the named pipe
+                    try:
+                        response = fifo.read().strip()  # Read the message from the named pipe
+                    except Exception as e:
+                        response = ""
                     VideoSignalQueue.put('Proceed')
 
                     if response != old_response and response != "":

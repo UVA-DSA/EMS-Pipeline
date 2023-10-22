@@ -36,9 +36,9 @@ def EMSVision(FeedbackQueue, VisionDataQueue):
             pil_image = message["image"]
             model_scores,model_latency = classify(pil_image,labels_for_classification,classifier)
 
-            pipeline_config.vision_curr_segment += [model_scores, model_latency]
-            pipeline_config.vision_rows_trial.append(pipeline_config.vision_curr_segment)
-            pipeline_config.vision_curr_segment = []
+            pipeline_config.curr_segment += [model_scores, model_latency]
+            pipeline_config.rows_trial.append(pipeline_config.curr_segment)
+            pipeline_config.curr_segment = []
             
             print("[EMS Vision Thread: action-recognition-results:",model_scores,model_latency,']')
 

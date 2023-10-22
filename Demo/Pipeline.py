@@ -19,7 +19,7 @@ if pipeline_config.speech_model != 'whisper':
     import EMSConformerFileStream
     from EMSConformer.inference import run_tflite_model_in_files_easy
 
-def Pipeline(recording=pipeline_config.recording_name, videofile=pipeline_config.video_name, whisper_model=pipeline_config.whisper_model_sizes[0]):
+def Pipeline(recording=pipeline_config.recording_name, videofile=pipeline_config.video_name, whisper_model=pipeline_config.whisper_model_size):
 # Set the Google Speech API service-account key environment variable
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "service-account.json"
 
@@ -28,65 +28,45 @@ def Pipeline(recording=pipeline_config.recording_name, videofile=pipeline_config
     EMSAgentQueue  = queue.Queue()
     FeedbackQueue = queue.Queue()
     VideoDataQueue = queue.Queue()
-    SpeechSignalQueue = queue.Queue()
     # SpeechSignalQueue = Queue()
     VideoSignalQueue = queue.Queue()
     ConformerSignalQueue = queue.Queue()
-    
-
-# ===== Start Whisper module ===================================================
-    whispercppcommand = [
-    "./stream",
-    "-m", # use specific whisper model
-    f"models/ggml-{whisper_model}.bin", 
-    "--threads",
-    str(pipeline_config.num_threads),
-    "--step",                          
-    str(pipeline_config.step),
-    "--length",
-    str(pipeline_config.length),
-    "--keep",
-    str(pipeline_config.keep_ms)
-    ]
-    # If a Hard-coded Audio test file, use virtual mic to capture the recording
-    if(pipeline_config.hardcoded):
-        whispercppcommand.append("--capture")
-
-    # Start subprocess
-    WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='whisper.cpp/')
-
-# ===== Start Protocol module =================================================
-    EMSAgent = Thread(target=EMSAgentSystem.EMSAgentSystem, args=(EMSAgentQueue, FeedbackQueue))
-    EMSAgent.start()
-
-# ===== Warm up Protocol module =====
-    print("======================= Warmup Phase ======================")
-    signal = FeedbackQueue.get()
-    while (signal.protocol != 'protocol model warmup done'):
-        print('.',end="")
-        sleep(0.1)
-    print("======================= Warmup Done ======================")
 
     
     # ===== Start Speech Recognition module =================================================
     
     # Check speech model 
     if(pipeline_config.speech_model == 'whisper'):
-        
-            
         # ===== Start EMSAgent module =================================================
         EMSAgent = Thread(target=EMSAgentSystem.EMSAgentSystem, args=(SpeechToNLPQueue, FeedbackQueue))
         EMSAgent.start()
         
         sleep(3)
     
-                # Start subprocess
+    # Start Whisper module
+        whispercppcommand = [
+        "./stream",
+        "-m", # use specific whisper model
+        f"models/ggml-{whisper_model}.bin", 
+        "--threads",
+        str(pipeline_config.num_threads),
+        "--step",                          
+        str(pipeline_config.step),
+        "--length",
+        str(pipeline_config.length),
+        "--keep",
+        str(pipeline_config.keep_ms)
+        ]
+        # If a Hard-coded Audio test file, use virtual mic to capture the recording
+        if(pipeline_config.hardcoded):
+            whispercppcommand.append("--capture")
+
+        # Start subprocess
         WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='whisper.cpp/')
         
         sleep(2)
         
-        
-         # ===== Start Whisper Audiostream and Read module =========================================
+        # ===== Start Whisper Audiostream and Read module =========================================
         if pipeline_config.endtoendspv:
             recording_dir = f'./Audio_Scenarios/2023_Test/{recording}.wav'
         else:
@@ -124,8 +104,7 @@ def Pipeline(recording=pipeline_config.recording_name, videofile=pipeline_config
             EMSVision = Thread(
                             target=EMSVisionSystem.EMSVision, args=(FeedbackQueue, VideoDataQueue))
             EMSVision.start()
-        
-                
+               
     else:
                     
       # ===== Start EMSAgent module =================================================
@@ -145,11 +124,6 @@ def Pipeline(recording=pipeline_config.recording_name, videofile=pipeline_config
         Audiostream.start()
 
 
-
-
-    
-
-
 # ===== Exiting Program ====================================================
     '''
     When Whisper() of WhisperFileStream finishes running, that means recording is finished
@@ -157,19 +131,18 @@ def Pipeline(recording=pipeline_config.recording_name, videofile=pipeline_config
     TODO: Make a Event() from Threading module to use as flag signal instead of queueing the string 'Kill'
     '''
 
-    if(pipeline_config.speech_model == 'whisper'):    
+    if(pipeline_config.speech_model == 'whisper'):
         Audiostream.join()
         # WhisperPipeline.join()
         if(pipeline_config.endtoendspv):
             Videostream.join()
             EMSVision.join()
         EMSAgent.join()
-        WhisperSubprocess.terminate()   
+        WhisperSubprocess.terminate()
     else: 
         EMSAgent.join()
         EMSConformer.join()
         Audiostream.join()
-
 
 if __name__ == '__main__':
     Pipeline()

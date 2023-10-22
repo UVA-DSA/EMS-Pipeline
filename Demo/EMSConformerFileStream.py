@@ -11,7 +11,7 @@ RATE = 16000
 CHUNK = RATE // 10  # 100ms
 
 def ConformerStream(SpeechToNLPQueue,VideoSignalQueue, ConformerSignalQueue, wavefile_name):
-        
+    print('Conformer started!')
     with wave.open(wavefile_name, 'rb') as wf:
         try:
             # Instantiate PyAudio and initialize PortAudio system resources (1)

@@ -151,7 +151,7 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
     print(f'[Protocol warm up done!: {model("Warmup Text")}]')
 
     #Signal warmup done
-    protocolFB =  FeedbackObj("protocol model warmup done", "protocol model warmup done", "protocol model warmup done")
+    protocolFB =  FeedbackObj("protocol model warmup done", "protocol model warmup done", "protocol model warmup done", "protocol model warmup done")
     FeedbackQueue.put(protocolFB)
 
     # call the model    
@@ -161,7 +161,7 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
 
         # TODO: make thread exit while True loop based on threading module event
         if(received == 'Kill'):
-            # print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
+            print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
             break
         else:
             print('=============================================================')
@@ -176,11 +176,10 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
                 start = time.perf_counter_ns()
                 pred, prob, one_hot, logits = model(received.transcript)
                 end = time.perf_counter_ns()
-                ProtocolSignal.signal.emit([f"(Protocol:{pred}:{prob})"])
                 print(f'[Protocol suggestion:{pred}:{prob}]')
 
                 #Feedback
-                protocolFB =  FeedbackObj("", str(pred) + " : " +str(prob), "")
+                protocolFB =  FeedbackObj("", str(pred) + " : " +str(prob), "", "")
                 FeedbackQueue.put(protocolFB)
 
             else:
@@ -195,9 +194,9 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
                 pipeline_config.curr_segment += [(end-start)/1000000, pred, prob, 'correct?', one_hot, 'one hot GT', 'tn', 'fp', 'fn', 'tp', logits] # see if protocol prediction is correct later in EndToEndEval.py
             else:
                 # if no suggesion, save one hot vector of all 0's
-                pipeline_config.curr_segment += [-1, pred, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+                pipeline_config.curr_segment += [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
             pipeline_config.rows_trial.append(pipeline_config.curr_segment)
-            pipeline_config.curr_segment = []
+            if not pipeline_config.endtoendspv: pipeline_config.curr_segment = []
 
                 
         
