@@ -18,6 +18,7 @@ import multiprocessing
 if pipeline_config.speech_model != 'whisper':
     import EMSConformerFileStream
     from EMSConformer.inference import run_tflite_model_in_files_easy
+    from EMSConformer.inference import run_saved_model
 
 def Pipeline(recording=pipeline_config.recording_name, videofile=pipeline_config.video_name, whisper_model=pipeline_config.whisper_model_size):
 # Set the Google Speech API service-account key environment variable
@@ -113,9 +114,16 @@ def Pipeline(recording=pipeline_config.recording_name, videofile=pipeline_config
         
         sleep(3)
     
-        EMSConformer = Thread(target=run_tflite_model_in_files_easy.main, args=(SpeechToNLPQueue,ConformerSignalQueue, f"./EMSConformer/speech_models/{pipeline_config.conformer_model_type}"))
-        EMSConformer.start()
+        # tflite
+        if(pipeline_config.conformer_model_type.endswith(".tflite")):
+            EMSConformer = Thread(target=run_tflite_model_in_files_easy.main, args=(SpeechToNLPQueue,ConformerSignalQueue, f"./EMSConformer/speech_models/{pipeline_config.conformer_model_type}"))
+            EMSConformer.start()
 
+        else:
+            # full model
+            EMSConformer = Thread(target=run_saved_model.main, args=(SpeechToNLPQueue,ConformerSignalQueue))
+            EMSConformer.start()
+            
         sleep(3)
 
         # ===== Start Conformer Audiostream module =========================================

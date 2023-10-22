@@ -9,15 +9,17 @@ interventionStream = True
 transcriptStream = True
 
 # ------------------- Speech to Text Control ------------------- #
-# speech_model = 'conformer' 
-speech_model = 'whisper'
+speech_model = 'conformer' 
+# speech_model = 'whisper'
 
 # -- EMS Conformer configuration ------
-conformer_model_type = 'all_14_model.tflite' 
+# conformer_model_type = 'all_14_model.tflite' # for tflite
+# conformer_model_type = 'finetuned-conformer.tflite' # for finetuned tflite
+conformer_model_type = 'h5'  # for base model
 
 # -- EMS Agent configuration ------
 protocol_model_device = 'cuda' # 'cuda' or 'cpu'
-# protocol_model_type = 'DKEC-TinyClinicalBERT' # CognitiveEMS
+protocol_model_type = 'DKEC-TinyClinicalBERT' # CognitiveEMS
 protocol_model_type = 'EMSAssist' # EMSAssist
 
 # -- Audio Recording Option -----
@@ -41,7 +43,7 @@ vision_model_type = 'openai/clip-vit-base-patch32'
 
 endtoendspv = False #speech+protocol+vision
 
-num_trials = 3
+num_trials = 1
 
 # -- Whisper configuration ---
 whisper_model_sizes = [

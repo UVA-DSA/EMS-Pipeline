@@ -10,7 +10,7 @@ speech_config:
   normalize_per_feature: False
 
 decoder_config:
-  vocabulary: /slot1/asr_models/tensorflowasr_librispeech_models/tensorflowasr_pretrained/subword-conformer/pretrained-subword-conformer/conformer.subwords
+  vocabulary: conformer.subwords 
   target_vocab_size: 1024
   max_subword_length: 4
   blank_at_zero: True
@@ -55,7 +55,16 @@ learning_config:
           num_masks: 1
           mask_factor: 27
     data_paths:
-      - /home/liuyi/TensorFlowASR/conformer_standalone/finetune-train_transcripts.tsv    
+      #- /home/liuyi/TensorFlowASR/conformer_standalone/finetune-train_transcripts.tsv    
+
+      # - /slot1/eval_tian/audio_tian/finetune_train.tsv
+      # - /slot1/eval_tian/audio_liuyi/finetune_train.tsv
+      # - /slot1/eval_tian/audio_amran/finetune_train.tsv
+      # - /slot1/eval_tian/audio_radu/finetune_train.tsv
+      # - /slot1/eval_tian/audio_yichen/finetune_train.tsv
+      # - /slot1/eval_tian/audio_michael/finetune_train.tsv 
+      - /home/cogems_nist/Desktop/TensorFlowASR/combined-adapted/train.tsv
+
     tfrecords_dir: null
     shuffle: True
     cache: True
@@ -66,7 +75,22 @@ learning_config:
   eval_dataset_config:
     use_tf: True
     data_paths:
-      - /home/liuyi/TensorFlowASR/conformer_standalone/finetune-test_concatenated_ss_transcripts.tsv    
+      #- /home/liuyi/TensorFlowASR/conformer_standalone/finetune-test_concatenated_ss_transcripts.tsv    
+
+      # - /slot1/eval_tian/audio_tian/finetune_test.tsv
+      # - /slot1/eval_tian/audio_liuyi/finetune_test.tsv
+      # - /slot1/eval_tian/audio_amran/finetune_test.tsv
+      # - /slot1/eval_tian/audio_radu/finetune_test.tsv
+      # - /slot1/eval_tian/audio_yichen/finetune_test.tsv
+      # - /slot1/eval_tian/audio_michael/finetune_test.tsv 
+      # - ../../../../data/transcription_text/audio_tian/finetune_test_updated.tsv
+      # - ../../../../data/transcription_text/audio_liuyi/finetune_test_updated.tsv
+      # - ../../../../data/transcription_text/audio_amran/finetune_test_updated.tsv
+      # - ../../../../data/transcription_text/audio_radu/finetune_test_updated.tsv
+      # - ../../../../data/transcription_text/audio_yichen/finetune_test_updated.tsv
+      # - ../../../../data/transcription_text/audio_michael/finetune_test_updated.tsv 
+      - /home/cogems_nist/Desktop/TensorFlowASR/combined-adapted/test.tsv
+
     tfrecords_dir: null
     shuffle: False
     cache: True
@@ -77,8 +101,25 @@ learning_config:
   test_dataset_config:
     use_tf: True
     data_paths:
-      - /home/liuyi/TensorFlowASR/conformer_standalone/finetune-test_concatenated_ss_transcripts.tsv    
+      #- /home/liuyi/TensorFlowASR/conformer_standalone/finetune-test_concatenated_ss_transcripts.tsv    
 #      - /slot1/audio_dataset/LibriSpeech/test-clean/transcripts.tsv
+
+      # - /slot1/eval_tian/audio_tian/finetune_test.tsv
+      # - /slot1/eval_tian/audio_liuyi/finetune_test.tsv
+      # - /slot1/eval_tian/audio_amran/finetune_test.tsv
+      # - /slot1/eval_tian/audio_radu/finetune_test.tsv
+      # - /slot1/eval_tian/audio_yichen/finetune_test.tsv
+      # - /slot1/eval_tian/audio_michael/finetune_test.tsv 
+
+      # - ../../../../data/transcription_text/audio_tian/finetune_test_updated.tsv
+      # - ../../../../data/transcription_text/audio_liuyi/finetune_test_updated.tsv
+      # - ../../../../data/transcription_text/audio_amran/finetune_test_updated.tsv
+      # - ../../../../data/transcription_text/audio_radu/finetune_test_updated.tsv
+      # - ../../../../data/transcription_text/audio_yichen/finetune_test_updated.tsv
+      # - ../../../../data/transcription_text/audio_michael/finetune_test_updated.tsv   
+      - /home/cogems_nist/Desktop/TensorFlowASR/combined-adapted/test.tsv
+    
+
     tfrecords_dir: null
     shuffle: False
     buffer_size: 100
@@ -92,16 +133,38 @@ learning_config:
 
   running_config:
     batch_size: 2
-    num_epochs: 100
+    num_epochs: 10
     checkpoint:
-      filepath: /slot1/asr_models/conformer_ems/checkpoints/{epoch:02d}.h5
+      #filepath: /slot1/asr_models/conformer_ems/checkpoints/{epoch:02d}.
+      # filepath: ../../../../data/transcription_text/audio_all/conformer/conformer_PretrainLibrispeech_TrainEMS/checkpoints/{epoch:02d}.h5
+      #filepath: /slot1/eval_tian/audio_radu/conformer/conformer_PretrainLibrispeech_TrainEMS/checkpoints/{epoch:02d}.h5
+      #filepath: /slot1/eval_tian/audio_michael/conformer/conformer_PretrainLibrispeech_TrainEMS/checkpoints/{epoch:02d}.h5
+      #filepath: /slot1/eval_tian/audio_tian/conformer/conformer_PretrainLibrispeech_TrainEMS/checkpoints/{epoch:02d}.h5
+      #filepath: /slot1/eval_tian/audio_yichen/conformer/conformer_PretrainLibrispeech_TrainEMS/checkpoints/{epoch:02d}.h5
+      filepath: /home/cogems_nist/Desktop/TensorFlowASR/examples/conformer/run1/checkpoints/{epoch:02d}.h5
+
       save_best_only: True
       save_weights_only: True
       save_freq: epoch
       verbose: 1
-    states_dir: /slot1/asr_models/conformer_ems/states
+
+    states_dir: /home/cogems_nist/Desktop/TensorFlowASR/examples/conformer/run1/states
+    #states_dir: /slot1/asr_models/conformer_ems/states
+    # states_dir: ../../../../data/transcription_text/audio_all/conformer/conformer_PretrainLibrispeech_TrainEMS/states
+    #states_dir: /slot1/eval_tian/audio_radu/conformer/conformer_PretrainLibrispeech_TrainEMS/states
+    #states_dir: /slot1/eval_tian/audio_michael/conformer/conformer_PretrainLibrispeech_TrainEMS/states
+    #states_dir: /slot1/eval_tian/audio_tian/conformer/conformer_PretrainLibrispeech_TrainEMS/states
+    #states_dir: /slot1/eval_tian/audio_yichen/conformer/conformer_PretrainLibrispeech_TrainEMS/states
+
     tensorboard:
-      log_dir: /slot1/asr_models/conformer_ems/tensorboard
+      log_dir: /home/cogems_nist/Desktop/TensorFlowASR/examples/conformer/run1/tensorboard
+      #log_dir: /slot1/asr_models/conformer_ems/tensorboard
+      # log_dir: ../../../../data/transcription_text/audio_all/conformer/conformer_PretrainLibrispeech_TrainEMS/tensorboard
+      #log_dir: /slot1/eval_tian/audio_radu/conformer/conformer_PretrainLibrispeech_TrainEMS/tensorboard
+      #log_dir: /slot1/eval_tian/audio_michael/conformer/conformer_PretrainLibrispeech_TrainEMS/tensorboard
+      #log_dir: /slot1/eval_tian/audio_tian/conformer/conformer_PretrainLibrispeech_TrainEMS/tensorboard
+      #log_dir: /slot1/eval_tian/audio_yichen/conformer/conformer_PretrainLibrispeech_TrainEMS/tensorboard
+
       histogram_freq: 1
       write_graph: True
       write_images: True

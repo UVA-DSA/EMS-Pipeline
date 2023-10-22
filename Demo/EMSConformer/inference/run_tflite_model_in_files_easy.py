@@ -56,11 +56,6 @@ from classes import TranscriptItem
 import tensorflow as tf
 logger = tf.get_logger()
 
-# For TensorFlow
-# gpus = tf.config.experimental.list_physical_devices('GPU')
-# print(gpus)
-# tf.config.experimental.set_memory_growth(gpus[0], True)  # Use GPU 0
-
 def capture_audio(tflitemodel,input_details,output_details,blank,num_rnns,nstates,statesize, SpeechToNLPQueue, ConformerSignalQueue):
     
     full_transcription = ""
@@ -94,109 +89,14 @@ def capture_audio(tflitemodel,input_details,output_details,blank,num_rnns,nstate
         full_transcription += transcript
         
         transcriptItem = TranscriptItem(full_transcription, True, 0, latency)
-        # EMSAgentQueue.put(transcriptItem)
         SpeechToNLPQueue.put(transcriptItem)  
-        
-        # pipeline_config.curr_segment += [transcriptItem.transcriptionDuration, transcriptItem.transcript, transcriptItem.confidence, 'wer', 'cer']
-        # # if we made a protocol prediction
-        #     # if no suggesion, save one hot vector of all 0's
-        # pipeline_config.curr_segment += [-1, "NULL", -1, -1, -1, -1, -1, -1, -1, -1]
-        # pipeline_config.rows_trial.append(pipeline_config.curr_segment)
-        # pipeline_config.curr_segment = []
-        
+
         
         print('EMSConformer: Transcription Done!')
         
         
         
         
-    
-    
-    
-    
-    
-    
-#     chunk = 1024  # Record in chunks of 1024 samples
-#     sample_format = pyaudio.paInt16  # 16 bits per sample
-#     channels = 1
-#     fs = 16000  # Record at 16000 samples per second
-#     filename = "output.wav"
-
-#     p = pyaudio.PyAudio()  # Create an interface to PortAudio
-
-#     print('Recording')
-
-#     stream = p.open(format=sample_format,
-#                     channels=channels,
-#                     rate=fs,
-#                     frames_per_buffer=chunk,
-#                     input=True)
-
-#     frames = []  # Initialize array to store frames
-
-# # Store data in chunks for 3 seconds
-#     # Store data in chunks for 3 seconds
-#     seconds = 10
-#     num_chunks = int(fs / chunk * seconds)
-#     print(num_chunks)
-#     i = 1
-#     while True:
-        
-#         data = stream.read(chunk)
-        
-#         frames.append(data)
-#         if(i%num_chunks == 0):
-#             # call transcription
-            
-#             audio_data = b"".join(frames)
-#                         # Convert the audio data to WAV format
-#             with io.BytesIO() as wav_buffer:
-#                 with wave.open(wav_buffer, 'wb') as wf:
-#                     wf.setnchannels(channels)
-#                     wf.setsampwidth(sample_format // 8)
-#                     wf.setframerate(fs)
-#                     wf.writeframes(audio_data)
-
-#                 # Read the WAV data from the buffer
-#                 wav_buffer.seek(0)
-#                 wav_data = wav_buffer.read()
-
-            
-#             audio_buffer = read_raw_audio(wav_data)
-#             audio_buffer = audio_buffer.astype(np.float32)
-#             print(audio_buffer.shape)
-            
-#             frames = []
-            
-#             trainscribe(tflitemodel,input_details,output_details,audio_buffer,blank,num_rnns,nstates,statesize)
-            
-        
-#         i = i+1
-
-#     # Stop and close the stream 
-#     stream.stop_stream()
-#     stream.close()
-#     # Terminate the PortAudio interface
-#     p.terminate()
-
-#     print('Finished recording')
-
-#     # Save the recorded data as a WAV file
-#     wf = wave.open(filename, 'wb')
-#     wf.setnchannels(channels)
-#     wf.setsampwidth(p.get_sample_size(sample_format))
-#     wf.setframerate(fs)
-#     wf.writeframes(b''.join(frames))
-#     wf.close()
-
-
-
-
-
-
-
-
-
 
 def writeListFile(file_path, output_list, encoding = None):
     f = open(file_path, mode = "w")

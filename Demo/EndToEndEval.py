@@ -66,7 +66,7 @@ if __name__ == '__main__':
     logits_all_recordings = []
     df_all_recordings = []
 
-    if len(pipeline_config.whisper_model_sizes): 
+    if pipeline_config.speech_model == 'whisper': 
         speech_models = pipeline_config.whisper_model_sizes
     else:
         speech_models = ['conformer']
