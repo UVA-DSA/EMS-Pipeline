@@ -1,6 +1,6 @@
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
+# from PyQt5.QtCore import *
+# from PyQt5.QtWidgets import *
+# from PyQt5.QtGui import *
 
 class TranscriptItem:
       def __init__(self, transcript, isFinal, confidence, transcriptionDuration):
@@ -36,8 +36,8 @@ class QueueItem:
             self.isFinal = isFinal
             self.confidence = 0
 
-# Custom object for signalling
-class GUISignal(QObject):
-    signal = pyqtSignal(list)
+# # Custom object for signalling
+# class GUISignal(QObject):
+#     signal = pyqtSignal(list)
 
 

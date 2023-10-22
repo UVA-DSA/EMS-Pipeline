@@ -12,7 +12,7 @@ from transformers import BertTokenizer
 import pandas as pd
 from tqdm import tqdm
 warnings.filterwarnings("ignore")
-from classes import  GUISignal, FeedbackObj
+from classes import   FeedbackObj
 import time
 import sys
 from re import match
@@ -120,9 +120,7 @@ class EMSAgent(nn.Module):
 
 def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
 
-    ProtocolSignal = GUISignal()
     # ProtocolSignal.signal.connect(Window.UpdateProtocolBoxes)
-
     # initialize
     seed_everything(3407)
     from EMSAgent.default_sets import model_name

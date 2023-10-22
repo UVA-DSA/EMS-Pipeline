@@ -1,0 +1,149 @@
+speech_config:
+  sample_rate: 16000
+  frame_ms: 25
+  stride_ms: 10
+  feature_type: log_mel_spectrogram
+  num_feature_bins: 80
+  preemphasis: 0.97
+  normalize_signal: True
+  normalize_feature: True
+  normalize_per_feature: False
+
+decoder_config:
+  vocabulary: /slot1/asr_models/tensorflowasr_librispeech_models/tensorflowasr_pretrained/subword-conformer/pretrained-subword-conformer/conformer.subwords
+  target_vocab_size: 1024
+  max_subword_length: 4
+  blank_at_zero: True
+  beam_width: 0
+  norm_score: True
+
+model_config:
+  name: conformer
+  encoder_subsampling:
+    type: conv2d
+    kernel_size: 3
+    strides: 2
+    filters: 144
+  encoder_positional_encoding: sinusoid_concat
+  encoder_dmodel: 144
+  encoder_num_blocks: 16
+  encoder_head_size: 36
+  encoder_num_heads: 4
+  encoder_mha_type: relmha
+  encoder_kernel_size: 32
+  encoder_fc_factor: 0.5
+  encoder_dropout: 0.1
+  prediction_embed_dim: 320
+  prediction_embed_dropout: 0.0
+  prediction_num_rnns: 1
+  prediction_rnn_units: 320
+  prediction_rnn_type: lstm
+  prediction_rnn_implementation: 1
+  prediction_layer_norm: True
+  joint_dim: 320
+
+learning_config:
+  train_dataset_config:
+    use_tf: True
+    augmentation_config:
+      feature_augment:
+        time_masking:
+          num_masks: 10
+          mask_factor: 100
+          p_upperbound: 0.05
+        freq_masking:
+          num_masks: 1
+          mask_factor: 27
+    data_paths:
+      #- /home/liuyi/TensorFlowASR/conformer_standalone/finetune-train_transcripts.tsv    
+
+      #- /slot1/eval_tian/audio_tian/finetune_train.tsv
+      #- /slot1/eval_tian/audio_liuyi/finetune_train.tsv
+      #- /slot1/eval_tian/audio_radu/finetune_train.tsv
+      - /slot1/eval_tian/audio_yichen/finetune_train.tsv
+      #- /slot1/eval_tian/audio_michael/finetune_train.tsv 
+
+    tfrecords_dir: null
+    shuffle: True
+    cache: True
+    buffer_size: 100
+    drop_remainder: False
+    stage: train
+
+  eval_dataset_config:
+    use_tf: True
+    data_paths:
+      #- /home/liuyi/TensorFlowASR/conformer_standalone/finetune-test_concatenated_ss_transcripts.tsv    
+
+      #- /slot1/eval_tian/audio_tian/finetune_test.tsv
+      #- /slot1/eval_tian/audio_liuyi/finetune_test.tsv
+      #- /slot1/eval_tian/audio_radu/finetune_test.tsv
+      - /slot1/eval_tian/audio_yichen/finetune_test.tsv
+      #- /slot1/eval_tian/audio_michael/finetune_test.tsv 
+
+    tfrecords_dir: null
+    shuffle: False
+    cache: True
+    buffer_size: 100
+    drop_remainder: True
+    stage: eval
+
+  test_dataset_config:
+    use_tf: True
+    data_paths:
+      #- /home/liuyi/TensorFlowASR/conformer_standalone/finetune-test_concatenated_ss_transcripts.tsv    
+#      - /slot1/audio_dataset/LibriSpeech/test-clean/transcripts.tsv
+
+      #- /slot1/eval_tian/audio_tian/finetune_test.tsv
+      #- /slot1/eval_tian/audio_liuyi/finetune_test.tsv
+      #- /slot1/eval_tian/audio_radu/finetune_test.tsv
+      - /slot1/eval_tian/audio_yichen/finetune_test.tsv
+      #- /slot1/eval_tian/audio_michael/finetune_test.tsv 
+
+    tfrecords_dir: null
+    shuffle: False
+    buffer_size: 100
+    cache: False
+
+  optimizer_config:
+    warmup_steps: 40000
+    beta_1: 0.9
+    beta_2: 0.98
+    epsilon: 1e-9
+
+  running_config:
+    batch_size: 2
+    num_epochs: 200
+    checkpoint:
+      #filepath: /slot1/asr_models/conformer_ems/checkpoints/{epoch:02d}.
+      #filepath: /slot1/eval_tian/audio_liuyi/conformer/conformer_PretrainLibrispeech_TrainEMS/checkpoints/{epoch:02d}.h5
+      #filepath: /slot1/eval_tian/audio_radu/conformer/conformer_PretrainLibrispeech_TrainEMS/checkpoints/{epoch:02d}.h5
+      #filepath: /slot1/eval_tian/audio_michael/conformer/conformer_PretrainLibrispeech_TrainEMS/checkpoints/{epoch:02d}.h5
+      #filepath: /slot1/eval_tian/audio_tian/conformer/conformer_PretrainLibrispeech_TrainEMS/checkpoints/{epoch:02d}.h5
+      filepath: /slot1/eval_tian/audio_yichen/conformer/conformer_PretrainLibrispeech_TrainEMS/checkpoints/{epoch:02d}.h5
+
+
+      save_best_only: True
+      save_weights_only: True
+      save_freq: epoch
+      verbose: 1
+    #states_dir: /slot1/asr_models/conformer_ems/states
+    #states_dir: /slot1/eval_tian/audio_liuyi/conformer/conformer_PretrainLibrispeech_TrainEMS/states
+    #states_dir: /slot1/eval_tian/audio_radu/conformer/conformer_PretrainLibrispeech_TrainEMS/states
+    #states_dir: /slot1/eval_tian/audio_michael/conformer/conformer_PretrainLibrispeech_TrainEMS/states
+    #states_dir: /slot1/eval_tian/audio_tian/conformer/conformer_PretrainLibrispeech_TrainEMS/states
+    states_dir: /slot1/eval_tian/audio_yichen/conformer/conformer_PretrainLibrispeech_TrainEMS/states
+
+    tensorboard:
+      #log_dir: /slot1/asr_models/conformer_ems/tensorboard
+      #log_dir: /slot1/eval_tian/audio_liuyi/conformer/conformer_PretrainLibrispeech_TrainEMS/tensorboard
+      #log_dir: /slot1/eval_tian/audio_radu/conformer/conformer_PretrainLibrispeech_TrainEMS/tensorboard
+      #log_dir: /slot1/eval_tian/audio_michael/conformer/conformer_PretrainLibrispeech_TrainEMS/tensorboard
+      #log_dir: /slot1/eval_tian/audio_tian/conformer/conformer_PretrainLibrispeech_TrainEMS/tensorboard
+      log_dir: /slot1/eval_tian/audio_yichen/conformer/conformer_PretrainLibrispeech_TrainEMS/tensorboard
+
+      histogram_freq: 1
+      write_graph: True
+      write_images: True
+      update_freq: epoch
+      profile_batch: 2

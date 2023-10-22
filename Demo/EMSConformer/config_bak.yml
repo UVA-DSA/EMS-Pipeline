@@ -1,0 +1,166 @@
+# Copyright 2020 Huy Le Nguyen (@usimarit)
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+speech_config:
+  sample_rate: 16000
+  frame_ms: 25
+  stride_ms: 10
+  num_feature_bins: 80
+  feature_type: log_mel_spectrogram
+  preemphasis: 0.97
+  normalize_signal: True
+  normalize_feature: True
+  normalize_per_frame: False
+
+decoder_config:
+  vocabulary: /home/liuyi/TensorFlowASR/vocabularies/librispeech/librispeech_train_4_1030.subwords
+  target_vocab_size: 1000
+  max_subword_length: 10
+  blank_at_zero: True
+  beam_width: 5
+  norm_score: True
+  corpus_files:
+    - /slot1/audio_dataset/LibriSpeech/train-clean-100/transcripts.tsv
+#    - /slot1/audio_dataset/LibriSpeech/train-clean-360/transcripts.tsv
+#    - /home/liuyi/TensorFlowASR/dataset/LibriSpeech/train-clean-100/transcripts.tsv
+#    - /home/liuyi/TensorFlowASR/dataset/LibriSpeech/train-clean-360/transcripts.tsv
+#    - /home/liuyi/TensorFlowASR/conformer_standalone/fine-tune_test_transcript.tsv
+
+model_config:
+  name: conformer
+  encoder_subsampling:
+    type: conv2d
+    filters: 144
+    kernel_size: 3
+    strides: 2
+  encoder_positional_encoding: sinusoid
+  encoder_dmodel: 144
+  encoder_num_blocks: 16
+  encoder_head_size: 36
+  encoder_num_heads: 4
+  encoder_mha_type: relmha
+  encoder_kernel_size: 32
+  encoder_fc_factor: 0.5
+  encoder_dropout: 0.1
+  prediction_embed_dim: 320
+  prediction_embed_dropout: 0
+  prediction_num_rnns: 1
+  prediction_rnn_units: 320
+  prediction_rnn_type: lstm
+  prediction_rnn_implementation: 2
+  prediction_layer_norm: True
+  prediction_projection_units: 0
+  joint_dim: 320
+  prejoint_linear: True
+  joint_activation: tanh
+  joint_mode: add
+
+learning_config:
+  train_dataset_config:
+    use_tf: True
+    augmentation_config:
+      feature_augment:
+        time_masking:
+          num_masks: 10
+          mask_factor: 100
+          p_upperbound: 0.05
+        freq_masking:
+          num_masks: 1
+          mask_factor: 27
+    data_paths:
+      - /slot1/audio_dataset/LibriSpeech/train-clean-100/transcripts.tsv
+#      - /slot1/audio_dataset/LibriSpeech/train-clean-360/transcripts.tsv
+#      - /home/liuyi/TensorFlowASR/dataset/LibriSpeech/train-clean-100/transcripts.tsv
+#      - /home/liuyi/TensorFlowASR/conformer_standalone/finetune-train_poped_tmp_transcripts.tsv
+#      - /home/liuyi/TensorFlowASR/conformer_standalone/finetune-test_transcripts.tsv
+#      - /home/liuyi/TensorFlowASR/conformer_standalone/finetune-train_transcripts.tsv
+    tfrecords_dir: /slot1/tfrecord_files/
+    shuffle: True
+    cache: True
+    buffer_size: 100
+    drop_remainder: True
+    stage: train
+
+  eval_dataset_config:
+    use_tf: True
+    data_paths:
+      - /slot1/audio_dataset/LibriSpeech/dev-clean/transcripts.tsv
+#      - /home/liuyi/TensorFlowASR/dataset/LibriSpeech/dev-clean/transcripts.tsv
+#      - /home/liuyi/TensorFlowASR/conformer_standalone/finetune-train_poped_tmp_transcripts.tsv
+#      - /home/liuyi/TensorFlowASR/conformer_standalone/finetune-test_transcripts.tsv
+#      - /home/liuyi/TensorFlowASR/conformer_standalone/finetune-train_transcripts.tsv
+    tfrecords_dir: /slot1/tfrecord_files/
+    shuffle: False
+    cache: True
+    buffer_size: 100
+    drop_remainder: True
+    stage: eval
+
+  test_dataset_config:
+    use_tf: True
+    data_paths:
+      - /slot1/audio_dataset/LibriSpeech/test-clean/transcripts.tsv
+#      - /home/liuyi/TensorFlowASR/conformer_standalone/finetune-test_transcripts.tsv
+#      - /home/liuyi/TensorFlowASR/dataset/LibriSpeech/test-clean/transcripts.tsv
+#      - /home/liuyi/TensorFlowASR/conformer_standalone/simple-test_transcripts.tsv
+#      - /home/liuyi/TensorFlowASR/conformer_standalone/finetune-train_poped_tmp_transcripts.tsv
+#      - /home/liuyi/TensorFlowASR/conformer_standalone/finetune-test_poped_tmp_transcripts.tsv
+#      - /home/liuyi/TensorFlowASR/conformer_standalone/finetune-test_concatenated_ss_transcripts.tsv
+    tfrecords_dir: /slot1/tfrecord_files/
+    shuffle: False
+    cache: True
+    buffer_size: 100
+    drop_remainder: True
+    stage: test
+
+  optimizer_config:
+    warmup_steps: 40000
+    beta_1: 0.9
+    beta_2: 0.98
+    epsilon: 1e-9
+
+  running_config:
+    batch_size: 2
+    num_epochs: 1000
+    checkpoint:
+      filepath: /slot1/asr_models/tensorflowasr_librispeech_models/conformer/pretrained_librispeech100_1000epoch/checkpoints/{epoch:05d}.h5
+      #filepath: /slot1/asr_models/tensorflowasr_librispeech_models/conformer/pretrained_librispeech360_1000epoch/checkpoints/{epoch:05d}.h5
+      #filepath: /home/liuyi/TensorFlowASR/examples/conformer/h5_models/checkpoints/{epoch:02d}.h5
+      #filepath: /home/liuyi/TensorFlowASR/examples/conformer/pretrained_librispeech_testsample_h5_models/checkpoints/{epoch:02d}.h5
+      #filepath: /home/liuyi/TensorFlowASR/examples/conformer/pretrained_librispeech_h5_models/checkpoints/{epoch:02d}.h5
+      #filepath: /home/liuyi/TensorFlowASR/examples/conformer/pretrained_librispeech_train_ss_test_concatenated_h5_models/checkpoints/{epoch:02d}.h5
+      #filepath: /home/liuyi/TensorFlowASR/examples/conformer/nopretrained_train_ss_test_concatenated_h5_models/checkpoints/{epoch:02d}.h5
+      save_best_only: True
+      save_weights_only: True
+      save_freq: epoch
+      verbose: 1
+    states_dir: /slot1/asr_models/tensorflowasr_librispeech_models/conformer/pretrained_librispeech100_1000epoch/states
+    #states_dir: /slot1/asr_models/tensorflowasr_librispeech_models/conformer/pretrained_librispeech360_1000epoch/states
+    #states_dir: /home/liuyi/TensorFlowASR/examples/conformer/h5_models/states
+    #states_dir: /home/liuyi/TensorFlowASR/examples/conformer/pretrained_librispeech_testsample_h5_models/states
+    #states_dir: /home/liuyi/TensorFlowASR/examples/conformer/pretrained_librispeech_h5_models/states
+    #states_dir: /home/liuyi/TensorFlowASR/examples/conformer/pretrained_librispeech_train_ss_test_concatenated_h5_models/states
+    #states_dir: /home/liuyi/TensorFlowASR/examples/conformer/nopretrained_train_ss_test_concatenated_h5_models/states
+    tensorboard:
+      log_dir: /slot1/asr_models/tensorflowasr_librispeech_models/conformer/pretrained_librispeech100_1000epoch/tensorboard
+      #log_dir: /home/liuyi/TensorFlowASR/examples/conformer/h5_models/tensorboard
+      #log_dir: /home/liuyi/TensorFlowASR/examples/conformer/pretrained_librispeech_testsample_h5_models/tensorboard
+      #log_dir: /home/liuyi/TensorFlowASR/examples/conformer/pretrained_librispeech_h5_models/tensorboard
+      #log_dir: /home/liuyi/TensorFlowASR/examples/conformer/pretrained_librispeech_train_ss_test_concatenated_h5_models/tensorboard
+      #log_dir: /home/liuyi/TensorFlowASR/examples/conformer/nopretrained_train_ss_test_concatenated_h5_models/tensorboard
+      histogram_freq: 1
+      write_graph: True
+      write_images: True
+      update_freq: epoch
+      profile_batch: 2
