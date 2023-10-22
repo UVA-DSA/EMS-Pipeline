@@ -1,0 +1,48 @@
+,precision,recall,f1-score,support
+airway - failed (protocol 3 - 16),0.0,0.0,0.0,0.0
+environmental - heat exposure/heat exhaustion environmental - heat stroke (protocol 5 - 2),0.0,0.0,0.0,0.0
+environmental - hypothermia (protocol 5 - 1),0.0,0.0,0.0,0.0
+general - behavioral/patient restraint (protocol 3 - 4),0.0,0.0,0.0,1.0
+general - cardiac arrest (protocol 2 - 7),0.0,0.0,0.0,0.0
+general - cardiac arrest (protocol 8 - 2),0.0,0.0,0.0,0.0
+general - pain control (protocol 3 - 10),0.0,0.0,0.0,0.0
+general - pain control (protocol 9 - 8),0.0,0.0,0.0,0.0
+hemorrhage control (protocol 4 - 14),0.0,0.0,0.0,0.0
+injury - abdominal trauma (abdominal trauma) (protocol 4 - 2),0.0,0.0,0.0,0.0
+injury - burns - thermal (protocol 10 - 2),0.0,0.0,0.0,0.0
+injury - burns - thermal (protocol 4 - 3),0.0,0.0,0.0,0.0
+injury - crush syndrome (protocol 4 - 4),0.0,0.0,0.0,0.0
+injury - general trauma management (protocol 4 - 1),0.0,0.0,0.0,0.0
+injury - head (protocol 10 - 4),0.0,0.0,0.0,0.0
+injury - head (protocol 4 - 6),0.0,0.0,0.0,0.0
+injury - thoracic (protocol 4 - 11),0.0,0.0,0.0,0.0
+medical - abdominal pain (protocol 3 - 2),1.0,0.5,0.6666666666666666,2.0
+medical - allergic reaction/anaphylaxis (protocol 3 - 3),0.0,0.0,0.0,0.0
+medical - allergic reaction/anaphylaxis (protocol 9 - 2),0.0,0.0,0.0,0.0
+medical - altered mental status (protocol 3 - 15),0.0,0.0,0.0,0.0
+medical - altered mental status (protocol 9 - 14),0.0,0.0,0.0,0.0
+medical - bradycardia (protocol 2 - 9),0.0,0.0,0.0,0.0
+medical - chest pain - cardiac suspected (protocol 2 - 1),1.0,1.0,1.0,2.0
+medical - diabetic - hyperglycemia (protocol 3 - 7),0.0,0.0,0.0,0.0
+medical - diabetic - hypoglycemia (protocol 3 - 8),0.0,0.0,0.0,0.0
+medical - hypotension/shock (nontrauma) (protocol 3 - 13),0.0,0.0,0.0,0.0
+medical - nausea/vomiting (protocol 3 - 9),0.0,0.0,0.0,0.0
+medical - overdose/poisoning - calcium channel blocker (protocol 7 - 5),0.0,0.0,0.0,0.0
+medical - overdose/poisoning - opioid (protocol 7 - 1),0.5,1.0,0.6666666666666666,1.0
+medical - overdose/poisoning - stimulant (protocol 7 - 2),0.0,0.0,0.0,0.0
+medical - overdose/poisoning/toxic ingestion (protocol 9 - 9),0.0,0.0,0.0,0.0
+medical - pulmonary edema/chf (protocol 2 - 3),0.0,0.0,0.0,0.0
+medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress - croup/epiglottits) (protocol 9 - 11),0.0,0.0,0.0,0.0
+medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11),1.0,1.0,1.0,3.0
+medical - seizure (protocol 3 - 12),0.0,0.0,0.0,0.0
+medical - seizure (protocol 9 - 12),0.0,0.0,0.0,0.0
+medical - st elevation myocardial infarction (acs/ami) (protocol 2 - 2),0.0,0.0,0.0,0.0
+medical - stroke/tia (protocol 3 - 5),0.0,0.0,0.0,0.0
+medical - supraventricular tachycardia (including atrial fibrillation) medical - tachycardia medical - ventricular tachycardia with a pulse (protocol 2 - 8),0.0,0.0,0.0,0.0
+ob/gyn - childbirth/labor/delivery (protocol 6 - 2),0.0,0.0,0.0,0.0
+ob/gyn - pre-term labor (pre-term labor) (protocol 6 - 12),0.0,0.0,0.0,0.0
+spinal motion restriction (protocol 4 - 13),0.0,0.0,0.0,0.0
+micro avg,0.5384615384615384,0.7777777777777778,0.6363636363636364,9.0
+macro avg,0.08139534883720931,0.08139534883720931,0.07751937984496124,9.0
+weighted avg,0.8333333333333334,0.7777777777777778,0.7777777777777778,9.0
+samples avg,0.5833333333333334,0.5833333333333334,0.5833333333333334,9.0

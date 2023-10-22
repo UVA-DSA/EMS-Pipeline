@@ -5,7 +5,6 @@ from EMSAgent.default_sets import seed_everything, device, ungroup_p_node
 import numpy as np
 import warnings
 import yaml
-import re
 from EMSAgent.utils import AttrDict, onehot2p, convert_label
 from EMSAgent.Heterogeneous_graph import HeteroGraph
 from EMSAgent.model import EMSMultiModel
@@ -16,6 +15,7 @@ warnings.filterwarnings("ignore")
 from classes import   FeedbackObj
 import time
 import sys
+from re import match
 
 sys.path.append('../Demo')
 import pipeline_config
@@ -91,31 +91,34 @@ class EMSAgent(nn.Module):
         # pred_protocol = p_node[preds]
         # pred_prob = logits[preds]
 
+        # find age
+        regex = '[0-9]+ (y.?r.?s?|years? old)'
+        output = match(regex, text)
+        if output:
+            age_s, _ = output.group().split('y')
+            age = int(age_s)
+        else:
+            age = 39 #assume adult if age not given - 39 is median age for adults in US
+
         ### multi-label classification
         logits = logits.cpu().numpy()
         if self.config.cluster == 'group':
-            preds, logits = convert_label([preds], ages=[55], logits=[logits])
+            preds, logits = convert_label([preds], ages=[age], logits=[logits])
             preds, logits = preds[0], logits[0]
             one_hot = preds
 
         pred_protocol = np.array(ungroup_p_node)[np.where(preds == 1)]
         pred_prob = logits[np.where(preds == 1)]
 
-        return pred_protocol, pred_prob, one_hot
+        # get the protocol prediction with highest confidence value
+        max_prob_index = np.argmax(pred_prob)
+        prob = pred_prob[max_prob_index]
+        protocol = pred_protocol[max_prob_index]
 
-def add_new_parts(old_string, new_string):
-    # Split the strings into words
-    words1 = old_string.split()
-    words2 = new_string.split()
+        return protocol, prob, one_hot, logits
 
-    # Find new words in string2
-    new_words = [word for word in words2 if word not in words1]
 
-    # Update string1 with new words
-    old_string += " " + " ".join(new_words)
-    return old_string
-
-def EMSAgentSystem(SpeechToNLPQueue, FeedbackQueue):
+def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
 
     # ProtocolSignal.signal.connect(Window.UpdateProtocolBoxes)
     # initialize
@@ -144,41 +147,41 @@ def EMSAgentSystem(SpeechToNLPQueue, FeedbackQueue):
 
     model = EMSAgent(config, model_name)
     
-    full_transcript = ""
+    print('================= Warmup Protocol Model =================')
+    print(f'[Protocol warm up done!: {model("Warmup Text")}]')
+
+    #Signal warmup done
+    protocolFB =  FeedbackObj("protocol model warmup done", "protocol model warmup done", "protocol model warmup done", "protocol model warmup done")
+    FeedbackQueue.put(protocolFB)
+
     # call the model    
     while True:
         # Get queue item from the Speech-to-Text Module
-        received = SpeechToNLPQueue.get()
+        received = EMSAgentQueue.get()
 
         # TODO: make thread exit while True loop based on threading module event
         if(received == 'Kill'):
-            print("EMSAgent Thread received Kill Signal. Bye!")
+            print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
             break
         else:
-            
-            full_transcript = received.transcript
-            print(f'\n[Protocol model received transcript: {full_transcript}]')
+            print('=============================================================')
+            print(f'[Protocol model received transcript: {received.transcript}]')
             # initialize variables
             start = None
             end = None
             pred = None
             prob = None
-            if len(full_transcript):
+            if len(received.transcript) and not received.transcript.isspace():
                 # try:
-                start = time.perf_counter()
-                pred, prob, one_hot = model(full_transcript)
-                end = time.perf_counter()
-                pred = ','.join(pred)
-                prob = ','.join(str(p) for p in prob)
+                start = time.perf_counter_ns()
+                pred, prob, one_hot, logits = model(received.transcript)
+                end = time.perf_counter_ns()
                 print(f'[Protocol suggestion:{pred}:{prob}]')
 
                 #Feedback
-                protocolFB =  FeedbackObj("", str(pred),str(prob),"")
+                protocolFB =  FeedbackObj("", str(pred) + " : " +str(prob), "", "")
                 FeedbackQueue.put(protocolFB)
 
-                # except Exception as e:
-                #     pred = 'Protocol is not suggested due to exception'
-                #     print(e, f'[{pred}]')
             else:
                 pred = 'Protocol is not suggested due to receiving blank space as transcript'
                 print(f'[{pred}]')
@@ -188,16 +191,12 @@ def EMSAgentSystem(SpeechToNLPQueue, FeedbackQueue):
             pipeline_config.curr_segment += [received.transcriptionDuration, received.transcript, received.confidence, 'wer', 'cer']
             # if we made a protocol prediction
             if start != None and end != None:
-                pipeline_config.curr_segment += [end-start, pred, prob, 'correct?', one_hot, 'one hot GT', 'tn', 'fp', 'fn', 'tp'] # see if protocol prediction is correct later in EndToEndEval.py
+                pipeline_config.curr_segment += [(end-start)/1000000, pred, prob, 'correct?', one_hot, 'one hot GT', 'tn', 'fp', 'fn', 'tp', logits] # see if protocol prediction is correct later in EndToEndEval.py
             else:
                 # if no suggesion, save one hot vector of all 0's
-                pipeline_config.curr_segment += [-1, pred, -1, -1, -1, -1, -1, -1, -1, -1]
+                pipeline_config.curr_segment += [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
             pipeline_config.rows_trial.append(pipeline_config.curr_segment)
-            pipeline_config.curr_segment = []
-            
-            
-    FeedbackQueue.put("Kill")
-            
+            if not pipeline_config.endtoendspv: pipeline_config.curr_segment = []
 
                 
         

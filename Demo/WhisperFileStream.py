@@ -53,7 +53,7 @@ def process_whisper_response(response):
     end = response.find('}')
     block = response[:start]
     isFinal_str, avg_p_str, latency_str = response[start+1:end].split(",")
-    isFinal = True if isFinal_str == '1' else False
+    isFinal = int(isFinal_str)
     avg_p = float(avg_p_str)
     latency = int(latency_str)
 
@@ -231,10 +231,6 @@ def ReadPipe(SpeechToNLPQueue,VideoSignalQueue, SpeechSignalQueue):
         except Exception as e:
             print("EXCEPTION: ", e)
 
-
-
-
-
 def Whisper(SpeechToNLPQueue,VideoSignalQueue, wavefile_name):
     fifo_path = "/tmp/myfifo"
     finalized_blocks = ''
@@ -253,7 +249,10 @@ def Whisper(SpeechToNLPQueue,VideoSignalQueue, wavefile_name):
                 # Play samples from the wave file (3)
                 while len(data:=wf.readframes(CHUNK)):  # Requires Python 3.8+ for :=
                     stream.write(data)
-                    response = fifo.read().strip()  # Read the message from the named pipe
+                    try:
+                        response = fifo.read().strip()  # Read the message from the named pipe
+                    except Exception as e:
+                        response = ""
                     VideoSignalQueue.put('Proceed')
 
                     if response != old_response and response != "":
@@ -267,7 +266,7 @@ def Whisper(SpeechToNLPQueue,VideoSignalQueue, wavefile_name):
                         SpeechToNLPQueue.put(transcriptItem)  
                         
                         print("--- Whisper Latency:", latency)
-                        old_response = response                
+                        old_response = response
                 # Close stream (4)
                 stream.close()
 
