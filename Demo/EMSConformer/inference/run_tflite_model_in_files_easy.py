@@ -19,19 +19,17 @@ import queue
 
 import pipeline_config
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+# os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 import logging
 logging.getLogger("tensorflow").setLevel(logging.INFO)
 
-import tensorflow as tf
 from tqdm import tqdm
 
 from EMSConformer.inference.tensorflow_asr.metrics.error_rates import ErrorRate
 from EMSConformer.inference.tensorflow_asr.utils.file_util import read_file
 from EMSConformer.inference.tensorflow_asr.utils.metric_util import cer, wer
 
-logger = tf.get_logger()
 
 import fire
 #import tensorflow as tf
@@ -55,18 +53,28 @@ from scipy.io.wavfile import write
 
 from classes import TranscriptItem
 
+import tensorflow as tf
+logger = tf.get_logger()
+
+# For TensorFlow
+# gpus = tf.config.experimental.list_physical_devices('GPU')
+# print(gpus)
+# tf.config.experimental.set_memory_growth(gpus[0], True)  # Use GPU 0
 
 def capture_audio(tflitemodel,input_details,output_details,blank,num_rnns,nstates,statesize, SpeechToNLPQueue, ConformerSignalQueue):
     
+    full_transcription = ""
     while True:
         
         signal = ConformerSignalQueue.get()
         print("EMSConformer Signal: ",signal)
-        if(signal == "Kill"): break
+        if(signal == "Kill"): 
+            SpeechToNLPQueue.put("Kill")
+            break
         
         print('EMSConformer: Capturing audio!')
         fs = 16000  # Sample rate
-        seconds = 3 # Duration of recording
+        seconds = 4 # Duration of recording
 
         myrecording = sd.rec(int(seconds * fs), samplerate=fs, channels=1)
         sd.wait()  # Wait until recording is finished
@@ -83,17 +91,18 @@ def capture_audio(tflitemodel,input_details,output_details,blank,num_rnns,nstate
         audio_buffer = read_raw_audio(myrecording)
 
         transcript, latency = trainscribe(tflitemodel,input_details,output_details,audio_buffer,blank,num_rnns,nstates,statesize)
+        full_transcription += transcript
         
-        transcriptItem = TranscriptItem(transcript, True, 0, latency)
+        transcriptItem = TranscriptItem(full_transcription, True, 0, latency)
         # EMSAgentQueue.put(transcriptItem)
         SpeechToNLPQueue.put(transcriptItem)  
         
-        pipeline_config.curr_segment += [transcriptItem.transcriptionDuration, transcriptItem.transcript, transcriptItem.confidence, 'wer', 'cer']
-        # if we made a protocol prediction
-            # if no suggesion, save one hot vector of all 0's
-        pipeline_config.curr_segment += [-1, "NULL", -1, -1, -1, -1, -1, -1, -1, -1]
-        pipeline_config.rows_trial.append(pipeline_config.curr_segment)
-        pipeline_config.curr_segment = []
+        # pipeline_config.curr_segment += [transcriptItem.transcriptionDuration, transcriptItem.transcript, transcriptItem.confidence, 'wer', 'cer']
+        # # if we made a protocol prediction
+        #     # if no suggesion, save one hot vector of all 0's
+        # pipeline_config.curr_segment += [-1, "NULL", -1, -1, -1, -1, -1, -1, -1, -1]
+        # pipeline_config.rows_trial.append(pipeline_config.curr_segment)
+        # pipeline_config.curr_segment = []
         
         
         print('EMSConformer: Transcription Done!')

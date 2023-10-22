@@ -141,6 +141,14 @@
         "documentation": {}
     },
     {
+        "label": "sleep",
+        "importPath": "time",
+        "description": "time",
+        "isExtraImport": true,
+        "detail": "time",
+        "documentation": {}
+    },
+    {
         "label": "time",
         "importPath": "time",
         "description": "time",
@@ -178,6 +186,14 @@
         "isExtraImport": true,
         "importPath": "datetime",
         "description": "datetime",
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
         "detail": "datetime",
         "documentation": {}
     },
@@ -898,6 +914,14 @@
         "documentation": {}
     },
     {
+        "label": "pipeline",
+        "importPath": "transformers",
+        "description": "transformers",
+        "isExtraImport": true,
+        "detail": "transformers",
+        "documentation": {}
+    },
+    {
         "label": "WhisperForConditionalGeneration",
         "importPath": "transformers",
         "description": "transformers",
@@ -1019,7 +1043,7 @@
         "documentation": {}
     },
     {
-        "label": "GUISignal",
+        "label": "FeedbackObj",
         "importPath": "classes",
         "description": "classes",
         "isExtraImport": true,
@@ -1027,7 +1051,7 @@
         "documentation": {}
     },
     {
-        "label": "FeedbackObj",
+        "label": "TranscriptItem",
         "importPath": "classes",
         "description": "classes",
         "isExtraImport": true,
@@ -2593,6 +2617,15 @@
         "documentation": {}
     },
     {
+        "label": "multiprocessing",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "multiprocessing",
+        "description": "multiprocessing",
+        "detail": "multiprocessing",
+        "documentation": {}
+    },
+    {
         "label": "cpu_count",
         "importPath": "multiprocessing",
         "description": "multiprocessing",
@@ -3822,6 +3855,14 @@
         "documentation": {}
     },
     {
+        "label": "write",
+        "importPath": "scipy.io.wavfile",
+        "description": "scipy.io.wavfile",
+        "isExtraImport": true,
+        "detail": "scipy.io.wavfile",
+        "documentation": {}
+    },
+    {
         "label": "gammatone",
         "importPath": "tensorflow_asr.featurizers.methods",
         "description": "tensorflow_asr.featurizers.methods",
@@ -3949,6 +3990,31 @@
         "description": "EMSVision.ems_knowledge",
         "isExtraImport": true,
         "detail": "EMSVision.ems_knowledge",
+        "documentation": {}
+    },
+    {
+        "label": "threading",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "threading",
+        "description": "threading",
+        "detail": "threading",
+        "documentation": {}
+    },
+    {
+        "label": "Thread",
+        "importPath": "threading",
+        "description": "threading",
+        "isExtraImport": true,
+        "detail": "threading",
+        "documentation": {}
+    },
+    {
+        "label": "Thread",
+        "importPath": "threading",
+        "description": "threading",
+        "isExtraImport": true,
+        "detail": "threading",
         "documentation": {}
     },
     {
@@ -4449,23 +4515,6 @@
         "description": "textParse2",
         "isExtraImport": true,
         "detail": "textParse2",
-        "documentation": {}
-    },
-    {
-        "label": "threading",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "threading",
-        "description": "threading",
-        "detail": "threading",
-        "documentation": {}
-    },
-    {
-        "label": "Thread",
-        "importPath": "threading",
-        "description": "threading",
-        "isExtraImport": true,
-        "detail": "threading",
         "documentation": {}
     },
     {
@@ -5254,14 +5303,6 @@
         "documentation": {}
     },
     {
-        "label": "*",
-        "importPath": "PyQt5.QtCore",
-        "description": "PyQt5.QtCore",
-        "isExtraImport": true,
-        "detail": "PyQt5.QtCore",
-        "documentation": {}
-    },
-    {
         "label": "QThread",
         "importPath": "PyQt5.QtCore",
         "description": "PyQt5.QtCore",
@@ -5495,14 +5536,6 @@
     },
     {
         "label": "*",
-        "importPath": "PyQt5.QtWidgets",
-        "description": "PyQt5.QtWidgets",
-        "isExtraImport": true,
-        "detail": "PyQt5.QtWidgets",
-        "documentation": {}
-    },
-    {
-        "label": "*",
         "importPath": "PyQt5.QtGui",
         "description": "PyQt5.QtGui",
         "isExtraImport": true,
@@ -5543,14 +5576,6 @@
     },
     {
         "label": "QGuiApplication",
-        "importPath": "PyQt5.QtGui",
-        "description": "PyQt5.QtGui",
-        "isExtraImport": true,
-        "detail": "PyQt5.QtGui",
-        "documentation": {}
-    },
-    {
-        "label": "*",
         "importPath": "PyQt5.QtGui",
         "description": "PyQt5.QtGui",
         "isExtraImport": true,
@@ -6048,6 +6073,14 @@
         "importPath": "VideoFileStream",
         "description": "VideoFileStream",
         "detail": "VideoFileStream",
+        "documentation": {}
+    },
+    {
+        "label": "WhisperAgent",
+        "importPath": "EMSWhisper",
+        "description": "EMSWhisper",
+        "isExtraImport": true,
+        "detail": "EMSWhisper",
         "documentation": {}
     },
     {
@@ -7154,7 +7187,7 @@
         "kind": 2,
         "importPath": "Demo.EMSAgent.EMSAgentSystem",
         "description": "Demo.EMSAgent.EMSAgentSystem",
-        "peekOfCode": "def EMSAgentSystem(SpeechToNLPQueue, FeedbackQueue):\n    ProtocolSignal = GUISignal()\n    # ProtocolSignal.signal.connect(Window.UpdateProtocolBoxes)\n    # initialize\n    seed_everything(3407)\n    from EMSAgent.default_sets import model_name\n    config = {\n        'max_len': 512,\n        'fusion': None,\n        'cls': 'fc'",
+        "peekOfCode": "def EMSAgentSystem(SpeechToNLPQueue, FeedbackQueue):\n    # ProtocolSignal.signal.connect(Window.UpdateProtocolBoxes)\n    # initialize\n    seed_everything(3407)\n    from EMSAgent.default_sets import model_name\n    config = {\n        'max_len': 512,\n        'fusion': None,\n        'cls': 'fc'\n    }",
         "detail": "Demo.EMSAgent.EMSAgentSystem",
         "documentation": {}
     },
@@ -9431,7 +9464,7 @@
         "kind": 2,
         "importPath": "Demo.EMSConformer.inference.run_tflite_model_in_files_easy",
         "description": "Demo.EMSConformer.inference.run_tflite_model_in_files_easy",
-        "peekOfCode": "def capture_audio(tflitemodel,input_details,output_details,blank,num_rnns,nstates,statesize, SpeechToNLPQueue, ConformerSignalQueue):\n    while True:\n        signal = ConformerSignalQueue.get()\n        print(\"EMSConformer Signal: \",signal)\n        if(signal == \"Kill\"): break\n        print('EMSConformer: Capturing audio!')\n        fs = 16000  # Sample rate\n        seconds = 3 # Duration of recording\n        myrecording = sd.rec(int(seconds * fs), samplerate=fs, channels=1)\n        sd.wait()  # Wait until recording is finished",
+        "peekOfCode": "def capture_audio(tflitemodel,input_details,output_details,blank,num_rnns,nstates,statesize, SpeechToNLPQueue, ConformerSignalQueue):\n    full_transcription = \"\"\n    while True:\n        signal = ConformerSignalQueue.get()\n        print(\"EMSConformer Signal: \",signal)\n        if(signal == \"Kill\"): \n            SpeechToNLPQueue.put(\"Kill\")\n            break\n        print('EMSConformer: Capturing audio!')\n        fs = 16000  # Sample rate",
         "detail": "Demo.EMSConformer.inference.run_tflite_model_in_files_easy",
         "documentation": {}
     },
@@ -9481,20 +9514,11 @@
         "documentation": {}
     },
     {
-        "label": "os.environ['CUDA_VISIBLE_DEVICES']",
-        "kind": 5,
-        "importPath": "Demo.EMSConformer.inference.run_tflite_model_in_files_easy",
-        "description": "Demo.EMSConformer.inference.run_tflite_model_in_files_easy",
-        "peekOfCode": "os.environ['CUDA_VISIBLE_DEVICES'] = '-1'\nimport logging\nlogging.getLogger(\"tensorflow\").setLevel(logging.INFO)\nimport tensorflow as tf\nfrom tqdm import tqdm\nfrom EMSConformer.inference.tensorflow_asr.metrics.error_rates import ErrorRate\nfrom EMSConformer.inference.tensorflow_asr.utils.file_util import read_file\nfrom EMSConformer.inference.tensorflow_asr.utils.metric_util import cer, wer\nlogger = tf.get_logger()\nimport fire",
-        "detail": "Demo.EMSConformer.inference.run_tflite_model_in_files_easy",
-        "documentation": {}
-    },
-    {
         "label": "logger",
         "kind": 5,
         "importPath": "Demo.EMSConformer.inference.run_tflite_model_in_files_easy",
         "description": "Demo.EMSConformer.inference.run_tflite_model_in_files_easy",
-        "peekOfCode": "logger = tf.get_logger()\nimport fire\n#import tensorflow as tf\nfrom EMSConformer.inference.tensorflow_asr.utils.file_util import read_file\nimport json\nfrom pydub import AudioSegment\nfrom EMSConformer.inference.tensorflow_asr.featurizers.speech_featurizers import read_raw_audio\nfrom datetime import datetime\nimport argparse\nimport time",
+        "peekOfCode": "logger = tf.get_logger()\n# For TensorFlow\n# gpus = tf.config.experimental.list_physical_devices('GPU')\n# print(gpus)\n# tf.config.experimental.set_memory_growth(gpus[0], True)  # Use GPU 0\ndef capture_audio(tflitemodel,input_details,output_details,blank,num_rnns,nstates,statesize, SpeechToNLPQueue, ConformerSignalQueue):\n    full_transcription = \"\"\n    while True:\n        signal = ConformerSignalQueue.get()\n        print(\"EMSConformer Signal: \",signal)",
         "detail": "Demo.EMSConformer.inference.run_tflite_model_in_files_easy",
         "documentation": {}
     },
@@ -11470,6 +11494,69 @@
         "documentation": {}
     },
     {
+        "label": "transcribe",
+        "kind": 2,
+        "importPath": "Demo.EMSWhisper.WhisperAgent",
+        "description": "Demo.EMSWhisper.WhisperAgent",
+        "peekOfCode": "def transcribe(SpeechToNLPQueue,pipe, myrecording):\n    # Code for the second part of the task\n    # Send data to process1 through the queue\n                # run inference\n    pipeaudio = myrecording.ravel()\n    start_t = time.perf_counter()\n    output = pipe(pipeaudio)\n    end_t = time.perf_counter()\n    latency = (end_t-start_t)*1e3\n    transcript = output[\"text\"]",
+        "detail": "Demo.EMSWhisper.WhisperAgent",
+        "documentation": {}
+    },
+    {
+        "label": "WhisperPipeline",
+        "kind": 2,
+        "importPath": "Demo.EMSWhisper.WhisperAgent",
+        "description": "Demo.EMSWhisper.WhisperAgent",
+        "peekOfCode": "def WhisperPipeline( SpeechToNLPQueue, WhisperSignalQueue):\n    # read in audio file\n    # audio_file = \"jfk.wav\"\n    # audio, rate = librosa.load(audio_file, sr=16000)\n    model_repo = tiny_version_to_name_dict[version] if model_type == \"tiny\" else base_version_to_name_dict[version]\n    pipe = pipeline(model=model_repo, batch_size=1, device=0, chunk_length_s=5, stride_length_s=(2, 2)) # set device to 0 to run on cuda\n    data_queue = queue.Queue()\n    audio_buffer = np.zeros((1600,1))\n    while True:\n        print(\"SignalQueue\",WhisperSignalQueue, WhisperSignalQueue.qsize())",
+        "detail": "Demo.EMSWhisper.WhisperAgent",
+        "documentation": {}
+    },
+    {
+        "label": "model_type",
+        "kind": 5,
+        "importPath": "Demo.EMSWhisper.WhisperAgent",
+        "description": "Demo.EMSWhisper.WhisperAgent",
+        "peekOfCode": "model_type = \"tiny\" # or \"base\"\nmodel_type = \"base\"\nversion = 3\ntiny_version_to_name_dict = {\n    2: \"saahith/tiny.en-combined_v4-1-0.1-32-1e-05-fragrant-sweep-3\",\n    3: \"saahith/tiny.en-combined_v4-1-0.1-32-1e-05-revived-sweep-7\",\n    4: \"saahith/tiny.en-combined_v4-1-0-32-1e-05-glamorous-sweep-1\",\n    5: \"saahith/tiny.en-tiny.en-combined_v4-1-0.1-8-1e-06-sunny-sweep-55\",\n}\nbase_version_to_name_dict = {",
+        "detail": "Demo.EMSWhisper.WhisperAgent",
+        "documentation": {}
+    },
+    {
+        "label": "model_type",
+        "kind": 5,
+        "importPath": "Demo.EMSWhisper.WhisperAgent",
+        "description": "Demo.EMSWhisper.WhisperAgent",
+        "peekOfCode": "model_type = \"base\"\nversion = 3\ntiny_version_to_name_dict = {\n    2: \"saahith/tiny.en-combined_v4-1-0.1-32-1e-05-fragrant-sweep-3\",\n    3: \"saahith/tiny.en-combined_v4-1-0.1-32-1e-05-revived-sweep-7\",\n    4: \"saahith/tiny.en-combined_v4-1-0-32-1e-05-glamorous-sweep-1\",\n    5: \"saahith/tiny.en-tiny.en-combined_v4-1-0.1-8-1e-06-sunny-sweep-55\",\n}\nbase_version_to_name_dict = {\n    3: \"saahith/base.en-combined_v4-2-0-8-1e-05-deft-sweep-10\",",
+        "detail": "Demo.EMSWhisper.WhisperAgent",
+        "documentation": {}
+    },
+    {
+        "label": "version",
+        "kind": 5,
+        "importPath": "Demo.EMSWhisper.WhisperAgent",
+        "description": "Demo.EMSWhisper.WhisperAgent",
+        "peekOfCode": "version = 3\ntiny_version_to_name_dict = {\n    2: \"saahith/tiny.en-combined_v4-1-0.1-32-1e-05-fragrant-sweep-3\",\n    3: \"saahith/tiny.en-combined_v4-1-0.1-32-1e-05-revived-sweep-7\",\n    4: \"saahith/tiny.en-combined_v4-1-0-32-1e-05-glamorous-sweep-1\",\n    5: \"saahith/tiny.en-tiny.en-combined_v4-1-0.1-8-1e-06-sunny-sweep-55\",\n}\nbase_version_to_name_dict = {\n    3: \"saahith/base.en-combined_v4-2-0-8-1e-05-deft-sweep-10\",\n    4: \"saahith/base.en-combined_v4-1-0-8-1e-05-elated-sweep-2\",",
+        "detail": "Demo.EMSWhisper.WhisperAgent",
+        "documentation": {}
+    },
+    {
+        "label": "tiny_version_to_name_dict",
+        "kind": 5,
+        "importPath": "Demo.EMSWhisper.WhisperAgent",
+        "description": "Demo.EMSWhisper.WhisperAgent",
+        "peekOfCode": "tiny_version_to_name_dict = {\n    2: \"saahith/tiny.en-combined_v4-1-0.1-32-1e-05-fragrant-sweep-3\",\n    3: \"saahith/tiny.en-combined_v4-1-0.1-32-1e-05-revived-sweep-7\",\n    4: \"saahith/tiny.en-combined_v4-1-0-32-1e-05-glamorous-sweep-1\",\n    5: \"saahith/tiny.en-tiny.en-combined_v4-1-0.1-8-1e-06-sunny-sweep-55\",\n}\nbase_version_to_name_dict = {\n    3: \"saahith/base.en-combined_v4-2-0-8-1e-05-deft-sweep-10\",\n    4: \"saahith/base.en-combined_v4-1-0-8-1e-05-elated-sweep-2\",\n    5: \"saahith/base.en-combined_v4-1-0.1-8-1e-05-charmed-sweep-25\",",
+        "detail": "Demo.EMSWhisper.WhisperAgent",
+        "documentation": {}
+    },
+    {
+        "label": "base_version_to_name_dict",
+        "kind": 5,
+        "importPath": "Demo.EMSWhisper.WhisperAgent",
+        "description": "Demo.EMSWhisper.WhisperAgent",
+        "peekOfCode": "base_version_to_name_dict = {\n    3: \"saahith/base.en-combined_v4-2-0-8-1e-05-deft-sweep-10\",\n    4: \"saahith/base.en-combined_v4-1-0-8-1e-05-elated-sweep-2\",\n    5: \"saahith/base.en-combined_v4-1-0.1-8-1e-05-charmed-sweep-25\",\n    6: \"saahith/base.en-combined_v4-1-0-16-1e-05-swept-sweep-3\",\n}\ndef transcribe(SpeechToNLPQueue,pipe, myrecording):\n    # Code for the second part of the task\n    # Send data to process1 through the queue\n                # run inference",
+        "detail": "Demo.EMSWhisper.WhisperAgent",
+        "documentation": {}
+    },
+    {
         "label": "getAudioStremText",
         "kind": 2,
         "importPath": "Demo.Form_Filling.gui2",
@@ -12491,7 +12578,7 @@
         "kind": 2,
         "importPath": "Demo.EndToEndEval",
         "description": "Demo.EndToEndEval",
-        "peekOfCode": "def get_ground_truth_protocol(recording):\n    with open(f'Audio_Scenarios/2019_Test_Ground_Truth/{recording}-protocol.txt') as f:\n        ground_truth = f.read()\n    return ground_truth\ndef get_ground_truth_one_hot_vector(recording):\n    ground_truth = get_ground_truth_protocol(recording)\n    one_hot_vector = [1 if label.lower() == ground_truth.lower() else 0 for label in ungroup_p_node]\n    return np.array(one_hot_vector)\ndef get_wer_and_cer(recording, transcript):\n    tokenized_reference_text = Processor.tokenizer._normalize(get_ground_truth_transcript(recording))",
+        "peekOfCode": "def get_ground_truth_protocol(recording):\n    with open(f'Audio_Scenarios/2019_Test_Ground_Truth/{recording}-protocol.txt') as f:\n        ground_truth = f.read()\n    return ground_truth\ndef get_ground_truth_one_hot_vector(recording):\n    ground_truth = get_ground_truth_protocol(recording)\n    one_hot_vector = [1 if label.lower() == ground_truth.lower() else 0 for label in ungroup_p_node]\n    return np.array(one_hot_vector)\ndef get_wer_and_cer(recording, transcript):\n    # tokenized_reference_text = Processor.tokenizer._normalize(get_ground_truth_transcript(recording))",
         "detail": "Demo.EndToEndEval",
         "documentation": {}
     },
@@ -12500,7 +12587,7 @@
         "kind": 2,
         "importPath": "Demo.EndToEndEval",
         "description": "Demo.EndToEndEval",
-        "peekOfCode": "def get_ground_truth_one_hot_vector(recording):\n    ground_truth = get_ground_truth_protocol(recording)\n    one_hot_vector = [1 if label.lower() == ground_truth.lower() else 0 for label in ungroup_p_node]\n    return np.array(one_hot_vector)\ndef get_wer_and_cer(recording, transcript):\n    tokenized_reference_text = Processor.tokenizer._normalize(get_ground_truth_transcript(recording))\n    tokenized_prediction_text = Processor.tokenizer._normalize(transcript)\n    wer = wer_metric.compute(references=[tokenized_reference_text], predictions=[tokenized_prediction_text])\n    cer = cer_metric.compute(references=[tokenized_reference_text], predictions=[tokenized_prediction_text])\n    return wer, cer",
+        "peekOfCode": "def get_ground_truth_one_hot_vector(recording):\n    ground_truth = get_ground_truth_protocol(recording)\n    one_hot_vector = [1 if label.lower() == ground_truth.lower() else 0 for label in ungroup_p_node]\n    return np.array(one_hot_vector)\ndef get_wer_and_cer(recording, transcript):\n    # tokenized_reference_text = Processor.tokenizer._normalize(get_ground_truth_transcript(recording))\n    # tokenized_prediction_text = Processor.tokenizer._normalize(transcript)\n    # wer = wer_metric.compute(references=[tokenized_reference_text], predictions=[tokenized_prediction_text])\n    # cer = cer_metric.compute(references=[tokenized_reference_text], predictions=[tokenized_prediction_text])\n    return 0, 0",
         "detail": "Demo.EndToEndEval",
         "documentation": {}
     },
@@ -12509,7 +12596,7 @@
         "kind": 2,
         "importPath": "Demo.EndToEndEval",
         "description": "Demo.EndToEndEval",
-        "peekOfCode": "def get_wer_and_cer(recording, transcript):\n    tokenized_reference_text = Processor.tokenizer._normalize(get_ground_truth_transcript(recording))\n    tokenized_prediction_text = Processor.tokenizer._normalize(transcript)\n    wer = wer_metric.compute(references=[tokenized_reference_text], predictions=[tokenized_prediction_text])\n    cer = cer_metric.compute(references=[tokenized_reference_text], predictions=[tokenized_prediction_text])\n    return wer, cer\ndef check_protocol_correct(recording, protocol):\n    print('check protocol correct:',protocol)\n    if protocol == -1: return -1\n    ground_truth = get_ground_truth_protocol(recording)",
+        "peekOfCode": "def get_wer_and_cer(recording, transcript):\n    # tokenized_reference_text = Processor.tokenizer._normalize(get_ground_truth_transcript(recording))\n    # tokenized_prediction_text = Processor.tokenizer._normalize(transcript)\n    # wer = wer_metric.compute(references=[tokenized_reference_text], predictions=[tokenized_prediction_text])\n    # cer = cer_metric.compute(references=[tokenized_reference_text], predictions=[tokenized_prediction_text])\n    return 0, 0\ndef check_protocol_correct(recording, protocol):\n    print('check protocol correct:',protocol)\n    if protocol == -1: return -1\n    ground_truth = get_ground_truth_protocol(recording)",
         "detail": "Demo.EndToEndEval",
         "documentation": {}
     },
@@ -12527,7 +12614,7 @@
         "kind": 2,
         "importPath": "Demo.EndToEndEval",
         "description": "Demo.EndToEndEval",
-        "peekOfCode": "def is_singleton_array(arr):\n    shape = arr.shape\n    # Check if all dimensions have size 1\n    return all(dim == 1 for dim in shape)\n# --- main ---------------------------\nif __name__ == '__main__':\n    one_hot_pred_all_recordings = []\n    one_hot_gt_all_recordings = []\n    for whisper_model in pipeline_config.whisper_model_sizes:\n        for recording in pipeline_config.recordings_to_test:",
+        "peekOfCode": "def is_singleton_array(arr):\n    shape = arr.shape\n    # Check if all dimensions have size 1\n    return all(dim == 1 for dim in shape)\n# --- main ---------------------------\nif __name__ == '__main__':\n    one_hot_pred_all_recordings = []\n    one_hot_gt_all_recordings = []\n    for trial in range(pipeline_config.num_trials):\n        for whisper_model in pipeline_config.whisper_model_sizes:",
         "detail": "Demo.EndToEndEval",
         "documentation": {}
     },
@@ -12986,7 +13073,16 @@
         "kind": 2,
         "importPath": "Demo.WhisperFileStream",
         "description": "Demo.WhisperFileStream",
-        "peekOfCode": "def SDStream(SpeechSignalQueue,wavefile_name):\n    blocksize = 2048\n    buffersize = 20\n    device = len(sd.query_devices()) -1\n    q = queue.Queue(maxsize=20)\n    event = threading.Event()\n    print(\"Audio Streaming Started! \",wavefile_name)\n    def callback(outdata, frames, time, status):\n        assert frames == blocksize\n        if status.output_underflow:",
+        "peekOfCode": "def SDStream(SpeechSignalQueue,wavefile_name):\n    blocksize = 1024\n    buffersize = 20\n    device = len(sd.query_devices()) -1\n    q = queue.Queue(maxsize=20)\n    event = threading.Event()\n    print(\"Audio Streaming Started! \",wavefile_name)\n    SpeechSignalQueue.put(\"Proceed\")\n    def callback(outdata, frames, time, status):\n        assert frames == blocksize",
+        "detail": "Demo.WhisperFileStream",
+        "documentation": {}
+    },
+    {
+        "label": "PyAudioStream",
+        "kind": 2,
+        "importPath": "Demo.WhisperFileStream",
+        "description": "Demo.WhisperFileStream",
+        "peekOfCode": "def PyAudioStream(SpeechSignalQueue,wavefile_name):\n    with wave.open(wavefile_name, 'rb') as wf:\n        try:\n            # Instantiate PyAudio and initialize PortAudio system resources (1)\n            p = pyaudio.PyAudio()\n            info = p.get_default_host_api_info()\n            device_index = info.get('deviceCount') - 1 # get default device as output device\n            stream = p.open(format = pyaudio.paInt16, channels = 1, rate = RATE, output = True, frames_per_buffer = CHUNK, output_device_index=device_index)\n            # Play samples from the wave file (3)\n            while len(data:=wf.readframes(CHUNK)):  # Requires Python 3.8+ for :=",
         "detail": "Demo.WhisperFileStream",
         "documentation": {}
     },
@@ -13013,7 +13109,7 @@
         "kind": 5,
         "importPath": "Demo.WhisperFileStream",
         "description": "Demo.WhisperFileStream",
-        "peekOfCode": "RATE = 16000\nCHUNK = 1024  # 100ms\nSIGNAL = False\n'''\nThis method processes the whisper response we receive from fifo pipe \nThe response is type string, and is in the format 'block{isFinal,avg_p,latency}'\nWe remove background noise strings from the block (such as *crash* and [DOOR OPENS]) \nAnd separate out the parts of response into block, isFinal, avg_p, and latency\nblock : speech converted into text\nisFinal : '1' = the block is a final block. '0' = the block is a interim block",
+        "peekOfCode": "RATE = 16000\nCHUNK = 1600  # 100ms\nif(pipeline_config.endtoendspv):\n    RATE = 44100\n    CHUNK = RATE//10\nSIGNAL = False\n'''\nThis method processes the whisper response we receive from fifo pipe \nThe response is type string, and is in the format 'block{isFinal,avg_p,latency}'\nWe remove background noise strings from the block (such as *crash* and [DOOR OPENS]) ",
         "detail": "Demo.WhisperFileStream",
         "documentation": {}
     },
@@ -13022,7 +13118,7 @@
         "kind": 5,
         "importPath": "Demo.WhisperFileStream",
         "description": "Demo.WhisperFileStream",
-        "peekOfCode": "CHUNK = 1024  # 100ms\nSIGNAL = False\n'''\nThis method processes the whisper response we receive from fifo pipe \nThe response is type string, and is in the format 'block{isFinal,avg_p,latency}'\nWe remove background noise strings from the block (such as *crash* and [DOOR OPENS]) \nAnd separate out the parts of response into block, isFinal, avg_p, and latency\nblock : speech converted into text\nisFinal : '1' = the block is a final block. '0' = the block is a interim block\navg_p : 'float' of inclusive range [0,1]. the average confidence probability of all the tokens in the block",
+        "peekOfCode": "CHUNK = 1600  # 100ms\nif(pipeline_config.endtoendspv):\n    RATE = 44100\n    CHUNK = RATE//10\nSIGNAL = False\n'''\nThis method processes the whisper response we receive from fifo pipe \nThe response is type string, and is in the format 'block{isFinal,avg_p,latency}'\nWe remove background noise strings from the block (such as *crash* and [DOOR OPENS]) \nAnd separate out the parts of response into block, isFinal, avg_p, and latency",
         "detail": "Demo.WhisperFileStream",
         "documentation": {}
     },
@@ -13598,16 +13694,7 @@
         "kind": 6,
         "importPath": "Demo.classes",
         "description": "Demo.classes",
-        "peekOfCode": "class QueueItem:\n    def __init__(self, transcript, isFinal, confidence):\n            self.transcript = transcript\n            self.isFinal = isFinal\n            self.confidence = 0\n# Custom object for signalling\nclass GUISignal(QObject):\n    signal = pyqtSignal(list)",
-        "detail": "Demo.classes",
-        "documentation": {}
-    },
-    {
-        "label": "GUISignal",
-        "kind": 6,
-        "importPath": "Demo.classes",
-        "description": "Demo.classes",
-        "peekOfCode": "class GUISignal(QObject):\n    signal = pyqtSignal(list)",
+        "peekOfCode": "class QueueItem:\n    def __init__(self, transcript, isFinal, confidence):\n            self.transcript = transcript\n            self.isFinal = isFinal\n            self.confidence = 0\n# # Custom object for signalling\n# class GUISignal(QObject):\n#     signal = pyqtSignal(list)",
         "detail": "Demo.classes",
         "documentation": {}
     },
@@ -13724,7 +13811,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "datacollection = True\nvideostream = True\naudiostream = True\nsmartwatchStream = True\nconceptExtractionStream = True\nprotocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Speech to Text Control ------------------- #\n# speech_model = 'conformer' # 'conformer'",
+        "peekOfCode": "datacollection = True\nvideostream = True\naudiostream = True\nsmartwatchStream = True\nconceptExtractionStream = True\nprotocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Experiment Control ------------------- #\nendtoendspv = False #speech+protocol+vision",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13733,7 +13820,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "videostream = True\naudiostream = True\nsmartwatchStream = True\nconceptExtractionStream = True\nprotocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Speech to Text Control ------------------- #\n# speech_model = 'conformer' # 'conformer'\nspeech_model = 'whisper' # 'conformer'",
+        "peekOfCode": "videostream = True\naudiostream = True\nsmartwatchStream = True\nconceptExtractionStream = True\nprotocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Experiment Control ------------------- #\nendtoendspv = False #speech+protocol+vision\n# ------------------- Speech to Text Control ------------------- #",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13742,7 +13829,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "audiostream = True\nsmartwatchStream = True\nconceptExtractionStream = True\nprotocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Speech to Text Control ------------------- #\n# speech_model = 'conformer' # 'conformer'\nspeech_model = 'whisper' # 'conformer'\n# -- Audio Recording Option -----",
+        "peekOfCode": "audiostream = True\nsmartwatchStream = True\nconceptExtractionStream = True\nprotocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Experiment Control ------------------- #\nendtoendspv = False #speech+protocol+vision\n# ------------------- Speech to Text Control ------------------- #\nspeech_model = 'conformer' # 'conformer'",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13751,7 +13838,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "smartwatchStream = True\nconceptExtractionStream = True\nprotocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Speech to Text Control ------------------- #\n# speech_model = 'conformer' # 'conformer'\nspeech_model = 'whisper' # 'conformer'\n# -- Audio Recording Option -----\nhardcoded = True",
+        "peekOfCode": "smartwatchStream = True\nconceptExtractionStream = True\nprotocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Experiment Control ------------------- #\nendtoendspv = False #speech+protocol+vision\n# ------------------- Speech to Text Control ------------------- #\nspeech_model = 'conformer' # 'conformer'\nspeech_model = 'whisper' # 'conformer'",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13760,7 +13847,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "conceptExtractionStream = True\nprotocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Speech to Text Control ------------------- #\n# speech_model = 'conformer' # 'conformer'\nspeech_model = 'whisper' # 'conformer'\n# -- Audio Recording Option -----\nhardcoded = True\nrecording_name = '000_190105'",
+        "peekOfCode": "conceptExtractionStream = True\nprotocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Experiment Control ------------------- #\nendtoendspv = False #speech+protocol+vision\n# ------------------- Speech to Text Control ------------------- #\nspeech_model = 'conformer' # 'conformer'\nspeech_model = 'whisper' # 'conformer'\n# -- Audio Recording Option -----",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13769,7 +13856,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "protocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Speech to Text Control ------------------- #\n# speech_model = 'conformer' # 'conformer'\nspeech_model = 'whisper' # 'conformer'\n# -- Audio Recording Option -----\nhardcoded = True\nrecording_name = '000_190105'\nvideo_name = 'scenario_1'",
+        "peekOfCode": "protocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Experiment Control ------------------- #\nendtoendspv = False #speech+protocol+vision\n# ------------------- Speech to Text Control ------------------- #\nspeech_model = 'conformer' # 'conformer'\nspeech_model = 'whisper' # 'conformer'\n# -- Audio Recording Option -----\nhardcoded = True",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13778,7 +13865,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "interventionStream = True\ntranscriptStream = True\n# ------------------- Speech to Text Control ------------------- #\n# speech_model = 'conformer' # 'conformer'\nspeech_model = 'whisper' # 'conformer'\n# -- Audio Recording Option -----\nhardcoded = True\nrecording_name = '000_190105'\nvideo_name = 'scenario_1'\n# -- Whisper configuration ---",
+        "peekOfCode": "interventionStream = True\ntranscriptStream = True\n# ------------------- Experiment Control ------------------- #\nendtoendspv = False #speech+protocol+vision\n# ------------------- Speech to Text Control ------------------- #\nspeech_model = 'conformer' # 'conformer'\nspeech_model = 'whisper' # 'conformer'\n# -- Audio Recording Option -----\nhardcoded = True\nrecording_name = '000_190105'",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13787,7 +13874,25 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "transcriptStream = True\n# ------------------- Speech to Text Control ------------------- #\n# speech_model = 'conformer' # 'conformer'\nspeech_model = 'whisper' # 'conformer'\n# -- Audio Recording Option -----\nhardcoded = True\nrecording_name = '000_190105'\nvideo_name = 'scenario_1'\n# -- Whisper configuration ---\nwhisper_model_size = \"base-finetuned\"",
+        "peekOfCode": "transcriptStream = True\n# ------------------- Experiment Control ------------------- #\nendtoendspv = False #speech+protocol+vision\n# ------------------- Speech to Text Control ------------------- #\nspeech_model = 'conformer' # 'conformer'\nspeech_model = 'whisper' # 'conformer'\n# -- Audio Recording Option -----\nhardcoded = True\nrecording_name = '000_190105'\nvideo_name = 'scenario_1'",
+        "detail": "Demo.pipeline_config",
+        "documentation": {}
+    },
+    {
+        "label": "endtoendspv",
+        "kind": 5,
+        "importPath": "Demo.pipeline_config",
+        "description": "Demo.pipeline_config",
+        "peekOfCode": "endtoendspv = False #speech+protocol+vision\n# ------------------- Speech to Text Control ------------------- #\nspeech_model = 'conformer' # 'conformer'\nspeech_model = 'whisper' # 'conformer'\n# -- Audio Recording Option -----\nhardcoded = True\nrecording_name = '000_190105'\nvideo_name = 'scenario_1'\n# -- Whisper configuration ---\nwhisper_model_size = \"base-finetuned\"",
+        "detail": "Demo.pipeline_config",
+        "documentation": {}
+    },
+    {
+        "label": "speech_model",
+        "kind": 5,
+        "importPath": "Demo.pipeline_config",
+        "description": "Demo.pipeline_config",
+        "peekOfCode": "speech_model = 'conformer' # 'conformer'\nspeech_model = 'whisper' # 'conformer'\n# -- Audio Recording Option -----\nhardcoded = True\nrecording_name = '000_190105'\nvideo_name = 'scenario_1'\n# -- Whisper configuration ---\nwhisper_model_size = \"base-finetuned\"\nwhisper_model_size = \"base.en\"\n# -- Whisper configuration ---",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13805,7 +13910,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "hardcoded = True\nrecording_name = '000_190105'\nvideo_name = 'scenario_1'\n# -- Whisper configuration ---\nwhisper_model_size = \"base-finetuned\"\nwhisper_model_size = \"base.en\"\n# -- Whisper configuration ---\nwhisper_model_sizes = [\n    \"base-finetuned-v6\",\n    \"base-finetuned-v5\",",
+        "peekOfCode": "hardcoded = True\nrecording_name = '000_190105'\nvideo_name = 'scenario_1'\n# -- Whisper configuration ---\nwhisper_model_size = \"base-finetuned\"\nwhisper_model_size = \"base.en\"\n# -- Whisper configuration ---\nwhisper_model_sizes = [\n    \"base-wo-emsassist\",\n    \"base-wo-synth-v1\",",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13814,7 +13919,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "recording_name = '000_190105'\nvideo_name = 'scenario_1'\n# -- Whisper configuration ---\nwhisper_model_size = \"base-finetuned\"\nwhisper_model_size = \"base.en\"\n# -- Whisper configuration ---\nwhisper_model_sizes = [\n    \"base-finetuned-v6\",\n    \"base-finetuned-v5\",\n    \"base-finetuned-v4\",",
+        "peekOfCode": "recording_name = '000_190105'\nvideo_name = 'scenario_1'\n# -- Whisper configuration ---\nwhisper_model_size = \"base-finetuned\"\nwhisper_model_size = \"base.en\"\n# -- Whisper configuration ---\nwhisper_model_sizes = [\n    \"base-wo-emsassist\",\n    \"base-wo-synth-v1\",\n    \"tiny-wo-synth-v1\",",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13823,7 +13928,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "video_name = 'scenario_1'\n# -- Whisper configuration ---\nwhisper_model_size = \"base-finetuned\"\nwhisper_model_size = \"base.en\"\n# -- Whisper configuration ---\nwhisper_model_sizes = [\n    \"base-finetuned-v6\",\n    \"base-finetuned-v5\",\n    \"base-finetuned-v4\",\n    \"base-finetuned-v3\",",
+        "peekOfCode": "video_name = 'scenario_1'\n# -- Whisper configuration ---\nwhisper_model_size = \"base-finetuned\"\nwhisper_model_size = \"base.en\"\n# -- Whisper configuration ---\nwhisper_model_sizes = [\n    \"base-wo-emsassist\",\n    \"base-wo-synth-v1\",\n    \"tiny-wo-synth-v1\",\n    \"base-finetuned-v6\",",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13832,7 +13937,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "whisper_model_size = \"base-finetuned\"\nwhisper_model_size = \"base.en\"\n# -- Whisper configuration ---\nwhisper_model_sizes = [\n    \"base-finetuned-v6\",\n    \"base-finetuned-v5\",\n    \"base-finetuned-v4\",\n    \"base-finetuned-v3\",\n    \"base-finetuned-v2\",\n   \"tiny-finetuned-v2\",",
+        "peekOfCode": "whisper_model_size = \"base-finetuned\"\nwhisper_model_size = \"base.en\"\n# -- Whisper configuration ---\nwhisper_model_sizes = [\n    \"base-wo-emsassist\",\n    \"base-wo-synth-v1\",\n    \"tiny-wo-synth-v1\",\n    \"base-finetuned-v6\",\n    \"base-finetuned-v5\",\n    \"base-finetuned-v4\",",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13841,7 +13946,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "whisper_model_size = \"base.en\"\n# -- Whisper configuration ---\nwhisper_model_sizes = [\n    \"base-finetuned-v6\",\n    \"base-finetuned-v5\",\n    \"base-finetuned-v4\",\n    \"base-finetuned-v3\",\n    \"base-finetuned-v2\",\n   \"tiny-finetuned-v2\",\n#    \"tiny-finetuned-q5\",",
+        "peekOfCode": "whisper_model_size = \"base.en\"\n# -- Whisper configuration ---\nwhisper_model_sizes = [\n    \"base-wo-emsassist\",\n    \"base-wo-synth-v1\",\n    \"tiny-wo-synth-v1\",\n    \"base-finetuned-v6\",\n    \"base-finetuned-v5\",\n    \"base-finetuned-v4\",\n    \"base-finetuned-v3\",",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13850,7 +13955,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "whisper_model_sizes = [\n    \"base-finetuned-v6\",\n    \"base-finetuned-v5\",\n    \"base-finetuned-v4\",\n    \"base-finetuned-v3\",\n    \"base-finetuned-v2\",\n   \"tiny-finetuned-v2\",\n#    \"tiny-finetuned-q5\",\n#    \"tiny-q5\",\n#     \"tiny-finetuned\",",
+        "peekOfCode": "whisper_model_sizes = [\n    \"base-wo-emsassist\",\n    \"base-wo-synth-v1\",\n    \"tiny-wo-synth-v1\",\n    \"base-finetuned-v6\",\n    \"base-finetuned-v5\",\n    \"base-finetuned-v4\",\n    \"base-finetuned-v3\",\n    \"base-finetuned-v2\",\n    \"tiny-finetuned-v5\",",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13859,7 +13964,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "PATH_TO_WHISPER_CPP_FOLDER = \"/home/cogems_nist/Desktop/CogEMS_NIST/whisper.cpp\"\nnum_threads = 8\nstep = 3000\nlength = 30000\nkeep_ms = 300 #audio to keep from previous step in ms\n# -- EMS Conformer configuration ------\nconformer_model_type = 'all_14_model.tflite' \n# -- EMS Agent configuration ------\nprotocol_model_device = 'cuda' # 'cuda' or 'cpu'\nprotocol_model_type = 'DKEC-TinyClinicalBERT' #DKEC-TinyClinicalBERT, EMSAssist",
+        "peekOfCode": "PATH_TO_WHISPER_CPP_FOLDER = \"/home/cogems_nist/Desktop/CogEMS_NIST/whisper.cpp\"\nnum_threads = 8\nstep = 2000\nlength = 30000\nkeep_ms = 200 #audio to keep from previous step in ms\n# -- EMS Conformer configuration ------\n# conformer_model_type = 'all_14_model.tflite' \n# -- EMS Agent configuration ------\nprotocol_model_device = 'cuda' # 'cuda' or 'cpu'\nprotocol_model_type = 'DKEC-TinyClinicalBERT' #DKEC-TinyClinicalBERT, EMSAssist",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13868,7 +13973,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "num_threads = 8\nstep = 3000\nlength = 30000\nkeep_ms = 300 #audio to keep from previous step in ms\n# -- EMS Conformer configuration ------\nconformer_model_type = 'all_14_model.tflite' \n# -- EMS Agent configuration ------\nprotocol_model_device = 'cuda' # 'cuda' or 'cpu'\nprotocol_model_type = 'DKEC-TinyClinicalBERT' #DKEC-TinyClinicalBERT, EMSAssist\n# -- EMS Vision configuration ------",
+        "peekOfCode": "num_threads = 8\nstep = 2000\nlength = 30000\nkeep_ms = 200 #audio to keep from previous step in ms\n# -- EMS Conformer configuration ------\n# conformer_model_type = 'all_14_model.tflite' \n# -- EMS Agent configuration ------\nprotocol_model_device = 'cuda' # 'cuda' or 'cpu'\nprotocol_model_type = 'DKEC-TinyClinicalBERT' #DKEC-TinyClinicalBERT, EMSAssist\n# protocol_model_type = 'EMSAssist' #DKEC-TinyClinicalBERT, EMSAssist",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13877,7 +13982,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "step = 3000\nlength = 30000\nkeep_ms = 300 #audio to keep from previous step in ms\n# -- EMS Conformer configuration ------\nconformer_model_type = 'all_14_model.tflite' \n# -- EMS Agent configuration ------\nprotocol_model_device = 'cuda' # 'cuda' or 'cpu'\nprotocol_model_type = 'DKEC-TinyClinicalBERT' #DKEC-TinyClinicalBERT, EMSAssist\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' ",
+        "peekOfCode": "step = 2000\nlength = 30000\nkeep_ms = 200 #audio to keep from previous step in ms\n# -- EMS Conformer configuration ------\n# conformer_model_type = 'all_14_model.tflite' \n# -- EMS Agent configuration ------\nprotocol_model_device = 'cuda' # 'cuda' or 'cpu'\nprotocol_model_type = 'DKEC-TinyClinicalBERT' #DKEC-TinyClinicalBERT, EMSAssist\n# protocol_model_type = 'EMSAssist' #DKEC-TinyClinicalBERT, EMSAssist\n# -- EMS Vision configuration ------",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13886,7 +13991,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "length = 30000\nkeep_ms = 300 #audio to keep from previous step in ms\n# -- EMS Conformer configuration ------\nconformer_model_type = 'all_14_model.tflite' \n# -- EMS Agent configuration ------\nprotocol_model_device = 'cuda' # 'cuda' or 'cpu'\nprotocol_model_type = 'DKEC-TinyClinicalBERT' #DKEC-TinyClinicalBERT, EMSAssist\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' \n# --- End to End evaluation testing configs --------",
+        "peekOfCode": "length = 30000\nkeep_ms = 200 #audio to keep from previous step in ms\n# -- EMS Conformer configuration ------\n# conformer_model_type = 'all_14_model.tflite' \n# -- EMS Agent configuration ------\nprotocol_model_device = 'cuda' # 'cuda' or 'cpu'\nprotocol_model_type = 'DKEC-TinyClinicalBERT' #DKEC-TinyClinicalBERT, EMSAssist\n# protocol_model_type = 'EMSAssist' #DKEC-TinyClinicalBERT, EMSAssist\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' ",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13895,16 +14000,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "keep_ms = 300 #audio to keep from previous step in ms\n# -- EMS Conformer configuration ------\nconformer_model_type = 'all_14_model.tflite' \n# -- EMS Agent configuration ------\nprotocol_model_device = 'cuda' # 'cuda' or 'cpu'\nprotocol_model_type = 'DKEC-TinyClinicalBERT' #DKEC-TinyClinicalBERT, EMSAssist\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' \n# --- End to End evaluation testing configs --------\nrecordings_to_test = [",
-        "detail": "Demo.pipeline_config",
-        "documentation": {}
-    },
-    {
-        "label": "conformer_model_type",
-        "kind": 5,
-        "importPath": "Demo.pipeline_config",
-        "description": "Demo.pipeline_config",
-        "peekOfCode": "conformer_model_type = 'all_14_model.tflite' \n# -- EMS Agent configuration ------\nprotocol_model_device = 'cuda' # 'cuda' or 'cpu'\nprotocol_model_type = 'DKEC-TinyClinicalBERT' #DKEC-TinyClinicalBERT, EMSAssist\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' \n# --- End to End evaluation testing configs --------\nrecordings_to_test = [\n    '000_190105',\n    '001_190105',",
+        "peekOfCode": "keep_ms = 200 #audio to keep from previous step in ms\n# -- EMS Conformer configuration ------\n# conformer_model_type = 'all_14_model.tflite' \n# -- EMS Agent configuration ------\nprotocol_model_device = 'cuda' # 'cuda' or 'cpu'\nprotocol_model_type = 'DKEC-TinyClinicalBERT' #DKEC-TinyClinicalBERT, EMSAssist\n# protocol_model_type = 'EMSAssist' #DKEC-TinyClinicalBERT, EMSAssist\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' \n# --- End to End evaluation testing configs --------",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13913,7 +14009,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "protocol_model_device = 'cuda' # 'cuda' or 'cpu'\nprotocol_model_type = 'DKEC-TinyClinicalBERT' #DKEC-TinyClinicalBERT, EMSAssist\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' \n# --- End to End evaluation testing configs --------\nrecordings_to_test = [\n    '000_190105',\n    '001_190105',\n    '002_190105',\n    '003_190105',",
+        "peekOfCode": "protocol_model_device = 'cuda' # 'cuda' or 'cpu'\nprotocol_model_type = 'DKEC-TinyClinicalBERT' #DKEC-TinyClinicalBERT, EMSAssist\n# protocol_model_type = 'EMSAssist' #DKEC-TinyClinicalBERT, EMSAssist\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' \n# --- End to End evaluation testing configs --------\nif not endtoendspv:\n    recordings_to_test = [\n        '000_190105',\n        '001_190105',",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13922,7 +14018,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "protocol_model_type = 'DKEC-TinyClinicalBERT' #DKEC-TinyClinicalBERT, EMSAssist\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' \n# --- End to End evaluation testing configs --------\nrecordings_to_test = [\n    '000_190105',\n    '001_190105',\n    '002_190105',\n    '003_190105',\n    '004_190105',",
+        "peekOfCode": "protocol_model_type = 'DKEC-TinyClinicalBERT' #DKEC-TinyClinicalBERT, EMSAssist\n# protocol_model_type = 'EMSAssist' #DKEC-TinyClinicalBERT, EMSAssist\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' \n# --- End to End evaluation testing configs --------\nif not endtoendspv:\n    recordings_to_test = [\n        '000_190105',\n        '001_190105',\n        '002_190105',",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13931,16 +14027,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "vision_model_type = 'openai/clip-vit-base-patch32' \n# --- End to End evaluation testing configs --------\nrecordings_to_test = [\n    '000_190105',\n    '001_190105',\n    '002_190105',\n    '003_190105',\n    '004_190105',\n    '005_190105',\n    '006_190105',",
-        "detail": "Demo.pipeline_config",
-        "documentation": {}
-    },
-    {
-        "label": "recordings_to_test",
-        "kind": 5,
-        "importPath": "Demo.pipeline_config",
-        "description": "Demo.pipeline_config",
-        "peekOfCode": "recordings_to_test = [\n    '000_190105',\n    '001_190105',\n    '002_190105',\n    '003_190105',\n    '004_190105',\n    '005_190105',\n    '006_190105',\n    '007_190105',\n    '008_190105',",
+        "peekOfCode": "vision_model_type = 'openai/clip-vit-base-patch32' \n# --- End to End evaluation testing configs --------\nif not endtoendspv:\n    recordings_to_test = [\n        '000_190105',\n        '001_190105',\n        '002_190105',\n        '003_190105',\n        '004_190105',\n        '005_190105',",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13949,7 +14036,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "data_save = True\ncurr_segment = []\nrows_trial = []",
+        "peekOfCode": "data_save = True\ncurr_segment = []\nvision_curr_segment = []\nrows_trial = []\nvision_rows_trial = []\nnum_trials = 10",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13958,7 +14045,16 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "curr_segment = []\nrows_trial = []",
+        "peekOfCode": "curr_segment = []\nvision_curr_segment = []\nrows_trial = []\nvision_rows_trial = []\nnum_trials = 10",
+        "detail": "Demo.pipeline_config",
+        "documentation": {}
+    },
+    {
+        "label": "vision_curr_segment",
+        "kind": 5,
+        "importPath": "Demo.pipeline_config",
+        "description": "Demo.pipeline_config",
+        "peekOfCode": "vision_curr_segment = []\nrows_trial = []\nvision_rows_trial = []\nnum_trials = 10",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -13967,7 +14063,25 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "rows_trial = []",
+        "peekOfCode": "rows_trial = []\nvision_rows_trial = []\nnum_trials = 10",
+        "detail": "Demo.pipeline_config",
+        "documentation": {}
+    },
+    {
+        "label": "vision_rows_trial",
+        "kind": 5,
+        "importPath": "Demo.pipeline_config",
+        "description": "Demo.pipeline_config",
+        "peekOfCode": "vision_rows_trial = []\nnum_trials = 10",
+        "detail": "Demo.pipeline_config",
+        "documentation": {}
+    },
+    {
+        "label": "num_trials",
+        "kind": 5,
+        "importPath": "Demo.pipeline_config",
+        "description": "Demo.pipeline_config",
+        "peekOfCode": "num_trials = 10",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
