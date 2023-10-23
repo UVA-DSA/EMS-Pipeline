@@ -9,8 +9,8 @@ interventionStream = True
 transcriptStream = True
 
 # ------------------- Speech to Text Control ------------------- #
-speech_model = 'conformer' 
-# speech_model = 'whisper'
+# speech_model = 'conformer' 
+speech_model = 'whisper'
 
 # -- EMS Conformer configuration ------
 # conformer_model_type = 'all_14_model.tflite' # for tflite
@@ -20,7 +20,7 @@ conformer_model_type = 'h5'  # for base model
 # -- EMS Agent configuration ------
 protocol_model_device = 'cuda' # 'cuda' or 'cpu'
 protocol_model_type = 'DKEC-TinyClinicalBERT' # CognitiveEMS
-protocol_model_type = 'EMSAssist' # EMSAssist
+# protocol_model_type = 'EMSAssist' # EMSAssist
 
 # -- Audio Recording Option -----
 hardcoded = True
@@ -43,26 +43,26 @@ vision_model_type = 'openai/clip-vit-base-patch32'
 
 endtoendspv = False #speech+protocol+vision
 
-num_trials = 1
+num_trials = 3
 
 # -- Whisper configuration ---
 whisper_model_sizes = [
-    # "base-wo-emsassist",
-    # "base-wo-synth-v1",
-    # "tiny-wo-synth-v1",
-    # "base-finetuned-v6",
-    # "base-finetuned-v5",
-    # "base-finetuned-v4",
+    "base-wo-emsassist",
+    "base-wo-synth-v1",
+    "tiny-wo-synth-v1",
+    "base-finetuned-v6",
+    "base-finetuned-v5",
+    "base-finetuned-v4",
     "base-finetuned-v3", #best
-    # "base-finetuned-v2",
-    # "tiny-finetuned-v5",
-    # "tiny-finetuned-v4",
-    # "tiny-finetuned-v3",
-    # "tiny-finetuned-v2", #best
-    # "tiny-finetuned",
-    # "tiny.en", #baseline
-    # "base.en", #baseline
-    # "base-finetuned",
+    "base-finetuned-v2",
+    "tiny-finetuned-v5",
+    "tiny-finetuned-v4",
+    "tiny-finetuned-v3",
+    "tiny-finetuned-v2", #best
+    "tiny-finetuned",
+    "tiny.en", #baseline
+    "base.en", #baseline
+    "base-finetuned",
 ]
 
 if not endtoendspv:

@@ -127,7 +127,7 @@ def main(
     tf.keras.backend.clear_session()
 
     module = tf.saved_model.load(export_dir='/home/kesharaw/Desktop/repos/EMS-Pipeline/Demo/EMSConformer/speech_models')
-
+    
     capture_audio(module, SpeechToNLPQueue, ConformerSignalQueue)
 
 

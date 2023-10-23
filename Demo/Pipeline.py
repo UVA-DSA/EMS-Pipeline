@@ -124,7 +124,7 @@ def Pipeline(recording=pipeline_config.recording_name, videofile=pipeline_config
             EMSConformer = Thread(target=run_saved_model.main, args=(SpeechToNLPQueue,ConformerSignalQueue))
             EMSConformer.start()
             
-        sleep(3)
+        sleep(25)
 
         # ===== Start Conformer Audiostream module =========================================
         Audiostream = Thread(
