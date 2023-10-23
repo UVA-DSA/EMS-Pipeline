@@ -179,7 +179,7 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
                 print(f'[Protocol suggestion:{pred}:{prob}]')
 
                 #Feedback
-                protocolFB =  FeedbackObj("", str(pred) + " : " +str(prob), "", "")
+                protocolFB =  FeedbackObj("", str(pred),str(prob),"")
                 FeedbackQueue.put(protocolFB)
 
             else:

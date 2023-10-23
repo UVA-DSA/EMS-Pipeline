@@ -41,7 +41,7 @@ vision_model_type = 'openai/clip-vit-base-patch32'
 
 # ========EXPERIMENT CONFIGS ============================================================
 
-endtoendspv = False #speech+protocol+vision
+endtoendspv = True #speech+protocol+vision
 
 num_trials = 3
 
