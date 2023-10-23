@@ -12,7 +12,7 @@ def EMSVision(FeedbackQueue, VisionDataQueue):
 
     while True:
         try:
-            
+            index = 0
             protocol_msg = FeedbackQueue.get()
             message = VisionDataQueue.get()
                     
@@ -35,10 +35,12 @@ def EMSVision(FeedbackQueue, VisionDataQueue):
             
             pil_image = message["image"]
             model_scores,model_latency = classify(pil_image,labels_for_classification,classifier)
+            pil_image.save(f'{pipeline_config.directory}T{pipeline_config.trial_num}_{pipeline_config.curr_recording}_{index}_pil.jpg')
 
             pipeline_config.curr_segment += [model_scores, model_latency]
             pipeline_config.rows_trial.append(pipeline_config.curr_segment)
             pipeline_config.curr_segment = []
+            index += 1
             
             print("[EMS Vision Thread: action-recognition-results:",model_scores,model_latency,']')
 

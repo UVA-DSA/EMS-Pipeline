@@ -97,3 +97,7 @@ else:
 data_save = True
 curr_segment = []
 rows_trial = []
+time_stamp = None
+directory = None
+trial_num = None
+curr_recording = None
