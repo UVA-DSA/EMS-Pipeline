@@ -22,5 +22,7 @@ respiratory_distress_protocol = {"resp_assist_ventilation_bvm_via_mask":resp_ass
 
 
 ems_interventions = {"medical - chest pain - cardiac suspected (protocol 2 - 1)":adult_cardiact_arrest_protocol,
+                    "general - cardiac arrest (protocol 2 - 7)":adult_cardiact_arrest_protocol,
+                    "general - cardiac arrest (protocol 8 - 2)":adult_cardiact_arrest_protocol,
                              'medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress)' :respiratory_distress_protocol}
 
