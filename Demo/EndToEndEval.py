@@ -10,6 +10,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 from EMSAgent.default_sets import ungroup_p_node
 import os
 from time import sleep
+import datetime
 from EMSAgent.utils import get_precision_at_k, get_recall_at_k, get_r_precision_at_k, get_ndcg_at_k
 # -- static helper variables ---------------------------------------
 # initialize processor depending on whisper model size 
@@ -71,9 +72,12 @@ if __name__ == '__main__':
     else:
         speech_models = ['conformer']
 
+    time_stamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
     for trial in range(pipeline_config.num_trials):
         for speech_model in speech_models:
             for recording in pipeline_config.recordings_to_test:
+
+
                 # field names
                 fields = ['time audio->transcript (s)', 'transcript', 'whisper confidence', 'WER', 'CER', #4
                             'time protocol input->output (s)', 'protocol prediction', 'protocol confidence', #7
@@ -144,7 +148,7 @@ if __name__ == '__main__':
                 
                 # Write to csv
                 if(pipeline_config.data_save):
-                    directory = f"Evaluation_Results/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{speech_model}/"
+                    directory = f"Evaluation_Results/{time_stamp}/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{speech_model}/"
                     if not os.path.exists(directory):
                         os.makedirs(directory)
                     df.to_csv(f'{directory}T{trial}_{recording}.csv')
@@ -152,7 +156,7 @@ if __name__ == '__main__':
             # protocol model report for ALL recordings
             if(pipeline_config.data_save and pipeline_config.speech_model == "whisper" and not pipeline_config.endtoendspv):
                 report = classification_report(one_hot_gt_all_recordings, one_hot_pred_all_recordings, target_names=ungroup_p_node, output_dict=True)
-                with open(f'Evaluation_Results/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{speech_model}/protocol-model-evaluation-report.txt', 'w') as f:
+                with open(f'Evaluation_Results/{time_stamp}/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{speech_model}/protocol-model-evaluation-report.txt', 'w') as f:
                     f.write(str(report))
                     
             # protocol model report
