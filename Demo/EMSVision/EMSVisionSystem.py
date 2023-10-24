@@ -3,38 +3,27 @@ from transformers import pipeline
 import traceback
 from EMSVision.utils import *
 
-model_name = pipeline_config.vision_model_type
-print("Vision Here 1")
-classifier = pipeline("zero-shot-image-classification", model = model_name, device=0)
-print("Vision Here 2")
-
-def EMSVision(FeedbackQueue, VisionDataQueue):
+def EMSVision(FeedbackQueue, VideoDataQueue):
     
     # More models in the model hub.
     model_name = pipeline_config.vision_model_type
-    print("Vision Here 1")
     classifier = pipeline("zero-shot-image-classification", model = model_name, device=0)
-    print("Vision Here 2")
     index = 0
 
-    protocol_success = False
-    protocol_previous = ""
+    sucessful_protocol_found = False
+    sucessful_protocol = ""
     while True:
-        try:
-            
+        try:           
             if(not FeedbackQueue.empty()):
                 protocol_msg = FeedbackQueue.get(block=False)
                 protocol = protocol_msg.protocol
             else:
-                if(not protocol_success): protocol = "None"
+                protocol = sucessful_protocol if(sucessful_protocol_found) else "None"
 
-            print("Raw protocol",protocol_msg)
-            message = VisionDataQueue.get()
+            image_message = VideoDataQueue.get()
             
-
-
-            print(FeedbackQueue.qsize(), VisionDataQueue.qsize())
-            if(message["signal"] == "Kill"): 
+            print(FeedbackQueue.qsize(), VideoDataQueue.qsize())
+            if(image_message["signal"] == "Kill"): 
                 print("[EMS Vision Thread received Kill Signal. Bye!]")
                 break
             
@@ -44,30 +33,28 @@ def EMSVision(FeedbackQueue, VisionDataQueue):
             
 
             labels_for_classification = generate_labels(protocol)
-            if(labels_for_classification is None and not protocol_success): 
-                model_scores,model_latency = -1, -1
+            # if labels_for_classification is None, that means the protocol does not initiate action recogn
+            if(labels_for_classification is None): 
+                sucessful_protocol_found = False
+                model_scores,model_latency = "None", None
+            # if labels_for_classification is not None, that means a protocol that initiates action recogn was found
             else:
                 print("[EMS Vision Thread: generated-labels:",labels_for_classification,']')
-                
-                if not protocol_success:  protocol_previous = protocol
+                sucessful_protocol_found = True
+                sucessful_protocol = protocol 
+                print("[EMSVISIONTHREAD:]",protocol,sucessful_protocol,sucessful_protocol_found)
 
-                print("[EMSVISIONTHREAD:]",protocol,protocol_previous,protocol_success)
-                protocol_success = True
-
-                labels_for_classification = generate_labels(protocol_previous)
-
-                pil_image = message["image"]
                 model_scores,model_latency = classify(pil_image,labels_for_classification,classifier)
-                pil_image.save(f'{pipeline_config.directory}T{pipeline_config.trial_num}_{pipeline_config.curr_recording}_{index}_pil.jpg')
+
+            pil_image = image_message["image"]
+            pil_image.save(f'{pipeline_config.image_directory}T{pipeline_config.trial_num}_{pipeline_config.curr_recording}_{index}_pil.jpg')
+            
             index += 1
 
             print(f'[EMS Vision Thread: model scores-{model_scores}, latency-{model_latency}]')
-            pipeline_config.curr_segment += [model_scores, model_latency]
-            pipeline_config.rows_trial.append(pipeline_config.curr_segment)
-            pipeline_config.curr_segment = []
-            
-                
-            print("[EMS Vision Thread: action-recognition-results:",model_scores,model_latency,']')
+            pipeline_config.vision_data['protocol'].append(protocol)
+            pipeline_config.vision_data['intervention recognition'].append(model_scores)
+            pipeline_config.vision_data['intervention latency'].append(model_latency)
 
         except Exception as e:
             print('[EMS Vision Thread: EXCEPTION!]',e)

@@ -7,7 +7,7 @@ from PIL import Image
 from skimage.metrics import structural_similarity
 
 
-def VideoStream(VisionDataQueue,VideoSignalQueue, video_file_name):
+def VideoStream(VideoDataQueue, video_file_name):
     
     cap = cv2.VideoCapture(video_file_name) # video file path
     
@@ -24,7 +24,7 @@ def VideoStream(VisionDataQueue,VideoSignalQueue, video_file_name):
     while(cap.isOpened()):
       # Capture frame-by-frame
       before = frame
-      print("Video Stream Alive!")
+      # print("Video Stream Alive!")
       ret, frame = cap.read()
       if ret == True:
         
@@ -55,15 +55,15 @@ def VideoStream(VisionDataQueue,VideoSignalQueue, video_file_name):
         end_t = time.time_ns()
         
         time.sleep(1/fps)
-        print("[VISION Stream Sent Image!]", VisionDataQueue.full())
-        VisionDataQueue.put({"signal":"Proceed","image":pil_image})
+        # print("[VISION Stream Sent Image!]", VideoDataQueue.full())
+        VideoDataQueue.put({"signal":"Proceed","image":pil_image})
     
       # signal = VideoSignalQueue.get()
       
       # if(signal == "Kill"): 
       #   print("[Video Stream Thread received Kill Signal. Bye!]")
-      #   VisionDataQueue.empty()
-      #   VisionDataQueue.put({"signal":"Kill","image":None})
+      #   VideoDataQueue.empty()
+      #   VideoDataQueue.put({"signal":"Kill","image":None})
       #   break
 
       else:
@@ -75,5 +75,5 @@ def VideoStream(VisionDataQueue,VideoSignalQueue, video_file_name):
     cv2.destroyAllWindows()
     
     print("[Video Stream Thread Died. Sending Kill Signal. Bye!]")
-    VisionDataQueue.empty()
-    VisionDataQueue.put({"signal":"Kill","image":None})
+    VideoDataQueue.empty()
+    VideoDataQueue.put({"signal":"Kill","image":None})

@@ -5,6 +5,7 @@ cv_defibrillation_manual = ["A Defibrillator","Attaching two Defib pads on chest
 cpr_manual = []
 adv_airway_capnography = []
 admin_epi = []
+cardiac_monitor = ["Attaching Cardiac Monitor to a person","A Cardiac monitor"]
 
 # respiratory distress
 resp_assist_ventilation_bvm_via_mask = ["Placing Oxygen mask on face","BVM Mask" ]

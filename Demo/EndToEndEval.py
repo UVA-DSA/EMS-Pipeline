@@ -62,42 +62,49 @@ def is_singleton_array(arr):
 # --- main ---------------------------
 if __name__ == '__main__':
 
-    one_hot_pred_all_recordings = []
-    one_hot_gt_all_recordings = []
-    logits_all_recordings = []
-    df_all_recordings = []
-
     if pipeline_config.speech_model == 'whisper': 
         speech_models = pipeline_config.whisper_model_sizes
     else:
         speech_models = ['conformer']
 
-    # get timestamp, set up directory
+    # get timestamp of experiment run
     pipeline_config.time_stamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-
-
 
     for trial in range(pipeline_config.num_trials):
         pipeline_config.trial_num = trial
         for speech_model in speech_models:
-            if(pipeline_config.data_save):
-                pipeline_config.directory = f"Evaluation_Results/{pipeline_config.time_stamp}/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{speech_model}/"
-                if not os.path.exists(pipeline_config.directory):
-                    os.makedirs(pipeline_config.directory)
+            # set directory and make directory
+            pipeline_config.directory = f"Evaluation_Results/{pipeline_config.time_stamp}/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{speech_model}/"
+            if not os.path.exists(pipeline_config.directory):
+                os.makedirs(pipeline_config.directory)
+            # evaluate recordings
             for recording in pipeline_config.recordings_to_test:
+                pipeline_config.image_directory = f"{pipeline_config.directory}/T{trial}_{recording}_images/"
+                if not os.path.exists(pipeline_config.image_directory):
+                    os.makedirs(pipeline_config.image_directory)
                 pipeline_config.curr_recording = recording
-                # field names
-                fields = ['speech latency (ms)', 'transcript', 'whisper confidence', 'WER', 'CER', #4
-                            'protocol latency (ms)', 'protocol prediction', 'protocol confidence', #7
-                            'protocol correct? (1 = True, 0 = False, -1=None given)', #8
-                            'one hot prediction', 'one hot GT', 'tn', 'fp', 'fn', 'tp', 'logits'] 
+                # set field names
+                pipeline_config.trial_data['speech latency (ms)'] = []
+                pipeline_config.trial_data['transcript'] = []
+                pipeline_config.trial_data['whisper confidence'] = []
+                pipeline_config.trial_data['WER'] = []
+                pipeline_config.trial_data['CER'] = []
+                pipeline_config.trial_data['protocol latency (ms)'] = []
+                pipeline_config.trial_data['protocol prediction'] = []
+                pipeline_config.trial_data['protocol confidence'] = []
+                pipeline_config.trial_data['protocol correct?'] = []
+                pipeline_config.trial_data['one hot prediction'] = []
+                pipeline_config.trial_data['one hot gt'] = []
+                pipeline_config.trial_data['tn'] = []
+                pipeline_config.trial_data['fp'] = []
+                pipeline_config.trial_data['fn'] = []
+                pipeline_config.trial_data['tp'] = []
+                pipeline_config.trial_data['logits'] = []
                 if pipeline_config.endtoendspv:
-                    fields += ['intervention recognition','intervention latency']
-
-                # data rows of csv file for this run
-                pipeline_config.curr_segment = []
-                pipeline_config.rows_trial = []
-
+                    pipeline_config.vision_data['protocol'] = []
+                    pipeline_config.vision_data['intervention recognition'] = []
+                    pipeline_config.vision_data['intervention latency'] = []
+                    
                 # run pipeline
                 # Pipeline(recording=recording, video_file=video, whisper_model=whisper_model)
                 print("Running E2E Evaluation for Recording: ",recording)
@@ -107,67 +114,23 @@ if __name__ == '__main__':
                 print("protocol-model:",pipeline_config.protocol_model_type)
                 print("protocol-device:",pipeline_config.protocol_model_device)
                 print("isEnd-to-End:",pipeline_config.endtoendspv)
-                print("isData-Save:",pipeline_config.data_save)
                 print("Trial:",trial)
                 print("Recording:",recording)
-
 
                 print("\n\n\n ******************************************************** \n\n")
 
                 Pipeline(recording=recording, whisper_model=speech_model)
-                
-                # get data
-                rows_trial = pipeline_config.rows_trial
-                # get ground truth one hot vector
-                if(not pipeline_config.endtoendspv): gt = get_ground_truth_one_hot_vector(recording)
-                else: gt = get_ground_truth_one_hot_vector("000_190105") # placeholder
-                # evaluate metrics
-                for i in range(len(rows_trial)):
-                    row = rows_trial[i]
-                    try:
-                    # WER, CER
-                    #     row[3], row[4] = get_wer_and_cer(recording, row[1])
-                    #     row[8] = check_protocol_correct(recording, row[6])
-                        
-                    # protocol correct? (1 = True, 0 = False, -1=None given) 
-                    # if protocol given, evaluate protocol model
-                        if row[8] != -1:
-                            pred = np.array(row[9])
-                            logits = np.array(row[15])
-                            # one hot prediction
-                            row[9] = str(pred)
-                            # one hot GT
-                            row[10] = str(gt)
-                            # tn, fp, fn, tp
-                            row[11], row[12], row[13], row[14] = confusion_matrix(gt, pred).ravel()
-                    except:
-                        print("not uniform row")
-                
-                # save last one hot vectors and logit
-                one_hot_pred_all_recordings.append(pred)
-                one_hot_gt_all_recordings.append(gt)
-                logits_all_recordings.append(logits)
 
-                # save dataframe
-                df = pd.DataFrame(rows_trial, columns=fields)
-                df_all_recordings.append(df)
-                
-                # Write to csv
-                if(pipeline_config.data_save):
-                    df.to_csv(f'{pipeline_config.directory}T{trial}_{recording}.csv')
-                    
-            # protocol model report fpr ALL recordings
-            report = classification_report(one_hot_gt_all_recordings, one_hot_pred_all_recordings, target_names=ungroup_p_node, output_dict=True)
-            p1 = get_precision_at_k(np.array(one_hot_gt_all_recordings), np.array(logits_all_recordings), k=1)
-            r1 = get_recall_at_k(np.array(one_hot_gt_all_recordings), np.array(logits_all_recordings), k=1)
-            dcg1 = get_ndcg_at_k(np.array(one_hot_gt_all_recordings), np.array(logits_all_recordings), k=1)
-            rprecision1 = get_r_precision_at_k(np.array(one_hot_gt_all_recordings), np.array(logits_all_recordings), k=1)
-            report['P@1'] = p1
-            report['R@1'] = r1
-            report['nDCG@1'] = dcg1
-            report['R-Precision@1'] = rprecision1
+                # print("SIZE OF DICT")
+                # for key, value in pipeline_config.trial_data.items():
+                #     print(f"{key}: {len(value)}")
 
-            df = pd.DataFrame(report).T
-            df.to_csv(f'{pipeline_config.directory}T{trial}_protocol-model-evaluation-report.csv')
-            
+                # write out data
+                df = pd.DataFrame(pipeline_config.trial_data)
+                df.to_csv(f'{pipeline_config.directory}T{trial}_SPEECH+PROTOCOL_{recording}.csv')
+
+                if pipeline_config.endtoendspv:
+                    df = pd.DataFrame(pipeline_config.vision_data)
+                    df.to_csv(f'{pipeline_config.directory}T{trial}_VISION_{recording}.csv')
+                
             if(pipeline_config.speech_model == 'conformer'): break
