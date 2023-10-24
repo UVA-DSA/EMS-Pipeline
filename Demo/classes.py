@@ -17,7 +17,7 @@ class FeedbackObj:
         self.protocol = protocol
         self.protocol_confidence = protocol_confidence
         self.concept = concept
-
+        
 # ============== Custom Speech to NLP Queue Item Class ==============
 
 class SpeechNLPItem:

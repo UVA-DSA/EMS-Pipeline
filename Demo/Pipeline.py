@@ -26,7 +26,6 @@ def Pipeline(recording=pipeline_config.recording_name, videofile=pipeline_config
 
 # ===== Create thread-safe queues to pass on transcript and communication between modules ============
     SpeechToNLPQueue = queue.Queue()
-    EMSAgentQueue  = queue.Queue()
     FeedbackQueue = queue.Queue()
     VideoDataQueue = queue.Queue()
     # SpeechSignalQueue = Queue()
@@ -97,7 +96,7 @@ def Pipeline(recording=pipeline_config.recording_name, videofile=pipeline_config
         if pipeline_config.endtoendspv:
             # # ===== Start Video Streaming module =========================================
             Videostream = Thread(
-                            target=VideoFileStream.VideoStream, args=(VideoDataQueue, VideoSignalQueue, f'./Video_Scenarios/2023_Test/{recording}.avi'))
+                            target=VideoFileStream.VideoStream, args=(VideoDataQueue, f'./Video_Scenarios/2023_Test/{recording}.avi'))
             Videostream.start()
             
             

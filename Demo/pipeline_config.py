@@ -43,10 +43,17 @@ vision_model_type = 'openai/clip-vit-base-patch32'
 
 endtoendspv = True #speech+protocol+vision
 
-num_trials = 3
+num_trials = 1
 
 # -- Whisper configuration ---
 whisper_model_sizes = [
+    # "tiny-finetuned-v20",
+    # "tiny-finetuned-v21",
+    # "tiny-finetuned-v22",
+    # "tiny-finetuned-v23",
+    # "tiny-finetuned-v24",
+    # "tiny-finetuned-v25",
+    # "tiny-finetuned-v26",
     # "base-wo-emsassist",
     # "base-wo-synth-v1",
     # "tiny-wo-synth-v1",
@@ -67,36 +74,35 @@ whisper_model_sizes = [
 
 if not endtoendspv:
     recordings_to_test = [
-        # '000_190105',
-        # '001_190105',
-        # '002_190105',
-        # '003_190105',
-        # '004_190105',
-        # '005_190105',
-        # '006_190105',
-        # '007_190105',
-        # '008_190105',
-        # '009_190105',
-        # '010_190105',
-        # '011_190105'
+         '000_190105',
+         '001_190105',
+         '002_190105',
+         '003_190105',
+         '004_190105',
+         '005_190105',
+         '006_190105',
+         '007_190105',
+         '008_190105',
+         '009_190105',
+         '010_190105',
+         '011_190105'
     ]
 
 else:
     recordings_to_test = [  # audio + video e2e recordings
-        "scenario_1",
+        # "scenario_1",
         "scenario_2",
-        "scenario_3",
-        "scenario_4",
-        "scenario_5",
-        "scenario_6",
-        "scenario_7",
-        "scenario_8",
+        # "scenario_3",
+        # "scenario_4",
+        # "scenario_5",
+        # "scenario_6",
+        # "scenario_7",
+        # "scenario_8"
     ]
 
 # --- global variables used during end to end eval ----
-data_save = True
-curr_segment = []
-rows_trial = []
+trial_data = dict()
+vision_data = dict()
 time_stamp = None
 directory = None
 trial_num = None

@@ -12,7 +12,7 @@ from transformers import BertTokenizer
 import pandas as pd
 from tqdm import tqdm
 warnings.filterwarnings("ignore")
-from classes import   FeedbackObj
+from classes import FeedbackObj
 import time
 import sys
 from re import match
@@ -169,41 +169,36 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
         else:
             print('=============================================================')
             print(f'[Protocol model received transcript: {received.transcript}]')
-            # initialize variables
-            start = None
-            end = None
-            pred = None
-            prob = None
-            if len(received.transcript) and not received.transcript.isspace():
-                # try:
-                start = time.perf_counter_ns()
-                pred, prob, one_hot, logits = model(received.transcript)
-                end = time.perf_counter_ns()
-                print(f'[Protocol suggestion:{pred}:{prob}]')
 
-                #Feedback
-                protocolFB =  FeedbackObj("", str(pred),str(prob),"")
+            start = time.perf_counter_ns()
+            pred, prob, one_hot, logits = model(received.transcript)
+            end = time.perf_counter_ns()
+            print(f'[Protocol suggestion:{pred}:{prob}]')
+            prot_latency = (end-start)/1000000
 
-            else:
-                msg = 'Protocol is not suggested due to receiving blank space as transcript'
-                protocolFB =  FeedbackObj("", msg ,msg,"")
-                print(msg)
-            
-            #Feedback
+            #Send data (send to vision)
+            protocolFB =  FeedbackObj("", pred, prob, "")
             FeedbackQueue.put(protocolFB)
 
  # ===== save end to end pipeline results for this segment =========================================================================
-            # 'wer' and 'cer' calcluated and replaced later in EndToEndEval.py
-            pipeline_config.curr_segment += [received.transcriptionDuration, received.transcript, received.confidence, 'wer', 'cer']
-            # if we made a protocol prediction
-            if start != None and end != None:
-                pipeline_config.curr_segment += [(end-start)/1000000, pred, prob, 'correct?', one_hot, 'one hot GT', 'tn', 'fp', 'fn', 'tp', logits] # see if protocol prediction is correct later in EndToEndEval.py
-            else:
-                # if no suggesion, make fields -1
-                pipeline_config.curr_segment += [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
-            if not pipeline_config.endtoendspv: 
-                pipeline_config.rows_trial.append(pipeline_config.curr_segment)
-                pipeline_config.curr_segment = []
-
-                
+            '''
+            Fields with placeholders are calculated later in EndToEndEval or another data processing script
+            '''
+            pipeline_config.trial_data['speech latency (ms)'].append(received.transcriptionDuration)
+            pipeline_config.trial_data['transcript'].append(received.transcript)
+            pipeline_config.trial_data['whisper confidence'].append(received.confidence)
+            pipeline_config.trial_data['WER'].append(0) #placeholder
+            pipeline_config.trial_data['CER'].append(0) #placeholder
+            pipeline_config.trial_data['protocol latency (ms)'].append(prot_latency)
+            pipeline_config.trial_data['protocol prediction'].append(pred)
+            pipeline_config.trial_data['protocol confidence'].append(prob)
+            pipeline_config.trial_data['protocol correct?'].append(0) #placeholder
+            pipeline_config.trial_data['one hot prediction'].append(str(one_hot))
+            pipeline_config.trial_data['one hot gt'].append(str('[one hot gt placeholder]'))
+            pipeline_config.trial_data['tn'].append('tn placeholder')
+            pipeline_config.trial_data['fp'].append('fp placeholder')
+            pipeline_config.trial_data['fn'].append('fn placeholder')
+            pipeline_config.trial_data['tp'].append('tp placeholder')
+            pipeline_config.trial_data['logits'].append(str(logits))
+                    
         

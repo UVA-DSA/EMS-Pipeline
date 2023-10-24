@@ -260,12 +260,12 @@ def Whisper(SpeechToNLPQueue,VideoSignalQueue, wavefile_name):
                         block, isFinal, avg_p, latency = process_whisper_response(response) #isFinal = False means block is interim block
                         transcript = finalized_blocks + block
                         # if received block is finalized, then save to finalized blocks
-                        
                         if isFinal: finalized_blocks += block
-                        transcriptItem = TranscriptItem(transcript, isFinal, avg_p, latency)
-                        # EMSAgentQueue.put(transcriptItem)
-                        SpeechToNLPQueue.put(transcriptItem)  
-                        
+                        # send transcript item if its not an empty string or space
+                        if len(transcript) and not transcript.isspace():
+                            transcriptItem = TranscriptItem(transcript, isFinal, avg_p, latency)
+                            # EMSAgentQueue.put(transcriptItem)
+                            SpeechToNLPQueue.put(transcriptItem)  
                         print("--- Whisper Latency:", latency)
                         old_response = response
                 # Close stream (4)
