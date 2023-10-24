@@ -44,9 +44,11 @@ def EMSVision(FeedbackQueue, VideoDataQueue):
                 sucessful_protocol = protocol 
                 print("[EMSVISIONTHREAD:]",protocol,sucessful_protocol,sucessful_protocol_found)
 
-                pil_image = image_message["image"]
                 model_scores,model_latency = classify(pil_image,labels_for_classification,classifier)
-                pil_image.save(f'{pipeline_config.directory}T{pipeline_config.trial_num}_{pipeline_config.curr_recording}_{index}_pil.jpg')
+
+            pil_image = image_message["image"]
+            pil_image.save(f'{pipeline_config.image_directory}T{pipeline_config.trial_num}_{pipeline_config.curr_recording}_{index}_pil.jpg')
+            
             index += 1
 
             print(f'[EMS Vision Thread: model scores-{model_scores}, latency-{model_latency}]')

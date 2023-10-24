@@ -79,6 +79,9 @@ if __name__ == '__main__':
                 os.makedirs(pipeline_config.directory)
             # evaluate recordings
             for recording in pipeline_config.recordings_to_test:
+                pipeline_config.image_directory = f"{pipeline_config.directory}/T{trial}_{recording}_images/"
+                if not os.path.exists(pipeline_config.image_directory):
+                    os.makedirs(pipeline_config.image_directory)
                 pipeline_config.curr_recording = recording
                 # set field names
                 pipeline_config.trial_data['speech latency (ms)'] = []

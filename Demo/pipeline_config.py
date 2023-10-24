@@ -43,7 +43,7 @@ vision_model_type = 'openai/clip-vit-base-patch32'
 
 endtoendspv = True #speech+protocol+vision
 
-num_trials = 1
+num_trials = 3
 
 # -- Whisper configuration ---
 whisper_model_sizes = [
@@ -60,16 +60,16 @@ whisper_model_sizes = [
     # "base-finetuned-v6",
     # "base-finetuned-v5",
     # "base-finetuned-v4",
-    # "base-finetuned-v3", #best
+    # "base-finetuned-v3", 
     # "base-finetuned-v2",
     # "tiny-finetuned-v5",
     # "tiny-finetuned-v4",
     # "tiny-finetuned-v3",
-    # "tiny-finetuned-v2", #best
+    # "tiny-finetuned-v2", 
     # "tiny-finetuned",
     # "tiny.en", #baseline
     # "base.en", #baseline
-    "base-finetuned"
+    "base-finetuned" #best
 ]
 
 if not endtoendspv:
@@ -90,14 +90,14 @@ if not endtoendspv:
 
 else:
     recordings_to_test = [  # audio + video e2e recordings
-        # "scenario_1",
+        "scenario_1",
         "scenario_2",
-        # "scenario_3",
-        # "scenario_4",
-        # "scenario_5",
-        # "scenario_6",
-        # "scenario_7",
-        # "scenario_8"
+        "scenario_3",
+        "scenario_4",
+        "scenario_5",
+        "scenario_6",
+        "scenario_7",
+        "scenario_8"
     ]
 
 # --- global variables used during end to end eval ----
@@ -105,5 +105,6 @@ trial_data = dict()
 vision_data = dict()
 time_stamp = None
 directory = None
+image_directory = None
 trial_num = None
 curr_recording = None
