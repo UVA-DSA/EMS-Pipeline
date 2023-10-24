@@ -162,6 +162,9 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
         # TODO: make thread exit while True loop based on threading module event
         if(received == 'Kill'):
             print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
+            FeedbackQueue.empty()
+            kill_signal = FeedbackObj("Kill","Kill","Kill","Kill")
+            FeedbackQueue.put(kill_signal)
             break
         else:
             print('=============================================================')
@@ -180,11 +183,14 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
 
                 #Feedback
                 protocolFB =  FeedbackObj("", str(pred),str(prob),"")
-                FeedbackQueue.put(protocolFB)
 
             else:
-                pred = 'Protocol is not suggested due to receiving blank space as transcript'
-                print(f'[{pred}]')
+                msg = 'Protocol is not suggested due to receiving blank space as transcript'
+                protocolFB =  FeedbackObj("", msg ,msg,"")
+                print(msg)
+            
+            #Feedback
+            FeedbackQueue.put(protocolFB)
 
  # ===== save end to end pipeline results for this segment =========================================================================
             # 'wer' and 'cer' calcluated and replaced later in EndToEndEval.py
@@ -193,10 +199,11 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
             if start != None and end != None:
                 pipeline_config.curr_segment += [(end-start)/1000000, pred, prob, 'correct?', one_hot, 'one hot GT', 'tn', 'fp', 'fn', 'tp', logits] # see if protocol prediction is correct later in EndToEndEval.py
             else:
-                # if no suggesion, save one hot vector of all 0's
+                # if no suggesion, make fields -1
                 pipeline_config.curr_segment += [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
-            pipeline_config.rows_trial.append(pipeline_config.curr_segment)
-            if not pipeline_config.endtoendspv: pipeline_config.curr_segment = []
+            if not pipeline_config.endtoendspv: 
+                pipeline_config.rows_trial.append(pipeline_config.curr_segment)
+                pipeline_config.curr_segment = []
 
                 
         

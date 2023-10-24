@@ -234,6 +234,7 @@ def ReadPipe(SpeechToNLPQueue,VideoSignalQueue, SpeechSignalQueue):
 def Whisper(SpeechToNLPQueue,VideoSignalQueue, wavefile_name):
     fifo_path = "/tmp/myfifo"
     finalized_blocks = ''
+    VideoSignalQueue.put('Proceed')
         
     with open(fifo_path, 'r') as fifo:
         with wave.open(wavefile_name, 'rb') as wf:

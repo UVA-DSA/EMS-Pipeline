@@ -47,38 +47,38 @@ num_trials = 3
 
 # -- Whisper configuration ---
 whisper_model_sizes = [
-    "base-wo-emsassist",
-    "base-wo-synth-v1",
-    "tiny-wo-synth-v1",
-    "base-finetuned-v6",
-    "base-finetuned-v5",
-    "base-finetuned-v4",
-    "base-finetuned-v3", #best
-    "base-finetuned-v2",
-    "tiny-finetuned-v5",
-    "tiny-finetuned-v4",
-    "tiny-finetuned-v3",
-    "tiny-finetuned-v2", #best
-    "tiny-finetuned",
-    "tiny.en", #baseline
-    "base.en", #baseline
-    "base-finetuned",
+    # "base-wo-emsassist",
+    # "base-wo-synth-v1",
+    # "tiny-wo-synth-v1",
+    # "base-finetuned-v6",
+    # "base-finetuned-v5",
+    # "base-finetuned-v4",
+    # "base-finetuned-v3", #best
+    # "base-finetuned-v2",
+    # "tiny-finetuned-v5",
+    # "tiny-finetuned-v4",
+    # "tiny-finetuned-v3",
+    # "tiny-finetuned-v2", #best
+    # "tiny-finetuned",
+    # "tiny.en", #baseline
+    # "base.en", #baseline
+    "base-finetuned"
 ]
 
 if not endtoendspv:
     recordings_to_test = [
-        '000_190105',
-        '001_190105',
-        '002_190105',
-        '003_190105',
-        '004_190105',
-        '005_190105',
-        '006_190105',
-        '007_190105',
-        '008_190105',
-        '009_190105',
-        '010_190105',
-        '011_190105'
+        # '000_190105',
+        # '001_190105',
+        # '002_190105',
+        # '003_190105',
+        # '004_190105',
+        # '005_190105',
+        # '006_190105',
+        # '007_190105',
+        # '008_190105',
+        # '009_190105',
+        # '010_190105',
+        # '011_190105'
     ]
 
 else:

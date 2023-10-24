@@ -1,7 +1,7 @@
 # cardiac arrest, chest pain?
 cv_ecg_12_lead = ["An ECG monitor","Attaching Twelve ECG leads on chest"]
 
-cv_defibrillation_manual = ["Defibrillator","Attaching two Defib pads on chest"]
+cv_defibrillation_manual = ["A Defibrillator","Attaching two Defib pads on chest using two hands"]
 cpr_manual = []
 adv_airway_capnography = []
 admin_epi = []

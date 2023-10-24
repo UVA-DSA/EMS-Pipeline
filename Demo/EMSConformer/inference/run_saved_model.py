@@ -79,7 +79,7 @@ def capture_audio(model, SpeechToNLPQueue, ConformerSignalQueue):
         
         print(type(myrecording))
         print(myrecording.shape)
-        # write('output.wav', fs, myrecording)  # Save as WAV f
+        write('output.wav', fs, myrecording)  # Save as WAV f
             
             
         # print('Sounddevice :',myrecording)
@@ -126,7 +126,7 @@ def main(
 
     tf.keras.backend.clear_session()
 
-    module = tf.saved_model.load(export_dir='/home/kesharaw/Desktop/repos/EMS-Pipeline/Demo/EMSConformer/speech_models')
+    module = tf.saved_model.load(export_dir='/home/cogems_nist/Desktop/EMS-Pipeline/Demo/EMSConformer/speech_models')
     
     capture_audio(module, SpeechToNLPQueue, ConformerSignalQueue)
 
