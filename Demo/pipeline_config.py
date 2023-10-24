@@ -41,28 +41,35 @@ vision_model_type = 'openai/clip-vit-base-patch32'
 
 # ========EXPERIMENT CONFIGS ============================================================
 
-endtoendspv = True #speech+protocol+vision
+endtoendspv = False #speech+protocol+vision
 
 num_trials = 3
 
 # -- Whisper configuration ---
 whisper_model_sizes = [
-    "base-wo-emsassist",
-    "base-wo-synth-v1",
-    "tiny-wo-synth-v1",
-    "base-finetuned-v6",
-    "base-finetuned-v5",
-    "base-finetuned-v4",
-    "base-finetuned-v3", #best
-    "base-finetuned-v2",
-    "tiny-finetuned-v5",
-    "tiny-finetuned-v4",
-    "tiny-finetuned-v3",
-    "tiny-finetuned-v2", #best
-    "tiny-finetuned",
-    "tiny.en", #baseline
-    "base.en", #baseline
-    "base-finetuned",
+    "tine-finetuned-v20",
+    "tine-finetuned-v21",
+    "tine-finetuned-v22",
+    "tine-finetuned-v23",
+    "tine-finetuned-v24",
+    "tine-finetuned-v25",
+    "tine-finetuned-v26",
+    # "base-wo-emsassist",
+    # "base-wo-synth-v1",
+    # "tiny-wo-synth-v1",
+    # "base-finetuned-v6",
+    # "base-finetuned-v5",
+    # "base-finetuned-v4",
+    # "base-finetuned-v3", #best
+    # "base-finetuned-v2",
+    # "tiny-finetuned-v5",
+    # "tiny-finetuned-v4",
+    # "tiny-finetuned-v3",
+    # "tiny-finetuned-v2", #best
+    # "tiny-finetuned",
+    # "tiny.en", #baseline
+    # "base.en", #baseline
+    # "base-finetuned",
 ]
 
 if not endtoendspv:

@@ -5,6 +5,8 @@
 whisper.cpp/*.o
 whisper.cpp/stream
 
+.vscode
+
 *.h5
 *.tflite
 
