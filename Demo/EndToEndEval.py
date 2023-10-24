@@ -42,12 +42,12 @@ def get_ground_truth_one_hot_vector(recording):
     one_hot_vector = [1 if label.lower() == ground_truth.lower() else 0 for label in ungroup_p_node]
     return np.array(one_hot_vector)
 
-def get_wer_and_cer(recording, transcript):
-    # tokenized_reference_text = Processor.tokenizer._normalize(get_ground_truth_transcript(recording))
-    # tokenized_prediction_text = Processor.tokenizer._normalize(transcript)
-    # wer = wer_metric.compute(references=[tokenized_reference_text], predictions=[tokenized_prediction_text])
-    # cer = cer_metric.compute(references=[tokenized_reference_text], predictions=[tokenized_prediction_text])
-    return 0, 0
+# def get_wer_and_cer(recording, transcript):
+#     # tokenized_reference_text = Processor.tokenizer._normalize(get_ground_truth_transcript(recording))
+#     # tokenized_prediction_text = Processor.tokenizer._normalize(transcript)
+#     # wer = wer_metric.compute(references=[tokenized_reference_text], predictions=[tokenized_prediction_text])
+#     # cer = cer_metric.compute(references=[tokenized_reference_text], predictions=[tokenized_prediction_text])
+#     return 0, 0
 
 def check_protocol_correct(recording, protocol):
     if protocol == -1: return -1
@@ -72,15 +72,23 @@ if __name__ == '__main__':
     else:
         speech_models = ['conformer']
 
-    time_stamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    # get timestamp, set up directory
+    pipeline_config.time_stamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+
+
+
     for trial in range(pipeline_config.num_trials):
+        pipeline_config.trial_num = trial
         for speech_model in speech_models:
+            if(pipeline_config.data_save):
+                pipeline_config.directory = f"Evaluation_Results/{pipeline_config.time_stamp}/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{speech_model}/"
+                if not os.path.exists(pipeline_config.directory):
+                    os.makedirs(pipeline_config.directory)
             for recording in pipeline_config.recordings_to_test:
-
-
+                pipeline_config.curr_recording = recording
                 # field names
-                fields = ['time audio->transcript (s)', 'transcript', 'whisper confidence', 'WER', 'CER', #4
-                            'time protocol input->output (s)', 'protocol prediction', 'protocol confidence', #7
+                fields = ['speech latency (ms)', 'transcript', 'whisper confidence', 'WER', 'CER', #4
+                            'protocol latency (ms)', 'protocol prediction', 'protocol confidence', #7
                             'protocol correct? (1 = True, 0 = False, -1=None given)', #8
                             'one hot prediction', 'one hot GT', 'tn', 'fp', 'fn', 'tp', 'logits'] 
                 if pipeline_config.endtoendspv:
@@ -116,26 +124,24 @@ if __name__ == '__main__':
                 # evaluate metrics
                 for i in range(len(rows_trial)):
                     row = rows_trial[i]
+                    try:
                     # WER, CER
-                    if(not pipeline_config.endtoendspv):
-                        row[3], row[4] = get_wer_and_cer(recording, row[1])
-                        row[8] = check_protocol_correct(recording, row[6])
-                        
-                    else: 
-                        row[3], row[4] = get_wer_and_cer("000_190105", row[1]) # placeholder
-                        row[8] = check_protocol_correct("000_190105", row[6]) # placeholder
+                    #     row[3], row[4] = get_wer_and_cer(recording, row[1])
+                    #     row[8] = check_protocol_correct(recording, row[6])
                         
                     # protocol correct? (1 = True, 0 = False, -1=None given) 
                     # if protocol given, evaluate protocol model
-                    if row[7] > 0:
-                        pred = np.array(row[9])
-                        logits = np.array(row[15])
-                        # one hot prediction
-                        row[9] = str(pred)
-                        # one hot GT
-                        row[10] = str(gt)
-                        # tn, fp, fn, tp
-                        row[11], row[12], row[13], row[14] = confusion_matrix(gt, pred).ravel()
+                        if row[8] != -1:
+                            pred = np.array(row[9])
+                            logits = np.array(row[15])
+                            # one hot prediction
+                            row[9] = str(pred)
+                            # one hot GT
+                            row[10] = str(gt)
+                            # tn, fp, fn, tp
+                            row[11], row[12], row[13], row[14] = confusion_matrix(gt, pred).ravel()
+                    except:
+                        print("not uniform row")
                 
                 # save last one hot vectors and logit
                 one_hot_pred_all_recordings.append(pred)
@@ -148,18 +154,9 @@ if __name__ == '__main__':
                 
                 # Write to csv
                 if(pipeline_config.data_save):
-                    directory = f"Evaluation_Results/{time_stamp}/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{speech_model}/"
-                    if not os.path.exists(directory):
-                        os.makedirs(directory)
-                    df.to_csv(f'{directory}T{trial}_{recording}.csv')
-                         
-            # protocol model report for ALL recordings
-            if(pipeline_config.data_save and pipeline_config.speech_model == "whisper" and not pipeline_config.endtoendspv):
-                report = classification_report(one_hot_gt_all_recordings, one_hot_pred_all_recordings, target_names=ungroup_p_node, output_dict=True)
-                with open(f'Evaluation_Results/{time_stamp}/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{speech_model}/protocol-model-evaluation-report.txt', 'w') as f:
-                    f.write(str(report))
+                    df.to_csv(f'{pipeline_config.directory}T{trial}_{recording}.csv')
                     
-            # protocol model report
+            # protocol model report fpr ALL recordings
             report = classification_report(one_hot_gt_all_recordings, one_hot_pred_all_recordings, target_names=ungroup_p_node, output_dict=True)
             p1 = get_precision_at_k(np.array(one_hot_gt_all_recordings), np.array(logits_all_recordings), k=1)
             r1 = get_recall_at_k(np.array(one_hot_gt_all_recordings), np.array(logits_all_recordings), k=1)
@@ -171,6 +168,6 @@ if __name__ == '__main__':
             report['R-Precision@1'] = rprecision1
 
             df = pd.DataFrame(report).T
-            df.to_csv(f'{directory}T{trial}_protocol-model-evaluation-report.csv')
+            df.to_csv(f'{pipeline_config.directory}T{trial}_protocol-model-evaluation-report.csv')
             
             if(pipeline_config.speech_model == 'conformer'): break

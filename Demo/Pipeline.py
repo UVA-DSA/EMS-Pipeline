@@ -140,13 +140,17 @@ def Pipeline(recording=pipeline_config.recording_name, videofile=pipeline_config
     '''
 
     if(pipeline_config.speech_model == 'whisper'):
-        Audiostream.join()
         # WhisperPipeline.join()
         if(pipeline_config.endtoendspv):
+            Audiostream.join()
             Videostream.join()
             EMSVision.join()
-        EMSAgent.join()
-        WhisperSubprocess.terminate()
+            EMSAgent.join()
+            WhisperSubprocess.kill()
+        else:
+            Audiostream.join()
+            EMSAgent.join()
+            WhisperSubprocess.terminate()
     else: 
         EMSAgent.join()
         EMSConformer.join()
