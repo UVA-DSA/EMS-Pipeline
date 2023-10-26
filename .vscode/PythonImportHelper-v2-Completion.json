@@ -11336,7 +11336,7 @@
         "kind": 2,
         "importPath": "Demo.EMSVision.EMSVisionSystem",
         "description": "Demo.EMSVision.EMSVisionSystem",
-        "peekOfCode": "def EMSVision(FeedbackQueue, VisionDataQueue):\n    # More models in the model hub.\n    model_name = pipeline_config.vision_model_type\n    classifier = pipeline(\"zero-shot-image-classification\", model = model_name, device=0)\n    while True:\n        try:\n            protocol_msg = FeedbackQueue.get()\n            message = VisionDataQueue.get()\n            if(message[\"signal\"] == \"Kill\" or protocol_msg == \"Kill\"): \n                print(\"[EMS Vision Thread received Kill Signal. Bye!]\")",
+        "peekOfCode": "def EMSVision(FeedbackQueue, VideoDataQueue):\n    # More models in the model hub.\n    model_name = pipeline_config.vision_model_type\n    classifier = pipeline(\"zero-shot-image-classification\", model = model_name, device=0)\n    while True:\n        try:\n            protocol_msg = FeedbackQueue.get()\n            message = VideoDataQueue.get()\n            if(message[\"signal\"] == \"Kill\" or protocol_msg == \"Kill\"): \n                print(\"[EMS Vision Thread received Kill Signal. Bye!]\")",
         "detail": "Demo.EMSVision.EMSVisionSystem",
         "documentation": {}
     },
@@ -13055,7 +13055,7 @@
         "kind": 2,
         "importPath": "Demo.VideoFileStream",
         "description": "Demo.VideoFileStream",
-        "peekOfCode": "def VideoStream(VisionDataQueue,VideoSignalQueue, video_file_name):\n    cap = cv2.VideoCapture(video_file_name) # video file path\n    # Check if camera opened successfully\n    if (cap.isOpened()== False): \n      print(\"[Video Stream Thread: Error opening video stream or file]\")\n    frame = np.array([])\n    fps = (cap.get(cv2.CAP_PROP_FPS))\n    idx = 0\n    # Read until video is completed\n    while(cap.isOpened()):",
+        "peekOfCode": "def VideoStream(VideoDataQueue,VideoSignalQueue, video_file_name):\n    cap = cv2.VideoCapture(video_file_name) # video file path\n    # Check if camera opened successfully\n    if (cap.isOpened()== False): \n      print(\"[Video Stream Thread: Error opening video stream or file]\")\n    frame = np.array([])\n    fps = (cap.get(cv2.CAP_PROP_FPS))\n    idx = 0\n    # Read until video is completed\n    while(cap.isOpened()):",
         "detail": "Demo.VideoFileStream",
         "documentation": {}
     },
