@@ -121,9 +121,9 @@ if __name__ == '__main__':
 
                 Pipeline(recording=recording, whisper_model=speech_model)
 
-                print("SIZE OF DICT")
-                for key, value in pipeline_config.trial_data.items():
-                    print(f"{key}: {len(value)}")
+                # print("SIZE OF DICT")
+                # for key, value in pipeline_config.trial_data.items():
+                #     print(f"{key}: {len(value)}")
 
                 # write out data
                 df = pd.DataFrame(pipeline_config.trial_data)

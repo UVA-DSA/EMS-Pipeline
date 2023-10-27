@@ -127,7 +127,7 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
 
     config = {
         'max_len': 512,
-        'fusion': None,
+    'fusion': None,
         'cls': 'fc'
     }
     if model_name == 'EMSAssist':
@@ -199,6 +199,7 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
             pipeline_config.trial_data['fp'].append('fp placeholder')
             pipeline_config.trial_data['fn'].append('fn placeholder')
             pipeline_config.trial_data['tp'].append('tp placeholder')
+            print('logits', logits.shape)
             pipeline_config.trial_data['logits'].append(str(logits))
                     
         

@@ -41,15 +41,18 @@ vision_model_type = 'openai/clip-vit-base-patch32'
 
 # ========EXPERIMENT CONFIGS ============================================================
 
+speech_standalone = False
+protocol_standalone = False
+action_standalone = False
 endtoendspv = False #speech+protocol+vision
 
-num_trials = 3
-
+num_trials = 2
 # -- Whisper configuration ---
 whisper_model_sizes = [
-     "finetuned-tiny-final",
-     "finetuned-base-final",
-
+    #  "finetuned-base-final",
+    #  "finetuned-tiny-final",
+     "base-finetuned-wo-synth",
+     "tiny-finetuned-wo-synth",
     #  "finetuned-tiny-v100",
     #  "finetuned-tiny-v101",
     #  "finetuned-tiny-v102",
@@ -61,13 +64,13 @@ whisper_model_sizes = [
     #  "finetuned-tiny-v108",
     #  "finetuned-tiny-v109",
     #  "finetuned-tiny-v110",
-    #  "finetuned-tiny-v111",
+     "finetuned-tiny-v111",
     #  "finetuned-tiny-v112",
     #  "finetuned-tiny-v113",
     #  "finetuned-base-v200",
     #  "finetuned-base-v201",
     #  "finetuned-base-v202",
-    #  "finetuned-base-v203",
+     "finetuned-base-v203",
     #  "finetuned-base-v204",
     #  "finetuned-base-v205",
     #  "finetuned-base-v206",
@@ -100,18 +103,18 @@ whisper_model_sizes = [
 
 if not endtoendspv:
     recordings_to_test = [
-         '000_190105',
-        #  '001_190105',
-         '002_190105',
-        #  '003_190105',
-         '004_190105',
-        #  '005_190105',
-         '006_190105',
-        #  '007_190105',
-         '008_190105',
-        #  '009_190105',
-         '010_190105',
-        #  '011_190105'
+        #  '000_190105',
+        # #  '001_190105',
+        '002_190105',
+        '003_190105',
+        '004_190105',
+        '005_190105',
+        '006_190105',
+        '007_190105',
+        '008_190105',
+        '009_190105',
+        '010_190105',
+        '011_190105',
         "scenario_1",
         "scenario_2",
         "scenario_3",
