@@ -2,7 +2,7 @@ import time
 from classes import TranscriptItem
 import os
 import re
-
+from time import sleep
 '''
 This method processes the whisper response we receive from fifo pipe 
 The response is type string, and is in the format 'block{isFinal,avg_p}'
@@ -28,44 +28,60 @@ def process_whisper_response(response):
     start = response.find('{')
     end = response.find('}')
     block = response[:start]
-    stats = response[start+1:end]
-
-    stats = stats.split(',')
-    isFinal = True if stats[0] == '1' else False
-    p_string=stats[1]
-    latency=stats[2]
-    avg_p = float(p_string)
+    isFinal_str, avg_p_str, latency_str = response[start+1:end].split(",")
+    isFinal = True if isFinal_str == '1' else False
+    avg_p = float(avg_p_str)
+    latency = int(latency_str)
     # print(p_string)
 
     return block, isFinal, avg_p, latency
 
+def SignalFifo(SignalQueue):
+    fifo_path = "/tmp/signalfifo"
+    
+    with open(fifo_path, 'r', os.O_NONBLOCK) as fifo:
+        while True:
+            sleep(1)
+            
+            data = fifo.readline()
+            
+            if not data:
+                SignalQueue.put("Proceed")
+                continue
+            
+            signal = data.strip()
+            if signal == "Kill":
+                print("Received Kill Signal from Signal FIFO", signal)
+                SignalQueue.put("Kill")
+                break
+                
+                
+                
 
 def Fifo(SpeechToNLPQueue, EMSAgentQueue, SignalQueue):
     
     fifo_path = "/tmp/myfifo"
     finalized_blocks = ''
     
-    print("here1")
     with open(fifo_path, 'r', os.O_NONBLOCK) as fifo:
-        print("here2")
         try:
             print('Speech pipe opened!')
-            SignalQueue.put("ready")
-
             old_response = ""
             while True:  # Requires Python 3.8+ for :=
-                signal = SignalQueue.get()
-                if(signal == "Done"):
-                    break
+                if(not SignalQueue.empty()):
+                    signal = SignalQueue.get()
+                    if(signal == "Kill"):
+                        break
                 response = fifo.read().strip()  # Read the message from the named pipe
                 if(response != old_response):
                     if(response != ""):
-                        if("does not include pressure;" in response):
-                            continue
+
+                        if(response.count("{") > 2): continue
                         block, isFinal, avg_p, latency = process_whisper_response(response) #isFinal = False means block is interim block
                         transcript = finalized_blocks + block
                         # if received block is finalized, then save to finalized blocks
                         if isFinal: finalized_blocks += block
+                        
                         transcriptItem = TranscriptItem(transcript, isFinal, avg_p, latency)
                         EMSAgentQueue.put(transcriptItem)
                         SpeechToNLPQueue.put(transcriptItem)  

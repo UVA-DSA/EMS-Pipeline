@@ -9,8 +9,9 @@ from EMSAgent import EMSAgentSystem
 from threading import Thread
 from time import sleep,time
 
+from multiprocessing import Process
 
-def Pipeline(recording=pipeline_config.recording_name):
+def Pipeline(recording=pipeline_config.recording_name, whisper_model=pipeline_config.whisper_model_sizes[0], trial=0):
 # Set the Google Speech API service-account key environment variable
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "service-account.json"
 
@@ -24,7 +25,7 @@ def Pipeline(recording=pipeline_config.recording_name):
     whispercppcommand = [
     "./stream",
     "-m", # use specific whisper model
-    f"models/ggml-{pipeline_config.whisper_model_size}.bin", 
+    f"models/ggml-{whisper_model}.bin", 
     "--threads",
     str(pipeline_config.num_threads),
     "--step",                          
@@ -37,8 +38,8 @@ def Pipeline(recording=pipeline_config.recording_name):
     # str(pipeline_config.vth),
     # "-ac",
     # str(pipeline_config.audio_ctx)
-    "-mt",
-    str(pipeline_config.max_tokens)
+    # "-mt",
+    # str(pipeline_config.max_tokens)
     ]
     # If a Hard-coded Audio test file, use virtual mic to capture the recording
     if(pipeline_config.hardcoded):
@@ -47,6 +48,7 @@ def Pipeline(recording=pipeline_config.recording_name):
 # ===== Start EMSAgent module =================================================
     EMSAgent = Thread(target=EMSAgentSystem.EMSAgentSystem, args=(EMSAgentQueue, FeedbackQueue))
     EMSAgent.start()
+    
 
 # ===== Sleep for 3 seconds to finish starting Whisper module and EMSAgent module =====
     print("======================= Warmup Phase ======================")
@@ -68,86 +70,121 @@ def Pipeline(recording=pipeline_config.recording_name):
     # Start subprocess
     print("======================= Whisper Warmup ======================")
  
-    if pipeline_config.whisper_model_size == 'tiny-finetuned-q5':
 
-        is_streaming = True
+    is_streaming = True
 
-    # # ===== Start Audio Streaming Subprocess module =================================================
+# # ===== Start Audio Streaming Subprocess module =================================================
 
-        # audiostreamcommand = [
-        # "./stream-file",
-        # "-f", # uspecify which wavefile
-        # f"{recording}.wav", 
-        # ]
-        
-        # AudioStreamSubprocess = subprocess.Popen(audiostreamcommand, cwd='whisper.cpp/')
+    # audiostreamcommand = [
+    # "./stream-file",
+    # "-f", # uspecify which wavefile
+    # f"{recording}.wav", 
+    # ]
+    
 
-
-    # ===== Start Audiostream module =========================================
-        Audiostream = Thread(
-                        target=WhisperFileStream.Whisper, args=(SpeechToNLPQueue, EMSAgentQueue, f'./Audio_Scenarios/2019_Test/{recording}.wav', is_streaming, SignalQueue))
-        Audiostream.start()
-
-        sleep(3)
-
-        WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='whisper.cpp/')
+    WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='whisper.cpp/')
 
 
-    # ===== Start FIFO reading module =========================================
-        FIFOStream = Thread(
-                        target=FIFOStreamClient.Fifo, args=(SpeechToNLPQueue, EMSAgentQueue, SignalQueue))
-        FIFOStream.start()
+    sleep(6)
 
-        
-
-
-    else:
-
-        is_streaming = True
-
-   
-        WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='whisper.cpp/')
-
-        sleep(5)
-
-  
-     # ===== Start Audiostream module =========================================
-        Audiostream = Thread(
-                        target=WhisperFileStream.Whisper, args=(SpeechToNLPQueue, EMSAgentQueue, f'./Audio_Scenarios/2019_Test/{recording}.wav', is_streaming, SignalQueue))
-        Audiostream.start()
-
-
-    # # ===== Start Audio Streaming Subprocess module =================================================
-
-        # audiostreamcommand = [
-        # "./stream-file",
-        # "-f", # uspecify which wavefile
-        # f"{recording}.wav", 
-        # ]
-        
-        # AudioStreamSubprocess = subprocess.Popen(audiostreamcommand, cwd='whisper.cpp/')
-
-
-
-
-
-
-
-        # ===== Start FIFO reading module =========================================
-        FIFOStream = Thread(
-                        target=FIFOStreamClient.Fifo, args=(SpeechToNLPQueue, EMSAgentQueue, SignalQueue))
-        FIFOStream.start()
-
-        
-
-
-
+ 
     print("======================= Whisper Warmup Done ======================")
+ 
+ 
+    # ===== Start Audiostream module =========================================
+    if(pipeline_config.action_recognition):
+        audio_dir = f'./Audio_Scenarios/2023_Test/{recording}.wav'
+    else:
+        audio_dir = f'./Audio_Scenarios/2019_Test/{recording}.wav'
+        
+    Audiostream = Thread(
+                    target=WhisperFileStream.Whisper, args=(SpeechToNLPQueue, EMSAgentQueue, audio_dir, is_streaming, SignalQueue))
+    Audiostream.start()
+
+
+    if(pipeline_config.action_recognition):
+        clipcppcommand = [
+            "./zsl",
+            "-m", # use specific whisper model
+            f"../models/{pipeline_config.clip_model}", 
+            "-t", # threads
+            str(pipeline_config.clip_threads),
+            "--text",
+            str("dummy1"),
+            "--text",
+            str("dummy2"),
+            "--image",
+            str(f"../../.././Video_Scenarios/2023_Test/{recording}.avi"),
+            "--trial",
+            str(trial)
+            ]
+            
+        print("======================= Clip CPP Starting... ======================")
+        sleep(5)
+        ClipSubprocess = subprocess.Popen(clipcppcommand, cwd='clip.cpp/build/bin/')
+
+
+
+# # ===== Start FIFO reading module =========================================
+#     FIFOStream = Thread(
+#                     target=FIFOStreamClient.Fifo, args=(SpeechToNLPQueue, EMSAgentQueue, SignalQueue))
+#     FIFOStream.start()
+
+
+
+
+    # audiostreamcommand = [
+    # "python",
+    # "AudioStream.py",
+    # "-f", # use specific whisper model
+    # f"./Audio_Scenarios/2019_Test/{recording}.wav", 
+    # ]        
+    
+    # AudioStreamSubProcess = subprocess.Popen(audiostreamcommand, cwd='./')
+    
+
+
+# # ===== Start FIFO reading module =========================================
+#     SignalFIFOStream = Thread(
+#                     target=FIFOStreamClient.SignalFifo, args=(SignalQueue,))
+#     SignalFIFOStream.start()
+
+  # p.subprocess is alive
+    #                # ===== Start Whisper Audiostream and Read module =========================================
+    # Audiostream = Thread(
+    #                 target=WhisperFileStream.SDStream, args=(SpeechSignalQueue, f'./Audio_Scenarios/2019_Test/{recording}.wav'))
+    # Audiostream.start()
+    
+        
+    #                      # ===== Start Whisper Audiostream and Read module =========================================
+    # FIFOStream = Thread(
+    #                 target=WhisperFileStream.ReadPipe, args=(SpeechToNLPQueue,VideoSignalQueue,SpeechSignalQueue))
+    # FIFOStream.start()
+    
+
+
+    # # ===== Start Audio Streaming Subprocess module =================================================
+
+        # audiostreamcommand = [
+        # "./stream-file",
+        # "-f", # uspecify which wavefile
+        # f"{recording}.wav", 
+        # ]
+        
+        # AudioStreamSubprocess = subprocess.Popen(audiostreamcommand, cwd='whisper.cpp/')
 
 
 
 
 
+        
+
+
+
+
+
+ 
+    
 
 # ===== Exiting Program ====================================================
     '''
@@ -156,11 +193,19 @@ def Pipeline(recording=pipeline_config.recording_name):
     TODO: Make a Event() from Threading module to use as flag signal instead of queueing the string 'Kill'
     '''
     Audiostream.join()
-    FIFOStream.join()
+    # SignalFIFOStream.join()
+    # FIFOStream.join()
     EMSAgent.join()
-    WhisperSubprocess.terminate()
-    # AudioStreamSubprocess.terminate()
+    
+    
+    # AudioStreamSubProcess.terminate()
 
+    WhisperSubprocess.terminate()
+    
+    if(pipeline_config.action_recognition):
+        ClipSubprocess.terminate()
+
+    sleep(5)
 
 if __name__ == '__main__':
     Pipeline()

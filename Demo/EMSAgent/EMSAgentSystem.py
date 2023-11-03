@@ -110,12 +110,23 @@ class EMSAgent(nn.Module):
         pred_protocol = np.array(ungroup_p_node)[np.where(preds == 1)]
         pred_prob = logits[np.where(preds == 1)]
 
-        return pred_protocol, pred_prob, one_hot
+        # get the protocol prediction with highest confidence value
+        max_prob_index = np.argmax(pred_prob)
+        prob = pred_prob[max_prob_index]
+        protocol = pred_protocol[max_prob_index]
+
+
+        return protocol, prob, one_hot, logits
 
 
 def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
 
-
+    try:
+        os.mkfifo(pipeline_config.protocol_fifo)
+        print("[Protocol Pipe Created!]")
+    except FileExistsError:
+        print("[Protocol Pipe Exists!]")
+        
     # initialize
     seed_everything(3407)
     from EMSAgent.default_sets import model_name
@@ -149,54 +160,112 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
     protocolFB =  FeedbackObj("wd", "wd", "wd")
     FeedbackQueue.put(protocolFB)
 
-    # call the model    
-    while True:
-        # Get queue item from the Speech-to-Text Module
-        received = EMSAgentQueue.get()
+    if(pipeline_config.action_recognition):
+        try:
+            with open(pipeline_config.protocol_fifo, "w") as fifo:
 
-        # TODO: make thread exit while True loop based on threading module event
-        if(received == 'Kill'):
-            # print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
-            break
-        else:
-            print('=============================================================')
-            print(f'[Protocol model received transcript: {received.transcript}]')
-            # initialize variables
-            start = None
-            end = None
-            pred = None
-            prob = None
-            if len(received.transcript):
-                # try:
-                start = time.perf_counter()
-                pred, prob, one_hot = model(received.transcript)
-                end = time.perf_counter()
-                pred = ','.join(pred)
-                prob = ','.join(str(p) for p in prob)
-                print(f'[Protocol suggestion:{pred}:{prob}]')
+                # call the model    
+                while True:
+                    # Get queue item from the Speech-to-Text Module+
+                    received = EMSAgentQueue.get()
 
-                #Feedback
-                protocolFB =  FeedbackObj("", str(pred) + " : " +str(prob), "")
-                FeedbackQueue.put(protocolFB)
+                    # TODO: make thread exit while True loop based on threading module event
+                    if(received == 'Kill'):
+                        # print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
+                        break
+                    else:
+                        print('=============================================================')
+                        print(f'[Protocol model received transcript: {received.transcript}]')
+                        # initialize variables
+                        # try:
+                        start = time.perf_counter()
+                        pred, prob, one_hot, logits = model(received.transcript)
+                        end = time.perf_counter()
+                        print(f'[Protocol suggestion:{pred}:{prob}]')
+                        prot_latency = (end-start)*1000
 
-                # except Exception as e:
-                #     pred = 'Protocol is not suggested due to exception'
-                #     print(e, f'[{pred}]')
-            else:
-                pred = 'Protocol is not suggested due to receiving blank space as transcript'
-                print(f'[{pred}]')
+                        #Feedback
+                        protocolFB =  FeedbackObj("", str(pred) + " : " +str(prob), "")
+                        FeedbackQueue.put(protocolFB)
 
- # ===== save end to end pipeline results for this segment =========================================================================
-            # 'wer' and 'cer' calcluated and replaced later in EndToEndEval.py
-            pipeline_config.curr_segment += [received.transcriptionDuration, received.transcript, received.confidence, 'wer', 'cer']
-            # if we made a protocol prediction
-            if start != None and end != None:
-                pipeline_config.curr_segment += [end-start, pred, prob, 'correct?', one_hot, 'one hot GT', 'tn', 'fp', 'fn', 'tp'] # see if protocol prediction is correct later in EndToEndEval.py
-            else:
-                # if no suggesion, save one hot vector of all 0's
-                pipeline_config.curr_segment += [-1, pred, -1, -1, -1, -1, -1, -1, -1, -1]
-            pipeline_config.rows_trial.append(pipeline_config.curr_segment)
-            pipeline_config.curr_segment = []
+                        try:
+                            fpred = pred.split(',')[0]
+                            fifo.write(fpred+'\n')
+                            fifo.flush()
+                        except Exception as e:
+                            print(f'[Protocol Pipe Writing Failed:{str(e)}]')
 
-                
-        
+            # ===== save end to end pipeline results for this segment =========================================================================
+                        '''
+                        Fields with placeholders are calculated later in EndToEndEval or another data processing script
+                        '''
+                        pipeline_config.trial_data['speech latency (ms)'].append(received.transcriptionDuration)
+                        pipeline_config.trial_data['transcript'].append(received.transcript)
+                        pipeline_config.trial_data['whisper confidence'].append(received.confidence)
+                        pipeline_config.trial_data['WER'].append(0) #placeholder
+                        pipeline_config.trial_data['CER'].append(0) #placeholder
+                        pipeline_config.trial_data['protocol latency (ms)'].append(prot_latency)
+                        pipeline_config.trial_data['protocol prediction'].append(pred)
+                        pipeline_config.trial_data['protocol confidence'].append(prob)
+                        pipeline_config.trial_data['protocol correct?'].append(0) #placeholder
+                        pipeline_config.trial_data['one hot prediction'].append(str(one_hot))
+                        pipeline_config.trial_data['one hot gt'].append(str('[one hot gt placeholder]'))
+                        pipeline_config.trial_data['tn'].append('tn placeholder')
+                        pipeline_config.trial_data['fp'].append('fp placeholder')
+                        pipeline_config.trial_data['fn'].append('fn placeholder')
+                        pipeline_config.trial_data['tp'].append('tp placeholder')
+                        pipeline_config.trial_data['logits'].append(str(logits))
+
+
+        except Exception as e:
+            print("[EMSAgent Exception] ",str(e))      
+                    
+    else:
+        try:
+            # call the model    
+            while True:
+                # Get queue item from the Speech-to-Text Module+
+                received = EMSAgentQueue.get()
+
+                # TODO: make thread exit while True loop based on threading module event
+                if(received == 'Kill'):
+                    # print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
+                    break
+                else:
+                    print('=============================================================')
+                    print(f'[Protocol model received transcript: {received.transcript}]')
+                    # try:
+                    start = time.perf_counter()
+                    pred, prob, one_hot, logits = model(received.transcript)
+                    end = time.perf_counter()
+                    print(f'[Protocol suggestion:{pred}:{prob}]')
+                    prot_latency = (end-start)*1000
+
+
+                    #Feedback
+                    protocolFB =  FeedbackObj("", str(pred) + " : " +str(prob), "")
+                    FeedbackQueue.put(protocolFB)
+
+        # ===== save end to end pipeline results for this segment =========================================================================
+                    '''
+                    Fields with placeholders are calculated later in EndToEndEval or another data processing script
+                    '''
+                    pipeline_config.trial_data['speech latency (ms)'].append(received.transcriptionDuration)
+                    pipeline_config.trial_data['transcript'].append(received.transcript)
+                    pipeline_config.trial_data['whisper confidence'].append(received.confidence)
+                    pipeline_config.trial_data['WER'].append(0) #placeholder
+                    pipeline_config.trial_data['CER'].append(0) #placeholder
+                    pipeline_config.trial_data['protocol latency (ms)'].append(prot_latency)
+                    pipeline_config.trial_data['protocol prediction'].append(pred)
+                    pipeline_config.trial_data['protocol confidence'].append(prob)
+                    pipeline_config.trial_data['protocol correct?'].append(0) #placeholder
+                    pipeline_config.trial_data['one hot prediction'].append(str(one_hot))
+                    pipeline_config.trial_data['one hot gt'].append(str('[one hot gt placeholder]'))
+                    pipeline_config.trial_data['tn'].append('tn placeholder')
+                    pipeline_config.trial_data['fp'].append('fp placeholder')
+                    pipeline_config.trial_data['fn'].append('fn placeholder')
+                    pipeline_config.trial_data['tp'].append('tp placeholder')
+                    pipeline_config.trial_data['logits'].append(str(logits))
+
+        except Exception as e:
+            print("[EMSAgent Exception] ",str(e))            

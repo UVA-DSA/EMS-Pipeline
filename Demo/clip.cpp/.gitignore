@@ -1,0 +1,9 @@
+build/
+.vscode
+.cache/
+*.swp
+models/*.bin
+*.so
+__pycache__
+dist
+*.gguf

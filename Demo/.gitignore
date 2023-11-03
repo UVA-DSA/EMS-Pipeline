@@ -1,4 +1,19 @@
+
+build/
+.vscode
+.cache/
+*.swp
+*/models/*.bin
+*.so
+__pycache__
+*/dist
+*.gguf
+
 evaluation_results
+Evaluation_Results
+
+Video_Scenarios
+Audio_Scenarios
 
 *.zip
 

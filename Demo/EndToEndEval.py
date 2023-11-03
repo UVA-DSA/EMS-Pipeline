@@ -2,8 +2,8 @@
 
 from Pipeline import Pipeline
 import pipeline_config
-import csv
 import os
+import pandas as pd
 # from jiwer import wer, cer
 # from transformers import WhisperProcessor
 # from evaluate import load
@@ -33,10 +33,10 @@ def get_ground_truth_protocol(recording):
         ground_truth = f.read()
     return ground_truth
 
-def get_ground_truth_one_hot_vector(recording):
-    ground_truth = get_ground_truth_protocol(recording)
-    one_hot_vector = [1 if label.lower() == ground_truth.lower() else 0 for label in ungroup_p_node]
-    return np.array(one_hot_vector)
+# def get_ground_truth_one_hot_vector(recording):
+#     ground_truth = get_ground_truth_protocol(recording)
+#     one_hot_vector = [1 if label.lower() == ground_truth.lower() else 0 for label in ungroup_p_node]
+#     return np.array(one_hot_vector)
 
 
 def get_wer_and_cer(recording, transcript):
@@ -64,35 +64,57 @@ if __name__ == '__main__':
     '''
     device = 'cuda' # or cuda
     
-    for recording in pipeline_config.recordings_to_test:
-        # run one trial of the pipeline 
-        for i in range(1,pipeline_config.num_trials_per_recording+1):
-            # field names
-            fields = ['time audio->transcript (s)', 'transcript', 'whisper confidence', 'WER', 'CER', 'time protocol input->output (s)', 'protocol prediction', 'protocol confidence', 'protocol correct? (1 = True, 0 = False, -1=None given)','onehot'] 
+    for trial in range(pipeline_config.num_trials_per_recording):
+        for whisper_model in pipeline_config.whisper_model_sizes:
+            for recording in pipeline_config.recordings_to_test:
+                # set field names in trial data dictionary 
+                pipeline_config.trial_data['speech latency (ms)'] = []
+                pipeline_config.trial_data['transcript'] = []
+                pipeline_config.trial_data['whisper confidence'] = []
+                pipeline_config.trial_data['WER'] = []
+                pipeline_config.trial_data['CER'] = []
+                pipeline_config.trial_data['protocol latency (ms)'] = []
+                pipeline_config.trial_data['protocol prediction'] = []
+                pipeline_config.trial_data['protocol confidence'] = []
+                pipeline_config.trial_data['protocol correct?'] = []
+                pipeline_config.trial_data['one hot prediction'] = []
+                pipeline_config.trial_data['one hot gt'] = []
+                pipeline_config.trial_data['tn'] = []
+                pipeline_config.trial_data['fp'] = []
+                pipeline_config.trial_data['fn'] = []
+                pipeline_config.trial_data['tp'] = []
+                pipeline_config.trial_data['logits'] = []
+                if pipeline_config.action_recognition:
+                    pipeline_config.vision_data['protocol'] = []
+                    pipeline_config.vision_data['intervention recognition'] = []
+                    pipeline_config.vision_data['intervention latency'] = []
 
-            # data rows of csv file for this run
-            pipeline_config.curr_segment = []
-            pipeline_config.rows_trial = []
 
-            # run pipeline
-            Pipeline(recording=recording)
+                # run pipeline
+                print("Running E2E Evaluation for Recording: ",recording)
+                print("\n\n\n ********************** CONFIGURATION **************************** \n\n")
 
-            # calculate wer and cer after pipeline run is finished
-            # check if protocol prediction is correct
-            for row in pipeline_config.rows_trial:
-                row[3], row[4] = get_wer_and_cer(recording, row[1])
-                row[8] = check_protocol_correct(recording, row[6])
-                
-            # Write data to csv
-            directory = f'evaluation_results/{device}/{pipeline_config.whisper_model_size}/{recording}-all-trials/'
-            if not os.path.exists(directory):
-                os.makedirs(directory)
-            print(f'Evaluation Results stored in {directory}')
-            with open (f'{directory}{recording}-trial-{i}.csv', 'w+') as csvFile:
-                writer = csv.writer(csvFile)
-                writer.writerow(fields)
-                writer.writerows(pipeline_config.rows_trial)
-        # TODO
+                print("speech-model:",whisper_model)
+                print("protocol-model:",pipeline_config.protocol_model_type)
+                print("protocol-device:",pipeline_config.protocol_model_device)
+                print("isEnd-to-End:",pipeline_config.action_recognition)
+                print("Trial:",trial)
+                print("Recording:",recording)
+
+                print("\n\n\n ******************************************************** \n\n")
+
+                Pipeline(recording=recording, whisper_model=whisper_model, trial=trial)
+
+                # Write data to csv
+                directory = f'evaluation_results/{device}/{whisper_model}/'
+                if not os.path.exists(directory):
+                    os.makedirs(directory)
+                print(f'Evaluation Results stored in {directory}')
+
+                df = pd.DataFrame(pipeline_config.trial_data)
+                df.to_csv(f'{directory}T{trial}_SPEECH+PROTOCOL_{recording}.csv')
+
+            # TODO
     #     # find average of all trials for the recording
     #     with open (f'evaluation_results/{device}/{recording}-average-{i}.csv', 'w') as csvFile:
     #         fields = ['time audio->transcript (s)', 'whisper confidence', 'WER', 'CER', 'time protocol input->output (s)', 'protocol prediction', 'protocol confidence', 'protocol accuracy'] 
