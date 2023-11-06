@@ -125,6 +125,20 @@ if __name__ == '__main__':
                 # for key, value in pipeline_config.trial_data.items():
                 #     print(f"{key}: {len(value)}")
 
+                # remove keys from pipeline_config.trial_data that don't correspond to speech stuff
+                relevant_keys = set(['speech latency (ms)', 'transcript', 'whisper confidence'])
+
+                dictionary_keys = pipeline_config.trial_data.keys()
+                for key in dictionary_keys:
+                    if key not in relevant_keys:
+                        del pipeline_config.trial_data[key]
+                
+
+
+                pipeline_config.trial_data['speech latency (ms)'] = []
+                pipeline_config.trial_data['transcript'] = []
+                pipeline_config.trial_data['whisper confidence'] = []
+
                 # write out data
                 df = pd.DataFrame(pipeline_config.trial_data)
                 df.to_csv(f'{pipeline_config.directory}T{trial}_SPEECH+PROTOCOL_{recording}.csv')

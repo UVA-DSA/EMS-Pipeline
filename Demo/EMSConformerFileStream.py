@@ -8,7 +8,7 @@ import traceback
 
 # Wavefile recording parameters
 RATE = 16000
-CHUNK = RATE // 10  # 100ms
+CHUNK = 1024  # 100ms
 
 def ConformerStream(SpeechToNLPQueue,VideoSignalQueue, ConformerSignalQueue, wavefile_name):
     print('Conformer started!')

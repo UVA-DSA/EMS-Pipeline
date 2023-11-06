@@ -105,7 +105,10 @@ def trainscribe(model,audio_buffer):
     signal = audio_buffer # audio buffer
     start_t = time.perf_counter()
 
+    print("signal",signal.shape, signal[0:50])
     transcript = model.pred(signal)
+    
+    print(transcript)
     transcript = "".join([chr(u) for u in transcript])
     
     end_t = time.perf_counter()

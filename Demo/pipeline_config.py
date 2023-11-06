@@ -9,8 +9,8 @@ interventionStream = True
 transcriptStream = True
 
 # ------------------- Speech to Text Control ------------------- #
-# speech_model = 'conformer' 
-speech_model = 'whisper'
+speech_model = 'conformer' 
+# speech_model = 'whisper'
 
 # -- EMS Conformer configuration ------
 # conformer_model_type = 'all_14_model.tflite' # for tflite
@@ -19,8 +19,8 @@ conformer_model_type = 'h5'  # for base model
 
 # -- EMS Agent configuration ------
 protocol_model_device = 'cuda' # 'cuda' or 'cpu'
-protocol_model_type = 'DKEC-TinyClinicalBERT' # CognitiveEMS
-# protocol_model_type = 'EMSAssist' # EMSAssist
+# protocol_model_type = 'DKEC-TinyClinicalBERT' # CognitiveEMS
+protocol_model_type = 'EMSAssist' # EMSAssist
 
 # -- Audio Recording Option -----
 hardcoded = True
@@ -51,8 +51,8 @@ num_trials = 2
 whisper_model_sizes = [
     #  "finetuned-base-final",
     #  "finetuned-tiny-final",
-     "base-finetuned-wo-synth",
-     "tiny-finetuned-wo-synth",
+    #  "base-finetuned-wo-synth",
+    #  "tiny-finetuned-wo-synth",
     #  "finetuned-tiny-v100",
     #  "finetuned-tiny-v101",
     #  "finetuned-tiny-v102",
@@ -104,17 +104,18 @@ whisper_model_sizes = [
 if not endtoendspv:
     recordings_to_test = [
         #  '000_190105',
-        # #  '001_190105',
-        '002_190105',
-        '003_190105',
-        '004_190105',
-        '005_190105',
-        '006_190105',
-        '007_190105',
-        '008_190105',
-        '009_190105',
-        '010_190105',
-        '011_190105',
+        #  '001_190105',
+        "scenario_8",
+        # '002_190105',
+        # '003_190105',
+        # '004_190105',
+        # '005_190105',
+        # '006_190105',
+        # '007_190105',
+        # '008_190105',
+        # '009_190105',
+        # '010_190105',
+        # '011_190105',
         "scenario_1",
         "scenario_2",
         "scenario_3",
@@ -122,7 +123,7 @@ if not endtoendspv:
         "scenario_5",
         "scenario_6",
         "scenario_7",
-        "scenario_8"
+        
     ]
 
 else:

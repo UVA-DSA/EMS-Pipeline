@@ -65,7 +65,7 @@ if __name__ == '__main__':
     if pipeline_config.speech_model == 'whisper': 
         speech_models = pipeline_config.whisper_model_sizes
     else:
-        speech_models = ['conformer']
+        speech_models = ['conformer-base']
 
     # get timestamp of experiment run
     pipeline_config.time_stamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
@@ -76,6 +76,7 @@ if __name__ == '__main__':
             # set directory and make directory
             pipeline_config.directory = f"Evaluation_Results/{pipeline_config.time_stamp}/{pipeline_config.protocol_model_type}/{pipeline_config.protocol_model_device}/{speech_model}/"
             if not os.path.exists(pipeline_config.directory):
+                print("MADE DIR")
                 os.makedirs(pipeline_config.directory)
             # evaluate recordings
             for recording in pipeline_config.recordings_to_test:
@@ -133,5 +134,5 @@ if __name__ == '__main__':
                     df = pd.DataFrame(pipeline_config.vision_data)
                     df.to_csv(f'{pipeline_config.directory}T{trial}_VISION_{recording}.csv')
             
-                break #for test   
+                # break #for test   
             if(pipeline_config.speech_model == 'conformer'): break

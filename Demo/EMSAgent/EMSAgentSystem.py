@@ -62,6 +62,7 @@ class EMSAgent(nn.Module):
 
     def eval_fn(self, data):
         with torch.no_grad():
+            outputs = None
             if data['ids'] != None:
                 ids = data["ids"].to(device, dtype=torch.long).unsqueeze(0)
                 mask = data["mask"].to(device, dtype=torch.long).unsqueeze(0)
@@ -169,6 +170,10 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
         else:
             print('=============================================================')
             print(f'[Protocol model received transcript: {received.transcript}]')
+
+            if received.transcript == "":
+                pred, prob, one_hot, logits = -1, -1, -1, -1
+                continue
 
             start = time.perf_counter_ns()
             pred, prob, one_hot, logits = model(received.transcript)
