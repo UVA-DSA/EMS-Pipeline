@@ -92,7 +92,7 @@ def get_image():
 # while True:
 #     print(get_image())
 
-recording_enabled = True
+recording_enabled = False
 frame_index = 0
 
 curr_date = datetime.now()
