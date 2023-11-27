@@ -22,15 +22,15 @@ def EMSVision(FeedbackQueue, VideoDataQueue):
 
             image_message = VideoDataQueue.get()
             
-            print(FeedbackQueue.qsize(), VideoDataQueue.qsize())
             if(image_message["signal"] == "Kill"): 
                 print("[EMS Vision Thread received Kill Signal. Bye!]")
                 break
             
-            print("[EMS Vision Thread: received-protocol:",protocol,']\n')
-            
-            print('\n\n=============================================================')
-            
+            if(protocol is not "None"):
+                print("[EMS Vision Thread: received-protocol:",protocol,']\n')
+                
+                print('\n\n=============================================================')
+                
 
             labels_for_classification = generate_labels(protocol)
             # if labels_for_classification is None, that means the protocol does not initiate action recogn
@@ -45,13 +45,13 @@ def EMSVision(FeedbackQueue, VideoDataQueue):
                 print("[EMSVISIONTHREAD:]",protocol,sucessful_protocol,sucessful_protocol_found)
 
                 model_scores,model_latency = classify(pil_image,labels_for_classification,classifier)
+                print(f'[EMS Vision Thread: model scores-{model_scores}, latency-{model_latency}]')
 
             pil_image = image_message["image"]
             pil_image.save(f'{pipeline_config.image_directory}T{pipeline_config.trial_num}_{pipeline_config.curr_recording}_{index}_pil.jpg')
             
             index += 1
 
-            print(f'[EMS Vision Thread: model scores-{model_scores}, latency-{model_latency}]')
             pipeline_config.vision_data['protocol'].append(protocol)
             pipeline_config.vision_data['intervention recognition'].append(model_scores)
             pipeline_config.vision_data['intervention latency'].append(model_latency)

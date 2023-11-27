@@ -64,6 +64,7 @@ class EMSAgent(nn.Module):
 
     def eval_fn(self, data):
         with torch.no_grad():
+            outputs = None
             if data['ids'] != None:
                 ids = data["ids"].to(device, dtype=torch.long).unsqueeze(0)
                 mask = data["mask"].to(device, dtype=torch.long).unsqueeze(0)
@@ -129,7 +130,7 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
 
     config = {
         'max_len': 512,
-        'fusion': None,
+    'fusion': None,
         'cls': 'fc'
     }
     if model_name == 'EMSAssist':
@@ -171,10 +172,18 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
         else:
             print('=============================================================')
             print(f'[Protocol model received transcript: {received.transcript}]')
+<<<<<<< HEAD
             
             if(received.transcript == ""):
                 pred= prob= one_hot= logits =-1
                 continue
+=======
+
+            if received.transcript == "":
+                pred, prob, one_hot, logits = -1, -1, -1, -1
+                continue
+
+>>>>>>> cf500d4f1b859a82a8c2ac94fc75d623d6d18d4b
             start = time.perf_counter_ns()
             pred, prob, one_hot, logits = model(received.transcript)
             end = time.perf_counter_ns()
@@ -204,6 +213,7 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
             pipeline_config.trial_data['fp'].append('fp placeholder')
             pipeline_config.trial_data['fn'].append('fn placeholder')
             pipeline_config.trial_data['tp'].append('tp placeholder')
+            print('logits', logits.shape)
             pipeline_config.trial_data['logits'].append(str(logits))
                     
         

@@ -31,5 +31,5 @@ ems_interventions = {"medical - chest pain - cardiac suspected (protocol 2 - 1)"
                     "general - cardiac arrest (protocol 2 - 7)":adult_cardiact_arrest_protocol,
                     "general - cardiac arrest (protocol 8 - 2)":adult_cardiact_arrest_protocol,
                     "medical - supraventricular tachycardia (including atrial fibrillation) medical - tachycardia medical - ventricular tachycardia with a pulse (protocol 2 - 8)":tachycardia_protocol,
-                    'medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress)' :respiratory_distress_protocol}
+                    'medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)':respiratory_distress_protocol}
 

@@ -38,11 +38,12 @@ def Pipeline(recording=pipeline_config.recording_name, videofile=pipeline_config
     # Check speech model 
     if(pipeline_config.speech_model == 'whisper'):
         # ===== Start EMSAgent module =================================================
-        EMSAgent = Thread(target=EMSAgentSystem.EMSAgentSystem, args=(SpeechToNLPQueue, FeedbackQueue))
-        EMSAgent.start()
+        if(not pipeline_config.speech_standalone):
+            EMSAgent = Thread(target=EMSAgentSystem.EMSAgentSystem, args=(SpeechToNLPQueue, FeedbackQueue))
+            EMSAgent.start()
+            
+            sleep(3)
         
-        sleep(3)
-    
     # Start Whisper module
         whispercppcommand = [
         "./stream",
@@ -94,17 +95,19 @@ def Pipeline(recording=pipeline_config.recording_name, videofile=pipeline_config
         # FIFOStream.start()
           
         if pipeline_config.endtoendspv:
-            # # ===== Start Video Streaming module =========================================
-            Videostream = Thread(
-                            target=VideoFileStream.VideoStream, args=(VideoDataQueue, f'./Video_Scenarios/2023_Test/{recording}.avi'))
-            Videostream.start()
-            
+
             
         # ===== Start Video Action Recognition module =========================================
             EMSVision = Thread(
                             target=EMSVisionSystem.EMSVision, args=(FeedbackQueue, VideoDataQueue))
             EMSVision.start()
                
+            sleep(10)
+                           # # ===== Start Video Streaming module =========================================
+            Videostream = Thread(
+                            target=VideoFileStream.VideoStream, args=(VideoDataQueue, f'./Video_Scenarios/2023_Test/{recording}.avi'))
+            Videostream.start()
+            
     else:
                     
       # ===== Start EMSAgent module =================================================
@@ -148,7 +151,9 @@ def Pipeline(recording=pipeline_config.recording_name, videofile=pipeline_config
             WhisperSubprocess.kill()
         else:
             Audiostream.join()
-            EMSAgent.join()
+            if(not pipeline_config.speech_standalone):
+                EMSAgent.join()
+            # EMSAgent.join()
             WhisperSubprocess.terminate()
     else: 
         EMSAgent.join()
