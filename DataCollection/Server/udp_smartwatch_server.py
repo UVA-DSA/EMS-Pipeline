@@ -1,5 +1,5 @@
 
-import pandas as pd
+# import pandas as pd
 import socket
 import collections
 from datetime import datetime
@@ -51,7 +51,8 @@ if not os.path.exists(newpath):
             sw_data[3] = float (sw_data[3])
             sw_data[4] = float (sw_data[4])
             sw_data[5] = float (sw_data[5])
-            sw_data[6] = curr_epoch_time #check
+            
+            sw_data.append(curr_epoch_time) #check
 
             writer.writerow(sw_data)
             print(sw_data)

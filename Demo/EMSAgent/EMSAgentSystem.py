@@ -19,6 +19,7 @@ from re import match
 
 sys.path.append('../Demo')
 import pipeline_config
+from Demo.EMSAgent.utils import preprocess
 
 class EMSAgent(nn.Module):
     def __init__(self, config, date):
@@ -46,6 +47,7 @@ class EMSAgent(nn.Module):
 
     def initData(self, text):
         ids, mask = None, None
+        text = preprocess(text)
         if text:
             inputs = self.tokenizer.__call__(text,
                                               None,
@@ -169,7 +171,10 @@ def EMSAgentSystem(EMSAgentQueue, FeedbackQueue):
         else:
             print('=============================================================')
             print(f'[Protocol model received transcript: {received.transcript}]')
-
+            
+            if(received.transcript == ""):
+                pred= prob= one_hot= logits =-1
+                continue
             start = time.perf_counter_ns()
             pred, prob, one_hot, logits = model(received.transcript)
             end = time.perf_counter_ns()

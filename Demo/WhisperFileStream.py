@@ -236,6 +236,12 @@ def Whisper(SpeechToNLPQueue,VideoSignalQueue, wavefile_name):
     finalized_blocks = ''
     VideoSignalQueue.put('Proceed')
         
+    if "scenario" in wavefile_name:
+        RATE = 44100
+        CHUNK = 1024
+    else:
+        RATE = 16000
+        CHUNK = 1024        
     with open(fifo_path, 'r') as fifo:
         with wave.open(wavefile_name, 'rb') as wf:
             try:
@@ -266,8 +272,16 @@ def Whisper(SpeechToNLPQueue,VideoSignalQueue, wavefile_name):
                             transcriptItem = TranscriptItem(transcript, isFinal, avg_p, latency)
                             # EMSAgentQueue.put(transcriptItem)
                             SpeechToNLPQueue.put(transcriptItem)  
+                            
+                            if pipeline_config.speech_standalone:
+                                pipeline_config.trial_data['speech latency (ms)'].append(latency)
+                                pipeline_config.trial_data['transcript'].append(transcript)
+                                pipeline_config.trial_data['whisper confidence'].append(avg_p)
+                
                         print("--- Whisper Latency:", latency)
                         old_response = response
+                        
+                        
                 # Close stream (4)
                 stream.close()
 

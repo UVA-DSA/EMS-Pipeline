@@ -91,7 +91,11 @@ def capture_audio(tflitemodel,input_details,output_details,blank,num_rnns,nstate
         transcriptItem = TranscriptItem(full_transcription, True, 0, latency)
         SpeechToNLPQueue.put(transcriptItem)  
 
-        
+        if pipeline_config.speech_standalone:
+            pipeline_config.trial_data['speech latency (ms)'].append(latency)
+            pipeline_config.trial_data['transcript'].append(full_transcription)
+            pipeline_config.trial_data['whisper confidence'].append(0)
+
         print('EMSConformer: Transcription Done!')
         
         

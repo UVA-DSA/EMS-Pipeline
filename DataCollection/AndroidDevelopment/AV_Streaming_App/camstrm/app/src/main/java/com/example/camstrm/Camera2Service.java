@@ -13,6 +13,8 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
@@ -30,6 +32,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -135,6 +138,9 @@ public class Camera2Service extends Service {
 
                 Long timestamp = System.currentTimeMillis();
                 img = reader.acquireLatestImage();
+
+
+
                 if(img.getPlanes().length == 0){
                     return;
                 }
@@ -147,8 +153,16 @@ public class Camera2Service extends Service {
                     img.setTimestamp(timestamp);
                 }
 
+                Bitmap originalBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
-                if(img_list.size() < 10){
+// Compress the Bitmap with a quality factor (0-100)
+                int quality = 75; // Adjust the quality as needed
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                originalBitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+
+                bytes = outputStream.toByteArray();
+
+                if(img_list.size() < 1){
                     ImageData imageData=new ImageData(seq,img.getHeight(),img.getWidth(),bytes.length,bytes, img.getTimestamp());
                     img_list.add(imageData);
 

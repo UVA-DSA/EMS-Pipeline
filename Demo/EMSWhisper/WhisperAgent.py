@@ -87,7 +87,7 @@ def WhisperPipeline( SpeechToNLPQueue, WhisperSignalQueue):
         
         print('EMSWhisper: Capturing audio!')
         fs = 16000  # Sample rate
-        seconds = 5 # Duration of recording
+        seconds = 4 # Duration of recording
 
         myrecording = sd.rec(int(seconds * fs), samplerate=fs, channels=1)
         sd.wait()  # Wait until recording is finished
@@ -95,9 +95,9 @@ def WhisperPipeline( SpeechToNLPQueue, WhisperSignalQueue):
         print(myrecording.shape)
         
             # run inference
-        audio_buffer = np.concatenate((audio_buffer,myrecording),axis=0)
+        # audio_buffer = np.concatenate((audio_buffer,myrecording),axis=0)
         
-        process1 = Thread(target=transcribe, args=(SpeechToNLPQueue,pipe,audio_buffer))
+        process1 = Thread(target=transcribe, args=(SpeechToNLPQueue,pipe,myrecording))
         process1.start()
         
         # print(audio_buffer.shape)

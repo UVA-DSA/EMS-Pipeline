@@ -8,7 +8,9 @@ elif dataset == 'MIMIC3':
     from EMSAgent.default_sets import ICD9_DIAG
 import re
 from collections import OrderedDict
-
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+cahcedStopwords = stopwords.words('english')
 
 class AttrDict(dict):
     def __getattr__(self, attr):
@@ -177,6 +179,13 @@ def removePunctuation(sentence):
     return sentence
 
 
+def preprocess(text):
+    text_ = removePunctuation(text.lower())
+    text_tokens = word_tokenize(text_)
+    # text_tokens_stem = [self.stemmer.stem(w) for w in text_tokens]
+    tokens_without_sw = [word for word in text_tokens if not word in cahcedStopwords]
+    new_text = ' '.join(tokens_without_sw)
+    return new_text
 
 def text_remove_double_space(text):
     text = text.lower()

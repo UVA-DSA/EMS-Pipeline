@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">CogEMS</string>
-    <string name="server_ip">192.168.33.173</string>
+    <string name="server_ip">172.27.185.18</string>
+    <string name="socketio_port">5000</string>
     <string name="audio_server_port">8888</string>
     <string name="video_server_port">8899</string>
     <string name="feedback_server_port">7088</string>

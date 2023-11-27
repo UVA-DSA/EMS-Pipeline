@@ -93,7 +93,11 @@ def capture_audio(model, SpeechToNLPQueue, ConformerSignalQueue):
         
         transcriptItem = TranscriptItem(full_transcription, True, 0, latency)
         SpeechToNLPQueue.put(transcriptItem)  
-
+        
+        if pipeline_config.speech_standalone:
+            pipeline_config.trial_data['speech latency (ms)'].append(latency)
+            pipeline_config.trial_data['transcript'].append(full_transcription)
+            pipeline_config.trial_data['whisper confidence'].append(0)
         
         print('EMSConformer: Transcription Done!')
         
@@ -126,7 +130,7 @@ def main(
 
     tf.keras.backend.clear_session()
 
-    module = tf.saved_model.load(export_dir='/home/cogems_nist/Desktop/EMS-Pipeline/Demo/EMSConformer/speech_models')
+    module = tf.saved_model.load(export_dir='/home/kesharaw/Desktop/repos/EMS-Pipeline/Demo/EMSConformer/speech_models')
     
     capture_audio(module, SpeechToNLPQueue, ConformerSignalQueue)
 

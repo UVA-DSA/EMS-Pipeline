@@ -12,6 +12,16 @@ CHUNK = RATE // 10  # 100ms
 
 def ConformerStream(SpeechToNLPQueue,VideoSignalQueue, ConformerSignalQueue, wavefile_name):
     print('Conformer started!')
+    
+    if "scenario" in wavefile_name:
+        RATE = 44100
+        CHUNK = 1024
+        
+    else:
+        # Wavefile recording parameters
+        RATE = 16000
+        CHUNK = 1024  # 100ms
+        
     with wave.open(wavefile_name, 'rb') as wf:
         try:
             # Instantiate PyAudio and initialize PortAudio system resources (1)
@@ -19,6 +29,7 @@ def ConformerStream(SpeechToNLPQueue,VideoSignalQueue, ConformerSignalQueue, wav
             info = p.get_default_host_api_info()
             device_index = info.get('deviceCount') - 1 # get default device as output device
                 
+            print(wavefile_name,RATE,CHUNK)
             stream = p.open(format = pyaudio.paInt16, channels = 1, rate = RATE, output = True, frames_per_buffer = CHUNK, output_device_index=device_index)
             
             # Play samples from the wave file (3)

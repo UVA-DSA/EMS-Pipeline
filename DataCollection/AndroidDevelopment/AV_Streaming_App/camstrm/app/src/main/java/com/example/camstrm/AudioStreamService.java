@@ -1,11 +1,15 @@
 package com.example.camstrm;
 
 import android.Manifest;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
+import android.os.IBinder;
 import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
@@ -21,7 +25,7 @@ public class AudioStreamService {
     //audio streaming vars
     private AudioRecord recorder;
     private boolean audioStreamStatus = true;
-    private static String TAG2 = "Audio recording";
+    private static String TAG2 = "Audio Client";
     private static final int RECORDING_RATE = 16000; //16000;//11025;//44100;
     private static final int CHANNEL = AudioFormat.CHANNEL_CONFIGURATION_MONO; //CHANNEL_IN_MONO
     private static final int FORMAT = AudioFormat.ENCODING_PCM_16BIT;
@@ -30,10 +34,19 @@ public class AudioStreamService {
     int port = 50005;
     private Context mContext;
 
+    private SocketIOService socketIOService;
+
+    private boolean mBound = false;
+
     public AudioStreamService(Context mContext, String server_ip, int port) {
         this.port = port;
         this.SERVER = server_ip;
         this.mContext = mContext;
+
+        // Bind to LocalService.
+        Intent intent = new Intent(this.mContext, SocketIOService.class);
+        this.mContext.bindService(intent, connection, Context.BIND_AUTO_CREATE);
+
     }
 
     public void startStreaming() {
@@ -43,16 +56,16 @@ public class AudioStreamService {
             public void run() {
                 try {
 
-                    DatagramSocket socket = new DatagramSocket();
-                    Log.d(TAG2, "Socket Created for Audio Stream");
+//                    DatagramSocket socket = new DatagramSocket();
+//                    Log.d(TAG2, "Socket Created for Audio Stream");
 
                     byte[] buffer = new byte[BUFFER_SIZE];
 
                     Log.d(TAG2, "Buffer for audio created of size " + BUFFER_SIZE);
-                    DatagramPacket packet;
+//                    DatagramPacket packet;
 
-                    final InetAddress destination = InetAddress.getByName(SERVER);
-                    Log.d(TAG2, "Address for audio receiver retrieved");
+//                    final InetAddress destination = InetAddress.getByName(SERVER);
+//                    Log.d(TAG2, "Address for audio receiver retrieved");
 
                     if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                         // TODO: Consider calling
@@ -65,29 +78,70 @@ public class AudioStreamService {
                         return;
                     }
                     recorder = new AudioRecord(MediaRecorder.AudioSource.MIC, RECORDING_RATE, CHANNEL, FORMAT, BUFFER_SIZE * 10);
-                    Log.d(TAG2, "Recorder initialized");
+                    Log.d(TAG2, "Recorder initialized " + BUFFER_SIZE );
 
                     recorder.startRecording();
 
-                    while(audioStreamStatus == true) {
-                        //reading data from MIC into buffer
+
+
+                    while(true) {
                         BUFFER_SIZE = recorder.read(buffer, 0, buffer.length);
+
+                        if(socketIOService != null){
+
+
+                            String command = socketIOService.getCommand();
+//                        Log.d("Audio Client", "C: Command "+ command );
+
+                            if(command.equals("start")){
+                                audioStreamStatus = true;
+                            }else{
+                                audioStreamStatus = false;
+                            }
+
+                            if (audioStreamStatus) {
+                                socketIOService.sendAudio(buffer);
+                                Log.d(TAG2, "Sending Audio " + BUFFER_SIZE);
+                            }
+                        }
+
+                        //reading data from MIC into buffer
+
                         //putting buffer in the packet
-                        packet = new DatagramPacket (buffer,buffer.length,destination,port);
-                        socket.send(packet);
+//                        packet = new DatagramPacket (buffer,buffer.length,destination,port);
+
+
+//                        socket.send(packet);
                         //System.out.println("MinBufferSize: " +BUFFER_SIZE);
                     }
 
-                } catch(UnknownHostException e) {
-                    Log.e(TAG2, "UnknownHostException, audio streaming");
-                } catch (IOException e) {
+                } catch(Exception e) {
+                    Log.e(TAG2, "Exception, audio streaming");
                     e.printStackTrace();
-                    Log.e(TAG2, "IOException, audio streaming");
                 }
             }
         });
         streamThread.start();
     }
+
+
+    private ServiceConnection connection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance.
+            SocketIOService.SocketIOServiceBinder binder = (SocketIOService.SocketIOServiceBinder) service;
+            socketIOService = binder.getService();
+            Log.d("Audio Stream Client", "Bounded to service!");
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
 
 
 }

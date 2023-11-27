@@ -4,7 +4,20 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3ff93d76-7c59-4c50-9db6-1fe4f35f74f9" name="Changes" comment="" />
+    <list default="true" id="3ff93d76-7c59-4c50-9db6-1fe4f35f74f9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../Demo/Audio_Scenarios/2019_Test_Ground_Truth/000_190105-transcript.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Demo/Audio_Scenarios/2019_Test_Ground_Truth/000_190105-transcript.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Demo/EMSAgent/EMSAgentSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Demo/EMSAgent/EMSAgentSystem.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Demo/EMSConformer/inference/run_saved_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Demo/EMSConformer/inference/run_saved_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Demo/EMSConformer/inference/run_tflite_model_in_files_easy.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Demo/EMSConformer/inference/run_tflite_model_in_files_easy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Demo/EMSConformer/speech_models/saved_model.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Demo/EMSConformer/speech_models/saved_model.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Demo/EMSConformer/speech_models/variables/variables.data-00000-of-00001" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Demo/EMSConformer/speech_models/variables/variables.data-00000-of-00001" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Demo/EMSConformer/speech_models/variables/variables.index" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Demo/EMSConformer/speech_models/variables/variables.index" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Demo/EMSConformerFileStream.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Demo/EMSConformerFileStream.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Demo/EMSVision/ems_action_keywords.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Demo/EMSVision/ems_action_keywords.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Demo/EMSWhisper/WhisperAgent.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Demo/EMSWhisper/WhisperAgent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Demo/WhisperFileStream.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Demo/WhisperFileStream.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Demo/pipeline_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Demo/pipeline_config.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,13 +32,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
-    <property name="cidr.known.project.marker" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/camstrm" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cidr.known.project.marker": "true",
+    "last_opened_file_path": "/home/kesharaw/Desktop/repos/EMS-Pipeline/DataCollection/AndroidDevelopment/AV_Streaming_App/camstrm"
+  }
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
