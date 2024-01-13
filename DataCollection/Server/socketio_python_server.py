@@ -10,6 +10,8 @@ import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('agg')
 from threading import Thread
+from gopro import execute_main, main
+import asyncio
 
 import multiprocessing
 
@@ -21,6 +23,7 @@ import wave
 
 
 imagequeue = multiprocessing.Queue()
+commandqueue = multiprocessing.Queue()
 video_display_process = None
 recording_dir = None
 image_index = 0
@@ -85,10 +88,20 @@ def start():
         recording_info = RecordingInfo(subject=subject, intervention=intervention)
         
         init_recording(recording_info=recording_info)
+        
+        
         # print("Recording Started!")
         
     # emit('command', "start", broadcast=True)
     sendCommand("start")
+    
+    
+    # asyncio.run(main())
+    gopro_process =  multiprocessing.Process(target=execute_main, args=(commandqueue,))
+    gopro_process.start()
+    
+    commandqueue.put("start")
+    
     # 'Sent Start Command to CognitiveEMS!'
     return redirect(url_for('index'))
 
@@ -97,6 +110,7 @@ def start():
 def stop():
     # emit('command', "stop", broadcast=True)
     sendCommand("stop")
+    commandqueue.put("stop")
     return redirect(url_for('index'))
 
 
