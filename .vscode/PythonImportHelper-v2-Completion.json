@@ -157,6 +157,14 @@
         "documentation": {}
     },
     {
+        "label": "sleep",
+        "importPath": "time",
+        "description": "time",
+        "isExtraImport": true,
+        "detail": "time",
+        "documentation": {}
+    },
+    {
         "label": "time",
         "importPath": "time",
         "description": "time",
@@ -202,6 +210,14 @@
         "isExtraImport": true,
         "importPath": "datetime",
         "description": "datetime",
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
         "detail": "datetime",
         "documentation": {}
     },
@@ -388,6 +404,93 @@
         "documentation": {}
     },
     {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "subprocess",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "subprocess",
+        "description": "subprocess",
+        "detail": "subprocess",
+        "documentation": {}
+    },
+    {
+        "label": "signal",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "signal",
+        "description": "signal",
+        "detail": "signal",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "match",
+        "importPath": "re",
+        "description": "re",
+        "isExtraImport": true,
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "http",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "http",
+        "description": "http",
+        "detail": "http",
+        "documentation": {}
+    },
+    {
+        "label": "asyncio",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "asyncio",
+        "description": "asyncio",
+        "detail": "asyncio",
+        "documentation": {}
+    },
+    {
+        "label": "WirelessGoPro",
+        "importPath": "open_gopro",
+        "description": "open_gopro",
+        "isExtraImport": true,
+        "detail": "open_gopro",
+        "documentation": {}
+    },
+    {
+        "label": "Params",
+        "importPath": "open_gopro",
+        "description": "open_gopro",
+        "isExtraImport": true,
+        "detail": "open_gopro",
+        "documentation": {}
+    },
+    {
         "label": "Flask",
         "importPath": "flask",
         "description": "flask",
@@ -512,6 +615,22 @@
         "documentation": {}
     },
     {
+        "label": "execute_main",
+        "importPath": "gopro",
+        "description": "gopro",
+        "isExtraImport": true,
+        "detail": "gopro",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "importPath": "gopro",
+        "description": "gopro",
+        "isExtraImport": true,
+        "detail": "gopro",
+        "documentation": {}
+    },
+    {
         "label": "multiprocessing",
         "kind": 6,
         "isExtraImport": true,
@@ -547,21 +666,21 @@
         "documentation": {}
     },
     {
-        "label": "logging",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "logging",
-        "description": "logging",
-        "detail": "logging",
-        "documentation": {}
-    },
-    {
         "label": "csv",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "csv",
         "description": "csv",
         "detail": "csv",
+        "documentation": {}
+    },
+    {
+        "label": "logging",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "logging",
+        "description": "logging",
+        "detail": "logging",
         "documentation": {}
     },
     {
@@ -1409,32 +1528,6 @@
         "documentation": {}
     },
     {
-        "label": "sys",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "sys",
-        "description": "sys",
-        "detail": "sys",
-        "documentation": {}
-    },
-    {
-        "label": "re",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "re",
-        "description": "re",
-        "detail": "re",
-        "documentation": {}
-    },
-    {
-        "label": "match",
-        "importPath": "re",
-        "description": "re",
-        "isExtraImport": true,
-        "detail": "re",
-        "documentation": {}
-    },
-    {
         "label": "pipeline_config",
         "kind": 6,
         "isExtraImport": true,
@@ -1465,15 +1558,6 @@
         "description": "torch_geometric.data",
         "isExtraImport": true,
         "detail": "torch_geometric.data",
-        "documentation": {}
-    },
-    {
-        "label": "json",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "json",
-        "description": "json",
-        "detail": "json",
         "documentation": {}
     },
     {
@@ -3771,15 +3855,6 @@
         "documentation": {}
     },
     {
-        "label": "subprocess",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "subprocess",
-        "description": "subprocess",
-        "detail": "subprocess",
-        "documentation": {}
-    },
-    {
         "label": "setup",
         "importPath": "setuptools",
         "description": "setuptools",
@@ -5953,6 +6028,276 @@
         "documentation": {}
     },
     {
+        "label": "get_command_msg",
+        "kind": 2,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "def get_command_msg(id):\n\treturn \"_GPHD_:%u:%u:%d:%1lf\\n\" % (0, 0, 2, 0)\n## Parameters:\n##\nVERBOSE=False\n## Sends Record command to GoPro Camera, must be in Video mode!\nRECORD=False\n## Converts GoPro camera live stream via FFMPEG to a local source, must be in Video mode!\nSTREAM=False\n##",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "gopro_live",
+        "kind": 2,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "def gopro_live():\n\tUDP_IP = \"10.5.5.9\"\n\tUDP_PORT = 8554\n\tKEEP_ALIVE_PERIOD = 2500\n\tKEEP_ALIVE_CMD = 2\n\tMESSAGE = get_command_msg(KEEP_ALIVE_CMD)\n\tURL = \"http://10.5.5.9:8080/live/amba.m3u8\"\n\ttry:\n        # original code - response_raw = urllib.request.urlopen('http://10.5.5.9/gp/gpControl').read().decode('utf-8')\n\t\tresponse_raw = urlopen('http://10.5.5.9/gp/gpControl').read().decode('utf-8')",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "quit_gopro",
+        "kind": 2,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "def quit_gopro(signal, frame):\n\tif RECORD:\n\t\turlopen(\"http://10.5.5.9/gp/gpControl/command/shutter?p=0\").read()\n\tsys.exit(0)\ndef wake_on_lan(macaddress):\n\t\"\"\"switches on remote computers using WOL. \"\"\"\n\t#check macaddress format and try to compensate\n\tif len(macaddress) == 12:\n\t\tpass\n\telif len(macaddress) == 12 + 5:",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "wake_on_lan",
+        "kind": 2,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "def wake_on_lan(macaddress):\n\t\"\"\"switches on remote computers using WOL. \"\"\"\n\t#check macaddress format and try to compensate\n\tif len(macaddress) == 12:\n\t\tpass\n\telif len(macaddress) == 12 + 5:\n\t\tsep = macaddress[2]\n\t\tmacaddress = macaddress.replace(sep, '')\n\telse:\n\t\traise ValueError('Incorrect MAC Address Format')",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "GOPRO_IP",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "GOPRO_IP = '10.5.5.9'\nGOPRO_MAC = 'DEADBEEF0000'\ndef gopro_live():\n\tUDP_IP = \"10.5.5.9\"\n\tUDP_PORT = 8554\n\tKEEP_ALIVE_PERIOD = 2500\n\tKEEP_ALIVE_CMD = 2\n\tMESSAGE = get_command_msg(KEEP_ALIVE_CMD)\n\tURL = \"http://10.5.5.9:8080/live/amba.m3u8\"\n\ttry:",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "GOPRO_MAC",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "GOPRO_MAC = 'DEADBEEF0000'\ndef gopro_live():\n\tUDP_IP = \"10.5.5.9\"\n\tUDP_PORT = 8554\n\tKEEP_ALIVE_PERIOD = 2500\n\tKEEP_ALIVE_CMD = 2\n\tMESSAGE = get_command_msg(KEEP_ALIVE_CMD)\n\tURL = \"http://10.5.5.9:8080/live/amba.m3u8\"\n\ttry:\n        # original code - response_raw = urllib.request.urlopen('http://10.5.5.9/gp/gpControl').read().decode('utf-8')",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\tUDP_IP",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\tUDP_IP = \"10.5.5.9\"\n\tUDP_PORT = 8554\n\tKEEP_ALIVE_PERIOD = 2500\n\tKEEP_ALIVE_CMD = 2\n\tMESSAGE = get_command_msg(KEEP_ALIVE_CMD)\n\tURL = \"http://10.5.5.9:8080/live/amba.m3u8\"\n\ttry:\n        # original code - response_raw = urllib.request.urlopen('http://10.5.5.9/gp/gpControl').read().decode('utf-8')\n\t\tresponse_raw = urlopen('http://10.5.5.9/gp/gpControl').read().decode('utf-8')\n\t\tjsondata=json.loads(response_raw)",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\tUDP_PORT",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\tUDP_PORT = 8554\n\tKEEP_ALIVE_PERIOD = 2500\n\tKEEP_ALIVE_CMD = 2\n\tMESSAGE = get_command_msg(KEEP_ALIVE_CMD)\n\tURL = \"http://10.5.5.9:8080/live/amba.m3u8\"\n\ttry:\n        # original code - response_raw = urllib.request.urlopen('http://10.5.5.9/gp/gpControl').read().decode('utf-8')\n\t\tresponse_raw = urlopen('http://10.5.5.9/gp/gpControl').read().decode('utf-8')\n\t\tjsondata=json.loads(response_raw)\n\t\tresponse=jsondata[\"info\"][\"firmware_version\"]",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\tKEEP_ALIVE_PERIOD",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\tKEEP_ALIVE_PERIOD = 2500\n\tKEEP_ALIVE_CMD = 2\n\tMESSAGE = get_command_msg(KEEP_ALIVE_CMD)\n\tURL = \"http://10.5.5.9:8080/live/amba.m3u8\"\n\ttry:\n        # original code - response_raw = urllib.request.urlopen('http://10.5.5.9/gp/gpControl').read().decode('utf-8')\n\t\tresponse_raw = urlopen('http://10.5.5.9/gp/gpControl').read().decode('utf-8')\n\t\tjsondata=json.loads(response_raw)\n\t\tresponse=jsondata[\"info\"][\"firmware_version\"]\n\texcept http.client.BadStatusLine:",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\tKEEP_ALIVE_CMD",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\tKEEP_ALIVE_CMD = 2\n\tMESSAGE = get_command_msg(KEEP_ALIVE_CMD)\n\tURL = \"http://10.5.5.9:8080/live/amba.m3u8\"\n\ttry:\n        # original code - response_raw = urllib.request.urlopen('http://10.5.5.9/gp/gpControl').read().decode('utf-8')\n\t\tresponse_raw = urlopen('http://10.5.5.9/gp/gpControl').read().decode('utf-8')\n\t\tjsondata=json.loads(response_raw)\n\t\tresponse=jsondata[\"info\"][\"firmware_version\"]\n\texcept http.client.BadStatusLine:\n\t\tresponse = urlopen('http://10.5.5.9/camera/cv').read().decode('utf-8')",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\tMESSAGE",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\tMESSAGE = get_command_msg(KEEP_ALIVE_CMD)\n\tURL = \"http://10.5.5.9:8080/live/amba.m3u8\"\n\ttry:\n        # original code - response_raw = urllib.request.urlopen('http://10.5.5.9/gp/gpControl').read().decode('utf-8')\n\t\tresponse_raw = urlopen('http://10.5.5.9/gp/gpControl').read().decode('utf-8')\n\t\tjsondata=json.loads(response_raw)\n\t\tresponse=jsondata[\"info\"][\"firmware_version\"]\n\texcept http.client.BadStatusLine:\n\t\tresponse = urlopen('http://10.5.5.9/camera/cv').read().decode('utf-8')\n\tif \"HD4\" in response or \"HD3.2\" in response or \"HD5\" in response or \"HX\" in response or \"HD6\" in response or \"HD7\" in response:",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\tURL",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\tURL = \"http://10.5.5.9:8080/live/amba.m3u8\"\n\ttry:\n        # original code - response_raw = urllib.request.urlopen('http://10.5.5.9/gp/gpControl').read().decode('utf-8')\n\t\tresponse_raw = urlopen('http://10.5.5.9/gp/gpControl').read().decode('utf-8')\n\t\tjsondata=json.loads(response_raw)\n\t\tresponse=jsondata[\"info\"][\"firmware_version\"]\n\texcept http.client.BadStatusLine:\n\t\tresponse = urlopen('http://10.5.5.9/camera/cv').read().decode('utf-8')\n\tif \"HD4\" in response or \"HD3.2\" in response or \"HD5\" in response or \"HX\" in response or \"HD6\" in response or \"HD7\" in response:\n\t\tprint(\"branch HD4\")",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tresponse_raw",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\t\tresponse_raw = urlopen('http://10.5.5.9/gp/gpControl').read().decode('utf-8')\n\t\tjsondata=json.loads(response_raw)\n\t\tresponse=jsondata[\"info\"][\"firmware_version\"]\n\texcept http.client.BadStatusLine:\n\t\tresponse = urlopen('http://10.5.5.9/camera/cv').read().decode('utf-8')\n\tif \"HD4\" in response or \"HD3.2\" in response or \"HD5\" in response or \"HX\" in response or \"HD6\" in response or \"HD7\" in response:\n\t\tprint(\"branch HD4\")\n\t\tprint(jsondata[\"info\"][\"model_name\"]+\"\\n\"+jsondata[\"info\"][\"firmware_version\"])\n\t\t##\n\t\t## HTTP GETs the URL that tells the GoPro to start streaming.",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tresponse",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\t\tresponse = urlopen('http://10.5.5.9/camera/cv').read().decode('utf-8')\n\tif \"HD4\" in response or \"HD3.2\" in response or \"HD5\" in response or \"HX\" in response or \"HD6\" in response or \"HD7\" in response:\n\t\tprint(\"branch HD4\")\n\t\tprint(jsondata[\"info\"][\"model_name\"]+\"\\n\"+jsondata[\"info\"][\"firmware_version\"])\n\t\t##\n\t\t## HTTP GETs the URL that tells the GoPro to start streaming.\n\t\t##\n\t\turlopen(\"http://10.5.5.9/gp/gpControl/execute?p1=gpStream&a1=proto_v2&c1=restart\").read()\n\t\tif RECORD:\n\t\t\turlopen(\"http://10.5.5.9/gp/gpControl/command/shutter?p=1\").read()",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\t\t\t\tdata",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\t\t\t\tdata = req.read()\n\t\t\t\tencoding = req.info().get_content_charset('utf-8')\n\t\t\t\tjson_data = json.loads(data.decode(encoding))\n\t\t\t\tif json_data[\"status\"][\"31\"] >= 1:\n\t\t\t\t\tconnectedStatus=True\n\t\t##\n\t\t## Opens the stream over udp in ffplay. This is a known working configuration by Reddit user hoppjerka:\n\t\t## https://www.reddit.com/r/gopro/comments/2md8hm/how_to_livestream_from_a_gopro_hero4/cr1b193\n\t\t##\n\t\tloglevel_verbose=\"\"",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\t\t\t\tencoding",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\t\t\t\tencoding = req.info().get_content_charset('utf-8')\n\t\t\t\tjson_data = json.loads(data.decode(encoding))\n\t\t\t\tif json_data[\"status\"][\"31\"] >= 1:\n\t\t\t\t\tconnectedStatus=True\n\t\t##\n\t\t## Opens the stream over udp in ffplay. This is a known working configuration by Reddit user hoppjerka:\n\t\t## https://www.reddit.com/r/gopro/comments/2md8hm/how_to_livestream_from_a_gopro_hero4/cr1b193\n\t\t##\n\t\tloglevel_verbose=\"\"\n\t\tif VERBOSE==False:",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\t\t\t\tjson_data",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\t\t\t\tjson_data = json.loads(data.decode(encoding))\n\t\t\t\tif json_data[\"status\"][\"31\"] >= 1:\n\t\t\t\t\tconnectedStatus=True\n\t\t##\n\t\t## Opens the stream over udp in ffplay. This is a known working configuration by Reddit user hoppjerka:\n\t\t## https://www.reddit.com/r/gopro/comments/2md8hm/how_to_livestream_from_a_gopro_hero4/cr1b193\n\t\t##\n\t\tloglevel_verbose=\"\"\n\t\tif VERBOSE==False:\n\t\t\tloglevel_verbose = \"-loglevel panic\"",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\t\t\tloglevel_verbose",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\t\t\tloglevel_verbose = \"-loglevel panic\"\n\t\tif SAVE == False:\n\t\t\tif STREAM == True:\n\t\t\t\tsubprocess.Popen(\"ffmpeg \" + loglevel_verbose + \" -fflags nobuffer -f:v mpegts -probesize 8192 -i udp://10.5.5.100:8554 -f mpegts -vcodec copy udp://localhost:10000\", shell=True)\n\t\t\telse:\n\t\t\t\tsubprocess.Popen(\"ffplay \" + loglevel_verbose + \" -fflags nobuffer -f:v mpegts -probesize 8192 udp://10.5.5.100:8554\", shell=True)\n\t\telse:\n\t\t\tif SAVE_FORMAT==\"ts\":\n\t\t\t\tTS_PARAMS = \" -acodec copy -vcodec copy \"\n\t\t\telse:",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\t\t\t\tTS_PARAMS",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\t\t\t\tTS_PARAMS = \" -acodec copy -vcodec copy \"\n\t\t\telse:\n\t\t\t\tTS_PARAMS = \"\"\n\t\t\tSAVELOCATION = SAVE_LOCATION + SAVE_FILENAME + \".\" + SAVE_FORMAT\n\t\t\tprint(\"Recording locally: \" + str(SAVE))\n\t\t\tprint(\"Recording stored in: \" + SAVELOCATION)\n\t\t\tprint(\"Note: Preview is not available when saving the stream.\")\n\t\t\tsubprocess.Popen('ffmpeg -i \"udp://10.5.5.100:8554\" -fflags nobuffer -f:v mpegts -probesize 8192 ' + TS_PARAMS + SAVELOCATION, shell=True)\n\t\tif sys.version_info.major >= 3:\n\t\t\tMESSAGE = bytes(MESSAGE, \"utf-8\")",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\t\t\t\tTS_PARAMS",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\t\t\t\tTS_PARAMS = \"\"\n\t\t\tSAVELOCATION = SAVE_LOCATION + SAVE_FILENAME + \".\" + SAVE_FORMAT\n\t\t\tprint(\"Recording locally: \" + str(SAVE))\n\t\t\tprint(\"Recording stored in: \" + SAVELOCATION)\n\t\t\tprint(\"Note: Preview is not available when saving the stream.\")\n\t\t\tsubprocess.Popen('ffmpeg -i \"udp://10.5.5.100:8554\" -fflags nobuffer -f:v mpegts -probesize 8192 ' + TS_PARAMS + SAVELOCATION, shell=True)\n\t\tif sys.version_info.major >= 3:\n\t\t\tMESSAGE = bytes(MESSAGE, \"utf-8\")\n\t\tprint(\"Press ctrl+C to quit this application.\\n\")\n\t\twhile True:",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\t\t\tSAVELOCATION",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\t\t\tSAVELOCATION = SAVE_LOCATION + SAVE_FILENAME + \".\" + SAVE_FORMAT\n\t\t\tprint(\"Recording locally: \" + str(SAVE))\n\t\t\tprint(\"Recording stored in: \" + SAVELOCATION)\n\t\t\tprint(\"Note: Preview is not available when saving the stream.\")\n\t\t\tsubprocess.Popen('ffmpeg -i \"udp://10.5.5.100:8554\" -fflags nobuffer -f:v mpegts -probesize 8192 ' + TS_PARAMS + SAVELOCATION, shell=True)\n\t\tif sys.version_info.major >= 3:\n\t\t\tMESSAGE = bytes(MESSAGE, \"utf-8\")\n\t\tprint(\"Press ctrl+C to quit this application.\\n\")\n\t\twhile True:\n\t\t\tsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\t\t\tMESSAGE",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\t\t\tMESSAGE = bytes(MESSAGE, \"utf-8\")\n\t\tprint(\"Press ctrl+C to quit this application.\\n\")\n\t\twhile True:\n\t\t\tsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)\n\t\t\tsock.sendto(MESSAGE, (UDP_IP, UDP_PORT))\n\t\t\tsleep(KEEP_ALIVE_PERIOD/1000)\n\telse:\n\t\tprint(\"branch hero3\"+response)\n\t\tif \"Hero3\" in response or \"HERO3+\" in response:\n\t\t\tprint(\"branch hero3\")",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\t\t\tsock",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\t\t\tsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)\n\t\t\tsock.sendto(MESSAGE, (UDP_IP, UDP_PORT))\n\t\t\tsleep(KEEP_ALIVE_PERIOD/1000)\n\telse:\n\t\tprint(\"branch hero3\"+response)\n\t\tif \"Hero3\" in response or \"HERO3+\" in response:\n\t\t\tprint(\"branch hero3\")\n\t\t\tPASSWORD=urlopen(\"http://10.5.5.9/bacpac/sd\").read()\n\t\t\tprint(\"HERO3/3+/2 camera\")\n\t\t\tPassword =  str(PASSWORD, 'utf-8')",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\t\t\tPassword",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\t\t\tPassword =  str(PASSWORD, 'utf-8')\n\t\t\ttext=re.sub(r'\\W+', '', Password)\n\t\t\turlopen(\"http://10.5.5.9/camera/PV?t=\" + text + \"&p=%02\")\n\t\t\tsubprocess.Popen(\"ffplay \" + URL, shell=True)\ndef quit_gopro(signal, frame):\n\tif RECORD:\n\t\turlopen(\"http://10.5.5.9/gp/gpControl/command/shutter?p=0\").read()\n\tsys.exit(0)\ndef wake_on_lan(macaddress):\n\t\"\"\"switches on remote computers using WOL. \"\"\"",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tsep",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\t\tsep = macaddress[2]\n\t\tmacaddress = macaddress.replace(sep, '')\n\telse:\n\t\traise ValueError('Incorrect MAC Address Format')\n\t#Pad the sync stream\n\tdata = ''.join(['FFFFFFFFFFFF', macaddress * 20])\n\tsend_data = bytes.fromhex(data)\n\t# Broadcast to lan\n\tsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)\n\tsock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tmacaddress",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\t\tmacaddress = macaddress.replace(sep, '')\n\telse:\n\t\traise ValueError('Incorrect MAC Address Format')\n\t#Pad the sync stream\n\tdata = ''.join(['FFFFFFFFFFFF', macaddress * 20])\n\tsend_data = bytes.fromhex(data)\n\t# Broadcast to lan\n\tsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)\n\tsock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)\n\tsock.sendto(send_data, (GOPRO_IP, 9))",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\tdata",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\tdata = ''.join(['FFFFFFFFFFFF', macaddress * 20])\n\tsend_data = bytes.fromhex(data)\n\t# Broadcast to lan\n\tsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)\n\tsock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)\n\tsock.sendto(send_data, (GOPRO_IP, 9))\nif __name__ == '__main__':\n\twake_on_lan(GOPRO_MAC)\n\tsignal.signal(signal.SIGINT, quit_gopro)\n\tgopro_live()",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\tsend_data",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\tsend_data = bytes.fromhex(data)\n\t# Broadcast to lan\n\tsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)\n\tsock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)\n\tsock.sendto(send_data, (GOPRO_IP, 9))\nif __name__ == '__main__':\n\twake_on_lan(GOPRO_MAC)\n\tsignal.signal(signal.SIGINT, quit_gopro)\n\tgopro_live()",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "\tsock",
+        "kind": 5,
+        "importPath": "DataCollection.Server.GoProStream",
+        "description": "DataCollection.Server.GoProStream",
+        "peekOfCode": "\tsock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)\n\tsock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)\n\tsock.sendto(send_data, (GOPRO_IP, 9))\nif __name__ == '__main__':\n\twake_on_lan(GOPRO_MAC)\n\tsignal.signal(signal.SIGINT, quit_gopro)\n\tgopro_live()",
+        "detail": "DataCollection.Server.GoProStream",
+        "documentation": {}
+    },
+    {
+        "label": "execute_main",
+        "kind": 2,
+        "importPath": "DataCollection.Server.gopro",
+        "description": "DataCollection.Server.gopro",
+        "peekOfCode": "def execute_main(commandqueue):\n    print(\"GoPro process started!\")\n    loop = asyncio.new_event_loop()\n    asyncio.set_event_loop(loop)\n    loop.run_until_complete(main(commandqueue))\n    loop.close()\n    # asyncio.run(main())",
+        "detail": "DataCollection.Server.gopro",
+        "documentation": {}
+    },
+    {
         "label": "RecordingInfo",
         "kind": 6,
         "importPath": "DataCollection.Server.socketio_python_server",
@@ -6011,7 +6356,7 @@
         "kind": 2,
         "importPath": "DataCollection.Server.socketio_python_server",
         "description": "DataCollection.Server.socketio_python_server",
-        "peekOfCode": "def stop():\n    # emit('command', \"stop\", broadcast=True)\n    sendCommand(\"stop\")\n    return redirect(url_for('index'))\n@socketio.on('message')\ndef handle_message(message):\n    # print('Received message:', message)\n    pass\n    # emit('message', message, broadcast=True)\n@socketio.on('video')",
+        "peekOfCode": "def stop():\n    # emit('command', \"stop\", broadcast=True)\n    sendCommand(\"stop\")\n    commandqueue.put(\"stop\")\n    return redirect(url_for('index'))\n@socketio.on('message')\ndef handle_message(message):\n    # print('Received message:', message)\n    pass\n    # emit('message', message, broadcast=True)",
         "detail": "DataCollection.Server.socketio_python_server",
         "documentation": {}
     },
@@ -6074,7 +6419,16 @@
         "kind": 5,
         "importPath": "DataCollection.Server.socketio_python_server",
         "description": "DataCollection.Server.socketio_python_server",
-        "peekOfCode": "imagequeue = multiprocessing.Queue()\nvideo_display_process = None\nrecording_dir = None\nimage_index = 0\n# Initialize a global audio array to store received audio data\naudio_array = np.array([], dtype=np.uint8)\napp = Flask(__name__)\nsocketio = SocketIO(app)\nclass RecordingInfo:\n    def __init__(self, subject, intervention):",
+        "peekOfCode": "imagequeue = multiprocessing.Queue()\ncommandqueue = multiprocessing.Queue()\nvideo_display_process = None\nrecording_dir = None\nimage_index = 0\n# Initialize a global audio array to store received audio data\naudio_array = np.array([], dtype=np.uint8)\napp = Flask(__name__)\nsocketio = SocketIO(app)\nclass RecordingInfo:",
+        "detail": "DataCollection.Server.socketio_python_server",
+        "documentation": {}
+    },
+    {
+        "label": "commandqueue",
+        "kind": 5,
+        "importPath": "DataCollection.Server.socketio_python_server",
+        "description": "DataCollection.Server.socketio_python_server",
+        "peekOfCode": "commandqueue = multiprocessing.Queue()\nvideo_display_process = None\nrecording_dir = None\nimage_index = 0\n# Initialize a global audio array to store received audio data\naudio_array = np.array([], dtype=np.uint8)\napp = Flask(__name__)\nsocketio = SocketIO(app)\nclass RecordingInfo:\n    def __init__(self, subject, intervention):",
         "detail": "DataCollection.Server.socketio_python_server",
         "documentation": {}
     },
@@ -6130,6 +6484,42 @@
         "description": "DataCollection.Server.socketio_python_server",
         "peekOfCode": "socketio = SocketIO(app)\nclass RecordingInfo:\n    def __init__(self, subject, intervention):\n        self.subject = subject\n        self.intervention = intervention\n        self.trial = 0\ndef sendCommand(command):\n    # print(\"Command: \")\n    socketio.emit('command', command)\ndef init_recording(recording_info:RecordingInfo):",
         "detail": "DataCollection.Server.socketio_python_server",
+        "documentation": {}
+    },
+    {
+        "label": "send_message",
+        "kind": 2,
+        "importPath": "DataCollection.Server.tcp_smartwatch_client",
+        "description": "DataCollection.Server.tcp_smartwatch_client",
+        "peekOfCode": "def send_message(server_ip, server_port, message):\n    # Create a socket object\n    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n    try:\n        # Connect to the server\n        client_socket.connect((server_ip, server_port))\n        columns = ['sw_epoch_ms','wrist_position','sensor_type','value_X_Axis','value_Y_Axis','value_Z_Axis','server_epoch_ms']\n        curr_date = datetime.now()\n        dt_string = curr_date.strftime(\"%d-%m-%Y-%H-%M-%S\")\n        newpath = \"../DataCollected/smartwatch_data/\"+dt_string",
+        "detail": "DataCollection.Server.tcp_smartwatch_client",
+        "documentation": {}
+    },
+    {
+        "label": "server_ip",
+        "kind": 5,
+        "importPath": "DataCollection.Server.tcp_smartwatch_client",
+        "description": "DataCollection.Server.tcp_smartwatch_client",
+        "peekOfCode": "server_ip = '172.27.150.154'\nserver_port = 7889\nmessage_to_send = 'Hello, Server!'\n# Call the function to send the message\nsend_message(server_ip, server_port, message_to_send)",
+        "detail": "DataCollection.Server.tcp_smartwatch_client",
+        "documentation": {}
+    },
+    {
+        "label": "server_port",
+        "kind": 5,
+        "importPath": "DataCollection.Server.tcp_smartwatch_client",
+        "description": "DataCollection.Server.tcp_smartwatch_client",
+        "peekOfCode": "server_port = 7889\nmessage_to_send = 'Hello, Server!'\n# Call the function to send the message\nsend_message(server_ip, server_port, message_to_send)",
+        "detail": "DataCollection.Server.tcp_smartwatch_client",
+        "documentation": {}
+    },
+    {
+        "label": "message_to_send",
+        "kind": 5,
+        "importPath": "DataCollection.Server.tcp_smartwatch_client",
+        "description": "DataCollection.Server.tcp_smartwatch_client",
+        "peekOfCode": "message_to_send = 'Hello, Server!'\n# Call the function to send the message\nsend_message(server_ip, server_port, message_to_send)",
+        "detail": "DataCollection.Server.tcp_smartwatch_client",
         "documentation": {}
     },
     {
