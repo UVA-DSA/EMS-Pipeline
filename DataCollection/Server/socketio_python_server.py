@@ -95,9 +95,9 @@ def start():
     # emit('command', "start", broadcast=True)
     sendCommand("start")
     
-    
+    global recording_dir
     # asyncio.run(main())
-    gopro_process =  multiprocessing.Process(target=execute_main, args=(commandqueue,))
+    gopro_process =  multiprocessing.Process(target=execute_main, args=(commandqueue,recording_dir))
     gopro_process.start()
     
     commandqueue.put("start")
@@ -213,5 +213,5 @@ def display(ImageQueue):
 
 if __name__ == '__main__':
 
-    socketio.run(app, host='0.0.0.0', port=5000)
+    socketio.run(app, host='0.0.0.0', port=9235)
     
