@@ -29,13 +29,21 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp"
                 android:text="@string/hello_world" />
-
-            <Button
-                android:id="@+id/startBtn"
+            <TextView
+                android:id="@+id/ip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="start_stopUDPClient"
-                android:text="Start" />
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:paddingBottom="10dp"
+                android:text="@string/hello_world" />
+
+<!--            <Button-->
+<!--                android:id="@+id/startBtn"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:onClick="start_stopUDPClient"-->
+<!--                android:text="Start" />-->
         </LinearLayout>
 
     </FrameLayout>
