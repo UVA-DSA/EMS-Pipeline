@@ -491,6 +491,15 @@
         "documentation": {}
     },
     {
+        "label": "shutil",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "shutil",
+        "description": "shutil",
+        "detail": "shutil",
+        "documentation": {}
+    },
+    {
         "label": "Flask",
         "importPath": "flask",
         "description": "flask",
@@ -4017,15 +4026,6 @@
         "documentation": {}
     },
     {
-        "label": "shutil",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "shutil",
-        "description": "shutil",
-        "detail": "shutil",
-        "documentation": {}
-    },
-    {
         "label": "requests",
         "kind": 6,
         "isExtraImport": true,
@@ -6289,11 +6289,20 @@
         "documentation": {}
     },
     {
+        "label": "move_files_with_prefix",
+        "kind": 2,
+        "importPath": "DataCollection.Server.gopro",
+        "description": "DataCollection.Server.gopro",
+        "peekOfCode": "def move_files_with_prefix(src_folder, dest_folder, prefix):\n    # Ensure the source and destination folders exist\n    if not os.path.exists(src_folder):\n        print(f\"Source folder '{src_folder}' does not exist.\")\n        return\n    if not os.path.exists(dest_folder):\n        print(f\"Destination folder '{dest_folder}' does not exist.\")\n        return\n    # Iterate through files in the source folder\n    for filename in os.listdir(src_folder):",
+        "detail": "DataCollection.Server.gopro",
+        "documentation": {}
+    },
+    {
         "label": "execute_main",
         "kind": 2,
         "importPath": "DataCollection.Server.gopro",
         "description": "DataCollection.Server.gopro",
-        "peekOfCode": "def execute_main(commandqueue):\n    print(\"GoPro process started!\")\n    loop = asyncio.new_event_loop()\n    asyncio.set_event_loop(loop)\n    loop.run_until_complete(main(commandqueue))\n    loop.close()\n    # asyncio.run(main())",
+        "peekOfCode": "def execute_main(commandqueue,path):\n    print(\"GoPro process started!\")\n    loop = asyncio.new_event_loop()\n    asyncio.set_event_loop(loop)\n    loop.run_until_complete(main(commandqueue,path))\n    loop.close()\n    # asyncio.run(main())",
         "detail": "DataCollection.Server.gopro",
         "documentation": {}
     },
@@ -11729,7 +11738,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "datacollection = True\nvideostream = True\naudiostream = True\nsmartwatchStream = True\nconceptExtractionStream = True\nprotocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Speech to Text Control ------------------- #\nspeech_model = 'conformer' ",
+        "peekOfCode": "datacollection = True\nvideostream = True\naudiostream = True\nsmartwatchStream = True\nconceptExtractionStream = True\nprotocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Speech to Text Control ------------------- #\n# speech_model = 'conformer' ",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -11738,7 +11747,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "videostream = True\naudiostream = True\nsmartwatchStream = True\nconceptExtractionStream = True\nprotocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Speech to Text Control ------------------- #\nspeech_model = 'conformer' \n# speech_model = 'whisper'",
+        "peekOfCode": "videostream = True\naudiostream = True\nsmartwatchStream = True\nconceptExtractionStream = True\nprotocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Speech to Text Control ------------------- #\n# speech_model = 'conformer' \nspeech_model = 'whisper'",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -11747,7 +11756,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "audiostream = True\nsmartwatchStream = True\nconceptExtractionStream = True\nprotocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Speech to Text Control ------------------- #\nspeech_model = 'conformer' \n# speech_model = 'whisper'\n# -- EMS Conformer configuration ------",
+        "peekOfCode": "audiostream = True\nsmartwatchStream = True\nconceptExtractionStream = True\nprotocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Speech to Text Control ------------------- #\n# speech_model = 'conformer' \nspeech_model = 'whisper'\n# -- EMS Conformer configuration ------",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -11756,7 +11765,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "smartwatchStream = True\nconceptExtractionStream = True\nprotocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Speech to Text Control ------------------- #\nspeech_model = 'conformer' \n# speech_model = 'whisper'\n# -- EMS Conformer configuration ------\n# conformer_model_type = 'all_14_model.tflite' # for tflite",
+        "peekOfCode": "smartwatchStream = True\nconceptExtractionStream = True\nprotocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Speech to Text Control ------------------- #\n# speech_model = 'conformer' \nspeech_model = 'whisper'\n# -- EMS Conformer configuration ------\n# conformer_model_type = 'all_14_model.tflite' # for tflite",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -11765,7 +11774,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "conceptExtractionStream = True\nprotocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Speech to Text Control ------------------- #\nspeech_model = 'conformer' \n# speech_model = 'whisper'\n# -- EMS Conformer configuration ------\n# conformer_model_type = 'all_14_model.tflite' # for tflite\n# conformer_model_type = 'finetuned_conformer_final.tflite' # for finetuned tflite",
+        "peekOfCode": "conceptExtractionStream = True\nprotocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Speech to Text Control ------------------- #\n# speech_model = 'conformer' \nspeech_model = 'whisper'\n# -- EMS Conformer configuration ------\n# conformer_model_type = 'all_14_model.tflite' # for tflite\n# conformer_model_type = 'finetuned_conformer_final.tflite' # for finetuned tflite",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -11774,7 +11783,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "protocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Speech to Text Control ------------------- #\nspeech_model = 'conformer' \n# speech_model = 'whisper'\n# -- EMS Conformer configuration ------\n# conformer_model_type = 'all_14_model.tflite' # for tflite\n# conformer_model_type = 'finetuned_conformer_final.tflite' # for finetuned tflite\nconformer_model_type = 'h5'  # for base model",
+        "peekOfCode": "protocolStream = True\ninterventionStream = True\ntranscriptStream = True\n# ------------------- Speech to Text Control ------------------- #\n# speech_model = 'conformer' \nspeech_model = 'whisper'\n# -- EMS Conformer configuration ------\n# conformer_model_type = 'all_14_model.tflite' # for tflite\n# conformer_model_type = 'finetuned_conformer_final.tflite' # for finetuned tflite\nconformer_model_type = 'h5'  # for base model",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -11783,7 +11792,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "interventionStream = True\ntranscriptStream = True\n# ------------------- Speech to Text Control ------------------- #\nspeech_model = 'conformer' \n# speech_model = 'whisper'\n# -- EMS Conformer configuration ------\n# conformer_model_type = 'all_14_model.tflite' # for tflite\n# conformer_model_type = 'finetuned_conformer_final.tflite' # for finetuned tflite\nconformer_model_type = 'h5'  # for base model\n# -- EMS Agent configuration ------",
+        "peekOfCode": "interventionStream = True\ntranscriptStream = True\n# ------------------- Speech to Text Control ------------------- #\n# speech_model = 'conformer' \nspeech_model = 'whisper'\n# -- EMS Conformer configuration ------\n# conformer_model_type = 'all_14_model.tflite' # for tflite\n# conformer_model_type = 'finetuned_conformer_final.tflite' # for finetuned tflite\nconformer_model_type = 'h5'  # for base model\n# -- EMS Agent configuration ------",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -11792,7 +11801,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "transcriptStream = True\n# ------------------- Speech to Text Control ------------------- #\nspeech_model = 'conformer' \n# speech_model = 'whisper'\n# -- EMS Conformer configuration ------\n# conformer_model_type = 'all_14_model.tflite' # for tflite\n# conformer_model_type = 'finetuned_conformer_final.tflite' # for finetuned tflite\nconformer_model_type = 'h5'  # for base model\n# -- EMS Agent configuration ------\nprotocol_model_device = 'cuda' # 'cuda' or 'cpu'",
+        "peekOfCode": "transcriptStream = True\n# ------------------- Speech to Text Control ------------------- #\n# speech_model = 'conformer' \nspeech_model = 'whisper'\n# -- EMS Conformer configuration ------\n# conformer_model_type = 'all_14_model.tflite' # for tflite\n# conformer_model_type = 'finetuned_conformer_final.tflite' # for finetuned tflite\nconformer_model_type = 'h5'  # for base model\n# -- EMS Agent configuration ------\nprotocol_model_device = 'cuda' # 'cuda' or 'cpu'",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -11801,7 +11810,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "speech_model = 'conformer' \n# speech_model = 'whisper'\n# -- EMS Conformer configuration ------\n# conformer_model_type = 'all_14_model.tflite' # for tflite\n# conformer_model_type = 'finetuned_conformer_final.tflite' # for finetuned tflite\nconformer_model_type = 'h5'  # for base model\n# -- EMS Agent configuration ------\nprotocol_model_device = 'cuda' # 'cuda' or 'cpu'\n# protocol_model_type = 'DKEC-TinyClinicalBERT' # CognitiveEMS\nprotocol_model_type = 'EMSAssist' # EMSAssist",
+        "peekOfCode": "speech_model = 'whisper'\n# -- EMS Conformer configuration ------\n# conformer_model_type = 'all_14_model.tflite' # for tflite\n# conformer_model_type = 'finetuned_conformer_final.tflite' # for finetuned tflite\nconformer_model_type = 'h5'  # for base model\n# -- EMS Agent configuration ------\nprotocol_model_device = 'cuda' # 'cuda' or 'cpu'\n# protocol_model_type = 'DKEC-TinyClinicalBERT' # CognitiveEMS\nprotocol_model_type = 'EMSAssist' # EMSAssist\n# -- Audio Recording Option -----",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -11828,7 +11837,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "protocol_model_type = 'EMSAssist' # EMSAssist\n# -- Audio Recording Option -----\nhardcoded = True\nrecording_name = '000_190105'\nvideo_name = 'scenario_1'\n# -- Whisper configuration ---\nwhisper_model_size = \"base-finetuned\"\nPATH_TO_WHISPER_CPP_FOLDER = \"/home/cogems_nist/Desktop/CogEMS_NIST/whisper.cpp\"\n<<<<<<< HEAD\nnum_threads = 4",
+        "peekOfCode": "protocol_model_type = 'EMSAssist' # EMSAssist\n# -- Audio Recording Option -----\nhardcoded = True\nrecording_name = '000_190105'\nvideo_name = 'scenario_1'\n# -- Whisper configuration ---\nwhisper_model_size = \"base-finetuned\"\nPATH_TO_WHISPER_CPP_FOLDER = \"/home/cogems_nist/Desktop/CogEMS_NIST/whisper.cpp\"\nnum_threads = 8\nstep = 5000",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -11837,7 +11846,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "hardcoded = True\nrecording_name = '000_190105'\nvideo_name = 'scenario_1'\n# -- Whisper configuration ---\nwhisper_model_size = \"base-finetuned\"\nPATH_TO_WHISPER_CPP_FOLDER = \"/home/cogems_nist/Desktop/CogEMS_NIST/whisper.cpp\"\n<<<<<<< HEAD\nnum_threads = 4\nstep = 4000\nlength = 8000",
+        "peekOfCode": "hardcoded = True\nrecording_name = '000_190105'\nvideo_name = 'scenario_1'\n# -- Whisper configuration ---\nwhisper_model_size = \"base-finetuned\"\nPATH_TO_WHISPER_CPP_FOLDER = \"/home/cogems_nist/Desktop/CogEMS_NIST/whisper.cpp\"\nnum_threads = 8\nstep = 5000\nlength = 30000\nkeep_ms = 300 #audio to keep from previous step in ms",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -11846,7 +11855,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "recording_name = '000_190105'\nvideo_name = 'scenario_1'\n# -- Whisper configuration ---\nwhisper_model_size = \"base-finetuned\"\nPATH_TO_WHISPER_CPP_FOLDER = \"/home/cogems_nist/Desktop/CogEMS_NIST/whisper.cpp\"\n<<<<<<< HEAD\nnum_threads = 4\nstep = 4000\nlength = 8000\nkeep_ms = 200 #audio to keep from previous step in ms",
+        "peekOfCode": "recording_name = '000_190105'\nvideo_name = 'scenario_1'\n# -- Whisper configuration ---\nwhisper_model_size = \"base-finetuned\"\nPATH_TO_WHISPER_CPP_FOLDER = \"/home/cogems_nist/Desktop/CogEMS_NIST/whisper.cpp\"\nnum_threads = 8\nstep = 5000\nlength = 30000\nkeep_ms = 300 #audio to keep from previous step in ms\n# -- EMS Vision configuration ------",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -11855,7 +11864,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "video_name = 'scenario_1'\n# -- Whisper configuration ---\nwhisper_model_size = \"base-finetuned\"\nPATH_TO_WHISPER_CPP_FOLDER = \"/home/cogems_nist/Desktop/CogEMS_NIST/whisper.cpp\"\n<<<<<<< HEAD\nnum_threads = 4\nstep = 4000\nlength = 8000\nkeep_ms = 200 #audio to keep from previous step in ms\n=======",
+        "peekOfCode": "video_name = 'scenario_1'\n# -- Whisper configuration ---\nwhisper_model_size = \"base-finetuned\"\nPATH_TO_WHISPER_CPP_FOLDER = \"/home/cogems_nist/Desktop/CogEMS_NIST/whisper.cpp\"\nnum_threads = 8\nstep = 5000\nlength = 30000\nkeep_ms = 300 #audio to keep from previous step in ms\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' ",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -11864,7 +11873,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "whisper_model_size = \"base-finetuned\"\nPATH_TO_WHISPER_CPP_FOLDER = \"/home/cogems_nist/Desktop/CogEMS_NIST/whisper.cpp\"\n<<<<<<< HEAD\nnum_threads = 4\nstep = 4000\nlength = 8000\nkeep_ms = 200 #audio to keep from previous step in ms\n=======\nnum_threads = 8\nstep = 5000",
+        "peekOfCode": "whisper_model_size = \"base-finetuned\"\nPATH_TO_WHISPER_CPP_FOLDER = \"/home/cogems_nist/Desktop/CogEMS_NIST/whisper.cpp\"\nnum_threads = 8\nstep = 5000\nlength = 30000\nkeep_ms = 300 #audio to keep from previous step in ms\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' \n# ========EXPERIMENT CONFIGS ============================================================\nspeech_standalone = False",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -11873,7 +11882,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "PATH_TO_WHISPER_CPP_FOLDER = \"/home/cogems_nist/Desktop/CogEMS_NIST/whisper.cpp\"\n<<<<<<< HEAD\nnum_threads = 4\nstep = 4000\nlength = 8000\nkeep_ms = 200 #audio to keep from previous step in ms\n=======\nnum_threads = 8\nstep = 5000\nlength = 30000",
+        "peekOfCode": "PATH_TO_WHISPER_CPP_FOLDER = \"/home/cogems_nist/Desktop/CogEMS_NIST/whisper.cpp\"\nnum_threads = 8\nstep = 5000\nlength = 30000\nkeep_ms = 300 #audio to keep from previous step in ms\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' \n# ========EXPERIMENT CONFIGS ============================================================\nspeech_standalone = False\nprotocol_standalone = False",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -11882,7 +11891,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "num_threads = 4\nstep = 4000\nlength = 8000\nkeep_ms = 200 #audio to keep from previous step in ms\n=======\nnum_threads = 8\nstep = 5000\nlength = 30000\nkeep_ms = 300 #audio to keep from previous step in ms\n>>>>>>> cf500d4f1b859a82a8c2ac94fc75d623d6d18d4b",
+        "peekOfCode": "num_threads = 8\nstep = 5000\nlength = 30000\nkeep_ms = 300 #audio to keep from previous step in ms\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' \n# ========EXPERIMENT CONFIGS ============================================================\nspeech_standalone = False\nprotocol_standalone = False\naction_standalone = False",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -11891,7 +11900,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "step = 4000\nlength = 8000\nkeep_ms = 200 #audio to keep from previous step in ms\n=======\nnum_threads = 8\nstep = 5000\nlength = 30000\nkeep_ms = 300 #audio to keep from previous step in ms\n>>>>>>> cf500d4f1b859a82a8c2ac94fc75d623d6d18d4b\n# -- EMS Vision configuration ------",
+        "peekOfCode": "step = 5000\nlength = 30000\nkeep_ms = 300 #audio to keep from previous step in ms\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' \n# ========EXPERIMENT CONFIGS ============================================================\nspeech_standalone = False\nprotocol_standalone = False\naction_standalone = False\nendtoendspv = False #speech+protocol+vision",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -11900,7 +11909,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "length = 8000\nkeep_ms = 200 #audio to keep from previous step in ms\n=======\nnum_threads = 8\nstep = 5000\nlength = 30000\nkeep_ms = 300 #audio to keep from previous step in ms\n>>>>>>> cf500d4f1b859a82a8c2ac94fc75d623d6d18d4b\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' ",
+        "peekOfCode": "length = 30000\nkeep_ms = 300 #audio to keep from previous step in ms\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' \n# ========EXPERIMENT CONFIGS ============================================================\nspeech_standalone = False\nprotocol_standalone = False\naction_standalone = False\nendtoendspv = False #speech+protocol+vision\nnum_trials = 2",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -11909,43 +11918,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "keep_ms = 200 #audio to keep from previous step in ms\n=======\nnum_threads = 8\nstep = 5000\nlength = 30000\nkeep_ms = 300 #audio to keep from previous step in ms\n>>>>>>> cf500d4f1b859a82a8c2ac94fc75d623d6d18d4b\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' \n# ========EXPERIMENT CONFIGS ============================================================",
-        "detail": "Demo.pipeline_config",
-        "documentation": {}
-    },
-    {
-        "label": "num_threads",
-        "kind": 5,
-        "importPath": "Demo.pipeline_config",
-        "description": "Demo.pipeline_config",
-        "peekOfCode": "num_threads = 8\nstep = 5000\nlength = 30000\nkeep_ms = 300 #audio to keep from previous step in ms\n>>>>>>> cf500d4f1b859a82a8c2ac94fc75d623d6d18d4b\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' \n# ========EXPERIMENT CONFIGS ============================================================\n<<<<<<< HEAD\nendtoendspv = False #speech+protocol+vision",
-        "detail": "Demo.pipeline_config",
-        "documentation": {}
-    },
-    {
-        "label": "step",
-        "kind": 5,
-        "importPath": "Demo.pipeline_config",
-        "description": "Demo.pipeline_config",
-        "peekOfCode": "step = 5000\nlength = 30000\nkeep_ms = 300 #audio to keep from previous step in ms\n>>>>>>> cf500d4f1b859a82a8c2ac94fc75d623d6d18d4b\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' \n# ========EXPERIMENT CONFIGS ============================================================\n<<<<<<< HEAD\nendtoendspv = False #speech+protocol+vision\nspeech_standalone = False",
-        "detail": "Demo.pipeline_config",
-        "documentation": {}
-    },
-    {
-        "label": "length",
-        "kind": 5,
-        "importPath": "Demo.pipeline_config",
-        "description": "Demo.pipeline_config",
-        "peekOfCode": "length = 30000\nkeep_ms = 300 #audio to keep from previous step in ms\n>>>>>>> cf500d4f1b859a82a8c2ac94fc75d623d6d18d4b\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' \n# ========EXPERIMENT CONFIGS ============================================================\n<<<<<<< HEAD\nendtoendspv = False #speech+protocol+vision\nspeech_standalone = False\nnum_trials = 1",
-        "detail": "Demo.pipeline_config",
-        "documentation": {}
-    },
-    {
-        "label": "keep_ms",
-        "kind": 5,
-        "importPath": "Demo.pipeline_config",
-        "description": "Demo.pipeline_config",
-        "peekOfCode": "keep_ms = 300 #audio to keep from previous step in ms\n>>>>>>> cf500d4f1b859a82a8c2ac94fc75d623d6d18d4b\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' \n# ========EXPERIMENT CONFIGS ============================================================\n<<<<<<< HEAD\nendtoendspv = False #speech+protocol+vision\nspeech_standalone = False\nnum_trials = 1\n=======",
+        "peekOfCode": "keep_ms = 300 #audio to keep from previous step in ms\n# -- EMS Vision configuration ------\nvision_model_type = 'openai/clip-vit-base-patch32' \n# ========EXPERIMENT CONFIGS ============================================================\nspeech_standalone = False\nprotocol_standalone = False\naction_standalone = False\nendtoendspv = False #speech+protocol+vision\nnum_trials = 2\n# -- Whisper configuration ---",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -11954,16 +11927,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "vision_model_type = 'openai/clip-vit-base-patch32' \n# ========EXPERIMENT CONFIGS ============================================================\n<<<<<<< HEAD\nendtoendspv = False #speech+protocol+vision\nspeech_standalone = False\nnum_trials = 1\n=======\nspeech_standalone = False\nprotocol_standalone = False\naction_standalone = False",
-        "detail": "Demo.pipeline_config",
-        "documentation": {}
-    },
-    {
-        "label": "endtoendspv",
-        "kind": 5,
-        "importPath": "Demo.pipeline_config",
-        "description": "Demo.pipeline_config",
-        "peekOfCode": "endtoendspv = False #speech+protocol+vision\nspeech_standalone = False\nnum_trials = 1\n=======\nspeech_standalone = False\nprotocol_standalone = False\naction_standalone = False\nendtoendspv = False #speech+protocol+vision\n>>>>>>> cf500d4f1b859a82a8c2ac94fc75d623d6d18d4b\nnum_trials = 2",
+        "peekOfCode": "vision_model_type = 'openai/clip-vit-base-patch32' \n# ========EXPERIMENT CONFIGS ============================================================\nspeech_standalone = False\nprotocol_standalone = False\naction_standalone = False\nendtoendspv = False #speech+protocol+vision\nnum_trials = 2\n# -- Whisper configuration ---\nwhisper_model_sizes = [\n    #  \"finetuned-base-final\",",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -11972,25 +11936,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "speech_standalone = False\nnum_trials = 1\n=======\nspeech_standalone = False\nprotocol_standalone = False\naction_standalone = False\nendtoendspv = False #speech+protocol+vision\n>>>>>>> cf500d4f1b859a82a8c2ac94fc75d623d6d18d4b\nnum_trials = 2\n# -- Whisper configuration ---",
-        "detail": "Demo.pipeline_config",
-        "documentation": {}
-    },
-    {
-        "label": "num_trials",
-        "kind": 5,
-        "importPath": "Demo.pipeline_config",
-        "description": "Demo.pipeline_config",
-        "peekOfCode": "num_trials = 1\n=======\nspeech_standalone = False\nprotocol_standalone = False\naction_standalone = False\nendtoendspv = False #speech+protocol+vision\n>>>>>>> cf500d4f1b859a82a8c2ac94fc75d623d6d18d4b\nnum_trials = 2\n# -- Whisper configuration ---\nwhisper_model_sizes = [",
-        "detail": "Demo.pipeline_config",
-        "documentation": {}
-    },
-    {
-        "label": "speech_standalone",
-        "kind": 5,
-        "importPath": "Demo.pipeline_config",
-        "description": "Demo.pipeline_config",
-        "peekOfCode": "speech_standalone = False\nprotocol_standalone = False\naction_standalone = False\nendtoendspv = False #speech+protocol+vision\n>>>>>>> cf500d4f1b859a82a8c2ac94fc75d623d6d18d4b\nnum_trials = 2\n# -- Whisper configuration ---\nwhisper_model_sizes = [\n<<<<<<< HEAD\n    \"base-finetuned-wo-synth\",",
+        "peekOfCode": "speech_standalone = False\nprotocol_standalone = False\naction_standalone = False\nendtoendspv = False #speech+protocol+vision\nnum_trials = 2\n# -- Whisper configuration ---\nwhisper_model_sizes = [\n    #  \"finetuned-base-final\",\n    #  \"finetuned-tiny-final\",\n    #  \"base-finetuned-wo-synth\",",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -11999,7 +11945,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "protocol_standalone = False\naction_standalone = False\nendtoendspv = False #speech+protocol+vision\n>>>>>>> cf500d4f1b859a82a8c2ac94fc75d623d6d18d4b\nnum_trials = 2\n# -- Whisper configuration ---\nwhisper_model_sizes = [\n<<<<<<< HEAD\n    \"base-finetuned-wo-synth\",\n    \"tiny-finetuned-wo-synth\",",
+        "peekOfCode": "protocol_standalone = False\naction_standalone = False\nendtoendspv = False #speech+protocol+vision\nnum_trials = 2\n# -- Whisper configuration ---\nwhisper_model_sizes = [\n    #  \"finetuned-base-final\",\n    #  \"finetuned-tiny-final\",\n    #  \"base-finetuned-wo-synth\",\n    #  \"tiny-finetuned-wo-synth\",",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -12008,7 +11954,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "action_standalone = False\nendtoendspv = False #speech+protocol+vision\n>>>>>>> cf500d4f1b859a82a8c2ac94fc75d623d6d18d4b\nnum_trials = 2\n# -- Whisper configuration ---\nwhisper_model_sizes = [\n<<<<<<< HEAD\n    \"base-finetuned-wo-synth\",\n    \"tiny-finetuned-wo-synth\",\n    # \"finetuned-tiny-v109\",",
+        "peekOfCode": "action_standalone = False\nendtoendspv = False #speech+protocol+vision\nnum_trials = 2\n# -- Whisper configuration ---\nwhisper_model_sizes = [\n    #  \"finetuned-base-final\",\n    #  \"finetuned-tiny-final\",\n    #  \"base-finetuned-wo-synth\",\n    #  \"tiny-finetuned-wo-synth\",\n    #  \"finetuned-tiny-v100\",",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -12017,7 +11963,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "endtoendspv = False #speech+protocol+vision\n>>>>>>> cf500d4f1b859a82a8c2ac94fc75d623d6d18d4b\nnum_trials = 2\n# -- Whisper configuration ---\nwhisper_model_sizes = [\n<<<<<<< HEAD\n    \"base-finetuned-wo-synth\",\n    \"tiny-finetuned-wo-synth\",\n    # \"finetuned-tiny-v109\",\n    # \"finetuned-tiny-v110\",",
+        "peekOfCode": "endtoendspv = False #speech+protocol+vision\nnum_trials = 2\n# -- Whisper configuration ---\nwhisper_model_sizes = [\n    #  \"finetuned-base-final\",\n    #  \"finetuned-tiny-final\",\n    #  \"base-finetuned-wo-synth\",\n    #  \"tiny-finetuned-wo-synth\",\n    #  \"finetuned-tiny-v100\",\n    #  \"finetuned-tiny-v101\",",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -12026,7 +11972,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "num_trials = 2\n# -- Whisper configuration ---\nwhisper_model_sizes = [\n<<<<<<< HEAD\n    \"base-finetuned-wo-synth\",\n    \"tiny-finetuned-wo-synth\",\n    # \"finetuned-tiny-v109\",\n    # \"finetuned-tiny-v110\",\n    # \"finetuned-tiny-v111\",\n    # \"finetuned-base-v203\",",
+        "peekOfCode": "num_trials = 2\n# -- Whisper configuration ---\nwhisper_model_sizes = [\n    #  \"finetuned-base-final\",\n    #  \"finetuned-tiny-final\",\n    #  \"base-finetuned-wo-synth\",\n    #  \"tiny-finetuned-wo-synth\",\n    #  \"finetuned-tiny-v100\",\n    #  \"finetuned-tiny-v101\",\n    #  \"finetuned-tiny-v102\",",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
@@ -12035,7 +11981,7 @@
         "kind": 5,
         "importPath": "Demo.pipeline_config",
         "description": "Demo.pipeline_config",
-        "peekOfCode": "whisper_model_sizes = [\n<<<<<<< HEAD\n    \"base-finetuned-wo-synth\",\n    \"tiny-finetuned-wo-synth\",\n    # \"finetuned-tiny-v109\",\n    # \"finetuned-tiny-v110\",\n    # \"finetuned-tiny-v111\",\n    # \"finetuned-base-v203\",\n    # \"finetuned-tiny-v112\",\n    # \"finetuned-tiny-v113\",",
+        "peekOfCode": "whisper_model_sizes = [\n    #  \"finetuned-base-final\",\n    #  \"finetuned-tiny-final\",\n    #  \"base-finetuned-wo-synth\",\n    #  \"tiny-finetuned-wo-synth\",\n    #  \"finetuned-tiny-v100\",\n    #  \"finetuned-tiny-v101\",\n    #  \"finetuned-tiny-v102\",\n    #  \"finetuned-tiny-v103\",\n    #  \"finetuned-tiny-v104\",",
         "detail": "Demo.pipeline_config",
         "documentation": {}
     },
