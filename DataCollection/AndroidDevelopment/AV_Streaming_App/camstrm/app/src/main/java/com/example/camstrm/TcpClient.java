@@ -102,14 +102,15 @@ public class TcpClient {
                             ImageData image = Camera2Service.img_list.remove(0);
 
 
-                            mBufferImageOut.write(22);
-
-                            mBufferImageOut.writeInt(image.seq);
-                            mBufferImageOut.writeLong(image.timestamp);
-                            mBufferImageOut.writeInt(image.width);
-                            mBufferImageOut.writeInt(image.byte_len);
-                            mBufferImageOut.write(image.data);
-                            mBufferImageOut.flush();
+                            if(mBufferIn.read() != -1 ) {
+                                mBufferImageOut.write(22);
+                                mBufferImageOut.writeInt(image.seq);
+                                mBufferImageOut.writeLong(image.timestamp);
+                                mBufferImageOut.writeInt(image.width);
+                                mBufferImageOut.writeInt(image.byte_len);
+                                mBufferImageOut.write(image.data);
+                                mBufferImageOut.flush();
+                            }
 
                         }
 
