@@ -1,95 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity">
 
-    <LinearLayout
+    <!-- Removed the LinearLayout containing the start button -->
+
+    <Button
+        android:id="@+id/btn1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/startbtn"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:text="start"
-            />
-        <Button
-            android:id="@+id/btn1"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:text="close"
-            />
-    </LinearLayout>
+        android:text="close" />
 
     <LinearLayout
         android:id="@+id/layout_practitioner"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
->
-
-
-    <ImageView
-        android:id="@+id/image_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:contentDescription="@string/my_image_description"
-        android:rotation="180"
-        android:scaleType="fitXY" />
-
-
-    <TextView
-        android:id="@+id/protocol_output"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="23dp"
-        android:layout_marginRight="23dp"
-        android:layout_marginBottom="77dp"
-        android:background="#30008080"
-        android:backgroundTint="@color/teal_200"
-        android:gravity="center"
-        android:maxLines="5"
-        android:text="Protocol"
-        android:textColor="#00FF00"
-        android:textSize="22sp"
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/intervention_output"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="23dp"
-        android:layout_marginRight="23dp"
-        android:layout_marginBottom="77dp"
-        android:background="#304682b4"
-        android:backgroundTint="@color/teal_200"
-        android:gravity="center"
-        android:maxLines="5"
-        android:text="Intervention"
-        android:textColor="#00FFFF"
-        android:textSize="22sp"
-        android:textStyle="bold" />
-
-</RelativeLayout>
+            <TextView
+                android:id="@+id/recording_status"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Your Text Here"
+                android:textSize="56sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

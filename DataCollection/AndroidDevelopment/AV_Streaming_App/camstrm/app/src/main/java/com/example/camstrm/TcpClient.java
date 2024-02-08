@@ -66,7 +66,6 @@ public class TcpClient {
         this.context = context;
         this.imageViewCallback = imageViewCallback;
 
-
         // Bind to LocalService.
         Intent intent = new Intent(this.context, SocketIOService.class);
         this.context.bindService(intent, connection, Context.BIND_AUTO_CREATE);
@@ -179,6 +178,8 @@ public class TcpClient {
             try {
 
                 int status = 0;
+                String message = "";
+
                 //in this while the client listens for the messages sent by the server
                 while (mRun) {
 
@@ -187,13 +188,20 @@ public class TcpClient {
 
 
                     String command = socketIOService.getCommand();
-//                    Log.d("Video TCP Client", "C: Command "+ command );
+                    Log.d("Video TCP Client", "C: Command "+ command );
 
-
+                    String display ;
                     if(command.equals("start")){
                         start = true;
+                        display = "Recording in Progress ...";
                     }else{
                         start = false;
+                        display = "Recording Stopped";
+                    }
+
+                    if(!message.equals(command)) {
+                        imageViewCallback.updateTextMainActivity(display);
+                        message = command;
                     }
 
 //                    Log.d("Video Client", "C: Start "+ start );
@@ -203,9 +211,9 @@ public class TcpClient {
 
                             ImageData img = Camera2Service.img_list.remove(Camera2Service.img_list.size()-1);
 
-                            if(imageViewCallback != null && img != null){
-                                imageViewCallback.updateImageView(img.data);
-                            }
+//                            if(imageViewCallback != null && img != null){
+//                                imageViewCallback.updateImageView(img.data);
+//                            }
 
                             status = sendImage(img, socketIOService);
 

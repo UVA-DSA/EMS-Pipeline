@@ -56,6 +56,10 @@ public class MainActivity extends AppCompatActivity implements ImageViewCallback
     private Context mContext;
 
     ImageView imageView;
+
+    // Get a reference to the TextView
+    private TextView textView;
+
     ActivityResultLauncher<Intent> activityResultLauncher;
 
 
@@ -71,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements ImageViewCallback
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
+
+        textView = findViewById(R.id.recording_status);
 
         Log.i(TAG,"in main");
         mContext = this;
@@ -176,9 +182,9 @@ public class MainActivity extends AppCompatActivity implements ImageViewCallback
             //if the user has not granted permission, request it
             requestPermission();
         }
-
-            AudioStreamService audioStreamService = new AudioStreamService(mContext, serverip, audioPort);
-            audioStreamService.startStreaming();
+//
+//            AudioStreamService audioStreamService = new AudioStreamService(mContext, serverip, audioPort);
+//            audioStreamService.startStreaming();
 
     }
 
@@ -242,11 +248,24 @@ public class MainActivity extends AppCompatActivity implements ImageViewCallback
                 ImageView simpleImageView=(ImageView)  findViewById(R.id.image_view);
                 simpleImageView.setImageBitmap(bitmapImage);//set the source in java class
 
-
-
             }
         });
 
+
+    }
+
+    @Override
+    public void updateTextMainActivity(String message) {
+        runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+
+                    // Stuff that updates the UI
+                    textView.setText(message);
+
+            }
+        });
 
     }
 

@@ -97,8 +97,8 @@ def start():
     
     global recording_dir
     # asyncio.run(main())
-    gopro_process =  multiprocessing.Process(target=execute_main, args=(commandqueue,recording_dir))
-    gopro_process.start()
+    # gopro_process =  multiprocessing.Process(target=execute_main, args=(commandqueue,recording_dir))
+    # gopro_process.start()
     
     commandqueue.put("start")
     
@@ -179,7 +179,7 @@ def handle_connect():
     global video_display_process  # Declare the variable as global
     
     if video_display_process is None or not video_display_process.is_alive():
-        video_display_process = multiprocessing.Process(target=display, args=(imagequeue,))
+        video_display_process = multiprocessing.Process(target=display, args=(imagequeue,commandqueue))
         video_display_process.start()
         
     # print('A user connected')
@@ -195,10 +195,15 @@ def handle_disconnect():
     video_display_process.terminate()
     
 
-def display(ImageQueue):
+def display(ImageQueue, commandqueue):
     # print("display started:")
     
     while True:
+        if not commandqueue.empty():
+            command = commandqueue.get()
+            if command == "stop":
+                break
+            
         if not ImageQueue.empty():
             # print("display received:")
             received = ImageQueue.get()

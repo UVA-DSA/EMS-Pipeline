@@ -6401,7 +6401,7 @@
         "kind": 2,
         "importPath": "DataCollection.Server.socketio_python_server",
         "description": "DataCollection.Server.socketio_python_server",
-        "peekOfCode": "def handle_connect():\n    global video_display_process  # Declare the variable as global\n    if video_display_process is None or not video_display_process.is_alive():\n        video_display_process = multiprocessing.Process(target=display, args=(imagequeue,))\n        video_display_process.start()\n    # print('A user connected')\n@socketio.on('disconnect')\ndef handle_disconnect():\n    # print('A user disconnected')\n    global video_display_process  # Declare the variable as global",
+        "peekOfCode": "def handle_connect():\n    global video_display_process  # Declare the variable as global\n    if video_display_process is None or not video_display_process.is_alive():\n        video_display_process = multiprocessing.Process(target=display, args=(imagequeue,commandqueue))\n        video_display_process.start()\n    # print('A user connected')\n@socketio.on('disconnect')\ndef handle_disconnect():\n    # print('A user disconnected')\n    global video_display_process  # Declare the variable as global",
         "detail": "DataCollection.Server.socketio_python_server",
         "documentation": {}
     },
@@ -6410,7 +6410,7 @@
         "kind": 2,
         "importPath": "DataCollection.Server.socketio_python_server",
         "description": "DataCollection.Server.socketio_python_server",
-        "peekOfCode": "def handle_disconnect():\n    # print('A user disconnected')\n    global video_display_process  # Declare the variable as global\n    global image_index \n    image_index = 0\n    video_display_process.terminate()\ndef display(ImageQueue):\n    # print(\"display started:\")\n    while True:\n        if not ImageQueue.empty():",
+        "peekOfCode": "def handle_disconnect():\n    # print('A user disconnected')\n    global video_display_process  # Declare the variable as global\n    global image_index \n    image_index = 0\n    video_display_process.terminate()\ndef display(ImageQueue, commandqueue):\n    # print(\"display started:\")\n    while True:\n        if not commandqueue.empty():",
         "detail": "DataCollection.Server.socketio_python_server",
         "documentation": {}
     },
@@ -6419,7 +6419,7 @@
         "kind": 2,
         "importPath": "DataCollection.Server.socketio_python_server",
         "description": "DataCollection.Server.socketio_python_server",
-        "peekOfCode": "def display(ImageQueue):\n    # print(\"display started:\")\n    while True:\n        if not ImageQueue.empty():\n            # print(\"display received:\")\n            received = ImageQueue.get()\n            if (received is None): break\n            cv2.imshow(\"Window\", received)\n            cv2.waitKey(1)\n    cv2.destroyAllWindows()    ",
+        "peekOfCode": "def display(ImageQueue, commandqueue):\n    # print(\"display started:\")\n    while True:\n        if not commandqueue.empty():\n            command = commandqueue.get()\n            if command == \"stop\":\n                break\n        if not ImageQueue.empty():\n            # print(\"display received:\")\n            received = ImageQueue.get()",
         "detail": "DataCollection.Server.socketio_python_server",
         "documentation": {}
     },

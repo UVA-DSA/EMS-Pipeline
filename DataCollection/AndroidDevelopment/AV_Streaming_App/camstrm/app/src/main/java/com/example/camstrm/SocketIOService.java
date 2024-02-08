@@ -28,6 +28,8 @@ public class SocketIOService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+        Log.d("SocketIO Service", "onStartCommand");
         if(intent != null){
 
         Bundle extras = intent.getExtras();
