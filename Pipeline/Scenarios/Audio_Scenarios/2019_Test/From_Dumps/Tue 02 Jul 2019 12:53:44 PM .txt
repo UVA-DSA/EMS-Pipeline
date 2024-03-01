@@ -1,0 +1,99 @@
+Mode:
+
+004_190105
+
+Speech: 
+
+Dispatch for male there, possibly having seizures, we arrived on scene to find our patient sitting upright on the commode. He was awake, but not responding normally had a Glasgow Coma score of about 14 /. The mother patient has a seizure history and looks in his presenting today. As if he's postictal / her, this is roughly normal for how he looks in those situations he's recently diagnosed with a UTI and it's on medication for that, starting yesterday and unknown antibiotic, she couldn't find it. He has a history of seizures, bipolar disorder and autism for what she is normally able to communicate, normally and Wizkid currently unable to do so. However, 
+Patient has a slight fever, but vital signs are otherwise unremarkable. With a heart rate of 90. Respirations is 16 blood pressure of 139 over 82 Glasgow Coma score 14. 
+Blood glucose of 150 and oxygen saturation of 98 % on room air other than that patients just still altered mental status, but not any active seizure activity and we'll be at the hospital in 5 minutes or so 
+
+
+Concept Extraction:
+
+(Gender, True, male, 0.6)
+(Convulsions, True, seizures, 1.0)
+(Seizure, True, seizures, 1.0)
+(Gcs, False, 14, 0.81)
+(Decreased mental status, True, 14, 0.81)
+(Convulsions, True, seizure, 0.69)
+(Seizure, True, seizure, 0.69)
+(Convulsions, True, seizures, 0.6)
+(Seizure, True, seizures, 0.6)
+(Heart rate, True, 90., 0.79)
+(Gcs, True, 14., 0.88)
+(Blood pressure, True, 139/82, 0.81)
+(Glucose, True, 150, 0.83)
+
+
+Protocol Text:
+
+(Medical - Seizure, 0.52)
+(Medical - Altered Mental Status, 0.3)
+(Medical - Overdose/Poisoning - Opioid, 0.18)
+
+
+Intervention:
+
+(Transport, 1.0)
+(Cardiac monitor, 1.0)
+(Normal saline, 0.82)
+(Narcan, 0.15)
+
+
+System Messages Log:
+
+Welcome to CognitiveEMS, a cognitive assistant system for 
+Emergency Medical Services (EMS). 
+  _____                  _  __   _             ____ __  ___ ___
+ / ___/___  ___ _ ___   (_)/ /_ (_)_  __ ___  / __//  |/  // __/
+/ /__ / _ \/ _ `// _ \ / // __// /| |/ // -_)/ _/ / /|_/ /_\ \  
+\___/ \___/\_, //_//_//_/ \__//_/ |___/ \__//___//_/  /_//___/  
+          /___/                                                
+
+CognitiveEMS captures speech by first responders and attempts to 
+find appropriate EMS protocols and interventions. The following 
+protocols are currently supported:
+
+1. Medical - Abdominal Pain
+2. Medical - Altered Mental Status
+3. Medical - Seizure
+4. Medical - Respiratory Distress/Asthma/COPD/Croup/Reactive Airway
+5. General - Behavioral/Patient Restraint
+6. Medical - Overdose/Poisoning - Opioid
+7. Medical - Diabetic - Hypoglycemia
+8. Medical - Chest Pain - Cardiac Suspected
+
+For more information, visit:
+https://github.com/UVA-DSA/EMS-pipeline
+
+12:45:58 PM - Starting!
+12:45:58 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 1
+12:46:52 PM - Transcription of audio file complete!
+12:47:22 PM - System state dumped to /Dumps/Tue 02 Jul 2019 12:47:22 PM .txt
+12:47:26 PM - Form Being Generated!
+12:47:36 PM - Form Generated: /Dumps/Tue 02 Jul 2019 12:47:27 PM .pdf
+12:47:46 PM - Resetting!
+12:47:49 PM - Starting!
+12:47:49 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 2
+12:48:50 PM - API's 1 minute limit reached. Restablishing connection!
+12:48:50 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 3
+12:49:19 PM - Transcription of audio file complete!
+12:49:24 PM - System state dumped to /Dumps/Tue 02 Jul 2019 12:49:24 PM .txt
+12:49:25 PM - Form Being Generated!
+12:49:37 PM - Form Generated: /Dumps/Tue 02 Jul 2019 12:49:27 PM .pdf
+12:49:49 PM - Resetting!
+12:49:57 PM - Starting!
+12:49:57 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 4
+12:50:57 PM - API's 1 minute limit reached. Restablishing connection!
+12:50:57 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 5
+12:51:07 PM - Transcription of audio file complete!
+12:51:32 PM - System state dumped to /Dumps/Tue 02 Jul 2019 12:51:32 PM .txt
+12:51:34 PM - Form Being Generated!
+12:51:46 PM - Form Generated: /Dumps/Tue 02 Jul 2019 12:51:37 PM .pdf
+12:52:07 PM - Resetting!
+12:52:09 PM - Starting!
+12:52:09 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 6
+12:53:10 PM - API's 1 minute limit reached. Restablishing connection!
+12:53:10 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 7
+12:53:29 PM - Transcription of audio file complete!

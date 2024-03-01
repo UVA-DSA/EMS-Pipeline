@@ -1,0 +1,54 @@
+{
+    "Clear airway": [
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - seizure"
+    ],
+    "Open/position airway": [
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Etco2 capnography": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Glucose check": [
+        "medical - altered mental status"
+    ],
+    "Restraint applied": [
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)"
+    ],
+    "Cpr": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "general - cardiac arrest"
+    ],
+    "Defibrillation": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "general - cardiac arrest"
+    ],
+    "Io": [
+        "general - cardiac arrest",
+        "medical - diabetic - hypoglycemia"
+    ],
+    "Cpap/bipap": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Nebulizer therapy": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Rosc": [
+        "general - cardiac arrest"
+    ],
+    "Vitals/assess": [
+        "general - cardiac arrest",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)"
+    ],
+    "Thoracostomy": [
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Hospital contact": [
+        "medical - stroke/tia (protocol 3 - 5)"
+    ],
+    "General - contact medical control": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "general - pain control"
+    ]
+}

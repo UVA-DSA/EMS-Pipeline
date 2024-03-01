@@ -1,0 +1,101 @@
+Mode:
+
+005_190105
+
+Speech: 
+
+We were dispatched to the residence along with Richmond fire department for breathing problem. We arrived on scene to find an 89 year old, female, conscious and breathing, who is being walked out to the ambulance by Richmond fire department. At this time there were no obvious signs of distress or me like threat. The patient complaint was complaining of shortness of breath that started at approximately 1900. This evening she stated she has a history of asthma and gave herself to breathing treatment. Since the onset she denies. Any other symptoms are pain. She was April Friday, past medical, history, medications and allergies. As listed as far as a medical assessment goes, a patient was alert and oriented times. 4 worksheet DCS F15, with Peyton Airway skin was pink, warm and dry. She had no major other abnormalities noted her lung sounds are clear and equal bilaterally. 
+Her vitals were as follows: heart rate 99, respiratory rate 30 blood pressure, 186 over 87 GCF of 15 and 96 % on room air; a 12-lead 
+So done with no major abnormalities noted continue to monitor, reassess until our arrival at the hospital where Cara transfer the nursing staff 
+
+
+Concept Extraction:
+
+(Gender, True, female, 1.0)
+(Age, True, 89, 0.66)
+(Shortness of breath, True, of shortness breath, 0.67)
+(Wheezing, True, lung sounds, 0.98)
+(Resp, True, 30, 0.67)
+(Heart rate, True, 99, 0.9)
+(Blood pressure, True, 186/87, 0.84)
+(Tachypnea, True, 30, 0.67)
+
+
+Protocol Text:
+
+(Medical - Respiratory Distress/Asthma/COPD/Croup/Reactive Airway, 0.75)
+(Medical - Overdose/Poisoning - Opioid, 0.22)
+(Medical - Chest Pain - Cardiac Suspected, 0.03)
+
+
+Intervention:
+
+(Transport, 1.0)
+(Cardiac monitor, 0.25)
+
+
+System Messages Log:
+
+Welcome to CognitiveEMS, a cognitive assistant system for 
+Emergency Medical Services (EMS). 
+  _____                  _  __   _             ____ __  ___ ___
+ / ___/___  ___ _ ___   (_)/ /_ (_)_  __ ___  / __//  |/  // __/
+/ /__ / _ \/ _ `// _ \ / // __// /| |/ // -_)/ _/ / /|_/ /_\ \  
+\___/ \___/\_, //_//_//_/ \__//_/ |___/ \__//___//_/  /_//___/  
+          /___/                                                
+
+CognitiveEMS captures speech by first responders and attempts to 
+find appropriate EMS protocols and interventions. The following 
+protocols are currently supported:
+
+1. Medical - Abdominal Pain
+2. Medical - Altered Mental Status
+3. Medical - Seizure
+4. Medical - Respiratory Distress/Asthma/COPD/Croup/Reactive Airway
+5. General - Behavioral/Patient Restraint
+6. Medical - Overdose/Poisoning - Opioid
+7. Medical - Diabetic - Hypoglycemia
+8. Medical - Chest Pain - Cardiac Suspected
+
+For more information, visit:
+https://github.com/UVA-DSA/EMS-pipeline
+
+12:45:58 PM - Starting!
+12:45:58 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 1
+12:46:52 PM - Transcription of audio file complete!
+12:47:22 PM - System state dumped to /Dumps/Tue 02 Jul 2019 12:47:22 PM .txt
+12:47:26 PM - Form Being Generated!
+12:47:36 PM - Form Generated: /Dumps/Tue 02 Jul 2019 12:47:27 PM .pdf
+12:47:46 PM - Resetting!
+12:47:49 PM - Starting!
+12:47:49 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 2
+12:48:50 PM - API's 1 minute limit reached. Restablishing connection!
+12:48:50 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 3
+12:49:19 PM - Transcription of audio file complete!
+12:49:24 PM - System state dumped to /Dumps/Tue 02 Jul 2019 12:49:24 PM .txt
+12:49:25 PM - Form Being Generated!
+12:49:37 PM - Form Generated: /Dumps/Tue 02 Jul 2019 12:49:27 PM .pdf
+12:49:49 PM - Resetting!
+12:49:57 PM - Starting!
+12:49:57 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 4
+12:50:57 PM - API's 1 minute limit reached. Restablishing connection!
+12:50:57 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 5
+12:51:07 PM - Transcription of audio file complete!
+12:51:32 PM - System state dumped to /Dumps/Tue 02 Jul 2019 12:51:32 PM .txt
+12:51:34 PM - Form Being Generated!
+12:51:46 PM - Form Generated: /Dumps/Tue 02 Jul 2019 12:51:37 PM .pdf
+12:52:07 PM - Resetting!
+12:52:09 PM - Starting!
+12:52:09 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 6
+12:53:10 PM - API's 1 minute limit reached. Restablishing connection!
+12:53:10 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 7
+12:53:29 PM - Transcription of audio file complete!
+12:53:44 PM - System state dumped to /Dumps/Tue 02 Jul 2019 12:53:44 PM .txt
+12:53:45 PM - Form Being Generated!
+12:53:55 PM - Form Generated: /Dumps/Tue 02 Jul 2019 12:53:46 PM .pdf
+12:54:08 PM - Resetting!
+12:54:12 PM - Starting!
+12:54:12 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 8
+12:55:13 PM - API's 1 minute limit reached. Restablishing connection!
+12:55:13 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 9
+12:55:26 PM - Transcription of audio file complete!

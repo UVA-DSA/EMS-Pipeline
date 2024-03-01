@@ -1,0 +1,5 @@
+Update in Sep 6 2023
+
+1. Interface_v1 is the first version of BERT model integrated to EMSPipeline
+2. Now we use Interface (second version of BERT model)
+3. The difference is that Interface's now use TinyclinicalBERT (15M) while Interface_v2 use COReBERT (110M). And Interface_v2 only output one prediction (string), Interface output multiple predictions (list). I've updated the code to convert list to string

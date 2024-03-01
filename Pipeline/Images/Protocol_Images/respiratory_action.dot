@@ -1,0 +1,26 @@
+digraph respiratory_action {
+graph [fontname="times-roman"];
+node [fontname="times-roman"];
+edge [fontname="times-roman"];
+Respiratory_Action [fontcolor=black, shape=box, fontsize=11, style=filled, fillcolor=orange];
+MDI [fontcolor=black, shape=ellipse, fontsize=11, style=filled, fillcolor=gray];
+Respiratory_Action -> MDI;
+CPAP [fontcolor=black, shape=ellipse, fontsize=11, style=filled, fillcolor=gray];
+Respiratory_Action -> CPAP;
+AdministerOxygen [fontcolor=black, shape=ellipse, fontsize=11, style=filled, fillcolor=gray];
+Respiratory_Action -> AdministerOxygen;
+AlbuterolSulfate [fontcolor=black, shape=ellipse, fontsize=11, style=filled, fillcolor=gray];
+Respiratory_Action -> AlbuterolSulfate;
+Selector [fontcolor=black, shape=octagon, fontsize=11, style=filled, fillcolor=cyan];
+Respiratory_Action -> Selector;
+Sequence [fontcolor=black, shape=box, fontsize=11, style=filled, fillcolor=orange];
+Selector -> Sequence;
+"Advanced EMT?" [fontcolor=black, shape=ellipse, fontsize=11, style=filled, fillcolor=gray];
+Sequence -> "Advanced EMT?";
+"IV access" [fontcolor=black, shape=ellipse, fontsize=11, style=filled, fillcolor=gray];
+Sequence -> "IV access";
+Methylprednisolone [fontcolor=black, shape=ellipse, fontsize=11, style=filled, fillcolor=gray];
+Sequence -> Methylprednisolone;
+NS [fontcolor=black, shape=ellipse, fontsize=11, style=filled, fillcolor=gray];
+Selector -> NS;
+}

@@ -1,0 +1,66 @@
+{
+    "medical - chest pain - cardiac suspected (protocol 2 - 1)": {
+        "Aspirin (asa)": 0.39964921213306176,
+        "Nitroglycerin": 0.39964921213306176,
+        "Midazolam (versed)": 0.21654716402171015,
+        "Fentanyl": 0.21654716402171015,
+        "Morphine": 0.21654716402171015,
+        "Diazepam (valium)": 0.21654716402171015
+    },
+    "medical - seizure (protocol 3 - 12)": {
+        "Midazolam (versed)": 0.6496414920651304,
+        "Diazepam (valium)": 0.6496414920651304
+    },
+    "medical - seizure (protocol 9 - 12)": {
+        "Midazolam (versed)": 0.6496414920651304,
+        "Diazepam (valium)": 0.6496414920651304
+    },
+    "medical - abdominal pain (protocol 3 - 2)": {
+        "Ondansetron (zofran)": 1.7047480922384253
+    },
+    "general - pain control (protocol 3 - 10)": {
+        "Ondansetron (zofran)": 0.34094961844768507,
+        "Ketorolac (toradol)": 0.34094961844768507,
+        "Acetaminophen (tylenol)": 0.34094961844768507,
+        "Fentanyl": 0.25985659682605217,
+        "Morphine": 0.25985659682605217
+    },
+    "medical - overdose/poisoning - opioid (protocol 7 - 1)": {
+        "Naloxone (narcan)": 2.3978952727983707
+    },
+    "general - cardiac arrest (protocol 8 - 2)": {
+        "Epi 1:10,000": 0.7992984242661235,
+        "Amiodarone (cordarone)": 0.7992984242661235,
+        "Magnesium sulfate": 0.568249364079475
+    },
+    "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)": {
+        "Albuterol (proventil)": 0.29973690909979633,
+        "Ipratropium (atrovent)": 0.29973690909979633,
+        "Dexamethasone 10mg iv/im": 0.29973690909979633,
+        "Dexamethasone 10mg po": 0.29973690909979633,
+        "Epi 1:1,000": 0.29973690909979633,
+        "Albuterol 5mg / ipratropium 0.5mg (duoneb)": 0.29973690909979633,
+        "Dexamethasone (decadron)": 0.29973690909979633,
+        "Magnesium sulfate": 0.21309351152980316
+    },
+    "general - pain control (protocol 9 - 8)": {
+        "Ketamine (ketalar)": 0.47957905455967414,
+        "Ketorolac (toradol)": 0.34094961844768507,
+        "Acetaminophen (tylenol)": 0.34094961844768507,
+        "Fentanyl": 0.25985659682605217,
+        "Morphine": 0.25985659682605217
+    },
+    "medical - diabetic - hypoglycemia (protocol 3 - 8)": {
+        "Glucagon (glucagen)": 0.4261870230596063,
+        "Glucose (oral forms)": 0.4261870230596063,
+        "Dextrose 10 % injectable solution": 0.4261870230596063,
+        "Dextrose 50 % injectable solution": 0.4261870230596063
+    },
+    "medical - diabetic - hypoglycemia (protocol 9 - 6)": {
+        "Dextrose 25%": 0.47957905455967414,
+        "Glucagon (glucagen)": 0.34094961844768507,
+        "Glucose (oral forms)": 0.34094961844768507,
+        "Dextrose 10 % injectable solution": 0.34094961844768507,
+        "Dextrose 50 % injectable solution": 0.34094961844768507
+    }
+}

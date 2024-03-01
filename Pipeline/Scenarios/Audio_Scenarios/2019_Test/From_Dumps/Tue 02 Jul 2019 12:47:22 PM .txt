@@ -1,0 +1,65 @@
+Mode:
+
+000_190105
+
+Speech: 
+
+55 year old male found unconscious driver side passenger seat of his car. His wife reported that he snorted a line of heroin before I just prior to losing Consciousness. Patient originally presented unresponsive. The pail, with shallow, ineffective respirations at a rate of about 5 with heart rate, was 118. The blood pressure was 205 over 119 is blood. Glucose levels, 126 is O2, saturations was nightwear, 94 % choir bag mask ventilation with mountain with the Tosh oxygen. However, after 0.25 mg of naloxone intravenously patient is now awake and breathing normally with Improvement, Vital Signs and respiratory status and no longer needs supplemental oxygen. 
+
+
+Concept Extraction:
+
+(Gender, True, male, 0.81)
+(Age, True, 55, 0.65)
+(Loss of consciousness, True, unconscious, 0.58)
+(Resp, True, 5, 0.77)
+(Bradypnea, True, 5, 0.77)
+(Heart rate, True, 118., 1.0)
+(Blood pressure, True, 205/11, 1.0)
+(Pulse oximetry, True, saturations, 1.0)
+
+
+Protocol Text:
+
+(Medical - Respiratory Distress/Asthma/COPD/Croup/Reactive Airway, 0.35)
+(Medical - Overdose/Poisoning - Opioid, 0.34)
+(Medical - Altered Mental Status, 0.31)
+
+
+Intervention:
+
+(Transport, 1.0)
+(Cardiac monitor, 0.65)
+(Normal saline, 0.31)
+(Narcan, 0.26)
+
+
+System Messages Log:
+
+Welcome to CognitiveEMS, a cognitive assistant system for 
+Emergency Medical Services (EMS). 
+  _____                  _  __   _             ____ __  ___ ___
+ / ___/___  ___ _ ___   (_)/ /_ (_)_  __ ___  / __//  |/  // __/
+/ /__ / _ \/ _ `// _ \ / // __// /| |/ // -_)/ _/ / /|_/ /_\ \  
+\___/ \___/\_, //_//_//_/ \__//_/ |___/ \__//___//_/  /_//___/  
+          /___/                                                
+
+CognitiveEMS captures speech by first responders and attempts to 
+find appropriate EMS protocols and interventions. The following 
+protocols are currently supported:
+
+1. Medical - Abdominal Pain
+2. Medical - Altered Mental Status
+3. Medical - Seizure
+4. Medical - Respiratory Distress/Asthma/COPD/Croup/Reactive Airway
+5. General - Behavioral/Patient Restraint
+6. Medical - Overdose/Poisoning - Opioid
+7. Medical - Diabetic - Hypoglycemia
+8. Medical - Chest Pain - Cardiac Suspected
+
+For more information, visit:
+https://github.com/UVA-DSA/EMS-pipeline
+
+12:45:58 PM - Starting!
+12:45:58 PM - Started speech recognition on file audio via Google Speech API. File Session Counter: 1
+12:46:52 PM - Transcription of audio file complete!

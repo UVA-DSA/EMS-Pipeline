@@ -1,95 +1,164 @@
 # CognitiveEMS Pipeline
-This repository contains the decision support pipeline for a Cognitive Assistant System for Emergency Medical Serivces (EMS). The system aims to improve situational awareness of the first responders/paramedics by automated collection and analysis of data from incident scenes and providing suggestions to them. The figure below shows the overall architecture of the proposed system. For more information visit the project page at: https://www.nist.gov/ctl/pscr/cognitive-assistant-systems-emergency-response
 
-![Architecture](ETC/CognitiveEMS.png)
+## About This Project
+This repository contains the decision support pipeline for a real-time, multimodal, and edge-deployed Cognitive Assistant System for Emergency Medical Serivces (EMS). The system aims to improve situational awareness of the first responders/paramedics by automated collection and analysis of multimodal data from incident scenes and providing suggestions to them. The figure below shows the high level overview of the proposed system. For more information visit the [project page](https://www.nist.gov/ctl/pscr/cognitive-assistant-systems-emergency-response).
 
-## Demo 
-The `Demo/` directory contains a demonstration of the edge device system in form of a graphical user interface (GUI). 
+![Architecture](<README Images/CognitiveEMS.png>)
 
- The GUI is built with PyQt4 and has been succesfully tested on:
+## Notice
+:exclamation: The branches related previous work carried out in this project is archived and you may browse them under tags.
 
-`64-bit Ubuntu 16.04 LTS, Intel® Core™ i7-7700 CPU @ 3.60GHz × 8`
+## Branches in This Repository 
+- `server` : the CognitiveEMS pipeline implemented on server (Ubuntu desktop)
+- `edge` : the CognitiveEMS pipeline deployed on edge (Jetson Nano)
+- `demo` : a portable demo of the CognitiveEMS pipeline implemented on laptop that can be used for data collection (Alienware m15 R7)
 
-`2016 MacBook Pro running macOS Monterey, Intel Core™ i7 Dual-Core, 2.4 GH Dual Core`
+## Publically Available Datasets
+One of the challenges of developing a Cognitive Assistant system for the EMS domain is a lack of realistic audio and video EMS data. We contribute new publicly-available datasets, including human and synthetic EMS conversational audio and multimodal data from simulated EMS scenarios that can be found [here]().
 
-### Requirements
-The branch has been tested using Python 3.8.1. You may be able to get it running on lower versions.
-A requirements.txt file containing all required Python packages is in Demo/. From the Demo folder, run the following commands:
+## Models and Software Architecture  
+The figure below illustrates a high level overview of the software architecture. The pipeline is a real-time multi-thread system. There is a main process that handles execution and coordination of the three AI models running on their own separate threads: (1) EMS-Whisper for Speech Recognition, which transcribes audio input into a text transcript; (2) EMS-TinyBERT for Protocol Prediction, which predicts the correct protocol for the incident from the text transcript; and (3) EMS-Vision for Intervention Recognition, which recognizes the medical treatment action based on video input and the predicted protocol. Each model is described in more detail below. Further architecture details on the folder structure and code can be found in the [Technical Documentation](#technical-documentation) section. 
+
+![Software Design](<README Images/Overall Figure.png>)
+
+### EMS-Whisper for Speech Recognition
+Our speech recognition model, EMS-Whisper, is a fine-tuned version of [Whisper](https://openai.com/research/whisper) models trained on a curated dataset of conversational EMS speech. We have two sizes of EMS-Whisper: base-finetuned (39M parameters) and tiny-finetuned (74M parameters), which are the finetuned English-only tiny and base Whisper models. We choose to build off the Whisper architecture because it has been found to be robust to noisy environments, diverse ranges of accents, and has strong out-of-the-box performance on numerous datasets. A separate github repository with more details about EMS-Whisper can be found [here](https://github.com/UVA-DSA/EMS-Whisper).
 
 
+### EMS-TinyBERT for Protocol Prediction
+Our protocol prediction model, EMSTinyBERT, consists of three parts: (1) [TinyClinicalBERT](https://huggingface.co/nlpie/tiny-clinicalbert), a [BERT](https://arxiv.org/abs/1810.04805) model pretrained on medical corpus to encoder to encode EMS transcripts into text features; (2) a graph neural network to fuse domain knowledge with text features; and (3) a group-wise training strategy to deal with scarcity of training samples in rare classes. EMS-TinyBERT is a lightweight model that can be deployed on edge. A separate github repository with more details about EMS-TinyBERT can be found [here](https://github.com/UVA-DSA/DKEC).
+
+### EMS-Vision for Intervention Recognition
+
+Our intervention recognition model, EMS-Vision, consists
+of three parts: (1) The protocol prediction from EMS-
+TinyBERT give contextual basis to the (2) knowledge agent that provides a subset of interventions associated with the protocol to (3) [CLIP](https://openai.com/research/clip), an open-source zero-shot image classification model. A separate github repository with more details about EMS-Vision can be found [here]().
+
+
+### Additional Options for Models
+
+#### Google Cloud Speech-To-Text API for Speech Recognition
+There is an option to use the [Google Cloud Speech-To-Text API](https://cloud.google.com/speech-to-text/) for speech recognition in the CognitiveEMS pipeline. However, this option relies on a cloud service and the pipeline will no longer be edge-deployed.  
+
+#### EMSAssist Models
+There is another Cognitive Assistant pipeline for EMS called [EMSAssist](https://dl.acm.org/doi/abs/10.1145/3581791.3596853). We have integrated EMSAssist's Speech Recognition Model (EMSConformer) and Protocol Prediction Model (EMSMobileBERT) for evaluation purposes to compare our pipeline to the current state of the art. EMSAssist's github repositories can be found [here](https://github.com/LENSS/EMSAssist) and [here](https://github.com/liuyibox/EMSAssist-artifact-evaluation).
+
+## Getting Started 
+### Prerequisites
+To get started CognitiveEMS, you need to have [`Conda`](https://docs.conda.io/en/latest/) and [`git`](https://git-scm.com/) installed. All our implementions used **Conda version 23.1.0** and **git version 2.25.1**. We list hardware specifications for each device we used below. You may be able to use different hardware specifications and different versions of CUDA.
+
+The `server` implementation hs been successfully tested on an Ubuntu desktop with these specifications:
+- OS: **64-bit Ubuntu 20.04.6 LTS**
+- Processor: **13th Gen Intel® Core™ i9-13900KF x 32**
+- Graphics: **NVIDA Corporation**
+- NVIDIA Cuda complier driver: **version 10.1.243**
+- CUDA: **version 12.1**
+
+The `edge` implementation hs been successfully tested on a Jetson Nano with these specifications:
+- Jetson nano
+
+The `demo` implementation hs been successfully tested on an Alienware m15 R7 laptop with these specifications:
+- OS: **64-bit Ubuntu 20.02.6 LTS**
+- Processor: **12th Gen Intel® Core™ i7-12700H x 20**
+- Graphics: **NVIDIA Corporation / Mesa Intel® Graphics (ADL GT2)**
+- NVIDIA Cuda complier driver: **version 11.3.58**
+- CUDA: **version 11.4**
+
+You may be able to get CognitiveEMS running on hardware with different specifications and different verisions of CUDA.
+
+### Installation
+Clone our repository from github and go to the server branch
+```bash
+# clone repo
+git clone https://github.com/UVA-DSA/CognitiveEMS
+cd CognitiveEMS/
+
+# go to server branch
+git checkout server 
 ```
-sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
-sudo apt-get install ffmpeg
-sudo apt-get install python3-pyaudio
-sudo apt-get install curl
+
+### Conda Environment Setup 
+Create and activate the Conda environment that uses `Python 3.8.18 `named `CogEMS` for dependencies and packages.
+
+If you are using hardware that matches **[our specifications](#prerequisites) (Linux OS, CUDA 12.1),** create the CogEMS Conda environment from the `environment.yml` file.
+```bash
+# create Conda environment from yaml file
+cd Pipeline/
+conda env create --file environment.yml
+
+# activate Conda environment
+conda activate CogEMS
 ```
 
+If you are using hardware with **<span style="color:red">different specifications</span>,** you may have to manually create the CogEMS Conda environment.
+```bash
+# manually create conda enviroment
+conda create --name CogEMS python=3.8.18
 
+# activate Conda environment
+conda activate CogEMS
+
+# Now, manually install dependencies
+# check cuda version
+nvidia-smi
+
+# execute pytorch install command
+'''
+go to https://pytorch.org/get-started/locally/ and get the installation command for these options:
+Stable (2.1.0), Linux, conda, Python, and your CUDA version 
+'''
+# for the our server, the command was:
+conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
+
+# install other packages
+conda install pyaudio
+pip install torch-geometric
+pip install pyyaml
+pip install transformers
+pip install chardet
+pip install charset-normalizer==3.1.0
+pip install pyqt5
+pip install pandas
+pip install openpyxl
+pip install evaluate
+pip install jiwer
 ```
-pip install -r requirements.txt
+### Virtual Speaker and Mic Setup
+Since the CognitiveEMS pipeline is real-time and takes in a stream of audio from a mic as input, we set up a virtual speaker and mic to capture the input internally for our audio recordings.
+
+> **<span style="color:red">NOTE!</span>** You have to run the commands to set up the virtual speaker and mic every time you restart your device.
+
+```bash
+# set up virtual speaker
+pactl load-module module-null-sink sink_name="virtual_speaker" sink_properties=device.description="virtual_speaker"
+
+# set up virtual mic
+pactl load-module module-remap-source master="virtual_speaker.monitor" source_name="virtual_mic" source_properties=device.description="virtual_mic"
 ```
 
+### Model Setup
+Since model weight files were too large to store on our github repository, you need to download them from our publically available Box folders for EMS-Whisper and EMS-TinyBERT.
+
+#### Setup for EMS-Whisper
+Download the `models` folder for EMS-Whisper from [here]() and put the `models` folder under the `Pipeline/EMS_Whisper` folder as: `Pipeline/EMS_Whisper/models/`
+
+#### Setup for EMS-TinyBERT
+Download the `models` folder for EMS-TinyBERT from [here]() and put the `models` folder under the `Pipeline/EMS_TinyBERT` folder as: `Pipeline/EMS_TinyBERT/models/`
+
+### Google Cloud Speech-To-Text API Setup (Optional)
+To use the Google Cloud Speech-To-Text API, you need to have your own service account key in a JSON file. The service account must have the Speech API enabled. Put your JSON file under the Pipeline folder as: `Pipeline/service-account.json`. For more information and to get started with Google Cloud Speech-To-Text go [here](https://cloud.google.com/speech-to-text/).
+
+## Usage
+### Running the Pipeline
+
+#### Pipeline Options
+
+### Running Evaluations of the Pipeline
+#### Reproducing Results
 
 
-#### MetaMap:
-**MetaMap 2016v2** needs to be installed under the `Demo/public_mm` directory. Downloads are hosted at:  
-<https://metamap.nlm.nih.gov/MainDownload.shtml>  
-
-You will need a UMLS account/license. You can request one here:  
-<https://uts.nlm.nih.gov/license.html>  
-
-Instructions for installing MetaMap are here:  
-<https://metamap.nlm.nih.gov/Installation.shtml>
-
-#### PyMetaMap:
-**PyMetaMap** is a Python Wrapper around MetaMap. It needs to be installed in the `Demo/pymetamap` directory. The software is already in this directory, but needs to be built:
-
-`cd pymetamap`  
-`python setup.py install`  
-
-For more information, visit: <https://github.com/AnthonyMRios/pymetamap>
-
-#### Google Cloud Speech-to-Text API:
-To use the **Google Cloud Speech API**, you need to have your own service account key in JSON format. The service account must have the Speech API enabled. It needs to be in the demo folder:  
-
-`Demo/service-account.json`
-
-For more information, visit: <https://cloud.google.com/speech-to-text/>
-
-#### DeepSpeech Models (Optional):
-
-**DeepSpeech** functionality is currently **disabled** in the demo. The models are not needed, but they could be downloaded by running:
-
-`mkdir DeepSpeech_Models`  
-`cd DeepSpeech_Models`  
-`wget https://github.com/mozilla/DeepSpeech/releases/download/v0.5.1/deepspeech-0.5.1-models.tar.gz`  
-`tar xvfz deepspeech-0.5.1-models.tar.gz`
-
-For more information and link to more recent models, visit: <https://github.com/mozilla/DeepSpeech>
-
-### Running the Demo
-
-Make the `metamap.sh` executable by running (this step is only needed to be run once on every machine):
-
-`chmod +x metamap.sh`
-
-To run MetaMap, run (this step needs to repeated after every reboot):
-
-`./metamap.sh`
-
-To launch the graphical user interface (GUI), run:
-
-`Python GUI.py`
-
-For data collection:
-
-Running `python GUI.py` will default to no data collection.
-Please use --datacollect 1 or --datacollect 0 to specifiy if you want data collected with the data collection scripts
-Default data collection will collect all streams, but you may also specify streams with the --streams option
-Arguments for the --streams option include "all" for all streams, "audio" for microphone data, "video" for video data, "smartwatch", for smartwatch data, "conceptextract" for concept extraction data, "intervention" for intervention suggestions data, "protocol" for protocol results data, and "transcript" for the speech to text transcript.
-
-
-![GUI](ETC/GUI.png)
+## Technical Documentation
+Coming soon
 
 ## Publications
 [“Information Extraction from Patient Care Reports for Intelligent Emergency Medical Services”](https://homa-alem.github.io/papers/CHASE_2021.pdf)  
@@ -124,3 +193,4 @@ In SIGBED Review, Special Issue on Medical Cyber Physical Systems Workshop (CPS-
 ["Towards a Cognitive Assistant System for Emergency Response"](https://homa-alem.github.io/papers/ICCPS_Poster_2018.pdf)  
 S. Preum, S. Shu, J. Ting, V. Lin, R. Williams, J. Stankovic, H. Alemzadeh  
 In the 9th ACM/IEEE International Conference on Cyber-Physical Systems (CPS-Week), 2018.
+

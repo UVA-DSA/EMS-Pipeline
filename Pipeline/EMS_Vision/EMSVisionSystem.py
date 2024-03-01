@@ -1,0 +1,63 @@
+import pipeline_config
+from transformers import pipeline
+import traceback
+from EMS_Vision.utils import *
+
+def EMSVision(ProtocolQueue, VideoDataQueue):
+    
+    # More models in the model hub.
+    model_name = pipeline_config.vision_model_type
+    classifier = pipeline("zero-shot-image-classification", model = model_name, device=0)
+    index = 0
+
+    sucessful_protocol_found = False
+    sucessful_protocol = ""
+    while True:
+        try:           
+            if(not ProtocolQueue.empty()):
+                protocol_msg = ProtocolQueue.get(block=False)
+                protocol = protocol_msg.protocol
+            else:
+                protocol = sucessful_protocol if(sucessful_protocol_found) else "None"
+
+            image_message = VideoDataQueue.get()
+            
+            if(image_message["signal"] == "Kill"): 
+                print("[EMS Vision Thread received Kill Signal. Bye!]")
+                break
+            
+            if(protocol is not "None"):
+                print("[EMS Vision Thread: received-protocol:",protocol,']\n')
+                
+                print('\n\n=============================================================')
+                
+
+            labels_for_classification = generate_labels(protocol)
+            # if labels_for_classification is None, that means the protocol does not initiate action recogn
+            if(labels_for_classification is None): 
+                sucessful_protocol_found = False
+                model_scores,model_latency = "None", None
+            # if labels_for_classification is not None, that means a protocol that initiates action recogn was found
+            else:
+                print("[EMS Vision Thread: generated-labels:",labels_for_classification,']')
+                sucessful_protocol_found = True
+                sucessful_protocol = protocol 
+                print("[EMSVISIONTHREAD:]",protocol,sucessful_protocol,sucessful_protocol_found)
+
+                model_scores,model_latency = classify(pil_image,labels_for_classification,classifier)
+                print(f'[EMS Vision Thread: model scores-{model_scores}, latency-{model_latency}]')
+
+            pil_image = image_message["image"]
+            pil_image.save(f'{pipeline_config.image_directory}T{pipeline_config.trial_num}_{pipeline_config.curr_recording}_{index}_pil.jpg')
+            
+            index += 1
+
+            if pipeline_config.evaluation:
+                pipeline_config.vision_data['protocol'].append(protocol)
+                pipeline_config.vision_data['intervention recognition'].append(model_scores)
+                pipeline_config.vision_data['intervention latency'].append(model_latency)
+
+        except Exception as e:
+            print('[EMS Vision Thread: EXCEPTION!]',e)
+            print(traceback.format_exc())
+            break

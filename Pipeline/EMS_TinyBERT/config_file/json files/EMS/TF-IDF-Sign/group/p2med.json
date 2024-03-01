@@ -1,0 +1,50 @@
+{
+    "medical - chest pain - cardiac suspected (protocol 2 - 1)": {
+        "Aspirin (asa)": 0.3465735902799726,
+        "Nitroglycerin": 0.3465735902799726,
+        "Midazolam (versed)": 0.23104906018664842,
+        "Fentanyl": 0.23104906018664842,
+        "Morphine": 0.23104906018664842,
+        "Diazepam (valium)": 0.23104906018664842
+    },
+    "medical - seizure": {
+        "Midazolam (versed)": 0.6931471805599453,
+        "Diazepam (valium)": 0.6931471805599453
+    },
+    "medical - abdominal pain (protocol 3 - 2)": {
+        "Ondansetron (zofran)": 1.3862943611198906
+    },
+    "general - pain control": {
+        "Ketorolac (toradol)": 0.4158883083359672,
+        "Acetaminophen (tylenol)": 0.4158883083359672,
+        "Fentanyl": 0.2772588722239781,
+        "Morphine": 0.2772588722239781,
+        "Ketamine (ketalar)": 0.2079441541679836,
+        "Ondansetron (zofran)": 0.13862943611198905
+    },
+    "medical - overdose/poisoning - opioid (protocol 7 - 1)": {
+        "Naloxone (narcan)": 2.0794415416798357
+    },
+    "general - cardiac arrest": {
+        "Epi 1:10,000": 0.6931471805599452,
+        "Amiodarone (cordarone)": 0.6931471805599452,
+        "Magnesium sulfate": 0.46209812037329684
+    },
+    "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)": {
+        "Albuterol (proventil)": 0.25993019270997947,
+        "Ipratropium (atrovent)": 0.25993019270997947,
+        "Dexamethasone 10mg iv/im": 0.25993019270997947,
+        "Dexamethasone 10mg po": 0.25993019270997947,
+        "Epi 1:1,000": 0.25993019270997947,
+        "Albuterol 5mg / ipratropium 0.5mg (duoneb)": 0.25993019270997947,
+        "Dexamethasone (decadron)": 0.25993019270997947,
+        "Magnesium sulfate": 0.17328679513998632
+    },
+    "medical - diabetic - hypoglycemia": {
+        "Glucagon (glucagen)": 0.4620981203732968,
+        "Glucose (oral forms)": 0.4620981203732968,
+        "Dextrose 10 % injectable solution": 0.4620981203732968,
+        "Dextrose 50 % injectable solution": 0.4620981203732968,
+        "Dextrose 25%": 0.2310490601866484
+    }
+}

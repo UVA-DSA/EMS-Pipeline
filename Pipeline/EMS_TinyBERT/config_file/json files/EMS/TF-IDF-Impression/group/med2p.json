@@ -1,0 +1,159 @@
+{
+    "Naloxone (narcan)": [
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - altered mental status",
+        "general - cardiac arrest",
+        "medical - seizure",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - diabetic - hypoglycemia"
+    ],
+    "Fentanyl": [
+        "general - pain control",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)"
+    ],
+    "Epi 1:10,000": [
+        "general - cardiac arrest"
+    ],
+    "Glucose (oral forms)": [
+        "medical - diabetic - hypoglycemia",
+        "medical - altered mental status",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "general - cardiac arrest"
+    ],
+    "Aspirin (asa)": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "general - pain control",
+        "medical - seizure",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - diabetic - hypoglycemia",
+        "medical - altered mental status"
+    ],
+    "Albuterol (proventil)": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "general - cardiac arrest",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - altered mental status"
+    ],
+    "Ipratropium (atrovent)": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "general - cardiac arrest",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - altered mental status"
+    ],
+    "Dexamethasone 10mg iv/im": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "medical - diabetic - hypoglycemia",
+        "general - cardiac arrest"
+    ],
+    "Ondansetron (zofran)": [
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "general - pain control",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)",
+        "medical - diabetic - hypoglycemia",
+        "medical - seizure",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - altered mental status"
+    ],
+    "Nitroglycerin": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)",
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Ketorolac (toradol)": [
+        "general - pain control",
+        "injury - general trauma management (protocol 4 - 1)",
+        "medical - abdominal pain (protocol 3 - 2)"
+    ],
+    "Dextrose 10 % injectable solution": [
+        "medical - diabetic - hypoglycemia",
+        "general - cardiac arrest",
+        "medical - stroke/tia (protocol 3 - 5)",
+        "medical - altered mental status",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)"
+    ],
+    "Magnesium sulfate": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Ketamine (ketalar)": [
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Terbutaline sulfate 1 mg/ml": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Dexamethasone 10mg po": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Sodium bicarbonate": [
+        "general - cardiac arrest"
+    ],
+    "Midazolam (versed)": [
+        "medical - seizure",
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)",
+        "medical - altered mental status",
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)",
+        "injury - general trauma management (protocol 4 - 1)",
+        "general - pain control",
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)"
+    ],
+    "Haldol": [
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)"
+    ],
+    "Amiodarone (cordarone)": [
+        "general - cardiac arrest"
+    ],
+    "Glucagon (glucagen)": [
+        "medical - diabetic - hypoglycemia",
+        "medical - altered mental status"
+    ],
+    "Epi 1:1,000": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)",
+        "general - cardiac arrest"
+    ],
+    "Diphenhydramine (benadryl)": [
+        "general - cardiac arrest"
+    ],
+    "10 ml calcium chloride 10 % prefilled syringe": [
+        "general - cardiac arrest"
+    ],
+    "Generic medication placeholder": [
+        "medical - stroke/tia (protocol 3 - 5)"
+    ],
+    "Norepinephrine injection [levophed]": [
+        "general - cardiac arrest"
+    ],
+    "Albuterol 5mg / ipratropium 0.5mg (duoneb)": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Atropine": [
+        "general - cardiac arrest"
+    ],
+    "Norepinephrine (levophed)": [
+        "general - cardiac arrest"
+    ],
+    "Oxymetazoline (afrin)": [
+        "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)"
+    ],
+    "Labetalol (normodyne)": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)"
+    ],
+    "Diprivan": [
+        "injury - general trauma management (protocol 4 - 1)"
+    ],
+    "Insulin": [
+        "general - cardiac arrest"
+    ],
+    "Adenosine (adenocard)": [
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)"
+    ]
+}
