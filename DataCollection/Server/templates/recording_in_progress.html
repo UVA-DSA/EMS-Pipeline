@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CognitiveEMS Data Collection System</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .btn-stop {
+            width: 150px; /* Adjust the width of the stop button */
+            height: 50px; /* Adjust the height of the stop button */
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <h1 class="mb-4">Recording in progress...</h1>
+        <form action="/stop" method="get" class="mb-3">
+            <button type="submit" class="btn btn-danger btn-stop">Stop</button>
+        </form>
+    </div>
+
+</body>
+</html>

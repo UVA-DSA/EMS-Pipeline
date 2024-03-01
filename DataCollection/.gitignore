@@ -1,0 +1,16 @@
+*.gradle
+*.idea
+
+*.logcat
+
+
+*/node_modules
+
+DataCollected/
+
+None/
+
+__pycache__/
+
+
+*.wav

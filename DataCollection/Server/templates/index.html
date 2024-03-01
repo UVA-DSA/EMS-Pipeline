@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CognitiveEMS Data Collection System</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .container {
+            min-height: 100vh; /* Minimum height to fill the viewport */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center vertically */
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            text-align: center;
+        }
+
+        .btn {
+            width: 100px; /* Adjust the width of the buttons */
+            padding: 10px;
+            margin-top: 30px; /* Spacing above the button */
+        }
+    </style>
+</head>
+<body>
+    <div class="container d-flex justify-content-center">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6 text-center">
+                <h1 class="mb-4" >CognitiveEMS</h1>
+                <h3 class="mb-4" style="padding-bottom: 30px;">Data Collection System</h3>
+                <form action="/start" method="post" class="form-group">
+                    <input type="text" class="form-control mb-3" name="subject" placeholder="Subject Name" required>
+                    <input type="text" class="form-control mb-3" name="intervention" placeholder="Intervention" required>
+                    <button type="submit" class="btn btn-primary">Start</button>
+                </form>
+            </div>
+            <div class="col-3"></div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
