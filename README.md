@@ -9,9 +9,15 @@ This repository contains the decision support pipeline for a real-time, multimod
 :exclamation: The branches related previous work carried out in this project is archived and you may browse them under tags.
 
 ## Branches in This Repository 
-- `server` : the CognitiveEMS pipeline implemented on server (Ubuntu desktop)
-- `edge` : the CognitiveEMS pipeline deployed on edge (Jetson Nano)
-- `demo` : a portable demo of the CognitiveEMS pipeline implemented on laptop that can be used for data collection (Alienware m15 R7)
+- `master` : the CognitiveEMS pipeline implemented on server (Ubuntu desktop). used to evaluate the pipeline performance and generate results displayed in our paper.
+- `edge` : the CognitiveEMS pipeline deployed on edge (Jetson Nano) used to evaluate the pipeline performance and generate results displayed in our paper.
+- `demo` : a portable demo of the CognitiveEMS pipeline with a GUI implemented for an Ubuntu based system that can be used for demonstration of the Cognitive Assistant.
+- `dcs` : a data collection system developed to collect multimodal data.
+    - supported modalities: Video, Audio, IMU Data from smartwatch
+    - supported devices: 
+        - Android smartphone/smarglass for Video and Audio
+        - GoPro for Video and Audio
+        - WearOS based smartwatches for IMU data
 
 ## Publically Available Datasets
 One of the challenges of developing a Cognitive Assistant system for the EMS domain is a lack of realistic audio and video EMS data. We contribute new publicly-available datasets, including human and synthetic EMS conversational audio and multimodal data from simulated EMS scenarios that can be found [here]().
