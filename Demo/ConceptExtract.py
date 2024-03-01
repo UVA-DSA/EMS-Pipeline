@@ -147,7 +147,7 @@ class ConceptExtractor(object):
         '''
         sent_text: a list of sent text
         '''
-        mm = MetaMap.get_instance('./public_mm/bin/metamap16', version=2016)
+        mm = MetaMap.get_instance('./public_mm/bin/metamap20', version=2020)
         self.concepts, _ = mm.extract_concepts(sent_text, word_sense_disambiguation=True,
                                                ignore_stop_phrases=True)
 
@@ -155,7 +155,7 @@ class ConceptExtractor(object):
                                              ignore_stop_phrases=True)
 
         with open("chunk.csv", "a") as f:
-            writer = csv.writer(f, delimiter=',', escapechar='\\')
+            writer = csv.writer(f, delimiter=',')
             writer.writerow(sent_text)
 
         check1, ob1 = get_bp(self.scores, sent_text)

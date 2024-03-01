@@ -68,9 +68,6 @@ def audio_stream_UDP(stopped):
     t2 = threading.Thread(target=getAudioData, args=(stopped,))
     t2.start()
 
-# thread for streaming audio to the GUI 
-t1 = threading.Thread(target=audio_stream_UDP, args=(stopped,))
-t1.start()
 
 class MicrophoneStream(object):
     micSessionCounter = 0
@@ -223,8 +220,13 @@ class MicrophoneStream(object):
 # Google Cloud Speech API Recognition Thread for Microphone
 def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, data_path_str, audioStreamBool, transcriptStreamBool):
 
+    t1 = threading.Thread(target=audio_stream_UDP, args=(stopped,))
+    t1.start()
 
     data_path_str += "audiodata/"
+    if audioStreamBool:
+        if not os.path.exists(data_path_str):
+                    os.makedirs(data_path_str)
     with speech.SpeechClient() as client:
         # Create GUI Signal Object
         SpeechSignal = GUISignal()

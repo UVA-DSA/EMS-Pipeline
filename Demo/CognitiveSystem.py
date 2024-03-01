@@ -26,10 +26,11 @@ blackboard.tick_num = 0
 
 # ------------ For Feedback ------------
 class FeedbackObj:
-    def __init__(self, intervention, protocol, concept):
+    def __init__(self, intervention, protocol, p_confidence, concept):
         super(FeedbackObj, self).__init__()
         self.intervention = intervention
         self.protocol = protocol
+        self.protocol_confidence = p_confidence
         self.concept = concept
 
 # ------------ End Feedback Obj Class ------------
@@ -63,18 +64,20 @@ def CognitiveSystem(Window, SpeechToNLPQueue, FeedbackQueue, data_path_str, conc
     SpeechText = ""
     NLP_Items = []
     Tick_Counter = 1
-# ================== HERE ================================================================
+
+    previous_transcript = ""
     while True:
         # continue
         # Get queue item from the Speech-to-Text Module
         received = SpeechToNLPQueue.get()
+        # print("Received chunk", received.transcript)
 
         if(received == 'Kill'):
-            print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
+            # print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
             break
 
         if(Window.reset == 1):
-            print("Cognitive System Thread Received reset signal. Killing Cognitive System Thread.")
+            # print("Cognitive System Thread Received reset signal. Killing Cognitive System Thread.")
             return
 
         # If item received from queue is legitmate
@@ -82,12 +85,43 @@ def CognitiveSystem(Window, SpeechToNLPQueue, FeedbackQueue, data_path_str, conc
             #sentsList = [received.transcript]
 
             # Use online tool to find sentence boundaries
-            dummy12 = received.transcript
-            sentsList = [received.transcript]
+            current_transcript = received.transcript
+            # dummy12 = dummy12.replace('\r', '').replace('\n', '')
+            # dummyP2 = dummy12.replace(' ', '%20')
+            # dummyP3 = dummyP2.replace('\'', '%27')
+            # dummyP = dummyP3.replace('&', '%26')
+            # part1 = 'curl -d text='+dummyP+' http://bark.phon.ioc.ee/punctuator'
+            # op = subprocess.getstatusoutput(part1)
+            # # print("op:  ", op)
+            # output = op[1].rsplit('\n', 1)[1]
+            # sentsList = textParse2.sent_tokenize(output)  # final sentences
+            # print("original: ",received.transcript)
+            # print("online_tool: ",output)
+            # print("sentsList: ",sentsList)
             
+            
+            # # Split the strings into lists of words
+            # words1 = previous_transcript.split()
+            # words2 = current_transcript.split()
+
+            # # Find the words in str2 that are not in str1 while preserving order
+            # diff = [word for word in words2 if word not in words1]
+
+            # # Join the words to form str3
+            # new_transcript = ' '.join(diff)
+            
+            # if len(diff) == 0: pass 
+            
+            
+            sentsList = [current_transcript]
+
+            print("\n\n\n\ Concept Extraction Received: ",current_transcript, '\n\n')
+
             def print_tree(tree):
                 print(py_trees.display.unicode_tree(root=tree.root, show_status=True))
                 
+                
+            # print("sentsList:",sentsList)
             # Processes each chunk/sentence
             PunctuatedAndHighlightedText = ""
             for idx, item in enumerate(sentsList):
@@ -115,18 +149,19 @@ def CognitiveSystem(Window, SpeechToNLPQueue, FeedbackQueue, data_path_str, conc
                 PunctuatedAndHighlightedText += PunctuatedAndHighlightedTextChunk + " "
                 Tick_Counter += 1
 
+                NLP_Items = []
+
                 if(Window.reset == 1):
                     # print("Cognitive System Thread Received reset signal. Killing Cognitive System Thread.")
                     return
 
-            SpeechSignal.signal.emit([SpeechNLPItem(
-                PunctuatedAndHighlightedText, received.isFinal, received.confidence, received.numPrinted, 'NLP')])
+            PunctuatedAndHighlightedText = '<b>' + PunctuatedAndHighlightedText + '</b>'
+            # SpeechSignal.signal.emit([SpeechNLPItem(
+            #     PunctuatedAndHighlightedText, received.isFinal, received.confidence, received.numPrinted, 'NLP')]) # icommented for somereaosn
 
 
 # Function to return this recent tick's results
 def TickResults(Window, NLP_Items, data_path_str, conceptBool, interventionBool, FeedbackQueue):
-    Concepts_Graph = dict()
-    # print(NLP_Items)
     if conceptBool == True:
         if not os.path.exists(data_path_str + "conceptextractiondata/"):
             os.makedirs(data_path_str+"conceptextractiondata/")
@@ -174,9 +209,10 @@ def TickResults(Window, NLP_Items, data_path_str, conceptBool, interventionBool,
         if len(blackboard.Vitals[item].content) > 0:
             content = (str(blackboard.Vitals[item].name).capitalize(), str(blackboard.Vitals[item].binary),
                        str(blackboard.Vitals[item].value), str(blackboard.Vitals[item].content),
-                       str(round(blackboard.Vitals[item].score/1000, 2)), blackboard.Vitals[item].tick)
+                       str(round(blackboard.Vitals[item].score/1000, 2)),blackboard.Vitals[item].tick)
             # print(content)
             signs_and_vitals.append(content)
+
             if(content not in NLP_Items):
                 NLP_Items.append(content)
 
@@ -184,7 +220,7 @@ def TickResults(Window, NLP_Items, data_path_str, conceptBool, interventionBool,
         if len(blackboard.Signs[item].content) > 0:
             content = (str(blackboard.Signs[item].name).capitalize(), str(blackboard.Signs[item].binary),
                        str(blackboard.Signs[item].value), str(blackboard.Signs[item].content),
-                       str(round(blackboard.Signs[item].score/1000, 2)), blackboard.Signs[item].tick)
+                       str(round(blackboard.Signs[item].score/1000, 2)),blackboard.Signs[item].tick)
             # print(content)
             signs_and_vitals.append(content)
             if(content not in NLP_Items):
@@ -211,12 +247,8 @@ def TickResults(Window, NLP_Items, data_path_str, conceptBool, interventionBool,
 
     signs_and_vitals_str = ""
     signs_and_vitals_str_fb = ""
-    
-    # Store in dictionary to take out duplicates of the same concept with out of date confidence
+
     for sv in NLP_Items:
-        Concepts_Graph[sv[0]] = sv
-    
-    for sv in Concepts_Graph.values():
         signs_and_vitals_str += "("
         for i, t in enumerate(sv):
             if(i != 3 and i != 4 and i != 5):
@@ -237,20 +269,21 @@ def TickResults(Window, NLP_Items, data_path_str, conceptBool, interventionBool,
     # print("===============================================================")
 
     #Feedback
-    interventionFB =  FeedbackObj(suggestions_str_fb, None, None)
+    interventionFB =  FeedbackObj(suggestions_str_fb, None, None, None)
     FeedbackQueue.put(interventionFB)
 
-    conceptFB =  FeedbackObj(None,None, signs_and_vitals_str_fb)
+    conceptFB =  FeedbackObj(None,None,None, signs_and_vitals_str_fb)
     FeedbackQueue.put(conceptFB)
 
 
     # ProtocolSignal.signal.emit([protocol_candidates_str, suggestions_str])
-    ProtocolSignal.signal.emit([protocol_candidates_str, suggestions_str])
+    ProtocolSignal.signal.emit([interventionFB])
 
 
     if interventionBool == True:
         #write data to file for data collection
         Intervention_outputfile.write(suggestions_str)
+
 
     ConceptExtractionSignal.signal.emit([signs_and_vitals_str])
 

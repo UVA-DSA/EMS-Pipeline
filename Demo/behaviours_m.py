@@ -182,6 +182,7 @@ class InformationGathering(py_trees.behaviour.Behaviour):
         #blackboard = Blackboard()
         global blackboard
         # print("global tick_num: ", blackboard.tick_num)
+        print('blackboard',blackboard.text)
         self.sce.ConceptExtract(blackboard.text)
 
         blackboard.concepts = self.sce.concepts

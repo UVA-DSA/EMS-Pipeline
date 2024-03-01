@@ -1,2 +1,0 @@
-*.pt filter=lfs diff=lfs merge=lfs -text
-whisper.cpp/models/*.bin filter=lfs diff=lfs merge=lfs -text

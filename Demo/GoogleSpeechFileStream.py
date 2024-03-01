@@ -22,6 +22,7 @@ with open(os.devnull, 'w') as f:
 RATE = 44100
 CHUNK = int(RATE / 10)  # 100ms
 
+
 class FileStream(object):
     fileSessionCounter = 0
     position = 0
@@ -63,7 +64,7 @@ class FileStream(object):
         # streaming_recognize method will not block the process termination.
         # self._buff.put(None)
         # self._audio_interface.terminate()
-# ========================= HERE ===================================================================
+
     def _fill_buffer(self, in_data, frame_count, time_info, status_flags):
         """Continuously collect data from the audio stream, into the buffer."""
         # self._buff.put(in_data)
@@ -164,13 +165,6 @@ class FileStream(object):
 
 
 def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, wavefile_name, data_path_str, audioStreamBool, transcriptStreamBool):
-    
-    def numberWords(s):
-        count = 0
-        for c in s:
-            if c == ' ': count += 1
-        return count
-    
     # Create GUI Signal Object
     SpeechSignal = GUISignal()
     SpeechSignal.signal.connect(Window.UpdateSpeechBox)
@@ -189,9 +183,6 @@ def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, wavefile_nam
     else:
         RATE = 16000
     CHUNK = int(RATE)/10
-
-    # Define a transcript chunk to be a certain number of words 
-    WORDS_PER_CHUNK = 3
     
     client = speech.SpeechClient()
     config = speech.RecognitionConfig(encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
@@ -216,7 +207,6 @@ def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, wavefile_nam
             # Now, put the transcription responses to use.
             num_chars_printed = 0
             responseTimeStamp = time.time()
-            prev_num_words = 0
 
             for response in responses:
                 if not response.results:
@@ -232,20 +222,33 @@ def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, wavefile_nam
                 transcript = result.alternatives[0].transcript
                 confidence = result.alternatives[0].confidence
 
-#=================== Sion - consider interim results for intervention suggestion==============================================================================
-                new_num_words = numberWords(transcript)
-                # process per new chunk, and always process final segments
-                if (new_num_words - prev_num_words >= WORDS_PER_CHUNK) or result.is_final:
+                # Display interim results, but with a carriage return at the end of the
+                # line, so subsequent lines will overwrite them.
+                # If the previous result was longer than this one, we need to print
+                # some extra spaces to overwrite the previous result
+                overwrite_chars = ' ' * (num_chars_printed - len(transcript))
+
+                if result.is_final:
+                    #print(transcript + overwrite_chars)
                     QueueItem = SpeechNLPItem(transcript, result.is_final,
-                                                    confidence, num_chars_printed, 'Speech')
-                    # send all transcripts (interim and final) to Xueren's Model
-                    EMSAgentSpeechToNLPQueue.put(QueueItem)
-                    # send all transcripts (interim and final) to Metamap
+                                              confidence, num_chars_printed, 'Speech')
                     SpeechToNLPQueue.put(QueueItem)
-                    # signal GUI SpeechBox that transcript has been received and queued 
+                    EMSAgentSpeechToNLPQueue.put(QueueItem)
+
                     SpeechSignal.signal.emit([QueueItem])
-                prev_num_words = new_num_words
-                    
+                    num_chars_printed = 0
+
+                elif not result.is_final:
+                    #sys.stdout.write(transcript + overwrite_chars + '\r')
+                    # sys.stdout.flush()
+                    QueueItem = SpeechNLPItem(transcript, result.is_final,
+                                              confidence, num_chars_printed, 'Speech')
+                    # SpeechToNLPQueue.put(QueueItem)
+                    # EMSAgentSpeechToNLPQueue.put(QueueItem)
+
+                    SpeechSignal.signal.emit([QueueItem])
+                    num_chars_printed = len(transcript)
+
         except Exception as e:
             # print(e)
             MsgSignal.signal.emit(

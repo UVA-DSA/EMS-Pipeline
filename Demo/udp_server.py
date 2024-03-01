@@ -13,17 +13,17 @@ Function to find the peaks and valleys using the robust method using z-score and
 2. paramter tuning is highly important !!!
 """
 def robust_peaks_detection_zscore(df,lag,threshold,influence):
-    rate = thresholding_algo(df['Value_Magnitude_XYZ'],lag,threshold,influence)
+    rate = thresholding_algo(df['value_Magnitude_XYZ'],lag,threshold,influence)
     indices = np.where(rate['signals'] == 1)[0]
-    robust_peaks_time = df.iloc[indices]['EPOCH_Time_ms']
-    robust_peaks_value = df.iloc[indices]['Value_Magnitude_XYZ']
+    robust_peaks_time = df.iloc[indices]['sw_epoch_ms']
+    robust_peaks_value = df.iloc[indices]['value_Magnitude_XYZ']
     indices = np.where(rate['signals'] == -1)[0]
-    robust_valleys_time = df.iloc[indices]['EPOCH_Time_ms']
-    robust_valleys_value = df.iloc[indices]['Value_Magnitude_XYZ']
+    robust_valleys_time = df.iloc[indices]['sw_epoch_ms']
+    robust_valleys_value = df.iloc[indices]['value_Magnitude_XYZ']
     # # #Plotting
     # fig = plt.figure()
     # ax = fig.subplots()
-    # ax.plot(acc_df[‘EPOCH_Time_ms’].tolist(),acc_df[‘Value_Magnitude_XYZ’].tolist())
+    # ax.plot(acc_df[‘sw_epoch_ms’].tolist(),acc_df[‘value_Magnitude_XYZ’].tolist())
     # ax.scatter(robust_valleys_time, robust_valleys_value, color = ‘gold’, s = 15, marker = ‘v’, label = ‘Minima’)
     # ax.scatter(robust_peaks_time, robust_peaks_value, color = ‘b’, s = 15, marker = ‘X’, label = ‘Robust Peaks’)
     # ax.legend()
@@ -37,12 +37,12 @@ Function to find the peaks and valleys
 3. todo
 """
 def find_peaks_valleys_cwt(df):
-    peaks = find_peaks_cwt(df['Value_Magnitude_XYZ'],np.arange(100,2000))
+    peaks = find_peaks_cwt(df['value_Magnitude_XYZ'],np.arange(100,2000))
     print(peaks)
 #     height = peaks[1][‘peak_heights’] #list of the heights of the peaks
 #     peak_pos = data_frame.iloc[peaks[0]] #list of the peaks positions
 #     # #Finding the minima
-#     y2 = df[‘Value_Magnitude_XYZ’]*-1
+#     y2 = df[‘value_Magnitude_XYZ’]*-1
 #     minima = find_peaks(y2,height = -5, distance = 1)
 #     min_pos = data_frame.iloc[minima[0]] #list of the minima positions
 #     min_height = y2.iloc[minima[0]] #list of the mirrored minima heights
@@ -54,11 +54,11 @@ Function to find the peaks and valleys
 3. todo
 """
 def find_peaks_valleys(df,height,distance,prominence):
-    peaks = find_peaks(df['Value_Magnitude_XYZ'], height = height,  distance = distance,prominence=prominence)
+    peaks = find_peaks(df['value_Magnitude_XYZ'], height = height,  distance = distance,prominence=prominence)
     height = peaks[1]['peak_heights'] #list of the heights of the peaks
     peak_pos = data_frame.iloc[peaks[0]] #list of the peaks positions
     # #Finding the minima
-    y2 = df['Value_Magnitude_XYZ']*-1
+    y2 = df['value_Magnitude_XYZ']*-1
     minima = find_peaks(y2,height = -5, distance = 1)
     min_pos = data_frame.iloc[minima[0]] #list of the minima positions
     min_height = y2.iloc[minima[0]] #list of the mirrored minima heights
@@ -68,7 +68,7 @@ Function to calculate the CPR rate
 1. finds time differences between peaks and return the average rate per minute
 """
 def find_cpr_rate(peaks):
-    time_diff_between_peaks=np.diff(peaks['EPOCH_Time_ms'])
+    time_diff_between_peaks=np.diff(peaks['sw_epoch_ms'])
     is_not_empty=len(time_diff_between_peaks) > 0
     if is_not_empty:
         avg_time_btwn_peaks_in_seconds_scipy = np.average(time_diff_between_peaks)/1000

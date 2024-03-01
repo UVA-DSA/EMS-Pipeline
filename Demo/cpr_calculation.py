@@ -36,13 +36,13 @@ def thresholding_algo(y, lag, threshold, influence):
                 stdFilter = np.asarray(stdFilter))
 
 def robust_peaks_detection_zscore(df,lag,threshold,influence):
-    rate = thresholding_algo(df['Value_Magnitude_XYZ'],lag,threshold,influence)
+    rate = thresholding_algo(df['value_Magnitude_XYZ'],lag,threshold,influence)
     indices = np.where(rate['signals'] == 1)[0]
-    robust_peaks_time = df.iloc[indices]['EPOCH_Time_ms']
-    robust_peaks_value = df.iloc[indices]['Value_Magnitude_XYZ']
+    robust_peaks_time = df.iloc[indices]['sw_epoch_ms']
+    robust_peaks_value = df.iloc[indices]['value_Magnitude_XYZ']
     indices = np.where(rate['signals'] == -1)[0]
-    robust_valleys_time = df.iloc[indices]['EPOCH_Time_ms']
-    robust_valleys_value = df.iloc[indices]['Value_Magnitude_XYZ']
+    robust_valleys_time = df.iloc[indices]['sw_epoch_ms']
+    robust_valleys_value = df.iloc[indices]['value_Magnitude_XYZ']
     # # #Plotting
     # fig = plt.figure()
     # ax = fig.subplots()
@@ -61,7 +61,7 @@ Function to find the peaks and valleys
 3. todo
 """
 # def find_peaks_valleys_cwt(df):
-#     peaks = find_peaks_cwt(df['Value_Magnitude_XYZ'],np.arange(100,2000))
+#     peaks = find_peaks_cwt(df['value_Magnitude_XYZ'],np.arange(100,2000))
 #     print(peaks)
 #     height = peaks[1][‘peak_heights’] #list of the heights of the peaks
 #     peak_pos = data_frame.iloc[peaks[0]] #list of the peaks positions
@@ -79,11 +79,11 @@ Function to find the peaks and valleys
 """
 def find_peaks_valleys(df,height,distance,prominence):
     # print("find_peaks",df)
-    peaks = find_peaks(df['Value_Magnitude_XYZ'], height = height,  distance = distance,prominence=prominence)
+    peaks = find_peaks(df['value_Magnitude_XYZ'], height = height,  distance = distance,prominence=prominence)
     height = peaks[1]['peak_heights'] #list of the heights of the peaks
     peak_pos = df.iloc[peaks[0]] #list of the peaks positions
     # #Finding the minima
-    y2 = df['Value_Magnitude_XYZ']*-1
+    y2 = df['value_Magnitude_XYZ']*-1
     minima = find_peaks(y2,height = -5, distance = 1)
     min_pos = df.iloc[minima[0]] #list of the minima positions
     min_height = y2.iloc[minima[0]] #list of the mirrored minima heights
@@ -94,7 +94,7 @@ Function to calculate the CPR rate
 1. finds time differences between peaks and return the average rate per minute
 """
 def find_cpr_rate(peaks):
-    time_diff_between_peaks=np.diff(peaks['EPOCH_Time_ms'])
+    time_diff_between_peaks=np.diff(peaks['sw_epoch_ms'])
     is_not_empty=len(time_diff_between_peaks) > 0
     if is_not_empty:
         avg_time_btwn_peaks_in_seconds_scipy = np.average(time_diff_between_peaks)/1000
@@ -109,8 +109,8 @@ Function to preprocess data
 2. todo
 """
 def preprocess_data(df):
-    magnitude_xyz_df = np.sqrt(np.square(df[['Value_X_Axis','Value_Y_Axis','Value_Z_Axis']]).sum(axis=1))
-    df['Value_Magnitude_XYZ'] = magnitude_xyz_df
+    magnitude_xyz_df = np.sqrt(np.square(df[['value_X_Axis','value_Y_Axis','value_Z_Axis']]).sum(axis=1))
+    df['value_Magnitude_XYZ'] = magnitude_xyz_df
     return df
 
 
@@ -120,7 +120,7 @@ def vid_streaming_Cpr(y_vals, image_times):
     #normalize by removing mean 
     wrist_data_norm=y_vals-mean
     #detect peaks for hand detection
-    peaks, _ = find_peaks(wrist_data_norm, height=0.005)
+    peaks, _ = find_peaks(wrist_data_norm, height=0.002)
     peak_times = np.take(image_times, peaks)
 
     #find time difference between peaks and calculate cpr rate

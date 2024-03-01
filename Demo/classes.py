@@ -1,7 +1,4 @@
-# from PyQt5.QtCore import *
-# from PyQt5.QtWidgets import *
-# from PyQt5.QtGui import *
-
+from PyQt5.QtCore import pyqtSignal, QObject
 class TranscriptItem:
       def __init__(self, transcript, isFinal, confidence, transcriptionDuration):
             self.transcript = transcript
@@ -11,12 +8,13 @@ class TranscriptItem:
 
 # ------------ For Feedback ------------
 class FeedbackObj:
-    def __init__(self, intervention, protocol, concept):
+    def __init__(self, intervention, protocol, protocol_confidence, concept):
         super(FeedbackObj, self).__init__()
         self.intervention = intervention
         self.protocol = protocol
+        self.protocol_confidence = protocol_confidence
         self.concept = concept
-
+        
 # ============== Custom Speech to NLP Queue Item Class ==============
 
 class SpeechNLPItem:
@@ -36,7 +34,7 @@ class QueueItem:
             self.confidence = 0
 
 # Custom object for signalling
-# class GUISignal(QObject):
-#     signal = pyqtSignal(list)
+class GUISignal(QObject):
+    signal = pyqtSignal(list)
 
 

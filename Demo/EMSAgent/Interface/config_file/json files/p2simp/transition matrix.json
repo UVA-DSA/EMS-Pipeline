@@ -1,0 +1,38 @@
+{
+    "general - cardiac arrest": {
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)": "0.013752501"
+    },
+    "general - pain control": {
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)": "0.2102051"
+    },
+    "injury - general trauma management (protocol 4 - 1)": {
+        "general - pain control": "0.030154577"
+    },
+    "medical - abdominal pain (protocol 3 - 2)": {
+        "medical - diabetic - hypoglycemia": "0.00044492353"
+    },
+    "medical - altered mental status": {
+        "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)": "0.6133083"
+    },
+    "medical - chest pain - cardiac suspected (protocol 2 - 1)": {
+        "general - cardiac arrest": "0.06943887"
+    },
+    "medical - diabetic - hypoglycemia": {
+        "medical - abdominal pain (protocol 3 - 2)": "0.08457269"
+    },
+    "medical - overdose/poisoning - opioid (protocol 7 - 1)": {
+        "general - cardiac arrest": "0.075175114"
+    },
+    "medical - overdose/poisoning/toxic ingestion (protocol 9 - 9)": {
+        "medical - overdose/poisoning - opioid (protocol 7 - 1)": "0.21252614"
+    },
+    "medical - respiratory distress/asthma/copd/croup/reactive airway (respiratory distress) (protocol 3 - 11)": {
+        "medical - chest pain - cardiac suspected (protocol 2 - 1)": "0.0013606463"
+    },
+    "medical - seizure": {
+        "medical - stroke/tia (protocol 3 - 5)": "0.009248269"
+    },
+    "medical - stroke/tia (protocol 3 - 5)": {
+        "medical - altered mental status": "0.026867103"
+    }
+}

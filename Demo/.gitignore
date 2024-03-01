@@ -1,28 +1,23 @@
-
-build/
-.vscode
-.cache/
-*.swp
-*/models/*.bin
-*.so
-__pycache__
-*/dist
-*.gguf
-
-evaluation_results
-Evaluation_Results
-
-Video_Scenarios
-Audio_Scenarios
-
-*.zip
-
 # Ignore Mac system files
 .DS_store
 
-EMSAgent/models
+results.csv
 
+chunk.csv
+check.csv
+
+*.logcat
+
+pymetamap/pymetamap.egg-info/PKG-INFO
+
+*.o
+EMS_Whisper/main
+EMS_Whisper/stream
+
+*.egg
 .gradle/*
+
+.vscode
 
 # Ignore node_modules folder
 public_mm/*
@@ -31,23 +26,21 @@ EMSAgent/Interface/models/*
 
 service-account.json
 
+# Ignore all text files
+*.txt
+
 # Ignore files related to API keys
 .env
 
 # Ignore SASS config files
 .sass-cache
 
-*/*.local.properties
-
-*/PKG-INFO
 
 data_collection_folder/*
 
 __pycache__/
 
 *.~lock.*
-*.egg
-*.pyc
 
 */.gradle
 */.idea
@@ -90,16 +83,7 @@ output.json
 obj/
 .externalNativeBuild
 
-check.csv
-chunk.csv
-transcript.txt
+*/camstrm/.gradle/*
 
-
-#Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-
-whisper.cpp/models/*
+# whisper wieghts 
+/whisper.cpp/models/*.bin

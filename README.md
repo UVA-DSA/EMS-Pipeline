@@ -1,126 +1,126 @@
-# Installation and Setup Guide
+# CognitiveEMS Pipeline
+This repository contains the decision support pipeline for a Cognitive Assistant System for Emergency Medical Serivces (EMS). The system aims to improve situational awareness of the first responders/paramedics by automated collection and analysis of data from incident scenes and providing suggestions to them. The figure below shows the overall architecture of the proposed system. For more information visit the project page at: https://www.nist.gov/ctl/pscr/cognitive-assistant-systems-emergency-response
 
-This guide provides instructions for setting up the **CognitiveEMS** Pipeline on *NVIDIA Jetson Nano* edge device.
+![Architecture](ETC/CognitiveEMS.png)
 
-## Disassemble and Install WiFi Card
+## Demo 
+The `Demo/` directory contains a demonstration of the edge device system in form of a graphical user interface (GUI). 
 
-[Insert instructions for disassembling and installing the WiFi card here.]
+ The GUI is built with PyQt4 and has been succesfully tested on:
 
-## Anaconda Compatibility
+`64-bit Ubuntu 16.04 LTS, Intel® Core™ i7-7700 CPU @ 3.60GHz × 8`
 
-Anaconda is not supported on Arch Linux. To manage Python environments, we recommend using `archiconda3`.
+`2016 MacBook Pro running macOS Monterey, Intel Core™ i7 Dual-Core, 2.4 GH Dual Core`
 
-Please follow the instructions at [archiconda3](https://github.com/yqlbu/archiconda3) to install Conda.
+### Requirements
+The branch has been tested using Python 3.8.1. You may be able to get it running on lower versions.
+A requirements.txt file containing all required Python packages is in Demo/. From the Demo folder, run the following commands:
 
-## Permissions Issue
-
-If you encounter permission issues, you can resolve them by changing ownership of certain directories:
-
-```bash
-sudo chown -R $USER:$USER ~/archiconda3/
-sudo chown -R $USER:$USER ~/.conda/
-```
-
-## PyTorch Compatibility
-
-To ensure compatibility, use PyTorch 1.10 with Cuda 10.2 and Python 3.6. Be mindful when creating virtual environments.
-
-Create a Conda environment with Python 3.6:
-
-
-```bash
-conda create -n myenv python=3.6
-conda activate myenv
-```
-
-For Cuda 1.10.0, refer to [this link](https://qengineering.eu/install-pytorch-on-jetson-nano.html).
-
-## Numpy Version
-
-Ensure that you install numpy version 1.19.4 to avoid issues:
-
-```bash
-pip install numpy==1.19.4
-```
-## PyAudio Installation
-
-Install the required dependencies and PyAudio:
-
-
-```bash
-sudo apt-get install portaudio19-dev python-all-dev python3-all-dev
-pip install pyaudio
-```
-
-## Transformers Compatibility
-
-Please note that the latest Transformers library may not be supported. You may encounter issues with the WhisperProcessor. Additionally, the 'evaluate' module is not supported.
-
-*Update 10/10/23*
-
-Workaround to install Transformers
-
-Follow steps provided in this [link](https://benjcunningham.org/installing-transformers-on-jetson-nano.html)
-
-Few changes needed.
-
-1. Make conda environment with python=3.6 instead of venv
-2. When installing SentencePiece, use `python setup.py install --user`
-3. Skip Install Tokenizers step
-4. `pip install transformers==2.5.1`
-5. Downgrade numpy to `1.19.4`
-
-
-## Librosa Installation
-
-Commands:
-```bash
-
-$ sudo apt-get install llvm-7
-
-$ cd /usr/bin
-
-$ sudo ln -s llvm-config-7 llvm-config
-
-$ sudo pip3 install llvmlite==0.31.0
-
-$ sudo pip3 install numba==0.48
-
-$ sudo pip3 install librosa
 
 ```
-
-Note that if you have ever tried other llvm versions (e.g. llvm-9, llvm-10, etc.), uninstall other llvm versions, install the correct version llvm-7, remove the file ‘llvm-config’ under /usr/bin if it exists, and re-run “sudo ln -s llvm-config-7 llvm-config” before attempting installation of numba.
-
-
-## Creating a virtual mic
-Add these commands to the end of `/etc/pulse/default.pa` and reboot.
-
-```bash
-pactl load-module module-null-sink sink_name="virtual_speaker" sink_properties=device.description="virtual_speaker"
-pactl load-module module-remap-source master="virtual_speaker.monitor" source_name="virtual_mic" source_properties=device.description="virtual_mic"
+sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
+sudo apt-get install ffmpeg
+sudo apt-get install python3-pyaudio
+sudo apt-get install curl
 ```
 
-Testing Streaming whisper.cpp with virtual mic
-```bash
- ./stream -m ./models/ggml-tiny.en.bin -t 3 --step 4000 --length 8000 -ac 512 --capture
+
+```
+pip install -r requirements.txt
 ```
 
-## Protocol Agent Warmup Phase
 
-The protocol agent requires a warmup phase before use. Follow these steps:
 
-1.  Start the Whisper CPP process.
-2.  Start the EMSAgent process.
-3.  Execute a warmup inference inside EMSAgent to load kernels.
-4.  Sleep for around 60 seconds for the warmup to complete.
-5.  Start the audio streaming process.
+#### MetaMap:
+**MetaMap 2016v2** needs to be installed under the `Demo/public_mm` directory. Downloads are hosted at:  
+<https://metamap.nlm.nih.gov/MainDownload.shtml>  
 
-## GPU Loading Time on Jetson
+You will need a UMLS account/license. You can request one here:  
+<https://uts.nlm.nih.gov/license.html>  
 
-On Jetson devices, it may take a significant amount of time to load PyTorch kernels to the GPU. This typically happens only once.
+Instructions for installing MetaMap are here:  
+<https://metamap.nlm.nih.gov/Installation.shtml>
 
-----------
+#### PyMetaMap:
+**PyMetaMap** is a Python Wrapper around MetaMap. It needs to be installed in the `Demo/pymetamap` directory. The software is already in this directory, but needs to be built:
 
-Feel free to customize and expand upon these instructions as needed for your specific setup and requirements.
+`cd pymetamap`  
+`python setup.py install`  
 
+For more information, visit: <https://github.com/AnthonyMRios/pymetamap>
+
+#### Google Cloud Speech-to-Text API:
+To use the **Google Cloud Speech API**, you need to have your own service account key in JSON format. The service account must have the Speech API enabled. It needs to be in the demo folder:  
+
+`Demo/service-account.json`
+
+For more information, visit: <https://cloud.google.com/speech-to-text/>
+
+#### DeepSpeech Models (Optional):
+
+**DeepSpeech** functionality is currently **disabled** in the demo. The models are not needed, but they could be downloaded by running:
+
+`mkdir DeepSpeech_Models`  
+`cd DeepSpeech_Models`  
+`wget https://github.com/mozilla/DeepSpeech/releases/download/v0.5.1/deepspeech-0.5.1-models.tar.gz`  
+`tar xvfz deepspeech-0.5.1-models.tar.gz`
+
+For more information and link to more recent models, visit: <https://github.com/mozilla/DeepSpeech>
+
+### Running the Demo
+
+Make the `metamap.sh` executable by running (this step is only needed to be run once on every machine):
+
+`chmod +x metamap.sh`
+
+To run MetaMap, run (this step needs to repeated after every reboot):
+
+`./metamap.sh`
+
+To launch the graphical user interface (GUI), run:
+
+`Python GUI.py`
+
+For data collection:
+
+Running `python GUI.py` will default to no data collection.
+Please use --datacollect 1 or --datacollect 0 to specifiy if you want data collected with the data collection scripts
+Default data collection will collect all streams, but you may also specify streams with the --streams option
+Arguments for the --streams option include "all" for all streams, "audio" for microphone data, "video" for video data, "smartwatch", for smartwatch data, "conceptextract" for concept extraction data, "intervention" for intervention suggestions data, "protocol" for protocol results data, and "transcript" for the speech to text transcript.
+
+
+![GUI](ETC/GUI.png)
+
+## Publications
+[“Information Extraction from Patient Care Reports for Intelligent Emergency Medical Services”](https://homa-alem.github.io/papers/CHASE_2021.pdf)  
+S. Kim, W. Guo, R. Williams, J. Stankovic, H. Alemzadeh  
+In the IEEE/ACM Conf. on Connected Health: Applications, Systems, and Engineering Technologies (CHASE), 2021. **(Best Paper Finalist)**
+
+[“A Review of Cognitive Assistants for Healthcare: Trends, Prospects, and Future Directions”](https://www.cs.virginia.edu/~stankovic/psfiles/CognitiveAssistantHealthSurvey_Main.pdf)  
+S. Preum, S. Munir, M. Ma, M. S. Yasar, D. J. Stone, R. Williams, H. Alemzadeh, J. Stankovic  
+In ACM Computing Surveys, 2021.  
+
+[“IMACS-an interactive cognitive assistant module for cardiac arrest cases in emergency medical service: Demo Abstract.”](https://dl.acm.org/doi/abs/10.1145/3384419.3430451)  
+M. A. Rahman, S. Preum, J. Stankovic. L. Jia, E. Mirza, R. Williams, H. Alemzadeh  
+In the 18th Conference on Embedded Networked Sensor Systems (SenSys'20), 2020.
+
+[“EMSContExt: EMS Protocol-driven Concept Extraction for Cognitive Assistance in Emergency Response”](https://homa-alem.github.io/papers/EMSContExt_IAAI2020.pdf)  
+S. Preum, S. Shu, H. Alemzadeh, J. Stankovic  
+In the Thirty-Second Annual Conf. on Innovative Applications of Artificial Intelligence (IAAI-20), 2020.
+
+[“GRACE: Generating Summary Reports Automatically for Cognitive Assistance in Emergency Response”](https://www.cs.virginia.edu/~stankovic/psfiles/IAAI-RahmanM.42.pdf)  
+M. A. Rahman, S. M. Preum, R. Williams, H. Alemzadeh, J. Stankovic  
+In the Thirty-Second Annual Conf. on Innovative Applications of Artificial Intelligence (IAAI-20), 2020.
+
+["A Behavior Tree Cognitive Assistant System for Emergency Medical Services](https://homa-alem.github.io/papers/IROS2019.pdf)  
+S. Shu, S. Preum, H. M. Pitchford, R. D. Williams, J. Stankovic, H. Alemzadeh  
+In the IEEE IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2019
+
+["CognitiveEMS: A Cognitive Assistant System for Emergency Medical Services"](https://homa-alem.github.io/papers/MEDCPS_2018.pdf)  
+S. Preum, S. Shu, M. Hotaki, R. Williams, J. Stankovic, H. Alemzadeh  
+In SIGBED Review, Special Issue on Medical Cyber Physical Systems Workshop (CPS-Week), 2018.
+ Featured by the IWCE's Urgent Communications and UVA SEAS News, 2018.
+ 
+["Towards a Cognitive Assistant System for Emergency Response"](https://homa-alem.github.io/papers/ICCPS_Poster_2018.pdf)  
+S. Preum, S. Shu, J. Ting, V. Lin, R. Williams, J. Stankovic, H. Alemzadeh  
+In the 9th ACM/IEEE International Conference on Cyber-Physical Systems (CPS-Week), 2018.
