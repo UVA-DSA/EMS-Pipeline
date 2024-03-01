@@ -1,202 +1,126 @@
-# CognitiveEMS Pipeline
+# Installation and Setup Guide
 
-## About This Project
-This repository contains the decision support pipeline for a real-time, multimodal, and edge-deployed Cognitive Assistant System for Emergency Medical Serivces (EMS). The system aims to improve situational awareness of the first responders/paramedics by automated collection and analysis of multimodal data from incident scenes and providing suggestions to them. The figure below shows the high level overview of the proposed system. For more information visit the [project page](https://www.nist.gov/ctl/pscr/cognitive-assistant-systems-emergency-response).
+This guide provides instructions for setting up the **CognitiveEMS** Pipeline on *NVIDIA Jetson Nano* edge device.
 
-![Architecture](<README Images/CognitiveEMS.png>)
+## Disassemble and Install WiFi Card
 
-## Notice
-:exclamation: The branches related previous work carried out in this project is archived and you may browse them under tags.
+[Insert instructions for disassembling and installing the WiFi card here.]
 
-## Branches in This Repository 
-- `master` : the CognitiveEMS pipeline implemented on server (Ubuntu desktop). used to evaluate the pipeline performance and generate results displayed in our paper.
-- `edge` : the CognitiveEMS pipeline deployed on edge (Jetson Nano) used to evaluate the pipeline performance and generate results displayed in our paper.
-- `demo` : a portable demo of the CognitiveEMS pipeline with a GUI implemented for an Ubuntu based system that can be used for demonstration of the Cognitive Assistant.
-- `dcs` : a data collection system developed to collect multimodal data.
-    - supported modalities: Video, Audio, IMU Data from smartwatch
-    - supported devices: 
-        - Android smartphone/smarglass for Video and Audio
-        - GoPro for Video and Audio
-        - WearOS based smartwatches for IMU data
+## Anaconda Compatibility
 
-## Publically Available Datasets
-One of the challenges of developing a Cognitive Assistant system for the EMS domain is a lack of realistic audio and video EMS data. We contribute new publicly-available datasets, including human and synthetic EMS conversational audio and multimodal data from simulated EMS scenarios that can be found [here]().
+Anaconda is not supported on Arch Linux. To manage Python environments, we recommend using `archiconda3`.
 
-## Models and Software Architecture  
-The figure below illustrates a high level overview of the software architecture. The pipeline is a real-time multi-thread system. There is a main process that handles execution and coordination of the three AI models running on their own separate threads: (1) EMS-Whisper for Speech Recognition, which transcribes audio input into a text transcript; (2) EMS-TinyBERT for Protocol Prediction, which predicts the correct protocol for the incident from the text transcript; and (3) EMS-Vision for Intervention Recognition, which recognizes the medical treatment action based on video input and the predicted protocol. Each model is described in more detail below. Further architecture details on the folder structure and code can be found in the [Technical Documentation](#technical-documentation) section. 
+Please follow the instructions at [archiconda3](https://github.com/yqlbu/archiconda3) to install Conda.
 
-![Software Design](<README Images/Overall Figure.png>)
+## Permissions Issue
 
-### EMS-Whisper for Speech Recognition
-Our speech recognition model, EMS-Whisper, is a fine-tuned version of [Whisper](https://openai.com/research/whisper) models trained on a curated dataset of conversational EMS speech. We have two sizes of EMS-Whisper: base-finetuned (39M parameters) and tiny-finetuned (74M parameters), which are the finetuned English-only tiny and base Whisper models. We choose to build off the Whisper architecture because it has been found to be robust to noisy environments, diverse ranges of accents, and has strong out-of-the-box performance on numerous datasets. A separate github repository with more details about EMS-Whisper can be found [here](https://github.com/UVA-DSA/EMS-Whisper).
+If you encounter permission issues, you can resolve them by changing ownership of certain directories:
 
-
-### EMS-TinyBERT for Protocol Prediction
-Our protocol prediction model, EMSTinyBERT, consists of three parts: (1) [TinyClinicalBERT](https://huggingface.co/nlpie/tiny-clinicalbert), a [BERT](https://arxiv.org/abs/1810.04805) model pretrained on medical corpus to encoder to encode EMS transcripts into text features; (2) a graph neural network to fuse domain knowledge with text features; and (3) a group-wise training strategy to deal with scarcity of training samples in rare classes. EMS-TinyBERT is a lightweight model that can be deployed on edge. A separate github repository with more details about EMS-TinyBERT can be found [here](https://github.com/UVA-DSA/DKEC).
-
-### EMS-Vision for Intervention Recognition
-
-Our intervention recognition model, EMS-Vision, consists
-of three parts: (1) The protocol prediction from EMS-
-TinyBERT give contextual basis to the (2) knowledge agent that provides a subset of interventions associated with the protocol to (3) [CLIP](https://openai.com/research/clip), an open-source zero-shot image classification model. A separate github repository with more details about EMS-Vision can be found [here]().
-
-
-### Additional Options for Models
-
-#### Google Cloud Speech-To-Text API for Speech Recognition
-There is an option to use the [Google Cloud Speech-To-Text API](https://cloud.google.com/speech-to-text/) for speech recognition in the CognitiveEMS pipeline. However, this option relies on a cloud service and the pipeline will no longer be edge-deployed.  
-
-#### EMSAssist Models
-There is another Cognitive Assistant pipeline for EMS called [EMSAssist](https://dl.acm.org/doi/abs/10.1145/3581791.3596853). We have integrated EMSAssist's Speech Recognition Model (EMSConformer) and Protocol Prediction Model (EMSMobileBERT) for evaluation purposes to compare our pipeline to the current state of the art. EMSAssist's github repositories can be found [here](https://github.com/LENSS/EMSAssist) and [here](https://github.com/liuyibox/EMSAssist-artifact-evaluation).
-
-## Getting Started 
-### Prerequisites
-To get started CognitiveEMS, you need to have [`Conda`](https://docs.conda.io/en/latest/) and [`git`](https://git-scm.com/) installed. All our implementions used **Conda version 23.1.0** and **git version 2.25.1**. We list hardware specifications for each device we used below. You may be able to use different hardware specifications and different versions of CUDA.
-
-The `server` implementation hs been successfully tested on an Ubuntu desktop with these specifications:
-- OS: **64-bit Ubuntu 20.04.6 LTS**
-- Processor: **13th Gen Intel® Core™ i9-13900KF x 32**
-- Graphics: **NVIDA Corporation**
-- NVIDIA Cuda complier driver: **version 10.1.243**
-- CUDA: **version 12.1**
-
-The `edge` implementation hs been successfully tested on a Jetson Nano with these specifications:
-- Jetson nano
-
-The `demo` implementation hs been successfully tested on an Alienware m15 R7 laptop with these specifications:
-- OS: **64-bit Ubuntu 20.02.6 LTS**
-- Processor: **12th Gen Intel® Core™ i7-12700H x 20**
-- Graphics: **NVIDIA Corporation / Mesa Intel® Graphics (ADL GT2)**
-- NVIDIA Cuda complier driver: **version 11.3.58**
-- CUDA: **version 11.4**
-
-You may be able to get CognitiveEMS running on hardware with different specifications and different verisions of CUDA.
-
-### Installation
-Clone our repository from github and go to the server branch
 ```bash
-# clone repo
-git clone https://github.com/UVA-DSA/CognitiveEMS
-cd CognitiveEMS/
-
-# go to server branch
-git checkout server 
+sudo chown -R $USER:$USER ~/archiconda3/
+sudo chown -R $USER:$USER ~/.conda/
 ```
 
-### Conda Environment Setup 
-Create and activate the Conda environment that uses `Python 3.8.18 `named `CogEMS` for dependencies and packages.
+## PyTorch Compatibility
 
-If you are using hardware that matches **[our specifications](#prerequisites) (Linux OS, CUDA 12.1),** create the CogEMS Conda environment from the `environment.yml` file.
+To ensure compatibility, use PyTorch 1.10 with Cuda 10.2 and Python 3.6. Be mindful when creating virtual environments.
+
+Create a Conda environment with Python 3.6:
+
+
 ```bash
-# create Conda environment from yaml file
-cd Pipeline/
-conda env create --file environment.yml
-
-# activate Conda environment
-conda activate CogEMS
+conda create -n myenv python=3.6
+conda activate myenv
 ```
 
-If you are using hardware with **<span style="color:red">different specifications</span>,** you may have to manually create the CogEMS Conda environment.
+For Cuda 1.10.0, refer to [this link](https://qengineering.eu/install-pytorch-on-jetson-nano.html).
+
+## Numpy Version
+
+Ensure that you install numpy version 1.19.4 to avoid issues:
+
 ```bash
-# manually create conda enviroment
-conda create --name CogEMS python=3.8.18
-
-# activate Conda environment
-conda activate CogEMS
-
-# Now, manually install dependencies
-# check cuda version
-nvidia-smi
-
-# execute pytorch install command
-'''
-go to https://pytorch.org/get-started/locally/ and get the installation command for these options:
-Stable (2.1.0), Linux, conda, Python, and your CUDA version 
-'''
-# for the our server, the command was:
-conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
-
-# install other packages
-conda install pyaudio
-pip install torch-geometric
-pip install pyyaml
-pip install transformers
-pip install chardet
-pip install charset-normalizer==3.1.0
-pip install pyqt5
-pip install pandas
-pip install openpyxl
-pip install evaluate
-pip install jiwer
+pip install numpy==1.19.4
 ```
-### Virtual Speaker and Mic Setup
-Since the CognitiveEMS pipeline is real-time and takes in a stream of audio from a mic as input, we set up a virtual speaker and mic to capture the input internally for our audio recordings.
+## PyAudio Installation
 
-> **<span style="color:red">NOTE!</span>** You have to run the commands to set up the virtual speaker and mic every time you restart your device.
+Install the required dependencies and PyAudio:
+
 
 ```bash
-# set up virtual speaker
+sudo apt-get install portaudio19-dev python-all-dev python3-all-dev
+pip install pyaudio
+```
+
+## Transformers Compatibility
+
+Please note that the latest Transformers library may not be supported. You may encounter issues with the WhisperProcessor. Additionally, the 'evaluate' module is not supported.
+
+*Update 10/10/23*
+
+Workaround to install Transformers
+
+Follow steps provided in this [link](https://benjcunningham.org/installing-transformers-on-jetson-nano.html)
+
+Few changes needed.
+
+1. Make conda environment with python=3.6 instead of venv
+2. When installing SentencePiece, use `python setup.py install --user`
+3. Skip Install Tokenizers step
+4. `pip install transformers==2.5.1`
+5. Downgrade numpy to `1.19.4`
+
+
+## Librosa Installation
+
+Commands:
+```bash
+
+$ sudo apt-get install llvm-7
+
+$ cd /usr/bin
+
+$ sudo ln -s llvm-config-7 llvm-config
+
+$ sudo pip3 install llvmlite==0.31.0
+
+$ sudo pip3 install numba==0.48
+
+$ sudo pip3 install librosa
+
+```
+
+Note that if you have ever tried other llvm versions (e.g. llvm-9, llvm-10, etc.), uninstall other llvm versions, install the correct version llvm-7, remove the file ‘llvm-config’ under /usr/bin if it exists, and re-run “sudo ln -s llvm-config-7 llvm-config” before attempting installation of numba.
+
+
+## Creating a virtual mic
+Add these commands to the end of `/etc/pulse/default.pa` and reboot.
+
+```bash
 pactl load-module module-null-sink sink_name="virtual_speaker" sink_properties=device.description="virtual_speaker"
-
-# set up virtual mic
 pactl load-module module-remap-source master="virtual_speaker.monitor" source_name="virtual_mic" source_properties=device.description="virtual_mic"
 ```
 
-### Model Setup
-Since model weight files were too large to store on our github repository, you need to download them from our publically available Box folders for EMS-Whisper and EMS-TinyBERT.
+Testing Streaming whisper.cpp with virtual mic
+```bash
+ ./stream -m ./models/ggml-tiny.en.bin -t 3 --step 4000 --length 8000 -ac 512 --capture
+```
 
-#### Setup for EMS-Whisper
-Download the `models` folder for EMS-Whisper from [here]() and put the `models` folder under the `Pipeline/EMS_Whisper` folder as: `Pipeline/EMS_Whisper/models/`
+## Protocol Agent Warmup Phase
 
-#### Setup for EMS-TinyBERT
-Download the `models` folder for EMS-TinyBERT from [here]() and put the `models` folder under the `Pipeline/EMS_TinyBERT` folder as: `Pipeline/EMS_TinyBERT/models/`
+The protocol agent requires a warmup phase before use. Follow these steps:
 
-### Google Cloud Speech-To-Text API Setup (Optional)
-To use the Google Cloud Speech-To-Text API, you need to have your own service account key in a JSON file. The service account must have the Speech API enabled. Put your JSON file under the Pipeline folder as: `Pipeline/service-account.json`. For more information and to get started with Google Cloud Speech-To-Text go [here](https://cloud.google.com/speech-to-text/).
+1.  Start the Whisper CPP process.
+2.  Start the EMSAgent process.
+3.  Execute a warmup inference inside EMSAgent to load kernels.
+4.  Sleep for around 60 seconds for the warmup to complete.
+5.  Start the audio streaming process.
 
-## Usage
-### Running the Pipeline
+## GPU Loading Time on Jetson
 
-#### Pipeline Options
+On Jetson devices, it may take a significant amount of time to load PyTorch kernels to the GPU. This typically happens only once.
 
-### Running Evaluations of the Pipeline
-#### Reproducing Results
+----------
 
-
-## Technical Documentation
-Coming soon
-
-## Publications
-[“Information Extraction from Patient Care Reports for Intelligent Emergency Medical Services”](https://homa-alem.github.io/papers/CHASE_2021.pdf)  
-S. Kim, W. Guo, R. Williams, J. Stankovic, H. Alemzadeh  
-In the IEEE/ACM Conf. on Connected Health: Applications, Systems, and Engineering Technologies (CHASE), 2021. **(Best Paper Finalist)**
-
-[“A Review of Cognitive Assistants for Healthcare: Trends, Prospects, and Future Directions”](https://www.cs.virginia.edu/~stankovic/psfiles/CognitiveAssistantHealthSurvey_Main.pdf)  
-S. Preum, S. Munir, M. Ma, M. S. Yasar, D. J. Stone, R. Williams, H. Alemzadeh, J. Stankovic  
-In ACM Computing Surveys, 2021.  
-
-[“IMACS-an interactive cognitive assistant module for cardiac arrest cases in emergency medical service: Demo Abstract.”](https://dl.acm.org/doi/abs/10.1145/3384419.3430451)  
-M. A. Rahman, S. Preum, J. Stankovic. L. Jia, E. Mirza, R. Williams, H. Alemzadeh  
-In the 18th Conference on Embedded Networked Sensor Systems (SenSys'20), 2020.
-
-[“EMSContExt: EMS Protocol-driven Concept Extraction for Cognitive Assistance in Emergency Response”](https://homa-alem.github.io/papers/EMSContExt_IAAI2020.pdf)  
-S. Preum, S. Shu, H. Alemzadeh, J. Stankovic  
-In the Thirty-Second Annual Conf. on Innovative Applications of Artificial Intelligence (IAAI-20), 2020.
-
-[“GRACE: Generating Summary Reports Automatically for Cognitive Assistance in Emergency Response”](https://www.cs.virginia.edu/~stankovic/psfiles/IAAI-RahmanM.42.pdf)  
-M. A. Rahman, S. M. Preum, R. Williams, H. Alemzadeh, J. Stankovic  
-In the Thirty-Second Annual Conf. on Innovative Applications of Artificial Intelligence (IAAI-20), 2020.
-
-["A Behavior Tree Cognitive Assistant System for Emergency Medical Services](https://homa-alem.github.io/papers/IROS2019.pdf)  
-S. Shu, S. Preum, H. M. Pitchford, R. D. Williams, J. Stankovic, H. Alemzadeh  
-In the IEEE IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2019
-
-["CognitiveEMS: A Cognitive Assistant System for Emergency Medical Services"](https://homa-alem.github.io/papers/MEDCPS_2018.pdf)  
-S. Preum, S. Shu, M. Hotaki, R. Williams, J. Stankovic, H. Alemzadeh  
-In SIGBED Review, Special Issue on Medical Cyber Physical Systems Workshop (CPS-Week), 2018.
- Featured by the IWCE's Urgent Communications and UVA SEAS News, 2018.
- 
-["Towards a Cognitive Assistant System for Emergency Response"](https://homa-alem.github.io/papers/ICCPS_Poster_2018.pdf)  
-S. Preum, S. Shu, J. Ting, V. Lin, R. Williams, J. Stankovic, H. Alemzadeh  
-In the 9th ACM/IEEE International Conference on Cyber-Physical Systems (CPS-Week), 2018.
+Feel free to customize and expand upon these instructions as needed for your specific setup and requirements.
 

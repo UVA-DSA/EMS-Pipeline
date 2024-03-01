@@ -1,0 +1,1 @@
+python client.py --model DeepSpeech_Models/output_graph.pbmm --alphabet DeepSpeech_Models/alphabet.txt --lm DeepSpeech_Models/lm.binary --trie DeepSpeech_Models/trie --audio /home/hotaki/2019/Audio_Scenarios/2019_Test/000_190105.wav

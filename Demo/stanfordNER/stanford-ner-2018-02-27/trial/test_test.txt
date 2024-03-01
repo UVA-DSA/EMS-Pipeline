@@ -1,0 +1,5 @@
+parrot	ANIMAL
+goat	ANIMAL
+Arif	PERSON
+ship	O
+cow	ANIMAL
