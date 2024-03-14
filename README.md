@@ -168,7 +168,7 @@ Coming soon
 
 ## Publications
 [“Real-Time Multimodal Cognitive Assistant for Emergency Medical Services”](https://arxiv.org/pdf/2403.06734.pdf)  
-K. Weerasinghe, S. Janapati, X. Ge, S. Kim, S. Iyer, J. Stankovic, H. Alemzadeh
+K. Weerasinghe, S. Janapati, X. Ge, S. Kim, S. Iyer, J. Stankovic, H. Alemzadeh  
 In the 9th ACM/IEEE Conference on Internet of Things Design and Implementation (IoTDI), 2024.
 
 [“Information Extraction from Patient Care Reports for Intelligent Emergency Medical Services”](https://homa-alem.github.io/papers/CHASE_2021.pdf)  
