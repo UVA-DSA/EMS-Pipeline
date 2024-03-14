@@ -173,7 +173,11 @@ In the 9th ACM/IEEE Conference on Internet of Things Design and Implementation (
 
 ["DKEC: Domain Knowledge Enhanced Multi-Label Classification for Electronic Health Records"](https://arxiv.org/pdf/2310.07059.pdf)  
 X. Ge, R. D. Williams, J. A. Stankovic, H. Alemzadeh  
-Preprint available on arXiv.  
+Preprint available on arXiv, 2024.   
+
+["Camera-Independent Single Image Depth Estimation From Defocus Blur"](https://openaccess.thecvf.com/content/WACV2024/papers/Wijayasingha_Camera-Independent_Single_Image_Depth_Estimation_From_Defocus_Blur_WACV_2024_paper.pdf)  
+L. Wijayasingha, H. Alemzadeh, J. A. Stankovic  
+In the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV), 2024.  
 
 [“emsReACT: A Real-Time Interactive Cognitive Assistant for Cardiac Arrest Training in Emergency Medical Services”](https://homa-alem.github.io/papers/DCOSS_IOT_2023_emsReACT.pdf)  
 M A. Rahman, L. Jia, E. Mirza, S. M. Preum. H. Alemzadeh, R. D. Williams, J. Stankovic  
