@@ -167,13 +167,13 @@ To use the Google Cloud Speech-To-Text API, you need to have your own service ac
 Coming soon
 
 ## Publications
-[“Real-Time Multimodal Cognitive Assistant for Emergency Medical Services”](https://arxiv.org/pdf/2403.06734.pdf)
+[“Real-Time Multimodal Cognitive Assistant for Emergency Medical Services”](https://arxiv.org/pdf/2403.06734.pdf)  
 K. Weerasinghe, S. Janapati, X. Ge, S. Kim, S. Iyer, J. Stankovic, H. Alemzadeh
 In the 9th ACM/IEEE Conference on Internet of Things Design and Implementation (IoTDI), 2024.
 
 [“Information Extraction from Patient Care Reports for Intelligent Emergency Medical Services”](https://homa-alem.github.io/papers/CHASE_2021.pdf)  
 S. Kim, W. Guo, R. Williams, J. Stankovic, H. Alemzadeh  
-In the IEEE/ACM Conf. on Connected Health: Applications, Systems, and Engineering Technologies (CHASE), 2021. **(Best Paper Finalist)**
+In the IEEE/ACM Conf. on Connected Health: Applications, Systems, and Engineering Technologies (CHASE), 2021. **(Best Paper Finalist)** 
 
 [“A Review of Cognitive Assistants for Healthcare: Trends, Prospects, and Future Directions”](https://www.cs.virginia.edu/~stankovic/psfiles/CognitiveAssistantHealthSurvey_Main.pdf)  
 S. Preum, S. Munir, M. Ma, M. S. Yasar, D. J. Stone, R. Williams, H. Alemzadeh, J. Stankovic  
