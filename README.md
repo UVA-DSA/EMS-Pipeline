@@ -171,9 +171,9 @@ Coming soon
 K. Weerasinghe, S. Janapati, X. Ge, S. Kim, S. Iyer, J. Stankovic, H. Alemzadeh  
 In the 9th ACM/IEEE Conference on Internet of Things Design and Implementation (IoTDI), 2024.  
 
-["DKEC: Domain Knowledge Enhanced Multi-Label Classification for Electronic Health Records"](https://arxiv.org/pdf/2310.07059.pdf)
-X. Ge, R. D. Williams, J. A. Stankovic, H. Alemzadeh
-Preprint available on arXiv.
+["DKEC: Domain Knowledge Enhanced Multi-Label Classification for Electronic Health Records"](https://arxiv.org/pdf/2310.07059.pdf)  
+X. Ge, R. D. Williams, J. A. Stankovic, H. Alemzadeh  
+Preprint available on arXiv.  
 
 [“emsReACT: A Real-Time Interactive Cognitive Assistant for Cardiac Arrest Training in Emergency Medical Services”](https://homa-alem.github.io/papers/DCOSS_IOT_2023_emsReACT.pdf)  
 M A. Rahman, L. Jia, E. Mirza, S. M. Preum. H. Alemzadeh, R. D. Williams, J. Stankovic  
