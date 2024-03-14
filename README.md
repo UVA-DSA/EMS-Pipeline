@@ -169,7 +169,19 @@ Coming soon
 ## Publications
 [“Real-Time Multimodal Cognitive Assistant for Emergency Medical Services”](https://arxiv.org/pdf/2403.06734.pdf)  
 K. Weerasinghe, S. Janapati, X. Ge, S. Kim, S. Iyer, J. Stankovic, H. Alemzadeh  
-In the 9th ACM/IEEE Conference on Internet of Things Design and Implementation (IoTDI), 2024.
+In the 9th ACM/IEEE Conference on Internet of Things Design and Implementation (IoTDI), 2024.  
+
+[“emsReACT: A Real-Time Interactive Cognitive Assistant for Cardiac Arrest Training in Emergency Medical Services”](https://homa-alem.github.io/papers/DCOSS_IOT_2023_emsReACT.pdf)  
+M A. Rahman, L. Jia, E. Mirza, S. M. Preum. H. Alemzadeh, R. D. Williams, J. Stankovic  
+In the 19th Annual Int. Conf. on Distributed Computing in Smart Systems and the Internet of Things (DCOSS-IoT), 2023.  
+
+["Poster Abstract: SenseEMS - Towards A Hand Activity Recognition and Monitoring System for Emergency Medical Services](https://homa-alem.github.io/papers/IPSN_Poster_2023_SenseEMS.pdf)    
+M. A. Rahman, K. Weerasinghe, L. Wijayasingha, H. Alemzadeh, R. D. Williams, J. Stankovic  
+In the 22nd annual ACM/IEEE International Conference on Information Processing in Sensor Networks (IPSN), 2023.  
+
+[“EMS-BERT: A Pre-Trained Language Representation Model for the Emergency Medical Services (EMS) Domain”](https://homa-alem.github.io/papers/CHASE_2023_EMS-BERT.pdf)  
+M. A. Rahman, S. M. Preum, R. D. Williams, H. Alemzadeh, J. Stankovic  
+In the IEEE/ACM Conf. on Connected Health: Applications, Systems and Engineering Technologies (CHASE), 2023.  
 
 [“Information Extraction from Patient Care Reports for Intelligent Emergency Medical Services”](https://homa-alem.github.io/papers/CHASE_2021.pdf)  
 S. Kim, W. Guo, R. Williams, J. Stankovic, H. Alemzadeh  
