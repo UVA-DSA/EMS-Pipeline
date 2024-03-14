@@ -217,8 +217,8 @@ In the IEEE IEEE/RSJ International Conference on Intelligent Robots and Systems 
 
 ["CognitiveEMS: A Cognitive Assistant System for Emergency Medical Services"](https://homa-alem.github.io/papers/MEDCPS_2018.pdf)  
 S. Preum, S. Shu, M. Hotaki, R. Williams, J. Stankovic, H. Alemzadeh  
-In SIGBED Review, Special Issue on Medical Cyber Physical Systems Workshop (CPS-Week), 2018.
- Featured by the IWCE's Urgent Communications and UVA SEAS News, 2018.
+In SIGBED Review, Special Issue on Medical Cyber Physical Systems Workshop (CPS-Week), 2018.  
+**Featured by the IWCE's Urgent Communications and UVA SEAS News, 2018.**
  
 ["Towards a Cognitive Assistant System for Emergency Response"](https://homa-alem.github.io/papers/ICCPS_Poster_2018.pdf)  
 S. Preum, S. Shu, J. Ting, V. Lin, R. Williams, J. Stankovic, H. Alemzadeh  
