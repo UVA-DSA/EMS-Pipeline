@@ -175,48 +175,52 @@ def EMSTinyBERTSystem(Window, EMSTinyBERTQueue, ProtocolQueue):
             break
         else:
             print('=============================================================')
-            print(f'[Protocol model received transcript: {received.transcript}]')
+            try:
+                print(f'[Protocol model received: {received}]')
+                print(f'[Protocol model received transcript: {received.transcript}]')
 
-            if received.transcript == "":
-                pred, prob, one_hot, logits = -1, -1, -1, -1
+                if received.transcript == "":
+                    pred, prob, one_hot, logits = -1, -1, -1, -1
+                    continue
+                
+                narrative += received.transcript
+
+                start = time.perf_counter_ns()
+                pred, prob, one_hot, logits = model(narrative)
+                end = time.perf_counter_ns()
+                print(f'[Protocol suggestion:{pred}:{prob}]')
+                prot_latency = (end-start)/1000000
+
+                #Send data (send to vision)
+                protocolFB =  FeedbackObj("", pred, prob, "")
+                ProtocolQueue.put(protocolFB)
+                if Window:
+                    ProtocolSignal.signal.emit([protocolFB])
+
+
+    # ===== save end to end pipeline results for this segment =========================================================================
+                if pipeline_config.evaluation:
+                    '''
+                    Fields with placeholders are calculated later in EndToEndEval or another data processing script
+                    '''
+                    pipeline_config.trial_data['speech latency (ms)'].append(received.transcriptionDuration)
+                    pipeline_config.trial_data['transcript'].append(received.transcript)
+                    pipeline_config.trial_data['whisper confidence'].append(received.confidence)
+                    pipeline_config.trial_data['WER'].append(0) #placeholder
+                    pipeline_config.trial_data['CER'].append(0) #placeholder
+                    pipeline_config.trial_data['protocol latency (ms)'].append(prot_latency)
+                    pipeline_config.trial_data['protocol prediction'].append(pred)
+                    pipeline_config.trial_data['protocol confidence'].append(prob)
+                    pipeline_config.trial_data['protocol correct?'].append(0) #placeholder
+                    pipeline_config.trial_data['one hot prediction'].append(str(one_hot))
+                    pipeline_config.trial_data['one hot gt'].append(str('[one hot gt placeholder]'))
+                    pipeline_config.trial_data['tn'].append('tn placeholder')
+                    pipeline_config.trial_data['fp'].append('fp placeholder')
+                    pipeline_config.trial_data['fn'].append('fn placeholder')
+                    pipeline_config.trial_data['tp'].append('tp placeholder')
+                    print('logits', logits.shape)
+                    pipeline_config.trial_data['logits'].append(str(logits))
+                            
+            except:
+                print("Error in Protocol Model")
                 continue
-            
-            narrative += received.transcript
-
-            start = time.perf_counter_ns()
-            pred, prob, one_hot, logits = model(narrative)
-            end = time.perf_counter_ns()
-            print(f'[Protocol suggestion:{pred}:{prob}]')
-            prot_latency = (end-start)/1000000
-
-            #Send data (send to vision)
-            protocolFB =  FeedbackObj("", pred, prob, "")
-            ProtocolQueue.put(protocolFB)
-            if Window:
-                ProtocolSignal.signal.emit([protocolFB])
-
-
- # ===== save end to end pipeline results for this segment =========================================================================
-            if pipeline_config.evaluation:
-                '''
-                Fields with placeholders are calculated later in EndToEndEval or another data processing script
-                '''
-                pipeline_config.trial_data['speech latency (ms)'].append(received.transcriptionDuration)
-                pipeline_config.trial_data['transcript'].append(received.transcript)
-                pipeline_config.trial_data['whisper confidence'].append(received.confidence)
-                pipeline_config.trial_data['WER'].append(0) #placeholder
-                pipeline_config.trial_data['CER'].append(0) #placeholder
-                pipeline_config.trial_data['protocol latency (ms)'].append(prot_latency)
-                pipeline_config.trial_data['protocol prediction'].append(pred)
-                pipeline_config.trial_data['protocol confidence'].append(prob)
-                pipeline_config.trial_data['protocol correct?'].append(0) #placeholder
-                pipeline_config.trial_data['one hot prediction'].append(str(one_hot))
-                pipeline_config.trial_data['one hot gt'].append(str('[one hot gt placeholder]'))
-                pipeline_config.trial_data['tn'].append('tn placeholder')
-                pipeline_config.trial_data['fp'].append('fp placeholder')
-                pipeline_config.trial_data['fn'].append('fn placeholder')
-                pipeline_config.trial_data['tp'].append('tp placeholder')
-                print('logits', logits.shape)
-                pipeline_config.trial_data['logits'].append(str(logits))
-                        
-        

@@ -60,10 +60,9 @@ def process_whisper_response(response):
 
     return block, isFinal, avg_p, latency
 
-def Whisper(Window, TranscriptQueue,VideoSignalQueue, wavefile_name):
+def Whisper(Window, TranscriptQueue,EMSAgentSpeechQueue, wavefile_name):
     fifo_path = "/tmp/myfifo"
     finalized_blocks = ''
-    VideoSignalQueue.put('Proceed')
     
     if Window:
         TranscriptSignal = GUISignal()
@@ -98,7 +97,6 @@ def Whisper(Window, TranscriptQueue,VideoSignalQueue, wavefile_name):
                         response = fifo.read().strip()  # Read the message from the named pipe
                     except Exception as e:
                         response = ""
-                    VideoSignalQueue.put('Proceed')
 
                     if response != old_response and response != "":
                         block, isFinal, avg_p, latency = process_whisper_response(response) #isFinal = False means block is interim block
@@ -116,7 +114,7 @@ def Whisper(Window, TranscriptQueue,VideoSignalQueue, wavefile_name):
                                 print('WHISPER_OUT',transcriptItem.transcript)
                                 TranscriptSignal.signal.emit([transcriptItem])
                                 TranscriptQueue.put(transcriptItem) 
-                            
+                                EMSAgentSpeechQueue.put(transcriptItem)
                                 
                             # intertimTranscriptItem = SpeechNLPItem(block, isFinal,
                             #                   avg_p, len(transcript), 'Speech')
@@ -128,7 +126,7 @@ def Whisper(Window, TranscriptQueue,VideoSignalQueue, wavefile_name):
                 stream.close()
 
                 TranscriptQueue.put('Kill')
-                VideoSignalQueue.put('Kill')
+                EMSAgentSpeechQueue.put('Kill')
 
                 # Release PortAudio system resources (5)
                 p.terminate()
