@@ -136,9 +136,8 @@ def start():
     global recording_dir
 
     # GoPro Code
-    # asyncio.run(main())
-    # gopro_process =  multiprocessing.Process(target=execute_main, args=(commandqueue,recording_dir))
-    # gopro_process.start()
+    gopro_process =  multiprocessing.Process(target=execute_main, args=(commandqueue,recording_dir))
+    gopro_process.start()
     
     commandqueue.put("start")
 
