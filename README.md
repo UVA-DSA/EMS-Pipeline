@@ -166,6 +166,14 @@ To use the Google Cloud Speech-To-Text API, you need to have your own service ac
 ## Technical Documentation
 Coming soon
 
+## Video Demonstrations
+
+
+https://github.com/UVA-DSA/EMS-Pipeline/assets/40396880/8511b697-c680-4af9-9e1c-8681b7d7cdc9
+
+
+
+
 ## Publications
 [“Real-Time Multimodal Cognitive Assistant for Emergency Medical Services”](https://arxiv.org/pdf/2403.06734.pdf)  
 K. Weerasinghe, S. Janapati, X. Ge, S. Kim, S. Iyer, J. Stankovic, H. Alemzadeh  
