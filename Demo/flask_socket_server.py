@@ -17,6 +17,7 @@ app = Flask(__name__)
 socketio = SocketIO(app)
 
 video_display_process = None
+image_seq = 0
 
 @socketio.on('connect')
 def handle_connect():
@@ -48,6 +49,31 @@ def handle_byte_array(byte_array):
 
     socketio.emit('server_video', byte_array_string)
 
+    # global image_seq
+
+    # try:
+    #     # byte_array_string consists a string of base64 encoded bmp image
+    #     byte_array = base64.b64decode(byte_array_string)
+
+    #     # Step 2: Create an image object from the binary data
+    #     image = Image.open(io.BytesIO(byte_array))
+
+    #             # Convert the PIL image object to an OpenCV image (numpy array)
+    #     cv2_img = np.array(image)
+        
+
+    #     cv2_img = cv2.cvtColor(cv2_img, cv2.COLOR_RGB2BGR)
+
+    #     cv2_img = cv2.rotate(cv2_img, cv2.ROTATE_90_COUNTERCLOCKWISE)
+
+    #     cv2.imwrite(f"./data_collection_folder/img_{image_seq}.jpeg",cv2_img)
+
+    #     image_seq += 1
+
+    #     print('Image saved successfully.')
+    # except Exception as e:
+    #     print("EXCEPTION!: ",e)
+
 
 @socketio.on('video')
 def handle_base64_img(byte_array_string):
@@ -57,26 +83,28 @@ def handle_base64_img(byte_array_string):
     
     # # Convert the base64 encoded byte array string to bytes
     
-    # try:
-    #     # byte_array_string consists a string of base64 encoded bmp image
-    #     byte_array = base64.b64decode(byte_array_string)
+    try:
+        # byte_array_string consists a string of base64 encoded bmp image
+        byte_array = base64.b64decode(byte_array_string)
 
-    #     # Step 2: Create an image object from the binary data
-    #     image = Image.open(io.BytesIO(byte_array))
+        # Step 2: Create an image object from the binary data
+        image = Image.open(io.BytesIO(byte_array))
 
-    #           # Convert the PIL image object to an OpenCV image (numpy array)
-    #     cv2_img = np.array(image)
+              # Convert the PIL image object to an OpenCV image (numpy array)
+        cv2_img = np.array(image)
         
 
-    #     cv2_img = cv2.cvtColor(cv2_img, cv2.COLOR_RGB2BGR)
+        cv2_img = cv2.cvtColor(cv2_img, cv2.COLOR_RGB2BGR)
 
-    #     cv2_img = cv2.rotate(cv2_img, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        cv2_img = cv2.rotate(cv2_img, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
-    #     imagequeue.put(cv2_img)
+        cv2.imwrite(cv2_img,f"./data_collection_folder/img_{image_seq}.jpeg")
 
-    #     # print('Image saved successfully.')
-    # except Exception as e:
-    #     print("EXCEPTION!: ",e)
+        image_seq += 1
+
+        print('Image saved successfully.')
+    except Exception as e:
+        print("EXCEPTION!: ",e)
 
 
 def display_image(imagequeue):

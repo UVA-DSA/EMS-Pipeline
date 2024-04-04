@@ -14,73 +14,99 @@ import threading
 import socket
 import traceback
 from copy import copy
+from collections import deque
 
 import re
 
 from audio_streaming import audio_server
 
-from sounddevice_udp_receiver import playback_thread, receive_and_buffer
 # speech to text client
 client = None
 streaming_config = None
 # Audio recording parameters
 RATE = 16000
-CHUNK = 640  # 100ms #50ms
+CHUNK_SIZE = 640  # 100ms #50ms
 CHANNEL = 1
 #CHUNK = int(RATE * 5)  # 100ms
 
 stopped = False
 
+# UDP socket configuration
+UDP_IP = "0.0.0.0"  # Listen on all available IPs
+UDP_PORT = 8888  # Port to listen on
+
+# PyAudio configuration
+CHANNELS = 1  # Mono audio
+RATE = 16000  # Sample rate in Hz
+CHUNK_SIZE = 640  # Number of audio frames per buffer
+FORMAT = pyaudio.paInt16  # 16-bit int
 
 audio_buff = queue.Queue(maxsize=16)
 wav_audio_buffer = queue.Queue()
 
-def audio_stream_UDP():
-    
-    
-    # Instantiate PyAudio and initialize PortAudio system resources (1)
+
+# Jitter buffer configuration
+BUFFER_DURATION = 0.5  # Target buffer duration in seconds
+MAX_BUFFER_SIZE = int(RATE / CHUNK_SIZE * BUFFER_DURATION)  # Number of chunks to buffer
+
+# Initialize jitter buffer
+jitter_buffer = deque(maxlen=MAX_BUFFER_SIZE)
+
+# Flag to control the playback thread
+playback_running = True
+
+# Initialize PyAudio
+
+
+def playback_thread():
     p = pyaudio.PyAudio()
-    info = p.get_default_host_api_info()
-    device_index = info.get('deviceCount') - 1 # get default device as output device
 
-    stream = p.open(format = pyaudio.paInt16, channels = 1, rate = RATE, output = True, frames_per_buffer = CHUNK, output_device_index=device_index)
-    
-                
-    global audio_buff
+    stream = p.open(format=FORMAT,
+                    channels=CHANNELS,
+                    rate=RATE,
+                    output=True)
+
+    while playback_running:
+        if len(jitter_buffer) > 0:
+            samples = jitter_buffer.popleft()
+            stream.write(samples.tobytes())  # Convert numpy array back to bytes
+            # print("Wrote to stream:", len(samples), "samples")
+        else:
+            # Buffer is empty, wait a bit
+            time.sleep(CHUNK_SIZE / RATE)
+
+    stream.stop_stream()
+    stream.close()
+    print("Stopped audio playback")
+
+def receive_and_buffer():
+    # Initialize UDP socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.bind((UDP_IP, UDP_PORT))
+    sock.settimeout(5)  # Set a timeout for the socket operations
+    print(f"Listening for audio on UDP port {UDP_PORT}")
+
+    global playback_running
     global stopped
-    # AUDIO streaming variables and functions
-    host_name = socket.gethostname()
-    host_ip = '0.0.0.0' #socket.gethostbyname(host_name)
-    port = 8888
+    try:
+        while not stopped:
+            try:
+                # This will now raise a timeout exception if no data is received within the timeout period
+                data, addr = sock.recvfrom(CHUNK_SIZE * CHANNELS * 2)  # 2 bytes per sample for 16-bit audio
+                samples = np.frombuffer(data, dtype='int16')
+                if len(jitter_buffer) < MAX_BUFFER_SIZE:
+                    jitter_buffer.append(samples)
+            except socket.timeout:
+                # Catch the timeout and just continue, this gives us a chance to check if stopped has been set
+                continue
+    except KeyboardInterrupt:
+        print("Keyboard interrupt received, stopping...")
+    finally:
+        playback_running = False
+        sock.close()  # Ensure the socket is closed when exiting
+        print("Stopped audio streaming")
 
-    client_socket = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-    client_socket.bind((host_ip,port))
 
-
-    print("Audio Thread Created!")
-
-        
-    # receive and put audio data in queue
-    def getAudioData():
-        
-        global stopped
-        
-        while True:
-            if stopped == True:
-                break
-            
-            # print("Waiting for Audio client...")
-            frame,_= client_socket.recvfrom(CHUNK * CHANNEL * 2)
-            stream.write(frame)
-            
-        client_socket.close()
-        stream.close()
-        p.terminate()
-        print("Audio Server Terminated!")
-        
-            
-    t2 = threading.Thread(target=getAudioData)
-    t2.start()
 
 def callback(in_data, frame_count, time_info, status):
     try:
@@ -113,13 +139,24 @@ def process_whisper_response(response):
 
 
 # Google Cloud Speech API Recognition Thread for Microphone
-def WhisperMicStream(Window, TranscriptQueue):
+def WhisperMicStream(Window, TranscriptQueue, EMSAgentSpeechToNLPQueue):
     print("Audio streaming app is running in the background.")
     
     global stopped
+    global playback_running
     
-    t1 = threading.Thread(target=audio_stream_UDP)
-    t1.start()    
+    # Start the playback thread
+    _playback_thread = threading.Thread(target=playback_thread)
+    _playback_thread.start()
+
+    # Start receiving and buffering audio
+    receive_and_buffer_thread = threading.Thread(target=receive_and_buffer)
+    receive_and_buffer_thread.start()
+
+    # Wait for the playback thread to finish
+
+    # playback_thread.join()
+
 
     fifo_path = "/tmp/myfifo"
     finalized_blocks = ''
@@ -141,6 +178,8 @@ def WhisperMicStream(Window, TranscriptQueue):
 
             if(Window.stopped == 1): 
                 stopped = True
+                playback_running = False
+                print("WhisperMicStream received stop signal!")
                 break
             
             try:
@@ -148,7 +187,7 @@ def WhisperMicStream(Window, TranscriptQueue):
             except Exception as e:
                 response = ""
 
-            if response == "You":
+            if "You" in response:
                 pass
             if response != old_response and response != "":
                 block, isFinal, avg_p, latency = process_whisper_response(response) #isFinal = False means block is interim block
@@ -166,6 +205,7 @@ def WhisperMicStream(Window, TranscriptQueue):
                         print('WHISPER_OUT',transcriptItem.transcript)
                         TranscriptSignal.signal.emit([transcriptItem])
                         TranscriptQueue.put(transcriptItem) 
+                        EMSAgentSpeechToNLPQueue.put(transcriptItem)
                     
                         
                     # intertimTranscriptItem = SpeechNLPItem(block, isFinal,

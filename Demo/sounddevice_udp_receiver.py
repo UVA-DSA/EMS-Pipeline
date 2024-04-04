@@ -42,7 +42,7 @@ def playback_thread():
         print("Stopped audio playback")
 
 # Function to continuously receive audio and add it to the jitter buffer
-def receive_and_buffer(Window):
+def receive_and_buffer():
     # Initialize UDP socket
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.bind((UDP_IP, UDP_PORT))
@@ -51,8 +51,8 @@ def receive_and_buffer(Window):
     global playback_running
     try:
         while True:
-            if(Window.stopped == 1):
-                break
+            # if(Window.stopped == 1):
+            #     break
             data, addr = sock.recvfrom(CHUNK_SIZE * CHANNELS * 2)  # 2 bytes per sample for 16-bit audio
             samples = np.frombuffer(data, dtype='int16')
             print("Received", len(samples), "samples"   )
@@ -67,11 +67,11 @@ def receive_and_buffer(Window):
         print("Stopped audio streaming")
 
 # # Start the playback thread
-# playback_thread = threading.Thread(target=playback_thread)
-# playback_thread.start()
+playback_thread = threading.Thread(target=playback_thread)
+playback_thread.start()
 
-# # Start receiving and buffering audio
-# receive_and_buffer()
+# Start receiving and buffering audio
+receive_and_buffer()
 
-# # Wait for the playback thread to finish
-# playback_thread.join()
+# Wait for the playback thread to finish
+playback_thread.join()

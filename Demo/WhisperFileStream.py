@@ -82,6 +82,11 @@ def Whisper(Window, TranscriptQueue,EMSAgentSpeechQueue, wavefile_name):
                 # Instantiate PyAudio and initialize PortAudio system resources (1)
                 p = pyaudio.PyAudio()
                 info = p.get_default_host_api_info()
+                print("INFO: ", info)
+
+                #list all available devices
+                for i in range(p.get_device_count()):
+                    print(p.get_device_info_by_index(i))
                 device_index = info.get('deviceCount') - 1 # get default device as output device
 
                 stream = p.open(format = pyaudio.paInt16, channels = 1, rate = RATE, output = True, frames_per_buffer = CHUNK, output_device_index=device_index)

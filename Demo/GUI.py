@@ -539,11 +539,10 @@ class MainWindow(QWidget):
                 # Start subprocess
                 self.WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='EMS_Whisper/')
                 
-                # time.sleep(2)
-
+                # time.sleep(5)
 
                 self.SpeechThread = StoppableThread(
-                        target=WhisperMicStream.WhisperMicStream, args=(self, SpeechToNLPQueue))
+                        target=WhisperMicStream.WhisperMicStream, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue,))
                 
 
             self.SpeechThread.start()
@@ -614,7 +613,7 @@ class MainWindow(QWidget):
             print("Cognitive System Thread Started")
             self.CognitiveSystemThread = StoppableThread(
                 target=CognitiveSystem.CognitiveSystem, args=(self, SpeechToNLPQueue, FeedbackQueue, data_path, conceptExtractionStream, interventionStream,))
-            self.CognitiveSystemThread.start()
+            # self.CognitiveSystemThread.start()
 
 
         # ==== Start the EMS Agent - Xueren ==== #

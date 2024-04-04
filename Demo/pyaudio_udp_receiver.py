@@ -1,47 +1,84 @@
 import socket
 import pyaudio
+import numpy as np
+from collections import deque
+import threading
+import time
 
 # UDP socket configuration
 UDP_IP = "0.0.0.0"  # Listen on all available IPs
 UDP_PORT = 8888  # Port to listen on
 
 # PyAudio configuration
-FORMAT = pyaudio.paInt16  # Assuming 16-bit PCM audio
 CHANNELS = 1  # Mono audio
 RATE = 16000  # Sample rate in Hz
-CHUNK_SIZE = 1024  # Number of audio frames per buffer
+CHUNK_SIZE = 640  # Number of audio frames per buffer
+FORMAT = pyaudio.paInt16  # 16-bit int
 
-# Initialize UDP socket
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-sock.bind((UDP_IP, UDP_PORT))
-print(f"Listening for audio on UDP port {UDP_PORT}")
+# Jitter buffer configuration
+BUFFER_DURATION = 0.5  # Target buffer duration in seconds
+MAX_BUFFER_SIZE = int(RATE / CHUNK_SIZE * BUFFER_DURATION)  # Number of chunks to buffer
+
+# Initialize jitter buffer
+jitter_buffer = deque(maxlen=MAX_BUFFER_SIZE)
+
+# Flag to control the playback thread
+playback_running = True
 
 # Initialize PyAudio
 p = pyaudio.PyAudio()
 
-# Open audio stream
-stream = p.open(format=FORMAT,
-                channels=CHANNELS,
-                rate=RATE,
-                output=True,
-                frames_per_buffer=CHUNK_SIZE)
+def playback_thread():
+    stream = p.open(format=FORMAT,
+                    channels=CHANNELS,
+                    rate=RATE,
+                    output=True)
 
-# Function to continuously receive audio and play it
-def receive_and_play():
+    while playback_running:
+        if len(jitter_buffer) > 0:
+            samples = jitter_buffer.popleft()
+            stream.write(samples.tobytes())  # Convert numpy array back to bytes
+            print("Wrote to stream:", len(samples), "samples")
+        else:
+            # Buffer is empty, wait a bit
+            time.sleep(CHUNK_SIZE / RATE)
+
+    stream.stop_stream()
+    stream.close()
+    print("Stopped audio playback")
+
+# Function to continuously receive audio and add it to the jitter buffer
+def receive_and_buffer():
+    # Initialize UDP socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.bind((UDP_IP, UDP_PORT))
+    print(f"Listening for audio on UDP port {UDP_PORT}")
+
+    global playback_running
     try:
         while True:
             data, addr = sock.recvfrom(CHUNK_SIZE * CHANNELS * 2)  # 2 bytes per sample for 16-bit audio
-            stream.write(data)
-            print("data received: ",len(data))
+            samples = np.frombuffer(data, dtype='int16')
+            print("Received", len(samples), "samples")
+            if len(jitter_buffer) < MAX_BUFFER_SIZE:
+                jitter_buffer.append(samples)
+            print("Buffer size:", len(jitter_buffer))
     except KeyboardInterrupt:
-        pass
+        print("Keyboard interrupt received, stopping...")
     finally:
-        # Cleanup
-        stream.stop_stream()
-        stream.close()
-        p.terminate()
+        playback_running = False
         sock.close()
         print("Stopped audio streaming")
 
-# Start receiving and playing audio
-receive_and_play()
+# Start the playback thread
+playback_thread = threading.Thread(target=playback_thread)
+playback_thread.start()
+
+# Start receiving and buffering audio
+receive_and_buffer()
+
+# Wait for the playback thread to finish
+playback_thread.join()
+
+# Terminate PyAudio
+p.terminate()

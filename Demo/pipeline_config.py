@@ -29,11 +29,12 @@ video_name = 'scenario_1'
 
 # -- Whisper configuration ---
 whisper_model_size = "finetuned-base-v203"
+# whisper_model_size = "finetuned-tiny-v111"
 
 PATH_TO_WHISPER_CPP_FOLDER = "/home/cogems_nist/Desktop/CognitiveEMS/Pipeline/EMS_Whisper/whisper.cpp"
 num_threads = 4
-step = 2000
-length = 12000
+step = 4000
+length = 8000
 keep_ms = 100 #audio to keep from previous step in ms
 
 # -- EMS Vision configuration ------
