@@ -1,0 +1,8 @@
+<!-- res/drawable/ar_text_box.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#65806a90" /> <!-- Transparent white background -->
+    <stroke
+        android:color="#000000"
+         android:width="0.5dp" /> <!-- Border width -->
+    <corners android:radius="8dp" /> <!-- Rounded corners -->
+</shape>

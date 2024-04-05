@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/startbtn"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:text="start"
+            />
+        <Button
+            android:id="@+id/btn1"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:text="close"
+            />
+    </LinearLayout>
+
+
+
+        <!--        <TextView-->
+<!--            android:id="@+id/concept_output"-->
+<!--            android:layout_width="430dp"-->
+<!--            android:layout_height="170dp"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:layout_marginStart="20dp"-->
+<!--            android:layout_marginEnd="11dp"-->
+<!--            android:layout_marginBottom="181dp"-->
+<!--            android:layout_toEndOf="@+id/protocol_output"-->
+<!--            android:gravity="center"-->
+
+<!--            android:text="Concept"-->
+<!--            android:textColor="#FFC300"-->
+<!--            android:textSize="30sp"-->
+<!--            android:textStyle="bold" />-->
+
+
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".MainActivity">
+
+            <SurfaceView
+                android:id="@+id/surfaceView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/concept_output"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp"
+                android:layout_centerVertical="true"
+                android:text="Left Text"
+                android:textSize="18sp"
+                android:textColor="#FFF" />
+
+            <TextView
+                android:id="@+id/protocol_output"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="16dp"
+                android:layout_centerVertical="true"
+                android:text="Right Text"
+                android:textSize="18sp"
+                android:textColor="#FFF" />
+
+        </RelativeLayout>
+
+
+
+</LinearLayout>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Cognitive EMS</string>
+    <string name="server_ip">172.27.135.153</string>
+    <string name="socketio_port">5000</string>
+    <string name="audio_server_port">2222</string>
+    <string name="video_server_port">8899</string>
+    <string name="my_image_description">image description here</string>
+
+</resources>
