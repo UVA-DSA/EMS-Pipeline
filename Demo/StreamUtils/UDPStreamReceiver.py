@@ -82,6 +82,7 @@ class UDPStreamReceiver:
     def close(self):
         self._registeredQueueListLock.acquire()
         self._sock.close()
+        print("UDPStreamReceiver Exiting...")
         self._registeredQueueListLock.release()
     
             

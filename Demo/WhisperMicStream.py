@@ -57,10 +57,12 @@ jitter_buffer = deque(maxlen=MAX_BUFFER_SIZE)
 # Flag to control the playback thread
 playback_running = True
 
+stop_event = threading.Event()
+
 # Initialize PyAudio
 
 
-def playback_thread():
+def playback_thread(stop_event):
     p = pyaudio.PyAudio()
 
     stream = p.open(format=FORMAT,
@@ -73,14 +75,14 @@ def playback_thread():
     q = queue.Queue(10)
     sr.registerQueue(q)
 
-    while playback_running:
+    while not stop_event.is_set():
         if q.empty():
             time.sleep(1e-3)
         else:
             sample = (q.get())
             stream.write(sample[12:])
             
-
+    print("Audio Server Terminated!")
     sr.unregisterQueue(q)
     sr.close()
 
@@ -150,9 +152,11 @@ def WhisperMicStream(Window, TranscriptQueue, EMSAgentSpeechToNLPQueue):
     
     global stopped
     global playback_running
+
+    global stop_event
     
     # Start the playback thread
-    _playback_thread = threading.Thread(target=playback_thread)
+    _playback_thread = threading.Thread(target=playback_thread, args=(stop_event,))
     _playback_thread.start()
 
     # Start receiving and buffering audio
@@ -185,6 +189,7 @@ def WhisperMicStream(Window, TranscriptQueue, EMSAgentSpeechToNLPQueue):
             if(Window.stopped == 1): 
                 stopped = True
                 playback_running = False
+                stop_event.set()
                 print("WhisperMicStream received stop signal!")
                 break
             

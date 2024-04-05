@@ -187,11 +187,12 @@ ifdef WHISPER_OPENBLAS
 	LDFLAGS += -lopenblas
 endif
 
+#sm_87 for jetson orin. sm_80 for other Ampere gen
 ifdef WHISPER_CUBLAS
 	ifeq ($(shell expr $(NVCC_VERSION) \>= 11.6), 1)
 		CUDA_ARCH_FLAG=native
 	else
-		CUDA_ARCH_FLAG=sm_87
+		CUDA_ARCH_FLAG=sm_80
 	endif
 
 	CFLAGS      += -DGGML_USE_CUBLAS -I/usr/local/cuda/include -I/opt/cuda/include -I$(CUDA_PATH)/targets/$(UNAME_M)-linux/include

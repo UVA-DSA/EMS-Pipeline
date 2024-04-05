@@ -28,12 +28,15 @@ CHUNK = int(RATE / 20)  # 100ms #50ms
 
 stopped = False
 
+stop_event = threading.Event()
+
 
 audio_buff = queue.Queue(maxsize=16)
 wav_audio_buffer = queue.Queue()
 
-def audio_stream_UDP(stopped):
+def audio_stream_UDP(stop_event):
     # AUDIO streaming variables and functions
+
     port = 2222
 
     sr = UDPStreamReceiver.UDPStreamReceiver(port)
@@ -41,7 +44,7 @@ def audio_stream_UDP(stopped):
     sr.registerQueue(q)
     
     # receive and put audio data in queue
-    while not stopped:
+    while not stop_event.is_set():
         if q.empty():
             time.sleep(1e-3)
         else:
@@ -50,10 +53,11 @@ def audio_stream_UDP(stopped):
             audio_buff.put(audio)
             wav_audio_buffer.put(audio)
         # print("Waiting for Audio client...")
-    print("Audio Server Terminated!")
         
     sr.unregisterQueue(q)
     sr.close()
+    print("Audio Server Terminated!")
+
                 
 
 
@@ -114,6 +118,8 @@ class MicrophoneStream(object):
 
 
     def generator(self):
+
+
         # Create GUI Signal Objects
         GoogleSignal = GUISignal()
         GoogleSignal.signal.connect(self.Window.StartGoogle)
@@ -165,7 +171,7 @@ class MicrophoneStream(object):
 
                 if self.Window.stopped == 1:
                     print('Speech Thread Killed')
-                    stopped = True
+                    stop_event.set()
                     # Dump file to disk
                     # if self.audioStreamBool == True or True:
                     #     output_audio = wave.open(self.data_path_str+ "audiodata.wav",'wb')
@@ -208,7 +214,10 @@ class MicrophoneStream(object):
 # Google Cloud Speech API Recognition Thread for Microphone
 def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, data_path_str, audioStreamBool, transcriptStreamBool):
 
-    t1 = threading.Thread(target=audio_stream_UDP, args=(stopped,))
+    global stop_event
+
+
+    t1 = threading.Thread(target=audio_stream_UDP, args=(stop_event,))
     t1.start()
 
     data_path_str += "audiodata/"

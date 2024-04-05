@@ -664,6 +664,10 @@ class MainWindow(QWidget):
         self.reset = 1
         self.stopped = 1
 
+        try:
+            self.WhisperSubprocess.kill()
+        except:
+            print("Could not kill Whisper!")
         if(self.WhisperSubprocess != None):
             self.WhisperSubprocess.terminate()
         self.WhisperSubprocess = None

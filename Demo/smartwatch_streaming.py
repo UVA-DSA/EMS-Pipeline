@@ -117,8 +117,8 @@ class Thread_Watch(QThread):
                         break
                     
             except Exception as e:
-                print("Smartwatch network error! retrying....",e )
-                time.sleep(3)
+                # print("Smartwatch network error! retrying....",e )
+                time.sleep(5)
                 
             finally:
                 # Close the socket
