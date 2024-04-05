@@ -69,6 +69,8 @@ from StoppableThread.StoppableThread import StoppableThread
 from video_streaming import Thread
 from smartwatch_streaming import Thread_Watch
 
+from GenUtils.genutils import *
+
 chunkdata = []
 
 datacollection = False
@@ -108,6 +110,8 @@ class MainWindow(QWidget):
         self.finalSpeechSegmentsSpeech = []
         self.finalSpeechSegmentsNLP = []
         self.nonFinalText = ""
+        
+        self.ip_address = get_local_ipv4()
 
         #whisper
 
@@ -402,6 +406,11 @@ class MainWindow(QWidget):
         self.MsgBox.setText(System_Info_Text + "\n" + str(datetime.datetime.now().strftime("%c")) + " - Ready to start speech recognition!")
         self.MsgBox.setText(System_Info_Text)
         self.UpdateMsgBox(["Ready to start speech recognition!"])
+
+
+        self.IpAddressLabel = QLabel("IP Address: " + self.ip_address)
+        self.IpAddressLabel.setFont(QFont("Monospace", 18))
+        self.Box3.addWidget(self.IpAddressLabel)  # Add this below the system log text box in the layout
 
         # Add Link Lab Logo
         self.PictureBox = QLabel()
