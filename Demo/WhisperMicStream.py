@@ -18,6 +18,8 @@ from collections import deque
 
 import re
 
+from StreamUtils import UDPStreamReceiver
+
 from audio_streaming import audio_server
 
 # speech to text client
@@ -65,19 +67,23 @@ def playback_thread():
                     channels=CHANNELS,
                     rate=RATE,
                     output=True)
+    print("Started audio playback")
+    sr = UDPStreamReceiver.UDPStreamReceiver(2222)
+
+    q = queue.Queue(10)
+    sr.registerQueue(q)
 
     while playback_running:
-        if len(jitter_buffer) > 0:
-            samples = jitter_buffer.popleft()
-            stream.write(samples.tobytes())  # Convert numpy array back to bytes
-            # print("Wrote to stream:", len(samples), "samples")
+        if q.empty():
+            time.sleep(1e-3)
         else:
-            # Buffer is empty, wait a bit
-            time.sleep(CHUNK_SIZE / RATE)
+            sample = (q.get())
+            stream.write(sample[12:])
+            
 
-    stream.stop_stream()
-    stream.close()
-    print("Stopped audio playback")
+    sr.unregisterQueue(q)
+    sr.close()
+
 
 def receive_and_buffer():
     # Initialize UDP socket
@@ -150,8 +156,8 @@ def WhisperMicStream(Window, TranscriptQueue, EMSAgentSpeechToNLPQueue):
     _playback_thread.start()
 
     # Start receiving and buffering audio
-    receive_and_buffer_thread = threading.Thread(target=receive_and_buffer)
-    receive_and_buffer_thread.start()
+    # receive_and_buffer_thread = threading.Thread(target=receive_and_buffer)
+    # receive_and_buffer_thread.start()
 
     # Wait for the playback thread to finish
 

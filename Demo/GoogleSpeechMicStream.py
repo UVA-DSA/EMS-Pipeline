@@ -6,6 +6,7 @@ import pyaudio
 import time
 from google.cloud import speech_v1 as speech
 from six.moves import queue
+from StreamUtils import UDPStreamReceiver
 from classes import SpeechNLPItem, GUISignal
 import datetime
 import wave
@@ -33,40 +34,27 @@ wav_audio_buffer = queue.Queue()
 
 def audio_stream_UDP(stopped):
     # AUDIO streaming variables and functions
-    host_name = socket.gethostname()
-    host_ip = '0.0.0.0' #socket.gethostbyname(host_name)
-    port = 8888
-    BUFF_SIZE = 1280 #65536
+    port = 2222
 
-    client_socket = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-    client_socket.bind((host_ip,port))
-
-
-    RATE = 16000
-    CHUNK = int (RATE / 10)
-    print("Audio Thread Created!")
-
-        
+    sr = UDPStreamReceiver.UDPStreamReceiver(port)
+    q = queue.Queue(10)
+    sr.registerQueue(q)
+    
     # receive and put audio data in queue
-    def getAudioData(stopped):
-        while not stopped:
-            # print("Waiting for Audio client...")
-            frame,_= client_socket.recvfrom(BUFF_SIZE)
-            # print("buffer size", audio_buff.qsize())
-            if (audio_buff.qsize()) < 16:
-                audio_buff.put(frame)
-                wav_audio_buffer.put(frame)
-                # print("frame added")
-            else:
-                with audio_buff.mutex:
-                    audio_buff.queue.clear()
-                    wav_audio_buffer.queue.clear()
-                    # print("buffer cleared")
-        # print('Audio chunk received')
-        print("Audio Server Terminated!")
-            
-    t2 = threading.Thread(target=getAudioData, args=(stopped,))
-    t2.start()
+    while not stopped:
+        if q.empty():
+            time.sleep(1e-3)
+        else:
+            payload = (q.get())
+            audio = payload[12:]
+            audio_buff.put(audio)
+            wav_audio_buffer.put(audio)
+        # print("Waiting for Audio client...")
+    print("Audio Server Terminated!")
+        
+    sr.unregisterQueue(q)
+    sr.close()
+                
 
 
 class MicrophoneStream(object):

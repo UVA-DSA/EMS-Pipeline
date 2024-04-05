@@ -1,2 +1,16 @@
 .vscode
 DataCollection/
+
+
+Demo/Audio_Scenarios/2019_Test_Ground_Truth.zip
+Demo/Audio_Scenarios/2023_Test.zip
+Demo/Audio_Scenarios/Standalone/
+Demo/Audio_Scenarios/pre-chunked.zip
+Demo/Audio_Scenarios/pre-chunked/
+Demo/Audio_Scenarios/test_data (1).zip
+Demo/EMSAgent/Interface.zip
+Demo/EMSAgent/models/
+Demo/EMSConformer/
+Demo/Evaluation_Results/
+Demo/evaluation_results/
+Demo/whisper.cpp/
