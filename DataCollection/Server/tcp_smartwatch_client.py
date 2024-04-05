@@ -40,7 +40,7 @@ def receive_data(server_ip, server_port, recording_dir, commandqueue):
                     
                     sw_data = response.decode('utf-8').split(',')
 
-                    curr_epoch_time = int(time.time_ns() // 1e6)
+                    curr_epoch_time = int(time.time_ns())
                     
                     # convert to proper types
                     sw_data[0] = int (sw_data[0])

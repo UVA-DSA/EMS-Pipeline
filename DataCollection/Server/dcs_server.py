@@ -137,8 +137,8 @@ def start():
 
     # GoPro Code
     # asyncio.run(main())
-    # gopro_process =  multiprocessing.Process(target=execute_main, args=(commandqueue,recording_dir))
-    # gopro_process.start()
+    gopro_process =  multiprocessing.Process(target=execute_main, args=(commandqueue,recording_dir))
+    gopro_process.start()
     
     commandqueue.put("start")
 
@@ -197,9 +197,11 @@ def handle_byte_array(byte_array_string):
         # print(video_recording_dir)
         img_data = byte_array_string.split(',')
 
+        #get epoch time in ns
+        ts = int(time.time_ns())
         byte_array = base64.b64decode(img_data[0])
         # Specify the file path where you want to save the image
-        image_path = f'{video_recording_dir}frame_{image_index}_seq-{img_data[1]}_ts-{img_data[2]}.jpeg'  # You can change the file format as needed (e.g., .jpg, .png)
+        image_path = f'{video_recording_dir}frame_{image_index}_seq-{img_data[1]}_source_ts-{img_data[2]}_pc_ts{ts}.jpeg'  # You can change the file format as needed (e.g., .jpg, .png)
         image_index += 1
         # reconstruct image as an numpy array
         img = imread(io.BytesIO(byte_array))
@@ -238,5 +240,5 @@ def handle_disconnect():
 
 if __name__ == '__main__':
 
-    socketio.run(app, host='0.0.0.0', port=5000)
+    socketio.run(app, host='0.0.0.0', port=9000)
     
