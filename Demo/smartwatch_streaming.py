@@ -51,7 +51,7 @@ class Thread_Watch(QThread):
             try:
                 # Connect to the server
                 self.changeActivityRec.emit('Connecting to SmartWatch...')
-                print("sw details ", self.smartwatch_ip, self.smartwatch_port)
+                # print("sw details ", self.smartwatch_ip, self.smartwatch_port)
                 client_socket.connect((self.smartwatch_ip, self.smartwatch_port))
                 
                 self.changeActivityRec.emit('Connected to SmartWatch!')

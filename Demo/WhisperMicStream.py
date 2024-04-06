@@ -80,7 +80,8 @@ def playback_thread(stop_event):
             time.sleep(1e-3)
         else:
             sample = (q.get())
-            stream.write(sample[12:])
+            if(sample is not None):
+                stream.write(sample[12:])
             
     print("Audio Server Terminated!")
     sr.unregisterQueue(q)

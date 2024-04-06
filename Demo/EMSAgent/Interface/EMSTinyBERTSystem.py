@@ -150,8 +150,14 @@ def EMSTinyBERTSystem(Window, EMSTinyBERTQueue, ProtocolQueue):
         raise Exception('wrong model name')
     config = AttrDict(config)
 
+    start_t = time.time()
 
     model = EMSTinyBERT(config, model_name)
+
+    end_t = time.time()
+
+    print(f"[Protocol model initialization time: {end_t-start_t}]")
+
     
     print('================= Warmup Protocol Model =================')
     print(f'[Protocol warm up done!: {model("Warmup Text")}]')

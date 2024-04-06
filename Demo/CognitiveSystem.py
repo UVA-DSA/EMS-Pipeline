@@ -17,8 +17,24 @@ import re
 
 #added 3/18
 import nltk
-nltk.download('punkt')
+from nltk.data import find
+
+# Function to check and download if necessary
+def download_nltk_data(dataset_name):
+    try:
+        # Attempt to find the dataset
+        if dataset_name == 'punkt':
+            find(f"tokenizers/{dataset_name}")
+        else:
+            find(f"corpora/{dataset_name}")
+            
+        print(f"{dataset_name} is already available.")
+    except LookupError:
+        # If dataset is not found, download it
+        print(f"Downloading {dataset_name}...")
+        nltk.download(dataset_name, quiet=True)
 #--
+download_nltk_data('punkt')
 
 # ============== Cognitive System ==============
 from behaviours_m import blackboard

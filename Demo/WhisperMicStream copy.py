@@ -59,7 +59,7 @@ class MicrophoneStream:
                 self.sio.wait()
                 break  # Exit the loop if connected successfully
             except Exception as e:
-                print("Connection failed, retrying...", e)
+                # print("Connection failed, retrying...", e)
                 time.sleep(5)  # Wait for 5 seconds before retrying
 
 

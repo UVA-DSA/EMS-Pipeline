@@ -248,6 +248,13 @@ class MainWindow(QWidget):
         VIDEO_HEIGHT = 480
         self.video.setGeometry(QtCore.QRect(0, 0, VIDEO_WIDTH, VIDEO_HEIGHT))
 
+        # Thread for internet check
+        # Initialize the internet check thread
+        self.internet_check_thread = InternetCheckThread()
+        self.internet_check_thread.internet_status_signal.connect(self.update_internet_status)
+        self.internet_check_thread.start()
+
+
         # Threads for video 
         th = Thread(data_path, videostream)
         th.changePixmap.connect(self.setImage)
@@ -408,9 +415,17 @@ class MainWindow(QWidget):
         self.UpdateMsgBox(["Ready to start speech recognition!"])
 
 
-        self.IpAddressLabel = QLabel("IP Address: " + self.ip_address)
-        self.IpAddressLabel.setFont(QFont("Monospace", 18))
+        self.IpAddressLabel = QLabel("IP: " + self.ip_address)
+        self.IpAddressLabel.setFont(QFont("Monospace", 12))
         self.Box3.addWidget(self.IpAddressLabel)  # Add this below the system log text box in the layout
+
+        self.InternetAvailLabel = QLabel("")
+        self.InternetAvailLabel.setFont(QFont("Arial", 22))
+        # if(self.internet_avail):
+        #     self.InternetAvailLabel.setStyleSheet("color: green; font-weight: bold; ")
+        # else:
+        #     self.InternetAvailLabel.setStyleSheet("color: red; font-weight: bold; ")
+        self.Box3.addWidget(self.InternetAvailLabel)  # Add this below the system log text box in the layout
 
         # Add Link Lab Logo
         self.PictureBox = QLabel()
@@ -457,6 +472,29 @@ class MainWindow(QWidget):
             print("testing successful")
             self.mediaPlayer.play()
 
+    @pyqtSlot(bool)
+    def update_internet_status(self, is_available):
+        if is_available:
+            self.InternetAvailLabel.setText("INTERNET AVAILABLE")
+            self.InternetAvailLabel.setStyleSheet("color: green; font-weight: bold;")
+            self.GoogleSpeechRadioButton.setEnabled(True)
+        else:
+            self.InternetAvailLabel.setText("NO INTERNET")
+            self.InternetAvailLabel.setStyleSheet("color: red; font-weight: bold;")
+            self.GoogleSpeechRadioButton.setEnabled(False)
+
+            if(not self.MLSpeechRadioButton.isChecked()):
+                #stop everything.
+                self.StopButtonClick()
+
+                #reset everything
+                # self.ResetButtonClick()
+
+                self.ComboBox.setEnabled(True)
+
+                self.MLSpeechRadioButton.click()
+
+
 
     def mediaStateChanged(self, state):
     	if self.player.state() == QMediaPlayer.StoppedState:
@@ -467,6 +505,7 @@ class MainWindow(QWidget):
     def closeEvent(self, event):
         print('Closing GUI')
         # self.th2.exit()
+        self.internet_check_thread.stop()
         self.stopped = 1
         self.reset = 1
         SpeechToNLPQueue.put('Kill')
@@ -609,7 +648,7 @@ class MainWindow(QWidget):
                 # Start subprocess
                 self.WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='EMS_Whisper/')
                 
-                # time.sleep(2)
+                time.sleep(4)
 
                 self.SpeechThread = StoppableThread(
                         target=WhisperFileStream.Whisper, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav'))

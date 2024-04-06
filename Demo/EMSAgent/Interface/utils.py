@@ -9,13 +9,32 @@ elif dataset == 'MIMIC3':
 import re
 from collections import OrderedDict
 import nltk
-nltk.download('stopwords')
-nltk.download('punkt')
+
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
+
 cahcedStopwords = stopwords.words('english')
 
+from nltk.data import find
 
+# Function to check and download if necessary
+def download_nltk_data(dataset_name):
+    try:
+        # Attempt to find the dataset
+        if dataset_name == 'punkt':
+            find(f"tokenizers/{dataset_name}")
+        else:
+            find(f"corpora/{dataset_name}")
+            
+        print(f"{dataset_name} is already available.")
+    except LookupError:
+        # If dataset is not found, download it
+        print(f"Downloading {dataset_name}...")
+        nltk.download(dataset_name, quiet=True)
+
+# Check and download stopwords and punkt
+download_nltk_data('stopwords')
+download_nltk_data('punkt')
 
 class AttrDict(dict):
     def __getattr__(self, attr):
