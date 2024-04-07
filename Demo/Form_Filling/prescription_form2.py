@@ -9,7 +9,7 @@ import datetime
 
 from pymetamap import MetaMap
 #mm = MetaMap.get_instance('/home/arif/Desktop/metamap/public_mm/bin/metamap16')
-mm = MetaMap.get_instance('./public_mm/bin/metamap20')
+mm = MetaMap.get_instance('./public_mm/bin/metamap16')
 #for abs path, add "/home/arif/Desktop/metamap/"
 caseNo='023'
 

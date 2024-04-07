@@ -198,8 +198,9 @@ def EMSTinyBERTSystem(Window, EMSTinyBERTQueue, ProtocolQueue):
                 prot_latency = (end-start)/1000000
 
                 #Send data (send to vision)
-                protocolFB =  FeedbackObj("", pred, prob, "")
-                ProtocolQueue.put(protocolFB)
+                if(prob > 0.7):
+                    protocolFB =  FeedbackObj("", pred, prob, "")
+                    ProtocolQueue.put(protocolFB)
                 if Window:
                     ProtocolSignal.signal.emit([protocolFB])
 

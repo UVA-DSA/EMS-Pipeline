@@ -474,6 +474,8 @@ class MainWindow(QWidget):
 
     @pyqtSlot(bool)
     def update_internet_status(self, is_available):
+        self.ip_address = get_local_ipv4()
+
         if is_available:
             self.InternetAvailLabel.setText("INTERNET AVAILABLE")
             self.InternetAvailLabel.setStyleSheet("color: green; font-weight: bold;")
@@ -661,7 +663,7 @@ class MainWindow(QWidget):
             print("Cognitive System Thread Started")
             self.CognitiveSystemThread = StoppableThread(
                 target=CognitiveSystem.CognitiveSystem, args=(self, SpeechToNLPQueue, FeedbackQueue, data_path, conceptExtractionStream, interventionStream,))
-            # self.CognitiveSystemThread.start()
+            self.CognitiveSystemThread.start()
 
 
         # ==== Start the EMS Agent - Xueren ==== #
@@ -705,6 +707,7 @@ class MainWindow(QWidget):
 
         try:
             self.WhisperSubprocess.kill()
+            subprocess.Popen('pkill stream', shell=False)
         except:
             print("Could not kill Whisper!")
         if(self.WhisperSubprocess != None):

@@ -136,8 +136,13 @@ class Thread(QThread):
 
         self.display_thread = threading.Thread(target=self.display_image, args=(self.changePixmap, display_queue,))
 
+        self.mediapipe_thread = threading.Thread(target=self.process_image)
+
         @self.sio.on('server_video')
         def on_message(data):
+            
+
+            # self.imagequeue.put(data)
 
                         # Schedule the asynchronous image processing task
             asyncio.run_coroutine_threadsafe(self.process_image_async(data), self.loop)
@@ -188,7 +193,7 @@ class Thread(QThread):
         RGB_img = np.array(image)
         
         # Process the image
-        RGB_img = cv2.rotate(RGB_img, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        # RGB_img = cv2.rotate(RGB_img, cv2.ROTATE_90_COUNTERCLOCKWISE)
         RGB_img = cv2.resize(RGB_img, (640, 480))
 
         h, w, ch = RGB_img.shape
@@ -197,6 +202,9 @@ class Thread(QThread):
 
         # print("Time taken to display image: ", time.time() - start)
         self.changePixmap.emit(qImg)  # Emit signal to update GUI
+
+        # self.imagequeue.put(RGB_img)
+
 
         
     def stop(self):
@@ -245,7 +253,7 @@ class Thread(QThread):
             while self.is_running:
                 if not self.imagequeue.empty():
                     image = self.imagequeue.get()
-                    print("Image received")
+                    # print("Image received")
                     # print("Image shape: ", image.shape)
                     # print("Image type: ", type(image))
                     # print("Image size: ", image.size)
@@ -288,8 +296,9 @@ class Thread(QThread):
                         y_vals.append(0)#(math.nan)
 
 
-                    cv2_img = cv2.rotate(image, cv2.ROTATE_90_COUNTERCLOCKWISE)
-                    cv2_img = cv2.resize(cv2_img, (640, 480))
+                    # cv2_img = cv2.rotate(image, cv2.ROTATE_90_COUNTERCLOCKWISE)
+                    # cv2_img = cv2.resize(cv2_img, (640, 480))
+                    cv2_img = image
                     h, w, ch = cv2_img.shape
                     # print("Image Size",h,w)
                     bytesPerLine = ch * w
@@ -318,6 +327,8 @@ class Thread(QThread):
                 self.sio.emit('message', 'Hello from Video QThread!')  # Send a message to the server
                 
 
+
+                # self.mediapipe_thread.start()
                 # self.display_thread.start()
 
                 # image_processor = ImageProcessor(image_queue, display_queue)
