@@ -75,7 +75,7 @@ public class ImageCompressor {
                     Log.e("ImageCompressor", "Bitmap is null");
                     return;
                 }
-                bmp.compress(Bitmap.CompressFormat.JPEG, 40, stream); // Adjust the format and quality as needed
+                bmp.compress(Bitmap.CompressFormat.JPEG, 25, stream); // Adjust the format and quality as needed
 
                 byteArray = stream.toByteArray();
                 stream.reset();
