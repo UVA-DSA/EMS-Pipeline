@@ -196,14 +196,14 @@ class Thread(QThread):
         # RGB_img = cv2.rotate(RGB_img, cv2.ROTATE_90_COUNTERCLOCKWISE)
         RGB_img = cv2.resize(RGB_img, (640, 480))
 
-        h, w, ch = RGB_img.shape
-        bytesPerLine = ch * w
-        qImg = QImage(RGB_img.data, 640, 480, bytesPerLine, QImage.Format_RGB888).scaled(w, h, Qt.KeepAspectRatio)
+        # h, w, ch = RGB_img.shape
+        # bytesPerLine = ch * w
+        # qImg = QImage(RGB_img.data, 640, 480, bytesPerLine, QImage.Format_RGB888).scaled(w, h, Qt.KeepAspectRatio)
 
-        # print("Time taken to display image: ", time.time() - start)
-        self.changePixmap.emit(qImg)  # Emit signal to update GUI
+        # # print("Time taken to display image: ", time.time() - start)
+        # self.changePixmap.emit(qImg)  # Emit signal to update GUI
 
-        # self.imagequeue.put(RGB_img)
+        self.imagequeue.put(RGB_img)
 
 
         
@@ -328,7 +328,7 @@ class Thread(QThread):
                 
 
 
-                # self.mediapipe_thread.start()
+                self.mediapipe_thread.start()
                 # self.display_thread.start()
 
                 # image_processor = ImageProcessor(image_queue, display_queue)
