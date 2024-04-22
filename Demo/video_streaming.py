@@ -57,7 +57,7 @@ total_imgs=0
 
 
 
-image_queue = Queue()
+image_queue = Queue(maxsize=1)
 display_queue = Queue()
 
 class ImageProcessor(Process):
@@ -138,6 +138,15 @@ class Thread(QThread):
 
         self.mediapipe_thread = threading.Thread(target=self.process_image)
 
+        self.mp_hands = mp.solutions.hands.Hands(
+            max_num_hands=1,
+            model_complexity=0,
+            min_detection_confidence=0.5,
+            min_tracking_confidence=0.5)
+        
+        self.mp_drawing = mp.solutions.drawing_utils
+
+
         @self.sio.on('server_video')
         def on_message(data):
             
@@ -192,9 +201,9 @@ class Thread(QThread):
         image = Image.open(io.BytesIO(byte_array))
         RGB_img = np.array(image)
         
-        # Process the image
-        # RGB_img = cv2.rotate(RGB_img, cv2.ROTATE_90_COUNTERCLOCKWISE)
-        RGB_img = cv2.resize(RGB_img, (640, 480))
+        # # Process the image
+        # # RGB_img = cv2.rotate(RGB_img, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        # RGB_img = cv2.resize(RGB_img, (640, 480))
 
         # h, w, ch = RGB_img.shape
         # bytesPerLine = ch * w
@@ -203,7 +212,7 @@ class Thread(QThread):
         # # print("Time taken to display image: ", time.time() - start)
         # self.changePixmap.emit(qImg)  # Emit signal to update GUI
 
-        self.imagequeue.put(RGB_img)
+        self.imagequeue.put(RGB_img,block=False)
 
 
         
@@ -240,77 +249,70 @@ class Thread(QThread):
 
             
 
-    def process_image(self):
+    def process_image(self, image=None):
         
         # run below in a another thread
+        while self.is_running:
+            if not self.imagequeue.empty():
+                image = self.imagequeue.get()
+                # print("Image received")
+                # print("Image shape: ", image.shape)
+                # print("Image type: ", type(image))
+                # print("Image size: ", image.size)
+                # print("Image dtype: ", image.dtype)
+                # print("Image len: ", len(image))
 
-        with mp_hands.Hands(
-            max_num_hands=1,
-            model_complexity=0,
-            min_detection_confidence=0.5,
-            min_tracking_confidence=0.5) as hands:
+            
+                #for peak detection
+                y_vals = []
 
-            while self.is_running:
-                if not self.imagequeue.empty():
-                    image = self.imagequeue.get()
-                    # print("Image received")
-                    # print("Image shape: ", image.shape)
-                    # print("Image type: ", type(image))
-                    # print("Image size: ", image.size)
-                    # print("Image dtype: ", image.dtype)
-                    # print("Image len: ", len(image))
+                #array for timestamps when every image is received
+                image_times = []
 
+                curr_date = datetime.datetime.now()
+                dt_string = curr_date.strftime("%d-%m-%Y-%H-%M-%S")
+
+                    # print("Remaining buffer size: ",img_buffer_size)
+
+                #get timestamp when getting the image frame -- for cpr rate detection
+                curr_time = round(time.time()*1000)
+                image_times.append(curr_time)
+
+        
                 
-                    #for peak detection
-                    y_vals = []
+                #process image with mediapipe hand detection
+                hand_detection_results = self.mp_hands.process(image)
 
-                    #array for timestamps when every image is received
-                    image_times = []
+                # hand-detection annotations
+                if hand_detection_results and hand_detection_results.multi_hand_landmarks:
+                    self.changeVisInfo.emit(str("Hand Detected! Wrist Position Identified."))
+                    for hand_landmarks in hand_detection_results.multi_hand_landmarks:
 
-                    curr_date = datetime.datetime.now()
-                    dt_string = curr_date.strftime("%d-%m-%Y-%H-%M-%S")
+                        #append y_val to array for peak detection
+                        y_vals.append(hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].y)
+                        
+                        #for drawing hand annotations on image
+                        self.mp_drawing.draw_landmarks(image,hand_landmarks,mp_hands.HAND_CONNECTIONS,mp_drawing_styles.get_default_hand_landmarks_style(),mp_drawing_styles.get_default_hand_connections_style())
+                else:
+                    self.changeVisInfo.emit(str("Detecting Hands..."))
+                    y_vals.append(0)#(math.nan)
 
-                        # print("Remaining buffer size: ",img_buffer_size)
 
-                    #get timestamp when getting the image frame -- for cpr rate detection
-                    curr_time = round(time.time()*1000)
-                    image_times.append(curr_time)
-
-           
-                    
-                    #process image with mediapipe hand detection
-                    hand_detection_results = hands.process(image)
-
-                    # hand-detection annotations
-                    if hand_detection_results and hand_detection_results.multi_hand_landmarks:
-                        self.changeVisInfo.emit(str("Hand Detected! Wrist Position Identified."))
-                        for hand_landmarks in hand_detection_results.multi_hand_landmarks:
-
-                            #append y_val to array for peak detection
-                            y_vals.append(hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].y)
+                # cv2_img = cv2.rotate(image, cv2.ROTATE_90_COUNTERCLOCKWISE)
+                # cv2_img = cv2.resize(cv2_img, (640, 480))
+                cv2_img = image
+                h, w, ch = cv2_img.shape
+                # print("Image Size",h,w)
+                bytesPerLine = ch * w
+                convertToQtFormat = QImage(cv2_img.data, 640, 480, bytesPerLine, QImage.Format_RGB888)
+                p = convertToQtFormat.scaled(w,h, Qt.KeepAspectRatio)
+                self.changePixmap.emit(p)
                             
-                            #for drawing hand annotations on image
-                            mp_drawing.draw_landmarks(image,hand_landmarks,mp_hands.HAND_CONNECTIONS,mp_drawing_styles.get_default_hand_landmarks_style(),mp_drawing_styles.get_default_hand_connections_style())
-                    else:
-                        self.changeVisInfo.emit(str("Detecting Hands..."))
-                        y_vals.append(0)#(math.nan)
-
-
-                    # cv2_img = cv2.rotate(image, cv2.ROTATE_90_COUNTERCLOCKWISE)
-                    # cv2_img = cv2.resize(cv2_img, (640, 480))
-                    cv2_img = image
-                    h, w, ch = cv2_img.shape
-                    # print("Image Size",h,w)
-                    bytesPerLine = ch * w
-                    convertToQtFormat = QImage(cv2_img.data, 640, 480, bytesPerLine, QImage.Format_RGB888)
-                    p = convertToQtFormat.scaled(w,h, Qt.KeepAspectRatio)
-                    self.changePixmap.emit(p)
-                                
-                    
-                    if(len(image_times) == 10000):
-                        #Clear the arrays to get 100 more image frames for cpr rate calculation
-                        y_vals.clear()
-                        image_times.clear()
+                
+                if(len(image_times) == 10000):
+                    #Clear the arrays to get 100 more image frames for cpr rate calculation
+                    y_vals.clear()
+                    image_times.clear()
 
 
 
