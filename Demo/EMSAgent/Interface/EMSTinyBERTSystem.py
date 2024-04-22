@@ -156,17 +156,21 @@ def EMSTinyBERTSystem(Window, EMSTinyBERTQueue, ProtocolQueue):
 
     end_t = time.time()
 
-    print(f"[Protocol model initialization time: {end_t-start_t}]")
+    # print(f"[Protocol model initialization time: {end_t-start_t}]")
 
     
     print('================= Warmup Protocol Model =================')
-    print(f'[Protocol warm up done!: {model("Warmup Text")}]')
+    # print(f'[Protocol warm up done!: {model("Warmup Text")}]')
 
     #Signal warmup done
     protocolFB =  FeedbackObj("protocol model warmup done", "protocol model warmup done","protocol warmup done",  "protocol model warmup done")
     ProtocolQueue.put(protocolFB)
 
     narrative = ""
+
+    # with EMSTinyBERTQueue.mutex:
+    #     EMSTinyBERTQueue.queue.clear()
+
     # call the model    
     while True:
         # Get queue item from the Speech-to-Text Module
@@ -174,7 +178,7 @@ def EMSTinyBERTSystem(Window, EMSTinyBERTQueue, ProtocolQueue):
 
         # TODO: make thread exit while True loop based on threading module event
         if(received == 'Kill'):
-            print("Cognitive System Thread received Kill Signal. Killing Cognitive System Thread.")
+            print("EMSTinyBERT Thread received Kill Signal. Killing Cognitive System Thread.")
             ProtocolQueue.empty()
             kill_signal = FeedbackObj("Kill","Kill","Kill","Kill")
             ProtocolQueue.put(kill_signal)

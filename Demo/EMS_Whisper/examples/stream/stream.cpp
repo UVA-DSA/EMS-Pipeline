@@ -194,7 +194,7 @@ int main(int argc, char **argv)
     int fd;
     const char *myfifo = "/tmp/myfifo";
     /* create the FIFO (named pipe) */
-    mkfifo(myfifo, 0666);
+    mkfifo(myfifo, 0777);
 
     whisper_params params;
 

@@ -9,7 +9,8 @@ import traceback
 # import soundfile as sf
 
 import queue
-
+import os
+import errno
 import sys
 import threading
 from classes import GUISignal
@@ -75,8 +76,17 @@ def Whisper(Window, TranscriptQueue,EMSAgentSpeechQueue, wavefile_name):
     else:
         RATE = 16000
         CHUNK = 1024
+    print("WhisperFileStream - Thread Started...")
+
+    try:
+        os.mkfifo(fifo_path)
+    except OSError as oe:
+        if oe.errno != errno.EEXIST:
+            raise
+
 
     with open(fifo_path, 'r') as fifo:
+        print("WhisperFileStream - Opened FIFO")
         with wave.open(wavefile_name, 'rb') as wf:
             try:
                 # Instantiate PyAudio and initialize PortAudio system resources (1)
@@ -93,6 +103,7 @@ def Whisper(Window, TranscriptQueue,EMSAgentSpeechQueue, wavefile_name):
                 
                 old_response = ""
                 # Play samples from the wave file (3)
+                print("WhisperFileStream - started streaming...")
                 while len(data:=wf.readframes(CHUNK)):  # Requires Python 3.8+ for :=
                     
                     if(Window.stopped == 1): 
@@ -130,7 +141,7 @@ def Whisper(Window, TranscriptQueue,EMSAgentSpeechQueue, wavefile_name):
                         old_response = response
                 # Close stream (4)
                 stream.close()
-
+            
                 TranscriptQueue.put('Kill')
                 EMSAgentSpeechQueue.put('Kill')
 
