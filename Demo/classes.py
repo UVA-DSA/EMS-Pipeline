@@ -1,4 +1,12 @@
 from PyQt5.QtCore import pyqtSignal, QObject
+
+# ------------ For Image ------------
+class QueueImage:
+     def __init__(self, timestamp, image):
+          self.timestamp = timestamp
+          self.image = image
+
+# ------------ For Transcription ------------
 class TranscriptItem:
       def __init__(self, transcript, isFinal, confidence, transcriptionDuration):
             self.transcript = transcript

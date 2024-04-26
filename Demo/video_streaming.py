@@ -9,7 +9,6 @@ import time
 
 import asyncio
 
-
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
@@ -46,16 +45,12 @@ mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
 mp_face_mesh = mp.solutions.face_mesh
-# mp_pose = mp.solutions.pose
 
+# mp_pose = mp.solutions.pose
 
 seq_all=0
 dropped_imgs=0
 total_imgs=0
-
-
-
-
 
 image_queue = Queue(maxsize=1)
 display_queue = Queue()
@@ -85,7 +80,7 @@ class ImageProcessor(Process):
 def process_image(image):
     """
     Adds annotations to image for the models you have selected, 
-    For now, it just depict results from hand detection
+    For now, it just depicts results from hand detection
     """
   
     global mp_hands #, mp_face_mesh
