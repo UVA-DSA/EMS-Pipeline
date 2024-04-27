@@ -6,6 +6,9 @@ results.csv
 chunk.csv
 check.csv
 
+EMS_Vision/weights
+
+
 *.logcat
 
 pymetamap/pymetamap.egg-info/PKG-INFO

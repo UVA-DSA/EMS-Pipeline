@@ -39,6 +39,8 @@ import time
 
 from multiprocessing import Process, Queue
 
+from EMS_Vision.ObjectDetector import ObjectDetector
+
 import queue
 # Media Pipe vars
 global mp_drawing, mp_drawing_styles, mp_hands, mp_face_mesh
@@ -138,6 +140,8 @@ class Thread(QThread):
 
         self.mediapipe_thread = threading.Thread(target=self.process_image)
 
+        self.object_detector = ObjectDetector(image_queue, display_queue)
+
         self.mp_hands = mp.solutions.hands.Hands(
             max_num_hands=1,
             model_complexity=0,
@@ -211,7 +215,7 @@ class Thread(QThread):
 
         # # print("Time taken to display image: ", time.time() - start)
         # self.changePixmap.emit(qImg)  # Emit signal to update GUI
-
+        # print("[Video_Streaming] Image received")
         self.imagequeue.put(RGB_img,block=False)
 
 
@@ -234,7 +238,6 @@ class Thread(QThread):
             if(display_queue.empty()):
                 continue
             else:
-                start_t = time.time()
                 RGB_img = display_queue.get()
 
                 h, w, ch = RGB_img.shape
@@ -244,8 +247,6 @@ class Thread(QThread):
                 p = convertToQtFormat.scaled(w,h, Qt.KeepAspectRatio)
 
                 changePixmap.emit(p)
-
-                print("Time taken to display image: ", time.time()-start_t)
 
             
 
@@ -328,10 +329,11 @@ class Thread(QThread):
                 print("Connected to the server!")
                 self.sio.emit('message', 'Hello from Video QThread!')  # Send a message to the server
                 
+                #start object detector engine process
+                self.object_detector.start()
 
-
-                self.mediapipe_thread.start()
-                # self.display_thread.start()
+                # self.mediapipe_thread.start()
+                self.display_thread.start()
 
                 # image_processor = ImageProcessor(image_queue, display_queue)
                 # image_processor.start()

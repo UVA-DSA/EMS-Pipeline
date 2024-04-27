@@ -714,13 +714,13 @@ class MainWindow(QWidget):
             self.WhisperSubprocess.terminate()
         self.WhisperSubprocess = None
 
-        if(self.CognitiveSystemThread != None):
-            SpeechToNLPQueue.put('Kill')
-        #     EMSAgentSpeechToNLPQueue.put('Kill')
-        #     FeedbackQueue.put('Kill')
-        # SpeechToNLPQueue.put('Kill')
-        EMSAgentSpeechToNLPQueue.put('Kill')
-        FeedbackQueue.put('Kill')
+        # if(self.CognitiveSystemThread != None):
+        #     SpeechToNLPQueue.put('Kill')
+        # #     EMSAgentSpeechToNLPQueue.put('Kill')
+        # #     FeedbackQueue.put('Kill')
+        # # SpeechToNLPQueue.put('Kill')
+        # EMSAgentSpeechToNLPQueue.put('Kill')
+        # FeedbackQueue.put('Kill')
         self.VUMeter.setValue(0)
         self.finalSpeechSegmentsSpeech = []
         self.finalSpeechSegmentsNLP = []
