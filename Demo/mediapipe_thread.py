@@ -1,8 +1,8 @@
 import cv2
 import sys
-from PyQt5.QtCore import * 
-from PyQt5.QtGui import * 
-from PyQt5.QtWidgets import * 
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 import mediapipe as mp
 import threading
 
@@ -10,8 +10,9 @@ import threading
 VIDEO_WIDTH = 841
 VIDEO_HEIGHT = 511
 
+
 class MPThread(QThread):
-    
+
     changePixmap = pyqtSignal(QImage)
     frame_buffer = []
 
@@ -27,7 +28,6 @@ class MPThread(QThread):
                 return
             else:
                 self.frame_buffer.append(image)
-    
 
     def process_image(self, image):
         """adds annotations to image for the models you have selected, 
@@ -38,7 +38,6 @@ class MPThread(QThread):
         # global face_mesh_toggle
         # global pose_detection_toggle
         global mp_hands, mp_face_mesh
-
 
         hand_detection_results = None
         face_mesh_results = None
@@ -51,24 +50,21 @@ class MPThread(QThread):
                 model_complexity=0,
                 min_detection_confidence=0.5,
                 min_tracking_confidence=0.5) as hands:
-                hand_detection_results = hands.process(image)
-
+            hand_detection_results = hands.process(image)
 
         # # face mesh
         # if face_mesh_toggle:
         with mp_face_mesh.FaceMesh(
-            static_image_mode=True,
-            refine_landmarks=True,
-            max_num_faces=1000,
-            min_detection_confidence=0.5) as face_mesh:
+                static_image_mode=True,
+                refine_landmarks=True,
+                max_num_faces=1000,
+                min_detection_confidence=0.5) as face_mesh:
             face_mesh_results = face_mesh.process(image)
-        
 
         # if pose_detection_toggle:
         #     with mp_pose.Pose(
         #         static_image_mode=True, min_detection_confidence=0.5, model_complexity=2) as pose:
         #         pose_results = pose.process(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
-        
 
         # annotations of results onto image
         image.flags.writeable = True
@@ -83,7 +79,6 @@ class MPThread(QThread):
                     mp_hands.HAND_CONNECTIONS,
                     mp_drawing_styles.get_default_hand_landmarks_style(),
                     mp_drawing_styles.get_default_hand_connections_style())
-        
 
         if face_mesh_results and face_mesh_results.multi_face_landmarks:
             for face_landmarks in face_mesh_results.multi_face_landmarks:
@@ -108,7 +103,7 @@ class MPThread(QThread):
                     landmark_drawing_spec=None,
                     connection_drawing_spec=mp_drawing_styles
                     .get_default_face_mesh_iris_connections_style())
-        
+
         # # hand-detection annotations
         # if hand_detection_toggle and hand_detection_results and hand_detection_results.multi_hand_landmarks:
         #     for hand_landmarks in hand_detection_results.multi_hand_landmarks:
@@ -118,7 +113,7 @@ class MPThread(QThread):
         #             mp_hands.HAND_CONNECTIONS,
         #             mp_drawing_styles.get_default_hand_landmarks_style(),
         #             mp_drawing_styles.get_default_hand_connections_style())
-        
+
         # # face-mesh annotations
         # if face_mesh_toggle and face_mesh_results and face_mesh_results.multi_face_landmarks:
         #     for face_landmarks in face_mesh_results.multi_face_landmarks:
@@ -143,27 +138,27 @@ class MPThread(QThread):
         #             landmark_drawing_spec=None,
         #             connection_drawing_spec=mp_drawing_styles
         #             .get_default_face_mesh_iris_connections_style())
-        
+
         # # pose detection annotations
         # if pose_detection_toggle and pose_results and pose_results.pose_landmarks:
         #     mp_drawing.draw_landmarks(
         #         image,
         #         pose_results.pose_landmarks,
         #         mp_pose.POSE_CONNECTIONS,
-        #         landmark_drawing_spec=mp_drawing_styles.get_default_pose_landmarks_style())    
+        #         landmark_drawing_spec=mp_drawing_styles.get_default_pose_landmarks_style())
 
         return image
-
 
     def emit_signal(self, image):
         rgbImage = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         h, w, ch = rgbImage.shape
         bytesPerLine = ch * w
-        convertToQtFormat = QImage(rgbImage.data, w, h, bytesPerLine, QImage.Format_RGB888)
-        p = convertToQtFormat.scaled(VIDEO_HEIGHT, VIDEO_WIDTH, Qt.KeepAspectRatio)
+        convertToQtFormat = QImage(
+            rgbImage.data, w, h, bytesPerLine, QImage.Format_RGB888)
+        p = convertToQtFormat.scaled(
+            VIDEO_HEIGHT, VIDEO_WIDTH, Qt.KeepAspectRatio)
         self.changePixmap.emit(p)
         return
-
 
     def window_update_prerecorded(self, PATH):
         # PATH = "/Users/saahith/Desktop/mediapipe-GUI/test2.mp4"
@@ -172,7 +167,7 @@ class MPThread(QThread):
         fps = int(cap.get(cv2.CAP_PROP_FPS))
         duration = frames/fps
         start = time.time()
-        
+
         while True:
             current_time = time.time()
             frame_index = int((current_time - start)/duration * frames)
@@ -190,12 +185,10 @@ class MPThread(QThread):
                 image = self.process_image(image)
                 self.emit_signal(image)
 
-
     def run(self, VIDEO_PATH=0):
         global mp_drawing, mp_drawing_styles, mp_hands, mp_face_mesh
         mp_drawing = mp.solutions.drawing_utils
         mp_drawing_styles = mp.solutions.drawing_styles
-
 
         mp_hands = mp.solutions.hands
         mp_face_mesh = mp.solutions.face_mesh
@@ -205,7 +198,8 @@ class MPThread(QThread):
         if VIDEO_PATH == 0:
             t2 = threading.Thread(target=self.window_update_webcam, args=())
         else:
-            t2 = threading.Thread(target=self.window_update_prerecorded, args=(VIDEO_PATH,))
+            t2 = threading.Thread(
+                target=self.window_update_prerecorded, args=(VIDEO_PATH,))
 
         t1.start()
         t2.start()
