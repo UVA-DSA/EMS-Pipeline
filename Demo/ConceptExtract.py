@@ -147,7 +147,8 @@ class ConceptExtractor(object):
         '''
         sent_text: a list of sent text
         '''
-        mm = MetaMap.get_instance('./public_mm/bin/metamap20', version=2020) #may have to edit for your version of metamap
+        # mm = MetaMap.get_instance('./public_mm/bin/metamap20', version=2020) #may have to edit for your version of metamap
+        mm = MetaMap.get_instance('./public_mm/bin/metamap20', version=2020)
         self.concepts, _ = mm.extract_concepts(sent_text, word_sense_disambiguation=True,
                                                ignore_stop_phrases=True)
 

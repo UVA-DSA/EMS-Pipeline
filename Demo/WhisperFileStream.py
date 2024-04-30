@@ -116,6 +116,8 @@ def Whisper(Window, TranscriptQueue,EMSAgentSpeechQueue, wavefile_name):
                         response = ""
 
                     if response != old_response and response != "":
+                        if "Thanks for watching!" in response:
+                            continue
                         block, isFinal, avg_p, latency = process_whisper_response(response) #isFinal = False means block is interim block
                         transcript = finalized_blocks + block
                         # if received block is finalized, then save to finalized blocks

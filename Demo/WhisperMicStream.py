@@ -86,6 +86,8 @@ def playback_thread(stop_event):
     print("Audio Server Terminated!")
     sr.unregisterQueue(q)
     sr.close()
+    stop_event.clear()
+
 
 
 def receive_and_buffer():

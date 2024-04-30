@@ -28,7 +28,7 @@ class MediaPipeProcess(multiprocessing.Process):
             while True:
                 if not self.input_queue.empty():
                     image = self.input_queue.get()
-                    
+                    print(self.input_queue)
                     #here for debugging purposes, remove when necessary
                     print("Image recieved")
                     continue

@@ -427,7 +427,7 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
                                 previewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
                                         CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
 
-                                previewRequestBuilder.set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, new Range<Integer>(20, 30));
+                                previewRequestBuilder.set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, new Range<Integer>(10, 20));
 
                                 // Finally, we start displaying the camera preview.
                                 CaptureRequest previewRequest = previewRequestBuilder.build();

@@ -718,7 +718,7 @@ class MainWindow(QWidget):
         #     SpeechToNLPQueue.put('Kill')
         # #     EMSAgentSpeechToNLPQueue.put('Kill')
         # #     FeedbackQueue.put('Kill')
-        # SpeechToNLPQueue.put('Kill')
+        # # SpeechToNLPQueue.put('Kill')
         # EMSAgentSpeechToNLPQueue.put('Kill')
         # FeedbackQueue.put('Kill')
         self.VUMeter.setValue(0)
