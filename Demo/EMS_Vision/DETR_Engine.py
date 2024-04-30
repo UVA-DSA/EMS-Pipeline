@@ -10,21 +10,43 @@ import cv2
 from PIL import Image
 
 class DETREngine:
-    def __init__(self, first_class_index=0):
+    def __init__(self, detr_version="base"):
         print(torch.__version__, torch.cuda.is_available())
         torch.set_grad_enabled(False)
 
         self.threshold = 0.8
-        if first_class_index == 0:
-            self.num_classes = 6
+
+
+        self.detr_version = detr_version
+        
+        if(self.detr_version == "ems"):
             self.finetuned_classes = [
                 'IV needle', 'bp monitor', 'bvm', 'defib pads', 'dummy', 'hands'
             ]
+            checkpoint = torch.load('./EMS_Vision/weights/ems_finetuned_detr_checkpoint.pth', map_location='cpu')
+
         else:
-            self.num_classes = 6
             self.finetuned_classes = [
-                'IV needle', 'bp monitor', 'bvm', 'defib pads', 'dummy', 'hands'
+                'N/A', 'person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus',
+                'train', 'truck', 'boat', 'traffic light', 'fire hydrant', 'N/A',
+                'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse',
+                'sheep', 'cow', 'elephant', 'bear', 'zebra', 'giraffe', 'N/A', 'backpack',
+                'umbrella', 'N/A', 'N/A', 'handbag', 'tie', 'suitcase', 'frisbee', 'skis',
+                'snowboard', 'sports ball', 'kite', 'baseball bat', 'baseball glove',
+                'skateboard', 'surfboard', 'tennis racket', 'bottle', 'N/A', 'wine glass',
+                'cup', 'fork', 'knife', 'spoon', 'bowl', 'banana', 'apple', 'sandwich',
+                'orange', 'broccoli', 'carrot', 'hot dog', 'pizza', 'donut', 'cake',
+                'chair', 'couch', 'potted plant', 'bed', 'N/A', 'dining table', 'N/A',
+                'N/A', 'toilet', 'N/A', 'tv', 'laptop', 'mouse', 'remote', 'keyboard',
+                'cell phone', 'microwave', 'oven', 'toaster', 'sink', 'refrigerator', 'N/A',
+                'book', 'clock', 'vase', 'scissors', 'teddy bear', 'hair drier',
+                'toothbrush'
             ]
+            checkpoint = torch.load('./EMS_Vision/weights/detr-r50-e632da11.pth', map_location='cpu')
+
+
+        self.num_classes = len(self.finetuned_classes)
+
 
         self.COLORS = [[0.000, 0.447, 0.741], [0.850, 0.325, 0.098], [0.929, 0.694, 0.125],
           [0.494, 0.184, 0.556], [0.466, 0.674, 0.188], [0.301, 0.745, 0.933]]
@@ -36,7 +58,6 @@ class DETREngine:
         ])
 
         self.model = torch.hub.load('facebookresearch/detr', 'detr_resnet50', pretrained=False, num_classes=self.num_classes)
-        checkpoint = torch.load('./EMS_Vision/weights/checkpoint.pth', map_location='cpu')
         self.model.load_state_dict(checkpoint['model'], strict=True)
         print("[DETR_Engine] DETR Model loaded")
         self.model.eval()
@@ -66,7 +87,7 @@ class DETREngine:
         probas = outputs['pred_logits'].softmax(-1)[0, :, :-1]
         keep = probas.max(-1).values > threshold
         probas_to_keep = probas[keep]
-        bboxes_scaled = self.rescale_bboxes(outputs['pred_boxes'][0, keep], (800, 800))
+        bboxes_scaled = self.rescale_bboxes(outputs['pred_boxes'][0, keep], (512, 512))
         return probas_to_keep, bboxes_scaled
 
     def plot_finetuned_results(self, cv2_img, prob=None, boxes=None):

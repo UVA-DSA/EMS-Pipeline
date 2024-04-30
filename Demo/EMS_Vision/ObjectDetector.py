@@ -3,13 +3,14 @@ from multiprocessing import Process
 from .DETR_Engine import DETREngine
 import time
 
+from pipeline_config import detr_version
 
 class ObjectDetector(Process):
     def __init__(self, input_queue, output_queue):
         super(ObjectDetector, self).__init__()
         self.input_queue = input_queue
         self.output_queue = output_queue
-        self.detr_engine = DETREngine()
+        self.detr_engine = DETREngine(detr_version)
 
         print("ObjectDetector: Initialized")
 
