@@ -158,3 +158,11 @@ smartwatch_port = 7889
 
 smartglass_ip = ""
 smartglass_port = 8889
+
+
+
+
+
+
+# -- EMS Vision configuration ------
+detr_version = "base" #ems
