@@ -19,6 +19,7 @@ class MediaPipeProcess(Process):
             input_queue (multiprocessing.Queue): input queue for process_image() of QueueImage objects
             output_queue (multiprocessing.Queue):output queue for annotated images of QueueImage objects
 
+        QueueImage is defined in /classes.py
         """
         super(MediaPipeProcess, self).__init__()
         self.input_queue = input_queue  # Queue for input images
@@ -53,10 +54,6 @@ class MediaPipeProcess(Process):
     def run(self):
         while self.is_running:  # Loop to process images
             if not self.input_queue.empty():
-                print("Run begins.")
                 queued_image = self.input_queue.get()
-                print("Image received.")
                 processed_image = self.process_image(QueueImage=queued_image)
-                print("Image processed.")
                 self.output_queue.put(processed_image)
-                print("Image outputted.")
