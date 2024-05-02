@@ -39,6 +39,7 @@ import time
 from multiprocessing import Process, Queue
 
 from EMS_Vision.ObjectDetector import ObjectDetector
+from pipeline_config import socketio_ipaddr
 
 import queue
 # Media Pipe vars
@@ -317,7 +318,7 @@ class Thread(QThread):
     def run(self):
         while self.is_running:
             try:
-                self.sio.connect('http://localhost:5000')  # Connect to the Flask-SocketIO server
+                self.sio.connect(socketio_ipaddr)  # Connect to the Flask-SocketIO server
                 print("Connected to the server!")
                 self.sio.emit('message', 'Hello from Video QThread!')  # Send a message to the server
                 

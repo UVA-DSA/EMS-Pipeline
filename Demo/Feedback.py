@@ -1,122 +1,42 @@
-import json
-import pickle
-import socket
 import time
-from classes import FeedbackObj
-# TCP_IP = '127.0.0.1'
-TCP_PORT = 7088
-# TODO: This is the old feedback system. make a flask client, whenever sendMessage is called, we need to send the message to the requested
-# make a feedback class. sio.emit(topic, message) 
-
-"""
-class FeedbackClient()
-
-def init:
-    
-    self.sio_client = SIO("ip")
+import socketio
+import threading
+from pipeline_config import socketio_ipaddr, feedback_topic
 
 
-def sendMessage(type, message)
-    feedback = FeedbackObj(type, message)
+class FeedbackClient(threading.Thread):
+    """ Flask client for sending any "Feedback" object to the central server.
 
-    self.sio_client.emit("feedback",feedback)
+    Attributes:
+        sio (socketio.Client): sets up the socketio connection
+        _sigstop (threading.Event): stop signal
+    """
 
+    def __init__(self):
+        print('this is called')
+        super(FeedbackClient, self).__init__()
+        self.sio = socketio.Client()
+        self._sigstop = threading.Event()
+        #print(self._stop)
 
-"""
+    def stop(self):
+        """Call this method to kill the thread."""
+        self._sigstop.set()
 
-def sendMessage(feedbackObj:FeedbackObj, connection):
-    count = 0
-    data_string = b""
-    # data_string = pickle.dumps(feedbackObj)   
-    # data_string = json.dumps(feedbackObj)
-    if feedbackObj:
-        print("Feedback Object: ",feedbackObj.concept, feedbackObj.intervention, feedbackObj.protocol)
-        if feedbackObj.concept:
-            data_string = b"Concepts: " + feedbackObj.concept.encode('ascii') + b'\0'
-        if feedbackObj.intervention:
-            data_string = b"Intervention: " + feedbackObj.intervention.encode('ascii') + b'\0'
-        if feedbackObj.protocol:
-            data_string = b"Protocol: " + feedbackObj.protocol.encode('ascii') + b'\0'
-    
-    #just for testing, delete later
-    # data_string = b"Hello from cogEMS! " +str.encode(str(count)) + b'\0'
+    def run(self):
+        """Inherited from threading.thread. Called in threading.thread.start()"""
+        while not self._sigstop.is_set():
+            try:
+                # defined in pipeline_config.py
+                self.sio.connect(socketio_ipaddr)
+                self.sio.wait()
+            except Exception as e:
+                print("Connection failed, retrying...", e)
+                time.sleep(5)
+        print("Succesfully exited feedback thread.")
 
-    print("data string to send from feedback: ", data_string)   
-
-    sent = connection.send(data_string) #b"hello from server"
-    print("sent: ", sent)
-
-    count += 1
-    time.sleep(0.2)
-            
-
-def Feedback (Window, data_path, FeedbackQueue):
-    #initialize tcp connection
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    sock.bind(("0.0.0.0", TCP_PORT))  
-    sock.listen(5) 
-    print("Waiting for client in feedback...")
-
-    connection,address = sock.accept()  
-    print("Client connected for feedback: ",address)
-
-    # while(True):
-    #     example = FeedbackObj('intervention', 'protocol', 'concept')
-    #     sendMessage(example, connection)
-    #     time.sleep(1)
-
-    while True:
-
-        # Get queue item from the Speech-to-Text Module
-        received = FeedbackQueue.get()
-
-        if(received == 'Kill'):
-            # print("Thread received Kill Signal. Killing Feedback Thread.")
-            connection.close()
-            print("Terminated feedback client connection!")
-
-            # print("Retrying to connect to a feedback client....")
-            # connection,address = sock.accept()  
-            # print("Client connected for feedback: ",address)
-            
-
-        if(Window.reset == 1):
-            print("Cognitive System Thread Received reset signal. Killing Feedback Thread.")
-            connection.close()
-            return
-
-        # # If item received from queue is legitmate
-        # else:
-            
-        print("Feedback: Received chunk", received)
-        
-
-
-
-        try:
-            # connection.send("some more data")
-            print("sending message: ", received)
-            sendMessage(received, connection)
-        except Exception as e:
-            print("Feedback: Exception: ",e)
-            print("Reconnecting to a client...")
-            connection.close()
-
-            # recreate the socket and reconnect
-            # sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
-
-            # sock.bind(("0.0.0.0", TCP_PORT))  
-            # sock.listen(5)  
-
-            connection,address = sock.accept()  
-            print("Client reconnected for feedback: ",address)
-            # sendMessage(received, connection)
-            # connection.send("some more data")
-
-
-
-
-
-
-        
+    def sendMessage(self, message_obj):
+        if self._sigstop.is_set():
+            print('Cannot send a message. The connection to the server has been killed.')
+        else:
+            self.sio.emit(feedback_topic, 'teststr')

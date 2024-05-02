@@ -6,8 +6,6 @@ results.csv
 chunk.csv
 check.csv
 
-EMS_Vision/weights
-
 
 *.logcat
 

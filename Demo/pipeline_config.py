@@ -163,6 +163,9 @@ smartglass_port = 8889
 
 
 
-
 # -- EMS Vision configuration ------
 detr_version = "base" #ems
+
+# --- socketio config ---
+socketio_ipaddr  = 'http://localhost:5000'
+feedback_topic = 'feedback'

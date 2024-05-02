@@ -3,7 +3,7 @@ PROTOCOL = "protocol"
 
 # ------------ For MediaPipe Interprocess Communication ------------
 
-class QueueImage:
+class MPQueueImage:
     """
     Custom image object for MediaPipeProcess processor.
 
@@ -17,24 +17,27 @@ class QueueImage:
 
 
 # ------------ Object Detection Results  ------------
-    
-class ObjectDetectionResults:
+class DetectionObj:
+    """
+    Object to return Detection results from the Action Recognition model.
+
+    Attributes:
+        box_coords (dictionary): box coordinates in the format - {center_point : (x, y), width: w, height: h}
+        obj_name (str) : name of the object
+
+    """
     def __init__(self, box_coords, obj_name):
+        self.type = 'Detection'
         self.box_coords = box_coords
         self.obj_name = obj_name
 
-
-# ------------ General Flask Response Object  ------------
-class ResponseObj:
-    def __init__(self, type, message):
-        self.type = type
-        self.message = message
 
 # ------------ For Transcription ------------
 
 
 class TranscriptItem:
     def __init__(self, transcript, isFinal, confidence, transcriptionDuration):
+        self.type = 'Transcript'
         self.transcript = transcript
         self.isFinal = isFinal
         self.confidence = confidence
@@ -46,12 +49,11 @@ class TranscriptItem:
 class FeedbackObj:
     def __init__(self, intervention, protocol, protocol_confidence, concept): #add objdet result class
         super(FeedbackObj, self).__init__()
+        self.type = 'Feedback'
         self.intervention = intervention
         self.protocol = protocol
         self.protocol_confidence = protocol_confidence
         self.concept = concept
-
-# TODO: ObjDet result class
 
 # ------------ Custom Speech to NLP QueueItem Class ------------
 

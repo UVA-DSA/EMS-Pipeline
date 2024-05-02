@@ -1,5 +1,6 @@
 from multiprocessing import Process
-
+from Feedback import FeedbackClient
+from classes import DetectionObj
 from .DETR_Engine import DETREngine
 import time
 
@@ -11,18 +12,20 @@ class ObjectDetector(Process):
         self.input_queue = input_queue
         self.output_queue = output_queue
         self.detr_engine = DETREngine(detr_version)
-        # self.feedback_client = TODO
-
+        self.feedback_client = FeedbackClient()
         print("ObjectDetector: Initialized")
 
 
     def run(self):
+        self.feedback_client.start() # start the feedback thread
         while True:
             frame = self.input_queue.get()
             # print("ObjectDetector: Got frame")
             # Do some object detection
             result_image = self.detr_engine.run_workflow(frame)
-
-            # TODO: CALL self.feedback_client.SENDMESSAGE(OBJ)
+            
+            dummy_obj = DetectionObj('hi', 'hi')
+            self.feedback_client
+            self.feedback_client.sendMessage(dummy_obj)
             self.output_queue.put(result_image)
             # print("ObjectDetector: Put frame")

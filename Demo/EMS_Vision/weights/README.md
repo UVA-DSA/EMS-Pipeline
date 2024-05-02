@@ -1,0 +1,2 @@
+## Instructions
+Insert the EMS fine-tuned model here under the name "ems_finetuned_detr_checkpoint.pth" and insert Meta's base [detr](https://dl.fbaipublicfiles.com/detr/detr-r50-e632da11.pth) under the name "detr-r50-e632da11.pth".

@@ -4,7 +4,7 @@ import multiprocessing
 import numpy as np
 from EMS_MediaPipe import MediaPipeProcess
 from PIL import Image
-from classes import QueueImage
+from classes import MPQueueImage
 from datetime import datetime
 import cv2
 
@@ -23,7 +23,7 @@ MediaPipeWorker = MediaPipeProcess(
 # media_pipe_process.start()
 
 MediaPipeWorker.start()
-input_image_obj = QueueImage(image=cv2image, timestamp=datetime.now())
+input_image_obj = MPQueueImage(image=cv2image, timestamp=datetime.now())
 image_queue.put(input_image_obj)
 # results_queue.get(img).show()
 

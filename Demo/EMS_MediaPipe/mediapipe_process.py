@@ -1,6 +1,7 @@
 from multiprocessing import Process
 import mediapipe as mp
 from PIL import Image
+from classes import MPQueueImage
 
 # Global variables for MediaPipe utilities
 global mp_drawing, mp_drawing_styles, mp_hands, mp_face_mesh
@@ -16,18 +17,25 @@ class MediaPipeProcess(Process):
         """ Instantiates a separate process for MediaPipe image annotation.
 
         Args:
-            input_queue (multiprocessing.Queue): input queue for process_image() of QueueImage objects
-            output_queue (multiprocessing.Queue):output queue for annotated images of QueueImage objects
+            input_queue (multiprocessing.Queue): input queue for process_image() of MPQueueImage objects
+            output_queue (multiprocessing.Queue):output queue for annotated images of MPQueueImage objects
 
-        QueueImage is defined in /classes.py
+        MPQueueImage is defined in /classes.py
         """
         super(MediaPipeProcess, self).__init__()
         self.input_queue = input_queue  # Queue for input images
         self.output_queue = output_queue  # Queue for output images
         self.is_running = True
 
-    # Method to process an image for hand landmark detection
-    def process_image(self, QueueImage):
+    def process_image(self, QueueImage:MPQueueImage):
+        """Performs hand landmark detection on an inputted image and returns the result.
+
+        Args:
+            QueueImage (MPQueueImage): QueueImage object of type MPQueueImage
+
+        Returns:
+            MPQueueImage: processed image.
+        """
         hand_detection_results = None
 
         # Initialize the MediaPipe model

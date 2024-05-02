@@ -19,6 +19,7 @@ socketio = SocketIO(app)
 video_display_process = None
 image_seq = 0
 
+
 @socketio.on('connect')
 def handle_connect():
     # Accessing the client's address from the request context
@@ -26,15 +27,22 @@ def handle_connect():
     print(f"Client connected: {client_address}")
 
     global video_display_process  # Declare the variable as global
-    
+
     if video_display_process is None or not video_display_process.is_alive():
-        video_display_process = multiprocessing.Process(target=display_image, args=(imagequeue,))
+        video_display_process = multiprocessing.Process(
+            target=display_image, args=(imagequeue,))
         video_display_process.start()
-        
+
 
 @socketio.on('message')
 def handleImage(msg):
     print((msg))
+
+
+@socketio.on('feedback')
+def handleFeedback(msg):
+    print('Feedback recieved! ', msg)
+
 
 @socketio.on('audio')
 def handle_audio(audio_data):
@@ -60,7 +68,6 @@ def handle_byte_array(byte_array):
 
     #             # Convert the PIL image object to an OpenCV image (numpy array)
     #     cv2_img = np.array(image)
-        
 
     #     cv2_img = cv2.cvtColor(cv2_img, cv2.COLOR_RGB2BGR)
 
@@ -80,9 +87,9 @@ def handle_base64_img(byte_array_string):
     # print('Received video from smartglass')
     socketio.emit('server_video', byte_array_string)
     # print('Received bytes!')
-    
+
     # # Convert the base64 encoded byte array string to bytes
-    
+
     try:
         # byte_array_string consists a string of base64 encoded bmp image
         byte_array = base64.b64decode(byte_array_string)
@@ -90,21 +97,20 @@ def handle_base64_img(byte_array_string):
         # Step 2: Create an image object from the binary data
         image = Image.open(io.BytesIO(byte_array))
 
-              # Convert the PIL image object to an OpenCV image (numpy array)
+        # Convert the PIL image object to an OpenCV image (numpy array)
         cv2_img = np.array(image)
-        
 
         cv2_img = cv2.cvtColor(cv2_img, cv2.COLOR_RGB2BGR)
 
         cv2_img = cv2.rotate(cv2_img, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
-        cv2.imwrite(cv2_img,f"./data_collection_folder/img_{image_seq}.jpeg")
+        cv2.imwrite(cv2_img, f"./data_collection_folder/img_{image_seq}.jpeg")
 
         image_seq += 1
 
         print('Image saved successfully.')
     except Exception as e:
-        print("EXCEPTION!: ",e)
+        print("EXCEPTION!: ", e)
 
 
 def display_image(imagequeue):
