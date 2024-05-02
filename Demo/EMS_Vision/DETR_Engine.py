@@ -122,3 +122,5 @@ class DETREngine:
         probas_to_keep, bboxes_scaled = self.filter_bboxes_from_outputs(outputs, threshold=self.threshold)
         result_image = self.plot_finetuned_results(my_image, probas_to_keep, bboxes_scaled)
         return result_image
+    
+        #TODO : Need another output with box coordinates (dictionary) ex. {obj1 : {name : value, boxcoords : [(x1,y1), ...]}, objs2...}

@@ -5,15 +5,15 @@ import torch
 import torch.nn as nn
 import pandas as pd
 from collections import defaultdict
-from EMSAgent.Interface.utils import sortby, removePunctuation
+from EMS_Agent.Interface.utils import sortby, removePunctuation
 import numpy as np
 from tqdm import tqdm
 from transformers import AutoTokenizer, AutoModel
-from EMSAgent.Interface.default_sets import device, dataset, SAVE_RESULT_ROOT
+from EMS_Agent.Interface.default_sets import device, dataset, SAVE_RESULT_ROOT
 if dataset =='EMS':
-    from EMSAgent.Interface.default_sets import p_node, group_p_dict, ungroup_p_node, group_hier, ungroup_hier, p2hier, group_hier_dict
+    from EMS_Agent.Interface.default_sets import p_node, group_p_dict, ungroup_p_node, group_hier, ungroup_hier, p2hier, group_hier_dict
 elif dataset == 'MIMIC3':
-    from EMSAgent.Interface.default_sets import ICD9_DIAG, MIMIC_3_DIR, ICD9_DIAG_GROUP, group_ICD9_dict
+    from EMS_Agent.Interface.default_sets import ICD9_DIAG, MIMIC_3_DIR, ICD9_DIAG_GROUP, group_ICD9_dict
 import os
 import json
 

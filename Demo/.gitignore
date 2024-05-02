@@ -25,7 +25,7 @@ EMS_Whisper/stream
 # Ignore node_modules folder
 public_mm/*
 *.tar.bz2
-EMSAgent/Interface/models/*
+EMS_Agent/Interface/models/*
 
 service-account.json
 

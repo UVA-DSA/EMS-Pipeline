@@ -1,13 +1,14 @@
 import torch.nn as nn
 import torch
 import os
-from EMSAgent.Interface.default_sets import seed_everything, device, ungroup_p_node
+from EMS_Agent.Interface.default_sets import seed_everything, device, ungroup_p_node
 import numpy as np
 import warnings
 import yaml
-from EMSAgent.Interface.utils import AttrDict, onehot2p, convert_label, preprocess
-from EMSAgent.Interface.Heterogeneous_graph import HeteroGraph
-from EMSAgent.Interface.model import EMSMultiModel
+from EMS_Agent.Interface.utils import AttrDict, onehot2p, convert_label, preprocess
+from EMS_Agent.Interface.default_sets import model_name
+from EMS_Agent.Interface.Heterogeneous_graph import HeteroGraph
+from EMS_Agent.Interface.model import EMSMultiModel
 from transformers import BertTokenizer
 import pandas as pd
 from tqdm import tqdm
@@ -27,12 +28,12 @@ class EMSTinyBERT(nn.Module):
         self.config = config
         self.tokenizer = BertTokenizer.from_pretrained(self.config.backbone, do_lower_Case=True)
         self.clean_model_date = date
-        self.save_model_root = os.path.join('EMSAgent/Interface/models', '{}'.format(self.clean_model_date))
+        self.save_model_root = os.path.join('EMS_Agent/Interface/models', '{}'.format(self.clean_model_date))
         if self.config.graph == 'hetero':
-            signs_df = pd.read_excel('./EMSAgent/Interface/config_file/All Protocols Mapping.xlsx')
-            impre_df = pd.read_excel('./EMSAgent/Interface/config_file/Impression Protocol.xlsx')
-            med_df = pd.read_excel('./EMSAgent/Interface/config_file/Medication Protocol.xlsx')
-            proc_df = pd.read_excel('./EMSAgent/Interface/config_file/Procedure Protocol.xlsx')
+            signs_df = pd.read_excel('./EMS_Agent/Interface/config_file/All Protocols Mapping.xlsx')
+            impre_df = pd.read_excel('./EMS_Agent/Interface/config_file/Impression Protocol.xlsx')
+            med_df = pd.read_excel('./EMS_Agent/Interface/config_file/Medication Protocol.xlsx')
+            proc_df = pd.read_excel('./EMS_Agent/Interface/config_file/Procedure Protocol.xlsx')
             HGraph = HeteroGraph(backbone=self.config.backbone, mode=self.config.cluster)
             self.graph = HGraph(signs_df, impre_df, med_df, proc_df)
         else:
@@ -129,7 +130,6 @@ def EMSTinyBERTSystem(Window, EMSTinyBERTQueue, ProtocolQueue):
         
     # initialize
     seed_everything(3407)
-    from EMSAgent.Interface.default_sets import model_name
 
     config = {
         'max_len': 512,

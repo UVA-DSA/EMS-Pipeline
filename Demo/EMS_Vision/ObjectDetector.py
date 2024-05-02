@@ -11,6 +11,7 @@ class ObjectDetector(Process):
         self.input_queue = input_queue
         self.output_queue = output_queue
         self.detr_engine = DETREngine(detr_version)
+        # self.feedback_client = TODO
 
         print("ObjectDetector: Initialized")
 
@@ -22,5 +23,6 @@ class ObjectDetector(Process):
             # Do some object detection
             result_image = self.detr_engine.run_workflow(frame)
 
+            # TODO: CALL self.feedback_client.SENDMESSAGE(OBJ)
             self.output_queue.put(result_image)
             # print("ObjectDetector: Put frame")

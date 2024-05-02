@@ -1,11 +1,11 @@
 import torch
 import numpy as np
 from transformers import BertTokenizer, BertModel
-from EMSAgent.Interface.default_sets import dataset, SAVE_RESULT_ROOT
+from EMS_Agent.Interface.default_sets import dataset, SAVE_RESULT_ROOT
 if dataset == 'EMS':
-    from EMSAgent.Interface.default_sets import p_node, group_p_dict, reverse_group_p_dict, ungroup_p_node, group_hier, ungroup_hier, p2hier
+    from EMS_Agent.Interface.default_sets import p_node, group_p_dict, reverse_group_p_dict, ungroup_p_node, group_hier, ungroup_hier, p2hier
 elif dataset == 'MIMIC3':
-    from EMSAgent.Interface.default_sets import ICD9_DIAG
+    from EMS_Agent.Interface.default_sets import ICD9_DIAG
 import re
 from collections import OrderedDict
 import nltk

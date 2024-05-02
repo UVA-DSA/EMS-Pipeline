@@ -6,7 +6,7 @@ import py_trees
 import behaviours_m as be
 from py_trees.blackboard import Blackboard
 from tqdm import tqdm as tqdm
-from classes import SpeechNLPItem, GUISignal
+from classes import SpeechNLPItem, GUISignal, FeedbackObj
 import threading
 import text_clf_utils as utils
 from ranking_func import rank
@@ -39,17 +39,6 @@ download_nltk_data('punkt')
 # ============== Cognitive System ==============
 from behaviours_m import blackboard
 blackboard.tick_num = 0
-
-# ------------ For Feedback ------------
-class FeedbackObj:
-    def __init__(self, intervention, protocol, p_confidence, concept):
-        super(FeedbackObj, self).__init__()
-        self.intervention = intervention
-        self.protocol = protocol
-        self.protocol_confidence = p_confidence
-        self.concept = concept
-
-# ------------ End Feedback Obj Class ------------
 
 # Cognitive System Thread
 def CognitiveSystem(Window, SpeechToNLPQueue, FeedbackQueue, data_path_str, conceptBool, interventionBool):

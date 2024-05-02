@@ -47,7 +47,7 @@ from DSP.amplitude import Amplitude
 from classes import SpeechNLPItem, GUISignal
 import TextSpeechStream
 import CognitiveSystem
-from EMSAgent.Interface import EMSAgentSystem
+from EMS_Agent.Interface import EMSAgentSystem
 import Feedback
 import GoogleSpeechMicStream
 import GoogleSpeechFileStream
@@ -61,7 +61,7 @@ import WhisperFileStream
 import WhisperMicStream
 import audio_streaming
 
-from EMSAgent.Interface import EMSTinyBERTSystem
+from EMS_Agent.Interface import EMSTinyBERTSystem
 
 
 from StoppableThread.StoppableThread import StoppableThread
@@ -663,7 +663,7 @@ class MainWindow(QWidget):
             print("Cognitive System Thread Started")
             self.CognitiveSystemThread = StoppableThread(
                 target=CognitiveSystem.CognitiveSystem, args=(self, SpeechToNLPQueue, FeedbackQueue, data_path, conceptExtractionStream, interventionStream,))
-            # self.CognitiveSystemThread.start()
+            self.CognitiveSystemThread.start()
 
 
         # ==== Start the EMS Agent - Xueren ==== #

@@ -15,17 +15,8 @@ import pandas as pd
 import time
 from tqdm import tqdm
 warnings.filterwarnings("ignore")
-from classes import  GUISignal
+from classes import GUISignal, FeedbackObj
 
-# ------------ For Feedback ------------
-class FeedbackObj:
-    def __init__(self, intervention, protocol, concept):
-        super(FeedbackObj, self).__init__()
-        self.intervention = intervention
-        self.protocol = protocol
-        self.concept = concept
-
-# ------------ End Feedback Obj Class ------------
 
 class EMSAgent(nn.Module):
     def __init__(self, config, date):
@@ -33,12 +24,12 @@ class EMSAgent(nn.Module):
         self.config = config
         self.tokenizer = BertTokenizer.from_pretrained(self.config.backbone, do_lower_Case=True)
         self.clean_model_date = date
-        self.save_model_root = os.path.join('./EMSAgent/Interface/models/DKEC-TinyClinicalBERT/')
+        self.save_model_root = os.path.join('./EMS_Agent/Interface/models/DKEC-TinyClinicalBERT/')
         if self.config.graph == 'hetero':
-            signs_df = pd.read_excel('./EMSAgent/Interface/config_file/All Protocols Mapping.xlsx')
-            impre_df = pd.read_excel('./EMSAgent/Interface/config_file/Impression Protocol.xlsx')
-            med_df = pd.read_excel('./EMSAgent/Interface/config_file/Medication Protocol.xlsx')
-            proc_df = pd.read_excel('./EMSAgent/Interface/config_file/Procedure Protocol.xlsx')
+            signs_df = pd.read_excel('./EMS_Agent/Interface/config_file/All Protocols Mapping.xlsx')
+            impre_df = pd.read_excel('./EMS_Agent/Interface/config_file/Impression Protocol.xlsx')
+            med_df = pd.read_excel('./EMS_Agent/Interface/config_file/Medication Protocol.xlsx')
+            proc_df = pd.read_excel('./EMS_Agent/Interface/config_file/Procedure Protocol.xlsx')
             HGraph = HeteroGraph(backbone=self.config.backbone, mode=self.config.cluster)
             self.graph = HGraph(signs_df, impre_df, med_df, proc_df)
         else:
@@ -138,7 +129,7 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_st
         |[-+]?\\.(?:inf|Inf|INF)
         |\\.(?:nan|NaN|NAN))$''', re.X),
         list(u'-+0123456789.'))
-    with open('./EMSAgent/Interface/config.yaml', 'r') as f:
+    with open('./EMS_Agent/Interface/config.yaml', 'r') as f:
         config = yaml.load(f, Loader=loader)
     config['parameters'].update({'iter_num': {'value': 0}})
     config = AttrDict(config['parameters'])

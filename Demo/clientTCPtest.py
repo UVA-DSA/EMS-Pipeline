@@ -1,16 +1,9 @@
 import socket
 import pickle
+from classes import FeedbackObj
 
 HOST = "127.0.0.1" # The server's hostname or IP address
 PORT = 7088  # The port used by the server
-
-
-class FeedbackObj:
-    def __init__(self, intervention, protocol, concept):
-        super(FeedbackObj, self).__init__()
-        self.intervention = intervention
-        self.protocol = protocol
-        self.concept = concept
 
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:

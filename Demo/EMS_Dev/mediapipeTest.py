@@ -2,7 +2,7 @@
 
 import multiprocessing
 import numpy as np
-from EMSMediaPipe import MediaPipeProcess
+from EMS_MediaPipe import MediaPipeProcess
 from PIL import Image
 from classes import QueueImage
 from datetime import datetime

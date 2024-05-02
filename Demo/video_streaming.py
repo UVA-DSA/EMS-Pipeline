@@ -126,7 +126,7 @@ class Thread(QThread):
         self.is_running = True
         self.imagequeue = image_queue
 
-        self.sio = Client()
+        self.sio = Client() #TODO: add similar to feedback.py
                 # Create an asyncio event loop for this thread
         self.loop = asyncio.new_event_loop()
         asyncio.set_event_loop(self.loop)

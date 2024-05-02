@@ -2,16 +2,27 @@ import json
 import pickle
 import socket
 import time
+from classes import FeedbackObj
 # TCP_IP = '127.0.0.1'
 TCP_PORT = 7088
+# TODO: This is the old feedback system. make a flask client, whenever sendMessage is called, we need to send the message to the requested
+# make a feedback class. sio.emit(topic, message) 
 
-class FeedbackObj:
-    def __init__(self, intervention, protocol, concept):
-        super(FeedbackObj, self).__init__()
-        self.intervention = intervention
-        self.protocol = protocol
-        self.concept = concept
+"""
+class FeedbackClient()
 
+def init:
+    
+    self.sio_client = SIO("ip")
+
+
+def sendMessage(type, message)
+    feedback = FeedbackObj(type, message)
+
+    self.sio_client.emit("feedback",feedback)
+
+
+"""
 
 def sendMessage(feedbackObj:FeedbackObj, connection):
     count = 0

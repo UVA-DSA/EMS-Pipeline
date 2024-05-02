@@ -1,12 +1,12 @@
 from transformers import BertTokenizer
 import pandas as pd
 import os
-from EMSAgent.utils import text_remove_double_space, AttrDict, onehot2p
-from EMSAgent.default_sets import group_p_dict, device, p_node, reverse_group_p_dict, seed_everything
+from EMS_Agent.utils import text_remove_double_space, AttrDict, onehot2p
+from EMS_Agent.default_sets import group_p_dict, device, p_node, reverse_group_p_dict, seed_everything
 import torch
 import torch.nn as nn
-from EMSAgent.Heterogeneous_graph import HeteroGraph
-from EMSAgent.model import EMSMultiModel
+from EMS_Agent.Heterogeneous_graph import HeteroGraph
+from EMS_Agent.model import EMSMultiModel
 import yaml
 import re
 import numpy as np
