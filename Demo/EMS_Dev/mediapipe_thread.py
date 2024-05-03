@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import *
 import mediapipe as mp
 import threading
 
+""" Although this might have been used at somepoint, it seems like no working module uses this thread. """
 
 VIDEO_WIDTH = 841
 VIDEO_HEIGHT = 511

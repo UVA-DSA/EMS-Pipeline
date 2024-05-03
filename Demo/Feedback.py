@@ -39,4 +39,4 @@ class FeedbackClient(threading.Thread):
         if self._sigstop.is_set():
             print('Cannot send a message. The connection to the server has been killed.')
         else:
-            self.sio.emit(feedback_topic, 'teststr')
+            self.sio.emit(feedback_topic, message_obj)

@@ -26,10 +26,11 @@ class DetectionObj:
         obj_name (str) : name of the object
 
     """
-    def __init__(self, box_coords, obj_name):
-        self.type = 'Detection'
+    def __init__(self, box_coords, name, confidence):
+        self.type = 'detection'
         self.box_coords = box_coords
-        self.obj_name = obj_name
+        self.obj_name = name
+        self.confidence = confidence
 
 
 # ------------ For Transcription ------------
@@ -37,7 +38,7 @@ class DetectionObj:
 
 class TranscriptItem:
     def __init__(self, transcript, isFinal, confidence, transcriptionDuration):
-        self.type = 'Transcript'
+        self.type = 'transcript'
         self.transcript = transcript
         self.isFinal = isFinal
         self.confidence = confidence
@@ -49,7 +50,7 @@ class TranscriptItem:
 class FeedbackObj:
     def __init__(self, intervention, protocol, protocol_confidence, concept): #add objdet result class
         super(FeedbackObj, self).__init__()
-        self.type = 'Feedback'
+        self.type = 'feedback'
         self.intervention = intervention
         self.protocol = protocol
         self.protocol_confidence = protocol_confidence

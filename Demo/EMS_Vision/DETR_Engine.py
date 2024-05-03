@@ -8,6 +8,7 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import numpy as np
 import cv2
 from PIL import Image
+from classes import DetectionObj
 
 
 class DETREngine:
@@ -86,11 +87,6 @@ class DETREngine:
         b = b * torch.tensor([img_w, img_h, img_w, img_h], dtype=torch.float32)
         return b
 
-    @staticmethod
-    def return_bbox_obj():
-        # TODO: Define a method that takes in a name and output from rescale_bboxes. Then returns a DetectionObj.
-        pass
-
     def filter_bboxes_from_outputs(self, outputs, threshold=0.7):
         """Recover bounding-boxes with prediction confidence above threshold (default=0.7)"""
         probas = outputs['pred_logits'].softmax(-1)[0, :, :-1]
@@ -100,12 +96,58 @@ class DETREngine:
             outputs['pred_boxes'][0, keep], (512, 512))
         return probas_to_keep, bboxes_scaled
 
+    def create_bbox_objs(self, prob=None, boxes=None):
+        """ Takes in outputs from model and creates DetectionObjs
+
+        Args:
+            prob (_type_): Probabilities of each detection
+            boxes (_type_): min and max corner of each detection
+
+        Returns
+            list: list of dictionaries in following format {name: x, boxcoords: [(xmin, ymin), (xmax, ymax)]}
+        """
+        detection_objects = []
+        if prob is not None and boxes is not None:
+            for p, box in zip(prob, boxes):
+                detection_object = dict()
+                cl = p.argmax().item()
+                name = f'{self.finetuned_classes[cl]}: {p[cl]:.2f}'
+                xmin, ymin, xmax, ymax = box
+                boxcoords = [(xmin.item(), ymin.item()),
+                             (xmax.item(), ymax.item())]
+
+                detection_object = DetectionObj(
+                    box_coords=boxcoords, obj_name=name)
+                detection_objects.append(detection_object)
+        return detection_objects
+
     def plot_finetuned_results(self, cv2_img, prob=None, boxes=None):
+        """ Given confidences and bounding box coordinates plot the bounding boxes and assign labels.
+        Also returns DetectionObjs with data from the probabilities and box coordinates.
+
+        Args:
+            cv2_img (_type_): image in cv2 format
+            prob (_type_): #TODO: fill in
+            boxes (torch.Tensor): tensor for bounding box coordinates
+
+        Returns:
+            np.array, list: annotated image, list of DetectionObjs
+        """
+        detection_objects = []
         if prob is not None and boxes is not None:
             for p, box in zip(prob, boxes):
                 xmin, ymin, xmax, ymax = box
+                box_coordinates = [(int(xmin), int(ymin)),
+                                   (int(xmax), int(ymax))]
                 cl = p.argmax().item()
-                label = f'{self.finetuned_classes[cl]}: {p[cl]:.2f}'
+                name = self.finetuned_classes[cl]
+                confidence = f'{p[cl]:.2f}'
+                label = f'{name}: {confidence}'
+
+                detection_objects.append(DetectionObj(box_coords=box_coordinates,
+                                                      name=name,
+                                                      confidence=confidence))
+
                 color = [int(x * 255)
                          for x in self.COLORS[cl % len(self.COLORS)]]
 
@@ -123,20 +165,21 @@ class DETREngine:
                 cv2.putText(cv2_img, label, (int(xmin), int(ymin) - 5),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
 
-        return cv2_img
+        return cv2_img, detection_objects
 
     def run_workflow(self, my_image):
         img = self.cv2_to_pil(my_image)
         img = self.transform(img).unsqueeze(0)
         outputs = self.model(img)
-        print(outputs)
         # print(f"[DETR Engine] Inference time: {time.time() - start_t}")
-
         probas_to_keep, bboxes_scaled = self.filter_bboxes_from_outputs(
             outputs, threshold=self.threshold)
 
-        result_image = self.plot_finetuned_results(
+        # plot bboxes on image
+        result_image, detection_objects = self.plot_finetuned_results(
             my_image, probas_to_keep, bboxes_scaled)
-        return result_image
 
-        # TODO : Need another output with box coordinates (dictionary) ex. {obj1 : {name : value, boxcoords : [(x1,y1), ...]}, objs2...}
+        detection_results_serialized = [
+            vars(detection_object) for detection_object in detection_objects]
+
+        return result_image, detection_results_serialized
