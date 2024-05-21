@@ -25,6 +25,7 @@ import java.io.IOException;
 public class MainActivity extends Activity  {
 
     private static TextView mTextView;
+    private static TextView mIPTextView;
     private Button mButton;
     private ActivityMainBinding binding;
     private static final String DEBUG_TAG = "NetworkStatusExample";
@@ -33,7 +34,7 @@ public class MainActivity extends Activity  {
     private boolean isStarted = false;
     private SensorData mSensor;
 //    private String watchArm = "Left Wrist";
-    private String watchArm = "CogEMS - CPR";
+    private String message = "CogEMS DCS";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +44,9 @@ public class MainActivity extends Activity  {
 
 
         mTextView = binding.text;
+        mIPTextView = binding.ip;
         mTextView.setText(welcomeMsg);
-        mButton = binding.startBtn;
+//        mButton = binding.startBtn;
         connMgr =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         boolean isWifiConn = false;
@@ -65,38 +67,10 @@ public class MainActivity extends Activity  {
             mSensor = new SensorData(this);
         }
 
-        mTextView.setText(watchArm);
+        mTextView.setText(message);
+        mIPTextView.setText(SendSensorDataWorker.getLocalIpAddress());
+        mSensor.startSensor();
 
-//        Thread thread = new Thread() {
-//
-//            @Override
-//            public void run() {
-//                try {
-//                    Long startTime = System.currentTimeMillis()/1000;
-//                    while (true) {
-//                            Thread.sleep(1000);
-//                            runOnUiThread(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    if(isStarted){
-//
-//                                        // update TextView here!
-//                                    Long elapsedTime = System.currentTimeMillis()/1000 - startTime;
-//                                    setTimeText(elapsedTime);
-//                                    }else{
-//                                        mTextView.setText(welcomeMsg);
-//                                    }
-//                                }
-//                            });
-//
-//                        }
-//
-//                } catch (InterruptedException e) {
-//                }
-//            }
-//        };
-//
-//        thread.start();
     }
 
     public boolean isOnline() {
@@ -143,13 +117,13 @@ public class MainActivity extends Activity  {
         if(!isStarted) {
 
             Log.d(DEBUG_TAG, "Button Clicked");
-            mTextView.setText(watchArm + " Recording..");
+            mTextView.setText(message + " Recording..");
             mSensor.startSensor();
             mButton.setText("Stop");
             isStarted = true;
         }else {
             Log.d(DEBUG_TAG, "Button Clicked");
-            mTextView.setText(watchArm);
+            mTextView.setText(message);
             mSensor.stopSensor();
             mButton.setText("Start");
             isStarted = false;
