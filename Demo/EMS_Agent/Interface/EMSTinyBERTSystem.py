@@ -10,6 +10,7 @@ from EMS_Agent.Interface.default_sets import model_name
 from EMS_Agent.Interface.Heterogeneous_graph import HeteroGraph
 from EMS_Agent.Interface.model import EMSMultiModel
 from transformers import BertTokenizer
+from Feedback import FeedbackClient
 import pandas as pd
 from tqdm import tqdm
 warnings.filterwarnings("ignore")
@@ -44,6 +45,8 @@ class EMSTinyBERT(nn.Module):
         model_path = os.path.join(self.save_model_root, 'model.pt')
         checkpoint = torch.load(model_path, map_location='cpu')
         self.model.load_state_dict(checkpoint, strict=False)
+
+        self.feedback_client = FeedbackClient.instance()
         self.model.to(device)
 
     def initData(self, text):
@@ -172,6 +175,7 @@ def EMSTinyBERTSystem(Window, EMSTinyBERTQueue, ProtocolQueue):
     #     EMSTinyBERTQueue.queue.clear()
 
     # call the model    
+
     while True:
         # Get queue item from the Speech-to-Text Module
         received = EMSTinyBERTQueue.get()
@@ -206,6 +210,7 @@ def EMSTinyBERTSystem(Window, EMSTinyBERTQueue, ProtocolQueue):
                     protocolFB =  FeedbackObj("", pred, prob, "")
                     protocolFeedback = ProtocolObj(pred,prob)
                     protocol_dict = protocolFeedback.__dict__
+                    model.feedback_client.sendMessage(protocol_dict)
                     
                     ProtocolQueue.put(protocolFB)
                 if Window:

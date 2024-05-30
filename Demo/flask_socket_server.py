@@ -54,7 +54,7 @@ def handle_audio(audio_data):
 
 @socketio.on('bytes')
 def handle_byte_array(byte_array):
-    print('Received video from smartglass')
+    # print('Received video from smartglass')
     byte_array_string = base64.b64encode(byte_array).decode('utf-8')
 
     socketio.emit('server_video', byte_array_string)

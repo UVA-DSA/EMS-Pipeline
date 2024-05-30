@@ -68,6 +68,7 @@ from StoppableThread.StoppableThread import StoppableThread
 
 from video_streaming import Thread
 from smartwatch_streaming import Thread_Watch
+from Feedback import FeedbackClient
 
 from GenUtils.genutils import *
 
@@ -266,6 +267,8 @@ class MainWindow(QWidget):
         th2.changeActivityRec.connect(self.handle_message)
         th2.start()
 
+        self.feedbackClient = FeedbackClient.instance()
+        self.feedbackClient.start()
         # th2 = ThreadAudio(self)
         # th2.start()
 

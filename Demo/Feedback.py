@@ -14,9 +14,13 @@ class FeedbackClient(threading.Thread):
     
     _instance = None
     _lock = threading.Lock()
+    _num_instances = 0
+
 
     def __init__(self):
-        raise RuntimeError('use instance()')
+        super().__init__()
+        self.is_connected = False
+        # raise RuntimeError('use instance()')
         # #print(self._stop)
 
     @classmethod
@@ -25,11 +29,19 @@ class FeedbackClient(threading.Thread):
             with cls._lock:
                 if not cls._instance:
                     print("new instance of feedbackClient building...")
-                    cls._instance = super().__new__(cls)
+                    cls._instance = FeedbackClient()
                     #print('this is called')
-                    #super(FeedbackClient, self).__init__()
+                    
                     cls.sio = socketio.Client()
                     cls._sigstop = threading.Event()
+                    print("feedback instance created")
+
+        else:
+            print("returning feedback instance")
+
+        cls._num_instances += 1
+        print("Feedback Number of instances: ", cls._num_instances)
+
         return cls._instance
 
 
@@ -40,10 +52,14 @@ class FeedbackClient(threading.Thread):
 
     def run(self):
         """Inherited from threading.thread. Called in threading.thread.start()"""
-        while not self._sigstop.is_set():
+        while True:
             try:
-                # defined in pipeline_config.py
+                # defined 1in pipeline_config.py
                 self.sio.connect(socketio_ipaddr)
+                print("Connected to SocketIO server!")
+                self.sio.emit('message', 'Hello from Feedback Client!')  # Send a message to the server
+
+                self.is_connected = True
                 self.sio.wait()
             except Exception as e:
                 print("Connection failed, retrying...", e)
@@ -51,11 +67,12 @@ class FeedbackClient(threading.Thread):
         print("Succesfully exited feedback thread.")
 
     def sendMessage(self, message_obj):
-        if self._sigstop.is_set():
-            print('Cannot send a message. The connection to the server has been killed.')
-        else:
-<<<<<<< HEAD
-=======
-            print(f"Sent message to feedback {message_obj}")
->>>>>>> 672dcf2fdc34eb453f5b92594fd52172060c7938
-            self.sio.emit(feedback_topic, message_obj)
+        if(not self.is_connected):
+            print("Not connected to server, cannot send message.")
+            return
+        #print("Sent message to feedback ", message_obj)
+        # if self._sigstop.is_set():
+        #     print('Cannot send a message. The connection to the server has been killed.')
+        # else:
+        self.sio.emit(feedback_topic, message_obj)
+        print(f"Sent message to feedback {message_obj}")

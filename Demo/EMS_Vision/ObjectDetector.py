@@ -18,15 +18,14 @@ class ObjectDetector(Process):
 
 
     def run(self):
-        self.feedback_client.start() # start the feedback thread
         while True:
-            frame = self.input_queue.get()
-            # print("ObjectDetector: Got frame")
-            # Do some object detection
-            result_image = self.detr_engine.run_workflow(frame)
+            # frame = self.input_queue.get()
+            # # print("ObjectDetector: Got frame")
+            # # Do some object detection
+            # result_image = self.detr_engine.run_workflow(frame)
             
-            dummy_obj = DetectionObj('hi', 'hi')
+            dummy_obj = DetectionObj('hi', 'hi', 'hi')
             dummy_obj_dict = dummy_obj.__dict__
             self.feedback_client.sendMessage(dummy_obj_dict)
-            self.output_queue.put(result_image)
+            # self.output_queue.put(result_image)
             # print("ObjectDetector: Put frame")
