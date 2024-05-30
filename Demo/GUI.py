@@ -678,7 +678,7 @@ class MainWindow(QWidget):
         if(self.FeedbackThread == None):
             print("Feedback Thread Started")
             self.FeedbackThread = StoppableThread(
-                target=Feedback.Feedback, args=(self, data_path, FeedbackQueue))
+                target=Feedback.FeedbackClient, args=(self, data_path, FeedbackQueue))
             # self.FeedbackThread.start()
 
     @pyqtSlot()

@@ -237,12 +237,13 @@ class Thread(QThread):
                 RGB_img = display_queue.get()
 
                 h, w, ch = RGB_img.shape
-                # print("Image Size",h,w)
+                print("Image Size",w,h)
                 bytesPerLine = ch * w
                 convertToQtFormat = QImage(RGB_img.data, 640, 480, bytesPerLine, QImage.Format_RGB888)
-                p = convertToQtFormat.scaled(w,h, Qt.KeepAspectRatio)
-
+                p = convertToQtFormat.scaled(w*2,h*2, Qt.KeepAspectRatio)
                 changePixmap.emit(p)
+                #h_p, w_p, ch_p = p.shape
+                #print("converted Image Size", w_p,h_p)
 
             
 

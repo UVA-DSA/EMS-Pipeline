@@ -13,7 +13,7 @@ from transformers import BertTokenizer
 import pandas as pd
 from tqdm import tqdm
 warnings.filterwarnings("ignore")
-from classes import FeedbackObj
+from classes import FeedbackObj, ProtocolObj
 import time
 import sys
 from re import match
@@ -204,6 +204,9 @@ def EMSTinyBERTSystem(Window, EMSTinyBERTQueue, ProtocolQueue):
                 #Send data (send to vision)
                 if(prob > 0.7):
                     protocolFB =  FeedbackObj("", pred, prob, "")
+                    protocolFeedback = ProtocolObj(pred,prob)
+                    protocol_dict = protocolFeedback.__dict__
+                    
                     ProtocolQueue.put(protocolFB)
                 if Window:
                     ProtocolSignal.signal.emit([protocolFB])
@@ -229,7 +232,7 @@ def EMSTinyBERTSystem(Window, EMSTinyBERTQueue, ProtocolQueue):
                     pipeline_config.trial_data['fp'].append('fp placeholder')
                     pipeline_config.trial_data['fn'].append('fn placeholder')
                     pipeline_config.trial_data['tp'].append('tp placeholder')
-                    print('logits', logits.shape)
+                    # print('logits', logits.shape)
                     pipeline_config.trial_data['logits'].append(str(logits))
                             
             except:
