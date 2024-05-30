@@ -1,6 +1,6 @@
 from flask import Flask, request
 from flask_socketio import SocketIO
-
+import logging
 
 import base64
 import io
@@ -10,6 +10,10 @@ from imageio import imread
 from PIL import Image
 import numpy as np
 import multiprocessing
+
+# Suppress Flask logging
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 
 imagequeue = multiprocessing.Queue()
 
@@ -123,4 +127,4 @@ def display_image(imagequeue):
 
 
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=5000)
+    socketio.run(app, host='0.0.0.0', port=5000, log_output=False, debug=False)

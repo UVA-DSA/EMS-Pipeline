@@ -18,9 +18,9 @@ fc1.start()
 
 time.sleep(4)
 
-fc1.sendMessage(detectObj.__dict__)
-fc2.sendMessage(protocolObj1.__dict__)
-fc3.sendMessage(protocolObj2.__dict__)
+fc1.send_message(detectObj.__dict__)
+fc2.send_message(protocolObj1.__dict__)
+fc3.send_message(protocolObj2.__dict__)
 
 
 
