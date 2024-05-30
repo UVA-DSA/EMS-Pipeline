@@ -11,13 +11,28 @@ class FeedbackClient(threading.Thread):
         sio (socketio.Client): sets up the socketio connection
         _sigstop (threading.Event): stop signal
     """
+    
+    _instance = None
+    _lock = threading.Lock()
 
     def __init__(self):
-        print('this is called')
-        super(FeedbackClient, self).__init__()
-        self.sio = socketio.Client()
-        self._sigstop = threading.Event()
-        #print(self._stop)
+        raise RuntimeError('use instance()')
+        # #print(self._stop)
+
+    @classmethod
+    def instance(cls):
+        if cls._instance is None:
+            with cls._lock:
+                if not cls._instance:
+                    print("new instance of feedbackClient building...")
+                    cls._instance = super().__new__(cls)
+                    #print('this is called')
+                    #super(FeedbackClient, self).__init__()
+                    cls.sio = socketio.Client()
+                    cls._sigstop = threading.Event()
+        return cls._instance
+
+
 
     def stop(self):
         """Call this method to kill the thread."""
@@ -39,4 +54,8 @@ class FeedbackClient(threading.Thread):
         if self._sigstop.is_set():
             print('Cannot send a message. The connection to the server has been killed.')
         else:
+<<<<<<< HEAD
+=======
+            print(f"Sent message to feedback {message_obj}")
+>>>>>>> 672dcf2fdc34eb453f5b92594fd52172060c7938
             self.sio.emit(feedback_topic, message_obj)

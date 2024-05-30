@@ -33,6 +33,22 @@ class DetectionObj:
         self.confidence = confidence
 
 
+# ------------ Object Detection Results  ------------
+class ProtocolObj:
+    """
+    Object to return Protocol results from the Protocol Recognition model.
+
+    Attributes:
+    protocol (str): protocol name
+    protocol_confidence (str): confidence in protocol 
+        
+
+    """
+    def __init__(self, protocol, protocol_confidence):
+        self.type = 'Protocol'
+        self.protocol = protocol
+        self.protocol_confidence = protocol_confidence
+
 # ------------ For Transcription ------------
 
 

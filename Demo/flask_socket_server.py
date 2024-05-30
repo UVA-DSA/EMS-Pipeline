@@ -41,8 +41,10 @@ def handleImage(msg):
 
 @socketio.on('feedback')
 def handleFeedback(msg):
-    #below is for debugging purposes
-    print(msg)
+    print('Feedback recieved! ', msg)
+    socketio.emit('feedback', msg)
+
+
 
 @socketio.on('audio')
 def handle_audio(audio_data):
