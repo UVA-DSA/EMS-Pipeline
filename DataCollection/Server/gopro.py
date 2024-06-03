@@ -29,7 +29,7 @@ async def main(commandqueue, path):
     async with WirelessGoPro() as gopro:
         
         print("GoPro Directory: ",path)
-        await gopro.ble_setting.resolution.set(Params.Resolution.RES_4K)
+        await gopro.ble_setting.resolution.set(Params.Resolution.RES_1080)
         await gopro.ble_setting.fps.set(Params.FPS.FPS_30)
         
         command = commandqueue.get()
@@ -46,10 +46,10 @@ async def main(commandqueue, path):
                 await gopro.ble_command.set_shutter(shutter=Params.Toggle.DISABLE)
                 print("Downloading file..")
                 media_list = (await gopro.http_command.get_media_list()).data.files
-                await gopro.http_command.download_file(camera_file=media_list[-1].filename)
+                # await gopro.http_command.download_file(camera_file=media_list[-1].filename)
                 
-                print("Download complete! Moving file..")
-                move_files_with_prefix("./",path,"GH")
+                # print("Download complete! Moving file..")
+                # move_files_with_prefix("./",path,"GX")
 
             
         # end = input("Press enter to stop recording..")
