@@ -2,7 +2,7 @@ import cv2
 import os
 
 # Open the video file
-video_path = '/home/kesharaw/Desktop/datasets/EMS Action Dataset/Data Collection/Interventions/North Garden/05-23-2024/GoPro/GX010314.MP4'
+video_path = '/home/kesharaw/Desktop/datasets/EMS Action Dataset/Data Collection/Interventions/North Garden/05-23-2024/GoPro/GX010308.MP4'
 cap = cv2.VideoCapture(video_path)
 
 skip_frames = 10
@@ -61,6 +61,15 @@ def save_clip(start_frame):
     out.release()
     print(f"\nClip saved as '{output_file}'")
 
+
+def save_frame(current_frame):
+    cap.set(cv2.CAP_PROP_POS_FRAMES, current_frame)
+    ret, frame = cap.read()
+    if not ret:
+        print(f"Error: Could not read frame {current_frame}.")
+        return
+    
+    cv2.imwrite(f"{base_name}_frame_{current_frame}.jpg", frame)
 # Initial display
 display_frame(current_frame)
 
@@ -76,6 +85,8 @@ while True:
         display_frame(current_frame)
     elif key == ord('s'):  # 's' key to save the clip
         save_clip(current_frame)
+    elif key == ord('f'):  # 's' key to save the clip
+        save_frame(current_frame)
 
 cap.release()
 cv2.destroyAllWindows()

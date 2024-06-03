@@ -1,0 +1,948 @@
+   MainThread:13:32:54.359 util.py                                   210 DEBUG    | Send cmd --> echo "********" | sudo -S echo "VALID PASSWORD"
+   MainThread:13:32:54.373 util.py                                   216 DEBUG    | Receive response --> VALID PASSWORD
+
+   MainThread:13:32:54.380 util.py                                   210 DEBUG    | Send cmd --> nmcli --version
+   MainThread:13:32:54.394 util.py                                   216 DEBUG    | Receive response --> nmcli tool, version 1.22.10
+
+   MainThread:13:32:54.395 util.py                                   210 DEBUG    | Send cmd --> echo "********" | sudo -S nmcli dev
+   MainThread:13:32:54.421 util.py                                   216 DEBUG    | Receive response --> DEVICE        TYPE      STATE         CONNECTION 
+wlo1          wifi      connected     wahoo      
+p2p-dev-wlo1  wifi-p2p  disconnected  --         
+enp4s0        ethernet  unavailable   --         
+lo            loopback  unmanaged     --         
+
+   MainThread:13:32:54.421 wireless.py                                97 DEBUG    | Wifi setup. Using [WifiCli] driver::[wlo1] interface
+   MainThread:13:32:54.421 bleak_wrapper.py                          119 INFO     | Scanning for GoPro [A-Z0-9]{4} bluetooth devices...
+   MainThread:13:32:54.438 manager.py                                323 DEBUG    | initial properties: {'/org/bluez': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.AgentManager1': {}, 'org.bluez.ProfileManager1': {}}, '/org/bluez/hci0': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.Adapter1': {'Address': 'F0:57:A6:9A:F0:F5', 'AddressType': 'public', 'Name': 'keshara-CORSAIR-WS', 'Alias': 'keshara-CORSAIR-WS', 'Class': 786692, 'Powered': True, 'Discoverable': False, 'DiscoverableTimeout': 180, 'Pairable': False, 'PairableTimeout': 0, 'Discovering': False, 'UUIDs': ['0000110e-0000-1000-8000-00805f9b34fb', '0000110a-0000-1000-8000-00805f9b34fb', '00001200-0000-1000-8000-00805f9b34fb', '00001112-0000-1000-8000-00805f9b34fb', '0000110b-0000-1000-8000-00805f9b34fb', '0000110c-0000-1000-8000-00805f9b34fb', '00001800-0000-1000-8000-00805f9b34fb', '00001108-0000-1000-8000-00805f9b34fb', '00001801-0000-1000-8000-00805f9b34fb'], 'Modalias': 'usb:v1D6Bp0246d0535'}, 'org.freedesktop.DBus.Properties': {}, 'org.bluez.GattManager1': {}, 'org.bluez.LEAdvertisingManager1': {'ActiveInstances': 0, 'SupportedInstances': 8, 'SupportedIncludes': ['tx-power', 'appearance', 'local-name'], 'SupportedSecondaryChannels': ['1M', '2M', 'Coded']}, 'org.bluez.Media1': {}, 'org.bluez.NetworkServer1': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.Device1': {'Address': 'C2:19:DB:D0:13:0D', 'AddressType': 'random', 'Name': 'GoPro 1017', 'Alias': 'GoPro 1017', 'Appearance': 128, 'Icon': 'computer', 'Paired': True, 'Trusted': True, 'Blocked': False, 'LegacyPairing': False, 'Connected': False, 'UUIDs': ['00001800-0000-1000-8000-00805f9b34fb', '00001801-0000-1000-8000-00805f9b34fb', '00001804-0000-1000-8000-00805f9b34fb', '0000180a-0000-1000-8000-00805f9b34fb', '0000180f-0000-1000-8000-00805f9b34fb', '0000fea6-0000-1000-8000-00805f9b34fb', 'b5f90001-aa8d-11e3-9046-0002a5d5c51b', 'b5f90080-aa8d-11e3-9046-0002a5d5c51b', 'b5f90090-aa8d-11e3-9046-0002a5d5c51b'], 'Adapter': '/org/bluez/hci0', 'ManufacturerData': {754: bytearray(b'\x02\x037?\x00\r\x13\xd0\xdb\x19\xc2\x0f')}, 'ServiceData': {'0000fea6-0000-1000-8000-00805f9b34fb': bytearray(b'\xf7\xe3\x92\xee1017')}, 'ServicesResolved': False}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattService1': {'UUID': 'b5f90080-aa8d-11e3-9046-0002a5d5c51b', 'Device': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D', 'Primary': True, 'Includes': []}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c/char0055': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': 'b5f90084-aa8d-11e3-9046-0002a5d5c51b', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c', 'Value': bytearray(b''), 'Notifying': False, 'Flags': ['notify'], 'NotifyAcquired': False}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c/char0055/desc0057': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattDescriptor1': {'UUID': '00002902-0000-1000-8000-00805f9b34fb', 'Characteristic': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c/char0055', 'Value': bytearray(b'\x00\x00')}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c/char0052': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': 'b5f90083-aa8d-11e3-9046-0002a5d5c51b', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c', 'Value': bytearray(b''), 'Notifying': False, 'Flags': ['notify'], 'NotifyAcquired': False}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c/char0052/desc0054': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattDescriptor1': {'UUID': '00002902-0000-1000-8000-00805f9b34fb', 'Characteristic': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c/char0052', 'Value': bytearray(b'\x00\x00')}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c/char0050': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': 'b5f90082-aa8d-11e3-9046-0002a5d5c51b', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c', 'Value': bytearray(b''), 'Flags': ['write']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c/char004d': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': 'b5f90081-aa8d-11e3-9046-0002a5d5c51b', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c', 'Value': bytearray(b''), 'Notifying': False, 'Flags': ['notify'], 'NotifyAcquired': False}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c/char004d/desc004f': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattDescriptor1': {'UUID': '00002902-0000-1000-8000-00805f9b34fb', 'Characteristic': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c/char004d', 'Value': bytearray(b'\x00\x00')}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0046': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattService1': {'UUID': 'b5f90090-aa8d-11e3-9046-0002a5d5c51b', 'Device': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D', 'Primary': True, 'Includes': []}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0046/char0049': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': 'b5f90092-aa8d-11e3-9046-0002a5d5c51b', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0046', 'Value': bytearray(b''), 'Notifying': False, 'Flags': ['notify'], 'NotifyAcquired': False}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0046/char0049/desc004b': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattDescriptor1': {'UUID': '00002902-0000-1000-8000-00805f9b34fb', 'Characteristic': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0046/char0049', 'Value': bytearray(b'\x00\x00')}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0046/char0047': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': 'b5f90091-aa8d-11e3-9046-0002a5d5c51b', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0046', 'Value': bytearray(b''), 'Flags': ['write']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattService1': {'UUID': '0000fea6-0000-1000-8000-00805f9b34fb', 'Device': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D', 'Primary': True, 'Includes': []}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0043': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': 'b5f90079-aa8d-11e3-9046-0002a5d5c51b', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031', 'Value': bytearray(b''), 'Notifying': False, 'Flags': ['notify'], 'NotifyAcquired': False}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0043/desc0045': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattDescriptor1': {'UUID': '00002902-0000-1000-8000-00805f9b34fb', 'Characteristic': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0043', 'Value': bytearray(b'\x00\x00')}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0041': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': 'b5f90078-aa8d-11e3-9046-0002a5d5c51b', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031', 'Value': bytearray(b''), 'Flags': ['write']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char003e': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': 'b5f90077-aa8d-11e3-9046-0002a5d5c51b', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031', 'Value': bytearray(b'\x08\x93\x00\x08\x01\x00\n\x01\x00'), 'Notifying': False, 'Flags': ['notify'], 'NotifyAcquired': False}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char003e/desc0040': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattDescriptor1': {'UUID': '00002902-0000-1000-8000-00805f9b34fb', 'Characteristic': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char003e', 'Value': bytearray(b'\x00\x00')}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char003c': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': 'b5f90076-aa8d-11e3-9046-0002a5d5c51b', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031', 'Value': bytearray(b''), 'Flags': ['write']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0039': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': 'b5f90075-aa8d-11e3-9046-0002a5d5c51b', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031', 'Value': bytearray(b'\x02[\x00'), 'Notifying': False, 'Flags': ['notify'], 'NotifyAcquired': False}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0039/desc003b': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattDescriptor1': {'UUID': '00002902-0000-1000-8000-00805f9b34fb', 'Characteristic': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0039', 'Value': bytearray(b'\x00\x00')}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0037': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': 'b5f90074-aa8d-11e3-9046-0002a5d5c51b', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031', 'Value': bytearray(b''), 'Flags': ['write']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0034': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': 'b5f90073-aa8d-11e3-9046-0002a5d5c51b', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031', 'Value': bytearray(b'\x02\x17\x00'), 'Notifying': False, 'Flags': ['notify'], 'NotifyAcquired': False}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0034/desc0036': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattDescriptor1': {'UUID': '00002902-0000-1000-8000-00805f9b34fb', 'Characteristic': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0034', 'Value': bytearray(b'\x00\x00')}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0032': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': 'b5f90072-aa8d-11e3-9046-0002a5d5c51b', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031', 'Value': bytearray(b''), 'Flags': ['write']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0025': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattService1': {'UUID': 'b5f90001-aa8d-11e3-9046-0002a5d5c51b', 'Device': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D', 'Primary': True, 'Includes': []}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0025/char002f': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': 'b5f90006-aa8d-11e3-9046-0002a5d5c51b', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0025', 'Value': bytearray(b''), 'Flags': ['read']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0025/char002c': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': 'b5f90005-aa8d-11e3-9046-0002a5d5c51b', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0025', 'Value': bytearray(b''), 'Notifying': False, 'Flags': ['read', 'indicate']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0025/char002c/desc002e': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattDescriptor1': {'UUID': '00002902-0000-1000-8000-00805f9b34fb', 'Characteristic': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0025/char002c', 'Value': bytearray(b'\x00\x00')}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0025/char002a': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': 'b5f90004-aa8d-11e3-9046-0002a5d5c51b', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0025', 'Value': bytearray(b''), 'Flags': ['write']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0025/char0028': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': 'b5f90003-aa8d-11e3-9046-0002a5d5c51b', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0025', 'Value': bytearray(b'gY9-Cpm-85J'), 'Flags': ['read', 'write']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0025/char0026': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': 'b5f90002-aa8d-11e3-9046-0002a5d5c51b', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0025', 'Value': bytearray(b'HERO9 Black'), 'Flags': ['read', 'write']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0012': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattService1': {'UUID': '0000180a-0000-1000-8000-00805f9b34fb', 'Device': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D', 'Primary': True, 'Includes': []}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0012/char0023': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': '00002a50-0000-1000-8000-00805f9b34fb', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0012', 'Value': bytearray(b''), 'Flags': ['read']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0012/char0021': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': '00002a2a-0000-1000-8000-00805f9b34fb', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0012', 'Value': bytearray(b''), 'Flags': ['read']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0012/char001f': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': '00002a23-0000-1000-8000-00805f9b34fb', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0012', 'Value': bytearray(b''), 'Flags': ['read']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0012/char001d': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': '00002a28-0000-1000-8000-00805f9b34fb', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0012', 'Value': bytearray(b''), 'Flags': ['read']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0012/char001b': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': '00002a26-0000-1000-8000-00805f9b34fb', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0012', 'Value': bytearray(b''), 'Flags': ['read']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0012/char0019': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': '00002a27-0000-1000-8000-00805f9b34fb', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0012', 'Value': bytearray(b''), 'Flags': ['read']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0012/char0017': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': '00002a25-0000-1000-8000-00805f9b34fb', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0012', 'Value': bytearray(b''), 'Flags': ['read']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0012/char0015': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': '00002a24-0000-1000-8000-00805f9b34fb', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0012', 'Value': bytearray(b''), 'Flags': ['read']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0012/char0013': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': '00002a29-0000-1000-8000-00805f9b34fb', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0012', 'Value': bytearray(b''), 'Flags': ['read']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service000b': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattService1': {'UUID': '00001804-0000-1000-8000-00805f9b34fb', 'Device': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D', 'Primary': True, 'Includes': []}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service000b/char000c': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': '00002a07-0000-1000-8000-00805f9b34fb', 'Service': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service000b', 'Value': bytearray(b''), 'Flags': ['read']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0001': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattService1': {'UUID': '00001801-0000-1000-8000-00805f9b34fb', 'Device': '/org/bluez/hci0/dev_C2_19_DB_D0_13_0D', 'Primary': True, 'Includes': []}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.Device1': {'Address': 'F2:C0:5E:F2:B8:E1', 'AddressType': 'random', 'Name': 'MX Master 3', 'Alias': 'MX Master 3', 'Appearance': 962, 'Icon': 'input-mouse', 'Paired': True, 'Trusted': True, 'Blocked': False, 'LegacyPairing': False, 'Connected': True, 'UUIDs': ['00001800-0000-1000-8000-00805f9b34fb', '00001801-0000-1000-8000-00805f9b34fb', '0000180a-0000-1000-8000-00805f9b34fb', '0000180f-0000-1000-8000-00805f9b34fb', '00001812-0000-1000-8000-00805f9b34fb', '00010000-0000-1000-8000-011f2000046d'], 'Modalias': 'usb:v046DpB023d0015', 'Adapter': '/org/bluez/hci0', 'ServicesResolved': True}, 'org.freedesktop.DBus.Properties': {}, 'org.bluez.Battery1': {'Percentage': 20}}, '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service0041': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattService1': {'UUID': '00010000-0000-1000-8000-011f2000046d', 'Device': '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1', 'Primary': True, 'Includes': []}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service0041/char0042': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': '00010001-0000-1000-8000-011f2000046d', 'Service': '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service0041', 'Value': bytearray(b''), 'Notifying': False, 'Flags': ['read', 'write-without-response', 'write', 'notify'], 'WriteAcquired': False, 'NotifyAcquired': False}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service0041/char0042/desc0044': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattDescriptor1': {'UUID': '00002902-0000-1000-8000-00805f9b34fb', 'Characteristic': '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service0041/char0042', 'Value': bytearray(b'')}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service000e': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattService1': {'UUID': '0000180a-0000-1000-8000-00805f9b34fb', 'Device': '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1', 'Primary': True, 'Includes': []}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service000e/char001b': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': '00002a50-0000-1000-8000-00805f9b34fb', 'Service': '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service000e', 'Value': bytearray(b''), 'Flags': ['read']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service000e/char0019': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': '00002a28-0000-1000-8000-00805f9b34fb', 'Service': '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service000e', 'Value': bytearray(b''), 'Flags': ['read']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service000e/char0017': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': '00002a26-0000-1000-8000-00805f9b34fb', 'Service': '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service000e', 'Value': bytearray(b''), 'Flags': ['read']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service000e/char0015': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': '00002a27-0000-1000-8000-00805f9b34fb', 'Service': '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service000e', 'Value': bytearray(b''), 'Flags': ['read']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service000e/char0013': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': '00002a25-0000-1000-8000-00805f9b34fb', 'Service': '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service000e', 'Value': bytearray(b''), 'Flags': ['read']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service000e/char0011': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': '00002a24-0000-1000-8000-00805f9b34fb', 'Service': '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service000e', 'Value': bytearray(b''), 'Flags': ['read']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service000e/char000f': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': '00002a29-0000-1000-8000-00805f9b34fb', 'Service': '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service000e', 'Value': bytearray(b''), 'Flags': ['read']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service000a': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattService1': {'UUID': '00001801-0000-1000-8000-00805f9b34fb', 'Device': '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1', 'Primary': True, 'Includes': []}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service000a/char000b': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattCharacteristic1': {'UUID': '00002a05-0000-1000-8000-00805f9b34fb', 'Service': '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service000a', 'Value': bytearray(b''), 'Notifying': False, 'Flags': ['indicate']}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service000a/char000b/desc000d': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.GattDescriptor1': {'UUID': '00002902-0000-1000-8000-00805f9b34fb', 'Characteristic': '/org/bluez/hci0/dev_F2_C0_5E_F2_B8_E1/service000a/char000b', 'Value': bytearray(b'')}, 'org.freedesktop.DBus.Properties': {}}, '/org/bluez/hci0/dev_14_3F_A6_15_7B_26': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.Device1': {'Address': '14:3F:A6:15:7B:26', 'AddressType': 'public', 'Name': 'WH-1000XM4', 'Alias': 'WH-1000XM4', 'Class': 2360324, 'Icon': 'audio-card', 'Paired': True, 'Trusted': True, 'Blocked': False, 'LegacyPairing': False, 'Connected': False, 'UUIDs': ['00000000-deca-fade-deca-deafdecacaff', '00001108-0000-1000-8000-00805f9b34fb', '0000110b-0000-1000-8000-00805f9b34fb', '0000110c-0000-1000-8000-00805f9b34fb', '0000110e-0000-1000-8000-00805f9b34fb', '0000111e-0000-1000-8000-00805f9b34fb', '00001200-0000-1000-8000-00805f9b34fb', '81c2e72a-0591-443e-a1ff-05f988593351', '8901dfa8-5c7e-4d8f-9f0c-c2b70683f5f0', '931c7e8a-540f-4686-b798-e8df0a2ad9f7', '96cc203e-5068-46ad-b32d-e316f5e069ba', 'b9b213ce-eeab-49e4-8fd9-aa478ed1b26b', 'f8d1fbe4-7966-4334-8024-ff96c9330e15'], 'Modalias': 'usb:v054Cp0D58d0250', 'Adapter': '/org/bluez/hci0', 'ServicesResolved': False}, 'org.freedesktop.DBus.Properties': {}, 'org.bluez.MediaControl1': {'Connected': False}}, '/org/bluez/hci0/dev_C8_FD_19_89_66_D3': {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.Device1': {'Address': 'C8:FD:19:89:66:D3', 'AddressType': 'public', 'Name': '2260            $L$', 'Alias': '2260            $L$', 'Paired': False, 'Trusted': False, 'Blocked': False, 'LegacyPairing': False, 'Connected': False, 'UUIDs': ['00001800-0000-1000-8000-00805f9b34fb', '00001801-0000-1000-8000-00805f9b34fb', 'd0276450-0451-4000-b000-0000ccc00000', 'd0276450-0451-4000-b000-0000ee000000', 'd0276450-0451-4000-b000-0000ffc00000'], 'Adapter': '/org/bluez/hci0', 'ServicesResolved': False}, 'org.freedesktop.DBus.Properties': {}}}
+   MainThread:13:32:55.006 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0): ['org.bluez.Adapter1', {'Discovering': <dbus_fast.signature.Variant ('b', True)>}, []]
+   MainThread:13:32:55.062 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D): ['org.bluez.Device1', {'RSSI': <dbus_fast.signature.Variant ('n', -55)>}, []]
+   MainThread:13:32:55.062 bleak_wrapper.py                          132 INFO     | 	Discovered: C2:19:DB:D0:13:0D: GoPro 1017
+   MainThread:13:32:55.073 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0): ['org.bluez.Adapter1', {'Discovering': <dbus_fast.signature.Variant ('b', False)>}, []]
+   MainThread:13:32:55.074 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D): ['org.bluez.Device1', {}, ['RSSI']]
+   MainThread:13:32:55.075 bleak_wrapper.py                          145 INFO     | Found 1 matching devices.
+   MainThread:13:32:55.078 client.py                                 106 INFO     | Establishing the BLE connection
+   MainThread:13:32:55.081 bleak_wrapper.py                          212 INFO     | Establishing BLE connection to C2:19:DB:D0:13:0D: GoPro 1017...
+   MainThread:13:32:55.086 client.py                                 116 DEBUG    | Connecting to device @ C2:19:DB:D0:13:0D
+   MainThread:13:32:55.096 client.py                                 206 DEBUG    | Connecting to BlueZ path /org/bluez/hci0/dev_C2_19_DB_D0_13_0D
+   MainThread:13:32:56.136 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D): ['org.bluez.Device1', {'Connected': <dbus_fast.signature.Variant ('b', True)>}, []]
+   MainThread:13:32:57.439 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.ObjectManager.InterfacesAdded (/): ['/org/bluez/hci0/dev_C2_19_DB_D0_13_0D', {'org.bluez.Battery1': {'Percentage': <dbus_fast.signature.Variant ('y', 0)>}}]
+   MainThread:13:32:57.957 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D): ['org.bluez.Device1', {'ServicesResolved': <dbus_fast.signature.Variant ('b', True)>}, []]
+   MainThread:13:32:57.959 bleak_wrapper.py                          258 INFO     | Pairing with bluetoothctl
+   MainThread:13:32:58.251 bleak_wrapper.py                          353 INFO     | Discovering characteristics...
+   MainThread:13:32:58.257 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.ObjectManager.InterfacesAdded (/): ['/org/bluez/agent', {'org.freedesktop.DBus.Introspectable': {}, 'org.bluez.Agent1': {}}]
+   MainThread:13:32:58.258 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0): ['org.bluez.Adapter1', {'Pairable': <dbus_fast.signature.Variant ('b', True)>}, []]
+   MainThread:13:32:58.258 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0): ['org.bluez.Adapter1', {'Pairable': <dbus_fast.signature.Variant ('b', False)>}, []]
+   MainThread:13:32:58.384 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0025/char002c/desc002e): ['org.bluez.GattDescriptor1', {'Value': <dbus_fast.signature.Variant ('ay', bytearray(b'\x00\x00'))>}, []]
+   MainThread:13:32:58.384 client.py                                 814 DEBUG    | Read Descriptor 46 | /org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0025/char002c/desc002e: bytearray(b'\x00\x00')
+   MainThread:13:32:58.519 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0039/desc003b): ['org.bluez.GattDescriptor1', {'Value': <dbus_fast.signature.Variant ('ay', bytearray(b'\x00\x00'))>}, []]
+   MainThread:13:32:58.519 client.py                                 814 DEBUG    | Read Descriptor 59 | /org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0039/desc003b: bytearray(b'\x00\x00')
+   MainThread:13:32:58.609 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0043/desc0045): ['org.bluez.GattDescriptor1', {'Value': <dbus_fast.signature.Variant ('ay', bytearray(b'\x00\x00'))>}, []]
+   MainThread:13:32:58.609 client.py                                 814 DEBUG    | Read Descriptor 69 | /org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0043/desc0045: bytearray(b'\x00\x00')
+   MainThread:13:32:58.699 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0034/desc0036): ['org.bluez.GattDescriptor1', {'Value': <dbus_fast.signature.Variant ('ay', bytearray(b'\x00\x00'))>}, []]
+   MainThread:13:32:58.699 client.py                                 814 DEBUG    | Read Descriptor 54 | /org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0034/desc0036: bytearray(b'\x00\x00')
+   MainThread:13:32:58.834 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char003e/desc0040): ['org.bluez.GattDescriptor1', {'Value': <dbus_fast.signature.Variant ('ay', bytearray(b'\x00\x00'))>}, []]
+   MainThread:13:32:58.834 client.py                                 814 DEBUG    | Read Descriptor 64 | /org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char003e/desc0040: bytearray(b'\x00\x00')
+   MainThread:13:32:58.969 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c/char0055/desc0057): ['org.bluez.GattDescriptor1', {'Value': <dbus_fast.signature.Variant ('ay', bytearray(b'\x00\x00'))>}, []]
+   MainThread:13:32:58.969 client.py                                 814 DEBUG    | Read Descriptor 87 | /org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c/char0055/desc0057: bytearray(b'\x00\x00')
+   MainThread:13:32:59.149 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c/char0052/desc0054): ['org.bluez.GattDescriptor1', {'Value': <dbus_fast.signature.Variant ('ay', bytearray(b'\x00\x00'))>}, []]
+   MainThread:13:32:59.149 client.py                                 814 DEBUG    | Read Descriptor 84 | /org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c/char0052/desc0054: bytearray(b'\x00\x00')
+   MainThread:13:32:59.239 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c/char004d/desc004f): ['org.bluez.GattDescriptor1', {'Value': <dbus_fast.signature.Variant ('ay', bytearray(b'\x00\x00'))>}, []]
+   MainThread:13:32:59.239 client.py                                 814 DEBUG    | Read Descriptor 79 | /org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c/char004d/desc004f: bytearray(b'\x00\x00')
+   MainThread:13:32:59.374 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0046/char0049/desc004b): ['org.bluez.GattDescriptor1', {'Value': <dbus_fast.signature.Variant ('ay', bytearray(b'\x00\x00'))>}, []]
+   MainThread:13:32:59.374 client.py                                 814 DEBUG    | Read Descriptor 75 | /org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0046/char0049/desc004b: bytearray(b'\x00\x00')
+   MainThread:13:32:59.374 bleak_wrapper.py                          398 INFO     | Done discovering characteristics!
+   MainThread:13:32:59.378 bleak_wrapper.py                          316 INFO     | Enabling notifications...
+   MainThread:13:32:59.509 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0039): ['org.bluez.GattCharacteristic1', {'Notifying': <dbus_fast.signature.Variant ('b', True)>}, []]
+   MainThread:13:32:59.644 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0043): ['org.bluez.GattCharacteristic1', {'Notifying': <dbus_fast.signature.Variant ('b', True)>}, []]
+   MainThread:13:32:59.734 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0034): ['org.bluez.GattCharacteristic1', {'Notifying': <dbus_fast.signature.Variant ('b', True)>}, []]
+   MainThread:13:32:59.824 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char003e): ['org.bluez.GattCharacteristic1', {'Notifying': <dbus_fast.signature.Variant ('b', True)>}, []]
+   MainThread:13:32:59.959 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c/char0055): ['org.bluez.GattCharacteristic1', {'Notifying': <dbus_fast.signature.Variant ('b', True)>}, []]
+   MainThread:13:33:00.094 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c/char0052): ['org.bluez.GattCharacteristic1', {'Notifying': <dbus_fast.signature.Variant ('b', True)>}, []]
+   MainThread:13:33:00.274 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service004c/char004d): ['org.bluez.GattCharacteristic1', {'Notifying': <dbus_fast.signature.Variant ('b', True)>}, []]
+   MainThread:13:33:00.364 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0046/char0049): ['org.bluez.GattCharacteristic1', {'Notifying': <dbus_fast.signature.Variant ('b', True)>}, []]
+   MainThread:13:33:00.364 bleak_wrapper.py                          322 INFO     | Done enabling notifications
+   MainThread:13:33:00.368 builders.py                               698 INFO     | 
+<<<<<<<<--------------
+    "id" : "REG_STATUS_VAL_UPDATE.StatusId.ENCODING",
+    "protocol" : "BLE",
+    "uuid" : "Query",
+<<<<<<<<--------------
+
+   MainThread:13:33:00.370 gopro_wireless.py                         729 DEBUG    | Writing to [Query] UUID: 02:53:0a
+   MainThread:13:33:00.498 client.py                                 884 DEBUG    | Write Characteristic b5f90076-aa8d-11e3-9046-0002a5d5c51b | /org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char003c: bytearray(b'\x02S\n')
+   MainThread:13:33:00.499 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char003e): ['org.bluez.GattCharacteristic1', {'Value': <dbus_fast.signature.Variant ('ay', bytearray(b'\x05S\x00\n\x01\x00'))>}, []]
+   MainThread:13:33:00.500 gopro_wireless.py                         669 DEBUG    | Received response on BleUUID [Query Response]: 05:53:00:0a:01:00
+   MainThread:13:33:00.501 gopro_wireless.py                         644 INFO     | 
+-------------->>>>>>>>
+    "id" : "QueryCmdId.REG_STATUS_VAL_UPDATE",
+    "status" : "ErrorCode.SUCCESS",
+    "protocol" : "Protocol.BLE",
+    "data" : {
+        "StatusId.ENCODING" : "False",
+    },
+-------------->>>>>>>>
+
+   MainThread:13:33:00.508 builders.py                               698 INFO     | 
+<<<<<<<<--------------
+    "id" : "REG_STATUS_VAL_UPDATE.StatusId.SYSTEM_BUSY",
+    "protocol" : "BLE",
+    "uuid" : "Query",
+<<<<<<<<--------------
+
+   MainThread:13:33:00.513 gopro_wireless.py                         729 DEBUG    | Writing to [Query] UUID: 02:53:08
+   MainThread:13:33:00.587 client.py                                 884 DEBUG    | Write Characteristic b5f90076-aa8d-11e3-9046-0002a5d5c51b | /org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char003c: bytearray(b'\x02S\x08')
+   MainThread:13:33:00.588 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char003e): ['org.bluez.GattCharacteristic1', {'Value': <dbus_fast.signature.Variant ('ay', bytearray(b'\x05S\x00\x08\x01\x00'))>}, []]
+   MainThread:13:33:00.588 gopro_wireless.py                         669 DEBUG    | Received response on BleUUID [Query Response]: 05:53:00:08:01:00
+   MainThread:13:33:00.588 gopro_wireless.py                         644 INFO     | 
+-------------->>>>>>>>
+    "id" : "QueryCmdId.REG_STATUS_VAL_UPDATE",
+    "status" : "ErrorCode.SUCCESS",
+    "protocol" : "Protocol.BLE",
+    "data" : {
+        "StatusId.SYSTEM_BUSY" : "False",
+    },
+-------------->>>>>>>>
+
+   MainThread:13:33:00.589 gopro_wireless.py                         593 INFO     | BLE is ready!
+   MainThread:13:33:00.595 builders.py                               130 INFO     | 
+<<<<<<<<--------------
+    "id" : "CmdId.SET_DATE_TIME_DST",
+    "protocol" : "BLE",
+    "uuid" : "Command",
+    "date_time" : "2024-01-12 13:33:00.595710-05:00",
+    "tz_offset" : "-300",
+    "is_dst" : "False",
+<<<<<<<<--------------
+
+   MainThread:13:33:00.596 gopro_wireless.py                         729 DEBUG    | Writing to [Command] UUID: 0c:0f:0a:07:e8:01:0c:0d:21:00:fe:d4:00
+   MainThread:13:33:00.677 client.py                                 884 DEBUG    | Write Characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b | /org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0032: bytearray(b'\x0c\x0f\n\x07\xe8\x01\x0c\r!\x00\xfe\xd4\x00')
+   MainThread:13:33:00.678 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0034): ['org.bluez.GattCharacteristic1', {'Value': <dbus_fast.signature.Variant ('ay', bytearray(b'\x02\x0f\x02'))>}, []]
+   MainThread:13:33:00.678 gopro_wireless.py                         669 DEBUG    | Received response on BleUUID [Command Response]: 02:0f:02
+   MainThread:13:33:00.678 gopro_wireless.py                         644 INFO     | 
+-------------->>>>>>>>
+    "id" : "CmdId.SET_DATE_TIME_DST",
+    "status" : "ErrorCode.INVALID_PARAM",
+    "protocol" : "Protocol.BLE",
+-------------->>>>>>>>
+
+   MainThread:13:33:00.679 gopro_wireless.py                         741 WARNING  | Received non-success status: ErrorCode.INVALID_PARAM
+   MainThread:13:33:00.680 builders.py                               130 INFO     | 
+<<<<<<<<--------------
+    "id" : "CmdId.GET_THIRD_PARTY_API_VERSION",
+    "protocol" : "BLE",
+    "uuid" : "Command",
+<<<<<<<<--------------
+
+   MainThread:13:33:00.681 gopro_wireless.py                         729 DEBUG    | Writing to [Command] UUID: 01:51
+   MainThread:13:33:00.813 client.py                                 884 DEBUG    | Write Characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b | /org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0032: bytearray(b'\x01Q')
+   MainThread:13:33:00.814 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0034): ['org.bluez.GattCharacteristic1', {'Value': <dbus_fast.signature.Variant ('ay', bytearray(b'\x06Q\x00\x01\x02\x01\x00'))>}, []]
+   MainThread:13:33:00.815 gopro_wireless.py                         669 DEBUG    | Received response on BleUUID [Command Response]: 06:51:00:01:02:01:00
+   MainThread:13:33:00.816 gopro_wireless.py                         644 INFO     | 
+-------------->>>>>>>>
+    "id" : "CmdId.GET_THIRD_PARTY_API_VERSION",
+    "status" : "ErrorCode.SUCCESS",
+    "protocol" : "Protocol.BLE",
+    "data" : "2.0",
+-------------->>>>>>>>
+
+   MainThread:13:33:00.821 gopro_wireless.py                         330 INFO     | Using Open GoPro API version 2.0
+   MainThread:13:33:00.824 gopro_wireless.py                         777 INFO     | Discovering Wifi AP info and enabling via BLE
+   MainThread:13:33:00.826 builders.py                                74 INFO     | 
+<<<<<<<<--------------
+    "id" : "Read Wifi AP Password",
+    "protocol" : "BLE",
+    "uuid" : "Wifi AP Password",
+<<<<<<<<--------------
+
+   MainThread:13:33:00.949 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0025/char0028): ['org.bluez.GattCharacteristic1', {'Value': <dbus_fast.signature.Variant ('ay', bytearray(b'gY9-Cpm-85J'))>}, []]
+   MainThread:13:33:00.950 client.py                                 762 DEBUG    | Read Characteristic b5f90003-aa8d-11e3-9046-0002a5d5c51b | /org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0025/char0028: bytearray(b'gY9-Cpm-85J')
+   MainThread:13:33:00.950 gopro_wireless.py                         760 DEBUG    | Reading from Wifi AP Password
+   MainThread:13:33:00.950 builders.py                                76 INFO     | 
+-------------->>>>>>>>
+    "id" : "Wifi AP Password",
+    "status" : "ErrorCode.SUCCESS",
+    "protocol" : "Protocol.BLE",
+    "data" : "gY9-Cpm-85J",
+-------------->>>>>>>>
+
+   MainThread:13:33:00.955 builders.py                                74 INFO     | 
+<<<<<<<<--------------
+    "id" : "Read Wifi AP SSID",
+    "protocol" : "BLE",
+    "uuid" : "Wifi AP SSID",
+<<<<<<<<--------------
+
+   MainThread:13:33:01.084 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0025/char0026): ['org.bluez.GattCharacteristic1', {'Value': <dbus_fast.signature.Variant ('ay', bytearray(b'HERO9 Black'))>}, []]
+   MainThread:13:33:01.085 client.py                                 762 DEBUG    | Read Characteristic b5f90002-aa8d-11e3-9046-0002a5d5c51b | /org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0025/char0026: bytearray(b'HERO9 Black')
+   MainThread:13:33:01.085 gopro_wireless.py                         760 DEBUG    | Reading from Wifi AP SSID
+   MainThread:13:33:01.085 builders.py                                76 INFO     | 
+-------------->>>>>>>>
+    "id" : "Wifi AP SSID",
+    "status" : "ErrorCode.SUCCESS",
+    "protocol" : "Protocol.BLE",
+    "data" : "HERO9 Black",
+-------------->>>>>>>>
+
+   MainThread:13:33:01.088 builders.py                               130 INFO     | 
+<<<<<<<<--------------
+    "id" : "CmdId.SET_WIFI",
+    "protocol" : "BLE",
+    "uuid" : "Command",
+    "enable" : "True",
+<<<<<<<<--------------
+
+   MainThread:13:33:01.089 gopro_wireless.py                         729 DEBUG    | Writing to [Command] UUID: 03:17:01:01
+   MainThread:13:33:01.173 client.py                                 884 DEBUG    | Write Characteristic b5f90072-aa8d-11e3-9046-0002a5d5c51b | /org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0032: bytearray(b'\x03\x17\x01\x01')
+   MainThread:13:33:02.254 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0034): ['org.bluez.GattCharacteristic1', {'Value': <dbus_fast.signature.Variant ('ay', bytearray(b'\x02\x17\x00'))>}, []]
+   MainThread:13:33:02.255 gopro_wireless.py                         669 DEBUG    | Received response on BleUUID [Command Response]: 02:17:00
+   MainThread:13:33:02.255 gopro_wireless.py                         644 INFO     | 
+-------------->>>>>>>>
+    "id" : "CmdId.SET_WIFI",
+    "status" : "ErrorCode.SUCCESS",
+    "protocol" : "Protocol.BLE",
+-------------->>>>>>>>
+
+   MainThread:13:33:02.260 wireless.py                               453 INFO     | Scanning for HERO9 Black...
+   MainThread:13:33:02.260 util.py                                   210 DEBUG    | Send cmd --> echo "********" | sudo -S nmcli device wifi rescan
+   MainThread:13:33:02.295 util.py                                   216 DEBUG    | Receive response --> 
+   MainThread:13:33:02.295 util.py                                   210 DEBUG    | Send cmd --> echo "********" | sudo -S nmcli -f SSID device wifi list
+   MainThread:13:33:14.902 util.py                                   216 DEBUG    | Receive response --> SSID             
+han              
+HERO9 Black      
+UVA Guest        
+UVA WiFi Setup   
+wahoo            
+wahoo            
+eduroam          
+UVA Guest        
+UVA WiFi Setup   
+eduroam          
+DSA-LAB-Use-Only 
+--               
+--               
+TP-Link_ABB2_5G  
+eduroam          
+UVA Guest        
+--               
+eduroam          
+UVA Guest        
+UVA WiFi Setup   
+wahoo            
+eduroam          
+UVA Guest        
+UVA WiFi Setup   
+wahoo            
+UVA WiFi Setup   
+wahoo            
+UVA WiFi Setup   
+eduroam          
+UVA Guest        
+UVA WiFi Setup   
+wahoo            
+--               
+UVA Guest        
+UVA WiFi Setup   
+SETUP            
+eduroam          
+wahoo            
+UVA WiFi Setup   
+wahoo            
+eduroam          
+eduroam          
+UVA Guest        
+eduroam          
+UVA Guest        
+UVA WiFi Setup   
+wahoo            
+eduroam          
+UVA Guest        
+UVA WiFi Setup   
+wahoo            
+eduroam          
+UVA Guest        
+UVA WiFi Setup   
+wahoo            
+UVA Guest        
+eduroam          
+eduroam          
+UVA WiFi Setup   
+--               
+wahoo            
+UVA Guest        
+--               
+xfinitywifi      
+your mom         
+--               
+606931           
+
+   MainThread:13:33:14.902 wireless.py                               472 INFO     | Connecting to HERO9 Black...
+   MainThread:13:33:14.903 util.py                                   210 DEBUG    | Send cmd --> echo "********" | sudo -S nmcli dev wifi connect "HERO9 Black" password "gY9-Cpm-85J" ifname "wlo1"
+   MainThread:13:33:16.260 util.py                                   216 DEBUG    | Receive response --> [2KDevice 'wlo1' successfully activated with '5451e036-495a-4ec9-8c08-267398cdf043'.
+
+   MainThread:13:33:16.262 builders.py                               853 INFO     | 
+<<<<<<<<--------------
+    "id" : "Camera Shutter",
+    "protocol" : "HTTP",
+    "endpoint" : "gopro/camera/shutter/stop",
+    "mode" : "stop",
+<<<<<<<<--------------
+
+   MainThread:13:33:16.271 util.py                                   210 DEBUG    | Send cmd --> echo "********" | sudo -S nmcli con | grep "wlo1"
+   MainThread:13:33:16.294 util.py                                   216 DEBUG    | Receive response --> HERO9 Black         5451e036-495a-4ec9-8c08-267398cdf043  wifi      wlo1   
+
+   MainThread:13:33:16.294 gopro_base.py                             366 DEBUG    | Sending:  http://10.5.5.9:8080/gopro/camera/shutter/stop
+   MainThread:13:33:16.296 connectionpool.py                         244 DEBUG    | Starting new HTTP connection (1): 10.5.5.9:8080
+   MainThread:13:33:16.301 logger.py                                  70 DEBUG    | send: b'GET /gopro/camera/shutter/stop HTTP/1.1\r\nHost: 10.5.5.9:8080\r\nUser-Agent: python-requests/2.31.0\r\nAccept-Encoding: gzip, deflate\r\nAccept: */*\r\nConnection: keep-alive\r\n\r\n'
+   MainThread:13:33:16.312 logger.py                                  70 DEBUG    | reply: 'HTTP/1.1 404 Not Found\r\n'
+   MainThread:13:33:16.313 logger.py                                  70 DEBUG    | header: Content-Type: application/json
+   MainThread:13:33:16.313 logger.py                                  70 DEBUG    | header: Content-Length: 3
+   MainThread:13:33:16.313 connectionpool.py                         546 DEBUG    | http://10.5.5.9:8080 "GET /gopro/camera/shutter/stop HTTP/1.1" 404 3
+   MainThread:13:33:16.313 gopro_base.py                             381 WARNING  | Received non-success status 404: Not Found
+   MainThread:13:33:16.314 builders.py                               856 INFO     | 
+-------------->>>>>>>>
+    "id" : "Camera Shutter",
+    "status" : "ErrorCode.ERROR",
+    "protocol" : "Protocol.HTTP",
+-------------->>>>>>>>
+
+   MainThread:13:33:16.315 builders.py                               996 INFO     | 
+<<<<<<<<--------------
+    "id" : "SettingId.VIDEO_PERFORMANCE_MODE",
+    "protocol" : "HTTP",
+    "endpoint" : "gopro/camera/setting?setting=173&option=0",
+    "value" : "0",
+<<<<<<<<--------------
+
+   MainThread:13:33:16.316 util.py                                   210 DEBUG    | Send cmd --> echo "********" | sudo -S nmcli con | grep "wlo1"
+   MainThread:13:33:16.329 util.py                                   216 DEBUG    | Receive response --> HERO9 Black         5451e036-495a-4ec9-8c08-267398cdf043  wifi      wlo1   
+
+   MainThread:13:33:16.329 gopro_base.py                             366 DEBUG    | Sending:  http://10.5.5.9:8080/gopro/camera/setting?setting=173&option=0
+   MainThread:13:33:16.330 connectionpool.py                         244 DEBUG    | Starting new HTTP connection (1): 10.5.5.9:8080
+   MainThread:13:33:16.337 logger.py                                  70 DEBUG    | send: b'GET /gopro/camera/setting?setting=173&option=0 HTTP/1.1\r\nHost: 10.5.5.9:8080\r\nUser-Agent: python-requests/2.31.0\r\nAccept-Encoding: gzip, deflate\r\nAccept: */*\r\nConnection: keep-alive\r\n\r\n'
+   MainThread:13:33:16.357 logger.py                                  70 DEBUG    | reply: 'HTTP/1.1 403 Forbidden\r\n'
+   MainThread:13:33:16.358 logger.py                                  70 DEBUG    | header: Content-Type: application/json
+   MainThread:13:33:16.358 logger.py                                  70 DEBUG    | header: Content-Length: 36
+   MainThread:13:33:16.358 connectionpool.py                         546 DEBUG    | http://10.5.5.9:8080 "GET /gopro/camera/setting?setting=173&option=0 HTTP/1.1" 403 36
+   MainThread:13:33:16.359 gopro_base.py                             381 WARNING  | Received non-success status 403: Forbidden
+   MainThread:13:33:16.360 builders.py                              1005 INFO     | 
+-------------->>>>>>>>
+    "id" : "SettingId.VIDEO_PERFORMANCE_MODE",
+    "status" : "ErrorCode.ERROR",
+    "protocol" : "Protocol.HTTP",
+    "data" : {
+        "error" : "2",
+        "setting_id" : "SettingId.VIDEO_PERFORMANCE_MODE",
+    },
+-------------->>>>>>>>
+
+   MainThread:13:33:16.361 builders.py                               996 INFO     | 
+<<<<<<<<--------------
+    "id" : "SettingId.MAX_LENS_MOD",
+    "protocol" : "HTTP",
+    "endpoint" : "gopro/camera/setting?setting=162&option=0",
+    "value" : "0",
+<<<<<<<<--------------
+
+   MainThread:13:33:16.362 util.py                                   210 DEBUG    | Send cmd --> echo "********" | sudo -S nmcli con | grep "wlo1"
+   MainThread:13:33:16.375 util.py                                   216 DEBUG    | Receive response --> HERO9 Black         5451e036-495a-4ec9-8c08-267398cdf043  wifi      wlo1   
+
+   MainThread:13:33:16.375 gopro_base.py                             366 DEBUG    | Sending:  http://10.5.5.9:8080/gopro/camera/setting?setting=162&option=0
+   MainThread:13:33:16.376 connectionpool.py                         244 DEBUG    | Starting new HTTP connection (1): 10.5.5.9:8080
+   MainThread:13:33:16.377 logger.py                                  70 DEBUG    | send: b'GET /gopro/camera/setting?setting=162&option=0 HTTP/1.1\r\nHost: 10.5.5.9:8080\r\nUser-Agent: python-requests/2.31.0\r\nAccept-Encoding: gzip, deflate\r\nAccept: */*\r\nConnection: keep-alive\r\n\r\n'
+   MainThread:13:33:17.283 logger.py                                  70 DEBUG    | reply: 'HTTP/1.1 200 OK\r\n'
+   MainThread:13:33:17.286 logger.py                                  70 DEBUG    | header: Content-Type: application/json
+   MainThread:13:33:17.286 logger.py                                  70 DEBUG    | header: Content-Length: 3
+   MainThread:13:33:17.286 connectionpool.py                         546 DEBUG    | http://10.5.5.9:8080 "GET /gopro/camera/setting?setting=162&option=0 HTTP/1.1" 200 3
+   MainThread:13:33:17.288 builders.py                              1005 INFO     | 
+-------------->>>>>>>>
+    "id" : "SettingId.MAX_LENS_MOD",
+    "status" : "ErrorCode.SUCCESS",
+    "protocol" : "Protocol.HTTP",
+-------------->>>>>>>>
+
+   MainThread:13:33:17.292 builders.py                               996 INFO     | 
+<<<<<<<<--------------
+    "id" : "SettingId.CAMERA_UX_MODE",
+    "protocol" : "HTTP",
+    "endpoint" : "gopro/camera/setting?setting=175&option=1",
+    "value" : "1",
+<<<<<<<<--------------
+
+   MainThread:13:33:17.293 util.py                                   210 DEBUG    | Send cmd --> echo "********" | sudo -S nmcli con | grep "wlo1"
+   MainThread:13:33:17.321 util.py                                   216 DEBUG    | Receive response --> HERO9 Black         5451e036-495a-4ec9-8c08-267398cdf043  wifi      wlo1   
+
+   MainThread:13:33:17.321 gopro_base.py                             366 DEBUG    | Sending:  http://10.5.5.9:8080/gopro/camera/setting?setting=175&option=1
+   MainThread:13:33:17.322 connectionpool.py                         244 DEBUG    | Starting new HTTP connection (1): 10.5.5.9:8080
+   MainThread:13:33:17.363 logger.py                                  70 DEBUG    | send: b'GET /gopro/camera/setting?setting=175&option=1 HTTP/1.1\r\nHost: 10.5.5.9:8080\r\nUser-Agent: python-requests/2.31.0\r\nAccept-Encoding: gzip, deflate\r\nAccept: */*\r\nConnection: keep-alive\r\n\r\n'
+   MainThread:13:33:17.384 logger.py                                  70 DEBUG    | reply: 'HTTP/1.1 403 Forbidden\r\n'
+   MainThread:13:33:17.386 logger.py                                  70 DEBUG    | header: Content-Type: application/json
+   MainThread:13:33:17.386 logger.py                                  70 DEBUG    | header: Content-Length: 36
+   MainThread:13:33:17.387 connectionpool.py                         546 DEBUG    | http://10.5.5.9:8080 "GET /gopro/camera/setting?setting=175&option=1 HTTP/1.1" 403 36
+   MainThread:13:33:17.388 gopro_base.py                             381 WARNING  | Received non-success status 403: Forbidden
+   MainThread:13:33:17.393 builders.py                              1005 INFO     | 
+-------------->>>>>>>>
+    "id" : "SettingId.CAMERA_UX_MODE",
+    "status" : "ErrorCode.ERROR",
+    "protocol" : "Protocol.HTTP",
+    "data" : {
+        "error" : "2",
+        "setting_id" : "SettingId.CAMERA_UX_MODE",
+    },
+-------------->>>>>>>>
+
+   MainThread:13:33:17.399 builders.py                               853 INFO     | 
+<<<<<<<<--------------
+    "id" : "Media Turbo Transfer",
+    "protocol" : "HTTP",
+    "endpoint" : "gopro/media/turbo_transfer?p=0",
+    "p" : "Toggle.DISABLE",
+<<<<<<<<--------------
+
+   MainThread:13:33:17.402 util.py                                   210 DEBUG    | Send cmd --> echo "********" | sudo -S nmcli con | grep "wlo1"
+   MainThread:13:33:17.432 util.py                                   216 DEBUG    | Receive response --> HERO9 Black         5451e036-495a-4ec9-8c08-267398cdf043  wifi      wlo1   
+
+   MainThread:13:33:17.432 gopro_base.py                             366 DEBUG    | Sending:  http://10.5.5.9:8080/gopro/media/turbo_transfer?p=0
+   MainThread:13:33:17.433 connectionpool.py                         244 DEBUG    | Starting new HTTP connection (1): 10.5.5.9:8080
+   MainThread:13:33:17.436 logger.py                                  70 DEBUG    | send: b'GET /gopro/media/turbo_transfer?p=0 HTTP/1.1\r\nHost: 10.5.5.9:8080\r\nUser-Agent: python-requests/2.31.0\r\nAccept-Encoding: gzip, deflate\r\nAccept: */*\r\nConnection: keep-alive\r\n\r\n'
+   MainThread:13:33:17.442 logger.py                                  70 DEBUG    | reply: 'HTTP/1.1 200 OK\r\n'
+   MainThread:13:33:17.443 logger.py                                  70 DEBUG    | header: Content-Type: application/json
+   MainThread:13:33:17.443 logger.py                                  70 DEBUG    | header: Content-Length: 15
+   MainThread:13:33:17.444 connectionpool.py                         546 DEBUG    | http://10.5.5.9:8080 "GET /gopro/media/turbo_transfer?p=0 HTTP/1.1" 200 15
+   MainThread:13:33:17.444 builders.py                               856 INFO     | 
+-------------->>>>>>>>
+    "id" : "Media Turbo Transfer",
+    "status" : "ErrorCode.SUCCESS",
+    "protocol" : "Protocol.HTTP",
+    "data" : {
+        "turbo" : "0",
+    },
+-------------->>>>>>>>
+
+   MainThread:13:33:17.445 builders.py                               853 INFO     | 
+<<<<<<<<--------------
+    "id" : "Camera Presets Set Group",
+    "protocol" : "HTTP",
+    "endpoint" : "gopro/camera/presets/set_group?id=1000",
+    "_id" : "1000",
+<<<<<<<<--------------
+
+   MainThread:13:33:17.446 util.py                                   210 DEBUG    | Send cmd --> echo "********" | sudo -S nmcli con | grep "wlo1"
+   MainThread:13:33:17.459 util.py                                   216 DEBUG    | Receive response --> HERO9 Black         5451e036-495a-4ec9-8c08-267398cdf043  wifi      wlo1   
+
+   MainThread:13:33:17.459 gopro_base.py                             366 DEBUG    | Sending:  http://10.5.5.9:8080/gopro/camera/presets/set_group?id=1000
+   MainThread:13:33:17.460 connectionpool.py                         244 DEBUG    | Starting new HTTP connection (1): 10.5.5.9:8080
+   MainThread:13:33:17.461 logger.py                                  70 DEBUG    | send: b'GET /gopro/camera/presets/set_group?id=1000 HTTP/1.1\r\nHost: 10.5.5.9:8080\r\nUser-Agent: python-requests/2.31.0\r\nAccept-Encoding: gzip, deflate\r\nAccept: */*\r\nConnection: keep-alive\r\n\r\n'
+   MainThread:13:33:17.626 logger.py                                  70 DEBUG    | reply: 'HTTP/1.1 200 OK\r\n'
+   MainThread:13:33:17.627 logger.py                                  70 DEBUG    | header: Content-Type: application/json
+   MainThread:13:33:17.628 logger.py                                  70 DEBUG    | header: Content-Length: 3
+   MainThread:13:33:17.628 connectionpool.py                         546 DEBUG    | http://10.5.5.9:8080 "GET /gopro/camera/presets/set_group?id=1000 HTTP/1.1" 200 3
+   MainThread:13:33:17.630 builders.py                               856 INFO     | 
+-------------->>>>>>>>
+    "id" : "Camera Presets Set Group",
+    "status" : "ErrorCode.SUCCESS",
+    "protocol" : "Protocol.HTTP",
+-------------->>>>>>>>
+
+   MainThread:13:33:17.633 builders.py                               853 INFO     | 
+<<<<<<<<--------------
+    "id" : "Media List",
+    "protocol" : "HTTP",
+    "endpoint" : "gopro/media/list",
+<<<<<<<<--------------
+
+   MainThread:13:33:17.634 util.py                                   210 DEBUG    | Send cmd --> echo "********" | sudo -S nmcli con | grep "wlo1"
+   MainThread:13:33:17.672 util.py                                   216 DEBUG    | Receive response --> HERO9 Black         5451e036-495a-4ec9-8c08-267398cdf043  wifi      wlo1   
+
+   MainThread:13:33:17.672 gopro_base.py                             366 DEBUG    | Sending:  http://10.5.5.9:8080/gopro/media/list
+   MainThread:13:33:17.674 connectionpool.py                         244 DEBUG    | Starting new HTTP connection (1): 10.5.5.9:8080
+   MainThread:13:33:17.682 logger.py                                  70 DEBUG    | send: b'GET /gopro/media/list HTTP/1.1\r\nHost: 10.5.5.9:8080\r\nUser-Agent: python-requests/2.31.0\r\nAccept-Encoding: gzip, deflate\r\nAccept: */*\r\nConnection: keep-alive\r\n\r\n'
+   MainThread:13:33:17.800 logger.py                                  70 DEBUG    | reply: 'HTTP/1.1 200 OK\r\n'
+   MainThread:13:33:17.801 logger.py                                  70 DEBUG    | header: Content-Type: application/json
+   MainThread:13:33:17.801 logger.py                                  70 DEBUG    | header: Content-Length: 6717
+   MainThread:13:33:17.802 connectionpool.py                         546 DEBUG    | http://10.5.5.9:8080 "GET /gopro/media/list HTTP/1.1" 200 6717
+   MainThread:13:33:17.813 builders.py                               856 INFO     | 
+-------------->>>>>>>>
+    "id" : "Media List",
+    "status" : "ErrorCode.SUCCESS",
+    "protocol" : "Protocol.HTTP",
+    "data" : {
+        "identifier" : "999373358200756899",
+        "media" : [
+            {
+                "directory" : "100GOPRO",
+                "file_system" : [
+                    {
+                        "filename" : "100GOPRO/GH010203.MP4",
+                        "creation_timestamp" : "1701518361",
+                        "modified_time" : "1701518361",
+                        "low_res_video_size" : "49211614",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010204.MP4",
+                        "creation_timestamp" : "1701518603",
+                        "modified_time" : "1701518603",
+                        "low_res_video_size" : "26800577",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010205.MP4",
+                        "creation_timestamp" : "1701518766",
+                        "modified_time" : "1701518766",
+                        "low_res_video_size" : "27118955",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010206.MP4",
+                        "creation_timestamp" : "1701518944",
+                        "modified_time" : "1701518944",
+                        "low_res_video_size" : "33943080",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010207.MP4",
+                        "creation_timestamp" : "1701519140",
+                        "modified_time" : "1701519140",
+                        "low_res_video_size" : "42261312",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010208.MP4",
+                        "creation_timestamp" : "1701519327",
+                        "modified_time" : "1701519327",
+                        "low_res_video_size" : "31617373",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010209.MP4",
+                        "creation_timestamp" : "1701519501",
+                        "modified_time" : "1701519501",
+                        "low_res_video_size" : "33385842",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010210.MP4",
+                        "creation_timestamp" : "1701519729",
+                        "modified_time" : "1701519729",
+                        "low_res_video_size" : "77175564",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010211.MP4",
+                        "creation_timestamp" : "1701519973",
+                        "modified_time" : "1701519973",
+                        "low_res_video_size" : "27862429",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010212.MP4",
+                        "creation_timestamp" : "1701526347",
+                        "modified_time" : "1701526347",
+                        "low_res_video_size" : "1373285",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010213.MP4",
+                        "creation_timestamp" : "1701526511",
+                        "modified_time" : "1701526511",
+                        "low_res_video_size" : "43469059",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010214.MP4",
+                        "creation_timestamp" : "1701526683",
+                        "modified_time" : "1701526683",
+                        "low_res_video_size" : "47059892",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010215.MP4",
+                        "creation_timestamp" : "1701526828",
+                        "modified_time" : "1701526828",
+                        "low_res_video_size" : "24105596",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010216.MP4",
+                        "creation_timestamp" : "1701527042",
+                        "modified_time" : "1701527042",
+                        "low_res_video_size" : "3419963",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010217.MP4",
+                        "creation_timestamp" : "1701528376",
+                        "modified_time" : "1701528376",
+                        "low_res_video_size" : "6544500",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010218.MP4",
+                        "creation_timestamp" : "1701528437",
+                        "modified_time" : "1701528437",
+                        "low_res_video_size" : "25066645",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010219.MP4",
+                        "creation_timestamp" : "1701528618",
+                        "modified_time" : "1701528618",
+                        "low_res_video_size" : "30480298",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010220.MP4",
+                        "creation_timestamp" : "1701528788",
+                        "modified_time" : "1701528788",
+                        "low_res_video_size" : "26460392",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010221.MP4",
+                        "creation_timestamp" : "1701528926",
+                        "modified_time" : "1701528926",
+                        "low_res_video_size" : "27351972",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010222.MP4",
+                        "creation_timestamp" : "1701529088",
+                        "modified_time" : "1701529088",
+                        "low_res_video_size" : "28293553",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010223.MP4",
+                        "creation_timestamp" : "1701529229",
+                        "modified_time" : "1701529229",
+                        "low_res_video_size" : "26906735",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010224.MP4",
+                        "creation_timestamp" : "1701543923",
+                        "modified_time" : "1701543923",
+                        "low_res_video_size" : "39794280",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010225.MP4",
+                        "creation_timestamp" : "1701544260",
+                        "modified_time" : "1701544260",
+                        "low_res_video_size" : "24893153",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010226.MP4",
+                        "creation_timestamp" : "1701544446",
+                        "modified_time" : "1701544446",
+                        "low_res_video_size" : "26010038",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010227.MP4",
+                        "creation_timestamp" : "1701544586",
+                        "modified_time" : "1701544586",
+                        "low_res_video_size" : "57655400",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010228.MP4",
+                        "creation_timestamp" : "1701544930",
+                        "modified_time" : "1701544930",
+                        "low_res_video_size" : "28654271",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010229.MP4",
+                        "creation_timestamp" : "1701545232",
+                        "modified_time" : "1701545232",
+                        "low_res_video_size" : "30411254",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010230.MP4",
+                        "creation_timestamp" : "1701545766",
+                        "modified_time" : "1701545766",
+                        "low_res_video_size" : "32182317",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010231.MP4",
+                        "creation_timestamp" : "1701546075",
+                        "modified_time" : "1701546075",
+                        "low_res_video_size" : "35696514",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010232.MP4",
+                        "creation_timestamp" : "1701546430",
+                        "modified_time" : "1701546430",
+                        "low_res_video_size" : "54175835",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010233.MP4",
+                        "creation_timestamp" : "1701599967",
+                        "modified_time" : "1701599967",
+                        "low_res_video_size" : "34744175",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010234.MP4",
+                        "creation_timestamp" : "1701600190",
+                        "modified_time" : "1701600190",
+                        "low_res_video_size" : "32918968",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010235.MP4",
+                        "creation_timestamp" : "1701600327",
+                        "modified_time" : "1701600327",
+                        "low_res_video_size" : "29755715",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010236.MP4",
+                        "creation_timestamp" : "1701600555",
+                        "modified_time" : "1701600555",
+                        "low_res_video_size" : "23310724",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010237.MP4",
+                        "creation_timestamp" : "1701600682",
+                        "modified_time" : "1701600682",
+                        "low_res_video_size" : "25090700",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010238.MP4",
+                        "creation_timestamp" : "1701600857",
+                        "modified_time" : "1701600857",
+                        "low_res_video_size" : "22905884",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010239.MP4",
+                        "creation_timestamp" : "1701601023",
+                        "modified_time" : "1701601023",
+                        "low_res_video_size" : "44985956",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010240.MP4",
+                        "creation_timestamp" : "1701601165",
+                        "modified_time" : "1701601165",
+                        "low_res_video_size" : "12645274",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010241.MP4",
+                        "creation_timestamp" : "1701601330",
+                        "modified_time" : "1701601330",
+                        "low_res_video_size" : "23624594",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010242.MP4",
+                        "creation_timestamp" : "1701601462",
+                        "modified_time" : "1701601462",
+                        "low_res_video_size" : "25559406",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010243.MP4",
+                        "creation_timestamp" : "1701607640",
+                        "modified_time" : "1701607640",
+                        "low_res_video_size" : "32211315",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010244.MP4",
+                        "creation_timestamp" : "1701607824",
+                        "modified_time" : "1701607824",
+                        "low_res_video_size" : "40380719",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010245.MP4",
+                        "creation_timestamp" : "1701608222",
+                        "modified_time" : "1701608222",
+                        "low_res_video_size" : "24653425",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010246.MP4",
+                        "creation_timestamp" : "1701608366",
+                        "modified_time" : "1701608366",
+                        "low_res_video_size" : "45783",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010247.MP4",
+                        "creation_timestamp" : "1701608369",
+                        "modified_time" : "1701608369",
+                        "low_res_video_size" : "29526659",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010248.MP4",
+                        "creation_timestamp" : "1701608591",
+                        "modified_time" : "1701608591",
+                        "low_res_video_size" : "25703130",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010249.MP4",
+                        "creation_timestamp" : "1701608764",
+                        "modified_time" : "1701608764",
+                        "low_res_video_size" : "31561182",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010250.MP4",
+                        "creation_timestamp" : "1701608946",
+                        "modified_time" : "1701608946",
+                        "low_res_video_size" : "23724948",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010251.MP4",
+                        "creation_timestamp" : "1701609123",
+                        "modified_time" : "1701609123",
+                        "low_res_video_size" : "23426086",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010252.MP4",
+                        "creation_timestamp" : "1701609303",
+                        "modified_time" : "1701609303",
+                        "low_res_video_size" : "40274173",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010253.MP4",
+                        "creation_timestamp" : "1701609483",
+                        "modified_time" : "1701609483",
+                        "low_res_video_size" : "25085198",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010254.MP4",
+                        "creation_timestamp" : "1701609667",
+                        "modified_time" : "1701609667",
+                        "low_res_video_size" : "24023759",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010255.MP4",
+                        "creation_timestamp" : "1701689124",
+                        "modified_time" : "1701689124",
+                        "low_res_video_size" : "43907629",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010256.MP4",
+                        "creation_timestamp" : "1701694282",
+                        "modified_time" : "1701694282",
+                        "low_res_video_size" : "2802525",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010257.MP4",
+                        "creation_timestamp" : "1701694289",
+                        "modified_time" : "1701694289",
+                        "low_res_video_size" : "23019851",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010258.MP4",
+                        "creation_timestamp" : "1701695822",
+                        "modified_time" : "1701695822",
+                        "low_res_video_size" : "41856216",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010259.MP4",
+                        "creation_timestamp" : "1701695948",
+                        "modified_time" : "1701695948",
+                        "low_res_video_size" : "18219484",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GH010260.MP4",
+                        "creation_timestamp" : "1705065206",
+                        "modified_time" : "1705065206",
+                        "low_res_video_size" : "6824975",
+                        "lrv_file_size" : "-1",
+                    }, {
+                        "filename" : "100GOPRO/GX010261.MP4",
+                        "creation_timestamp" : "1705066024",
+                        "modified_time" : "1705066024",
+                        "low_res_video_size" : "800937",
+                        "lrv_file_size" : "-1",
+                    }
+                ],
+            }
+        ],
+    },
+-------------->>>>>>>>
+
+   MainThread:13:33:17.844 builders.py                               853 INFO     | 
+<<<<<<<<--------------
+    "id" : "Camera Shutter",
+    "protocol" : "HTTP",
+    "endpoint" : "gopro/camera/shutter/start",
+    "mode" : "start",
+<<<<<<<<--------------
+
+   MainThread:13:33:17.844 util.py                                   210 DEBUG    | Send cmd --> echo "********" | sudo -S nmcli con | grep "wlo1"
+   MainThread:13:33:17.857 util.py                                   216 DEBUG    | Receive response --> HERO9 Black         5451e036-495a-4ec9-8c08-267398cdf043  wifi      wlo1   
+
+   MainThread:13:33:17.858 gopro_base.py                             366 DEBUG    | Sending:  http://10.5.5.9:8080/gopro/camera/shutter/start
+   MainThread:13:33:17.859 connectionpool.py                         244 DEBUG    | Starting new HTTP connection (1): 10.5.5.9:8080
+   MainThread:13:33:17.863 logger.py                                  70 DEBUG    | send: b'GET /gopro/camera/shutter/start HTTP/1.1\r\nHost: 10.5.5.9:8080\r\nUser-Agent: python-requests/2.31.0\r\nAccept-Encoding: gzip, deflate\r\nAccept: */*\r\nConnection: keep-alive\r\n\r\n'
+   MainThread:13:33:17.866 logger.py                                  70 DEBUG    | reply: 'HTTP/1.1 404 Not Found\r\n'
+   MainThread:13:33:17.867 logger.py                                  70 DEBUG    | header: Content-Type: application/json
+   MainThread:13:33:17.867 logger.py                                  70 DEBUG    | header: Content-Length: 3
+   MainThread:13:33:17.867 connectionpool.py                         546 DEBUG    | http://10.5.5.9:8080 "GET /gopro/camera/shutter/start HTTP/1.1" 404 3
+   MainThread:13:33:17.867 gopro_base.py                             381 WARNING  | Received non-success status 404: Not Found
+   MainThread:13:33:17.869 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char003e): ['org.bluez.GattCharacteristic1', {'Value': <dbus_fast.signature.Variant ('ay', bytearray(b'\x08\x93\x00\x08\x01\x00\n\x01\x00'))>}, []]
+   MainThread:13:33:17.869 gopro_wireless.py                         669 DEBUG    | Received response on BleUUID [Query Response]: 08:93:00:08:01:00:0a:01:00
+   MainThread:13:33:17.870 gopro_wireless.py                         650 INFO     | 
+----ASYNC----->>>>>>>>
+    "id" : "QueryCmdId.STATUS_VAL_PUSH",
+    "status" : "ErrorCode.SUCCESS",
+    "protocol" : "Protocol.BLE",
+    "data" : {
+        "StatusId.SYSTEM_BUSY" : "False",
+        "StatusId.ENCODING" : "False",
+    },
+----ASYNC----->>>>>>>>
+
+   MainThread:13:33:22.443 builders.py                               516 INFO     | 
+<<<<<<<<--------------
+    "id" : "Set SettingId.LED",
+    "protocol" : "BLE",
+    "uuid" : "Settings",
+    "value" : "LED.BLE_KEEP_ALIVE",
+<<<<<<<<--------------
+
+   MainThread:13:33:22.449 gopro_wireless.py                         729 DEBUG    | Writing to [Settings] UUID: 03:5b:01:42
+   MainThread:13:33:22.639 client.py                                 884 DEBUG    | Write Characteristic b5f90074-aa8d-11e3-9046-0002a5d5c51b | /org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0037: bytearray(b'\x03[\x01B')
+   MainThread:13:33:22.641 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0039): ['org.bluez.GattCharacteristic1', {'Value': <dbus_fast.signature.Variant ('ay', bytearray(b'\x02[\x00'))>}, []]
+   MainThread:13:33:22.641 gopro_wireless.py                         669 DEBUG    | Received response on BleUUID [Settings Response]: 02:5b:00
+   MainThread:13:33:22.642 gopro_wireless.py                         644 INFO     | 
+-------------->>>>>>>>
+    "id" : "SettingId.LED",
+    "status" : "ErrorCode.SUCCESS",
+    "protocol" : "Protocol.BLE",
+-------------->>>>>>>>
+
+   MainThread:13:33:22.646 builders.py                               526 INFO     | 
+-------------->>>>>>>>
+    "id" : "SettingId.LED",
+    "status" : "ErrorCode.SUCCESS",
+    "protocol" : "Protocol.BLE",
+-------------->>>>>>>>
+
+   MainThread:13:33:50.675 builders.py                               516 INFO     | 
+<<<<<<<<--------------
+    "id" : "Set SettingId.LED",
+    "protocol" : "BLE",
+    "uuid" : "Settings",
+    "value" : "LED.BLE_KEEP_ALIVE",
+<<<<<<<<--------------
+
+   MainThread:13:33:50.680 gopro_wireless.py                         729 DEBUG    | Writing to [Settings] UUID: 03:5b:01:42
+   MainThread:13:33:50.811 client.py                                 884 DEBUG    | Write Characteristic b5f90074-aa8d-11e3-9046-0002a5d5c51b | /org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0037: bytearray(b'\x03[\x01B')
+   MainThread:13:33:50.812 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0039): ['org.bluez.GattCharacteristic1', {'Value': <dbus_fast.signature.Variant ('ay', bytearray(b'\x02[\x00'))>}, []]
+   MainThread:13:33:50.813 gopro_wireless.py                         669 DEBUG    | Received response on BleUUID [Settings Response]: 02:5b:00
+   MainThread:13:33:50.813 gopro_wireless.py                         644 INFO     | 
+-------------->>>>>>>>
+    "id" : "SettingId.LED",
+    "status" : "ErrorCode.SUCCESS",
+    "protocol" : "Protocol.BLE",
+-------------->>>>>>>>
+
+   MainThread:13:33:50.818 builders.py                               526 INFO     | 
+-------------->>>>>>>>
+    "id" : "SettingId.LED",
+    "status" : "ErrorCode.SUCCESS",
+    "protocol" : "Protocol.BLE",
+-------------->>>>>>>>
+
+   MainThread:13:34:18.847 builders.py                               516 INFO     | 
+<<<<<<<<--------------
+    "id" : "Set SettingId.LED",
+    "protocol" : "BLE",
+    "uuid" : "Settings",
+    "value" : "LED.BLE_KEEP_ALIVE",
+<<<<<<<<--------------
+
+   MainThread:13:34:18.848 gopro_wireless.py                         729 DEBUG    | Writing to [Settings] UUID: 03:5b:01:42
+   MainThread:13:34:18.981 client.py                                 884 DEBUG    | Write Characteristic b5f90074-aa8d-11e3-9046-0002a5d5c51b | /org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0037: bytearray(b'\x03[\x01B')
+   MainThread:13:34:18.982 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.Properties.PropertiesChanged (/org/bluez/hci0/dev_C2_19_DB_D0_13_0D/service0031/char0039): ['org.bluez.GattCharacteristic1', {'Value': <dbus_fast.signature.Variant ('ay', bytearray(b'\x02[\x00'))>}, []]
+   MainThread:13:34:18.982 gopro_wireless.py                         669 DEBUG    | Received response on BleUUID [Settings Response]: 02:5b:00
+   MainThread:13:34:18.983 gopro_wireless.py                         644 INFO     | 
+-------------->>>>>>>>
+    "id" : "SettingId.LED",
+    "status" : "ErrorCode.SUCCESS",
+    "protocol" : "Protocol.BLE",
+-------------->>>>>>>>
+
+   MainThread:13:34:18.985 builders.py                               526 INFO     | 
+-------------->>>>>>>>
+    "id" : "SettingId.LED",
+    "status" : "ErrorCode.SUCCESS",
+    "protocol" : "Protocol.BLE",
+-------------->>>>>>>>
+
+   MainThread:13:34:21.372 client.py                                 130 INFO     | Terminating the BLE connection
+   MainThread:13:34:21.375 bleak_wrapper.py                          408 INFO     | Disconnecting...
+   MainThread:13:34:21.377 client.py                                 386 DEBUG    | Disconnecting ({/org/bluez/hci0/dev_C2_19_DB_D0_13_0D})
+   MainThread:13:34:21.378 manager.py                                860 DEBUG    | received D-Bus signal: org.freedesktop.DBus.ObjectManager.InterfacesRemoved (/): ['/org/bluez/hci0/dev_C2_19_DB_D0_13_0D', ['org.bluez.Battery1']]
