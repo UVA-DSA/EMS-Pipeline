@@ -95,7 +95,8 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
 //
 //        // Example: Set a custom location and size for the rectangle
         Rect customRect = new Rect(500, 200, 800, 500); // Left, Top, Right, Bottom
-        CustomViewManager.getInstance().updateRectangle(customRect);
+        String object = "hands: 1.00";
+        CustomViewManager.getInstance().updateRectangle(customRect, object);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             // Request permissions if needed

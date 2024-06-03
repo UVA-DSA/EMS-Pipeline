@@ -54,6 +54,13 @@ public class SocketStream {
             }
         });
 
+        socket.on("feedback", new Emitter.Listener() {
+            @Override
+            public void call(Object... args){
+                Log.d("Feedback Client", "R: Received Feedback! : " + args[0]);
+            }
+        });
+
         // Add more event listeners here as needed
 
         socket.connect();
