@@ -45,9 +45,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CPR Rate: 110/min\n"
-            android:textColor="#FFFFFF"
-            /> <!-- White text color -->
+            android:text="CPR Rate: 110/min\nCPR Depth: 1in"
+            android:textColor="#228B22"
+            /> <!-- Green text color -->
     </FrameLayout>
 
     <!-- Protocol Text Box -->
@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cardiac Arrest - Unknown Rhythm - 0.8"
-            android:textColor="#FFFF00" /> <!-- White text color -->
+            android:textColor="#FFFF00" /> <!-- Yellow text color -->
     </FrameLayout>
 
     <!-- Patient Overview Text Box -->
@@ -83,6 +83,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Male - 48yrs\n** NO PULSE **\nBEGIN CPR"
-            android:textColor="#FFFFFF" /> <!-- White text color -->
+            android:textColor="#DC143C" /> <!-- White text color -->
     </FrameLayout>
 </RelativeLayout>
