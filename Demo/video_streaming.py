@@ -40,6 +40,7 @@ from multiprocessing import Process, Queue
 
 from EMS_Vision.ObjectDetector import ObjectDetector
 from pipeline_config import socketio_ipaddr
+from Feedback import FeedbackClient
 
 import queue
 # Media Pipe vars
@@ -126,6 +127,8 @@ class Thread(QThread):
         self.videoStreamBool = bool
         self.is_running = True
         self.imagequeue = image_queue
+
+        #self.feedback_client = FeedbackClient(self)
 
         self.sio = Client() #TODO: add similar to feedback.py
                 # Create an asyncio event loop for this thread

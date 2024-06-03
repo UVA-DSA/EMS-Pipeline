@@ -256,6 +256,8 @@ class MainWindow(QWidget):
         self.internet_check_thread.start()
 
 
+
+
         # Threads for video 
         th = Thread(data_path, videostream)
         th.changePixmap.connect(self.setImage)
@@ -267,8 +269,7 @@ class MainWindow(QWidget):
         th2.changeActivityRec.connect(self.handle_message)
         th2.start()
 
-        self.feedbackClient = FeedbackClient.instance()
-        self.feedbackClient.start()
+
         # th2 = ThreadAudio(self)
         # th2.start()
 

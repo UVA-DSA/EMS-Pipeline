@@ -46,7 +46,8 @@ class EMSTinyBERT(nn.Module):
         checkpoint = torch.load(model_path, map_location='cpu')
         self.model.load_state_dict(checkpoint, strict=False)
 
-        self.feedback_client = FeedbackClient.instance()
+        self.feedback_client = FeedbackClient()
+        self.feedback_client.start()
         self.model.to(device)
 
     def initData(self, text):
@@ -210,7 +211,7 @@ def EMSTinyBERTSystem(Window, EMSTinyBERTQueue, ProtocolQueue):
                     protocolFB =  FeedbackObj("", pred, prob, "")
                     protocolFeedback = ProtocolObj(pred,prob)
                     protocol_dict = protocolFeedback.__dict__
-                    model.feedback_client.sendMessage(protocol_dict)
+                    model.feedback_client.send_message(protocol_dict)
                     
                     ProtocolQueue.put(protocolFB)
                 if Window:
