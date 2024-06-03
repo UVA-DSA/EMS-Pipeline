@@ -1,6 +1,6 @@
 from flask import Flask, request
 from flask_socketio import SocketIO
-
+import logging
 
 import base64
 import io
@@ -10,6 +10,10 @@ from imageio import imread
 from PIL import Image
 import numpy as np
 import multiprocessing
+
+# Suppress Flask logging
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 
 imagequeue = multiprocessing.Queue()
 
@@ -42,6 +46,8 @@ def handleImage(msg):
 @socketio.on('feedback')
 def handleFeedback(msg):
     print('Feedback recieved! ', msg)
+    socketio.emit('feedback', msg)
+
 
 
 @socketio.on('audio')
@@ -52,7 +58,7 @@ def handle_audio(audio_data):
 
 @socketio.on('bytes')
 def handle_byte_array(byte_array):
-    print('Received video from smartglass')
+    # print('Received video from smartglass')
     byte_array_string = base64.b64encode(byte_array).decode('utf-8')
 
     socketio.emit('server_video', byte_array_string)
@@ -121,4 +127,4 @@ def display_image(imagequeue):
 
 
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=5000)
+    socketio.run(app, host='0.0.0.0', port=5000, log_output=False, debug=False)

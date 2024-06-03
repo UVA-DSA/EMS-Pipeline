@@ -88,3 +88,5 @@ obj/
 
 # whisper wieghts 
 /whisper.cpp/models/*.bin
+
+EMSAgent

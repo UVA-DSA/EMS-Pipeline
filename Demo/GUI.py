@@ -68,6 +68,7 @@ from StoppableThread.StoppableThread import StoppableThread
 
 from video_streaming import Thread
 from smartwatch_streaming import Thread_Watch
+from Feedback import FeedbackClient
 
 from GenUtils.genutils import *
 
@@ -255,6 +256,8 @@ class MainWindow(QWidget):
         self.internet_check_thread.start()
 
 
+
+
         # Threads for video 
         th = Thread(data_path, videostream)
         th.changePixmap.connect(self.setImage)
@@ -265,6 +268,7 @@ class MainWindow(QWidget):
         th2 = Thread_Watch(data_path, smartwatchStream, pipeline_config.smartwatch_ip, pipeline_config.smartwatch_port)
         th2.changeActivityRec.connect(self.handle_message)
         th2.start()
+
 
         # th2 = ThreadAudio(self)
         # th2.start()
@@ -678,7 +682,7 @@ class MainWindow(QWidget):
         if(self.FeedbackThread == None):
             print("Feedback Thread Started")
             self.FeedbackThread = StoppableThread(
-                target=Feedback.Feedback, args=(self, data_path, FeedbackQueue))
+                target=Feedback.FeedbackClient, args=(self, data_path, FeedbackQueue))
             # self.FeedbackThread.start()
 
     @pyqtSlot()

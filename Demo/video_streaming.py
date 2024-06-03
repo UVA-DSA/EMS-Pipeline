@@ -40,6 +40,7 @@ from multiprocessing import Process, Queue
 
 from EMS_Vision.ObjectDetector import ObjectDetector
 from pipeline_config import socketio_ipaddr
+from Feedback import FeedbackClient
 
 import queue
 # Media Pipe vars
@@ -127,12 +128,14 @@ class Thread(QThread):
         self.is_running = True
         self.imagequeue = image_queue
 
+        #self.feedback_client = FeedbackClient(self)
+
         self.sio = Client() #TODO: add similar to feedback.py
                 # Create an asyncio event loop for this thread
         self.loop = asyncio.new_event_loop()
         asyncio.set_event_loop(self.loop)
 
-        self.display_thread = threading.Thread(target=self.display_image, args=(self.changePixmap, display_queue,))
+        self.display_thread = threading.Thread(target=self.display_image, args=(self.changePixmap, image_queue,))
 
         self.mediapipe_thread = threading.Thread(target=self.process_image)
 
@@ -237,12 +240,11 @@ class Thread(QThread):
                 RGB_img = display_queue.get()
 
                 h, w, ch = RGB_img.shape
-                # print("Image Size",h,w)
                 bytesPerLine = ch * w
                 convertToQtFormat = QImage(RGB_img.data, 640, 480, bytesPerLine, QImage.Format_RGB888)
                 p = convertToQtFormat.scaled(w,h, Qt.KeepAspectRatio)
-
                 changePixmap.emit(p)
+                
 
             
 

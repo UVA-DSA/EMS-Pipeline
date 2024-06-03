@@ -10,10 +10,11 @@ from EMS_Agent.Interface.default_sets import model_name
 from EMS_Agent.Interface.Heterogeneous_graph import HeteroGraph
 from EMS_Agent.Interface.model import EMSMultiModel
 from transformers import BertTokenizer
+from Feedback import FeedbackClient
 import pandas as pd
 from tqdm import tqdm
 warnings.filterwarnings("ignore")
-from classes import FeedbackObj
+from classes import FeedbackObj, ProtocolObj
 import time
 import sys
 from re import match
@@ -44,6 +45,9 @@ class EMSTinyBERT(nn.Module):
         model_path = os.path.join(self.save_model_root, 'model.pt')
         checkpoint = torch.load(model_path, map_location='cpu')
         self.model.load_state_dict(checkpoint, strict=False)
+
+        self.feedback_client = FeedbackClient()
+        self.feedback_client.start()
         self.model.to(device)
 
     def initData(self, text):
@@ -172,6 +176,7 @@ def EMSTinyBERTSystem(Window, EMSTinyBERTQueue, ProtocolQueue):
     #     EMSTinyBERTQueue.queue.clear()
 
     # call the model    
+
     while True:
         # Get queue item from the Speech-to-Text Module
         received = EMSTinyBERTQueue.get()
@@ -204,6 +209,10 @@ def EMSTinyBERTSystem(Window, EMSTinyBERTQueue, ProtocolQueue):
                 #Send data (send to vision)
                 if(prob > 0.7):
                     protocolFB =  FeedbackObj("", pred, prob, "")
+                    protocolFeedback = ProtocolObj(pred,prob)
+                    protocol_dict = protocolFeedback.__dict__
+                    model.feedback_client.send_message(protocol_dict)
+                    
                     ProtocolQueue.put(protocolFB)
                 if Window:
                     ProtocolSignal.signal.emit([protocolFB])
@@ -229,7 +238,7 @@ def EMSTinyBERTSystem(Window, EMSTinyBERTQueue, ProtocolQueue):
                     pipeline_config.trial_data['fp'].append('fp placeholder')
                     pipeline_config.trial_data['fn'].append('fn placeholder')
                     pipeline_config.trial_data['tp'].append('tp placeholder')
-                    print('logits', logits.shape)
+                    # print('logits', logits.shape)
                     pipeline_config.trial_data['logits'].append(str(logits))
                             
             except:
