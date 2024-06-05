@@ -12,6 +12,11 @@ pip install torch-sparse==0.6.17
 
 pip install torch-scatter==2.1.1
 
-# torchvision:
-
 ```
+
+
+### Torchvision installation
+
+Follow instructions in https://forums.developer.nvidia.com/t/pytorch-for-jetson/72048 -> Installation -> Torchvision. Ensure the compatible torchvision version is selected. In this case, v0.15.1.
+
+Install it from source.
