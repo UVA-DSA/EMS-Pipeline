@@ -1,6 +1,7 @@
 package com.example.cognitive_ems;
 
 import android.graphics.Rect;
+import android.widget.TextView;
 
 public class CustomViewManager {
     private static CustomViewManager instance;
@@ -26,7 +27,11 @@ public class CustomViewManager {
             customView.setCustomRect(customRect, object);
         }
     }
-
+    public void updateProtocolBox(String str, TextView protocolBox) {
+        System.out.println("I am in update ProtocolBox!");
+        System.out.println("updating protocol box with: " + str);
+        customView.setProtocolBox(str,protocolBox);
+    }
     public void clearRectangle() {
         customView.clearCustomRect();
     }
