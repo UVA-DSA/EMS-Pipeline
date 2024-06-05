@@ -21,8 +21,6 @@ import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.params.StreamConfigurationMap;
-import android.media.ImageReader;
-import android.media.MediaCodec;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -31,31 +29,18 @@ import android.util.Log;
 import android.util.Range;
 import android.util.Size;
 import android.view.Surface;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.TextureView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-import okhttp3.Response;
-import okhttp3.WebSocket;
-import okhttp3.WebSocketListener;
-import okio.ByteString;
-
-public class CameraStreamActivity extends AppCompatActivity implements TextureView.SurfaceTextureListener,FeedbackDisplay {
+public class CameraStreamActivity extends AppCompatActivity implements TextureView.SurfaceTextureListener, FeedbackCallback {
 
     protected static final String TAG = "CameraStreamActivity";
     // Inside your activity or fragment:
@@ -118,10 +103,10 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
         this.protocolBox = (TextView)findViewById(R.id.protocolTextBox);
 
         this.tds_instance = TextDisplayService.getInstance();
-        this.tds_instance.setProtocolBox(protocolBox);
+//        this.tds_instance.setProtocolBox(protocolBox);
         //this.tds_instance.feedbackParser("{\"type\":\"Protocol\",\"protocol\":\"medical - knee pain - MCL suspected (protocol 2 - 1)\",\"protocol_confidence\":0.0209748435020447}");
 
-
+        SocketStream.getInstance().setFeedbackCallback(this);
 
     }
 
@@ -486,12 +471,12 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
     }
 
     @Override
-    public void transmitFeedback(String feedback) {
+    public void onFeedbackReceived(String feedback) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 tds_instance.setProtocolBox(protocolBox);
-                tds_instance.feedbackParser("{\"type\":\"Protocol\",\"protocol\":\"medical - knee pain - MCL suspected (protocol 2 - 1)\",\"protocol_confidence\":0.0209748435020447}");
+                tds_instance.feedbackParser("{\"type\":\"Protocol\",\"protocol\":\"medical - android sucks - MCL suspected (protocol 2 - 1)\",\"protocol_confidence\":0.0209748435020447}");
 
             }
         });

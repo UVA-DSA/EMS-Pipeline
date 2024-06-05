@@ -1,12 +1,9 @@
 package com.example.cognitive_ems;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+
 import android.util.Log;
-import android.widget.TextView;
 
 import java.net.URISyntaxException;
-import java.util.Dictionary;
 
 
 import io.socket.client.IO;
@@ -23,12 +20,26 @@ public class SocketStream {
     private final int port = 9235;
     private String serverUrl ;
 
-    private FeedbackDisplay feedbackDisplay;
+    private FeedbackCallback feedbackCallback;
+
+    private static SocketStream instance;
 
 
+    // Singleton pattern
+    public static SocketStream getInstance() {
+        if (instance == null) {
+            instance = new SocketStream();
+        }
+        return instance;
+    }
 
-    public SocketStream(String serverUrl) {
-        this.serverUrl =serverUrl;
+    private SocketStream() {
+        // Private constructor to prevent instantiation
+    }
+
+    public void initialize(String serverUrl) {
+        this.serverUrl = serverUrl;
+
         try {
             IO.Options options = IO.Options.builder()
                     .setReconnection(true)
@@ -39,8 +50,6 @@ public class SocketStream {
             Log.d("SocketIO Client", "C: Connecting to " + serverUrl);
             socket = IO.socket(serverUrl, options);
 
-
-
         } catch (URISyntaxException e) {
             Log.d("SocketIO Client", "E: Error!");
             e.printStackTrace();
@@ -50,7 +59,6 @@ public class SocketStream {
         socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                // Handle the connection event
                 Log.d("SocketIO Client", "C: Connected!");
             }
         });
@@ -59,22 +67,28 @@ public class SocketStream {
             @Override
             public void call(Object... args) {
                 Log.d("SocketIO Client", "R: Received Message! : " + args[0]);
-
             }
         });
 
         socket.on("feedback", new Emitter.Listener() {
             @Override
-            public void call(Object... args){
+            public void call(Object... args) {
                 Log.d("Feedback Client", "R: Received Feedback! : " + args[0]);
-                System.out.println("Feedback incoming!");
-                TextDisplayService.getInstance().feedbackParser(args[0]);
+
+                if (feedbackCallback != null) {
+                    feedbackCallback.onFeedbackReceived(args[0].toString());
+                }
             }
         });
 
         // Add more event listeners here as needed
 
         socket.connect();
+    }
+
+
+    public void setFeedbackCallback(FeedbackCallback feedbackCallback) {
+        this.feedbackCallback = feedbackCallback;
     }
 
     public String getCommand() {
