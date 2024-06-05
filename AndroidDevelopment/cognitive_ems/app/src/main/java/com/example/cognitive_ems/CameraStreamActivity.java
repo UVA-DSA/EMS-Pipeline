@@ -476,7 +476,7 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
             @Override
             public void run() {
                 tds_instance.setProtocolBox(protocolBox);
-                tds_instance.feedbackParser("{\"type\":\"Protocol\",\"protocol\":\"medical - android sucks - MCL suspected (protocol 2 - 1)\",\"protocol_confidence\":0.0209748435020447}");
+                tds_instance.feedbackParser(feedback);
 
             }
         });
