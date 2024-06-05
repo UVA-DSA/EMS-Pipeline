@@ -13,9 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <!-- Left AR Text Box -->
+    <!-- Action Log Text Box -->
     <FrameLayout
-        android:id="@+id/leftTextBox"
+        android:id="@+id/actionLog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -27,17 +27,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Left Text"
+            android:text="20:32:36 - CPR Started\n20:33:30 - Shock Administered\n20:33:54 - CPR Resumed\n ** CHECK RHYTHM **"
             android:textColor="#FFFFFF" /> <!-- White text color -->
     </FrameLayout>
 
-    <!-- Right AR Text Box -->
+    <!-- Procedure Information Text Box -->
     <FrameLayout
-        android:id="@+id/rightTextBox"
+        android:id="@+id/procedureStats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:padding="16dp"
         android:background="@drawable/ar_text_box"
         android:layout_margin="16dp">
@@ -45,7 +45,44 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Right Text"
-            android:textColor="#FFFFFF" /> <!-- White text color -->
+            android:text="CPR Rate: 110/min\nCPR Depth: 1in"
+            android:textColor="#228B22"
+            /> <!-- Green text color -->
+    </FrameLayout>
+
+    <!-- Protocol Text Box -->
+    <FrameLayout
+        android:id="@+id/protocol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:padding="16dp"
+        android:background="@drawable/ar_text_box"
+        android:layout_margin="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cardiac Arrest - Unknown Rhythm - 0.8"
+            android:textColor="#FFFF00" /> <!-- Yellow text color -->
+    </FrameLayout>
+
+    <!-- Patient Overview Text Box -->
+    <FrameLayout
+        android:id="@+id/patientOverview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/protocol"
+        android:padding="16dp"
+        android:background="@drawable/ar_text_box"
+        android:layout_margin="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Male - 48yrs\n** NO PULSE **\nBEGIN CPR"
+            android:textColor="#DC143C" /> <!-- White text color -->
     </FrameLayout>
 </RelativeLayout>

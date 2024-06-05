@@ -21,9 +21,9 @@ public class CustomViewManager {
         this.customView = overlayView;
     }
 
-    public void updateRectangle(Rect customRect) {
+    public void updateRectangle(Rect customRect, String object) {
         if (customView != null) {
-            customView.setCustomRect(customRect);
+            customView.setCustomRect(customRect, object);
         }
     }
 
