@@ -103,6 +103,10 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
         this.protocolBox = (TextView)findViewById(R.id.protocolTextBox);
 
         this.tds_instance = TextDisplayService.getInstance();
+        //DUMMY PRACTICE RECTANGLE
+        tds_instance.setProtocolBox(protocolBox);
+        tds_instance.feedbackParser("{\"type\":\"detection\",\"box_coords\":{\"center_point\":\"(700, 500)\", \"width\":\"200\",\"height\":\"300\"}, \"obj_name\":\"hand\", \"confidence\":\"0.897346927837\"}");
+
 //        this.tds_instance.setProtocolBox(protocolBox);
         //this.tds_instance.feedbackParser("{\"type\":\"Protocol\",\"protocol\":\"medical - knee pain - MCL suspected (protocol 2 - 1)\",\"protocol_confidence\":0.0209748435020447}");
 
@@ -477,7 +481,6 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
             public void run() {
                 tds_instance.setProtocolBox(protocolBox);
                 tds_instance.feedbackParser(feedback);
-
             }
         });
     }

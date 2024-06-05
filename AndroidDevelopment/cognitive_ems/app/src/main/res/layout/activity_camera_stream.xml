@@ -63,7 +63,7 @@
 
         <TextView
             android:id="@+id/protocolTextBox"
-            android:text=""
+            android:text="Finding protocol..."
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#FFFF00" /> <!-- Yellow text color -->
