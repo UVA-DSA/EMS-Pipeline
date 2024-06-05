@@ -3,8 +3,11 @@ package com.example.cognitive_ems;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.TextView;
 
 import java.net.URISyntaxException;
+import java.util.Dictionary;
+
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -20,6 +23,10 @@ public class SocketStream {
     private final int port = 9235;
     private String serverUrl ;
 
+    private FeedbackDisplay feedbackDisplay;
+
+
+
     public SocketStream(String serverUrl) {
         this.serverUrl =serverUrl;
         try {
@@ -31,6 +38,8 @@ public class SocketStream {
 
             Log.d("SocketIO Client", "C: Connecting to " + serverUrl);
             socket = IO.socket(serverUrl, options);
+
+
 
         } catch (URISyntaxException e) {
             Log.d("SocketIO Client", "E: Error!");
@@ -58,6 +67,8 @@ public class SocketStream {
             @Override
             public void call(Object... args){
                 Log.d("Feedback Client", "R: Received Feedback! : " + args[0]);
+                System.out.println("Feedback incoming!");
+                TextDisplayService.getInstance().feedbackParser(args[0]);
             }
         });
 
