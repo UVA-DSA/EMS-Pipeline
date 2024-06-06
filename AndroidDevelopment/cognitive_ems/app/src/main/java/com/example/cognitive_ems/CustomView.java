@@ -15,8 +15,7 @@ public class CustomView extends View {
     private Paint rectanglePaint;
     private Paint objectPaint;
     private Paint objectStrRectPaint;
-    private String objectStr;
-    private Rect customRect; // Store the custom location and size
+    private List<CustomRectangle> customRects; //list of custom rectangles to be displayed onscreen
     private Rect objectStrRect;//filled rectangle for object identification text
 
     public CustomView(Context context) {
@@ -48,20 +47,26 @@ public class CustomView extends View {
         objectStrRectPaint.setColor(Color.RED);
         objectStrRectPaint.setStyle(Paint.Style.FILL);
     }
-
+    //MAY NEED TO MOVE THESE WITH ADDITION OF CUSTOM RECTANGLE CLASS
     public void clearCustomRect() {
         this.customRect = null; // Clear the custom rectangle
         invalidate(); // Trigger a redraw to remove the rectangle
     }
 
     public void setCustomRect(Rect rect, String object) {
-        this.customRect = rect;
-        this.objectStr = object;
+        //check if this exact rectangle already exists in the list of custom rectangles, so as not to trigger too many redraws
+        for rect in customRects:
+            if (rect.getRectangle().equals(rect)){
+                return;
+        }
+        CustomRectangle customRect = new CustomRectangle(rect, object); //create a new custom rectangle from incoming feedback data
+        customRects.add(customRect); //add the new custom rectangle to the list of custom rectangles to be displayed
+        
         invalidate(); // Trigger a redraw when customRect is updated
     }
 
     public void setProtocolBox(String str, TextView protocolBox){
-        System.out.println("Made it to setProtocolBox!");
+        //System.out.println("Made it to setProtocolBox!");
         protocolBox.setText(str);
     }
 
@@ -71,12 +76,13 @@ public class CustomView extends View {
 
         if (this.customRect != null) {
             // Draw a rectangle on the TextureView
-            canvas.drawRect(this.customRect, rectanglePaint);
-            //Draw object name and confidence level on top-left corner of rectangle
-            //TODO: resize name rectangle relative to text size
-            objectStrRect = new Rect(customRect.left - 4, customRect.top - 20, customRect.left + 200, customRect.top);
-            canvas.drawRect(objectStrRect, objectStrRectPaint);
-            canvas.drawText(objectStr, customRect.left, customRect.top, objectPaint);
+            for rect in customRects:
+                canvas.drawRect(rect.getRectangle, rectanglePaint);
+                //This creates the background for the object name and confidence level to be displayed on. For better graphics, this should be resized relative to the text size
+                objectStrRect = new Rect(customRect.left - 4, customRect.top - 20, customRect.left + 200, customRect.top);
+                //Draw object name and confidence level on top-left corner of rectangle
+                canvas.drawRect(objectStrRect, objectStrRectPaint);
+                canvas.drawText(rect.getObjectStr, customRect.getRectangle.left, customRect.getRectangle.top, objectPaint);
         }
     }
 }
