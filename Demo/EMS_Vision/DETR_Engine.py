@@ -171,7 +171,7 @@ class DETREngine:
         img = self.cv2_to_pil(my_image)
         img = self.transform(img).unsqueeze(0)
         outputs = self.model(img)
-        # print(f"[DETR Engine] Inference time: {time.time() - start_t}")
+        print(f"[DETR Engine] Inference time: {time.time() - start_t}")
         probas_to_keep, bboxes_scaled = self.filter_bboxes_from_outputs(
             outputs, threshold=self.threshold)
 

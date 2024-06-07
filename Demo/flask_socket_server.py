@@ -10,18 +10,22 @@ from imageio import imread
 from PIL import Image
 import numpy as np
 import multiprocessing
+from engineio.payload import Payload
 
 # Suppress Flask logging
-log = logging.getLogger('werkzeug')
-log.setLevel(logging.ERROR)
+# log = logging.getLogger('werkzeug')
+# log.setLevel(logging.ERROR)
 
 imagequeue = multiprocessing.Queue()
 
 app = Flask(__name__)
+Payload.max_decode_packets = 5000
+
 socketio = SocketIO(app)
 
 video_display_process = None
 image_seq = 0
+
 
 
 @socketio.on('connect')
@@ -127,4 +131,4 @@ def display_image(imagequeue):
 
 
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=5000, log_output=False, debug=False)
+    socketio.run(app, host='0.0.0.0', port=5000, log_output=True, debug=True)

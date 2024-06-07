@@ -27,14 +27,14 @@ class ObjectDetector(Process):
         # self.sio.emit('message', 'Hello from Object Detector Process!')  # Send a message to the server
         self.feedback_client.start()
         while True:
-            # frame = self.input_queue.get()
-            # # print("ObjectDetector: Got frame")
+            frame = self.input_queue.get()
+            print("ObjectDetector: Got frame")
             # # Do some object detection
-            # result_image = self.detr_engine.run_workflow(frame)
+            result_image = self.detr_engine.run_workflow(frame)
             
             dummy_obj = DetectionObj('hi', 'hi', 'hi')
             dummy_obj_dict = dummy_obj.__dict__
-            self.feedback_client.send_message(dummy_obj_dict)
+            # self.feedback_client.send_message(dummy_obj_dict)
             # self.sio.emit('feedback', dummy_obj_dict)
-            # self.output_queue.put(result_image)
-            # print("ObjectDetector: Put frame")
+            self.output_queue.put(result_image)
+            print("ObjectDetector: Put frame")
