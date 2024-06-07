@@ -21,8 +21,6 @@ import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.params.StreamConfigurationMap;
-import android.media.ImageReader;
-import android.media.MediaCodec;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -31,30 +29,18 @@ import android.util.Log;
 import android.util.Range;
 import android.util.Size;
 import android.view.Surface;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.TextureView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-import okhttp3.Response;
-import okhttp3.WebSocket;
-import okhttp3.WebSocketListener;
-import okio.ByteString;
-
-public class CameraStreamActivity extends AppCompatActivity implements TextureView.SurfaceTextureListener {
+public class CameraStreamActivity extends AppCompatActivity implements TextureView.SurfaceTextureListener, FeedbackCallback {
 
     protected static final String TAG = "CameraStreamActivity";
     // Inside your activity or fragment:
@@ -75,10 +61,12 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
     private HandlerThread backgroundThread;
 
     private CustomView customView;
+    private TextView protocolBox; //Protocol text box
 
     private Bitmap bitmap;
 
     private WebSocketClient webSocketClient;
+    private TextDisplayService tds_instance;
 
 
 
@@ -89,14 +77,19 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
         // Initialization code here
         setContentView(R.layout.activity_camera_stream); // Set the layout for the activity
 
+
+
         customView = findViewById(R.id.overlayView);
 
         CustomViewManager.getInstance().setOverlayView(customView);
-//
+
 //        // Example: Set a custom location and size for the rectangle
         Rect customRect = new Rect(500, 200, 800, 500); // Left, Top, Right, Bottom
         String object = "hands: 1.00";
         CustomViewManager.getInstance().updateRectangle(customRect, object);
+
+        //dummy object to test with, take out eventually
+
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             // Request permissions if needed
@@ -107,45 +100,17 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
         textureView.setSurfaceTextureListener(this);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-//
-//
-//        // Start websocket client
-//
-//        WebSocketListener webSocketListener = new WebSocketListener() {
-//            @Override
-//            public void onClosed(@NonNull WebSocket webSocket, int code, @NonNull String reason) {
-//                super.onClosed(webSocket, code, reason);
-//            }
-//
-//            @Override
-//            public void onClosing(@NonNull WebSocket webSocket, int code, @NonNull String reason) {
-//                super.onClosing(webSocket, code, reason);
-//            }
-//
-//            @Override
-//            public void onFailure(@NonNull WebSocket webSocket, @NonNull Throwable t, @Nullable Response response) {
-//                super.onFailure(webSocket, t, response);
-//            }
-//
-//            @Override
-//            public void onMessage(@NonNull WebSocket webSocket, @NonNull String text) {
-//                super.onMessage(webSocket, text);
-//            }
-//
-//            @Override
-//            public void onMessage(@NonNull WebSocket webSocket, @NonNull ByteString bytes) {
-//                super.onMessage(webSocket, bytes);
-//            }
-//
-//            @Override
-//            public void onOpen(@NonNull WebSocket webSocket, @NonNull Response response) {
-//                super.onOpen(webSocket, response);
-//            }
-//        };
-//
-//
-//        webSocketClient = WebSocketClient.getInstance("ws://192.168.0.13:7777", webSocketListener);
-//        webSocketClient.connect();
+        this.protocolBox = (TextView)findViewById(R.id.protocolTextBox);
+
+        this.tds_instance = TextDisplayService.getInstance();
+        //DUMMY PRACTICE RECTANGLE
+        tds_instance.setProtocolBox(protocolBox);
+        tds_instance.feedbackParser("{\"type\":\"detection\",\"box_coords\":{\"center_point\":\"(700, 500)\", \"width\":\"200\",\"height\":\"300\"}, \"obj_name\":\"hand\", \"confidence\":\"0.897346927837\"}");
+
+//        this.tds_instance.setProtocolBox(protocolBox);
+        //this.tds_instance.feedbackParser("{\"type\":\"Protocol\",\"protocol\":\"medical - knee pain - MCL suspected (protocol 2 - 1)\",\"protocol_confidence\":0.0209748435020447}");
+
+        SocketStream.getInstance().setFeedbackCallback(this);
 
     }
 
@@ -507,6 +472,17 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
         socketIoService.sendImage(bitmap);
 //        bitmap.recycle();
 
+    }
+
+    @Override
+    public void onFeedbackReceived(String feedback) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tds_instance.setProtocolBox(protocolBox);
+                tds_instance.feedbackParser(feedback);
+            }
+        });
     }
 
     /**

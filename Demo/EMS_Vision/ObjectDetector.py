@@ -32,8 +32,18 @@ class ObjectDetector(Process):
             # # Do some object detection
             result_image = self.detr_engine.run_workflow(frame)
             
-            dummy_obj = DetectionObj('hi', 'hi', 'hi')
+                        
+            dummy_obj = DetectionObj({'center_point':'(500, 700)', 'width':'400', 'height':'300'}, 'keyboard', '0.255678475236')
             dummy_obj_dict = dummy_obj.__dict__
+            self.feedback_client.send_message(dummy_obj_dict)
+
+            # time.sleep(5)
+            
+            # dummy_obj2 = DetectionObj({'center_point':'(800, 500)', 'width':'300', 'height':'200'}, 'computer', '0.455678475236')
+            # dummy_obj_dict2 = dummy_obj2.__dict__
+            # self.feedback_client.send_message(dummy_obj_dict2)
+
+            # time.sleep(5)
             # self.feedback_client.send_message(dummy_obj_dict)
             # self.sio.emit('feedback', dummy_obj_dict)
             self.output_queue.put(result_image)

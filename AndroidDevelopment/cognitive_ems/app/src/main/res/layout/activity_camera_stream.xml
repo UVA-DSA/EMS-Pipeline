@@ -52,7 +52,7 @@
 
     <!-- Protocol Text Box -->
     <FrameLayout
-        android:id="@+id/protocol"
+        android:id="@+id/protocolFrame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -62,9 +62,10 @@
         android:layout_margin="16dp">
 
         <TextView
+            android:id="@+id/protocolTextBox"
+            android:text="Finding protocol..."
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cardiac Arrest - Unknown Rhythm - 0.8"
             android:textColor="#FFFF00" /> <!-- Yellow text color -->
     </FrameLayout>
 
@@ -74,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/protocol"
+        android:layout_above="@+id/protocolFrame"
         android:padding="16dp"
         android:background="@drawable/ar_text_box"
         android:layout_margin="16dp">
@@ -85,4 +86,5 @@
             android:text="Male - 48yrs\n** NO PULSE **\nBEGIN CPR"
             android:textColor="#DC143C" /> <!-- White text color -->
     </FrameLayout>
+
 </RelativeLayout>
