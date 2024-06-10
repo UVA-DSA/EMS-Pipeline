@@ -41,15 +41,18 @@ IMPORTANT NOTE!!!!!!!!! THERE MUST BE A SPACE BETWEEN THE COORDINATE POINTS FOR 
                 String protocolDisplayStr = feedback.substring(feedback.indexOf(":", 10) + 2, feedback.indexOf("(") + 16) + " - " + feedback.substring(feedback.indexOf("confidence") + 12, feedback.indexOf("confidence") + 16);
                 cvm.getInstance().updateProtocolBox(protocolDisplayStr, protocolBox);
             } else if (feedback.contains("\"type\":\"detection")) {
-                System.out.println(feedback);
+
                 Float confidence = Float.parseFloat(feedback.substring(feedback.indexOf("confidence") + 13, feedback.indexOf("confidence") + 17));
                 System.out.println("Confidence is: " + confidence.toString());
+
                 String objectString = feedback.substring(feedback.indexOf("name") + 7, feedback.indexOf("\"", feedback.indexOf("name") + 8)) + ":  " + confidence;
+
                 Integer width = Integer.parseInt(feedback.substring(feedback.indexOf("width") + 8, feedback.indexOf("\"", feedback.indexOf("width") + 9)));
                 Integer height = Integer.parseInt(feedback.substring(feedback.indexOf("height") + 9, feedback.indexOf("\"", feedback.indexOf("height")+10)));
                 Integer centerX = Integer.parseInt(feedback.substring(feedback.indexOf("point") + 9, feedback.indexOf(",", feedback.indexOf("point") + 9)));
                 Integer centerY = Integer.parseInt(feedback.substring(feedback.indexOf(",",feedback.indexOf("point"))+2, feedback.indexOf(")", feedback.indexOf("point"))));
                 System.out.println("width: " + width + " height: " + height + " centerX: " +  centerX + " centerY: " +  centerY);
+
                 Rect rect = new Rect(centerX-width/2, centerY-height/2, centerX + width/2, centerY + height/2);
                 cvm.getInstance().updateRectangle(rect, objectString);
             }
