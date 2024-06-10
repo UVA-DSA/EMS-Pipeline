@@ -81,6 +81,14 @@ public class SocketStream {
             }
         });
 
+        socket.on("action", new Emitter.Listener(){
+            @Override
+            public void call(Object... args) {
+                Log.d("SocketIO Client", "R: Received Action! : " + args[0]);
+            }
+        });
+        }
+
         // Add more event listeners here as needed
 
         socket.connect();
