@@ -24,6 +24,7 @@ public class CustomView extends View {
     private List<CustomRectangle> customRects; //list of custom rectangles to be displayed onscreen
     private Rect objectStrRect;//filled rectangle for object identification text
     private Integer maxRectangles;//maximum rectangles allowed on screen at a time
+    private Integer numRectangles; //tracks number of rectangles currently displayed, because using .remove() will affect accurate .size() measurement
 
     public CustomView(Context context) {
         super(context);
@@ -54,7 +55,8 @@ public class CustomView extends View {
         objectStrRectPaint.setColor(Color.RED);
         objectStrRectPaint.setStyle(Paint.Style.FILL);
         customRects = new ArrayList<>();
-        maxRectangles = 4; //arbitrary maximum number of rectangles allowed on screen
+        maxRectangles = 6; //arbitrary maximum number of rectangles allowed on screen
+        numRectangles = 0;
     }
     //MAY NEED TO EDIT THESE WITH ADDITION OF CUSTOM RECTANGLE CLASS
     public void clearCustomRects() {
@@ -66,7 +68,10 @@ public class CustomView extends View {
 
     public void setCustomRect(Rect rect, String object) {
         //check if this exact rectangle already exists in the list of custom rectangles, so as not to trigger too many redraws
-        if (customRects.size() > maxRectangles){System.out.println("hitting limit of rectangles on screen! cannot add"); return; }
+        if (numRectangles == maxRectangles){
+            customRects.remove(0);
+            numRectangles --;
+        }
         for (CustomRectangle rectangle:customRects) {
             if (rectangle.getRectangle().equals(rect)) {
                 System.out.println("This rectangle already exists!");
@@ -75,6 +80,7 @@ public class CustomView extends View {
         }
             CustomRectangle newRect = new CustomRectangle(rect, object); //create a new custom rectangle from incoming feedback data
             customRects.add(newRect); //add the new custom rectangle to the list of custom rectangles to be displayed
+            numRectangles++;
             System.out.println("customRects list now has " + customRects.size() + "rectangles");
             invalidate(); // Trigger a redraw when customRect is updated
     }

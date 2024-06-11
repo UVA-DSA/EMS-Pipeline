@@ -56,7 +56,7 @@ Assuming Object Detection feedback comes in the form: {"type":"detection","box_c
                 Integer minX = Integer.parseInt(feedback.substring(feedback.indexOf("[[") + 2, feedback.indexOf(",", feedback.indexOf("[["))));
                 Integer minY = Integer.parseInt(feedback.substring(feedback.indexOf(",", feedback.indexOf("[[")) + 1, feedback.indexOf("]", feedback.indexOf("[["))));
                 Integer maxX = Integer.parseInt(feedback.substring(feedback.indexOf("],[") + 3, feedback.indexOf(",", feedback.indexOf("],[") + 3)));
-                Integer maxY = Integer.parseInt(feedback.substring(feedback.indexOf(",",feedback.indexOf("],["))+4, feedback.indexOf("]]")));
+                Integer maxY = Integer.parseInt(feedback.substring(feedback.indexOf(",",feedback.indexOf("],[")+4) + 1, feedback.indexOf("]]")));
 
                 System.out.println("minX: " + minX + " minY: " +  minY + " maxX: " +  maxX + " maxY:  " + maxY);
                 Rect rect = new Rect(minX, minY, maxX, maxY);
