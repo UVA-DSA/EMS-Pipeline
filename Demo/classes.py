@@ -20,9 +20,10 @@ class MPQueueImage:
 class DetectionObj:
     """
     Object to return Detection results from the Action Recognition model.
+    {'type':'detection', 'box_coords':[(0, 102), (242, 511)], 'obj_name': 'keyboard', 'confidence':'0.95'}
 
     Attributes:
-        box_coords (dictionary): box coordinates in the format - {center_point : (x, y), width: w, height: h}
+        box_coords (dictionary): box coordinates 
         obj_name (str) : name of the object
 
     """
