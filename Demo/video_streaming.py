@@ -42,6 +42,8 @@ from EMS_Vision.ObjectDetector import ObjectDetector
 from pipeline_config import socketio_ipaddr
 from Feedback import FeedbackClient
 
+from torch import multiprocessing
+
 import queue
 # Media Pipe vars
 global mp_drawing, mp_drawing_styles, mp_hands, mp_face_mesh
@@ -58,6 +60,8 @@ total_imgs=0
 
 image_queue = Queue(maxsize=1)
 display_queue = Queue()
+
+#multiprocessing.set_start_method('forkserver')
 
 class ImageProcessor(Process):
     def __init__(self, image_queue, display_queue):
@@ -135,7 +139,7 @@ class Thread(QThread):
         self.loop = asyncio.new_event_loop()
         asyncio.set_event_loop(self.loop)
 
-        self.display_thread = threading.Thread(target=self.display_image, args=(self.changePixmap, image_queue,))
+        self.display_thread = threading.Thread(target=self.display_image, args=(self.changePixmap, display_queue,))
 
         self.mediapipe_thread = threading.Thread(target=self.process_image)
 
@@ -237,13 +241,16 @@ class Thread(QThread):
             if(display_queue.empty()):
                 continue
             else:
-                RGB_img = display_queue.get()
+                results = display_queue.get()
+                RGB_img = results[0]
 
                 h, w, ch = RGB_img.shape
                 bytesPerLine = ch * w
                 convertToQtFormat = QImage(RGB_img.data, 640, 480, bytesPerLine, QImage.Format_RGB888)
                 p = convertToQtFormat.scaled(w,h, Qt.KeepAspectRatio)
                 changePixmap.emit(p)
+
+                del RGB_img
                 
 
             
@@ -325,7 +332,9 @@ class Thread(QThread):
                 self.sio.emit('message', 'Hello from Video QThread!')  # Send a message to the server
                 
                 #start object detector engine process
+                # mp.set_start_method('spawn', force=True)
                 self.object_detector.start()
+                print("Object Detector Process started")
 
                 # self.mediapipe_thread.start()
                 self.display_thread.start()
@@ -340,5 +349,6 @@ class Thread(QThread):
             except Exception as e:
                 # print("Connection failed, retrying...", e)
                 time.sleep(5)  # Wait for 5 seconds before retrying
+
 
 

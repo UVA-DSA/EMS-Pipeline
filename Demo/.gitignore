@@ -6,6 +6,14 @@ results.csv
 chunk.csv
 check.csv
 
+smartwatch_data.csv
+
+
+EMS_Vision/test_data/
+EMS_Whisper/bindings/
+EMS_Whisper/examples/
+EMS_Whisper/tests/
+
 
 *.logcat
 
@@ -14,6 +22,7 @@ pymetamap/pymetamap.egg-info/PKG-INFO
 *.o
 EMS_Whisper/main
 EMS_Whisper/stream
+
 
 *.egg
 .gradle/*

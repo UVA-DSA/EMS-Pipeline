@@ -5,17 +5,19 @@ from .DETR_Engine import DETREngine
 import numpy as np
 import time
 
+from torch import multiprocessing
+
 from socketio import Client
 
 
 from pipeline_config import detr_version, socketio_ipaddr
 
-class ObjectDetector(Process):
+class ObjectDetector(multiprocessing.Process):
     def __init__(self, input_queue, output_queue):
         super(ObjectDetector, self).__init__()
         self.input_queue = input_queue
         self.output_queue = output_queue
-        self.detr_engine = DETREngine(detr_version)
+        self.detr_engine = None
         self.feedback_client = FeedbackClient()
         # self.sio = Client()
         print("ObjectDetector: Initialized")
@@ -25,8 +27,10 @@ class ObjectDetector(Process):
         # self.sio.connect(socketio_ipaddr)  # Connect to the Flask-SocketIO server
         # print("Connected to the server!")
         # self.sio.emit('message', 'Hello from Object Detector Process!')  # Send a message to the server
+        self.detr_engine = DETREngine(detr_version)
         self.feedback_client.start()
         while True:
+            print("ObjectDetector: Waiting for frame")
             frame = self.input_queue.get()
             print("ObjectDetector: Got frame")
             # # Do some object detection
@@ -46,5 +50,9 @@ class ObjectDetector(Process):
             # time.sleep(5)
             # self.feedback_client.send_message(dummy_obj_dict)
             # self.sio.emit('feedback', dummy_obj_dict)
+            del frame
             self.output_queue.put(result_image)
             print("ObjectDetector: Put frame")
+
+if __name__ == '__main__':
+    print("ObjectDetector: Testing")

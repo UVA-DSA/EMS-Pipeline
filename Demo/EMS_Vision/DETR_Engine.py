@@ -11,12 +11,14 @@ from PIL import Image
 from classes import DetectionObj
 
 
+
 class DETREngine:
     def __init__(self, detr_version="base"):
         print(torch.__version__, torch.cuda.is_available())
         torch.set_grad_enabled(False)
 
         self.threshold = 0.8
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
         self.detr_version = detr_version
 
@@ -62,6 +64,8 @@ class DETREngine:
             'facebookresearch/detr', 'detr_resnet50', pretrained=False, num_classes=self.num_classes)
         self.model.load_state_dict(checkpoint['model'], strict=True)
         print("[DETR_Engine] DETR Model loaded")
+
+        self.model.to(self.device)
         self.model.eval()
 
     @staticmethod
@@ -84,7 +88,7 @@ class DETREngine:
         """Rescale bounding boxes from ratio values to pixel values"""
         img_w, img_h = size
         b = DETREngine.box_cxcywh_to_xyxy(out_bbox)
-        b = b * torch.tensor([img_w, img_h, img_w, img_h], dtype=torch.float32)
+        b = b * torch.tensor([img_w, img_h, img_w, img_h], dtype=torch.float32).to(b.device)
         return b
 
     def filter_bboxes_from_outputs(self, outputs, threshold=0.7):
@@ -168,8 +172,11 @@ class DETREngine:
         return cv2_img, detection_objects
 
     def run_workflow(self, my_image):
+        start_t = time.time()
         img = self.cv2_to_pil(my_image)
+        print(f"[DETR Engine] Image conversion time: {time.time() - start_t}")
         img = self.transform(img).unsqueeze(0)
+        img = img.to(self.device)
         outputs = self.model(img)
         print(f"[DETR Engine] Inference time: {time.time() - start_t}")
         probas_to_keep, bboxes_scaled = self.filter_bboxes_from_outputs(
@@ -181,5 +188,6 @@ class DETREngine:
 
         detection_results_serialized = [
             vars(detection_object) for detection_object in detection_objects]
+        
 
         return result_image, detection_results_serialized
