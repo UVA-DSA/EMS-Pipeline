@@ -4,5 +4,7 @@ public interface FeedbackCallback {
 
     void onFeedbackReceived(String feedback);
 
+    void onActionReceived(String action);
+
 }
 

@@ -11,7 +11,7 @@ public class TextDisplayService {
 
     private static TextDisplayService instance;
     private CustomViewManager cvm;
-    private TextView protocolBox;
+    private TextView protocolBox, actionLogBox;
 
     public  TextDisplayService(){
     }
@@ -26,6 +26,12 @@ public class TextDisplayService {
     public void setProtocolBox(TextView pbox){
         if (pbox != null) {
             this.protocolBox = pbox;
+        }
+    }
+
+    public void setActionLogBox(TextView abox){
+        if (abox != null){
+            this.actionLogBox = abox;
         }
     }
 
@@ -59,6 +65,10 @@ IMPORTANT NOTE!!!!!!!!! THERE MUST BE A SPACE BETWEEN THE COORDINATE POINTS FOR 
         } catch (Exception e) {
             System.out.println("Could not understand feedback : " + e);
         }
+    }
+
+    protected void actionParser(String action){
+
     }
 
 }

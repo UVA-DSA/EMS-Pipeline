@@ -61,7 +61,7 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
     private HandlerThread backgroundThread;
 
     private CustomView customView;
-    private TextView protocolBox; //Protocol text box
+    private TextView protocolBox, actionLogBox; //Protocol text box
 
     private Bitmap bitmap;
 
@@ -101,14 +101,9 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         this.protocolBox = (TextView)findViewById(R.id.protocolTextBox);
+        this.actionLogBox = (TextView)findViewById(R.id.actionLog);
 
         this.tds_instance = TextDisplayService.getInstance();
-        //DUMMY PRACTICE RECTANGLE
-        //tds_instance.setProtocolBox(protocolBox);
-        //tds_instance.feedbackParser("{\"type\":\"detection\",\"box_coords\":{\"center_point\":\"(700, 500)\", \"width\":\"200\",\"height\":\"300\"}, \"obj_name\":\"hand\", \"confidence\":\"0.897346927837\"}");
-
-//        this.tds_instance.setProtocolBox(protocolBox);
-        //this.tds_instance.feedbackParser("{\"type\":\"Protocol\",\"protocol\":\"medical - knee pain - MCL suspected (protocol 2 - 1)\",\"protocol_confidence\":0.0209748435020447}");
 
         SocketStream.getInstance().setFeedbackCallback(this);
 
@@ -484,6 +479,19 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
             }
         });
     }
+
+    @Override
+    public void onActionReceived(String action) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tds_instance.setActionLogBox(actionLogBox);
+                tds_instance.actionParser(action);
+            }
+
+        });
+    }
+
 
     /**
      * Comparator based on the area of camera preview sizes.
