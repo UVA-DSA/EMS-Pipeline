@@ -84,9 +84,9 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
         CustomViewManager.getInstance().setOverlayView(customView);
 
 //        // Example: Set a custom location and size for the rectangle
-//        Rect customRect = new Rect(500, 200, 800, 500); // Left, Top, Right, Bottom
-//        String object = "hands: 1.00";
-//        CustomViewManager.getInstance().updateRectangle(customRect, object);
+        Rect customRect = new Rect(500, 200, 800, 500); // Left, Top, Right, Bottom
+        String object = "hands: 1.00";
+        CustomViewManager.getInstance().updateRectangle(customRect, object);
 
         //dummy object to test with, take out eventually
 
