@@ -211,7 +211,7 @@ def EMSTinyBERTSystem(Window, EMSTinyBERTQueue, ProtocolQueue):
                     protocolFB =  FeedbackObj("", pred, prob, "")
                     protocolFeedback = ProtocolObj(pred,prob)
                     protocol_dict = protocolFeedback.__dict__
-                    model.feedback_client.send_message(protocol_dict)
+                    model.feedback_client.send_message(protocol_dict, 'protocolFeedback') 
                     
                     ProtocolQueue.put(protocolFB)
                 if Window:

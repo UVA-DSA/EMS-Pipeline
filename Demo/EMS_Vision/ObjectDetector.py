@@ -53,7 +53,7 @@ class ObjectDetector(multiprocessing.Process):
             (image_array, objectDetected) = result_image
             if str(objectDetected) != '[]':
                 for i in range(len(objectDetected)):
-                    self.feedback_client.send_message(objectDetected[i], 'feedback')
+                    self.feedback_client.send_message(objectDetected[i], 'objectFeedback')
                     self.actionRecognition(objectDetected[i])
 
                 
