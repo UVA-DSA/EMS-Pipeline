@@ -2,7 +2,8 @@ package com.example.cognitive_ems;
 
 public interface FeedbackCallback {
 
-    void onFeedbackReceived(String feedback);
+    void onObjectFeedbackReceived(String feedback);
+    void onProtocolFeedbackReceived(String feedback);
 
     void onActionReceived(String action);
 

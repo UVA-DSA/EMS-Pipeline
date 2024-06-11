@@ -70,15 +70,25 @@ public class SocketStream {
             }
         });
 
-        socket.on("feedback", new Emitter.Listener() {
+        socket.on("objectFeedback", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                Log.d("Feedback Client", "R: Received Feedback! : " + args[0]);
+                Log.d("Feedback Client", "R: Received ObjectDetection! : " + args[0]);
 
                 if (feedbackCallback != null) {
-                    feedbackCallback.onFeedbackReceived(args[0].toString());
+                    feedbackCallback.onObjectFeedbackReceived(args[0].toString());
                 }
             }
+        });
+        socket.on("protocolFeedback", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("SocketIO Client", "R: Received Protocol! : " + args[0]);
+                if (feedbackCallback != null){
+                    feedbackCallback.onProtocolFeedbackReceived(args[0].toString());
+                }
+            }
+
         });
 
         socket.on("action", new Emitter.Listener() {
