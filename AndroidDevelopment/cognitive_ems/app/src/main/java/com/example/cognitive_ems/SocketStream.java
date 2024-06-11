@@ -80,6 +80,7 @@ public class SocketStream {
                 }
             }
         });
+        
         socket.on("protocolFeedback", new Emitter.Listener() {
             @Override
             public void call(Object... args) {

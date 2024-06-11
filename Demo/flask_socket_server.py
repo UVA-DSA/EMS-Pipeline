@@ -47,10 +47,17 @@ def handleImage(msg):
     print((msg))
 
 
-@socketio.on('feedback')
+@socketio.on('protocolFeedback')
 def handleFeedback(msg):
-    print('Feedback recieved! ', msg)
-    socketio.emit('feedback', msg)
+    print('Protocol feedback recieved! ', msg)
+    socketio.emit('protocolFeedback', msg)
+    
+    
+
+@socketio.on('objectFeedback')
+def handleFeedback(msg):
+    print('Object feedback recieved! ', msg)
+    socketio.emit('objectFeedback', msg)
 
 
 @socketio.on('action')
