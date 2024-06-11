@@ -18,7 +18,7 @@ public class SocketStream {
     //implement socket io connection
     private final String TAG = "SocketStream";
     private final int port = 9235;
-    private String serverUrl ;
+    private String serverUrl;
 
     private FeedbackCallback feedbackCallback;
 
@@ -81,7 +81,19 @@ public class SocketStream {
             }
         });
 
-        // Add more event listeners here as needed
+        socket.on("action", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("SocketIO Client", "R: Received Action! : " + args[0]);
+                if (feedbackCallback != null){
+                    feedbackCallback.onActionReceived(args[0].toString());
+                }
+            }
+
+        });
+
+
+    // Add more event listeners here as needed
 
         socket.connect();
     }

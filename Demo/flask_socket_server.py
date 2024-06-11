@@ -53,6 +53,12 @@ def handleFeedback(msg):
     socketio.emit('feedback', msg)
 
 
+@socketio.on('action')
+def handleAction(msg):
+    print('Action recieved! ', msg)
+    socketio.emit('action', msg)
+
+
 
 @socketio.on('audio')
 def handle_audio(audio_data):

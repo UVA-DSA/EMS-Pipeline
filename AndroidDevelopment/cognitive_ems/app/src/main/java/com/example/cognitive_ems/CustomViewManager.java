@@ -3,6 +3,8 @@ package com.example.cognitive_ems;
 import android.graphics.Rect;
 import android.widget.TextView;
 
+import androidx.constraintlayout.solver.widgets.Rectangle;
+
 public class CustomViewManager {
     private static CustomViewManager instance;
     private CustomView customView;
@@ -24,6 +26,7 @@ public class CustomViewManager {
 
     public void updateRectangle(Rect customRect, String object) {
         if (customView != null) {
+            System.out.println("Updating rectangle in CVM!");
             customView.setCustomRect(customRect, object);
         }
     }
@@ -32,7 +35,9 @@ public class CustomViewManager {
         System.out.println("updating protocol box with: " + str);
         customView.setProtocolBox(str,protocolBox);
     }
-    public void clearRectangle() {
-        customView.clearCustomRect();
+    //Removes all current displayed rectangles
+    public void clearRectangles() {
+        customView.clearCustomRects();
     }
+
 }

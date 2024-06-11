@@ -136,11 +136,11 @@ class FeedbackClient(threading.Thread):
         self.sio.disconnect()
         print("Successfully exited feedback thread.")
 
-    def send_message(self, message_obj):
+    def send_message(self, message_obj, topic):
         if not self.is_connected.is_set():
             # print("Not connected to server, cannot send message.")
             return
-        self.sio.emit(feedback_topic, message_obj)
+        self.sio.emit(topic, message_obj)
         #print(f"Sent message to feedback: {message_obj}")
 
     def on_connect(self):
