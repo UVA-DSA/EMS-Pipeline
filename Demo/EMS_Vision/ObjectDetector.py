@@ -21,19 +21,32 @@ class ObjectDetector(multiprocessing.Process):
         self.detr_engine = None
         self.feedback_client = FeedbackClient()
         self.detected_objects = [] #list of identified objects 
-        self.action = "Not enough information to determine action." #action for action log
+        self.action = " " #action for action log\
         # self.sio = Client()
         print("ObjectDetector: Initialized")
 
 
     def actionRecognition(self, obj):
         self.detected_objects.append(obj)
-        if any (o == 'hands' for o in self.detected_objects):
+        print(self.detected_objects)
+        proposedAction = self.action
+        #MAY WANT TO CHANGE THIS TO A SWITCH CASE LATER
+        #HAD TO USE 'person' instead of hand? keeps calling a hand a person
+        if any (o == 'person' for o in self.detected_objects):
             if any (o == 'bvm' for o in self.detected_objects):
-                self.action = 'CPR started' + " " + str(datetime.now())
+                proposedAction = 'CPR started' 
             elif any (o == 'defibrillator' for o in self.detected_objects):
-                self.action = 'Defibrillation started' + " " + str(datetime.now())
-        self.feedback_client.send_message(self.action, 'action')
+                proposedAction = 'Defibrillation started'
+            #TAKE OUT LATER, USING FOR ACTION LOG TESTING
+            elif any (o == 'keyboard' for o in self.detected_objects):
+                proposedAction = 'typing' 
+                self.detected_objects = [];
+            elif any (o == 'cell phone' for o in self.detected_objects):
+                proposedAction = 'calling' 
+                self.detected_objects = [];
+        if proposedAction != self.action:
+            self.action = proposedAction
+            self.feedback_client.send_message(self.action+ " " + str(datetime.now()), 'action')
 
 
     def run(self):
@@ -54,7 +67,8 @@ class ObjectDetector(multiprocessing.Process):
             if str(objectDetected) != '[]':
                 for i in range(len(objectDetected)):
                     self.feedback_client.send_message(objectDetected[i], 'objectFeedback')
-                    self.actionRecognition(objectDetected[i])
+                    if (objectDetected[i].get('obj_name') != 'null'):
+                        self.actionRecognition(objectDetected[i].get('obj_name'))
 
                 
 
