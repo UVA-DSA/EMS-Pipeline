@@ -90,6 +90,11 @@ public class CustomView extends View {
         protocolBox.setText(str);
     }
 
+    public void setActionLogBox(String str, TextView actionLogBox){
+        System.out.println("Made it to set Action Log Box in CV");
+        actionLogBox.setText(str);
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         System.out.println("Starting new redraw in onDraw");

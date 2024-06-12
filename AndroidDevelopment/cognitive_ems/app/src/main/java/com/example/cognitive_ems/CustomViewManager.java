@@ -35,6 +35,11 @@ public class CustomViewManager {
         System.out.println("updating protocol box with: " + str);
         customView.setProtocolBox(str,protocolBox);
     }
+
+    public void updateActionLogBox(String str, TextView actionLogBox){
+        System.out.println("I am in update Action Log Box!");
+        customView.setActionLogBox(str, actionLogBox);
+    }
     //Removes all current displayed rectangles
     public void clearRectangles() {
         customView.clearCustomRects();

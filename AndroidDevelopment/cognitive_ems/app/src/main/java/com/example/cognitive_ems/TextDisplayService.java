@@ -13,6 +13,9 @@ public class TextDisplayService {
     private CustomViewManager cvm;
     private TextView protocolBox, actionLogBox;
 
+    private String action1 = " ", action2 = " ", action3 = " ";
+
+
     public  TextDisplayService(){
     }
 
@@ -68,7 +71,15 @@ Assuming Object Detection feedback comes in the form: {"type":"detection","box_c
     }
 
     protected void actionParser(String action){
-
+        try {
+            action3 = action2;
+            action2 = action1;
+            action1 = action;
+            String actionString = action3 + "\n" + action2 + "\n" + action1;
+            cvm.getInstance().updateActionLogBox(actionString, actionLogBox);
+        } catch (Exception e) {
+            System.out.println("Could not understand action : " + e);
+        }
     }
 
     protected void protocolFeedbackParser(String feedback){
