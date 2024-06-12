@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_above="@+id/protocolFrame"
-        android:padding="16dp"
+        android:padding="6dp"
         android:background="@drawable/ar_text_box"
         android:layout_margin="16dp">
 
