@@ -46,7 +46,7 @@ class ObjectDetector(multiprocessing.Process):
                 self.detected_objects = [];
         if proposedAction != self.action:
             self.action = proposedAction
-            self.feedback_client.send_message(self.action+ " " + str(datetime.now()), 'action')
+            self.feedback_client.send_message(self.action+ " " + str(datetime.now().strftime("%H:%M:%S")), 'action')
 
 
     def run(self):
