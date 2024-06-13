@@ -33,23 +33,23 @@
     </FrameLayout>
 
     <!-- Procedure Information Text Box -->
-    <FrameLayout
-        android:id="@+id/procedureStats"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:padding="16dp"
-        android:background="@drawable/ar_text_box"
-        android:layout_margin="16dp">
+<!--    <FrameLayout-->
+<!--        android:id="@+id/procedureStats"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:padding="16dp"-->
+<!--        android:background="@drawable/ar_text_box"-->
+<!--        android:layout_margin="16dp">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CPR Rate: 110/min\nCPR Depth: 1in"
-            android:textColor="#228B22"
-            /> <!-- Green text color -->
-    </FrameLayout>
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="CPR Rate: 110/min\nCPR Depth: 1in"-->
+<!--            android:textColor="#228B22"-->
+<!--            /> &lt;!&ndash; Green text color &ndash;&gt;-->
+<!--    </FrameLayout>-->
 
     <!-- Protocol Text Box -->
     <FrameLayout
@@ -64,7 +64,7 @@
 
         <TextView
             android:id="@+id/protocolTextBox"
-            android:textSize="24dp"
+            android:textSize="16dp"
             android:text="Finding protocol..."
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,21 +72,21 @@
     </FrameLayout>
 
     <!-- Patient Overview Text Box -->
-    <FrameLayout
-        android:id="@+id/patientOverview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/protocolFrame"
-        android:padding="6dp"
-        android:background="@drawable/ar_text_box"
-        android:layout_margin="16dp">
+<!--    <FrameLayout-->
+<!--        android:id="@+id/patientOverview"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_above="@+id/protocolFrame"-->
+<!--        android:padding="6dp"-->
+<!--        android:background="@drawable/ar_text_box"-->
+<!--        android:layout_margin="16dp">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Male - 48yrs\n** NO PULSE **\nBEGIN CPR"
-            android:textColor="#DC143C" /> <!-- White text color -->
-    </FrameLayout>
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Male - 48yrs\n** NO PULSE **\nBEGIN CPR"-->
+<!--            android:textColor="#DC143C" /> &lt;!&ndash; White text color &ndash;&gt;-->
+<!--    </FrameLayout>-->
 
 </RelativeLayout>

@@ -31,7 +31,9 @@ public class CustomRectangle {
 
     public boolean equals(CustomRectangle other) {
         return this.rectangle.equals(other.rectangle) && this.objectStr.equals(other.objectStr);
-    } 
+    }
+
+    public String getObjectName() { return objectStr.substring(0, objectStr.indexOf(": "));}
 
 
 

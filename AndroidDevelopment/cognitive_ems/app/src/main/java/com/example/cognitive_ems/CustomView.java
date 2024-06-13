@@ -67,21 +67,25 @@ public class CustomView extends View {
     }
 
     public void setCustomRect(Rect rect, String object) {
-        //check if this exact rectangle already exists in the list of custom rectangles, so as not to trigger too many redraws
-        if (numRectangles == maxRectangles){
-            customRects.remove(0);
-            numRectangles --;
-        }
+
         for (CustomRectangle rectangle:customRects) {
-            if (rectangle.getRectangle().equals(rect)) {
-                System.out.println("This rectangle already exists!");
-                return;
+            if (rectangle.getObjectName().equals(object.substring(0, object.indexOf(": ")))){
+                System.out.println("This object already exists!");
+                customRects.remove(rectangle);
+                numRectangles--;
             }
         }
+
             CustomRectangle newRect = new CustomRectangle(rect, object); //create a new custom rectangle from incoming feedback data
             customRects.add(newRect); //add the new custom rectangle to the list of custom rectangles to be displayed
             numRectangles++;
             System.out.println("customRects list now has " + customRects.size() + "rectangles");
+
+
+        while (numRectangles > maxRectangles){
+            customRects.remove(0);
+            numRectangles --;
+        }
             invalidate(); // Trigger a redraw when customRect is updated
     }
 
