@@ -33,19 +33,22 @@ class ObjectDetector(multiprocessing.Process):
         #HAD TO USE 'person' instead of hand? keeps calling a hand a person
         if any (o == 'person' for o in self.detected_objects):
             if any (o == 'bvm' for o in self.detected_objects):
-                proposedAction = 'CPR started' 
+                proposedAction = 'CPR started'
+                self.detected_objects = []; #reset detected objects, such that we don't trigger the same action after the object is no longer onscreen 
             elif any (o == 'defibrillator' for o in self.detected_objects):
                 proposedAction = 'Defibrillation started'
+                self.detected_objects = []; #reset detected objects, such that we don't trigger the same action after the object is no longer onscreen
            
            #TAKE OUT LATER, USING FOR ACTION LOG TESTING
             elif any (o == 'keyboard' for o in self.detected_objects):
-                proposedAction = 'typing' 
+                proposedAction = 'typing'
+                self.detected_objects = []; #reset detected objects, such that we don't trigger the same action after the object is no longer onscreen      
             elif any (o == 'cell phone' for o in self.detected_objects):
                 proposedAction = 'calling' 
-        
+                self.detected_objects = []; #reset detected objects, such that we don't trigger the same action after the object is no longer onscreen
         if proposedAction != self.action: #checks that a new action has began 
             self.action = proposedAction
-            self.detected_objects = []; #reset detected objects, such that we don't trigger the same action after the object is no longer onscreen
+            
             self.feedback_client.send_message(self.action+ " " + str(datetime.now().strftime("%H:%M:%S")), 'action')
 
 
