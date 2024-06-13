@@ -62,6 +62,9 @@ Assuming Object Detection feedback comes in the form: {"type":"detection","box_c
                 Integer maxY = Integer.parseInt(feedback.substring(feedback.indexOf(",",feedback.indexOf("],[")+4) + 1, feedback.indexOf("]]")));
 
                 System.out.println("minX: " + minX + " minY: " +  minY + " maxX: " +  maxX + " maxY:  " + maxY);
+                if (minY < 20){
+                    minY = 40;
+                }
                 Rect rect = new Rect(minX, minY, maxX, maxY);
                 cvm.getInstance().updateRectangle(rect, objectString);
 

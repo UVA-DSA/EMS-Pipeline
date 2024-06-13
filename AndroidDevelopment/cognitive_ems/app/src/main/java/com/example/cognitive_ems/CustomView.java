@@ -50,7 +50,7 @@ public class CustomView extends View {
         objectPaint = new Paint();
         objectPaint.setColor(Color.WHITE);//Set text color to black
         objectPaint.setStrokeWidth(2);//Set stroke width
-        objectPaint.setTextSize(24);
+        objectPaint.setTextSize(28);
         objectStrRectPaint = new Paint();
         objectStrRectPaint.setColor(Color.RED);
         objectStrRectPaint.setStyle(Paint.Style.FILL);
