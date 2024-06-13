@@ -168,6 +168,8 @@ class DETREngine:
                 # Draw text
                 cv2.putText(cv2_img, label, (int(xmin), int(ymin) - 5),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+                # for obj in detection_objects:
+                #     print("These are the finetuned results: " + str(obj.obj_name))
 
         return cv2_img, detection_objects
 

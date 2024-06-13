@@ -11,7 +11,7 @@ from torch import multiprocessing
 from socketio import Client
 
 
-from pipeline_config import detr_version, socketio_ipaddr
+from pipeline_config import detr_version, socketio_ipaddr, objectDetectionBoxesenabled
 
 class ObjectDetector(multiprocessing.Process):
     def __init__(self, input_queue, output_queue):
@@ -31,9 +31,9 @@ class ObjectDetector(multiprocessing.Process):
         proposedAction = self.action #self.action is the current action being displayed
         #MAY WANT TO CHANGE THIS TO A SWITCH CASE LATER, awk in python though
         #HAD TO USE 'person' instead of hand? keeps calling a hand a person
-        if any (o == 'person' for o in self.detected_objects):
+        if any (o == 'dummy' for o in self.detected_objects) and any (o == 'hands' for o in self.detected_objects):
             if any (o == 'bvm' for o in self.detected_objects):
-                proposedAction = 'CPR started'
+                proposedAction = 'Ventilation started'
                 self.detected_objects = []; #reset detected objects, such that we don't trigger the same action after the object is no longer onscreen 
             elif any (o == 'defibrillator' for o in self.detected_objects):
                 proposedAction = 'Defibrillation started'
@@ -62,12 +62,15 @@ class ObjectDetector(multiprocessing.Process):
             # # Do some object detection
             result_image = self.detr_engine.run_workflow(frame)
             
-        
-            (image_array, objectDetected) = result_image
-            if str(objectDetected) != '[]': #if not null, sometimes it identifies a box with no object detection?
-                for i in range(len(objectDetected)): # loop through output, as there may be more than one object detected
-                    self.feedback_client.send_message(objectDetected[i], 'objectFeedback') #send detected object on objectfeedback channel
-                    self.actionRecognition(objectDetected[i].get('obj_name')) 
+            if objectDetectionBoxesenabled:
+                (image_array, objectDetected) = result_image
+                print("This is the length of the objects detected: " + str(len(objectDetected)))
+                if str(objectDetected) != '[]': #if not null, sometimes it identifies a box with no object detection?
+                    for i in range(len(objectDetected)):
+                        print("This is the current object: " + objectDetected[i].get('obj_name')) # loop through output, as there may be more than one object detected
+                        print("This is the confidence of the current object: " + str(objectDetected[i].get('confidence')))
+                        self.feedback_client.send_message(objectDetected[i], 'objectFeedback') #send detected object on objectfeedback channel
+                        self.actionRecognition(objectDetected[i].get('obj_name')) 
 
                 
 
