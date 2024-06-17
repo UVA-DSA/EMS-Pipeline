@@ -1,4 +1,6 @@
 package com.example.cognitive_ems;
+import static java.lang.Float.parseFloat;
+
 import android.graphics.Rect;
 
 import androidx.constraintlayout.solver.widgets.Rectangle;
@@ -29,11 +31,13 @@ public class CustomRectangle {
     }
 
 
-    public boolean equals(CustomRectangle other) {
-        return this.rectangle.equals(other.rectangle) && this.objectStr.equals(other.objectStr);
-    }
+//    public boolean equals(CustomRectangle other) {
+//        return this.rectangle.equals(other.rectangle) && this.objectStr.equals(other.objectStr);
+//    }
 
     public String getObjectName() { return objectStr.substring(0, objectStr.indexOf(": "));}
+
+    public Float getConfidence() { return parseFloat(objectStr.substring(objectStr.indexOf(": ") + 2));}
 
 
 

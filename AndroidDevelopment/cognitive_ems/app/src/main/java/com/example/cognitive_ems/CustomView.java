@@ -1,4 +1,6 @@
 package com.example.cognitive_ems;
+import static java.lang.Float.parseFloat;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -67,9 +69,14 @@ public class CustomView extends View {
     }
 
     public void setCustomRect(Rect rect, String object) {
-
+        System.out.println("Calling setCustomRect. CUrrent state of customRects: " + customRects.toString());
         for (CustomRectangle rectangle:customRects) {
+            System.out.println("Comparing rectangle " + object + "to " + rectangle.getObjectName());
             if (rectangle.getObjectName().equals(object.substring(0, object.indexOf(": ")))){
+                System.out.println("Same type of object!");
+                if (rectangle.getConfidence() > parseFloat(object.substring(object.indexOf(": ") + 2))){
+                    return; //Don't add new rectangle if same type as another rectangle, keep only the highest confidence one
+                }
                 System.out.println("This object already exists!");
                 customRects.remove(rectangle);
                 numRectangles--;
@@ -79,13 +86,14 @@ public class CustomView extends View {
             CustomRectangle newRect = new CustomRectangle(rect, object); //create a new custom rectangle from incoming feedback data
             customRects.add(newRect); //add the new custom rectangle to the list of custom rectangles to be displayed
             numRectangles++;
-            System.out.println("customRects list now has " + customRects.size() + "rectangles");
+            System.out.println("customRects list now is " + customRects.toString());
 
 
         while (numRectangles > maxRectangles){
             customRects.remove(0);
             numRectangles --;
         }
+            System.out.println("Adding rectangle: " + object);
             invalidate(); // Trigger a redraw when customRect is updated
     }
 
@@ -101,7 +109,7 @@ public class CustomView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        System.out.println("Starting new redraw in onDraw");
+        System.out.println("Starting new redraw in onDraw, with custom rects as follows" + customRects.toString());
         super.onDraw(canvas);
             // Draw a rectangle on the TextureView
             for (CustomRectangle rect:customRects) {
@@ -112,5 +120,6 @@ public class CustomView extends View {
                 canvas.drawRect(objectStrRect, objectStrRectPaint);
                 canvas.drawText(rect.getObjectStr(), rect.getRectangle().left, rect.getRectangle().top, objectPaint);
             }
+
     }
 }

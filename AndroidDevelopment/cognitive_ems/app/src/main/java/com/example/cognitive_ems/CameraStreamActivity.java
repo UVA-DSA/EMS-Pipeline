@@ -502,6 +502,15 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
         });
     }
 
+    public void onResetReceived() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                CustomViewManager.getInstance().updateProtocolBox("Reset Button Pressed!", protocolBox);
+            }
+        });
+    }
+
 
     /**
      * Comparator based on the area of camera preview sizes.

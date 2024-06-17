@@ -74,7 +74,6 @@ public class SocketStream {
             @Override
             public void call(Object... args) {
                 Log.d("Feedback Client", "R: Received ObjectDetection! : " + args[0]);
-
                 if (feedbackCallback != null) {
                     feedbackCallback.onObjectFeedbackReceived(args[0].toString());
                 }
@@ -101,6 +100,16 @@ public class SocketStream {
                 }
             }
 
+        });
+
+        socket.on("reset", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("SocketIO Client", "R: Received Reset! : " + args[0]);
+                if (feedbackCallback != null){
+                    feedbackCallback.onResetReceived();
+                }
+            }
         });
 
 
