@@ -72,7 +72,7 @@ def playback_thread(stop_event):
     print("Started audio playback")
     sr = UDPStreamReceiver.UDPStreamReceiver(2222)
 
-    q = queue.Queue(10)
+    q = queue.Queue(50)
     sr.registerQueue(q)
 
     while not stop_event.is_set():
@@ -82,10 +82,13 @@ def playback_thread(stop_event):
             sample = (q.get())
             if(sample is not None):
                 stream.write(sample[12:])
+                # print("Writing to stream")
             
     print("Audio Server Terminated!")
     sr.unregisterQueue(q)
     sr.close()
+    stream.stop_stream()
+    p.terminate()
     stop_event.clear()
 
 

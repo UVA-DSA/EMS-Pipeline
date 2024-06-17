@@ -55,28 +55,35 @@ class ObjectDetector(multiprocessing.Process):
     def run(self):
         self.detr_engine = DETREngine(detr_version)
         self.feedback_client.start()
+        frame_count = 0
         while True:
-            print("ObjectDetector: Waiting for frame")
+            # print("ObjectDetector: Waiting for frame")
             frame = self.input_queue.get()
-            print("ObjectDetector: Got frame")
+            # print("ObjectDetector: Got frame")
             # # Do some object detection
-            result_image = self.detr_engine.run_workflow(frame)
-            
-            if objectDetectionBoxesenabled:
-                (image_array, objectDetected) = result_image
-                print("This is the length of the objects detected: " + str(len(objectDetected)))
-                if str(objectDetected) != '[]': #if not null, sometimes it identifies a box with no object detection?
-                    for i in range(len(objectDetected)):
-                        print("This is the current object: " + objectDetected[i].get('obj_name')) # loop through output, as there may be more than one object detected
-                        print("This is the confidence of the current object: " + str(objectDetected[i].get('confidence')))
-                        self.feedback_client.send_message(objectDetected[i], 'objectFeedback') #send detected object on objectfeedback channel
-                        self.actionRecognition(objectDetected[i].get('obj_name')) 
+            result_image = [frame]
+
+            if(frame_count % 5 == 0):
+                print("ObjectDetector: Running object detection")
+                result_image = self.detr_engine.run_workflow(frame)
+                
+                if objectDetectionBoxesenabled:
+                    (image_array, objectDetected) = result_image
+                    # print("This is the length of the objects detected: " + str(len(objectDetected)))
+                    if str(objectDetected) != '[]': #if not null, sometimes it identifies a box with no object detection?
+                        for i in range(len(objectDetected)):
+                            # print("This is the current object: " + objectDetected[i].get('obj_name')) # loop through output, as there may be more than one object detected
+                            # print("This is the confidence of the current object: " + str(objectDetected[i].get('confidence')))
+                            self.feedback_client.send_message(objectDetected[i], 'objectFeedback') #send detected object on objectfeedback channel
+                            self.actionRecognition(objectDetected[i].get('obj_name')) 
 
                 
 
             del frame
             self.output_queue.put(result_image)
-            print("ObjectDetector: Put frame")
+
+            frame_count += 1
+            # print("ObjectDetector: Put frame")
 
 if __name__ == '__main__':
     print("ObjectDetector: Testing")
