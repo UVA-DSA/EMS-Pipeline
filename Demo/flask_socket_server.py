@@ -52,7 +52,12 @@ def handleFeedback(msg):
     print('Protocol feedback recieved! ', msg)
     socketio.emit('protocolFeedback', msg)
     
-    
+
+@socketio.on('reset')
+def handleFeedback(msg):
+    print('Reset recieved! ', msg)
+    socketio.emit('reset', msg)
+
 
 @socketio.on('objectFeedback')
 def handleFeedback(msg):
