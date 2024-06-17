@@ -256,6 +256,8 @@ class MainWindow(QWidget):
         self.internet_check_thread.start()
 
 
+        self.feedback_client = Feedback.FeedbackClient()
+        self.feedback_client.start()
        
 
         # Threads for video 
@@ -708,7 +710,6 @@ class MainWindow(QWidget):
         self.UpdateMsgBox(["Resetting!"])
         self.reset = 1
         self.stopped = 1
-        self.feedback_client = Feedback.FeedbackClient()
         self.feedback_client.send_message("Resetting", 'reset')
 
         try:

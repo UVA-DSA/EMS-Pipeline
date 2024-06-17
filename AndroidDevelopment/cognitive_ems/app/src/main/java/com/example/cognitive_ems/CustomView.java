@@ -66,35 +66,58 @@ public class CustomView extends View {
         customRects = new ArrayList<>();
 
         invalidate(); // Trigger a redraw to remove the rectangle
+
+    }
+
+    public void setCustomRectangleList(List<CustomRectangle> customRects) {
+
+        this.customRects = new ArrayList<>();
+        for (CustomRectangle rectangle : customRects) {
+            this.customRects.add(rectangle);
+            numRectangles++;
+        }
+        invalidate(); // Trigger a redraw to remove the rectangle
+
     }
 
     public void setCustomRect(Rect rect, String object) {
-        System.out.println("Calling setCustomRect. CUrrent state of customRects: " + customRects.toString());
-        for (CustomRectangle rectangle:customRects) {
-            System.out.println("Comparing rectangle " + object + "to " + rectangle.getObjectName());
-            if (rectangle.getObjectName().equals(object.substring(0, object.indexOf(": ")))){
+        System.out.println("Calling setCustomRect. Current state of customRects: " + customRects.toString());
+
+        String objectName = object.substring(0, object.indexOf(": "));
+        float newConfidence = Float.parseFloat(object.substring(object.indexOf(": ") + 2));
+
+        CustomRectangle existingRectangle = null;
+        for (CustomRectangle rectangle : customRects) {
+            System.out.println("Comparing rectangle " + objectName + " to " + rectangle.getObjectName());
+            if (rectangle.getObjectName().equals(objectName)) {
                 System.out.println("Same type of object!");
-                if (rectangle.getConfidence() > parseFloat(object.substring(object.indexOf(": ") + 2))){
-                    return; //Don't add new rectangle if same type as another rectangle, keep only the highest confidence one
-                }
-                System.out.println("This object already exists!");
-                customRects.remove(rectangle);
+                existingRectangle = rectangle;
+                break;
+            }
+        }
+
+        if (existingRectangle != null) {
+            if (existingRectangle.getConfidence() > newConfidence) {
+                return; // Don't add new rectangle if same type as another rectangle, keep only the highest confidence one
+            } else {
+                System.out.println("This object already exists with lower confidence, removing existing one.");
+                customRects.remove(existingRectangle);
                 numRectangles--;
             }
         }
 
-            CustomRectangle newRect = new CustomRectangle(rect, object); //create a new custom rectangle from incoming feedback data
-            customRects.add(newRect); //add the new custom rectangle to the list of custom rectangles to be displayed
-            numRectangles++;
-            System.out.println("customRects list now is " + customRects.toString());
+        CustomRectangle newRect = new CustomRectangle(rect, object); // Create a new custom rectangle from incoming feedback data
+        customRects.add(newRect); // Add the new custom rectangle to the list of custom rectangles to be displayed
+        numRectangles++;
+        System.out.println("customRects list now is " + customRects.toString());
 
-
-        while (numRectangles > maxRectangles){
+        while (numRectangles > maxRectangles) {
             customRects.remove(0);
-            numRectangles --;
+            numRectangles--;
         }
-            System.out.println("Adding rectangle: " + object);
-            invalidate(); // Trigger a redraw when customRect is updated
+
+        System.out.println("Adding rectangle: " + object);
+        invalidate(); // Trigger a redraw when customRect is updated
     }
 
     public void setProtocolBox(String str, TextView protocolBox){

@@ -1,13 +1,18 @@
 package com.example.cognitive_ems;
 
 import android.graphics.Rect;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.constraintlayout.solver.widgets.Rectangle;
 
+import java.util.List;
+
 public class CustomViewManager {
     private static CustomViewManager instance;
     private CustomView customView;
+
+    private String TAG = "CustomViewManager";
 
     private CustomViewManager() {
         // Private constructor to prevent instantiation
@@ -30,9 +35,15 @@ public class CustomViewManager {
             customView.setCustomRect(customRect, object);
         }
     }
+
+    public void updateRectangleList(List<CustomRectangle> customRects) {
+        if (customView != null) {
+            System.out.println("Updating rectangle in CVM!");
+            customView.setCustomRectangleList(customRects);
+        }
+    }
     public void updateProtocolBox(String str, TextView protocolBox) {
-        System.out.println("I am in update ProtocolBox!");
-        System.out.println("updating protocol box with: " + str);
+        Log.d(TAG, "updating protocol box with: " + str);
         customView.setProtocolBox(str,protocolBox);
     }
 

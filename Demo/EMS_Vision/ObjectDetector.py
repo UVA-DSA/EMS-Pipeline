@@ -66,21 +66,23 @@ class ObjectDetector(multiprocessing.Process):
             result_image = self.detr_engine.run_workflow(frame)
             
             if objectDetectionBoxesenabled:
-                (image_array, objectDetected) = result_image
-                #print("This is the length of the objects detected: " + str(len(objectDetected)))
-                if str(objectDetected) != '[]': #if not null, sometimes it identifies a box with no object detection?
-                    self.feedback_client.send_message(objectDetected, 'objectFeedback') #send detected object on objectfeedback channel, with number of objects detected
-                   
-                     #send detected object on objectfeedback channel, with number of objects detected
-                    
-                    print("just sent: " + str(objectDetected))
-                    for i in range(len(objectDetected)):
-                        # print("This is the current object: " + objectDetected[i].get('obj_name')) # loop through output, as there may be more than one object detected
-                        # print("This is the confidence of the current object: " + str(objectDetected[i].get('confidence')))
-                        
-                        self.actionRecognition(objectDetected[i].get('obj_name')) 
 
-            
+                if(frame_count % 15 == 0):
+                    (image_array, objectDetected) = result_image
+                    #print("This is the length of the objects detected: " + str(len(objectDetected)))
+                    if str(objectDetected) != '[]': #if not null, sometimes it identifies a box with no object detection?
+                        self.feedback_client.send_message(objectDetected, 'objectFeedback') #send detected object on objectfeedback channel, with number of objects detected
+                    
+                        #send detected object on objectfeedback channel, with number of objects detected
+                        
+                        # print("just sent: " + str(objectDetected))
+                        # for i in range(len(objectDetected)):
+                        #     # print("This is the current object: " + objectDetected[i].get('obj_name')) # loop through output, as there may be more than one object detected
+                        #     # print("This is the confidence of the current object: " + str(objectDetected[i].get('confidence')))
+                            
+                        #     self.actionRecognition(objectDetected[i].get('obj_name')) 
+
+                
 
             del frame
             self.output_queue.put(result_image)

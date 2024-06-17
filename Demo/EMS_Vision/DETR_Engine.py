@@ -55,7 +55,7 @@ class DETREngine:
                        [0.494, 0.184, 0.556], [0.466, 0.674, 0.188], [0.301, 0.745, 0.933]]
 
         self.transform = T.Compose([
-            T.Resize((512, 512)),  # Resize the image to 224x224 pixels
+            # T.Resize((512, 512)),  # Resize the image to 224x224 pixels
             T.ToTensor(),
             T.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
         ])

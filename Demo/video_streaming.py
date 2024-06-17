@@ -210,7 +210,7 @@ class Thread(QThread):
 
         
         # # Process the image
-        # # RGB_img = cv2.rotate(RGB_img, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        # RGB_img = cv2.rotate(RGB_img, cv2.ROTATE_90_COUNTERCLOCKWISE)
         # RGB_img = cv2.resize(RGB_img, (640, 480))
 
         # h, w, ch = RGB_img.shape
