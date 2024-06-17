@@ -667,7 +667,7 @@ class MainWindow(QWidget):
             print("Cognitive System Thread Started")
             self.CognitiveSystemThread = StoppableThread(
                 target=CognitiveSystem.CognitiveSystem, args=(self, SpeechToNLPQueue, FeedbackQueue, data_path, conceptExtractionStream, interventionStream,))
-            self.CognitiveSystemThread.start()
+            # self.CognitiveSystemThread.start()
 
 
         # ==== Start the EMS Agent - Xueren ==== #

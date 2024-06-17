@@ -176,11 +176,11 @@ class DETREngine:
     def run_workflow(self, my_image):
         start_t = time.time()
         img = self.cv2_to_pil(my_image)
-        print(f"[DETR Engine] Image conversion time: {time.time() - start_t}")
+        # print(f"[DETR Engine] Image conversion time: {time.time() - start_t}")
         img = self.transform(img).unsqueeze(0)
         img = img.to(self.device)
         outputs = self.model(img)
-        print(f"[DETR Engine] Inference time: {time.time() - start_t}")
+        # print(f"[DETR Engine] Inference time: {time.time() - start_t}")
         probas_to_keep, bboxes_scaled = self.filter_bboxes_from_outputs(
             outputs, threshold=self.threshold)
 

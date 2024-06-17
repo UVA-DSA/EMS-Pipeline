@@ -55,10 +55,13 @@ class ObjectDetector(multiprocessing.Process):
     def run(self):
         self.detr_engine = DETREngine(detr_version)
         self.feedback_client.start()
+        frame_count = 0
         while True:
             #print("ObjectDetector: Waiting for frame")
+            # print("ObjectDetector: Waiting for frame")
             frame = self.input_queue.get()
             #print("ObjectDetector: Got frame")
+            # print("ObjectDetector: Got frame")
             # # Do some object detection
             result_image = self.detr_engine.run_workflow(frame)
             
@@ -81,7 +84,9 @@ class ObjectDetector(multiprocessing.Process):
 
             del frame
             self.output_queue.put(result_image)
-            print("ObjectDetector: Put frame")
+
+            frame_count += 1
+            # print("ObjectDetector: Put frame")
 
 if __name__ == '__main__':
     print("ObjectDetector: Testing")
