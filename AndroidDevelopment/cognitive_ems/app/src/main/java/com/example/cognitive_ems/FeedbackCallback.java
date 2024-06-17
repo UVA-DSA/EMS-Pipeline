@@ -7,5 +7,7 @@ public interface FeedbackCallback {
 
     void onActionReceived(String action);
 
+    void onResetReceived();
+
 }
 

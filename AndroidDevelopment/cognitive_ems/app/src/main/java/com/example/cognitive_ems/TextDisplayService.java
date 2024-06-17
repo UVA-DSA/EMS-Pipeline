@@ -1,6 +1,8 @@
 package com.example.cognitive_ems;
 
 
+import static java.lang.Integer.parseInt;
+
 import android.graphics.Rect;
 import android.util.Log;
 import android.util.Size;
@@ -8,6 +10,10 @@ import android.widget.TextView;
 
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 
 public class TextDisplayService {
 
@@ -46,12 +52,15 @@ Assuming Object Detection feedback comes in the form: {"type":"detection","box_c
  */
     protected void objectFeedbackParser(Object args, Size size) {
         try {
-            String feedback = args.toString();
-//            System.out.println(args.toString());//Sent as python dict, unable to parse in current form, so identify as string
-//            if (feedback.contains("\"type\":\"Protocol")) { //determining if feedback is Protocol type
-//                String protocolDisplayStr = feedback.substring(feedback.indexOf(":", 10) + 2, feedback.indexOf("(") + 16) + " - " + feedback.substring(feedback.indexOf("confidence") + 12, feedback.indexOf("confidence") + 16);
-//                cvm.getInstance().updateProtocolBox(protocolDisplayStr, protocolBox);
-//            } else if (feedback.contains("\"type\":\"detection")) {
+            args = args.substring(1, args.length()-1);
+            String[] objects = args.split(Pattern.quote("},"));
+            List<String> listObjects = new ArrayList<>();
+            for (String object : objects) {
+                listObjects.add(object);
+            }
+            System.out.println(listObjects.toString());
+            for (String feedback : listObjects) {
+                System.out.println("Looping through objects: " + feedback);
                 //CURRENTLY just truncating confidence, should perhaps round if more than 2 decimal places?
                 Float confidence = Float.parseFloat(feedback.substring(feedback.indexOf("confidence") + 13, feedback.indexOf("confidence") + 17));
                 System.out.println("Confidence is: " + confidence.toString());
@@ -81,10 +90,12 @@ Assuming Object Detection feedback comes in the form: {"type":"detection","box_c
                 }
                 Rect rect = new Rect(minX, minY, maxX, maxY);
                 cvm.getInstance().updateRectangle(rect, objectString);
+            }
 
         } catch (Exception e) {
             System.out.println("Could not understand feedback : " + e);
         }
+
     }
 
     protected void actionParser(String action){

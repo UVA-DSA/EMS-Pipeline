@@ -57,22 +57,27 @@ class ObjectDetector(multiprocessing.Process):
         self.feedback_client.start()
         frame_count = 0
         while True:
+            #print("ObjectDetector: Waiting for frame")
             # print("ObjectDetector: Waiting for frame")
             frame = self.input_queue.get()
-            # print("ObjectDetector: Got frame of size: ",frame.shape)
+            #print("ObjectDetector: Got frame")
+            # print("ObjectDetector: Got frame")
             # # Do some object detection
-
-            # print("ObjectDetector: Running object detection")
             result_image = self.detr_engine.run_workflow(frame)
             
             if objectDetectionBoxesenabled:
                 (image_array, objectDetected) = result_image
-                # print("This is the length of the objects detected: " + str(len(objectDetected)))
+                #print("This is the length of the objects detected: " + str(len(objectDetected)))
                 if str(objectDetected) != '[]': #if not null, sometimes it identifies a box with no object detection?
+                    self.feedback_client.send_message(objectDetected, 'objectFeedback') #send detected object on objectfeedback channel, with number of objects detected
+                   
+                     #send detected object on objectfeedback channel, with number of objects detected
+                    
+                    print("just sent: " + str(objectDetected))
                     for i in range(len(objectDetected)):
                         # print("This is the current object: " + objectDetected[i].get('obj_name')) # loop through output, as there may be more than one object detected
                         # print("This is the confidence of the current object: " + str(objectDetected[i].get('confidence')))
-                        self.feedback_client.send_message(objectDetected[i], 'objectFeedback') #send detected object on objectfeedback channel
+                        
                         self.actionRecognition(objectDetected[i].get('obj_name')) 
 
             
