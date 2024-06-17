@@ -55,7 +55,7 @@ class DETREngine:
                        [0.494, 0.184, 0.556], [0.466, 0.674, 0.188], [0.301, 0.745, 0.933]]
 
         self.transform = T.Compose([
-            T.Resize((224, 224)),  # Resize the image to 224x224 pixels
+            T.Resize((512, 512)),  # Resize the image to 224x224 pixels
             T.ToTensor(),
             T.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
         ])
@@ -97,7 +97,7 @@ class DETREngine:
         keep = probas.max(-1).values > threshold
         probas_to_keep = probas[keep]
         bboxes_scaled = self.rescale_bboxes(
-            outputs['pred_boxes'][0, keep], (512, 512))
+            outputs['pred_boxes'][0, keep], (640, 480))
         return probas_to_keep, bboxes_scaled
 
     def create_bbox_objs(self, prob=None, boxes=None):

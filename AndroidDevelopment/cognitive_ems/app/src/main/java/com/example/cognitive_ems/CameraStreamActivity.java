@@ -53,7 +53,7 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
     private CameraCaptureSession captureSession;
     private CaptureRequest.Builder previewRequestBuilder;
     private Handler backgroundHandler;
-    private TextureView textureView;
+    private AutoFitTextureView textureView;
 
     private SocketIOService socketIoService;
     private boolean isBound = false;
@@ -84,9 +84,9 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
         CustomViewManager.getInstance().setOverlayView(customView);
 
 //        // Example: Set a custom location and size for the rectangle
-        Rect customRect = new Rect(500, 200, 800, 500); // Left, Top, Right, Bottom
-        String object = "hands: 1.00";
-        CustomViewManager.getInstance().updateRectangle(customRect, object);
+//        Rect customRect = new Rect(500, 200, 800, 500); // Left, Top, Right, Bottom
+//        String object = "hands: 1.00";
+//        CustomViewManager.getInstance().updateRectangle(customRect, object);
 
         //dummy object to test with, take out eventually
 
@@ -97,6 +97,11 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
         }
 
         textureView = findViewById(R.id.textureView); // Make sure you have a SurfaceView in your layout
+
+
+        // Set the aspect ratio to 4:3
+//        textureView.setAspectRatio(4, 3);
+
         textureView.setSurfaceTextureListener(this);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -363,6 +368,7 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
             SurfaceTexture texture = textureView.getSurfaceTexture();
             assert texture != null;
             //set a custom texture change listener callback
+            Log.d(TAG, "Setting custom texture listener with size " + imageDimension.getWidth() + "x" + imageDimension.getHeight());
             texture.setDefaultBufferSize(imageDimension.getWidth(), imageDimension.getHeight());
             Surface surface = new Surface(texture);
 
@@ -485,7 +491,7 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
          runOnUiThread(new Runnable() {
              @Override
              public void run() {
-                 tds_instance.objectFeedbackParser(feedback);
+                 tds_instance.objectFeedbackParser(feedback, imageDimension);
              }
          });
     }

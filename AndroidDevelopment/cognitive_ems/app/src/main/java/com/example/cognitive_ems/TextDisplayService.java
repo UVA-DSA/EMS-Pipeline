@@ -2,6 +2,8 @@ package com.example.cognitive_ems;
 
 
 import android.graphics.Rect;
+import android.util.Log;
+import android.util.Size;
 import android.widget.TextView;
 
 
@@ -42,7 +44,7 @@ public class TextDisplayService {
 Assuming protocol feedback comes in the form: {\"type\":\"Protocol\",\"protocol\":\"medical - knee pain - MCL suspected (protocol 2 - 1)\",\"protocol_confidence\":0.0209748435020447}
 Assuming Object Detection feedback comes in the form: {"type":"detection","box_coords":[[70,0],[512,511]],"obj_name":"person","confidence":"0.96"}
  */
-    protected void objectFeedbackParser(Object args) {
+    protected void objectFeedbackParser(Object args, Size size) {
         try {
             String feedback = args.toString();
 //            System.out.println(args.toString());//Sent as python dict, unable to parse in current form, so identify as string
@@ -56,12 +58,24 @@ Assuming Object Detection feedback comes in the form: {"type":"detection","box_c
 
                 String objectString = feedback.substring(feedback.indexOf("name") + 7, feedback.indexOf("\"", feedback.indexOf("name") + 8)) + ":  " + confidence;
 
+
                 Integer minX = Integer.parseInt(feedback.substring(feedback.indexOf("[[") + 2, feedback.indexOf(",", feedback.indexOf("[["))));
                 Integer minY = Integer.parseInt(feedback.substring(feedback.indexOf(",", feedback.indexOf("[[")) + 1, feedback.indexOf("]", feedback.indexOf("[["))));
                 Integer maxX = Integer.parseInt(feedback.substring(feedback.indexOf("],[") + 3, feedback.indexOf(",", feedback.indexOf("],[") + 3)));
                 Integer maxY = Integer.parseInt(feedback.substring(feedback.indexOf(",",feedback.indexOf("],[")+4) + 1, feedback.indexOf("]]")));
 
-                System.out.println("minX: " + minX + " minY: " +  minY + " maxX: " +  maxX + " maxY:  " + maxY);
+                // Scaling factors
+                float scaleX = size.getWidth() / 640.0f;
+                float scaleY = size.getHeight() / 480.0f;
+
+                // Apply scaling
+                minX = Math.round(minX * scaleX/4);
+                minY = Math.round(minY * scaleY/4);
+                maxX = Math.round(maxX * scaleX/4);
+                maxY = Math.round(maxY * scaleY/4);
+
+
+                Log.d("ObjectFeedback", "minX: " + minX + " minY: " +  minY + " maxX: " +  maxX + " maxY:  " + maxY);
                 if (minY < 20){
                     minY = 40;
                 }

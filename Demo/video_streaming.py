@@ -207,6 +207,7 @@ class Thread(QThread):
         byte_array = base64.b64decode(data)
         image = Image.open(io.BytesIO(byte_array))
         RGB_img = np.array(image)
+
         
         # # Process the image
         # # RGB_img = cv2.rotate(RGB_img, cv2.ROTATE_90_COUNTERCLOCKWISE)

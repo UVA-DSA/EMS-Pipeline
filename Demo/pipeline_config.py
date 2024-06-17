@@ -164,7 +164,7 @@ smartglass_port = 8889
 
 
 # -- EMS Vision configuration ------
-detr_version = "ems" #ems, or base
+detr_version = "base" #ems, or base
 objectDetectionBoxesenabled = True
 
 # --- socketio config ---
