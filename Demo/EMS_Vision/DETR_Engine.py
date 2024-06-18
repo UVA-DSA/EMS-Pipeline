@@ -100,32 +100,7 @@ class DETREngine:
             outputs['pred_boxes'][0, keep], (640, 480))
         return probas_to_keep, bboxes_scaled
 
-    def create_bbox_objs(self, prob=None, boxes=None):
-        """ Takes in outputs from model and creates DetectionObjs
 
-        Args:
-            prob (_type_): Probabilities of each detection
-            boxes (_type_): min and max corner of each detection
-
-        Returns
-            list: list of dictionaries in following format {name: x, boxcoords: [(xmin, ymin), (xmax, ymax)]}
-        """
-        detection_objects = []
-        if prob is not None and boxes is not None:
-            for p, box in zip(prob, boxes):
-                detection_object = dict()
-                cl = p.argmax().item()
-                if(cl == 1):
-                    continue
-                name = f'{self.finetuned_classes[cl]}: {p[cl]:.2f}'
-                xmin, ymin, xmax, ymax = box
-                boxcoords = [(xmin.item(), ymin.item()),
-                             (xmax.item(), ymax.item())]
-
-                detection_object = DetectionObj(
-                    box_coords=boxcoords, obj_name=name)
-                detection_objects.append(detection_object)
-        return detection_objects
 
     def plot_finetuned_results(self, cv2_img, prob=None, boxes=None):
         """ Given confidences and bounding box coordinates plot the bounding boxes and assign labels.
@@ -133,49 +108,53 @@ class DETREngine:
 
         Args:
             cv2_img (_type_): image in cv2 format
-            prob (_type_): #TODO: fill in
+            prob (_type_): probabilities of each detection
             boxes (torch.Tensor): tensor for bounding box coordinates
 
         Returns:
             np.array, list: annotated image, list of DetectionObjs
         """
-        detection_objects = []
-        if prob is not None and boxes is not None:
-            for p, box in zip(prob, boxes):
+        if prob is None or boxes is None:
+            return cv2_img, []
+
+        highest_confidence_objects = {}
+
+        for p, box in zip(prob, boxes):
+            cl = p.argmax().item()
+            if cl == 1:
+                continue
+
+            confidence = p[cl].item()
+            if cl not in highest_confidence_objects or confidence > highest_confidence_objects[cl][0]:
                 xmin, ymin, xmax, ymax = box
-                box_coordinates = [(int(xmin), int(ymin)),
-                                   (int(xmax), int(ymax))]
-                cl = p.argmax().item()
-                if(cl == 1):
-                    continue
-                name = self.finetuned_classes[cl]
-                confidence = f'{p[cl]:.2f}'
-                label = f'{name}: {confidence}'
+                box_coordinates = [(int(xmin), int(ymin)), (int(xmax), int(ymax))]
+                highest_confidence_objects[cl] = (confidence, box_coordinates, p, cl)
 
-                detection_objects.append(DetectionObj(box_coords=box_coordinates,
-                                                      name=name,
-                                                      confidence=confidence))
+        detection_objects = []
+        for cl, (confidence, box_coordinates, p, cl) in highest_confidence_objects.items():
+            name = self.finetuned_classes[cl]
+            label = f'{name}: {confidence:.2f}'
+            color = [int(x * 255) for x in self.COLORS[cl % len(self.COLORS)]]
 
-                color = [int(x * 255)
-                         for x in self.COLORS[cl % len(self.COLORS)]]
+            # Draw rectangle
+            cv2.rectangle(cv2_img, (box_coordinates[0][0], box_coordinates[0][1]),
+                        (box_coordinates[1][0], box_coordinates[1][1]), color, 2)
 
-                # Draw rectangle
-                cv2.rectangle(cv2_img, (int(xmin), int(ymin)),
-                              (int(xmax), int(ymax)), color, 2)
+            # Draw label background
+            label_size, _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 2)
+            cv2.rectangle(cv2_img, (box_coordinates[0][0], box_coordinates[0][1] - label_size[1] - 10),
+                        (box_coordinates[0][0] + label_size[0], box_coordinates[0][1]), color, cv2.FILLED)
 
-                # Draw label background
-                label_size, _ = cv2.getTextSize(
-                    label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 2)
-                cv2.rectangle(cv2_img, (int(xmin), int(ymin) - label_size[1] - 10),
-                              (int(xmin) + label_size[0], int(ymin)), color, cv2.FILLED)
+            # Draw text
+            cv2.putText(cv2_img, label, (box_coordinates[0][0], box_coordinates[0][1] - 5),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
 
-                # Draw text
-                cv2.putText(cv2_img, label, (int(xmin), int(ymin) - 5),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
-                # for obj in detection_objects:
-                #     print("These are the finetuned results: " + str(obj.obj_name))
+            detection_objects.append(DetectionObj(box_coords=box_coordinates,
+                                                name=name,
+                                                confidence=f'{confidence:.2f}'))
 
         return cv2_img, detection_objects
+
 
     def run_workflow(self, my_image):
         start_t = time.time()

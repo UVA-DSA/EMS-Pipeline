@@ -245,8 +245,8 @@ class MainWindow(QWidget):
 
         self.Grid_Layout.addWidget(self.video, 6, 0, 3, 1)
 
-        VIDEO_WIDTH = 640
-        VIDEO_HEIGHT = 480
+        VIDEO_WIDTH = 640*1.5
+        VIDEO_HEIGHT = 480*1.5
         self.video.setGeometry(QtCore.QRect(0, 0, VIDEO_WIDTH, VIDEO_HEIGHT))
 
         # Thread for internet check
