@@ -99,10 +99,10 @@ Assuming Object Detection feedback comes in the form: {"type":"detection","box_c
                 float scaleY = size.getHeight() / imageHeight;
 
                 // Apply scaling
-                minX = Math.round(minX * scaleX / 4);
-                minY = Math.round(minY * scaleY / 4);
-                maxX = Math.round(maxX * scaleX / 4);
-                maxY = Math.round(maxY * scaleY / 4);
+                minX = Math.round(minX * scaleX / 4.5f);
+                minY = Math.round(minY * scaleY / 6);
+                maxX = Math.round(maxX * scaleX / 4.5f);
+                maxY = Math.round(maxY * scaleY / 6);
 
                 Log.d("ObjectFeedback", "minX: " + minX + " minY: " + minY + " maxX: " + maxX + " maxY: " + maxY);
 

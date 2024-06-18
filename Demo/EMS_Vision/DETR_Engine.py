@@ -10,14 +10,14 @@ import cv2
 from PIL import Image
 from classes import DetectionObj
 
-
+from pipeline_config import detr_threshold
 
 class DETREngine:
     def __init__(self, detr_version="base"):
         print(torch.__version__, torch.cuda.is_available())
         torch.set_grad_enabled(False)
 
-        self.threshold = 0.8
+        self.threshold = detr_threshold
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
         self.detr_version = detr_version
@@ -115,6 +115,8 @@ class DETREngine:
             for p, box in zip(prob, boxes):
                 detection_object = dict()
                 cl = p.argmax().item()
+                if(cl == 1):
+                    continue
                 name = f'{self.finetuned_classes[cl]}: {p[cl]:.2f}'
                 xmin, ymin, xmax, ymax = box
                 boxcoords = [(xmin.item(), ymin.item()),
@@ -144,6 +146,8 @@ class DETREngine:
                 box_coordinates = [(int(xmin), int(ymin)),
                                    (int(xmax), int(ymax))]
                 cl = p.argmax().item()
+                if(cl == 1):
+                    continue
                 name = self.finetuned_classes[cl]
                 confidence = f'{p[cl]:.2f}'
                 label = f'{name}: {confidence}'

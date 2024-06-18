@@ -57,7 +57,7 @@ public class CustomView extends View {
         objectStrRectPaint.setColor(Color.RED);
         objectStrRectPaint.setStyle(Paint.Style.FILL);
         customRects = new ArrayList<>();
-        maxRectangles = 6; //arbitrary maximum number of rectangles allowed on screen
+        maxRectangles = 3; //arbitrary maximum number of rectangles allowed on screen
         numRectangles = 0;
     }
     //MAY NEED TO EDIT THESE WITH ADDITION OF CUSTOM RECTANGLE CLASS
@@ -71,9 +71,11 @@ public class CustomView extends View {
 
     public void setCustomRectangleList(List<CustomRectangle> customRects) {
 
-        this.customRects = new ArrayList<>();
+        this.customRects = new ArrayList<>();;
+        numRectangles = 0;
         for (CustomRectangle rectangle : customRects) {
-            this.customRects.add(rectangle);
+            if(numRectangles < maxRectangles)
+                this.customRects.add(rectangle);
             numRectangles++;
         }
         invalidate(); // Trigger a redraw to remove the rectangle

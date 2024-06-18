@@ -164,8 +164,9 @@ smartglass_port = 8889
 
 
 # -- EMS Vision configuration ------
-detr_version = "base" #ems, or base
+detr_version = "ems" #ems, or base
 objectDetectionBoxesenabled = True
+detr_threshold = 0.6
 
 # --- socketio config ---
 socketio_ipaddr  = 'http://localhost:5000'
