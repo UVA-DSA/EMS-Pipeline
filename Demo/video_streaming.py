@@ -248,7 +248,7 @@ class Thread(QThread):
                 h, w, ch = RGB_img.shape
                 bytesPerLine = ch * w
                 convertToQtFormat = QImage(RGB_img.data, 640, 480, bytesPerLine, QImage.Format_RGB888)
-                p = convertToQtFormat.scaled(w,h, Qt.KeepAspectRatio)
+                p = convertToQtFormat.scaled(640*1.5,480*1.5, Qt.KeepAspectRatio)
                 changePixmap.emit(p)
 
                 del RGB_img
