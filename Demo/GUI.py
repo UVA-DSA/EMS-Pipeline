@@ -272,6 +272,16 @@ class MainWindow(QWidget):
         th2.start()
 
 
+            # ==== Start the EMS Agent - Xueren ==== #
+        print("EMSAgent Thread Started")
+        self.EMSAgentThread = EMSTinyBERTSystem.EMSAgentInference(self,EMSAgentSpeechToNLPQueue, FeedbackQueue)
+        self.EMSAgentThread.start()
+        # self.EMSAgentThread = StoppableThread(
+        #     # target=EMSAgenSystem.EMSAgentSystem, args=(self, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path, protocolStream))
+        #     target=EMSTinyBERTSystem.EMSTinyBERTSystem, args=(self, EMSAgentSpeechToNLPQueue, FeedbackQueue))
+        # self.EMSAgentThread.start()
+
+
         # th2 = ThreadAudio(self)
         # th2.start()
 
@@ -672,13 +682,7 @@ class MainWindow(QWidget):
             # self.CognitiveSystemThread.start()
 
 
-        # ==== Start the EMS Agent - Xueren ==== #
-        if(self.EMSAgentThread == None):
-            print("EMSAgent Thread Started")
-            self.EMSAgentThread = StoppableThread(
-                # target=EMSAgenSystem.EMSAgentSystem, args=(self, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path, protocolStream))
-                target=EMSTinyBERTSystem.EMSTinyBERTSystem, args=(self, EMSAgentSpeechToNLPQueue, FeedbackQueue))
-            self.EMSAgentThread.start()
+
 
          # ==== Start the Feedback Thread ==== #
         if(self.FeedbackThread == None):
@@ -726,7 +730,7 @@ class MainWindow(QWidget):
         # #     EMSAgentSpeechToNLPQueue.put('Kill')
         # #     FeedbackQueue.put('Kill')
         # # SpeechToNLPQueue.put('Kill')
-        # EMSAgentSpeechToNLPQueue.put('Kill')
+        EMSAgentSpeechToNLPQueue.put('Kill')
         # FeedbackQueue.put('Kill')
         self.VUMeter.setValue(0)
         self.finalSpeechSegmentsSpeech = []
@@ -738,7 +742,6 @@ class MainWindow(QWidget):
         self.nonFinalText = ""
         self.SpeechThread = None
         self.CognitiveSystemThread = None
-        self.EMSAgentThread = None
         self.FeedbackThread = None
         time.sleep(.1)
         self.StartButton.setEnabled(True)
@@ -835,16 +838,17 @@ class MainWindow(QWidget):
     def UpdateProtocolBoxes(self, input):
         global chunkdata
         
-        received = input[0]
-        try:
-            protocol = received.protocol
-            protocol_confidence = received.protocol_confidence
-            if(protocol != None and protocol_confidence != None):
-                protocol_display = str(protocol) + " : " +str(round(protocol_confidence,2))
-                self.ProtocolBox.setText(protocol_display)
-                chunkdata.append(protocol_display)
-        except Exception as e:
-            print("Key error!", e)
+        self.ProtocolBox.setText("")
+        for received in input:
+            try:
+                protocol = received.protocol
+                protocol_confidence = received.protocol_confidence
+                if(protocol != None and protocol_confidence != None):
+                    protocol_display = str(protocol) + " : " +str(round(protocol_confidence,2))
+                    self.ProtocolBox.append(protocol_display)
+                    chunkdata.append(protocol_display)
+            except Exception as e:
+                print("Key error!", e)
         
 
         try:

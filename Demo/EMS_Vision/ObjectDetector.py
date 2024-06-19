@@ -26,26 +26,26 @@ class ObjectDetector(multiprocessing.Process):
         print("ObjectDetector: Initialized")
 
 
-    def actionRecognition(self, obj):
-        self.detected_objects.append(obj)
+    def actionRecognition(self, objs_list):
         proposedAction = self.action #self.action is the current action being displayed
         #MAY WANT TO CHANGE THIS TO A SWITCH CASE LATER, awk in python though
         #HAD TO USE 'person' instead of hand? keeps calling a hand a person
-        if any (o == 'dummy' for o in self.detected_objects) and any (o == 'hands' for o in self.detected_objects):
-            if any (o == 'bvm' for o in self.detected_objects):
+
+        if any (o['obj_name'] == 'hands' for o in objs_list):
+            if any (o['obj_name']  == 'bvm' for o in objs_list):
                 proposedAction = 'Ventilation started'
-                self.detected_objects = []; #reset detected objects, such that we don't trigger the same action after the object is no longer onscreen 
-            elif any (o == 'defibrillator' for o in self.detected_objects):
-                proposedAction = 'Defibrillation started'
-                self.detected_objects = []; #reset detected objects, such that we don't trigger the same action after the object is no longer onscreen
+                objs_list = []; #reset detected objects, such that we don't trigger the same action after the object is no longer onscreen 
+            elif any (o['obj_name']  == 'defib pads' for o in objs_list):
+                proposedAction = 'Attatching defibrillator'
+                objs_list = []; #reset detected objects, such that we don't trigger the same action after the object is no longer onscreen
            
            #TAKE OUT LATER, USING FOR ACTION LOG TESTING
-            elif any (o == 'keyboard' for o in self.detected_objects):
-                proposedAction = 'typing'
-                self.detected_objects = []; #reset detected objects, such that we don't trigger the same action after the object is no longer onscreen      
-            elif any (o == 'cell phone' for o in self.detected_objects):
-                proposedAction = 'calling' 
-                self.detected_objects = []; #reset detected objects, such that we don't trigger the same action after the object is no longer onscreen
+            # elif any (o == 'keyboard' for o in self.detected_objects):
+            #     proposedAction = 'typing'
+            #     self.detected_objects = []; #reset detected objects, such that we don't trigger the same action after the object is no longer onscreen      
+            # elif any (o == 'cell phone' for o in self.detected_objects):
+            #     proposedAction = 'calling' 
+            #     self.detected_objects = []; #reset detected objects, such that we don't trigger the same action after the object is no longer onscreen
         if proposedAction != self.action: #checks that a new action has began 
             self.action = proposedAction
             
@@ -80,7 +80,7 @@ class ObjectDetector(multiprocessing.Process):
                         #     # print("This is the current object: " + objectDetected[i].get('obj_name')) # loop through output, as there may be more than one object detected
                         #     # print("This is the confidence of the current object: " + str(objectDetected[i].get('confidence')))
                             
-                        #     self.actionRecognition(objectDetected[i].get('obj_name')) 
+                        self.actionRecognition(objectDetected) 
 
                 
 
