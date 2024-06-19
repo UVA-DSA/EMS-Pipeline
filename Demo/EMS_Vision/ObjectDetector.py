@@ -31,21 +31,21 @@ class ObjectDetector(multiprocessing.Process):
         proposedAction = self.action #self.action is the current action being displayed
         #MAY WANT TO CHANGE THIS TO A SWITCH CASE LATER, awk in python though
         #HAD TO USE 'person' instead of hand? keeps calling a hand a person
-        if any (o == 'dummy' for o in self.detected_objects) and any (o == 'hands' for o in self.detected_objects):
+        if any (o == 'hands' for o in self.detected_objects):
             if any (o == 'bvm' for o in self.detected_objects):
                 proposedAction = 'Ventilation started'
                 self.detected_objects = []; #reset detected objects, such that we don't trigger the same action after the object is no longer onscreen 
-            elif any (o == 'defibrillator' for o in self.detected_objects):
-                proposedAction = 'Defibrillation started'
+            elif any (o == 'defib pads' for o in self.detected_objects):
+                proposedAction = 'Attatching defibrillator'
                 self.detected_objects = []; #reset detected objects, such that we don't trigger the same action after the object is no longer onscreen
            
-           #TAKE OUT LATER, USING FOR ACTION LOG TESTING
-            elif any (o == 'keyboard' for o in self.detected_objects):
-                proposedAction = 'typing'
-                self.detected_objects = []; #reset detected objects, such that we don't trigger the same action after the object is no longer onscreen      
-            elif any (o == 'cell phone' for o in self.detected_objects):
-                proposedAction = 'calling' 
-                self.detected_objects = []; #reset detected objects, such that we don't trigger the same action after the object is no longer onscreen
+        #    #TAKE OUT LATER, USING FOR ACTION LOG TESTING
+        #     elif any (o == 'keyboard' for o in self.detected_objects):
+        #         proposedAction = 'typing'
+        #         self.detected_objects = []; #reset detected objects, such that we don't trigger the same action after the object is no longer onscreen      
+        #     elif any (o == 'cell phone' for o in self.detected_objects):
+        #         proposedAction = 'calling' 
+        #         self.detected_objects = []; #reset detected objects, such that we don't trigger the same action after the object is no longer onscreen
         if proposedAction != self.action: #checks that a new action has began 
             self.action = proposedAction
             

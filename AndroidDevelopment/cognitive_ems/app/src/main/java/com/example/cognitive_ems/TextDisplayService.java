@@ -120,7 +120,7 @@ Assuming Object Detection feedback comes in the form: {"type":"detection","box_c
                         paint.setColor(Color.BLUE);
                         break;
                     case "bvm" :
-                        paint.setColor(Color.YELLOW);
+                        paint.setColor(Color.RED);
                         break;
                     case "defib pads":
                         paint.setColor(Color.MAGENTA);

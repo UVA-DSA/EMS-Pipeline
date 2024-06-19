@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomView extends View {
-    private Paint rectanglePaint;
+//    private Paint rectanglePaint;
     private Paint objectPaint;
     private Paint objectStrRectPaint;
     private List<CustomRectangle> customRects; //list of custom rectangles to be displayed onscreen
@@ -45,14 +45,14 @@ public class CustomView extends View {
 
     private void init() {
         // Initialize the Paint for drawing the rectangle
-        rectanglePaint = new Paint();
-        rectanglePaint.setColor(Color.RED); // Set rectangle color to red
-        rectanglePaint.setStyle(Paint.Style.STROKE); // Set style to stroke
-        rectanglePaint.setStrokeWidth(5);// Set stroke width
+//        rectanglePaint = new Paint();
+//        rectanglePaint.setColor(Color.RED); // Set rectangle color to red
+//        rectanglePaint.setStyle(Paint.Style.STROKE); // Set style to stroke
+//        rectanglePaint.setStrokeWidth(5);// Set stroke width
         objectPaint = new Paint();
         objectPaint.setColor(Color.WHITE);//Set text color to black
-        objectPaint.setStrokeWidth(2);//Set stroke width
-        objectPaint.setTextSize(28);
+        objectPaint.setStrokeWidth(3);//Set stroke width
+        objectPaint.setTextSize(36);
         objectStrRectPaint = new Paint();
         objectStrRectPaint.setColor(Color.RED);
         objectStrRectPaint.setStyle(Paint.Style.FILL);
@@ -140,9 +140,11 @@ public class CustomView extends View {
             for (CustomRectangle rect:customRects) {
                 canvas.drawRect(rect.getRectangle(), rect.getRectanglePaint());
                 //This creates the background for the object name and confidence level to be displayed on. For better graphics, this should be resized relative to the text size
-                objectStrRect = new Rect(rect.getRectangle().left - 4, rect.getRectangle().top - 20, rect.getRectangle().left + 200, rect.getRectangle().top);
+                objectStrRect = new Rect(rect.getRectangle().left - 4, rect.getRectangle().top - 30, rect.getRectangle().right, rect.getRectangle().top);
                 //Draw object name and confidence level on top-left corner of rectangle
-                canvas.drawRect(objectStrRect, objectStrRectPaint);
+                Paint textBackground = rect.getRectanglePaint();
+                textBackground.setStyle(Paint.Style.FILL);
+                canvas.drawRect(objectStrRect, textBackground);
                 canvas.drawText(rect.getObjectStr(), rect.getRectangle().left, rect.getRectangle().top, objectPaint);
             }
 
