@@ -3,6 +3,8 @@ package com.example.cognitive_ems;
 
 import static java.lang.Integer.parseInt;
 
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
 import android.util.Size;
@@ -112,8 +114,28 @@ Assuming Object Detection feedback comes in the form: {"type":"detection","box_c
 
                 Rect rect = new Rect(minX, minY, maxX, maxY);
                 String objectString = objName + ": " + confidence;
+                Paint paint = new Paint();
+                switch (objName){
+                    case "hands":
+                        paint.setColor(Color.BLUE);
+                        break;
+                    case "bvm" :
+                        paint.setColor(Color.RED);
+                        break;
+                    case "defib pads":
+                        paint.setColor(Color.MAGENTA);
+                        break;
+                    case "dummy":
+                        paint.setColor(Color.GREEN);
+                        break;
+                    default:
+                        paint.setColor(Color.WHITE);
+                        break;
+                }
+                paint.setStyle(Paint.Style.STROKE); // Set style to stroke
+                paint.setStrokeWidth(5);// Set stroke width
 
-                listOfRectangles.add(new CustomRectangle(rect, objectString));
+                listOfRectangles.add(new CustomRectangle(rect, objectString, paint));
 
 //                cvm.getInstance().updateRectangle(rect, objectString);
 

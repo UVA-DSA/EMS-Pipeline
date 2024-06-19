@@ -1,6 +1,7 @@
 package com.example.cognitive_ems;
 import static java.lang.Float.parseFloat;
 
+import android.graphics.Paint;
 import android.graphics.Rect;
 
 import androidx.constraintlayout.solver.widgets.Rectangle;
@@ -15,15 +16,21 @@ public class CustomRectangle {
 
     private Rect rectangle;
     private String objectStr;
+
+    private Paint rectanglePaint;
     
 
-    public CustomRectangle(Rect rectangle, String objectStr) {
+    public CustomRectangle(Rect rectangle, String objectStr, Paint rectanglePaint) {
         this.rectangle = rectangle;
         this.objectStr = objectStr;
+        this.rectanglePaint = rectanglePaint;
     }
 
     public Rect getRectangle() {
         return rectangle;
+    }
+    public Paint getRectanglePaint() {
+        return rectanglePaint;
     }
 
     public String getObjectStr() {

@@ -512,6 +512,7 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                tds_instance.setProtocolBox(protocolBox);
                 CustomViewManager.getInstance().updateProtocolBox("Reset Button Pressed!", protocolBox);
             }
         });

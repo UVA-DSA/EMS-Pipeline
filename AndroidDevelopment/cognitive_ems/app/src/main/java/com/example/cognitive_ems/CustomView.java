@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomView extends View {
-    private Paint rectanglePaint;
+//    private Paint rectanglePaint;
     private Paint objectPaint;
     private Paint objectStrRectPaint;
     private List<CustomRectangle> customRects; //list of custom rectangles to be displayed onscreen
@@ -45,14 +45,14 @@ public class CustomView extends View {
 
     private void init() {
         // Initialize the Paint for drawing the rectangle
-        rectanglePaint = new Paint();
-        rectanglePaint.setColor(Color.RED); // Set rectangle color to red
-        rectanglePaint.setStyle(Paint.Style.STROKE); // Set style to stroke
-        rectanglePaint.setStrokeWidth(5);// Set stroke width
+//        rectanglePaint = new Paint();
+//        rectanglePaint.setColor(Color.RED); // Set rectangle color to red
+//        rectanglePaint.setStyle(Paint.Style.STROKE); // Set style to stroke
+//        rectanglePaint.setStrokeWidth(5);// Set stroke width
         objectPaint = new Paint();
         objectPaint.setColor(Color.WHITE);//Set text color to black
-        objectPaint.setStrokeWidth(2);//Set stroke width
-        objectPaint.setTextSize(28);
+        objectPaint.setStrokeWidth(3);//Set stroke width
+        objectPaint.setTextSize(36);
         objectStrRectPaint = new Paint();
         objectStrRectPaint.setColor(Color.RED);
         objectStrRectPaint.setStyle(Paint.Style.FILL);
@@ -83,43 +83,43 @@ public class CustomView extends View {
     }
 
     public void setCustomRect(Rect rect, String object) {
-        System.out.println("Calling setCustomRect. Current state of customRects: " + customRects.toString());
-
-        String objectName = object.substring(0, object.indexOf(": "));
-        float newConfidence = Float.parseFloat(object.substring(object.indexOf(": ") + 2));
-
-        CustomRectangle existingRectangle = null;
-        for (CustomRectangle rectangle : customRects) {
-            System.out.println("Comparing rectangle " + objectName + " to " + rectangle.getObjectName());
-            if (rectangle.getObjectName().equals(objectName)) {
-                System.out.println("Same type of object!");
-                existingRectangle = rectangle;
-                break;
-            }
-        }
-
-        if (existingRectangle != null) {
-            if (existingRectangle.getConfidence() > newConfidence) {
-                return; // Don't add new rectangle if same type as another rectangle, keep only the highest confidence one
-            } else {
-                System.out.println("This object already exists with lower confidence, removing existing one.");
-                customRects.remove(existingRectangle);
-                numRectangles--;
-            }
-        }
-
-        CustomRectangle newRect = new CustomRectangle(rect, object); // Create a new custom rectangle from incoming feedback data
-        customRects.add(newRect); // Add the new custom rectangle to the list of custom rectangles to be displayed
-        numRectangles++;
-        System.out.println("customRects list now is " + customRects.toString());
-
-        while (numRectangles > maxRectangles) {
-            customRects.remove(0);
-            numRectangles--;
-        }
-
-        System.out.println("Adding rectangle: " + object);
-        invalidate(); // Trigger a redraw when customRect is updated
+//        System.out.println("Calling setCustomRect. Current state of customRects: " + customRects.toString());
+//
+//        String objectName = object.substring(0, object.indexOf(": "));
+//        float newConfidence = Float.parseFloat(object.substring(object.indexOf(": ") + 2));
+//
+//        CustomRectangle existingRectangle = null;
+//        for (CustomRectangle rectangle : customRects) {
+//            System.out.println("Comparing rectangle " + objectName + " to " + rectangle.getObjectName());
+//            if (rectangle.getObjectName().equals(objectName)) {
+//                System.out.println("Same type of object!");
+//                existingRectangle = rectangle;
+//                break;
+//            }
+//        }
+//
+//        if (existingRectangle != null) {
+//            if (existingRectangle.getConfidence() > newConfidence) {
+//                return; // Don't add new rectangle if same type as another rectangle, keep only the highest confidence one
+//            } else {
+//                System.out.println("This object already exists with lower confidence, removing existing one.");
+//                customRects.remove(existingRectangle);
+//                numRectangles--;
+//            }
+//        }
+//
+//        CustomRectangle newRect = new CustomRectangle(rect, object); // Create a new custom rectangle from incoming feedback data
+//        customRects.add(newRect); // Add the new custom rectangle to the list of custom rectangles to be displayed
+//        numRectangles++;
+//        System.out.println("customRects list now is " + customRects.toString());
+//
+//        while (numRectangles > maxRectangles) {
+//            customRects.remove(0);
+//            numRectangles--;
+//        }
+//
+//        System.out.println("Adding rectangle: " + object);
+//        invalidate(); // Trigger a redraw when customRect is updated
     }
 
     public void setProtocolBox(String str, TextView protocolBox){
@@ -138,11 +138,13 @@ public class CustomView extends View {
         super.onDraw(canvas);
             // Draw a rectangle on the TextureView
             for (CustomRectangle rect:customRects) {
-                canvas.drawRect(rect.getRectangle(), rectanglePaint);
+                canvas.drawRect(rect.getRectangle(), rect.getRectanglePaint());
                 //This creates the background for the object name and confidence level to be displayed on. For better graphics, this should be resized relative to the text size
-                objectStrRect = new Rect(rect.getRectangle().left - 4, rect.getRectangle().top - 20, rect.getRectangle().left + 200, rect.getRectangle().top);
+                objectStrRect = new Rect(rect.getRectangle().left - 4, rect.getRectangle().top - 30, rect.getRectangle().right, rect.getRectangle().top);
                 //Draw object name and confidence level on top-left corner of rectangle
-                canvas.drawRect(objectStrRect, objectStrRectPaint);
+                Paint textBackground = rect.getRectanglePaint();
+                textBackground.setStyle(Paint.Style.FILL);
+                canvas.drawRect(objectStrRect, textBackground);
                 canvas.drawText(rect.getObjectStr(), rect.getRectangle().left, rect.getRectangle().top, objectPaint);
             }
 
