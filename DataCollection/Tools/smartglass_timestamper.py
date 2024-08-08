@@ -21,7 +21,7 @@ for index, row in csv.iterrows():
     time = csv['start_ts'][index]
     timestamps = [csv['start_ts'][index]]
     for i in range(1, len(gopro_range)):
-        time += 333333333
+        time += 33333333
         timestamps.append(time)
 
     df = pandas.DataFrame(columns=['gopro_frames', 'sg_timestamps'])
