@@ -35,6 +35,6 @@ def process_csv_files(data_directory, output_directory):
                 plot_data(csv_file_path, output_directory)
 
 
-data_directory = 'CSVs' 
+data_directory = 'ToPlot' 
 output_directory = 'Plots' 
 process_csv_files(data_directory, output_directory)
