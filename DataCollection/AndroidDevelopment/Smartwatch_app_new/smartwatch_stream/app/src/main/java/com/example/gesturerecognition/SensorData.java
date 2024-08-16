@@ -1,169 +1,141 @@
 package com.example.gesturerecognition;
 
-import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Bundle;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
-import androidx.work.Constraints;
-import androidx.work.ExistingPeriodicWorkPolicy;
-import androidx.work.ExistingWorkPolicy;
 import androidx.work.OneTimeWorkRequest;
-import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
 
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
 
-public class SensorData  implements SensorEventListener {
+public class SensorData implements SensorEventListener {
 
     private SensorManager sensorManager;
     private SensorDataCallback callback;
 
     private Sensor sensor_acc;
     private Sensor sensor_gyro;
-    private double avg = 0;
     private String acc_data;
     private String gyro_data;
-    private static final double P = 0.7;
     protected static final String LOG_TAG = "SensorData";
     private Context context;
-    private  boolean isStarted = false;
-    public static BlockingQueue<String> queue = new LinkedBlockingQueue<String>();
+    private boolean isStarted = false;
+    public static BlockingQueue<String> queue = new LinkedBlockingQueue<>();
     public static Long time_elapsed = Long.valueOf(0);
-    //    private String watchArm = "left";
     private String watchArm = "right";
-    private Long startTime;
-
     private Long accSeqNum = Long.valueOf(0);
     private Long gyroSeqNum = Long.valueOf(0);
 
+    // List to accumulate data points
+    private List<String> accumulatedData = new ArrayList<>();
+    private static final int MAX_DATA_POINTS = 20;
 
-    public  void startSensor(){
+    public void startSensor() {
         Log.d(LOG_TAG, "startSensor initiated");
 
-        if(!isStarted){
+        if (!isStarted) {
 
-            startTime = System.currentTimeMillis();
             WorkRequest uploadWorkRequest =
                     new OneTimeWorkRequest.Builder(SendSensorDataWorker.class)
                             .build();
-//        PeriodicWorkRequest uploadWorkRequest = new
-//                    PeriodicWorkRequest.Builder(SendSensorDataWorker.class, 24, TimeUnit.HOURS)
-//                    .setConstraints(new Constraints.Builder()
-//                            .setRequiresCharging(true)
-//                            .build()
-//                    )
-//                    .build();
+
             WorkManager
                     .getInstance(this.context)
                     .enqueue(uploadWorkRequest);
 
-//        udp_client = new UDP_Client();
-//        Log.d(LOG_TAG, "UDP Client" + udp_client);
-//         udp_thread = new Thread(udp_client);
-//        udp_thread.start();
             isStarted = true;
         }
     }
 
-    public  void stopSensor(){
-        if(isStarted){
-//            udp_thread.interrupt();
+    public void stopSensor() {
+        if (isStarted) {
             WorkManager.getInstance(this.context).cancelAllWork();
             isStarted = false;
         }
     }
-    public void sendSensorData(String data){
-        if(isStarted) {
-//            udp_client.queue.offer(data);
-            queue.offer(data);
 
+    public void sendSensorData(String data) {
+        if (isStarted) {
+            accumulatedData.add(data);
+            // Check if we have reached 100 data points
+            if (accumulatedData.size() >= MAX_DATA_POINTS) {
+                // Send all accumulated data at once
+                // Concatenate all data in the queue into a single string
+                StringBuilder combinedData = new StringBuilder();
+                accumulatedData.forEach(combinedData::append);
+
+
+                queue.offer(combinedData.toString());
+
+                // Clear the list after sending
+                accumulatedData.clear();
+            }
         }
     }
 
     public SensorData(Context context, SensorDataCallback sensorDataCallback) {
         this.context = context;
         this.callback = sensorDataCallback;
-        sensorManager = (SensorManager) context.getSystemService(context.SENSOR_SERVICE);
+        sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         sensor_acc = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensor_gyro = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         Log.d(LOG_TAG, "Sensors" + sensor_acc);
         sensorManager.registerListener(this, sensor_acc, SensorManager.SENSOR_DELAY_GAME);
         sensorManager.registerListener(this, sensor_gyro, SensorManager.SENSOR_DELAY_GAME);
-
     }
-
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-
-
         String time = Long.toString(System.currentTimeMillis());
         Sensor sensor = sensorEvent.sensor;
-        if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            //TODO: get
 
+        if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             accSeqNum++;
-            if(accSeqNum < 0) {
+            if (accSeqNum < 0) {
                 accSeqNum = 0L;
             }
 
-            // Acquire measurement values from event
-            double x = sensorEvent.values[0]; // X axis
-            double y = sensorEvent.values[1]; // y axis
-            double z = sensorEvent.values[2]; // z axis
+            double x = sensorEvent.values[0];
+            double y = sensorEvent.values[1];
+            double z = sensorEvent.values[2];
 
-            // Do something with the values
-
-            acc_data = x +","+ y + ","+ z;
+            acc_data = x + "," + y + "," + z;
             Log.d(LOG_TAG, "acc_3_axes: " + acc_data);
-            String data_to_send = time + ","+watchArm+ ","+"acc"+","+acc_data +",seq," + accSeqNum;
+            String data_to_send = time + "," + watchArm + "," + "acc" + "," + acc_data + ",seq," + accSeqNum + ";";
             sendSensorData(data_to_send);
             callback.onSensorDataReceived(String.valueOf(accSeqNum));
-        }else if (sensor.getType() == Sensor.TYPE_GYROSCOPE) {
-            //TODO: get values
 
+        } else if (sensor.getType() == Sensor.TYPE_GYROSCOPE) {
             gyroSeqNum++;
-            if(gyroSeqNum < 0) {
+            if (gyroSeqNum < 0) {
                 gyroSeqNum = 0L;
             }
-            // Acquire measurement values from event
-            double x = sensorEvent.values[0]; // X
-            double y = sensorEvent.values[1]; // y
-            double z = sensorEvent.values[2]; // z
 
-            gyro_data  = x +","+ y + ","+ z;
+            double x = sensorEvent.values[0];
+            double y = sensorEvent.values[1];
+            double z = sensorEvent.values[2];
 
-            Log.d(LOG_TAG, "gyro_data: "+gyro_data);
-            String data_to_send = time + ","+watchArm+ ","+"gyro"+","+gyro_data +",seq," + gyroSeqNum;
+            gyro_data = x + "," + y + "," + z;
+            Log.d(LOG_TAG, "gyro_data: " + gyro_data);
+            String data_to_send = time + "," + watchArm + "," + "gyro" + "," + gyro_data + ",seq," + gyroSeqNum + ";";
             sendSensorData(data_to_send);
             callback.onSensorDataReceived(String.valueOf(gyroSeqNum));
-
         }
-
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
-
     }
 
     public interface SensorDataCallback {
         void onSensorDataReceived(String data);
     }
-
 }

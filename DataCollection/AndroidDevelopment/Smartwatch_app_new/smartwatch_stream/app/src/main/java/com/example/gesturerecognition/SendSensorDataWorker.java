@@ -139,7 +139,7 @@ public class SendSensorDataWorker extends Worker {
 
                 String clientIP = clientSocket.getInetAddress().getHostAddress();
                 // Example: Reading data
-                byte[] buffer = new byte[1024];
+                byte[] buffer = new byte[8096];
                 int bytesRead;
 
                 Log.d(LOG_TAG, " TCP Client Connected!: " + clientIP);
@@ -188,6 +188,8 @@ public class SendSensorDataWorker extends Worker {
 
             boolean is_interrupted = Thread.currentThread().isInterrupted();
             String data = SensorData.queue.take();
+
+            Log.d(LOG_TAG, "Sent Data to: " + serverAddr + " Data: " + data)   ;
             //handle the data
             // Send data to the running thread
             byte[] buf = data.getBytes();
