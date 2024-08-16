@@ -9,6 +9,7 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -22,10 +23,11 @@ import com.example.gesturerecognition.databinding.ActivityMainBinding;
 
 import java.io.IOException;
 
-public class MainActivity extends Activity  {
+public class MainActivity extends Activity implements SensorData.SensorDataCallback {
 
     private static TextView mTextView;
     private static TextView mIPTextView;
+    private static TextView mSeqTextView;
     private Button mButton;
     private ActivityMainBinding binding;
     private static final String DEBUG_TAG = "NetworkStatusExample";
@@ -33,8 +35,13 @@ public class MainActivity extends Activity  {
     private String welcomeMsg = "NIST - Cognitive EMS";
     private boolean isStarted = false;
     private SensorData mSensor;
-//    private String watchArm = "Left Wrist";
+    //    private String watchArm = "Left Wrist";
     private String message = "DCS - Right Wrist";
+//    private String message = "DCS - Left Wrlist";
+
+    private PowerManager.WakeLock wakeLock;
+    private static final String TAG = "myapp:GestureRecognition";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +49,7 @@ public class MainActivity extends Activity  {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
+        mSeqTextView = binding.sequence;
         mTextView = binding.text;
         mIPTextView = binding.ip;
         mTextView.setText(welcomeMsg);
@@ -64,13 +71,25 @@ public class MainActivity extends Activity  {
         Log.d(DEBUG_TAG, "Internet connected: " + isOnline());
         if(isOnline()){
             bindNetwork();
-            mSensor = new SensorData(this);
+            mSensor = new SensorData(this, this);
         }
 
         mTextView.setText(message);
         mIPTextView.setText(SendSensorDataWorker.getLocalIpAddress());
         mSensor.startSensor();
 
+        PowerManager powerMgr = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        wakeLock = powerMgr.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
+        wakeLock.acquire();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (wakeLock != null && wakeLock.isHeld()) {
+            wakeLock.release();
+        }
     }
 
     public boolean isOnline() {
@@ -111,7 +130,7 @@ public class MainActivity extends Activity  {
         );
     }
 
-//    On click
+    //    On click
     public void start_stopUDPClient(View view){
 
         if(!isStarted) {
@@ -128,5 +147,13 @@ public class MainActivity extends Activity  {
             mButton.setText("Start");
             isStarted = false;
         }
+    }
+
+    @Override
+    public void onSensorDataReceived(String data) {
+        runOnUiThread(() -> {
+            // Update the sequence TextView with the new data
+            mSeqTextView.setText(data);
+        });
     }
 }

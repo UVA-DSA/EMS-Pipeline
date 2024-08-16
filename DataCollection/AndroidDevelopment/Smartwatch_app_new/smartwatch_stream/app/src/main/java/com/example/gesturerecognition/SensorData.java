@@ -31,6 +31,8 @@ import java.util.concurrent.TimeUnit;
 public class SensorData  implements SensorEventListener {
 
     private SensorManager sensorManager;
+    private SensorDataCallback callback;
+
     private Sensor sensor_acc;
     private Sensor sensor_gyro;
     private double avg = 0;
@@ -42,19 +44,23 @@ public class SensorData  implements SensorEventListener {
     private  boolean isStarted = false;
     public static BlockingQueue<String> queue = new LinkedBlockingQueue<String>();
     public static Long time_elapsed = Long.valueOf(0);
-//    private String watchArm = "left";
+    //    private String watchArm = "left";
     private String watchArm = "right";
     private Long startTime;
+
+    private Long accSeqNum = Long.valueOf(0);
+    private Long gyroSeqNum = Long.valueOf(0);
+
 
     public  void startSensor(){
         Log.d(LOG_TAG, "startSensor initiated");
 
         if(!isStarted){
 
-        startTime = System.currentTimeMillis();
-        WorkRequest uploadWorkRequest =
-                new OneTimeWorkRequest.Builder(SendSensorDataWorker.class)
-                        .build();
+            startTime = System.currentTimeMillis();
+            WorkRequest uploadWorkRequest =
+                    new OneTimeWorkRequest.Builder(SendSensorDataWorker.class)
+                            .build();
 //        PeriodicWorkRequest uploadWorkRequest = new
 //                    PeriodicWorkRequest.Builder(SendSensorDataWorker.class, 24, TimeUnit.HOURS)
 //                    .setConstraints(new Constraints.Builder()
@@ -62,15 +68,15 @@ public class SensorData  implements SensorEventListener {
 //                            .build()
 //                    )
 //                    .build();
-        WorkManager
-                .getInstance(this.context)
-                .enqueue(uploadWorkRequest);
+            WorkManager
+                    .getInstance(this.context)
+                    .enqueue(uploadWorkRequest);
 
 //        udp_client = new UDP_Client();
 //        Log.d(LOG_TAG, "UDP Client" + udp_client);
 //         udp_thread = new Thread(udp_client);
 //        udp_thread.start();
-        isStarted = true;
+            isStarted = true;
         }
     }
 
@@ -85,17 +91,19 @@ public class SensorData  implements SensorEventListener {
         if(isStarted) {
 //            udp_client.queue.offer(data);
             queue.offer(data);
+
         }
     }
 
-    public SensorData(Context context) {
+    public SensorData(Context context, SensorDataCallback sensorDataCallback) {
         this.context = context;
+        this.callback = sensorDataCallback;
         sensorManager = (SensorManager) context.getSystemService(context.SENSOR_SERVICE);
         sensor_acc = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensor_gyro = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         Log.d(LOG_TAG, "Sensors" + sensor_acc);
         sensorManager.registerListener(this, sensor_acc, SensorManager.SENSOR_DELAY_GAME);
-//        sensorManager.registerListener(this, sensor_gyro, SensorManager.SENSOR_DELAY_GAME);
+        sensorManager.registerListener(this, sensor_gyro, SensorManager.SENSOR_DELAY_GAME);
 
     }
 
@@ -107,7 +115,12 @@ public class SensorData  implements SensorEventListener {
         String time = Long.toString(System.currentTimeMillis());
         Sensor sensor = sensorEvent.sensor;
         if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            //TODO: get values
+            //TODO: get
+
+            accSeqNum++;
+            if(accSeqNum < 0) {
+                accSeqNum = 0L;
+            }
 
             // Acquire measurement values from event
             double x = sensorEvent.values[0]; // X axis
@@ -118,11 +131,16 @@ public class SensorData  implements SensorEventListener {
 
             acc_data = x +","+ y + ","+ z;
             Log.d(LOG_TAG, "acc_3_axes: " + acc_data);
-            String data_to_send = time + ","+watchArm+ ","+"acc"+","+acc_data;
+            String data_to_send = time + ","+watchArm+ ","+"acc"+","+acc_data +",seq," + accSeqNum;
             sendSensorData(data_to_send);
-
+            callback.onSensorDataReceived(String.valueOf(accSeqNum));
         }else if (sensor.getType() == Sensor.TYPE_GYROSCOPE) {
             //TODO: get values
+
+            gyroSeqNum++;
+            if(gyroSeqNum < 0) {
+                gyroSeqNum = 0L;
+            }
             // Acquire measurement values from event
             double x = sensorEvent.values[0]; // X
             double y = sensorEvent.values[1]; // y
@@ -131,19 +149,21 @@ public class SensorData  implements SensorEventListener {
             gyro_data  = x +","+ y + ","+ z;
 
             Log.d(LOG_TAG, "gyro_data: "+gyro_data);
-            String data_to_send = time + ","+watchArm+ ","+"gyro"+","+gyro_data;
+            String data_to_send = time + ","+watchArm+ ","+"gyro"+","+gyro_data +",seq," + gyroSeqNum;
             sendSensorData(data_to_send);
+            callback.onSensorDataReceived(String.valueOf(gyroSeqNum));
 
         }
-
-
-
 
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
+
+    public interface SensorDataCallback {
+        void onSensorDataReceived(String data);
     }
 
 }
