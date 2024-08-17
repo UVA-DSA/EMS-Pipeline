@@ -60,21 +60,28 @@ public class SmartwatchReceiver {
                                 byteArrayOutputStream.write(buffer, 0, bytesRead);
                                 // Check if we have received all the expected data
                                 String partialData = byteArrayOutputStream.toString("UTF-8");
-                                if (partialData.endsWith(";")) {
+                                if (partialData.endsWith("eof")) {
                                     break;
                                 }
                             }
 
                             String receivedMessage = byteArrayOutputStream.toString("UTF-8");
-                            System.out.println("[Smartwatch Receiver: Received raw data: " + receivedMessage + "]");
+                            // System.out.println("[Smartwatch Receiver: Received raw data: " + receivedMessage + "]");
 
                             String[] dataPoints = receivedMessage.split(";");
                             long currEpochTime = System.currentTimeMillis();
 
+
+                            System.out.println("[Smartwatch Receiver: Received upto " + dataPoints[dataPoints.length - 2] + " data points]");
+                            
                             for (String dataPoint : dataPoints) {
                                 if (!dataPoint.trim().isEmpty()) {
                                     String[] swData = dataPoint.split(",");
-                                    
+
+                                    //print swdata and length
+                                    // System.out.println("swData: " + swData);
+                                    // System.out.println("swData length: " + swData.length);
+
                                     // Check if swData array has the expected length before accessing
                                     if (swData.length >= 7) {
                                         try {
@@ -82,7 +89,7 @@ public class SmartwatchReceiver {
                                             swData[3] = String.valueOf(Double.parseDouble(swData[3]));  // value_X_Axis
                                             swData[4] = String.valueOf(Double.parseDouble(swData[4]));  // value_Y_Axis
                                             swData[5] = String.valueOf(Double.parseDouble(swData[5]));  // value_Z_Axis
-                                            swData[6] = String.valueOf(Long.parseLong(swData[7]));  // seq_num
+                                            swData[6] = String.valueOf(Long.parseLong(swData[6]));  // seq_num
 
                                             String[] finalSwData = new String[swData.length + 1];
                                             System.arraycopy(swData, 0, finalSwData, 0, swData.length);
@@ -100,9 +107,7 @@ public class SmartwatchReceiver {
                                         } catch (NumberFormatException e) {
                                             System.out.println("[Smartwatch Receiver: Data format error: " + e.getMessage() + "]");
                                         }
-                                    } else {
-                                        System.out.println("[Smartwatch Receiver: Received data with unexpected format: " + dataPoint + "]");
-                                    }
+                                    } 
                                 }
                             }
                         }
