@@ -1,2 +1,4 @@
 .vscode
-Demo
+Demo/
+**/Plots/
+**/Server/test

@@ -4,19 +4,22 @@ import matplotlib.pyplot as plt
 
 
 def plot_data(csv_file, output_folder):
-    df = pd.read_csv(csv_file)
+    df = pd.read_csv(csv_file, index_col=False)
 
-    # Get the frame number
-    frame = range(1, len(df) + 1)  
+    print(df.head(5))
 
+    # Plot x, y, z axis values with seq_num on the x-axis
     plt.figure(figsize=(10, 6))
-    plt.plot(frame, df['value_X_Axis'], label = 'X values')
-    plt.plot(frame, df['value_Y_Axis'], label = 'Y values')
-    plt.plot(frame, df['value_Z_Axis'], label = 'Z values')
-    plt.title(f'Plot for {os.path.basename(csv_file)}')
-    plt.xlabel('Frame')  
-    plt.ylabel('Values')  
-    
+    plt.plot(df['seq_num'], df['value_X_Axis'], label='X Axis')
+    plt.plot(df['seq_num'], df['value_Y_Axis'], label='Y Axis')
+    plt.plot(df['seq_num'], df['value_Z_Axis'], label='Z Axis')
+
+    # Adding labels and title
+    plt.xlabel('Sequence Number')
+    plt.ylabel('Accelerometer Values')
+    plt.title('Smartwatch Accelerometer Data')
+    plt.legend()
+
     plot_filename = os.path.join(output_folder, f"{os.path.basename(csv_file).replace('.csv', '.png')}")
     plt.savefig(plot_filename)
     plt.close()  
@@ -35,6 +38,6 @@ def process_csv_files(data_directory, output_directory):
                 plot_data(csv_file_path, output_directory)
 
 
-data_directory = 'ToPlot' 
+data_directory = '../Server/test/smartwatch_data/sw_right/' 
 output_directory = 'Plots' 
 process_csv_files(data_directory, output_directory)

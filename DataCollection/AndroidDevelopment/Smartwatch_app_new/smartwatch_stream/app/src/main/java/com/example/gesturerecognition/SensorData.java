@@ -36,7 +36,7 @@ public class SensorData implements SensorEventListener {
 
     // List to accumulate data points
     private List<String> accumulatedData = new ArrayList<>();
-    private static final int MAX_DATA_POINTS = 20;
+    private static final int MAX_DATA_POINTS = 50;
 
     public void startSensor() {
         Log.d(LOG_TAG, "startSensor initiated");
@@ -72,8 +72,8 @@ public class SensorData implements SensorEventListener {
                 StringBuilder combinedData = new StringBuilder();
                 accumulatedData.forEach(combinedData::append);
 
-
-                queue.offer(combinedData.toString());
+                String message = combinedData.toString() + "eof";
+                queue.offer(message);
 
                 // Clear the list after sending
                 accumulatedData.clear();
@@ -89,7 +89,7 @@ public class SensorData implements SensorEventListener {
         sensor_gyro = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         Log.d(LOG_TAG, "Sensors" + sensor_acc);
         sensorManager.registerListener(this, sensor_acc, SensorManager.SENSOR_DELAY_GAME);
-        sensorManager.registerListener(this, sensor_gyro, SensorManager.SENSOR_DELAY_GAME);
+//        sensorManager.registerListener(this, sensor_gyro, SensorManager.SENSOR_DELAY_GAME);
     }
 
     @Override
@@ -109,7 +109,7 @@ public class SensorData implements SensorEventListener {
 
             acc_data = x + "," + y + "," + z;
             Log.d(LOG_TAG, "acc_3_axes: " + acc_data);
-            String data_to_send = time + "," + watchArm + "," + "acc" + "," + acc_data + ",seq," + accSeqNum + ";";
+            String data_to_send = time + "," + watchArm + "," + "acc" + "," + acc_data + "," + accSeqNum + ";";
             sendSensorData(data_to_send);
             callback.onSensorDataReceived(String.valueOf(accSeqNum));
 
@@ -125,7 +125,7 @@ public class SensorData implements SensorEventListener {
 
             gyro_data = x + "," + y + "," + z;
             Log.d(LOG_TAG, "gyro_data: " + gyro_data);
-            String data_to_send = time + "," + watchArm + "," + "gyro" + "," + gyro_data + ",seq," + gyroSeqNum + ";";
+            String data_to_send = time + "," + watchArm + "," + "gyro" + "," + gyro_data + "," + gyroSeqNum + ";";
             sendSensorData(data_to_send);
             callback.onSensorDataReceived(String.valueOf(gyroSeqNum));
         }

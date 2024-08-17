@@ -147,7 +147,7 @@ public class SendSensorDataWorker extends Worker {
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
                     String receivedData = new String(buffer, 0, bytesRead);
                     // Handle received data as needed
-                    Log.d(LOG_TAG, " TCP Client Sent: " + receivedData);
+                    Log.d(LOG_TAG, " TCP Client Received: " + receivedData);
 
                     byte[] data = SensorData();
                     outputStream.write(data);
@@ -189,10 +189,10 @@ public class SendSensorDataWorker extends Worker {
             boolean is_interrupted = Thread.currentThread().isInterrupted();
             String data = SensorData.queue.take();
 
-            Log.d(LOG_TAG, "Sent Data to: " + serverAddr + " Data: " + data)   ;
             //handle the data
             // Send data to the running thread
             byte[] buf = data.getBytes();
+            Log.d(LOG_TAG, "Sensor Data size " + buf.length)   ;
 
             return  buf;
         } catch (InterruptedException e) {
@@ -203,7 +203,7 @@ public class SendSensorDataWorker extends Worker {
 
     private void SendDataToSocket(){
         while(!isStopped){
-            Log.d(LOG_TAG, "Sent Data to: " + serverAddr);
+//            Log.d(LOG_TAG, "Sent Data to: " + serverAddr);
 
             try {
 

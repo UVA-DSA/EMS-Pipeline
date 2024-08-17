@@ -3,11 +3,13 @@ package com.example.gesturerecognition;
 import android.app.Activity;
 import android.app.Notification;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.Settings;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.gesturerecognition.databinding.ActivityMainBinding;
 
@@ -49,6 +52,7 @@ public class MainActivity extends Activity implements SensorData.SensorDataCallb
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Start the foreground service
         mSeqTextView = binding.sequence;
         mTextView = binding.text;
         mIPTextView = binding.ip;
@@ -67,6 +71,8 @@ public class MainActivity extends Activity implements SensorData.SensorDataCallb
                 isMobileConn |= networkInfo.isConnected();
             }
         }
+
+
         Log.d(DEBUG_TAG, "Wifi connected: " + isWifiConn);
         Log.d(DEBUG_TAG, "Internet connected: " + isOnline());
         if(isOnline()){
