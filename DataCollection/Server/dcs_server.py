@@ -11,45 +11,63 @@ import matplotlib
 matplotlib.use('agg')
 from threading import Thread
 from gopro import execute_main, main
-import asyncio
+
+import logging
+logging.basicConfig(filename='./log.txt',level=logging.DEBUG)
+
 
 import multiprocessing
-
 import queue
 import time
 from datetime import datetime
 import os
-import wave
-
+import sys
 import threading
-from collections import deque
-from udp_audio_server import receive_and_buffer
-from tcp_smartwatch_client import receive_data
+# from udp_audio_server import receive_and_buffer
+from tcp_smartwatch_client import receive_smartwatch_data
 
-imagequeue = multiprocessing.Queue()
-commandqueue = multiprocessing.Queue()
-audiocommandqueue = queue.Queue()
-smartwatchcommandqueue = queue.Queue()
-
-audio_thread = None
-sw_thread = None
 
 recording_dir = None
-image_index = 0
-# Initialize a global audio array to store received audio data
+
+# queues
+imagequeue = multiprocessing.Queue()
+commandqueue = multiprocessing.Queue()
+
+
+# Audio related imports and vars
+audiocommandqueue = queue.Queue()
+audio_thread = None
 audio_array = np.array([], dtype=np.uint8)
 
+# thread management
+thread_stop = threading.Event()
+
+# Image related vars
+image_index = 0
 
 
-
-# Replace these values with your smartwatch's IP, port
-smartwatch_ip = '172.27.150.154'
+# Smartwatch related vars
+smartwatch_ip = '192.168.0.17'
 smartwatch_port = 7889
+smartwatch_id = 'right'
+sw_thread = None
 
 
+# Kinect related imports and vars
+import open3d as o3d
+sys.path.append('D:/repos/EMS-Pipeline/DataCollection/Kinect')
+from kinect_recorder import RecorderWithCallback
+from datetime import datetime
+
+config = o3d.io.AzureKinectSensorConfig()
+filename = '{date:%Y-%m-%d-%H-%M-%S}.mkv'.format(date=datetime.now())
+device = 0
+align_depth_to_color = True
+recorder = None
+kinect_thread = None
 
 
-
+# Main app
 app = Flask(__name__)
 socketio = SocketIO(app)
 
@@ -72,9 +90,15 @@ def init_recording(recording_info:RecordingInfo):
     global image_index
     global audio_thread
     global sw_thread
+
+    global thread_stop
     
-    global smartwatchcommandqueue
     global audiocommandqueue
+
+    global kinect_thread
+    global recorder
+
+    recorder = RecorderWithCallback(config, device, filename, align_depth_to_color)
     
     image_index = 0
     recording_dir = f"../DataCollected/{dt_string}/{recording_info.subject}/{recording_info.intervention}/{recording_info.trial}"
@@ -91,18 +115,22 @@ def init_recording(recording_info:RecordingInfo):
         trial_num += 1  # Increment the trial number if the folder already exists
 
     recording_info.trial = trial_num
-    recording_dir = f"../DataCollected/{dt_string}/{recording_info.subject}/{recording_info.intervention}/{recording_info.trial}"
+    recording_root = "D:/repos/EMS-Pipeline/DataCollection/DataCollected"
+    recording_dir = f"{recording_root}/{dt_string}/{recording_info.subject}/{recording_info.intervention}/{recording_info.trial}"
+    print("DCS Server Recording Directory: ", recording_dir)
+    # if (audio_thread == None):
+    #     audio_thread = threading.Thread(target=receive_and_buffer, args=(recording_dir, audiocommandqueue))
+    #     audio_thread.start()
+    #     audiocommandqueue.put("start")
 
-    if (audio_thread == None):
-        audio_thread = threading.Thread(target=receive_and_buffer, args=(recording_dir, audiocommandqueue))
-        audio_thread.start()
-        audiocommandqueue.put("start")
-
+    if (kinect_thread == None):
+        kinect_thread = threading.Thread(target=recorder.run)
+        kinect_thread.start()
+        recorder.start_recording(recording_dir)
 
     if (sw_thread == None):
-        sw_thread = threading.Thread(target=receive_data, args=(smartwatch_ip, smartwatch_port, recording_dir, smartwatchcommandqueue))
+        sw_thread = threading.Thread(target=receive_smartwatch_data, args=(smartwatch_ip, smartwatch_port, None, recording_dir,smartwatch_id, thread_stop))
         sw_thread.start()
-        smartwatchcommandqueue.put("start")
 
 @app.route('/')
 def index():
@@ -122,6 +150,9 @@ def recording_in_progress():
 def start():
     print("Start button clicked!")
     recording_info = None
+
+
+    thread_stop.clear()
     if request.method == "POST":
         
         subject = request.form.get("subject")
@@ -137,7 +168,7 @@ def start():
 
     # GoPro Code
     gopro_process =  multiprocessing.Process(target=execute_main, args=(commandqueue,recording_dir))
-    gopro_process.start()
+    # gopro_process.start()
     
     commandqueue.put("start")
 
@@ -151,11 +182,15 @@ def stop():
     
     global commandqueue
     global audiocommandqueue
-    global smartwatchcommandqueue
     
     global audio_thread
     global sw_thread
+
+    global kinect_thread
+    global recorder
     
+
+    thread_stop.set()
     commandqueue.put("stop")
     
     
@@ -167,9 +202,13 @@ def stop():
     
     if sw_thread != None:
         print("Stopping smartwatch thread")
-        smartwatchcommandqueue.put("stop")
         sw_thread = None
         
+
+    if kinect_thread != None:
+        print("Stopping kinect thread")
+        recorder.stop_recording()
+        kinect_thread = None
     
     sendCommand("stop")
     
@@ -236,8 +275,6 @@ def handle_disconnect():
     image_index = 0
     
  
-
 if __name__ == '__main__':
-
-    socketio.run(app, host='0.0.0.0', port=8383)
+    socketio.run(app, host='0.0.0.0', port=8389, debug=True)
     

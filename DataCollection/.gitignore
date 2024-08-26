@@ -15,3 +15,5 @@ __pycache__/
 *.wav
 
 *.mp4
+
+Kinect/recordings
