@@ -63,8 +63,16 @@ config = o3d.io.AzureKinectSensorConfig()
 filename = '{date:%Y-%m-%d-%H-%M-%S}.mkv'.format(date=datetime.now())
 device = 0
 align_depth_to_color = True
-recorder = None
+kinect_recorder = None
 kinect_thread = None
+
+
+# Arduino related imports and vars
+sys.path.append('D:/repos/EMS-Pipeline/DataCollection/Arduino/VL6180_ToF')
+from arduino_serial_reciever import ArduinoVL6180Recorder
+port = 'COM5'
+arduino_thread = None
+process_stop = multiprocessing.Event()
 
 
 # Main app
@@ -96,9 +104,15 @@ def init_recording(recording_info:RecordingInfo):
     global audiocommandqueue
 
     global kinect_thread
-    global recorder
+    global kinect_recorder
 
-    recorder = RecorderWithCallback(config, device, filename, align_depth_to_color)
+    global arduino_thread
+    global arduino_recorder 
+
+
+    global process_stop 
+
+    process_stop.clear()
     
     image_index = 0
     recording_dir = f"../DataCollected/{dt_string}/{recording_info.subject}/{recording_info.intervention}/{recording_info.trial}"
@@ -118,15 +132,31 @@ def init_recording(recording_info:RecordingInfo):
     recording_root = "D:/repos/EMS-Pipeline/DataCollection/DataCollected"
     recording_dir = f"{recording_root}/{dt_string}/{recording_info.subject}/{recording_info.intervention}/{recording_info.trial}"
     print("DCS Server Recording Directory: ", recording_dir)
+
+    # Create the necessary recorders
+    kinect_recorder = RecorderWithCallback(config, device, filename, align_depth_to_color)
+    arduino_recorder = ArduinoVL6180Recorder(port=port, recording_dir=recording_dir, thread_stop=process_stop)  # Replace with your actual port
+    
+
+    # Start the recording threads
+
+    if (arduino_thread == None):
+        # arduino should be a multiprocessing process 
+        arduino_thread = multiprocessing.Process(target=arduino_recorder.run)
+        # arduino_thread = threading.Thread(target=arduino_recorder.run)
+        arduino_recorder.start_recording()
+        arduino_thread.start()
+
+
     # if (audio_thread == None):
     #     audio_thread = threading.Thread(target=receive_and_buffer, args=(recording_dir, audiocommandqueue))
     #     audio_thread.start()
     #     audiocommandqueue.put("start")
 
     if (kinect_thread == None):
-        kinect_thread = threading.Thread(target=recorder.run)
+        kinect_thread = threading.Thread(target=kinect_recorder.run)
         kinect_thread.start()
-        recorder.start_recording(recording_dir)
+        kinect_recorder.start_recording(recording_dir)
 
     if (sw_thread == None):
         sw_thread = threading.Thread(target=receive_smartwatch_data, args=(smartwatch_ip, smartwatch_port, None, recording_dir,smartwatch_id, thread_stop))
@@ -151,7 +181,10 @@ def start():
     print("Start button clicked!")
     recording_info = None
 
+    global process_stop
+    global thread_stop
 
+    process_stop.clear()
     thread_stop.clear()
     if request.method == "POST":
         
@@ -187,10 +220,17 @@ def stop():
     global sw_thread
 
     global kinect_thread
-    global recorder
-    
+    global kinect_recorder
 
+    global arduino_thread
+    global arduino_recorder
+
+    global thread_stop
+    global process_stop
+    
+    process_stop.set()
     thread_stop.set()
+
     commandqueue.put("stop")
     
     
@@ -207,8 +247,13 @@ def stop():
 
     if kinect_thread != None:
         print("Stopping kinect thread")
-        recorder.stop_recording()
+        kinect_recorder.stop_recording()
         kinect_thread = None
+
+    if arduino_thread != None:
+        print("Stopping arduino thread")
+        arduino_recorder.stop_recording()
+        arduino_thread = None
     
     sendCommand("stop")
     
