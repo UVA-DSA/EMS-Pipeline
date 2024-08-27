@@ -21,7 +21,7 @@ class RecorderWithCallback:
         self.filename = filename
         self.rootdir = ""
         self.align_depth_to_color = align_depth_to_color
-        self.config = o3d.io.read_azure_kinect_sensor_config('./config.json')
+        self.config = o3d.io.read_azure_kinect_sensor_config('D:/repos/EMS-Pipeline/DataCollection/Kinect/config.json')
         self.recorder = o3d.io.AzureKinectRecorder(self.config, device)
         if not self.recorder.init_sensor():
             raise RuntimeError('Failed to connect to sensor')
@@ -64,6 +64,7 @@ class RecorderWithCallback:
         else:
             print('Nothing has been recorded.')
         # self.recorder.close_record()
+        return False
 
     def get_ts(self):
         t=str(time.time_ns())
@@ -156,4 +157,5 @@ if __name__ == '__main__':
 
     r = RecorderWithCallback(config, device, filename,
                              args.align_depth_to_color)
+    
     r.run()

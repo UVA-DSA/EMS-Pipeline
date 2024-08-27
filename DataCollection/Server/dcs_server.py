@@ -248,6 +248,7 @@ def stop():
     if kinect_thread != None:
         print("Stopping kinect thread")
         kinect_recorder.stop_recording()
+        kinect_recorder = None
         kinect_thread = None
 
     if arduino_thread != None:

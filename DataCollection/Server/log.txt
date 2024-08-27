@@ -6829,3 +6829,55 @@ INFO:werkzeug:127.0.0.1 - - [26/Aug/2024 17:37:17] "[32mPOST /start HTTP/1.1[0
 INFO:werkzeug:127.0.0.1 - - [26/Aug/2024 17:37:17] "GET /recording_in_progress HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [26/Aug/2024 17:37:39] "[32mGET /stop HTTP/1.1[0m" 302 -
 INFO:werkzeug:127.0.0.1 - - [26/Aug/2024 17:37:39] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://192.168.0.20:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:16:20] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:16:21] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:16:33] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:16:34] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:17:00] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:17:00] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:17:30] "[35m[1mPOST /start HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:17:30] "[36mGET /start?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:17:30] "[36mGET /start?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:17:30] "GET /start?__debugger__=yes&cmd=resource&f=console.png&s=G3MzLgkzquhjrJeGhi9c HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://192.168.0.20:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:20:57] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:21:12] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:21:12] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:21:32] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:21:32] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:21:42] "[35m[1mPOST /start HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:21:42] "[36mGET /start?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:21:42] "[36mGET /start?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:21:42] "GET /start?__debugger__=yes&cmd=resource&f=console.png&s=Q0wtEsBl8vcVz2K99vLa HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://192.168.0.20:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:23:10] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:23:17] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:23:17] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:23:20] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:23:20] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:23:27] "[35m[1mPOST /start HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:23:27] "[36mGET /start?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:23:27] "[36mGET /start?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:23:27] "GET /start?__debugger__=yes&cmd=resource&f=console.png&s=vbbtBPKW5SyHjyflt3Hs HTTP/1.1" 200 -
