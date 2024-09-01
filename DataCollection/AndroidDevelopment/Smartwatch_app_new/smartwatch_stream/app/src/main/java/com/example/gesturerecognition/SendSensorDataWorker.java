@@ -147,8 +147,9 @@ public class SendSensorDataWorker extends Worker {
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
                     String receivedData = new String(buffer, 0, bytesRead);
                     // Handle received data as needed
-                    Log.d(LOG_TAG, " TCP Client Received: " + receivedData);
-
+                    long serverEpochTime = Long.parseLong(receivedData.split(":")[1]);
+                    Log.d(LOG_TAG, " TCP Client Received Server Epoch: " + serverEpochTime);
+                    SensorData.calculateEpochOffset(serverEpochTime);
                     byte[] data = SensorData();
                     outputStream.write(data);
 
