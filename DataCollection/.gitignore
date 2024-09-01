@@ -15,3 +15,6 @@ __pycache__/
 *.wav
 
 *.mp4
+
+Kinect/recordings
+/Arduino/VL6180_ToF/recordings

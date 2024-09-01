@@ -80,7 +80,7 @@ def receive_smartwatch_data(server_ip: str, server_port: int, fifo_queue: Queue,
 
                             # Decode the full buffer
                             received_message = buffer.decode('utf-8').replace("eof", "")
-                            print(f"[Smartwatch Receiver: Received raw data: {received_message}]")
+                            # print(f"[Smartwatch Receiver: Received raw data: {received_message}]")
 
                             # Split the received message by semicolons to get individual data points
                             data_points = received_message.split(';')
@@ -105,13 +105,14 @@ def receive_smartwatch_data(server_ip: str, server_port: int, fifo_queue: Queue,
                                             # Write the data point to the CSV
                                             writer.writerow(sw_data)
 
-                                            try:
-                                                # Add it to the queue to be processed by the main process
-                                                fifo_queue.put(sw_data, block=False)
-                                            except Exception as e:
-                                                print(f"Error when writing to the FIFO queue: {e}")
-                                                while not fifo_queue.empty():
-                                                    fifo_queue.get()
+                                            if fifo_queue is not None:
+                                                try:
+                                                    # Add it to the queue to be processed by the main process
+                                                    fifo_queue.put(sw_data, block=False)
+                                                except Exception as e:
+                                                    print(f"Error when writing to the FIFO queue: {e}")
+                                                    while not fifo_queue.empty():
+                                                        fifo_queue.get()
                                         except (ValueError, IndexError) as e:
                                             print(f"[Smartwatch Receiver: Error processing data point: {data_point}, {e}]")
                                             
