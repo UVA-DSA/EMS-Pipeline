@@ -40,6 +40,11 @@ public class SensorData implements SensorEventListener {
     private static final int MAX_DATA_POINTS = 50;
 
     public static void calculateEpochOffset(Long time) {
+        if (time == -1) {
+            serverEpochTime = Long.valueOf(0);;
+            epochOffset = Long.valueOf(0);;
+            return;
+        }
         if( serverEpochTime == 0) {
             serverEpochTime = time;
             Long currentTimeMillis = System.currentTimeMillis();
@@ -104,6 +109,8 @@ public class SensorData implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if(serverEpochTime == 0) {
+            accSeqNum = Long.valueOf(0);
+            gyroSeqNum = Long.valueOf(0);
             return;
         }
         Long currentTimeMillis = System.currentTimeMillis();

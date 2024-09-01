@@ -142,7 +142,7 @@ def receive_smartwatch_data(server_ip: str, server_port: int, fifo_queue: Queue,
 
 if __name__ == '__main__':
     # Example usage:
-    smartwatch_1_ip = '127.0.0.1'
+    smartwatch_1_ip = '192.168.0.17'
     smartwatch_port = 7889
     smartwatch_1_id = 'right'
     smartwatch_1_q = Queue()

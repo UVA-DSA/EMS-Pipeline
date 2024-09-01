@@ -159,6 +159,7 @@ public class SendSensorDataWorker extends Worker {
 //                String sendData = "Hello, client!";
 //                outputStream.write(sendData.getBytes());
                 Log.d(LOG_TAG, " TCP Client Disconnected");
+                SensorData.calculateEpochOffset(Long.valueOf(-1));
 
                 // Close the client socket
                 clientSocket.close();
