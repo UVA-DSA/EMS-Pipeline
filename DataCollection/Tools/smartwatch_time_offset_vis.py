@@ -4,11 +4,22 @@ import seaborn as sns
 
 # Load the CSV file
 file_path = '../Server/test/smartwatch_data/sw_right/sw_data.csv'
+# file_path = '~/Downloads/sw_data.csv'
 df = pd.read_csv(file_path)
+
+# check if server_epoch_ms is in nanoseconds
+if df['server_epoch_ms'].max() > 1e13:
+
+    df['server_epoch_ms'] = df['server_epoch_ms'] // 1e6
+
 
 # Calculate the offset between smartwatch epoch time and server epoch time
 df['epoch_offset_ms'] = df['sw_epoch_ms'] - df['server_epoch_ms']
 
+# check if seq_num column is not present and add it if not
+if 'seq_num' not in df.columns:
+    # add column for sequence number
+    df['seq_num'] = range(0, len(df))
 
 # Calculate mean, standard deviation, min, and max of the offset
 mean_offset = df['epoch_offset_ms'].mean()
