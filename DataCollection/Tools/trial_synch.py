@@ -46,8 +46,8 @@ for idx, row in df_input.iterrows():
                     'sw_value_X_Axis': sw_data_csv['value_X_Axis'].iloc[sw_index],
                     'sw_value_Y_Axis': sw_data_csv['value_Y_Axis'].iloc[sw_index],
                     'sw_value_Z_Axis': sw_data_csv['value_Z_Axis'].iloc[sw_index],
-                    'sw_server_epoch_ms': sw_data_csv['server_epoch_ms'].iloc[sw_index],
-                    'offset_sw_server_epoch_ms': sw_offset_stamplist[sw_index]
+                    # 'sw_server_epoch_ms': sw_data_csv['server_epoch_ms'].iloc[sw_index],
+                    # 'offset_sw_server_epoch_ms': sw_offset_stamplist[sw_index]
                 }
                 break
             else:
@@ -58,8 +58,8 @@ for idx, row in df_input.iterrows():
                         'sw_value_X_Axis': 0,
                         'sw_value_Y_Axis': 0,
                         'sw_value_Z_Axis': 0,
-                        'sw_server_epoch_ms': 0,
-                        'offset_sw_server_epoch_ms': 0
+                    #     'sw_server_epoch_ms': 0,
+                    #     'offset_sw_server_epoch_ms': 0
                     }
                     sw_index = 0
                     break
@@ -68,8 +68,8 @@ for idx, row in df_input.iterrows():
             if gopro_epoch >= depth_offset_stamplist[depth_index] and gopro_epoch < depth_offset_stamplist[depth_index+1]:
                 depth_data_selected = {
                     'depth_value': depth_csv['value'].iloc[depth_index],
-                    'original_depthsensor_epoch': depth_csv['epoch'].iloc[depth_index],
-                    'offset_depthsensor_epoch': depth_offset_stamplist[depth_index]
+                    # 'original_depthsensor_epoch': depth_csv['epoch'].iloc[depth_index],
+                    # 'offset_depthsensor_epoch': depth_offset_stamplist[depth_index]
                 }
                 break
             else:
@@ -78,15 +78,19 @@ for idx, row in df_input.iterrows():
                 else:
                     depth_data_selected = {
                         'depth_value': 0,
-                        'original_depthsensor_epoch': 0,
-                        'offset_depthsensor_epoch': 0
+                        # 'original_depthsensor_epoch': 0,
+                        # 'offset_depthsensor_epoch': 0
                     }
                     depth_index = 0
                     break
 
+        if depthcam_frame < 1:
+            depthcam_print = -1
+        else:
+            depthcam_print = depthcam_frame
         result_rows.append({
             'gopro_epoch': gopro_epoch,  
-            'offset_depthcam_frame': depthcam_frame,
+            'offset_depthcam_frame': depthcam_print,
             **sw_data_selected,
             **depth_data_selected,
         })
