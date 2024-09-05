@@ -41,7 +41,6 @@ def receive_smartwatch_data(server_ip: str, server_port: int, fifo_queue: Queue,
                         print(f"[Smartwatch: Connection failed: {e}. Retrying in 5 seconds...]")
                         time.sleep(5)
                 
-                message = "Hello, Smart Watch!"
                 
                 if thread_stop.is_set():
                     print("[Smartwatch: Thread stop set, exiting..]")
@@ -60,6 +59,9 @@ def receive_smartwatch_data(server_ip: str, server_port: int, fifo_queue: Queue,
                                 print("[Smartwatch Receiver: Thread stop set, exiting..]")
                                 break
                 
+                            curr_epoch_time = int(time.time_ns()//1e6)
+                            message = f"server_epoch:{curr_epoch_time}"
+                            
                             # Send the message
                             client_socket.sendall(message.encode('utf-8'))
 
@@ -83,7 +85,7 @@ def receive_smartwatch_data(server_ip: str, server_port: int, fifo_queue: Queue,
                             # Split the received message by semicolons to get individual data points
                             data_points = received_message.split(';')
 
-                            curr_epoch_time = int(time.time_ns())
+                            curr_epoch_time = int(time.time_ns()//1e6)
 
                             for data_point in data_points:
                                 if data_point.strip():  # Check if the data_point is not empty
@@ -138,8 +140,8 @@ def receive_smartwatch_data(server_ip: str, server_port: int, fifo_queue: Queue,
         print("[Smartwatch: Smartwatch receival interrupted by user. Exiting...]")
         return
 
-# Example usage:
 if __name__ == '__main__':
+    # Example usage:
     smartwatch_1_ip = '192.168.0.17'
     smartwatch_port = 7889
     smartwatch_1_id = 'right'

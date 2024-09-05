@@ -29,7 +29,8 @@ public class SensorData implements SensorEventListener {
     private Context context;
     private boolean isStarted = false;
     public static BlockingQueue<String> queue = new LinkedBlockingQueue<>();
-    public static Long time_elapsed = Long.valueOf(0);
+    public static Long serverEpochTime = Long.valueOf(0);
+    public static Long epochOffset = Long.valueOf(0);
     private String watchArm = "right";
     private Long accSeqNum = Long.valueOf(0);
     private Long gyroSeqNum = Long.valueOf(0);
@@ -37,6 +38,19 @@ public class SensorData implements SensorEventListener {
     // List to accumulate data points
     private List<String> accumulatedData = new ArrayList<>();
     private static final int MAX_DATA_POINTS = 50;
+
+    public static void calculateEpochOffset(Long time) {
+        if (time == -1) {
+            serverEpochTime = Long.valueOf(0);;
+            epochOffset = Long.valueOf(0);;
+            return;
+        }
+        if( serverEpochTime == 0) {
+            serverEpochTime = time;
+            Long currentTimeMillis = System.currentTimeMillis();
+            epochOffset = currentTimeMillis - serverEpochTime;
+        }
+    }
 
     public void startSensor() {
         Log.d(LOG_TAG, "startSensor initiated");
@@ -94,7 +108,22 @@ public class SensorData implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        String time = Long.toString(System.currentTimeMillis());
+        if(serverEpochTime == 0) {
+            accSeqNum = Long.valueOf(0);
+            gyroSeqNum = Long.valueOf(0);
+            return;
+        }
+        Long currentTimeMillis = System.currentTimeMillis();
+
+        Log.d(LOG_TAG, "Current System Time: " + currentTimeMillis);
+        Log.d(LOG_TAG, "Received Server Time: " + serverEpochTime);
+        Log.d(LOG_TAG, "Epoch Offset Time: " + epochOffset);
+
+        currentTimeMillis -= epochOffset;
+        String time = currentTimeMillis.toString();
+
+        Log.d(LOG_TAG, "Offset Adjusted  Time: " + currentTimeMillis);
+
         Sensor sensor = sensorEvent.sensor;
 
         if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
