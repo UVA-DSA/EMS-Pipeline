@@ -6881,3 +6881,13 @@ INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:23:27] "[35m[1mPOST /start HTTP/1.
 INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:23:27] "[36mGET /start?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
 INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:23:27] "[36mGET /start?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
 INFO:werkzeug:127.0.0.1 - - [27/Aug/2024 10:23:27] "GET /start?__debugger__=yes&cmd=resource&f=console.png&s=vbbtBPKW5SyHjyflt3Hs HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://172.25.188.47:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 09:49:30] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 09:49:30] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
