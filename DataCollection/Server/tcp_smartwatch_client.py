@@ -50,8 +50,9 @@ def receive_smartwatch_data(server_ip: str, server_port: int, fifo_queue: Queue,
                     while True:
                         try:
                             if thread_stop.is_set():
-                                client_socket.close()
-                                client_socket = None
+                                if(client_socket):
+                                    client_socket.close()
+                                    client_socket = None
 
                                 file.flush()
                                 file.close()

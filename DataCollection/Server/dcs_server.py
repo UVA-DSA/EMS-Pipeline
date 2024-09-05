@@ -47,7 +47,7 @@ image_index = 0
 
 
 # Smartwatch related vars
-smartwatch_ip = '192.168.0.17'
+smartwatch_ip = '172.27.176.73'
 smartwatch_port = 7889
 smartwatch_id = 'right'
 sw_thread = None

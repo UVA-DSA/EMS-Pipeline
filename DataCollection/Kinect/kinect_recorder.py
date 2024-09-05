@@ -104,6 +104,8 @@ class RecorderWithCallback:
             self.vis.update_renderer()
 
         self.recorder.close_record()
+        self.recorder = None
+        
 
     def escape_callback(self, vis):
         self.stop_recording()

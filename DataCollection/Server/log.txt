@@ -6891,3 +6891,131 @@ WARNING:werkzeug: * Debugger is active!
 INFO:werkzeug: * Debugger PIN: 853-105-903
 INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 09:49:30] "GET / HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 09:49:30] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://172.25.188.47:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:172.27.184.149 - - [05/Sep/2024 11:30:21] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:172.27.184.149 - - [05/Sep/2024 11:30:21] "POST /socket.io/?EIO=4&transport=polling&sid=mMXLbYG1oyg3WEimAAAA HTTP/1.1" 200 -
+INFO:werkzeug:172.27.184.149 - - [05/Sep/2024 11:30:21] "GET /socket.io/?EIO=4&transport=polling&sid=mMXLbYG1oyg3WEimAAAA HTTP/1.1" 200 -
+INFO:werkzeug:172.27.184.149 - - [05/Sep/2024 11:30:21] "GET /socket.io/?EIO=4&transport=polling&sid=mMXLbYG1oyg3WEimAAAA HTTP/1.1" 200 -
+INFO:werkzeug:172.27.184.149 - - [05/Sep/2024 11:30:21] "POST /socket.io/?EIO=4&transport=polling&sid=mMXLbYG1oyg3WEimAAAA HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:30:22] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:30:36] "[35m[1mPOST /start HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:30:36] "[36mGET /start?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:30:36] "[36mGET /start?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:30:36] "GET /start?__debugger__=yes&cmd=resource&f=console.png&s=9ULcZ64dWZmE2SQJas9d HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:30:36] "GET /start?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://172.25.188.47:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:172.27.184.149 - - [05/Sep/2024 11:33:56] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:172.27.184.149 - - [05/Sep/2024 11:33:56] "POST /socket.io/?EIO=4&transport=polling&sid=Q4SkKPoACOzlbMAtAAAA HTTP/1.1" 200 -
+INFO:werkzeug:172.27.184.149 - - [05/Sep/2024 11:33:56] "GET /socket.io/?EIO=4&transport=polling&sid=Q4SkKPoACOzlbMAtAAAA HTTP/1.1" 200 -
+INFO:werkzeug:172.27.184.149 - - [05/Sep/2024 11:33:56] "GET /socket.io/?EIO=4&transport=polling&sid=Q4SkKPoACOzlbMAtAAAA HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:34:27] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:34:27] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:34:44] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:34:45] "GET / HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'D:\\repos\\EMS-Pipeline\\DataCollection\\Server\\dcs_server.py', reloading
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://172.25.188.47:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:172.27.184.149 - - [05/Sep/2024 11:37:45] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:172.27.184.149 - - [05/Sep/2024 11:37:45] "POST /socket.io/?EIO=4&transport=polling&sid=Q9ofP_SPENoOsFvJAAAA HTTP/1.1" 200 -
+INFO:werkzeug:172.27.184.149 - - [05/Sep/2024 11:37:45] "GET /socket.io/?EIO=4&transport=polling&sid=Q9ofP_SPENoOsFvJAAAA HTTP/1.1" 200 -
+INFO:werkzeug:172.27.184.149 - - [05/Sep/2024 11:37:45] "GET /socket.io/?EIO=4&transport=polling&sid=Q9ofP_SPENoOsFvJAAAA HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:37:52] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:37:52] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:38:21] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:38:21] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:39:02] "[35m[1mPOST /start HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:39:02] "[36mGET /start?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:39:02] "[36mGET /start?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:39:02] "GET /start?__debugger__=yes&cmd=resource&f=console.png&s=EzMNJzzdEA7NK79YgG21 HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://172.25.188.47:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:44:40] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:44:48] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:44:48] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:45:09] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:45:09] "GET / HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'D:\\repos\\EMS-Pipeline\\DataCollection\\Kinect\\kinect_recorder.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug: * Detected change in 'D:\\repos\\EMS-Pipeline\\DataCollection\\Kinect\\kinect_recorder.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://172.25.188.47:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:50:23] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:50:29] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:50:29] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:50:42] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:50:42] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:51:03] "[35m[1mPOST /start HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:51:03] "[36mGET /start?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:51:03] "[36mGET /start?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:51:03] "GET /start?__debugger__=yes&cmd=resource&f=console.png&s=WPBjbqkfn18P8YCeWoKd HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://172.25.188.47:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:52:46] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:52:46] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:172.27.184.149 - - [05/Sep/2024 11:52:54] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:172.27.184.149 - - [05/Sep/2024 11:52:54] "POST /socket.io/?EIO=4&transport=polling&sid=auSAemtkeaKDSUuzAAAA HTTP/1.1" 200 -
+INFO:werkzeug:172.27.184.149 - - [05/Sep/2024 11:52:54] "GET /socket.io/?EIO=4&transport=polling&sid=auSAemtkeaKDSUuzAAAA HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:53:03] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:53:03] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:53:22] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:53:22] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:53:43] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:53:43] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.27.184.149 - - [05/Sep/2024 11:54:00] "GET /socket.io/?EIO=4&transport=websocket&sid=auSAemtkeaKDSUuzAAAA HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://172.25.188.47:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:57:54] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:57:59] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:58:00] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:172.27.184.149 - - [05/Sep/2024 11:58:10] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:172.27.184.149 - - [05/Sep/2024 11:58:10] "POST /socket.io/?EIO=4&transport=polling&sid=2ceRDybe10xZkX9JAAAA HTTP/1.1" 200 -
+INFO:werkzeug:172.27.184.149 - - [05/Sep/2024 11:58:10] "GET /socket.io/?EIO=4&transport=polling&sid=2ceRDybe10xZkX9JAAAA HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:58:19] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:58:20] "GET / HTTP/1.1" 200 -
