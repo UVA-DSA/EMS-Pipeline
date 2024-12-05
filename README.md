@@ -49,7 +49,7 @@ For detailed descriptions of the models, refer to the [Technical Documentation](
 ### Recommended Specifications
 
 #### Server
-- **Processor**: 12th Gen (or higher) Intel® Core™ i5, i7, or i9.
+- **Processor**: 12th Gen (or newer) Intel® Core™ i5, i7, or i9.
 - **RAM**: 32GB.
 - **Graphics**: NVIDIA RTX 3080 or higher.
 
@@ -58,6 +58,15 @@ For detailed descriptions of the models, refer to the [Technical Documentation](
 
 #### Smartwatch
 - **Model**: Samsung Galaxy Watch 5.
+
+---
+
+### Minimum Specifications
+
+#### Server
+- **Processor**: 12th Gen Intel® Core™ i5
+- **RAM**: 16GB.
+- **Graphics**: NVIDIA RTX 3060
 
 ---
 
