@@ -39,7 +39,6 @@ The CognitiveEMS pipeline employs a real-time, multi-threaded architecture to pr
 2. **EMS-TinyBERT**: A protocol prediction model utilizing medical knowledge and transcript analysis.
 3. **EMS-Vision**: An intervention recognition model leveraging contextual knowledge and video data.
 
-![Software Design](Assets/EgoExoEMS-Cognitive_demo.png)
 
 For detailed descriptions of the models, refer to the [Technical Documentation](#technical-documentation).
 
@@ -83,6 +82,8 @@ For detailed descriptions of the models, refer to the [Technical Documentation](
 - Ensure the server, smartglass, and smartwatch are on the **same network**.
 - Assign a **static IP** to the server and configure it in the Android applications.
 - Remove any firewall rules blocking TCP or UDP traffic.
+
+![Network Architecture](Assets/EgoExoEMS-Cognitive_demo.png)
 
 ---
 
