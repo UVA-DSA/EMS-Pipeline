@@ -64,7 +64,7 @@ class HGT(nn.Module):
                       ('procedure', 'is taken by', 'protocol')]
                      )
         for _ in range(num_layers):
-            conv = HGTConv(hidden_channels, hidden_channels, meta_data, num_heads, group='sum')
+            conv = HGTConv(hidden_channels, hidden_channels, meta_data, num_heads)
             self.convs.append(conv)
 
         self.lin = Linear(hidden_channels, out_channels)

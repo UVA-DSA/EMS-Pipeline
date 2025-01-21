@@ -99,40 +99,76 @@ For detailed descriptions of the models, refer to the [Technical Documentation](
 
 ## Installation 
 
-:exclamation: Following is a work in progress.
+:exclamation: Following instructions are still a work in progress.
 
 
 
 ### 1. Clone the Repository
 ```bash
 git clone https://github.com/UVA-DSA/EMS-Pipeline.git
-git checkout server
-todo
+git checkout demo
 ```
 
 ### 2. Conda Environment Setup
 #### Standard Setup
 For hardware matching [recommended specifications](#hardware-requirements), use the provided `environment.yml` file:
 ```bash
-cd Pipeline/
+cd Demo/
+
+# dependencies for pyaudio
+sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
+sudo apt-get install ffmpeg libav-tools
+
+# create the conda environment
 conda env create --file environment.yml
-conda activate CogEMS
 ```
 
 #### Custom Setup
-For other hardware configurations:
-```bash
-conda create --name CogEMS python=3.8.18
-conda activate CogEMS
-```
+
 Manually install dependencies:
 1. Identify your CUDA version using `nvidia-smi`.
-2. Use the [PyTorch installation guide](https://pytorch.org/get-started/locally/) to install PyTorch, torchvision, and torchaudio for your system.
+2. Use the [PyTorch installation guide](https://pytorch.org/get-started/locally/) to install PyTorch (v1.12.1 or above), torchvision, and torchaudio for your system.
+```bash
+conda activate EMSProject
+pip install torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 --index-url https://download.pytorch.org/whl/cu118
+
+# downgrade below packages in the given order.
+pip install torch-geometric==2.2.0
+pip install torch-sparse==0.6.17
+pip install torch-scatter==2.1.1
+```
+
 3. Install additional packages:
 ```bash
-conda install pyaudio
-pip install torch-geometric pyyaml transformers pyqt5 pandas openpyxl evaluate jiwer
+pip install pyyaml transformers pyqt5 pandas openpyxl evaluate jiwer
+sudo apt-get install libxcb-randr0-dev libxcb-xtest0-dev libxcb-xinerama0-dev libxcb-shape0-dev libxcb-xkb-dev
 ```
+
+## Google Cloud Speech-to-Text API (Optional)
+
+To enable cloud-based speech recognition:
+1. Obtain a service account JSON key with the Speech API enabled.
+2. Place it under the `Demo/` folder as `service-account.json`.
+3. For more information, visit the [Google Cloud Speech-to-Text API](https://cloud.google.com/speech-to-text/) page.
+
+```json
+{
+  "type": "service_account",
+  "project_id": "",
+  "private_key_id": "",
+  "private_key": "",
+  "client_email": "",
+  "client_id": "",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "",
+  "universe_domain": "googleapis.com"
+}
+
+```
+
+---
 
 ### 3. Virtual Speaker and Mic Setup
 For audio input:
@@ -151,21 +187,13 @@ export LD_LIBRARY_PATH=/usr/lib/aarch64-linux-gnu/alsa-lib/:$LD_LIBRARY_PATH
 ## Model Setup
 
 ### EMS-Whisper
-1. Download the `models` folder from [here](#) and place it under `Pipeline/EMS_Whisper/models/`.
+1. Download the `models` folder from [here](#) and place it under `Demo/EMS_Whisper/models/`.
 
 ### EMS-TinyBERT
-1. Download the `models` folder from [here](#) and place it under `Pipeline/EMS_TinyBERT/models/`.
+1. Download the `models` folder from [here](#) and place it under `Demo/EMSAgent/Interface/models/`.
 
 ---
 
-## Google Cloud Speech-to-Text API (Optional)
-
-To enable cloud-based speech recognition:
-1. Obtain a service account JSON key with the Speech API enabled.
-2. Place it under the `Pipeline/` folder as `service-account.json`.
-3. For more information, visit the [Google Cloud Speech-to-Text API](https://cloud.google.com/speech-to-text/) page.
-
----
 
 ## Usage
 
