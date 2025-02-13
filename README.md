@@ -184,7 +184,7 @@ export LD_LIBRARY_PATH=/usr/lib/aarch64-linux-gnu/alsa-lib/:$LD_LIBRARY_PATH
 
 ---
 
-## Model Setup
+## 4. Model Setup
 
 ### EMS-Whisper
 1. Download the `models` folder from [here](#) and place it under `Demo/EMS_Whisper/models/`.
@@ -194,11 +194,66 @@ export LD_LIBRARY_PATH=/usr/lib/aarch64-linux-gnu/alsa-lib/:$LD_LIBRARY_PATH
 
 ---
 
+Here's an improved version of your README section with clearer instructions, improved formatting, and better readability:
+
+---
+
+### 5. Android Application Setup
+
+To install and configure the **CognitiveEMS** Android application on the smartglass, follow the steps below:
+
+#### **1. Open the Project in Android Studio**
+- Launch **Android Studio** and open the project located at:  
+  ```
+  AndroidDevelopment/cognitive_ems
+  ```
+- Ensure you have the correct **JDK** and **SDKs** installed for Android development.
+
+#### **2. Sync Gradle and Resolve Dependencies**
+- Allow **Gradle** to synchronize and resolve dependencies.  
+- Ensure there are no synchronization issues.
+
+#### **3. Connect the Smartglass**
+- Use a **USB cable** to connect the smartglass to your development machine.
+- Enable **Developer Options** on the smartglass.
+- Ensure **USB Debugging** is turned on.
+
+#### **4. Verify Device Connection**
+- Open **Android Studio** and check that the smartglass appears under **Connected Devices**.
+
+#### **5. Configure Network Settings (Important ⚠️)**
+- Ensure the **smartglass** and the **server hosting the CognitiveEMS pipeline** are on the **same network**.
+- Determine the **server's IP address**.  
+  - Ideally, assign a **static IP** to the server to avoid connectivity issues.
+- Open the file:  
+  ```
+  AndroidDevelopment/cognitive_ems/app/src/main/res/values/strings.xml
+  ```
+- Update the following line with the **server's IP address**:  
+  ```xml
+  <string name="server_ip">YOUR_SERVER_IP_HERE</string>
+  ```
+  Example:
+  ```xml
+  <string name="server_ip">192.168.1.100</string>
+  ```
+
+#### **6. Build and Deploy the Application**
+- Compile the project in **Android Studio**.
+- Install the application on the **smartglass**.
+
+---
+
+
 
 ## Usage
 
 ### Running the Cognitive Assistant Server
-TBD.
+
+1. Navigate to EMS-Pipeline directory.
+2. Activate the conda environment.
+3. Go to `Demo` folder and execute ```python GUI.py```.
+4. 
 
 ### Running the AR Smartglass Application
 TBD.
