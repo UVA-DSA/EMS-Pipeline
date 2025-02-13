@@ -130,15 +130,15 @@ conda env create --file environment.yml
 
 Manually install dependencies:
 1. Identify your CUDA version using `nvidia-smi`.
-2. Use the [PyTorch installation guide](https://pytorch.org/get-started/locally/) to install PyTorch (v2.2.0 or above), torchvision, and torchaudio for your system.
+2. Use the [PyTorch installation guide](https://pytorch.org/get-started/locally/) to install PyTorch (v2.5.1 tested), torchvision, and torchaudio for your system.
 ```bash
 conda activate EMSProject
-pip install torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 --index-url https://download.pytorch.org/whl/cu118
+pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu118
 
 # downgrade below packages in the given order.
-pip install torch-geometric==2.2.0
-pip install torch-sparse==0.6.17
-pip install torch-scatter==2.1.1
+pip install -q torch-scatter -f https://pytorch-geometric.com/whl/torch-2.2.0+cu118.html
+pip install -q torch-sparse -f https://pytorch-geometric.com/whl/torch-2.2.0+cu118.html
+pip install -q torch-geometric==2.3.1
 ```
 
 3. Install additional packages:
