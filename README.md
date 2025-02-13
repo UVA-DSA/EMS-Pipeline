@@ -76,9 +76,9 @@ For detailed descriptions of the models, refer to the [Technical Documentation](
 ## Software Requirements
 
 #### Server
-- **OS**: Ubuntu 20.04.6 LTS (64-bit).
-- **CUDA**: Version 12.1.
-- **Environment**: Conda (Python 3.8.18).
+- **OS**: Ubuntu 22.04.5 LTS (64-bit).
+- **CUDA**: Version 12.4.
+- **Environment**: Conda (Python 3.10.9).
 - **Android Studio**: For android app deployments for smartglass, smartwatch.
 
 #### Smartglass
