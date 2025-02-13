@@ -93,7 +93,7 @@ For detailed descriptions of the models, refer to the [Technical Documentation](
 - Assign a **static IP** to the server and configure it in the Android applications.
 - Remove any firewall rules blocking TCP or UDP traffic.
 
-![Network Architecture](Assets/EgoExoEMS-Cognitive_demo.png)
+![Network Architecture](Assets/Network_Architecture.png)
 
 ---
 
@@ -127,7 +127,7 @@ conda env create --file environment.yml
 
 Manually install dependencies:
 1. Identify your CUDA version using `nvidia-smi`.
-2. Use the [PyTorch installation guide](https://pytorch.org/get-started/locally/) to install PyTorch (v1.12.1 or above), torchvision, and torchaudio for your system.
+2. Use the [PyTorch installation guide](https://pytorch.org/get-started/locally/) to install PyTorch (v2.2.0 or above), torchvision, and torchaudio for your system.
 ```bash
 conda activate EMSProject
 pip install torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 --index-url https://download.pytorch.org/whl/cu118
@@ -252,8 +252,13 @@ To install and configure the **CognitiveEMS** Android application on the smartgl
 
 1. Navigate to EMS-Pipeline directory.
 2. Activate the conda environment.
-3. Go to `Demo` folder and execute ```python GUI.py```.
-4. 
+3. Go to `Demo` folder and execute ```python GUI.py```. This should open up the main GUI for the cognitive assistant.
+![Network Architecture](Assets/Main_GUI.png)
+
+
+4. To run the pipeline with pre-recorded audio transcripts, select the drop down `Microphone` and select one of the files. (Important ⚠️: Only speech recognitio and protocol prediction will work under this setting)
+5. To toggle between Google Speech (Internet connectivity required) and Local Speech Model (Whisper) simply click the appropriate radio button.
+6. To run the pipeline, press `Start`.
 
 ### Running the AR Smartglass Application
 TBD.
