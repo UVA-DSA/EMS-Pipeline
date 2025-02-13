@@ -192,6 +192,11 @@ export LD_LIBRARY_PATH=/usr/lib/aarch64-linux-gnu/alsa-lib/:$LD_LIBRARY_PATH
 ### EMS-TinyBERT
 1. Download the `models` folder from [here](https://drive.google.com/drive/folders/1y4Ko6iSr5zkmYbm2llNQq7cwL-cu6Qi3?usp=sharing) and place it under `Demo/EMSAgent/Interface/models/`.
 
+
+### EMS-Vision
+1. Download the `models` folder from [here](https://drive.google.com/drive/folders/1y4Ko6iSr5zkmYbm2llNQq7cwL-cu6Qi3?usp=sharing) and place it under `Demo/EMSVision/weights/`.
+
+
 ---
 
 ### 5. Android Application Setup
@@ -234,6 +239,9 @@ To install and configure the **CognitiveEMS** Android application on the smartgl
   <string name="server_ip">192.168.1.100</string>
   ```
 
+![Android Studio](Assets/Android_Studio.png)
+
+
 #### **6. Build and Deploy the Application**
 - Compile the project in **Android Studio**.
 - Install the application on the **smartglass**.
@@ -249,7 +257,7 @@ To install and configure the **CognitiveEMS** Android application on the smartgl
 1. Navigate to EMS-Pipeline directory.
 2. Activate the conda environment.
 3. Go to `Demo` folder and execute ```python GUI.py```. This should open up the main GUI for the cognitive assistant.
-![Network Architecture](Assets/Main_GUI.png)
+![Main GUI](Assets/Main_GUI.png)
 
 
 4. To run the pipeline with pre-recorded audio transcripts, select the drop down `Microphone` and select one of the files. (Important ⚠️: Only speech recognitio and protocol prediction will work under this setting)
