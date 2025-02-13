@@ -187,14 +187,10 @@ export LD_LIBRARY_PATH=/usr/lib/aarch64-linux-gnu/alsa-lib/:$LD_LIBRARY_PATH
 ## 4. Model Setup
 
 ### EMS-Whisper
-1. Download the `models` folder from [here](#) and place it under `Demo/EMS_Whisper/models/`.
+1. Download the `models` folder from [here](https://drive.google.com/drive/folders/1Z4oakBCSiSyW_agq3UG1eHsQDMmHKHOA?usp=sharing) and place it under `Demo/EMS_Whisper/models/`.
 
 ### EMS-TinyBERT
-1. Download the `models` folder from [here](#) and place it under `Demo/EMSAgent/Interface/models/`.
-
----
-
-Here's an improved version of your README section with clearer instructions, improved formatting, and better readability:
+1. Download the `models` folder from [here](https://drive.google.com/drive/folders/1y4Ko6iSr5zkmYbm2llNQq7cwL-cu6Qi3?usp=sharing) and place it under `Demo/EMSAgent/Interface/models/`.
 
 ---
 
