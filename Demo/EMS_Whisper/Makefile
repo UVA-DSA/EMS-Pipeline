@@ -1,4 +1,4 @@
-default: main bench quantize
+default: main stream
 
 ifndef UNAME_S
 UNAME_S := $(shell uname -s)
@@ -187,13 +187,9 @@ ifdef WHISPER_OPENBLAS
 	LDFLAGS += -lopenblas
 endif
 
-#sm_87 for jetson orin. sm_80 for other Ampere gen
+#sm_87 for jetson orin. sm_80 for other Ampere gen. change 192 line accordingly
 ifdef WHISPER_CUBLAS
-	ifeq ($(shell expr $(NVCC_VERSION) \>= 11.6), 1)
-		CUDA_ARCH_FLAG=sm_87
-	else
-		CUDA_ARCH_FLAG=sm_80
-	endif
+	CUDA_ARCH_FLAG=sm_80 
 
 	CFLAGS      += -DGGML_USE_CUBLAS -I/usr/local/cuda/include -I/opt/cuda/include -I$(CUDA_PATH)/targets/$(UNAME_M)-linux/include
 	CXXFLAGS    += -DGGML_USE_CUBLAS -I/usr/local/cuda/include -I/opt/cuda/include -I$(CUDA_PATH)/targets/$(UNAME_M)-linux/include
