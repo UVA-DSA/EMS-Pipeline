@@ -1,10 +1,10 @@
 package com.example.cognitive_ems;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+
 import android.util.Log;
 
 import java.net.URISyntaxException;
+
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -18,10 +18,28 @@ public class SocketStream {
     //implement socket io connection
     private final String TAG = "SocketStream";
     private final int port = 9235;
-    private String serverUrl ;
+    private String serverUrl;
 
-    public SocketStream(String serverUrl) {
-        this.serverUrl =serverUrl;
+    private FeedbackCallback feedbackCallback;
+
+    private static SocketStream instance;
+
+
+    // Singleton pattern
+    public static SocketStream getInstance() {
+        if (instance == null) {
+            instance = new SocketStream();
+        }
+        return instance;
+    }
+
+    private SocketStream() {
+        // Private constructor to prevent instantiation
+    }
+
+    public void initialize(String serverUrl) {
+        this.serverUrl = serverUrl;
+
         try {
             IO.Options options = IO.Options.builder()
                     .setReconnection(true)
@@ -41,7 +59,6 @@ public class SocketStream {
         socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                // Handle the connection event
                 Log.d("SocketIO Client", "C: Connected!");
             }
         });
@@ -50,13 +67,60 @@ public class SocketStream {
             @Override
             public void call(Object... args) {
                 Log.d("SocketIO Client", "R: Received Message! : " + args[0]);
-
             }
         });
 
-        // Add more event listeners here as needed
+        socket.on("objectFeedback", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("Feedback Client", "R: Received ObjectDetection! : " + args[0]);
+                if (feedbackCallback != null) {
+                    feedbackCallback.onObjectFeedbackReceived(args[0].toString());
+                }
+            }
+        });
+        
+        socket.on("protocolFeedback", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("SocketIO Client", "R: Received Protocol! : " + args[0]);
+                if (feedbackCallback != null){
+                    feedbackCallback.onProtocolFeedbackReceived(args[0].toString());
+                }
+            }
+
+        });
+
+        socket.on("action", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("SocketIO Client", "R: Received Action! : " + args[0]);
+                if (feedbackCallback != null){
+                    feedbackCallback.onActionReceived(args[0].toString());
+                }
+            }
+
+        });
+
+        socket.on("reset", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("SocketIO Client", "R: Received Reset! : " + args[0]);
+                if (feedbackCallback != null){
+                    feedbackCallback.onResetReceived();
+                }
+            }
+        });
+
+
+    // Add more event listeners here as needed
 
         socket.connect();
+    }
+
+
+    public void setFeedbackCallback(FeedbackCallback feedbackCallback) {
+        this.feedbackCallback = feedbackCallback;
     }
 
     public String getCommand() {

@@ -47,7 +47,7 @@ from DSP.amplitude import Amplitude
 from classes import SpeechNLPItem, GUISignal
 import TextSpeechStream
 import CognitiveSystem
-from EMSAgent.Interface import EMSAgentSystem
+from EMS_Agent.Interface import EMSAgentSystem
 import Feedback
 import GoogleSpeechMicStream
 import GoogleSpeechFileStream
@@ -61,15 +61,18 @@ import WhisperFileStream
 import WhisperMicStream
 import audio_streaming
 
-from EMSAgent.Interface import EMSTinyBERTSystem
+from EMS_Agent.Interface import EMSTinyBERTSystem
 
 
 from StoppableThread.StoppableThread import StoppableThread
 
 from video_streaming import Thread
 from smartwatch_streaming import Thread_Watch
+from Feedback import FeedbackClient
 
 from GenUtils.genutils import *
+
+import torch.multiprocessing as mp  # or just 'import multiprocessing as mp'
 
 chunkdata = []
 
@@ -112,6 +115,7 @@ class MainWindow(QWidget):
         self.nonFinalText = ""
         
         self.ip_address = get_local_ipv4()
+        
 
         #whisper
 
@@ -248,6 +252,17 @@ class MainWindow(QWidget):
         VIDEO_HEIGHT = 480
         self.video.setGeometry(QtCore.QRect(0, 0, VIDEO_WIDTH, VIDEO_HEIGHT))
 
+        # Thread for internet check
+        # Initialize the internet check thread
+        self.internet_check_thread = InternetCheckThread()
+        self.internet_check_thread.internet_status_signal.connect(self.update_internet_status)
+        self.internet_check_thread.start()
+
+
+        self.feedback_client = Feedback.FeedbackClient()
+        self.feedback_client.start()
+       
+
         # Threads for video 
         th = Thread(data_path, videostream)
         th.changePixmap.connect(self.setImage)
@@ -258,6 +273,17 @@ class MainWindow(QWidget):
         th2 = Thread_Watch(data_path, smartwatchStream, pipeline_config.smartwatch_ip, pipeline_config.smartwatch_port)
         th2.changeActivityRec.connect(self.handle_message)
         th2.start()
+
+
+            # ==== Start the EMS Agent - Xueren ==== #
+        print("EMSAgent Thread Started")
+        self.EMSAgentThread = EMSTinyBERTSystem.EMSAgentInference(self,EMSAgentSpeechToNLPQueue, FeedbackQueue)
+        self.EMSAgentThread.start()
+        # self.EMSAgentThread = StoppableThread(
+        #     # target=EMSAgenSystem.EMSAgentSystem, args=(self, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path, protocolStream))
+        #     target=EMSTinyBERTSystem.EMSTinyBERTSystem, args=(self, EMSAgentSpeechToNLPQueue, FeedbackQueue))
+        # self.EMSAgentThread.start()
+
 
         # th2 = ThreadAudio(self)
         # th2.start()
@@ -408,9 +434,17 @@ class MainWindow(QWidget):
         self.UpdateMsgBox(["Ready to start speech recognition!"])
 
 
-        self.IpAddressLabel = QLabel("IP Address: " + self.ip_address)
-        self.IpAddressLabel.setFont(QFont("Monospace", 18))
+        self.IpAddressLabel = QLabel("IP: " + self.ip_address)
+        self.IpAddressLabel.setFont(QFont("Monospace", 12))
         self.Box3.addWidget(self.IpAddressLabel)  # Add this below the system log text box in the layout
+
+        self.InternetAvailLabel = QLabel("")
+        self.InternetAvailLabel.setFont(QFont("Arial", 22))
+        # if(self.internet_avail):
+        #     self.InternetAvailLabel.setStyleSheet("color: green; font-weight: bold; ")
+        # else:
+        #     self.InternetAvailLabel.setStyleSheet("color: red; font-weight: bold; ")
+        self.Box3.addWidget(self.InternetAvailLabel)  # Add this below the system log text box in the layout
 
         # Add Link Lab Logo
         self.PictureBox = QLabel()
@@ -457,6 +491,31 @@ class MainWindow(QWidget):
             print("testing successful")
             self.mediaPlayer.play()
 
+    @pyqtSlot(bool)
+    def update_internet_status(self, is_available):
+        self.ip_address = get_local_ipv4()
+
+        if is_available:
+            self.InternetAvailLabel.setText("INTERNET AVAILABLE")
+            self.InternetAvailLabel.setStyleSheet("color: green; font-weight: bold;")
+            self.GoogleSpeechRadioButton.setEnabled(True)
+        else:
+            self.InternetAvailLabel.setText("NO INTERNET")
+            self.InternetAvailLabel.setStyleSheet("color: red; font-weight: bold;")
+            self.GoogleSpeechRadioButton.setEnabled(False)
+
+            if(not self.MLSpeechRadioButton.isChecked()):
+                #stop everything.
+                self.StopButtonClick()
+
+                #reset everything
+                # self.ResetButtonClick()
+
+                self.ComboBox.setEnabled(True)
+
+                self.MLSpeechRadioButton.click()
+
+
 
     def mediaStateChanged(self, state):
     	if self.player.state() == QMediaPlayer.StoppedState:
@@ -467,6 +526,7 @@ class MainWindow(QWidget):
     def closeEvent(self, event):
         print('Closing GUI')
         # self.th2.exit()
+        self.internet_check_thread.stop()
         self.stopped = 1
         self.reset = 1
         SpeechToNLPQueue.put('Kill')
@@ -609,7 +669,7 @@ class MainWindow(QWidget):
                 # Start subprocess
                 self.WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='EMS_Whisper/')
                 
-                # time.sleep(2)
+                time.sleep(4)
 
                 self.SpeechThread = StoppableThread(
                         target=WhisperFileStream.Whisper, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav'))
@@ -625,19 +685,13 @@ class MainWindow(QWidget):
             # self.CognitiveSystemThread.start()
 
 
-        # ==== Start the EMS Agent - Xueren ==== #
-        if(self.EMSAgentThread == None):
-            print("EMSAgent Thread Started")
-            self.EMSAgentThread = StoppableThread(
-                # target=EMSAgenSystem.EMSAgentSystem, args=(self, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path, protocolStream))
-                target=EMSTinyBERTSystem.EMSTinyBERTSystem, args=(self, EMSAgentSpeechToNLPQueue, FeedbackQueue))
-            self.EMSAgentThread.start()
+
 
          # ==== Start the Feedback Thread ==== #
         if(self.FeedbackThread == None):
             print("Feedback Thread Started")
             self.FeedbackThread = StoppableThread(
-                target=Feedback.Feedback, args=(self, data_path, FeedbackQueue))
+                target=Feedback.FeedbackClient, args=(self, data_path, FeedbackQueue))
             # self.FeedbackThread.start()
 
     @pyqtSlot()
@@ -663,22 +717,24 @@ class MainWindow(QWidget):
         self.UpdateMsgBox(["Resetting!"])
         self.reset = 1
         self.stopped = 1
+        self.feedback_client.send_message("Resetting", 'reset')
 
         try:
             self.WhisperSubprocess.kill()
+            subprocess.Popen('pkill stream', shell=False)
         except:
             print("Could not kill Whisper!")
         if(self.WhisperSubprocess != None):
             self.WhisperSubprocess.terminate()
         self.WhisperSubprocess = None
 
-        if(self.CognitiveSystemThread != None):
-            SpeechToNLPQueue.put('Kill')
-        #     EMSAgentSpeechToNLPQueue.put('Kill')
-        #     FeedbackQueue.put('Kill')
-        # SpeechToNLPQueue.put('Kill')
+        # if(self.CognitiveSystemThread != None):
+        #     SpeechToNLPQueue.put('Kill')
+        # #     EMSAgentSpeechToNLPQueue.put('Kill')
+        # #     FeedbackQueue.put('Kill')
+        # # SpeechToNLPQueue.put('Kill')
         EMSAgentSpeechToNLPQueue.put('Kill')
-        FeedbackQueue.put('Kill')
+        # FeedbackQueue.put('Kill')
         self.VUMeter.setValue(0)
         self.finalSpeechSegmentsSpeech = []
         self.finalSpeechSegmentsNLP = []
@@ -689,7 +745,6 @@ class MainWindow(QWidget):
         self.nonFinalText = ""
         self.SpeechThread = None
         self.CognitiveSystemThread = None
-        self.EMSAgentThread = None
         self.FeedbackThread = None
         time.sleep(.1)
         self.StartButton.setEnabled(True)
@@ -786,16 +841,17 @@ class MainWindow(QWidget):
     def UpdateProtocolBoxes(self, input):
         global chunkdata
         
-        received = input[0]
-        try:
-            protocol = received.protocol
-            protocol_confidence = received.protocol_confidence
-            if(protocol != None and protocol_confidence != None):
-                protocol_display = str(protocol) + " : " +str(round(protocol_confidence,2))
-                self.ProtocolBox.setText(protocol_display)
-                chunkdata.append(protocol_display)
-        except Exception as e:
-            print("Key error!", e)
+        self.ProtocolBox.setText("")
+        for received in input:
+            try:
+                protocol = received.protocol
+                protocol_confidence = received.protocol_confidence
+                if(protocol != None and protocol_confidence != None):
+                    protocol_display = str(protocol) + " : " +str(round(protocol_confidence,2))
+                    self.ProtocolBox.append(protocol_display)
+                    chunkdata.append(protocol_display)
+            except Exception as e:
+                print("Key error!", e)
         
 
         try:
@@ -891,6 +947,9 @@ def get_resolution_multiple_screens():
 
 # ================================================================== Main ==================================================================
 if __name__ == '__main__':
+    
+    # mp.set_start_method('spawn', force=True)
+
 
     #run with arguments
     #options:

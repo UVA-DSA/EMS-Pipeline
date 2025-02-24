@@ -9,7 +9,8 @@ import traceback
 # import soundfile as sf
 
 import queue
-
+import os
+import errno
 import sys
 import threading
 from classes import GUISignal
@@ -75,28 +76,39 @@ def Whisper(Window, TranscriptQueue,EMSAgentSpeechQueue, wavefile_name):
     else:
         RATE = 16000
         CHUNK = 1024
+    print("WhisperFileStream - Thread Started...")
+
+    try:
+        os.mkfifo(fifo_path)
+    except OSError as oe:
+        if oe.errno != errno.EEXIST:
+            raise
+
 
     with open(fifo_path, 'r') as fifo:
+        print("WhisperFileStream - Opened FIFO")
         with wave.open(wavefile_name, 'rb') as wf:
             try:
                 # Instantiate PyAudio and initialize PortAudio system resources (1)
                 p = pyaudio.PyAudio()
                 info = p.get_default_host_api_info()
-                print("INFO: ", info)
+                # print("INFO: ", info)
 
-                #list all available devices
-                for i in range(p.get_device_count()):
-                    print(p.get_device_info_by_index(i))
+                # #list all available devices
+                # for i in range(p.get_device_count()):
+                #     print(p.get_device_info_by_index(i))
                 device_index = info.get('deviceCount') - 1 # get default device as output device
 
                 stream = p.open(format = pyaudio.paInt16, channels = 1, rate = RATE, output = True, frames_per_buffer = CHUNK, output_device_index=device_index)
                 
                 old_response = ""
                 # Play samples from the wave file (3)
+                print("WhisperFileStream - started streaming...")
                 while len(data:=wf.readframes(CHUNK)):  # Requires Python 3.8+ for :=
                     
                     if(Window.stopped == 1): 
                         break
+                    
                     stream.write(data)
                     try:
                         response = fifo.read().strip()  # Read the message from the named pipe
@@ -104,6 +116,8 @@ def Whisper(Window, TranscriptQueue,EMSAgentSpeechQueue, wavefile_name):
                         response = ""
 
                     if response != old_response and response != "":
+                        if "Thanks for watching!" in response:
+                            continue
                         block, isFinal, avg_p, latency = process_whisper_response(response) #isFinal = False means block is interim block
                         transcript = finalized_blocks + block
                         # if received block is finalized, then save to finalized blocks
@@ -129,7 +143,7 @@ def Whisper(Window, TranscriptQueue,EMSAgentSpeechQueue, wavefile_name):
                         old_response = response
                 # Close stream (4)
                 stream.close()
-
+            
                 TranscriptQueue.put('Kill')
                 EMSAgentSpeechQueue.put('Kill')
 

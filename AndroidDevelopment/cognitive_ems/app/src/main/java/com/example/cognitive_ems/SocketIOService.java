@@ -42,7 +42,8 @@ public class SocketIOService extends Service {
         this.serverUrl = serverIp;
 
 
-        socketIOAdapter = new SocketStream(serverIp);
+        SocketStream.getInstance().initialize(this.serverUrl);
+        socketIOAdapter = SocketStream.getInstance();
         socketIOAdapter.sendMessage("Hello from Service!");
 
         imageSender = ImageCompressor.getInstance( socketIOAdapter);
@@ -69,7 +70,8 @@ public class SocketIOService extends Service {
 
             }
 
-            socketIOAdapter = new SocketStream(this.serverUrl);
+            SocketStream.getInstance().initialize(this.serverUrl);
+            socketIOAdapter = SocketStream.getInstance();
             socketIOAdapter.sendMessage("Hello from Service!");
 
         }

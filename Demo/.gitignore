@@ -6,6 +6,19 @@ results.csv
 chunk.csv
 check.csv
 
+smartwatch_data.csv
+
+EMS_Vision/weights
+
+
+public_mm
+
+EMS_Vision/test_data/
+EMS_Whisper/bindings/
+EMS_Whisper/examples/
+EMS_Whisper/tests/
+
+
 *.logcat
 
 pymetamap/pymetamap.egg-info/PKG-INFO
@@ -13,6 +26,7 @@ pymetamap/pymetamap.egg-info/PKG-INFO
 *.o
 EMS_Whisper/main
 EMS_Whisper/stream
+
 
 *.egg
 .gradle/*
@@ -22,7 +36,7 @@ EMS_Whisper/stream
 # Ignore node_modules folder
 public_mm/*
 *.tar.bz2
-EMSAgent/Interface/models/*
+EMS_Agent/Interface/models/*
 
 service-account.json
 
@@ -87,3 +101,5 @@ obj/
 
 # whisper wieghts 
 /whisper.cpp/models/*.bin
+
+EMSAgent

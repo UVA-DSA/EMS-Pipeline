@@ -190,7 +190,7 @@ endif
 #sm_87 for jetson orin. sm_80 for other Ampere gen
 ifdef WHISPER_CUBLAS
 	ifeq ($(shell expr $(NVCC_VERSION) \>= 11.6), 1)
-		CUDA_ARCH_FLAG=native
+		CUDA_ARCH_FLAG=sm_87
 	else
 		CUDA_ARCH_FLAG=sm_80
 	endif

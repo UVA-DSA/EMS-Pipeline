@@ -42,6 +42,8 @@ def audio_stream_UDP(stop_event):
     sr = UDPStreamReceiver.UDPStreamReceiver(port)
     q = queue.Queue(10)
     sr.registerQueue(q)
+
+    print("\n\n *** UDP_STREAM: ",stop_event.is_set(), " *** \n\n")
     
     # receive and put audio data in queue
     while not stop_event.is_set():
@@ -49,14 +51,17 @@ def audio_stream_UDP(stop_event):
             time.sleep(1e-3)
         else:
             payload = (q.get())
-            audio = payload[12:]
-            audio_buff.put(audio)
-            wav_audio_buffer.put(audio)
+            if(payload is not None):
+                audio = payload[12:]
+                audio_buff.put(audio)
+                wav_audio_buffer.put(audio)
         # print("Waiting for Audio client...")
         
     sr.unregisterQueue(q)
     sr.close()
     print("Audio Server Terminated!")
+    stop_event.clear()
+
 
                 
 
@@ -97,6 +102,8 @@ class MicrophoneStream(object):
         # self._audio_stream.stop_stream()
         # self._audio_stream.close()
         self.closed = True
+        stop_event.set()
+
         # Signal the generator to terminate so that the client's
         # streaming_recognize method will not block the process termination.
         # self._buff.put(None)  

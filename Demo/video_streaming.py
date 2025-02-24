@@ -9,7 +9,6 @@ import time
 
 import asyncio
 
-
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
@@ -39,6 +38,12 @@ import time
 
 from multiprocessing import Process, Queue
 
+from EMS_Vision.ObjectDetector import ObjectDetector
+from pipeline_config import socketio_ipaddr
+from Feedback import FeedbackClient
+
+from torch import multiprocessing
+
 import queue
 # Media Pipe vars
 global mp_drawing, mp_drawing_styles, mp_hands, mp_face_mesh
@@ -46,19 +51,17 @@ mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
 mp_face_mesh = mp.solutions.face_mesh
-# mp_pose = mp.solutions.pose
 
+# mp_pose = mp.solutions.pose
 
 seq_all=0
 dropped_imgs=0
 total_imgs=0
 
-
-
-
-
-image_queue = Queue()
+image_queue = Queue(maxsize=1)
 display_queue = Queue()
+
+#multiprocessing.set_start_method('forkserver')
 
 class ImageProcessor(Process):
     def __init__(self, image_queue, display_queue):
@@ -85,7 +88,7 @@ class ImageProcessor(Process):
 def process_image(image):
     """
     Adds annotations to image for the models you have selected, 
-    For now, it just depict results from hand detection
+    For now, it just depicts results from hand detection
     """
   
     global mp_hands #, mp_face_mesh
@@ -129,15 +132,33 @@ class Thread(QThread):
         self.is_running = True
         self.imagequeue = image_queue
 
-        self.sio = Client()
+        #self.feedback_client = FeedbackClient(self)
+
+        self.sio = Client() #TODO: add similar to feedback.py
                 # Create an asyncio event loop for this thread
         self.loop = asyncio.new_event_loop()
         asyncio.set_event_loop(self.loop)
 
         self.display_thread = threading.Thread(target=self.display_image, args=(self.changePixmap, display_queue,))
 
+        self.mediapipe_thread = threading.Thread(target=self.process_image)
+
+        self.object_detector = ObjectDetector(image_queue, display_queue)
+
+        self.mp_hands = mp.solutions.hands.Hands(
+            max_num_hands=1,
+            model_complexity=0,
+            min_detection_confidence=0.5,
+            min_tracking_confidence=0.5)
+        
+        self.mp_drawing = mp.solutions.drawing_utils
+
+
         @self.sio.on('server_video')
         def on_message(data):
+            
+
+            # self.imagequeue.put(data)
 
                         # Schedule the asynchronous image processing task
             asyncio.run_coroutine_threadsafe(self.process_image_async(data), self.loop)
@@ -186,17 +207,21 @@ class Thread(QThread):
         byte_array = base64.b64decode(data)
         image = Image.open(io.BytesIO(byte_array))
         RGB_img = np.array(image)
+
         
-        # Process the image
-        RGB_img = cv2.rotate(RGB_img, cv2.ROTATE_90_COUNTERCLOCKWISE)
-        RGB_img = cv2.resize(RGB_img, (640, 480))
+        # # Process the image
+        # RGB_img = cv2.rotate(RGB_img, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        # RGB_img = cv2.resize(RGB_img, (640, 480))
 
-        h, w, ch = RGB_img.shape
-        bytesPerLine = ch * w
-        qImg = QImage(RGB_img.data, 640, 480, bytesPerLine, QImage.Format_RGB888).scaled(w, h, Qt.KeepAspectRatio)
+        # h, w, ch = RGB_img.shape
+        # bytesPerLine = ch * w
+        # qImg = QImage(RGB_img.data, 640, 480, bytesPerLine, QImage.Format_RGB888).scaled(w, h, Qt.KeepAspectRatio)
 
-        # print("Time taken to display image: ", time.time() - start)
-        self.changePixmap.emit(qImg)  # Emit signal to update GUI
+        # # print("Time taken to display image: ", time.time() - start)
+        # self.changePixmap.emit(qImg)  # Emit signal to update GUI
+        # print("[Video_Streaming] Image received")
+        self.imagequeue.put(RGB_img,block=False)
+
 
         
     def stop(self):
@@ -217,108 +242,103 @@ class Thread(QThread):
             if(display_queue.empty()):
                 continue
             else:
-                start_t = time.time()
-                RGB_img = display_queue.get()
+                results = display_queue.get()
+                RGB_img = results[0]
 
                 h, w, ch = RGB_img.shape
-                # print("Image Size",h,w)
                 bytesPerLine = ch * w
                 convertToQtFormat = QImage(RGB_img.data, 640, 480, bytesPerLine, QImage.Format_RGB888)
-                p = convertToQtFormat.scaled(w,h, Qt.KeepAspectRatio)
-
+                p = convertToQtFormat.scaled(640,480, Qt.KeepAspectRatio)
                 changePixmap.emit(p)
 
-                print("Time taken to display image: ", time.time()-start_t)
+                del RGB_img
+                
 
             
 
-    def process_image(self):
+    def process_image(self, image=None):
         
         # run below in a another thread
+        while self.is_running:
+            if not self.imagequeue.empty():
+                image = self.imagequeue.get()
+                # print("Image received")
+                # print("Image shape: ", image.shape)
+                # print("Image type: ", type(image))
+                # print("Image size: ", image.size)
+                # print("Image dtype: ", image.dtype)
+                # print("Image len: ", len(image))
 
-        with mp_hands.Hands(
-            max_num_hands=1,
-            model_complexity=0,
-            min_detection_confidence=0.5,
-            min_tracking_confidence=0.5) as hands:
+            
+                #for peak detection
+                y_vals = []
 
-            while self.is_running:
-                if not self.imagequeue.empty():
-                    image = self.imagequeue.get()
-                    print("Image received")
-                    # print("Image shape: ", image.shape)
-                    # print("Image type: ", type(image))
-                    # print("Image size: ", image.size)
-                    # print("Image dtype: ", image.dtype)
-                    # print("Image len: ", len(image))
+                #array for timestamps when every image is received
+                image_times = []
 
+                curr_date = datetime.datetime.now()
+                dt_string = curr_date.strftime("%d-%m-%Y-%H-%M-%S")
+
+                    # print("Remaining buffer size: ",img_buffer_size)
+
+                #get timestamp when getting the image frame -- for cpr rate detection
+                curr_time = round(time.time()*1000)
+                image_times.append(curr_time)
+
+        
                 
-                    #for peak detection
-                    y_vals = []
+                #process image with mediapipe hand detection
+                hand_detection_results = self.mp_hands.process(image)
 
-                    #array for timestamps when every image is received
-                    image_times = []
+                # hand-detection annotations
+                if hand_detection_results and hand_detection_results.multi_hand_landmarks:
+                    self.changeVisInfo.emit(str("Hand Detected! Wrist Position Identified."))
+                    for hand_landmarks in hand_detection_results.multi_hand_landmarks:
 
-                    curr_date = datetime.datetime.now()
-                    dt_string = curr_date.strftime("%d-%m-%Y-%H-%M-%S")
+                        #append y_val to array for peak detection
+                        y_vals.append(hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].y)
+                        
+                        #for drawing hand annotations on image
+                        self.mp_drawing.draw_landmarks(image,hand_landmarks,mp_hands.HAND_CONNECTIONS,mp_drawing_styles.get_default_hand_landmarks_style(),mp_drawing_styles.get_default_hand_connections_style())
+                else:
+                    self.changeVisInfo.emit(str("Detecting Hands..."))
+                    y_vals.append(0)#(math.nan)
 
-                        # print("Remaining buffer size: ",img_buffer_size)
 
-                    #get timestamp when getting the image frame -- for cpr rate detection
-                    curr_time = round(time.time()*1000)
-                    image_times.append(curr_time)
-
-           
-                    
-                    #process image with mediapipe hand detection
-                    hand_detection_results = hands.process(image)
-
-                    # hand-detection annotations
-                    if hand_detection_results and hand_detection_results.multi_hand_landmarks:
-                        self.changeVisInfo.emit(str("Hand Detected! Wrist Position Identified."))
-                        for hand_landmarks in hand_detection_results.multi_hand_landmarks:
-
-                            #append y_val to array for peak detection
-                            y_vals.append(hand_landmarks.landmark[mp_hands.HandLandmark.WRIST].y)
+                # cv2_img = cv2.rotate(image, cv2.ROTATE_90_COUNTERCLOCKWISE)
+                # cv2_img = cv2.resize(cv2_img, (640, 480))
+                cv2_img = image
+                h, w, ch = cv2_img.shape
+                # print("Image Size",h,w)
+                bytesPerLine = ch * w
+                convertToQtFormat = QImage(cv2_img.data, 640, 480, bytesPerLine, QImage.Format_RGB888)
+                p = convertToQtFormat.scaled(w,h, Qt.KeepAspectRatio)
+                self.changePixmap.emit(p)
                             
-                            #for drawing hand annotations on image
-                            mp_drawing.draw_landmarks(image,hand_landmarks,mp_hands.HAND_CONNECTIONS,mp_drawing_styles.get_default_hand_landmarks_style(),mp_drawing_styles.get_default_hand_connections_style())
-                    else:
-                        self.changeVisInfo.emit(str("Detecting Hands..."))
-                        y_vals.append(0)#(math.nan)
-
-
-                    cv2_img = cv2.rotate(image, cv2.ROTATE_90_COUNTERCLOCKWISE)
-                    cv2_img = cv2.resize(cv2_img, (640, 480))
-                    h, w, ch = cv2_img.shape
-                    # print("Image Size",h,w)
-                    bytesPerLine = ch * w
-                    convertToQtFormat = QImage(cv2_img.data, 640, 480, bytesPerLine, QImage.Format_RGB888)
-                    p = convertToQtFormat.scaled(w,h, Qt.KeepAspectRatio)
-                    self.changePixmap.emit(p)
-                                
-                    
-                    if(len(image_times) == 10000):
-                        #Clear the arrays to get 100 more image frames for cpr rate calculation
-                        y_vals.clear()
-                        image_times.clear()
+                
+                if(len(image_times) == 10000):
+                    #Clear the arrays to get 100 more image frames for cpr rate calculation
+                    y_vals.clear()
+                    image_times.clear()
 
 
 
 
 
     def run(self):
-
-
-
         while self.is_running:
             try:
-                self.sio.connect('http://localhost:5000')  # Connect to the Flask-SocketIO server
+                self.sio.connect(socketio_ipaddr)  # Connect to the Flask-SocketIO server
                 print("Connected to the server!")
                 self.sio.emit('message', 'Hello from Video QThread!')  # Send a message to the server
                 
+                #start object detector engine process
+                # mp.set_start_method('spawn', force=True)
+                self.object_detector.start()
+                print("Object Detector Process started")
 
-                # self.display_thread.start()
+                # self.mediapipe_thread.start()
+                self.display_thread.start()
 
                 # image_processor = ImageProcessor(image_queue, display_queue)
                 # image_processor.start()
@@ -328,7 +348,8 @@ class Thread(QThread):
 
                 break  # Exit the loop if connected successfully
             except Exception as e:
-                print("Connection failed, retrying...", e)
+                # print("Connection failed, retrying...", e)
                 time.sleep(5)  # Wait for 5 seconds before retrying
+
 
 

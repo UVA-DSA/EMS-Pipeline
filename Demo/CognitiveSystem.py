@@ -6,7 +6,7 @@ import py_trees
 import behaviours_m as be
 from py_trees.blackboard import Blackboard
 from tqdm import tqdm as tqdm
-from classes import SpeechNLPItem, GUISignal
+from classes import SpeechNLPItem, GUISignal, FeedbackObj
 import threading
 import text_clf_utils as utils
 from ranking_func import rank
@@ -17,23 +17,29 @@ import re
 
 #added 3/18
 import nltk
-nltk.download('punkt')
+from nltk.data import find
+
+# Function to check and download if necessary
+def download_nltk_data(dataset_name):
+    try:
+        # Attempt to find the dataset
+        if dataset_name == 'punkt':
+            find(f"tokenizers/{dataset_name}")
+        else:
+            find(f"corpora/{dataset_name}")
+            
+        print(f"{dataset_name} is already available.")
+    except LookupError:
+        # If dataset is not found, download it
+        print(f"Downloading {dataset_name}...")
+        nltk.download(dataset_name, quiet=True)
 #--
+download_nltk_data('punkt')
+download_nltk_data('punkt_tab')
 
 # ============== Cognitive System ==============
 from behaviours_m import blackboard
 blackboard.tick_num = 0
-
-# ------------ For Feedback ------------
-class FeedbackObj:
-    def __init__(self, intervention, protocol, p_confidence, concept):
-        super(FeedbackObj, self).__init__()
-        self.intervention = intervention
-        self.protocol = protocol
-        self.protocol_confidence = p_confidence
-        self.concept = concept
-
-# ------------ End Feedback Obj Class ------------
 
 # Cognitive System Thread
 def CognitiveSystem(Window, SpeechToNLPQueue, FeedbackQueue, data_path_str, conceptBool, interventionBool):

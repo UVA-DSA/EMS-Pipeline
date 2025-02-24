@@ -2,10 +2,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextureView
+    <com.example.cognitive_ems.AutoFitTextureView
         android:id="@+id/textureView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        />
 
 
     <com.example.cognitive_ems.CustomView
@@ -13,9 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <!-- Left AR Text Box -->
+    <!-- Action Log Text Box -->
     <FrameLayout
-        android:id="@+id/leftTextBox"
+        android:id="@+id/actionLogFrame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -25,27 +26,69 @@
         android:layout_margin="16dp">
 
         <TextView
+            android:id="@+id/actionLog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Left Text"
+            android:textSize="20dp"
+            android:text="Looking for action..."
             android:textColor="#FFFFFF" /> <!-- White text color -->
     </FrameLayout>
 
-    <!-- Right AR Text Box -->
+    <!-- Procedure Information Text Box -->
+<!--    <FrameLayout-->
+<!--        android:id="@+id/procedureStats"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:padding="16dp"-->
+<!--        android:background="@drawable/ar_text_box"-->
+<!--        android:layout_margin="16dp">-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="CPR Rate: 110/min\nCPR Depth: 1in"-->
+<!--            android:textColor="#228B22"-->
+<!--            /> &lt;!&ndash; Green text color &ndash;&gt;-->
+<!--    </FrameLayout>-->
+
+    <!-- Protocol Text Box -->
     <FrameLayout
-        android:id="@+id/rightTextBox"
+        android:id="@+id/protocolFrame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
         android:padding="16dp"
         android:background="@drawable/ar_text_box"
         android:layout_margin="16dp">
 
         <TextView
+            android:id="@+id/protocolTextBox"
+            android:textSize="20dp"
+            android:text="Finding protocol..."
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Right Text"
-            android:textColor="#FFFFFF" /> <!-- White text color -->
+            android:textColor="#FFFF00" /> <!-- Yellow text color -->
     </FrameLayout>
+
+    <!-- Patient Overview Text Box -->
+<!--    <FrameLayout-->
+<!--        android:id="@+id/patientOverview"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_above="@+id/protocolFrame"-->
+<!--        android:padding="6dp"-->
+<!--        android:background="@drawable/ar_text_box"-->
+<!--        android:layout_margin="16dp">-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Male - 48yrs\n** NO PULSE **\nBEGIN CPR"-->
+<!--            android:textColor="#DC143C" /> &lt;!&ndash; White text color &ndash;&gt;-->
+<!--    </FrameLayout>-->
+
 </RelativeLayout>
