@@ -35,6 +35,7 @@ def download_nltk_data(dataset_name):
         nltk.download(dataset_name, quiet=True)
 #--
 download_nltk_data('punkt')
+download_nltk_data('punkt_tab')
 
 # ============== Cognitive System ==============
 from behaviours_m import blackboard

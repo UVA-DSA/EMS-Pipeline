@@ -8,6 +8,10 @@ check.csv
 
 smartwatch_data.csv
 
+EMS_Vision/weights
+
+
+public_mm
 
 EMS_Vision/test_data/
 EMS_Whisper/bindings/

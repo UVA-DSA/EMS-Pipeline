@@ -72,6 +72,8 @@ from Feedback import FeedbackClient
 
 from GenUtils.genutils import *
 
+import torch.multiprocessing as mp  # or just 'import multiprocessing as mp'
+
 chunkdata = []
 
 datacollection = False
@@ -113,6 +115,7 @@ class MainWindow(QWidget):
         self.nonFinalText = ""
         
         self.ip_address = get_local_ipv4()
+        
 
         #whisper
 
@@ -245,8 +248,8 @@ class MainWindow(QWidget):
 
         self.Grid_Layout.addWidget(self.video, 6, 0, 3, 1)
 
-        VIDEO_WIDTH = 640*1.5
-        VIDEO_HEIGHT = 480*1.5
+        VIDEO_WIDTH = 640
+        VIDEO_HEIGHT = 480
         self.video.setGeometry(QtCore.QRect(0, 0, VIDEO_WIDTH, VIDEO_HEIGHT))
 
         # Thread for internet check
@@ -944,6 +947,9 @@ def get_resolution_multiple_screens():
 
 # ================================================================== Main ==================================================================
 if __name__ == '__main__':
+    
+    # mp.set_start_method('spawn', force=True)
+
 
     #run with arguments
     #options:

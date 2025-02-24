@@ -12,10 +12,13 @@ from classes import DetectionObj
 
 from pipeline_config import detr_threshold
 
+
 class DETREngine:
     def __init__(self, detr_version="base"):
         print(torch.__version__, torch.cuda.is_available())
         torch.set_grad_enabled(False)
+        
+        print("[DETR Engine] Initializing DETR Engine")
 
         self.threshold = detr_threshold
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -65,7 +68,7 @@ class DETREngine:
         self.model.load_state_dict(checkpoint['model'], strict=True)
         print("[DETR_Engine] DETR Model loaded")
 
-        self.model.to(self.device)
+        # self.model.to(self.device)
         self.model.eval()
 
     @staticmethod
@@ -161,7 +164,6 @@ class DETREngine:
         img = self.cv2_to_pil(my_image)
         # print(f"[DETR Engine] Image conversion time: {time.time() - start_t}")
         img = self.transform(img).unsqueeze(0)
-        img = img.to(self.device)
         outputs = self.model(img)
         # print(f"[DETR Engine] Inference time: {time.time() - start_t}")
         probas_to_keep, bboxes_scaled = self.filter_bboxes_from_outputs(
