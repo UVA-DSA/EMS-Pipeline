@@ -513,7 +513,17 @@ public class CameraStreamActivity extends AppCompatActivity implements TextureVi
             @Override
             public void run() {
                 tds_instance.setProtocolBox(protocolBox);
-                CustomViewManager.getInstance().updateProtocolBox("Reset Button Pressed!", protocolBox);
+                CustomViewManager.getInstance().updateProtocolBox("Cognitive Assistant Reset!", protocolBox);
+            }
+        });
+    }
+
+    public void onExitReceived() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tds_instance.setProtocolBox(protocolBox);
+                CustomViewManager.getInstance().updateProtocolBox("Cognitive Assistant Stopped!", protocolBox);
             }
         });
     }

@@ -42,11 +42,11 @@ import PyQt5.QtWidgets,PyQt5.QtCore
 import py_trees
 from py_trees.blackboard import Blackboard
 
-from behaviours_m import *
+# from behaviours_m import *
 from DSP.amplitude import Amplitude
 from classes import SpeechNLPItem, GUISignal
 import TextSpeechStream
-import CognitiveSystem
+# import CognitiveSystem
 from EMS_Agent.Interface import EMSAgentSystem
 import Feedback
 import GoogleSpeechMicStream
@@ -66,7 +66,7 @@ from EMS_Agent.Interface import EMSTinyBERTSystem
 
 from StoppableThread.StoppableThread import StoppableThread
 
-from video_streaming import Thread
+from video_streaming import VideoThread
 from smartwatch_streaming import Thread_Watch
 from Feedback import FeedbackClient
 
@@ -115,6 +115,8 @@ class MainWindow(QWidget):
         self.nonFinalText = ""
         
         self.ip_address = get_local_ipv4()
+        
+        self.VideoThread = None
         
 
         #whisper
@@ -264,10 +266,10 @@ class MainWindow(QWidget):
        
 
         # Threads for video 
-        th = Thread(data_path, videostream)
-        th.changePixmap.connect(self.setImage)
-        th.changeVisInfo.connect(self.handle_message2)
-        th.start()  #Disabled for now
+        self.VideoThread = VideoThread(data_path, videostream)
+        self.VideoThread.changePixmap.connect(self.setImage)
+        self.VideoThread.changeVisInfo.connect(self.handle_message2)
+        self.VideoThread.start()  #Disabled for now
 
         # Threads for smartwatch
         th2 = Thread_Watch(data_path, smartwatchStream, pipeline_config.smartwatch_ip, pipeline_config.smartwatch_port)
@@ -525,14 +527,23 @@ class MainWindow(QWidget):
     # Called when closing the GUI
     def closeEvent(self, event):
         print('Closing GUI')
+        self.feedback_client.send_message("Exiting!", 'exit')
+        self.feedback_client.sio.disconnect()
+        self.feedback_client.stop()
         # self.th2.exit()
         self.internet_check_thread.stop()
         self.stopped = 1
         self.reset = 1
+        self.VideoThread.stop()
+        
         SpeechToNLPQueue.put('Kill')
-        EMSAgentSpeechToNLPQueue.put('Kill')
+        EMSAgentSpeechToNLPQueue.put('Exit')
         FeedbackQueue.put('Kill')
         event.accept()
+        
+        # self.th2.join()
+        
+        
 
     @pyqtSlot()
     def SaveButtonClick(self):
@@ -678,21 +689,21 @@ class MainWindow(QWidget):
             print("Hard-coded Audio File Speech Thread Started")
 
         # ==== Start the Cognitive System Thread
-        if(self.CognitiveSystemThread == None):
-            print("Cognitive System Thread Started")
-            self.CognitiveSystemThread = StoppableThread(
-                target=CognitiveSystem.CognitiveSystem, args=(self, SpeechToNLPQueue, FeedbackQueue, data_path, conceptExtractionStream, interventionStream,))
-            # self.CognitiveSystemThread.start()
+        # if(self.CognitiveSystemThread == None):
+        #     print("Cognitive System Thread Started")
+        #     self.CognitiveSystemThread = StoppableThread(
+        #         target=CognitiveSystem.CognitiveSystem, args=(self, SpeechToNLPQueue, FeedbackQueue, data_path, conceptExtractionStream, interventionStream,))
+        #     # self.CognitiveSystemThread.start()
 
 
 
 
          # ==== Start the Feedback Thread ==== #
-        if(self.FeedbackThread == None):
-            print("Feedback Thread Started")
-            self.FeedbackThread = StoppableThread(
-                target=Feedback.FeedbackClient, args=(self, data_path, FeedbackQueue))
-            # self.FeedbackThread.start()
+        # if(self.FeedbackThread == None):
+        #     print("Feedback Thread Started")
+        #     self.FeedbackThread = StoppableThread(
+        #         target=Feedback.FeedbackClient, args=(self, data_path, FeedbackQueue))
+        #     # self.FeedbackThread.start()
 
     @pyqtSlot()
     def StopButtonClick(self):
@@ -703,6 +714,7 @@ class MainWindow(QWidget):
         self.StartButton.setEnabled(True)
         self.ComboBox.setEnabled(True)
         self.ResetButton.setEnabled(True)
+        self.SpeechThread.stop()
 
     @pyqtSlot()
     def GenerateFormButtonClick(self):

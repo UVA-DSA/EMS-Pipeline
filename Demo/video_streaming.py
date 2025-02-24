@@ -2,6 +2,7 @@
 
 import csv
 import os
+import scipy
 import time
 import math
 import datetime
@@ -40,7 +41,6 @@ from multiprocessing import Process, Queue
 
 from EMS_Vision.ObjectDetector import ObjectDetector
 from pipeline_config import socketio_ipaddr
-from Feedback import FeedbackClient
 
 from torch import multiprocessing
 
@@ -60,6 +60,7 @@ total_imgs=0
 
 image_queue = Queue(maxsize=1)
 display_queue = Queue()
+signal_queue = Queue()  
 
 #multiprocessing.set_start_method('forkserver')
 
@@ -117,7 +118,7 @@ def process_image(image):
 
 
 
-class Thread(QThread):
+class VideoThread(QThread):
 
 
     changePixmap = pyqtSignal(QImage)
@@ -143,7 +144,7 @@ class Thread(QThread):
 
         self.mediapipe_thread = threading.Thread(target=self.process_image)
 
-        self.object_detector = ObjectDetector(image_queue, display_queue)
+        self.object_detector = ObjectDetector(image_queue, display_queue, signal_queue)
 
         self.mp_hands = mp.solutions.hands.Hands(
             max_num_hands=1,
@@ -225,13 +226,21 @@ class Thread(QThread):
 
         
     def stop(self):
+        print("[INFO] Video Stream Thread stopping..")
         self.is_running = False
-        self.display_thread.join()
         self.sio.disconnect()
+        self.sio.eio.disconnect()
+        signal_queue.put("stop")
+        print("[INFO] Socketio Disconnected")
+        
+        # self.display_thread.join()
 
-        self.is_running = False
+        self.sio = None
         self.loop.call_soon_threadsafe(self.loop.stop)
         self.quit()
+        
+        print("[INFO] Video Stream Thread Stopped")
+        
 
 
 
@@ -328,6 +337,7 @@ class Thread(QThread):
     def run(self):
         while self.is_running:
             try:
+                print("[VIDEO STREAMING]: Attempting to connect to the socketio ...")
                 self.sio.connect(socketio_ipaddr)  # Connect to the Flask-SocketIO server
                 print("Connected to the server!")
                 self.sio.emit('message', 'Hello from Video QThread!')  # Send a message to the server

@@ -34,7 +34,7 @@ stop_event = threading.Event()
 audio_buff = queue.Queue(maxsize=16)
 wav_audio_buffer = queue.Queue()
 
-def audio_stream_UDP(stop_event):
+def audio_stream_UDP(current_stop_event):
     # AUDIO streaming variables and functions
 
     port = 2222
@@ -43,10 +43,10 @@ def audio_stream_UDP(stop_event):
     q = queue.Queue(10)
     sr.registerQueue(q)
 
-    print("\n\n *** UDP_STREAM: ",stop_event.is_set(), " *** \n\n")
+    print("\n\n *** UDP_STREAM: ",current_stop_event.is_set(), " *** \n\n")
     
     # receive and put audio data in queue
-    while not stop_event.is_set():
+    while not current_stop_event.is_set():
         if q.empty():
             time.sleep(1e-3)
         else:
@@ -60,7 +60,7 @@ def audio_stream_UDP(stop_event):
     sr.unregisterQueue(q)
     sr.close()
     print("Audio Server Terminated!")
-    stop_event.clear()
+    current_stop_event.clear()
 
 
                 
@@ -223,7 +223,7 @@ def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, data_path_st
 
     global stop_event
 
-
+    stop_event.clear()
     t1 = threading.Thread(target=audio_stream_UDP, args=(stop_event,))
     t1.start()
 

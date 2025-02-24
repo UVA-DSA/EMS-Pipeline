@@ -162,6 +162,8 @@ def WhisperMicStream(Window, TranscriptQueue, EMSAgentSpeechToNLPQueue):
 
     global stop_event
     
+    stop_event.clear()
+    
     # Start the playback thread
     _playback_thread = threading.Thread(target=playback_thread, args=(stop_event,))
     _playback_thread.start()

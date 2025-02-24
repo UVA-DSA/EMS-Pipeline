@@ -79,6 +79,17 @@ public class SocketStream {
                 }
             }
         });
+
+        socket.on("message", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("SocketIO Client", "R: Received Message! : " + args[0]);
+                if (feedbackCallback != null){
+                    feedbackCallback.onProtocolFeedbackReceived(args[0].toString());
+                }
+            }
+
+        });
         
         socket.on("protocolFeedback", new Emitter.Listener() {
             @Override
@@ -108,6 +119,16 @@ public class SocketStream {
                 Log.d("SocketIO Client", "R: Received Reset! : " + args[0]);
                 if (feedbackCallback != null){
                     feedbackCallback.onResetReceived();
+                }
+            }
+        });
+
+        socket.on("exit", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Log.d("SocketIO Client", "R: Received Exit Signal! : " + args[0]);
+                if (feedbackCallback != null){
+                    feedbackCallback.onExitReceived();
                 }
             }
         });

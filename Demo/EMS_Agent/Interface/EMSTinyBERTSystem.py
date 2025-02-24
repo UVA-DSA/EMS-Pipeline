@@ -245,7 +245,13 @@ class EMSAgentInference(QThread):
                 print("[Protocol Model Thread received reset signal. Resetting the narrative]")
                 narrative = ""
                 continue
-
+            if(received == 'Exit'):
+                print("[Protocol Model Thread received exit signal. Exiting..]")
+                narrative = ""
+                self.model.feedback_client.sio.disconnect()
+                self.model.feedback_client.stop()
+                break
+                
             print('=============================================================')
             try:
                 print(f'[Protocol model received transcript: {received.transcript}]')

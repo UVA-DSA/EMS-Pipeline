@@ -14,10 +14,11 @@ from socketio import Client
 from pipeline_config import detr_version, socketio_ipaddr, objectDetectionBoxesenabled
 
 class ObjectDetector(multiprocessing.Process):
-    def __init__(self, input_queue, output_queue):
+    def __init__(self, input_queue, output_queue, signal_queue):
         super(ObjectDetector, self).__init__()
         self.input_queue = input_queue
         self.output_queue = output_queue
+        self.signal_queue = signal_queue
         self.detr_engine = None
         self.feedback_client = FeedbackClient()
         self.detected_objects = [] #list of identified objects 
@@ -59,7 +60,25 @@ class ObjectDetector(multiprocessing.Process):
         while True:
             #print("ObjectDetector: Waiting for frame")
             # print("ObjectDetector: Waiting for frame")
-            frame = self.input_queue.get()
+            try:
+                signal = self.signal_queue.get_nowait()
+                if signal == 'stop':
+                    print("[ObjectDetector]: Exiting")
+                    self.feedback_client.sio.disconnect()
+                    self.feedback_client.stop()
+                    break
+            except:
+                signal = None
+                
+            try:
+                frame = self.input_queue.get_nowait()
+            except:
+                frame = None
+                continue
+            
+
+
+            
             #print("ObjectDetector: Got frame")
             # print("ObjectDetector: Got frame")
             # # Do some object detection

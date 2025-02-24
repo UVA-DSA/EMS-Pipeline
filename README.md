@@ -145,6 +145,18 @@ pip install -q torch-geometric==2.3.1
 ```bash
 pip install pyyaml transformers pyqt5 pandas openpyxl evaluate jiwer
 sudo apt-get install libxcb-randr0-dev libxcb-xtest0-dev libxcb-xinerama0-dev libxcb-shape0-dev libxcb-xkb-dev
+
+pip install pyaudio
+pip install nltk
+pip install python-socketio
+pip install google-cloud-speech
+pip install pygame
+pip install sounddevice
+pip install mediapipe
+pip install netifaces
+pip install opencv-python-headless
+pip install pyqt5==5.15.6
+pip install py-trees==2.0.5
 ```
 
 ## Google Cloud Speech-to-Text API (Optional)
@@ -191,6 +203,13 @@ export LD_LIBRARY_PATH=/usr/lib/aarch64-linux-gnu/alsa-lib/:$LD_LIBRARY_PATH
 
 ### EMS-Whisper
 1. Download the `models` folder from [here](https://drive.google.com/drive/folders/1Z4oakBCSiSyW_agq3UG1eHsQDMmHKHOA?usp=sharing) and place it under `Demo/EMS_Whisper/models/`.
+2. Go to directory `Demo/EMS_Whisper`.
+3. Execute following commands to compile Whisper_CPP. Make sure to update `CUDA_ARCH_FLAG` in the `MakeFile` if `CUBLAS` is used (recommended).
+```bash
+make clean
+WHISPER_CUBLAS=1 make -j
+```
+4. Verify if `stream` artifact is generated within the folder.
 
 ### EMS-TinyBERT
 1. Download the `models` folder from [here](https://drive.google.com/drive/folders/1y4Ko6iSr5zkmYbm2llNQq7cwL-cu6Qi3?usp=sharing) and place it under `Demo/EMSAgent/Interface/models/`.
@@ -275,8 +294,4 @@ TBD.
 
 ---
 
-## Technical Documentation
-Coming soon.
-
----
 
