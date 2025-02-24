@@ -61,6 +61,7 @@ stop_event = threading.Event()
 
 # Initialize PyAudio
 
+silence = chr(0)*CHUNK_SIZE*CHANNELS*2
 
 def playback_thread(stop_event):
     p = pyaudio.PyAudio()
@@ -72,18 +73,18 @@ def playback_thread(stop_event):
     print("Started audio playback")
     sr = UDPStreamReceiver.UDPStreamReceiver(2222)
 
-    q = queue.Queue(50)
+    q = queue.Queue(1024)
     sr.registerQueue(q)
 
     while not stop_event.is_set():
-        if q.empty():
-            time.sleep(1e-3)
-        else:
-            sample = (q.get())
+        if not q.empty():
+            sample = (q.get(block=False))
             if(sample is not None):
                 stream.write(sample[12:])
-                # print("Writing to stream")
-            
+            else:
+                stream.write(silence)
+            # print("Writing to stream")
+        
     print("Audio Server Terminated!")
     sr.unregisterQueue(q)
     sr.close()

@@ -62,6 +62,7 @@ def audio_stream_UDP(stop_event):
     print("Audio Server Terminated!")
     stop_event.clear()
 
+
                 
 
 
@@ -101,6 +102,8 @@ class MicrophoneStream(object):
         # self._audio_stream.stop_stream()
         # self._audio_stream.close()
         self.closed = True
+        stop_event.set()
+
         # Signal the generator to terminate so that the client's
         # streaming_recognize method will not block the process termination.
         # self._buff.put(None)  
