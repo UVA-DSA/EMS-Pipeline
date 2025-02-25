@@ -208,7 +208,7 @@ class MainWindow(QWidget):
 
 
         self.Box = QVBoxLayout()
-        self.Grid_Layout.addLayout(self.Box, 8, 1, 1, 1)
+        self.Grid_Layout.addLayout(self.Box, 5, 1, 4, 1)
 
         # Create label and textbox for Vision Information
         self.VisionInformationLabel = QLabel()
@@ -228,7 +228,7 @@ class MainWindow(QWidget):
         # self.Box.sizePolicy.setHorizontalStretch(1)
         # Create label and textbox for Smartwatch
         self.Box2 = QVBoxLayout()
-        self.Grid_Layout.addLayout(self.Box2, 6, 1, 2, 1)
+        self.Grid_Layout.addLayout(self.Box2, 2, 1, 2, 1)
 
         self.SmartwatchLabel = QLabel()
         self.SmartwatchLabel.setText("<b>Smartwatch Activity</b>")
@@ -366,19 +366,19 @@ class MainWindow(QWidget):
         self.VUMeterPanelGridLayout.addWidget(self.VUMeter, 0, 1, 1, 1)
 
         # Create label and textbox for Concept Extraction
-        self.ConceptExtractionLabel = QLabel()
-        self.ConceptExtractionLabel.setText("<b>Concept Extraction</b>")
-        self.Grid_Layout.addWidget(self.ConceptExtractionLabel, 1, 1, 1, 1)
+        # self.ConceptExtractionLabel = QLabel()
+        # self.ConceptExtractionLabel.setText("<b>Concept Extraction</b>")
+        # self.Grid_Layout.addWidget(self.ConceptExtractionLabel, 1, 1, 1, 1)
 
-        self.ConceptExtractionSubLabel = QLabel()
-        self.ConceptExtractionSubLabel.setText(
-            "(Concept, Presence, Value, Confidence)")
-        self.Grid_Layout.addWidget(self.ConceptExtractionSubLabel, 2, 1, 1, 1)
+        # self.ConceptExtractionSubLabel = QLabel()
+        # self.ConceptExtractionSubLabel.setText(
+        #     "(Concept, Presence, Value, Confidence)")
+        # self.Grid_Layout.addWidget(self.ConceptExtractionSubLabel, 2, 1, 1, 1)
 
-        self.ConceptExtraction = QTextEdit()
-        self.ConceptExtraction.setReadOnly(True)
-        # self.ConceptExtraction.setFont(Box_Font)
-        self.Grid_Layout.addWidget(self.ConceptExtraction, 3, 1, 2, 1)
+        # self.ConceptExtraction = QTextEdit()
+        # self.ConceptExtraction.setReadOnly(True)
+        # # self.ConceptExtraction.setFont(Box_Font)
+        # self.Grid_Layout.addWidget(self.ConceptExtraction, 3, 1, 2, 1)
 
 
         # Add label, textbox for protcol name

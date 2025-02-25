@@ -286,8 +286,21 @@ To install and configure the **CognitiveEMS** Android application on the smartgl
 5. To toggle between Google Speech (Internet connectivity required) and Local Speech Model (Whisper) simply click the appropriate radio button.
 6. To run the pipeline, press `Start`.
 
+### Running the SocketIO Server
+
+1. To enable communication between the Cognitive Assistant and the smartglass application, socketio server needs to run in the background (Important ⚠️).
+2. Navigate to `EMS-Pipeline/Demo` folder.
+3. Activate the `Conda` environment.
+4. Run the server by executing `python flask_socket_server.py` and make sure it runs in the background.
+
+
 ### Running the AR Smartglass Application
-TBD.
+
+1. In the menu screen of the smartglass, open the application with the name `CognitveEMS`.
+2. Make sure that requested permissions from the app (mic,camera,network) is allowed and restart the application.
+3. There is no interaction with the application and if above steps with Cognitive Assistant and SocketIO server is properly executed, the app will communicate with the Cognitive Assistant.
+4. (Important ⚠️) The application may not be comlpetely optimized to use system resources. This was part of R&D and please use with that in mind. Application may close by itself (rarely) and may not maintain the connection with socket server over a long time (1+ hours).
+
 
 ### Running the Smartwatch Application
 TBD.
