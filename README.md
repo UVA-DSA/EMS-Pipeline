@@ -301,9 +301,15 @@ To install and configure the **CognitiveEMS** Android application on the smartgl
 3. There is no interaction with the application and if above steps with Cognitive Assistant and SocketIO server is properly executed, the app will communicate with the Cognitive Assistant.
 4. (Important ⚠️) The application may not be comlpetely optimized to use system resources. This was part of R&D and please use with that in mind. Application may close by itself (rarely) and may not maintain the connection with socket server over a long time (1+ hours).
 
+### Smartwatch Integration
+*In progress*
 
-### Running the Smartwatch Application
-TBD.
+
+### Demonstrating the system
+
+1. Once all above steps are executed and Cognitive Assistant is running, Smartglass application is running, you may test the system using following instructions.
+2. To begin speech recognition, make sure the Microphone radio button is pressed and start speaking to the smartglass. When Google speech is used, you should see immediate speech translation. THe protocol model will process the speech when it detects a pause in your speech. If Whisper model is used, make sure in the OS sound settings, output is selected to be virtual_speaker and input is virtual_mic.
+3. After a test, stop the speech recognition by pressing `stop` button in the main GUI. To clear the current speech transcript and protocol predictions, press `reset`. To start again, follow the above steps.
 
 ---
 
