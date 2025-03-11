@@ -12,5 +12,5 @@ while True:
     print(f"\r{epoch_ns}", end="", flush=True)
 
     # Short delay to avoid overwhelming output
-    time.sleep(0.001)  # 1 millisecond delay
+    time.sleep(0.01)  # 1 millisecond delay
 
