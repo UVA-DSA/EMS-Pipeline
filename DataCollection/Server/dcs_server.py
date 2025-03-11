@@ -47,7 +47,7 @@ image_index = 0
 
 
 # Smartwatch related vars
-smartwatch_ip = '172.27.176.73'
+smartwatch_ip = '192.168.0.101'
 smartwatch_port = 7889
 smartwatch_id = 'right'
 sw_thread = None
@@ -143,9 +143,9 @@ def init_recording(recording_info:RecordingInfo):
     if (arduino_thread == None):
         # arduino should be a multiprocessing process 
         arduino_thread = multiprocessing.Process(target=arduino_recorder.run)
-        # arduino_thread = threading.Thread(target=arduino_recorder.run)
-        arduino_recorder.start_recording()
-        arduino_thread.start()
+        # # arduino_thread = threading.Thread(target=arduino_recorder.run)
+        # arduino_recorder.start_recording()
+        # arduino_thread.start()
 
 
     # if (audio_thread == None):
@@ -253,7 +253,7 @@ def stop():
 
     if arduino_thread != None:
         print("Stopping arduino thread")
-        arduino_recorder.stop_recording()
+        # arduino_recorder.stop_recording()
         arduino_thread = None
     
     sendCommand("stop")

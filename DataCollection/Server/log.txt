@@ -7019,3 +7019,797 @@ INFO:werkzeug:172.27.184.149 - - [05/Sep/2024 11:58:10] "POST /socket.io/?EIO=4&
 INFO:werkzeug:172.27.184.149 - - [05/Sep/2024 11:58:10] "GET /socket.io/?EIO=4&transport=polling&sid=2ceRDybe10xZkX9JAAAA HTTP/1.1" 200 -
 INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:58:19] "[32mGET /stop HTTP/1.1[0m" 302 -
 INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 11:58:20] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://192.168.0.100:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:07:48] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:07:49] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:08:59] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:08:59] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:11:31] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:11:31] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:14:20] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:14:20] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:16:47] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:16:47] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:17:40] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:17:40] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:19:58] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:19:58] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:21:00] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:21:00] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:23:15] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:23:16] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:24:43] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:24:43] "POST /socket.io/?EIO=4&transport=polling&sid=6KR4KQimoB6IY88iAAAA HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:24:43] "GET /socket.io/?EIO=4&transport=polling&sid=6KR4KQimoB6IY88iAAAA HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:24:43] "POST /socket.io/?EIO=4&transport=polling&sid=6KR4KQimoB6IY88iAAAA HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:24:43] "GET /socket.io/?EIO=4&transport=polling&sid=6KR4KQimoB6IY88iAAAA HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:25:48] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:25:49] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:26:45] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:26:45] "POST /socket.io/?EIO=4&transport=polling&sid=zn71mP3C5K_NtIsUAAAC HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:26:45] "GET /socket.io/?EIO=4&transport=polling&sid=zn71mP3C5K_NtIsUAAAC HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:27:43] "GET /socket.io/?EIO=4&transport=websocket&sid=zn71mP3C5K_NtIsUAAAC HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:27:46] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:27:46] "POST /socket.io/?EIO=4&transport=polling&sid=vKDS6973NTSny8F-AAAE HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:27:47] "GET /socket.io/?EIO=4&transport=polling&sid=vKDS6973NTSny8F-AAAE HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:27:50] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:27:51] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:27:52] "GET /socket.io/?EIO=4&transport=websocket&sid=6KR4KQimoB6IY88iAAAA HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:31:17] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:31:17] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:32:19] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:32:20] "POST /socket.io/?EIO=4&transport=polling&sid=lck7EVN4hmh3cm92AAAG HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:32:20] "GET /socket.io/?EIO=4&transport=polling&sid=lck7EVN4hmh3cm92AAAG HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:33:30] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:33:31] "POST /socket.io/?EIO=4&transport=polling&sid=qNpok5hlGin4zKHbAAAI HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:33:31] "GET /socket.io/?EIO=4&transport=polling&sid=qNpok5hlGin4zKHbAAAI HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:33:31] "GET /socket.io/?EIO=4&transport=polling&sid=qNpok5hlGin4zKHbAAAI HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:33:31] "POST /socket.io/?EIO=4&transport=polling&sid=qNpok5hlGin4zKHbAAAI HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:33:53] "GET /socket.io/?EIO=4&transport=websocket&sid=vKDS6973NTSny8F-AAAE HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:33:56] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:33:57] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:33:58] "GET /socket.io/?EIO=4&transport=websocket&sid=lck7EVN4hmh3cm92AAAG HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:35:00] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:35:00] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:36:00] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:36:00] "POST /socket.io/?EIO=4&transport=polling&sid=TYaDo4puG9-VU2pAAAAK HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:36:00] "GET /socket.io/?EIO=4&transport=polling&sid=TYaDo4puG9-VU2pAAAAK HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:36:00] "POST /socket.io/?EIO=4&transport=polling&sid=TYaDo4puG9-VU2pAAAAK HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:36:00] "GET /socket.io/?EIO=4&transport=polling&sid=TYaDo4puG9-VU2pAAAAK HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:37:11] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:37:11] "POST /socket.io/?EIO=4&transport=polling&sid=khkHaawdHdCGqX0NAAAM HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:37:11] "GET /socket.io/?EIO=4&transport=polling&sid=khkHaawdHdCGqX0NAAAM HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:37:35] "GET /socket.io/?EIO=4&transport=websocket&sid=qNpok5hlGin4zKHbAAAI HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:37:42] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:37:42] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:37:43] "GET /socket.io/?EIO=4&transport=websocket&sid=TYaDo4puG9-VU2pAAAAK HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:38:10] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:38:10] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:39:20] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:39:20] "POST /socket.io/?EIO=4&transport=polling&sid=biMQ6r81BpP5mBuhAAAO HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:39:20] "GET /socket.io/?EIO=4&transport=polling&sid=biMQ6r81BpP5mBuhAAAO HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:39:20] "GET /socket.io/?EIO=4&transport=polling&sid=biMQ6r81BpP5mBuhAAAO HTTP/1.1" 200 -
+ERROR:engineio.server:post request handler error
+Traceback (most recent call last):
+  File "C:\Users\Alienware EMS Laptop\anaconda3\envs\cogems\lib\site-packages\engineio\server.py", line 294, in handle_request
+    socket.handle_post_request(environ)
+  File "C:\Users\Alienware EMS Laptop\anaconda3\envs\cogems\lib\site-packages\engineio\socket.py", line 111, in handle_post_request
+    p = payload.Payload(encoded_payload=body)
+  File "C:\Users\Alienware EMS Laptop\anaconda3\envs\cogems\lib\site-packages\engineio\payload.py", line 13, in __init__
+    self.decode(encoded_payload)
+  File "C:\Users\Alienware EMS Laptop\anaconda3\envs\cogems\lib\site-packages\engineio\payload.py", line 44, in decode
+    raise ValueError('Too many packets in payload')
+ValueError: Too many packets in payload
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:39:21] "POST /socket.io/?EIO=4&transport=polling&sid=biMQ6r81BpP5mBuhAAAO HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:40:31] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:40:31] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:40:31] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:40:31] "POST /socket.io/?EIO=4&transport=polling&sid=Q5Zw9Q5LnPUt2DpzAAAQ HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:40:31] "GET /socket.io/?EIO=4&transport=polling&sid=Q5Zw9Q5LnPUt2DpzAAAQ HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:40:31] "POST /socket.io/?EIO=4&transport=polling&sid=Q5Zw9Q5LnPUt2DpzAAAQ HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:40:31] "GET /socket.io/?EIO=4&transport=polling&sid=Q5Zw9Q5LnPUt2DpzAAAQ HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:40:31] "GET /socket.io/?EIO=4&transport=websocket&sid=khkHaawdHdCGqX0NAAAM HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:40:33] "GET /socket.io/?EIO=4&transport=websocket&sid=biMQ6r81BpP5mBuhAAAO HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:40:42] "GET /socket.io/?EIO=4&transport=websocket&sid=Q5Zw9Q5LnPUt2DpzAAAQ HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:40:43] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:40:43] "POST /socket.io/?EIO=4&transport=polling&sid=Ss6Ix9ukGLvH6on3AAAS HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:40:43] "GET /socket.io/?EIO=4&transport=polling&sid=Ss6Ix9ukGLvH6on3AAAS HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:40:43] "GET /socket.io/?EIO=4&transport=polling&sid=Ss6Ix9ukGLvH6on3AAAS HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:41:28] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:41:28] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:42:19] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:42:19] "POST /socket.io/?EIO=4&transport=polling&sid=Wa14ZcV5wFUJAABQAAAU HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:42:19] "GET /socket.io/?EIO=4&transport=polling&sid=Wa14ZcV5wFUJAABQAAAU HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:42:19] "GET /socket.io/?EIO=4&transport=polling&sid=Wa14ZcV5wFUJAABQAAAU HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:42:19] "POST /socket.io/?EIO=4&transport=polling&sid=Wa14ZcV5wFUJAABQAAAU HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:43:14] "GET /socket.io/?EIO=4&transport=websocket&sid=Wa14ZcV5wFUJAABQAAAU HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:43:17] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:43:18] "POST /socket.io/?EIO=4&transport=polling&sid=bBpses-GUAQx8Y1xAAAW HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:43:18] "GET /socket.io/?EIO=4&transport=polling&sid=bBpses-GUAQx8Y1xAAAW HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:43:48] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:43:48] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:43:48] "GET /socket.io/?EIO=4&transport=websocket&sid=Ss6Ix9ukGLvH6on3AAAS HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:45:16] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:45:16] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:46:16] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:46:16] "POST /socket.io/?EIO=4&transport=polling&sid=vJF2WHTWOws-xT8zAAAY HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:46:16] "GET /socket.io/?EIO=4&transport=polling&sid=vJF2WHTWOws-xT8zAAAY HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:47:27] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:47:27] "POST /socket.io/?EIO=4&transport=polling&sid=x1LcWuHL7OPgkww3AAAa HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:47:27] "GET /socket.io/?EIO=4&transport=polling&sid=x1LcWuHL7OPgkww3AAAa HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:47:27] "POST /socket.io/?EIO=4&transport=polling&sid=x1LcWuHL7OPgkww3AAAa HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:47:27] "GET /socket.io/?EIO=4&transport=polling&sid=x1LcWuHL7OPgkww3AAAa HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:47:40] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:47:41] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:47:41] "GET /socket.io/?EIO=4&transport=websocket&sid=bBpses-GUAQx8Y1xAAAW HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:47:42] "GET /socket.io/?EIO=4&transport=websocket&sid=vJF2WHTWOws-xT8zAAAY HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:50:57] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:50:57] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:51:59] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:52:00] "POST /socket.io/?EIO=4&transport=polling&sid=Rj6z23ZEPC8u0_CFAAAc HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:52:00] "GET /socket.io/?EIO=4&transport=polling&sid=Rj6z23ZEPC8u0_CFAAAc HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:53:07] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:53:07] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:53:08] "GET /socket.io/?EIO=4&transport=websocket&sid=x1LcWuHL7OPgkww3AAAa HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:53:09] "GET /socket.io/?EIO=4&transport=websocket&sid=Rj6z23ZEPC8u0_CFAAAc HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:53:10] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:53:10] "POST /socket.io/?EIO=4&transport=polling&sid=S9ne63nw5WSf89FaAAAe HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:53:10] "GET /socket.io/?EIO=4&transport=polling&sid=S9ne63nw5WSf89FaAAAe HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:53:52] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:53:52] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:54:46] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:54:46] "POST /socket.io/?EIO=4&transport=polling&sid=YRxlAkmRlPg0G1mqAAAg HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:54:46] "GET /socket.io/?EIO=4&transport=polling&sid=YRxlAkmRlPg0G1mqAAAg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:55:58] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:55:58] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:55:58] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:55:58] "POST /socket.io/?EIO=4&transport=polling&sid=J7V8zLFZ-vdVCCb-AAAi HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:55:58] "GET /socket.io/?EIO=4&transport=polling&sid=J7V8zLFZ-vdVCCb-AAAi HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:55:58] "GET /socket.io/?EIO=4&transport=websocket&sid=S9ne63nw5WSf89FaAAAe HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:55:58] "POST /socket.io/?EIO=4&transport=polling&sid=J7V8zLFZ-vdVCCb-AAAi HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:55:58] "GET /socket.io/?EIO=4&transport=polling&sid=J7V8zLFZ-vdVCCb-AAAi HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:55:59] "GET /socket.io/?EIO=4&transport=websocket&sid=YRxlAkmRlPg0G1mqAAAg HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://192.168.0.100:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:58:16] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:58:16] "POST /socket.io/?EIO=4&transport=polling&sid=OVxxbwOlpMA1rD3FAAAA HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:58:16] "GET /socket.io/?EIO=4&transport=polling&sid=OVxxbwOlpMA1rD3FAAAA HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:58:19] "GET /socket.io/?EIO=4&transport=websocket&sid=OVxxbwOlpMA1rD3FAAAA HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:58:19] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:58:20] "POST /socket.io/?EIO=4&transport=polling&sid=0RMqL7ixzE3ORYsGAAAC HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:58:20] "GET /socket.io/?EIO=4&transport=polling&sid=0RMqL7ixzE3ORYsGAAAC HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:58:32] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:58:32] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:58:35] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:58:36] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:59:25] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 19:59:25] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:59:56] "GET /socket.io/?EIO=4&transport=websocket&sid=0RMqL7ixzE3ORYsGAAAC HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:59:59] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:59:59] "POST /socket.io/?EIO=4&transport=polling&sid=441Z1KOgHhkLBghnAAAE HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 19:59:59] "GET /socket.io/?EIO=4&transport=polling&sid=441Z1KOgHhkLBghnAAAE HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:01:10] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:01:11] "POST /socket.io/?EIO=4&transport=polling&sid=kNe7wIfIyA2L_Ba0AAAG HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:01:11] "GET /socket.io/?EIO=4&transport=polling&sid=kNe7wIfIyA2L_Ba0AAAG HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:01:55] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:01:55] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:01:56] "GET /socket.io/?EIO=4&transport=websocket&sid=441Z1KOgHhkLBghnAAAE HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:01:57] "GET /socket.io/?EIO=4&transport=websocket&sid=kNe7wIfIyA2L_Ba0AAAG HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:01:58] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:01:58] "POST /socket.io/?EIO=4&transport=polling&sid=zZV6nxjgiM0RNUFTAAAI HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:01:58] "GET /socket.io/?EIO=4&transport=polling&sid=zZV6nxjgiM0RNUFTAAAI HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:02:39] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:02:39] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:03:35] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:03:35] "POST /socket.io/?EIO=4&transport=polling&sid=2vunl3bw7ojFLGqOAAAK HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:03:35] "GET /socket.io/?EIO=4&transport=polling&sid=2vunl3bw7ojFLGqOAAAK HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:03:35] "GET /socket.io/?EIO=4&transport=polling&sid=2vunl3bw7ojFLGqOAAAK HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:04:46] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:04:46] "POST /socket.io/?EIO=4&transport=polling&sid=xqm5xPk9wf7WC6-DAAAM HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:04:46] "GET /socket.io/?EIO=4&transport=polling&sid=xqm5xPk9wf7WC6-DAAAM HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:04:50] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:04:50] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:04:50] "GET /socket.io/?EIO=4&transport=websocket&sid=zZV6nxjgiM0RNUFTAAAI HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:04:51] "GET /socket.io/?EIO=4&transport=websocket&sid=2vunl3bw7ojFLGqOAAAK HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:05:21] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:05:21] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:06:23] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:06:23] "POST /socket.io/?EIO=4&transport=polling&sid=ICSzvGeHilG0DxmoAAAO HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:06:23] "GET /socket.io/?EIO=4&transport=polling&sid=ICSzvGeHilG0DxmoAAAO HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:07:30] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:07:30] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:07:31] "GET /socket.io/?EIO=4&transport=websocket&sid=xqm5xPk9wf7WC6-DAAAM HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:07:32] "GET /socket.io/?EIO=4&transport=websocket&sid=ICSzvGeHilG0DxmoAAAO HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:07:34] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:07:34] "GET /socket.io/?EIO=4&transport=polling&sid=LpV8Ku2cvEj1lgIbAAAQ HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:07:34] "POST /socket.io/?EIO=4&transport=polling&sid=LpV8Ku2cvEj1lgIbAAAQ HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:07:34] "GET /socket.io/?EIO=4&transport=polling&sid=LpV8Ku2cvEj1lgIbAAAQ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:08:17] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:08:17] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:08:19] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:08:20] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:08:27] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:08:27] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:09:35] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:09:35] "POST /socket.io/?EIO=4&transport=polling&sid=np-weCxWOjo949ofAAAS HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:09:35] "GET /socket.io/?EIO=4&transport=polling&sid=np-weCxWOjo949ofAAAS HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:10:36] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:10:37] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:10:37] "GET /socket.io/?EIO=4&transport=websocket&sid=LpV8Ku2cvEj1lgIbAAAQ HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:10:38] "GET /socket.io/?EIO=4&transport=websocket&sid=np-weCxWOjo949ofAAAS HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:10:39] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:10:39] "POST /socket.io/?EIO=4&transport=polling&sid=K2HNCVeD7ItcjR7UAAAU HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:10:39] "GET /socket.io/?EIO=4&transport=polling&sid=K2HNCVeD7ItcjR7UAAAU HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:11:07] "GET /socket.io/?EIO=4&transport=websocket&sid=K2HNCVeD7ItcjR7UAAAU HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:12:28] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:12:28] "POST /socket.io/?EIO=4&transport=polling&sid=qnASYQ7jmh41pNYlAAAW HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:12:28] "GET /socket.io/?EIO=4&transport=polling&sid=qnASYQ7jmh41pNYlAAAW HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:12:28] "GET /socket.io/?EIO=4&transport=polling&sid=qnASYQ7jmh41pNYlAAAW HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:12:48] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:12:48] "POST /socket.io/?EIO=4&transport=polling&sid=Rts5iUj5_M7UjZszAAAY HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:12:48] "GET /socket.io/?EIO=4&transport=polling&sid=Rts5iUj5_M7UjZszAAAY HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:12:48] "GET /socket.io/?EIO=4&transport=polling&sid=Rts5iUj5_M7UjZszAAAY HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:12:48] "POST /socket.io/?EIO=4&transport=polling&sid=Rts5iUj5_M7UjZszAAAY HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:12:53] "GET /socket.io/?EIO=4&transport=websocket&sid=qnASYQ7jmh41pNYlAAAW HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:12:53] "GET /socket.io/?EIO=4&transport=websocket&sid=Rts5iUj5_M7UjZszAAAY HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:12:54] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:12:54] "POST /socket.io/?EIO=4&transport=polling&sid=DlsGTwMi9Ej4AuSTAAAa HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:12:54] "GET /socket.io/?EIO=4&transport=polling&sid=DlsGTwMi9Ej4AuSTAAAa HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:12:54] "GET /socket.io/?EIO=4&transport=polling&sid=DlsGTwMi9Ej4AuSTAAAa HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:12:55] "GET /socket.io/?EIO=4&transport=websocket&sid=DlsGTwMi9Ej4AuSTAAAa HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:12:57] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:12:57] "POST /socket.io/?EIO=4&transport=polling&sid=92Ck7Ud7j3MsPjBSAAAc HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:12:57] "GET /socket.io/?EIO=4&transport=polling&sid=92Ck7Ud7j3MsPjBSAAAc HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:12:57] "GET /socket.io/?EIO=4&transport=polling&sid=92Ck7Ud7j3MsPjBSAAAc HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [05/Sep/2024 20:12:58] "GET /socket.io/?EIO=4&transport=websocket&sid=92Ck7Ud7j3MsPjBSAAAc HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:16:09] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:16:09] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:20:08] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:20:08] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:21:15] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:21:15] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:23:36] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:23:36] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:24:33] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:24:33] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:27:07] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:27:07] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:28:51] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:28:51] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:32:31] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:32:32] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:34:54] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:34:54] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:37:49] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [05/Sep/2024 20:37:50] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://192.168.0.100:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 18:52:48] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 18:52:48] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 18:53:04] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 18:53:04] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 18:55:40] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 18:55:41] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 18:56:01] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 18:56:01] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 18:57:15] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 18:57:15] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 18:59:03] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 18:59:03] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:01:33] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:01:34] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:04:21] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:04:21] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:07:10] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:07:10] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:08:16] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:08:16] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:11:14] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:11:14] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:14:28] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:14:28] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:17:10] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:17:11] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:17:55] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:17:55] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:20:19] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:20:20] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:23:01] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:23:02] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:24:33] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:24:33] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:25:30] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:25:30] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:26:58] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:26:58] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:29:43] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:29:43] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:32:23] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [06/Sep/2024 19:32:23] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://192.168.0.100:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:11:51] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:11:51] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:12:11] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:12:12] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:14:33] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:14:33] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:16:37] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:16:37] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:18:38] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:18:38] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:20:44] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:20:44] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:23:08] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:23:09] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:25:00] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:25:00] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:27:00] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:27:01] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:30:32] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:30:39] "[35m[1mPOST /start HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:30:40] "[36mGET /start?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:30:40] "[36mGET /start?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:30:40] "GET /start?__debugger__=yes&cmd=resource&f=console.png&s=JgORobTW2CYX1LXYJD4b HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:30:40] "[36mGET /start?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://192.168.0.100:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:31:13] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:31:22] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:31:22] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:33:45] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:33:45] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:35:51] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:35:51] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:38:06] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:38:06] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:38:33] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:38:33] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:40:29] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:40:30] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:46:14] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:46:15] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:48:23] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:48:23] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:52:28] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:52:28] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:55:01] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:55:01] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:55:57] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:55:57] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:58:19] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:58:19] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:59:03] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 20:59:03] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:00:56] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:00:56] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:03:21] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:03:21] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:05:28] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:05:28] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:08:49] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:08:49] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:11:26] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:11:27] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:12:11] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:12:11] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:14:04] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:14:05] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:29:20] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:29:20] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:31:57] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:31:58] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:32:56] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:32:56] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:34:57] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:34:57] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:35:27] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:35:27] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:37:53] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [12/Sep/2024 21:37:53] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://192.168.0.100:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://192.168.0.100:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 18:57:57] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 18:57:58] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:01:46] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:01:46] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:04:09] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:04:09] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://192.168.0.100:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:08:18] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:08:18] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:08:32] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:08:32] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:10:38] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:10:38] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:12:37] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:12:37] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:14:38] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:14:39] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:15:46] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:15:46] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:17:57] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:17:57] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:18:47] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:18:47] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:20:47] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:20:48] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:24:04] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:24:04] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:26:36] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:26:36] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:27:12] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:27:12] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:29:08] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:29:08] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:30:12] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:30:12] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:32:22] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:32:22] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:36:09] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:36:09] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:38:18] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:38:19] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:38:40] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:38:40] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:40:45] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:40:45] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:47:37] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:47:37] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:49:57] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:49:58] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:50:50] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:50:50] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:53:18] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:53:19] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:55:51] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:55:51] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:57:57] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 19:57:57] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 20:07:59] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 20:07:59] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 20:10:08] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 20:10:09] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 20:11:07] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 20:11:07] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 20:13:42] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 20:13:42] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 20:14:16] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 20:14:16] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 20:16:58] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [19/Sep/2024 20:16:59] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://192.168.0.101:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:35:20] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:35:20] "POST /socket.io/?EIO=4&transport=polling&sid=67oPk58eZuxf_BmmAAAA HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:35:20] "GET /socket.io/?EIO=4&transport=polling&sid=67oPk58eZuxf_BmmAAAA HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:35:20] "POST /socket.io/?EIO=4&transport=polling&sid=67oPk58eZuxf_BmmAAAA HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:35:20] "GET /socket.io/?EIO=4&transport=polling&sid=67oPk58eZuxf_BmmAAAA HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 15:35:44] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 15:35:44] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 15:36:01] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 15:36:01] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 15:36:04] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 15:36:04] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:36:55] "GET /socket.io/?EIO=4&transport=websocket&sid=67oPk58eZuxf_BmmAAAA HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:39:57] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:39:57] "POST /socket.io/?EIO=4&transport=polling&sid=WHcqqlhII54rSYP_AAAC HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:39:57] "GET /socket.io/?EIO=4&transport=polling&sid=WHcqqlhII54rSYP_AAAC HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:39:57] "GET /socket.io/?EIO=4&transport=polling&sid=WHcqqlhII54rSYP_AAAC HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://192.168.0.101:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:41:39] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:41:39] "GET /socket.io/?EIO=4&transport=polling&sid=nVAmHFK5hfp0r23jAAAA HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:41:39] "POST /socket.io/?EIO=4&transport=polling&sid=nVAmHFK5hfp0r23jAAAA HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:41:39] "GET /socket.io/?EIO=4&transport=polling&sid=nVAmHFK5hfp0r23jAAAA HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 15:43:31] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 15:43:31] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 15:43:40] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 15:43:40] "GET / HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'D:\\repos\\EMS-Pipeline\\DataCollection\\Server\\dcs_server.py', reloading
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://192.168.0.101:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:44:09] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:44:09] "POST /socket.io/?EIO=4&transport=polling&sid=V4yGx1na_OaX-qJrAAAA HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:44:09] "GET /socket.io/?EIO=4&transport=polling&sid=V4yGx1na_OaX-qJrAAAA HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:44:09] "GET /socket.io/?EIO=4&transport=polling&sid=V4yGx1na_OaX-qJrAAAA HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 15:44:10] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 15:44:16] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 15:44:16] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 15:44:51] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 15:44:51] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:44:54] "GET /socket.io/?EIO=4&transport=websocket&sid=V4yGx1na_OaX-qJrAAAA HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:44:55] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:44:55] "POST /socket.io/?EIO=4&transport=polling&sid=1YklL6gVgg4bOyK-AAAC HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:44:55] "GET /socket.io/?EIO=4&transport=polling&sid=1YklL6gVgg4bOyK-AAAC HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 15:45:41] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 15:45:41] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:47:13] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:47:14] "POST /socket.io/?EIO=4&transport=polling&sid=N1JygiqJwJD_0SxDAAAE HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:47:14] "GET /socket.io/?EIO=4&transport=polling&sid=N1JygiqJwJD_0SxDAAAE HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:47:52] "GET /socket.io/?EIO=4&transport=websocket&sid=1YklL6gVgg4bOyK-AAAC HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:48:25] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:48:25] "POST /socket.io/?EIO=4&transport=polling&sid=KxFnfvZ0vtqBbEnWAAAG HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:48:25] "GET /socket.io/?EIO=4&transport=polling&sid=KxFnfvZ0vtqBbEnWAAAG HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:49:22] "GET /socket.io/?EIO=4&transport=websocket&sid=N1JygiqJwJD_0SxDAAAE HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:49:29] "GET /socket.io/?EIO=4&transport=websocket&sid=KxFnfvZ0vtqBbEnWAAAG HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:49:32] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:49:32] "POST /socket.io/?EIO=4&transport=polling&sid=fNz2-t-wGoqcEtlnAAAI HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:49:32] "GET /socket.io/?EIO=4&transport=polling&sid=fNz2-t-wGoqcEtlnAAAI HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:49:32] "GET /socket.io/?EIO=4&transport=polling&sid=fNz2-t-wGoqcEtlnAAAI HTTP/1.1" 200 -
+ERROR:engineio.server:post request handler error
+Traceback (most recent call last):
+  File "C:\Users\Alienware EMS Laptop\anaconda3\envs\cogems\lib\site-packages\engineio\server.py", line 294, in handle_request
+    socket.handle_post_request(environ)
+  File "C:\Users\Alienware EMS Laptop\anaconda3\envs\cogems\lib\site-packages\engineio\socket.py", line 111, in handle_post_request
+    p = payload.Payload(encoded_payload=body)
+  File "C:\Users\Alienware EMS Laptop\anaconda3\envs\cogems\lib\site-packages\engineio\payload.py", line 13, in __init__
+    self.decode(encoded_payload)
+  File "C:\Users\Alienware EMS Laptop\anaconda3\envs\cogems\lib\site-packages\engineio\payload.py", line 44, in decode
+    raise ValueError('Too many packets in payload')
+ValueError: Too many packets in payload
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:49:33] "POST /socket.io/?EIO=4&transport=polling&sid=fNz2-t-wGoqcEtlnAAAI HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:50:43] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:50:43] "POST /socket.io/?EIO=4&transport=polling&sid=s7Ma2SjWTLSLcbQuAAAK HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:50:43] "GET /socket.io/?EIO=4&transport=polling&sid=s7Ma2SjWTLSLcbQuAAAK HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:51:45] "GET /socket.io/?EIO=4&transport=websocket&sid=fNz2-t-wGoqcEtlnAAAI HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:51:54] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:51:54] "POST /socket.io/?EIO=4&transport=polling&sid=e3L5pLoWc_FGtl2CAAAM HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:51:54] "GET /socket.io/?EIO=4&transport=polling&sid=e3L5pLoWc_FGtl2CAAAM HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:51:54] "POST /socket.io/?EIO=4&transport=polling&sid=e3L5pLoWc_FGtl2CAAAM HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:51:54] "GET /socket.io/?EIO=4&transport=polling&sid=e3L5pLoWc_FGtl2CAAAM HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:52:55] "GET /socket.io/?EIO=4&transport=websocket&sid=s7Ma2SjWTLSLcbQuAAAK HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:53:05] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:53:05] "POST /socket.io/?EIO=4&transport=polling&sid=D4s70De73KAxkQlvAAAO HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:53:06] "GET /socket.io/?EIO=4&transport=polling&sid=D4s70De73KAxkQlvAAAO HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:54:06] "GET /socket.io/?EIO=4&transport=websocket&sid=e3L5pLoWc_FGtl2CAAAM HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:54:17] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:54:17] "POST /socket.io/?EIO=4&transport=polling&sid=V6CIekCJiGMixnxIAAAQ HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:54:17] "GET /socket.io/?EIO=4&transport=polling&sid=V6CIekCJiGMixnxIAAAQ HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:55:10] "GET /socket.io/?EIO=4&transport=websocket&sid=V6CIekCJiGMixnxIAAAQ HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:55:12] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:55:13] "POST /socket.io/?EIO=4&transport=polling&sid=iGmiIRyiaqIP60bLAAAS HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:55:13] "GET /socket.io/?EIO=4&transport=polling&sid=iGmiIRyiaqIP60bLAAAS HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:55:13] "GET /socket.io/?EIO=4&transport=websocket&sid=D4s70De73KAxkQlvAAAO HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:56:10] "GET /socket.io/?EIO=4&transport=websocket&sid=iGmiIRyiaqIP60bLAAAS HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:56:12] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:56:12] "POST /socket.io/?EIO=4&transport=polling&sid=DX9iUS0ar6IAIU8rAAAU HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:56:12] "GET /socket.io/?EIO=4&transport=polling&sid=DX9iUS0ar6IAIU8rAAAU HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:56:13] "GET /socket.io/?EIO=4&transport=polling&sid=DX9iUS0ar6IAIU8rAAAU HTTP/1.1" 200 -
+ERROR:engineio.server:post request handler error
+Traceback (most recent call last):
+  File "C:\Users\Alienware EMS Laptop\anaconda3\envs\cogems\lib\site-packages\engineio\server.py", line 294, in handle_request
+    socket.handle_post_request(environ)
+  File "C:\Users\Alienware EMS Laptop\anaconda3\envs\cogems\lib\site-packages\engineio\socket.py", line 111, in handle_post_request
+    p = payload.Payload(encoded_payload=body)
+  File "C:\Users\Alienware EMS Laptop\anaconda3\envs\cogems\lib\site-packages\engineio\payload.py", line 13, in __init__
+    self.decode(encoded_payload)
+  File "C:\Users\Alienware EMS Laptop\anaconda3\envs\cogems\lib\site-packages\engineio\payload.py", line 44, in decode
+    raise ValueError('Too many packets in payload')
+ValueError: Too many packets in payload
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:56:13] "POST /socket.io/?EIO=4&transport=polling&sid=DX9iUS0ar6IAIU8rAAAU HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:57:23] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:57:24] "POST /socket.io/?EIO=4&transport=polling&sid=b3SdyQbS6ARUB9jgAAAW HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:57:24] "GET /socket.io/?EIO=4&transport=polling&sid=b3SdyQbS6ARUB9jgAAAW HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:57:24] "GET /socket.io/?EIO=4&transport=polling&sid=b3SdyQbS6ARUB9jgAAAW HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:57:24] "POST /socket.io/?EIO=4&transport=polling&sid=b3SdyQbS6ARUB9jgAAAW HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 15:58:03] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 15:58:04] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:58:05] "GET /socket.io/?EIO=4&transport=websocket&sid=DX9iUS0ar6IAIU8rAAAU HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:58:07] "GET /socket.io/?EIO=4&transport=websocket&sid=b3SdyQbS6ARUB9jgAAAW HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:58:08] "GET /socket.io/?EIO=4&transport=polling HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:58:08] "POST /socket.io/?EIO=4&transport=polling&sid=TYVHQhr-qrc_KZmwAAAY HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:58:08] "GET /socket.io/?EIO=4&transport=polling&sid=TYVHQhr-qrc_KZmwAAAY HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 15:58:08] "GET /socket.io/?EIO=4&transport=polling&sid=TYVHQhr-qrc_KZmwAAAY HTTP/1.1" 200 -
+INFO:werkzeug:192.168.0.102 - - [20/Sep/2024 16:00:40] "GET /socket.io/?EIO=4&transport=websocket&sid=TYVHQhr-qrc_KZmwAAAY HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 16:11:28] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 16:11:29] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 16:16:47] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 16:16:48] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 16:28:29] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 16:28:29] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 16:34:39] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 16:34:39] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 16:45:37] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 16:45:37] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 16:51:55] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 16:51:56] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 16:58:51] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 16:58:51] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 17:03:41] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 17:03:42] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 17:13:34] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 17:13:34] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 17:19:31] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [20/Sep/2024 17:19:31] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://192.168.0.100:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug: * Detected change in 'D:\\repos\\EMS-Pipeline\\DataCollection\\Server\\dcs_server.py', reloading
+INFO:werkzeug: * Restarting with stat
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://192.168.0.100:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 17:55:49] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 17:55:49] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 17:56:34] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 17:56:34] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 17:58:15] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 17:58:16] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:01:02] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:01:02] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:03:16] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:03:16] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:03:49] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:03:49] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:06:11] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:06:12] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:07:40] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:07:40] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:09:55] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:09:55] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:13:59] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:13:59] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:16:31] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:16:31] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:17:29] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:17:29] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:19:57] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:19:57] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:23:05] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:23:05] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:25:34] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:25:34] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:38:12] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:38:12] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:40:39] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:40:39] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:41:58] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:41:58] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:44:25] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:44:25] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:48:14] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:48:14] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:49:49] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:49:50] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:50:31] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:50:31] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:52:49] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [24/Sep/2024 18:52:49] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://192.168.0.100:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:21:43] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:21:43] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:22:36] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:22:44] "[35m[1mPOST /start HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:22:45] "[36mGET /start?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:22:45] "[36mGET /start?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:22:45] "GET /start?__debugger__=yes&cmd=resource&f=console.png&s=kyPCTF5nCUfRV2pzBVwg HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:22:47] "[36mGET /start?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8389
+ * Running on http://192.168.0.100:8389
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 853-105-903
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:23:58] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:24:04] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:24:04] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:24:20] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:24:21] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:26:51] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:26:51] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:31:51] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:31:51] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:35:18] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:35:18] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:40:54] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:40:54] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:49:47] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:49:47] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:56:10] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 17:56:11] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 18:10:38] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 18:10:38] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 18:18:19] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 18:18:19] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 18:21:10] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 18:21:10] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 18:25:35] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 18:25:36] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 18:29:18] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 18:29:18] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 18:33:13] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 18:33:13] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 18:35:56] "[32mPOST /start HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 18:35:56] "GET /recording_in_progress HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 18:39:27] "[32mGET /stop HTTP/1.1[0m" 302 -
+INFO:werkzeug:127.0.0.1 - - [23/Oct/2024 18:39:27] "GET / HTTP/1.1" 200 -
