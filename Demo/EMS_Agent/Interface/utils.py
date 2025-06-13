@@ -13,7 +13,6 @@ import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 
-cahcedStopwords = stopwords.words('english')
 
 from nltk.data import find
 
@@ -35,6 +34,9 @@ def download_nltk_data(dataset_name):
 # Check and download stopwords and punkt
 download_nltk_data('stopwords')
 download_nltk_data('punkt')
+download_nltk_data('punkt_tab')
+
+cahcedStopwords = stopwords.words('english')
 
 class AttrDict(dict):
     def __getattr__(self, attr):

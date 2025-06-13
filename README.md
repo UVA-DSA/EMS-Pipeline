@@ -118,12 +118,14 @@ For hardware matching [recommended specifications](#hardware-requirements), use 
 ```bash
 cd Demo/
 
+# Make sure your system is up-to-date
+sudo apt update
+sudo apt upgrade
+
 # dependencies for pyaudio
 sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
 sudo apt-get install ffmpeg libav-tools
 
-# create the conda environment
-conda env create --file environment.yml
 ```
 
 #### Custom Setup
@@ -132,6 +134,8 @@ Manually install dependencies:
 1. Identify your CUDA version using `nvidia-smi`.
 2. Use the [PyTorch installation guide](https://pytorch.org/get-started/locally/) to install PyTorch (v2.5.1 tested), torchvision, and torchaudio for your system.
 ```bash
+
+conda create -n EMSProject python=3.10
 conda activate EMSProject
 pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu118
 
@@ -143,7 +147,7 @@ pip install -q torch-geometric==2.3.1
 
 3. Install additional packages:
 ```bash
-pip install pyyaml transformers pyqt5 pandas openpyxl evaluate jiwer
+pip install pyyaml transformers==4.27.2 pyqt5 pandas openpyxl evaluate jiwer
 sudo apt-get install libxcb-randr0-dev libxcb-xtest0-dev libxcb-xinerama0-dev libxcb-shape0-dev libxcb-xkb-dev
 
 pip install pyaudio

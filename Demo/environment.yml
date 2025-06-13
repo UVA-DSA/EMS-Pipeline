@@ -151,21 +151,15 @@ dependencies:
     - threadpoolctl==3.1.0
     - tokenizers==0.13.2
     - tomli==2.0.1
-    - torch==1.12.1+cu113
-    - torch-geometric==2.2.0
-    - torch-scatter==2.1.1
-    - torch-sparse==0.6.17
-    - torchaudio==0.12.1+cu113
-    - torchvision==0.13.1+cu113
     - tornado==6.1
     - tqdm==4.63.0
     - transformers==4.27.2
     - typing-extensions==4.5.0
     - tzdata==2022.1
-    - tzlocal==4.1
+    - tzlocal==4.1EMSProject
     - urllib3==1.26.9
     - werkzeug==3.0.2
     - wheel==0.38.4
     - wsproto==1.2.0
-prefix: EMSProject
+prefix: EMSProject_Demo
 

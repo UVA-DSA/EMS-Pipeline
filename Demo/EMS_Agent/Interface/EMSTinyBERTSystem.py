@@ -5,7 +5,7 @@ from EMS_Agent.Interface.default_sets import seed_everything, device, ungroup_p_
 import numpy as np
 import warnings
 import yaml
-from EMS_Agent.Interface.utils import AttrDict, onehot2p, convert_label, preprocess
+from EMS_Agent.Interface.utils import AttrDict, onehot2p, convert_label, preprocess, download_nltk_data
 from EMS_Agent.Interface.default_sets import model_name
 from EMS_Agent.Interface.Heterogeneous_graph import HeteroGraph
 from EMS_Agent.Interface.model import EMSMultiModel
@@ -33,7 +33,12 @@ class EMSTinyBERT(nn.Module):
         self.config = config
         self.device = torch.device("cuda")
 
-        self.tokenizer = BertTokenizer.from_pretrained(self.config.backbone, do_lower_Case=True, local_files_only=True)
+        # download nltk data
+        download_nltk_data('stopwords')
+        download_nltk_data('punkt')
+        download_nltk_data('punkt_tab')
+
+        self.tokenizer = BertTokenizer.from_pretrained(self.config.backbone, do_lower_Case=True, local_files_only=False)
         self.clean_model_date = date
         self.save_model_root = os.path.join('EMS_Agent/Interface/models', '{}'.format(self.clean_model_date))
         if self.config.graph == 'hetero':
