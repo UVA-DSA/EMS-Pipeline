@@ -14,7 +14,7 @@ def spawn_network():
 "' Code for the GUI"
 
 from PyQt5.QtCore import *
-from PyQt.QtWidgets import *
+from PyQt5.QtWidgets import *
 from PyQt5.QtGUI import *
 from PyQt5 import QTCore
 from PyQt5.QtMultimediaWidgets import *
@@ -51,18 +51,27 @@ def network_process(event):
 
 "'GUI/Window  class"
 class gui_window(QWidget):
-    def __init__(self,application):
+    def __init__(self,application,queue):
         super(gui_window,self).init()
         self.app = application
+        self.command_queue = queue
         
-        
-        
+        main_layout = QVBoxLayout()
         
         ##setting up window
         self.screen_resolution = self.app.desktop().screenGeometry ##Todo: test to make sure this actually works
-        self.width = self.screen_resoluton.width()
-        self.height = self.screen_resoluton.height()
+        self.width = self.screen_resolution.width()
+        self.height = self.screen_resolution.height()
         self.setWindowTitle('CognitiveEMS Debugging Demo')
+
+
+        ################button creatoin
+        self.protocol_button_start = QPushButton('Protocol Start', self)
+        self.protocol_button_step - QPushButton('Protocol Stop',self)
+        main_layout.addWidget(self.protocol_button_start)
+        main_layout.addWidget(self.protocol_button_stop)
+        
+
 
         ####event creation for each possible process
         self.protocol_event = Event()
@@ -156,7 +165,9 @@ import py_trees
 from py_trees.blackboard import Blackboard
 
 
-
+##############
+"'Code that runs on start up'"
+import sys
 
 if __name__ == "__main__":
     
