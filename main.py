@@ -52,7 +52,7 @@ def network_process(event):
 "'GUI/Window  class"
 class gui_window(QWidget):
     def __init__(self,application,queue):
-        super(gui_window,self).init()
+        super(gui_window,self).__init__()
         self.app = application
         self.command_queue = queue
         
@@ -67,9 +67,14 @@ class gui_window(QWidget):
 
         ################button creatoin
         self.protocol_button_start = QPushButton('Protocol Start', self)
-        self.protocol_button_step - QPushButton('Protocol Stop',self)
+        self.protocol_button_stop = QPushButton('Protocol Stop',self)
         main_layout.addWidget(self.protocol_button_start)
         main_layout.addWidget(self.protocol_button_stop)
+
+        self.vision_button_start = QPushButton('Vision Start',self)
+        self.vision_button_stop = QPushButton('Vision Stop' , self)
+        main_layout.addWidget(self.vision_button_start)
+        main_layout.addWidget(self.vision_button_stop)
         
 
 
