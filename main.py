@@ -1,15 +1,6 @@
 import multiprocessing as mp
 from multiprocessing import Process, Queue
-
-
-def spawn_vision():
-    return
-def spawn_network():
-    return
-
-
-
-
+#""event being set corresponds to the start button getting clikced""
 ############################################################################################################################################################################################################
 "' Code for the GUI"
 
@@ -26,27 +17,27 @@ from multiprocessing import Event
 ######################
 "'Process spawning"
 def protocol_process(event):
-    while True:
+    while event.is_set() is True:
         print("Protocol Process/Thread Running")
 
 def feedback_process(event):
-    while True:
+    while event.is_set() is True:
         print("Feedback Process Running")
 
 def speech_process(event):
-    while True:
+    while event.is_set() is True:
         print("Speech Process Running")
     
 def vision_process(event):
-    while True:
+    while event.is_set() is True:
         print("Vision process Running")
 
 def network_process(event):
-    while True:
+    while event.is_set() is True:
         print("Network Process Running")
 
 ######################
-###avoid .terminate since it is not a clean shutdown of the process
+###avoid terminate since it is not a clean shutdown of the process
 
 
 "'GUI/Window  class"
@@ -65,14 +56,14 @@ class gui_window(QWidget):
         self.setWindowTitle('CognitiveEMS Debugging Demo')
 
 
-        ################button creatoin
+        ################button creation
         self.protocol_button_start = QPushButton('Protocol Start', self)
         self.protocol_button_stop = QPushButton('Protocol Stop',self)
         main_layout.addWidget(self.protocol_button_start)
         main_layout.addWidget(self.protocol_button_stop)
 
-        self.vision_button_start = QPushButton('Vision Start',self)
-        self.vision_button_stop = QPushButton('Vision Stop' , self)
+        self.vision_start_button = QPushButton('Vision Start',self)
+        self.vision_stop_button = QPushButton('Vision Stop' , self)
         main_layout.addWidget(self.vision_button_start)
         main_layout.addWidget(self.vision_button_stop)
         
@@ -118,58 +109,59 @@ class gui_window(QWidget):
 
 ###function for what happens when a button is clicked
     def start_protocol(self):
-        self.protocol_event.clear()
+        self.protocol_event.set()
         self.protocol = mp.Process(target=protocol_process,args=(self.protocol_event,))
         print("Protocol start")
         self.processes.append(self.protocol)
         self.protocol.start()
 
     def stop_protocol(self): 
-        self.protocol_event.set()
+        self.protocol_event.clear()
+        self.processes.remove(self.protocol)
         print("Protocol stopped")
 
     def vision_start(self):
-        self.vision_event.clear()
+        self.vision_event.set()
         self.vision = mp.Process(target=vision_process,args=(self.vision_event,))
         print("Vision start")
         self.processes.append(self.vision)
         self.vision.start()
 
     def vision_stop(self):
-        self.vision_event.set()
+        self.vision_event.clear()
         print("Vision stopped")
 
     def network_start(self):
-        self.network_event.clear()
+        self.network_event.set()
         self.network = mp.Process(target=network_process,args=(self.network_event,))
         print("Network started")
         self.processes.append(self.network)
         self.network.start()
 
     def network_stop(self):
-        self.network_event.set()
+        self.network_event.clear()
         print("Network stopped")
 
     def speech_start(self):
-        self.speech_event.clear()
+        self.speech_event.set()
         self.speech = mp.Process(target=speech_process,args=(self.speech_event,))
         print("Speech started")
         self.processes.append(self.speech)
         self.speech.start()
 
     def speech_stop(self):
-        self.speech_event.set()
+        self.speech_event.clear()
         print("Speech stopped")
 
     def feedback_start(self):
-        self.feedback_event.clear()
+        self.feedback_event.set()
         self.feedback = mp.Process(target=feedback_process,args=(self.feedback_event,))
         print("Feedback started")
         self.processes.append(self.feedback)
         self.feedback.start()
         
     def feedback_stop(self):
-        self.feedback_event.set()
+        self.feedback_event.clear()
         print("Feedback stopped")
 #################################################
 
@@ -202,3 +194,7 @@ if __name__ == "__main__":
     print(f"height: {Window.height}")
 
     Window.show()
+
+
+####################################################################################
+#if you do not want to load in the process each time the start button is called then you can create the processes outside of the class and just pass htem in as class parameters to the initializatino at which point it will just be equated to the class variable process for each of the 5 process types
