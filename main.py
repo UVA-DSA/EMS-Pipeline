@@ -76,8 +76,23 @@ class gui_window(QWidget):
         main_layout.addWidget(self.vision_button_start)
         main_layout.addWidget(self.vision_button_stop)
         
+        self.network_start_button = QPushButton('Network Start',self)
+        self.network_end_button = QPushButton('Network Stop',self)
+        main_layout.addWidget(self.network_start_button)
+        main_layout.addWidget(self.network_end_button)  
 
+        self.speech_start_button = QPushButton('Speech Start',self)
+        self.speech_stop_button = QPushButton('Speech Stop',self)
+        main_layout.addWidget(self.speech_start_button)
+        main_layout.addWidget(self.speech_stop_button)  
 
+        self.feedback_start_button = QPushButton('Feedback Start',self)
+        self.feedback_stopped_button = QPushButton('Feedback Stop',self)
+        main_layout.addWidget(self.feedback_start_button)
+        main_layout.addWidget(self.feedback_stopped_button)
+        
+        
+        self.setLayout(main_layout)
         ####event creation for each possible process
         self.protocol_event = Event()
         self.vision_event = Event()
