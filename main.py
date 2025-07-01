@@ -89,7 +89,15 @@ class gui_window(QWidget):
         main_layout.addWidget(self.feedback_stopped_button)
         print("Feedback buttons created")
         
-        
+
+
+
+    #########################################Text box updates and set up
+        self.protocol_box = QTextEdit()
+        self.protocol_box.setReadOnly(True)
+        self.protocol_box.setStyleSheet("background-color: #1E1E1E; color: white; font-size: 14px; font-family: Arial;")    
+        self.protocol_box.setOverwriteMode(True)
+        main_layout.addWidget(self.protocol_box)
         ####event creation for each possible process
         self.protocol_event = Event()
         self.vision_event = Event()
@@ -199,7 +207,6 @@ if __name__ == "__main__":
 
 
     Window.show()
-    
     ##Debug information
     print(f"width: {Window.width}")
     print(f"height: {Window.height}")
