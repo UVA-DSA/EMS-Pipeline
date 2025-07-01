@@ -6,35 +6,36 @@ from multiprocessing import Process, Queue
 
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
-from PyQt5.QtGUI import *
-from PyQt5 import QTCore
+from PyQt5.QtGui import *
+from PyQt5 import QtCore
 from PyQt5.QtMultimediaWidgets import *
 from PyQt5.QtMultimedia import *
 
 
 from multiprocessing import Event
+from datetime import datetime
 
 ######################
 "'Process spawning"
 def protocol_process(event):
     while event.is_set() is True:
-        print("Protocol Process/Thread Running")
+        print("Protocol Process/Thread Running at ",datetime.now())
 
 def feedback_process(event):
     while event.is_set() is True:
-        print("Feedback Process Running")
+        print("Feedback Process Running at ",datetime.now())
 
 def speech_process(event):
     while event.is_set() is True:
-        print("Speech Process Running")
+        print("Speech Process Running at ",datetime.now())
     
 def vision_process(event):
     while event.is_set() is True:
-        print("Vision process Running")
+        print("Vision process Running at ",datetime.now())
 
 def network_process(event):
     while event.is_set() is True:
-        print("Network Process Running")
+        print("Network Process Running at ",datetime.now())
 
 ######################
 ###avoid terminate since it is not a clean shutdown of the process
@@ -42,7 +43,7 @@ def network_process(event):
 
 "'GUI/Window  class"
 class gui_window(QWidget):
-    def __init__(self,application,queue):
+    def __init__(self,application,queue,width,height):
         super(gui_window,self).__init__()
         self.app = application
         self.command_queue = queue
@@ -50,40 +51,45 @@ class gui_window(QWidget):
         main_layout = QVBoxLayout()
         
         ##setting up window
-        self.screen_resolution = self.app.desktop().screenGeometry ##Todo: test to make sure this actually works
-        self.width = self.screen_resolution.width()
-        self.height = self.screen_resolution.height()
+        self.width = width
+        self.height = height
         self.setWindowTitle('CognitiveEMS Debugging Demo')
-
+        self.setLayout(main_layout)
+        self.setGeometry(0, 0, self.width, self.height)
+        self.setStyleSheet("background-color: #2E2E2E; color: white; font-size: 16px; font-family: Arial;")
 
         ################button creation
         self.protocol_button_start = QPushButton('Protocol Start', self)
         self.protocol_button_stop = QPushButton('Protocol Stop',self)
         main_layout.addWidget(self.protocol_button_start)
         main_layout.addWidget(self.protocol_button_stop)
+        print("Protocol buttons created")
 
         self.vision_start_button = QPushButton('Vision Start',self)
         self.vision_stop_button = QPushButton('Vision Stop' , self)
-        main_layout.addWidget(self.vision_button_start)
-        main_layout.addWidget(self.vision_button_stop)
-        
+        main_layout.addWidget(self.vision_start_button)
+        main_layout.addWidget(self.vision_stop_button)
+        print("Vision buttons created")
+
         self.network_start_button = QPushButton('Network Start',self)
         self.network_end_button = QPushButton('Network Stop',self)
         main_layout.addWidget(self.network_start_button)
         main_layout.addWidget(self.network_end_button)  
+        print("Network buttons created")
 
         self.speech_start_button = QPushButton('Speech Start',self)
         self.speech_stop_button = QPushButton('Speech Stop',self)
         main_layout.addWidget(self.speech_start_button)
         main_layout.addWidget(self.speech_stop_button)  
+        print("Speech buttons created")
 
         self.feedback_start_button = QPushButton('Feedback Start',self)
         self.feedback_stopped_button = QPushButton('Feedback Stop',self)
         main_layout.addWidget(self.feedback_start_button)
         main_layout.addWidget(self.feedback_stopped_button)
+        print("Feedback buttons created")
         
         
-        self.setLayout(main_layout)
         ####event creation for each possible process
         self.protocol_event = Event()
         self.vision_event = Event()
@@ -185,16 +191,18 @@ if __name__ == "__main__":
     
     print("Starting GUI!")
     application = QApplication(sys.argv)
+    width, height = application.desktop().screenGeometry().width(), application.desktop().screenGeometry().height()
     command_queue = Queue()
-    Window = gui_window(application=application,queue=command_queue)
+    Window = gui_window(application=application,queue=command_queue,width=width,height=height)
     
+    
+
+
+    Window.show()
     
     ##Debug information
     print(f"width: {Window.width}")
     print(f"height: {Window.height}")
-
-    Window.show()
-
-
+    sys.exit(application.exec_()) # Start the event loop
 ####################################################################################
 #if you do not want to load in the process each time the start button is called then you can create the processes outside of the class and just pass htem in as class parameters to the initializatino at which point it will just be equated to the class variable process for each of the 5 process
