@@ -132,6 +132,12 @@ class gui_window(QWidget):
         main_layout.addWidget(self.feedback_box)
         self.feedback_box.setText("Feedback Log:\n")    
 
+        self.log_box = QTextEdit()
+        self.log_box.setReadOnly(True)
+        self.log_box.setStyleSheet("background-color:transparent; font-size: 14px; font-family: Arial;")
+        self.log_box.setOverwriteMode(True)
+        main_layout.addWidget(self.log_box)
+        self.log_box.setText("Log:\n")
         ######################
 
         ####event creation for each possible process
@@ -163,11 +169,15 @@ class gui_window(QWidget):
         self.protocol = mp.Process(target=protocol_process,args=(self.protocol_event,))
         print("Protocol start")
         self.processes.append(self.protocol)
+        self.log_box.append("Protocol started at " + str(datetime.now()))
         self.protocol.start()
 
     def stop_protocol(self): 
         self.protocol_event.clear()
+        self.protocol.terminate()  # Ensure the process is terminated
+        self.protocol.join()  # Wait for the process to finish
         self.processes.remove(self.protocol)
+        self.log_box.append("Protocol stopped at " + str(datetime.now()))
         print("Protocol stopped")
 
     def vision_start(self):
@@ -175,49 +185,70 @@ class gui_window(QWidget):
         self.vision = mp.Process(target=vision_process,args=(self.vision_event,))
         print("Vision start")
         self.processes.append(self.vision)
+        self.log_box.append("Vision started at " + str(datetime.now()))
         self.vision.start()
 
     def vision_stop(self):
         self.vision_event.clear()
         print("Vision stopped")
+        self.vision.terminate()  # Ensure the process is terminated
+        self.vision.join()  # Wait for the process to finish
+        self.processes.remove(self.vision)
+        self.log_box.append("Vision stopped at " + str(datetime.now()))
 
     def network_start(self):
         self.network_event.set()
         self.network = mp.Process(target=network_process,args=(self.network_event,))
         print("Network started")
         self.processes.append(self.network)
+        self.log_box.append("Network started at " + str(datetime.now()))
         self.network.start()
 
     def network_stop(self):
         self.network_event.clear()
         print("Network stopped")
+        self.network.terminate()  # Ensure the process is terminated
+        self.network.join()  # Wait for the process to finish
+        self.processes.remove(self.network)
+        self.log_box.append("Network stopped at " + str(datetime.now()))
 
     def speech_start(self):
         self.speech_event.set()
         self.speech = mp.Process(target=speech_process,args=(self.speech_event,))
         print("Speech started")
         self.processes.append(self.speech)
+        self.log_box.append("Speech started at " + str(datetime.now()))
         self.speech.start()
 
     def speech_stop(self):
         self.speech_event.clear()
         print("Speech stopped")
+        self.speech.terminate()  # Ensure the process is terminated
+        self.speech.join()  # Wait for the process to finish
+        self.processes.remove(self.speech)
+        self.log_box.append("Speech stopped at " + str(datetime.now()))
 
     def feedback_start(self):
         self.feedback_event.set()
         self.feedback = mp.Process(target=feedback_process,args=(self.feedback_event,))
         print("Feedback started")
         self.processes.append(self.feedback)
+        self.log_box.append("Feedback started at " + str(datetime.now()))
         self.feedback.start()
         
     def feedback_stop(self):
         self.feedback_event.clear()
         print("Feedback stopped")
+        self.feedback.terminate()  # Ensure the process is terminated
+        self.feedback.join()  # Wait for the process to finish
+        self.processes.remove(self.feedback)
+        self.log_box.append("Feedback stopped at " + str(datetime.now()))
+
 #################################################
 
     @pyqtSlot(str)
     def update_protocol_log(self, message):
-        self.protocol_box.setText(message)
+        self.protocol_box.append(message)
 
     @pyqtSlot(str)
     def update_vision_log(self, message):
