@@ -53,7 +53,10 @@ class gui_window(QWidget):
         ##setting up window
         self.width = width
         self.height = height
-        self.setWindowTitle('CognitiveEMS Debugging Demo')
+        #self.setWindowTitle('CognitiveEMS Debugging Demo')
+        self.main_title = QLabel(self)
+        self.main_title.setText("CognitiveEMS Debugging Demo")
+        self.main_title.addWidget(self.main_title,0,0,1,1)
         self.setLayout(main_layout)
         self.setGeometry(0, 0, self.width, self.height)
         self.setStyleSheet("background-color: #2E2E2E; color: white; font-size: 16px; font-family: Arial;")
@@ -61,7 +64,7 @@ class gui_window(QWidget):
         ################button creation
         self.protocol_button_start = QPushButton('Protocol Start', self)
         self.protocol_button_stop = QPushButton('Protocol Stop',self)
-        main_layout.addWidget(self.protocol_button_start)
+        main_layout.addWidget(self.protocol_button_start,0,0,2,2)
         main_layout.addWidget(self.protocol_button_stop)
         print("Protocol buttons created")
 
@@ -98,6 +101,39 @@ class gui_window(QWidget):
         self.protocol_box.setStyleSheet("background-color: #1E1E1E; color: white; font-size: 14px; font-family: Arial;")    
         self.protocol_box.setOverwriteMode(True)
         main_layout.addWidget(self.protocol_box)
+        self.protocol_box.setText("Protocol Log:\n")
+
+
+        self.vision_box = QTextEdit()
+        self.vision_box.setReadOnly(True)
+        self.vision_box.setStyleSheet("background-color:transparent; font-size: 14px; font-family: Arial;")
+        self.vision_box.setOverwriteMode(True)
+        main_layout.addWidget(self.vision_box)
+        self.vision_box.setText("Vision Log:\n")
+
+        self.network_box = QTextEdit()
+        self.network_box.setReadOnly(True)
+        self.network_box.setStyleSheet("background-color:transparent; font-size: 14px; font-family: Arial;")
+        self.network_box.setOverwriteMode(True)
+        main_layout.addWidget(self.network_box)
+        self.network_box.setText("Network Log:\n")
+
+        self.speech_box = QTextEdit()
+        self.speech_box.setReadOnly(True)
+        self.speech_box.setStyleSheet("background-color:transparent; font-size: 14px; font-family: Arial;")
+        self.speech_box.setOverwriteMode(True)
+        main_layout.addWidget(self.speech_box)
+        self.speech_box.setText("Speech Log:\n")
+
+        self.feedback_box = QTextEdit()
+        self.feedback_box.setReadOnly(True)
+        self.feedback_box.setStyleSheet("background-color:transparent; font-size: 14px; font-family: Arial;")
+        self.feedback_box.setOverwriteMode(True)
+        main_layout.addWidget(self.feedback_box)
+        self.feedback_box.setText("Feedback Log:\n")    
+
+        ######################
+
         ####event creation for each possible process
         self.protocol_event = Event()
         self.vision_event = Event()
@@ -179,7 +215,25 @@ class gui_window(QWidget):
         print("Feedback stopped")
 #################################################
 
+    @pyqtSlot(str)
+    def update_protocol_log(self, message):
+        self.protocol_box.setText(message)
 
+    @pyqtSlot(str)
+    def update_vision_log(self, message):
+        self.vision_box.setText(message)
+    
+    @pyqtSlot(str)
+    def update_network_log(self, message):
+        self.network_box.setText(message)
+    
+    @pyqtSlot(str)
+    def update_speech_log(self, message):
+        self.speech_box.setText(message)
+    
+    @pyqtSlot(str)
+    def update_feedback_log(self, message):
+        self.feedback_box.setText(message)  
 
 
 ############################################################################################################################################################################################################
