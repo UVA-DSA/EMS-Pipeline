@@ -10,18 +10,32 @@ from PyQt5.QtGui import *
 from PyQt5 import QtCore
 from PyQt5.QtMultimediaWidgets import *
 from PyQt5.QtMultimedia import *
-
+from PyQt5.QtCore import pyqtSlot
 
 from multiprocessing import Event
 from datetime import datetime
+###########################################pyqtSlot Signals
+class GUI_signal(QObject):
+    signal_protocol = pyqtSignal(str)
+    signal_feedback = pyqtSignal(str)
+    signal_speech = pyqtSignal(str)
+    signal_vision = pyqtSignal(str)
+    signal_network = pyqtSignal(str)
 
+
+
+from time import sleep
+
+###########################################
 ######################
 "'Process spawning"
 def protocol_process(event):
     while event.is_set() is True:
         message = "Protocol Process/Thread Running at " + str(datetime.now())
         print(message)
-
+        gui_signal.signal_protocol.emit(message)
+        sleep(5)
+    
 
 def feedback_process(event):
     while event.is_set() is True:
@@ -40,12 +54,11 @@ def network_process(event):
         print("Network Process Running at ",datetime.now())
 
 ######################
-###avoid terminate since it is not a clean shutdown of the process
 
 
 "'GUI/Window  class"
 class gui_window(QWidget):
-    def __init__(self,application,queue,width,height):
+    def __init__(self,application,queue,width,height,signal):
         super(gui_window,self).__init__()
         self.app = application
         self.command_queue = queue
@@ -61,6 +74,7 @@ class gui_window(QWidget):
         self.setLayout(main_layout)
         self.setGeometry(0, 0, self.width, self.height)
         self.setStyleSheet("background-color: #2E2E2E; color: white; font-size: 16px; font-family: Arial;")
+
         main_layout.addWidget(self.main_title)
 
         ################button creation
@@ -104,7 +118,6 @@ class gui_window(QWidget):
         self.protocol_box.setOverwriteMode(True)
         main_layout.addWidget(self.protocol_box)
         self.protocol_box.setText("Protocol Log:\n")
-        self.protocol_update = pyqtSignal(str)
 
 
         self.vision_box = QTextEdit()
@@ -164,7 +177,10 @@ class gui_window(QWidget):
         self.vision_start_button.clicked.connect(self.vision_start)
         self.vision_stop_button.clicked.connect(self.vision_stop)
 
-
+        #signal set up
+        self.gui_signal = signal
+        self.gui_signal.signal_protocol.connect(self.update_protocol)
+       # gui_signal.signal_protocol.emit("Debug Begins")
 
 ###function for what happens when a button is clicked
     def start_protocol(self):
@@ -303,13 +319,15 @@ from py_trees.blackboard import Blackboard
 "'Code that runs on start up'"
 import sys
 
+
 if __name__ == "__main__":
     
     print("Starting GUI!")
     application = QApplication(sys.argv)
     width, height = application.desktop().screenGeometry().width(), application.desktop().screenGeometry().height()
     command_queue = Queue()
-    Window = gui_window(application=application,queue=command_queue,width=width,height=height)
+    gui_signal = GUI_signal()
+    Window = gui_window(application=application,queue=command_queue,width=width,height=height,signal=gui_signal)
     
     
 
@@ -319,5 +337,6 @@ if __name__ == "__main__":
     print(f"width: {Window.width}")
     print(f"height: {Window.height}")
     sys.exit(application.exec_()) # Start the event loop
+
 ####################################################################################
 #if you do not want to load in the process each time the start button is called then you can create the processes outside of the class and just pass htem in as class parameters to the initializatino at which point it will just be equated to the class variable process for each of the 5 process
