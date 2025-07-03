@@ -13,10 +13,11 @@ from PyQt5.QtMultimedia import *
 from PyQt5.QtCore import pyqtSlot
 
 from multiprocessing import Event
+from multiprocessing.shared_memory import SharedMemory
 from datetime import datetime
 ###########################################pyqtSlot Signals
 class GUI_signal(QObject):
-    signal_protocol = pyqtSignal(str)
+    signal_protocol = pyqtSignal(QByteArray)
     signal_feedback = pyqtSignal(str)
     signal_speech = pyqtSignal(str)
     signal_vision = pyqtSignal(str)
@@ -27,10 +28,46 @@ class GUI_signal(QObject):
 from time import sleep
 
 
+###########################################################################################################################################################################################################
+
+"'Process spawning"
+def protocol_process(self,event):
+    protocol_existing_memory = SharedMemory(name='shared memory process', create=False)
+    signal = protocol_existing_memory.buf[2]
+    print(signal)
+    while event.is_set() is True:
+        message = "Protocol Process/Thread Running at " + str(datetime.now())
+        print(message)
+        sleep(5)
+    protocol_existing_memory.unlink()
+    
+    
+
+def feedback_process(self,event):
+    feedback_existing_memory = SharedMemory(name='shared memory process', create=False)
+    while event.is_set() is True:
+        print("Feedback Process Running at ",datetime.now())
+
+def speech_process(self,event):
+    speech_existing_memory = SharedMemory(name='shared memory process', create=False)
+    while event.is_set() is True:
+        print("Speech Process Running at ",datetime.now())
+    
+def vision_process(self,event):
+    vision_existing_memory = SharedMemory(name='shared memory process', create=False)
+    while event.is_set() is True:
+        print("Vision process Running at ",datetime.now())
+
+def network_process(self,event):
+    netowrk_existing_memory = SharedMemory(name='shared memory process', create=False)
+    while event.is_set() is True:
+        print("Network Process Running at ",datetime.now())
+
+######################
 
 "'GUI/Window  class"
 class gui_window(QWidget):
-    def __init__(self,application,queue,width,height,signal):
+    def __init__(self,application,queue,width,height):
         super(gui_window,self).__init__()
         self.app = application
         self.command_queue = queue
@@ -80,6 +117,8 @@ class gui_window(QWidget):
         main_layout.addWidget(self.feedback_stopped_button)
         print("Feedback buttons created")
         
+        self.exit_button = QPushButton('Exit',self)
+        main_layout.addWidget(self.exit_button)
 
 
 
@@ -148,16 +187,32 @@ class gui_window(QWidget):
         self.network_end_button.clicked.connect(self.network_stop)
         self.vision_start_button.clicked.connect(self.vision_start)
         self.vision_stop_button.clicked.connect(self.vision_stop)
+        self.exit_button.clicked.connect(self.shared_memory_cleanup)
 
         #signal set up
-        self.gui_signal = signal
+        self.gui_signal = GUI_signal()
         self.gui_signal.signal_protocol.connect(self.update_protocol)
-        gui_signal.signal_protocol.emit("Debug Begins")
+        self.gui_signal.signal_feedback.connect(self.update_feedback_log)
+        self.gui_signal.signal_network.connect(self.update_network_log)
+        self.gui_signal.signal_speech.connect(self.update_speech_log)
+        self.gui_signal.signal_vision.connect(self.update_vision_log)
+
+
+        ##shared memory setup
+        self.process_memory = SharedMemory(name='shared memory process',create=True,size=5)
+        self.buffer = self.process_memory.buf
+        self.buffer[0] = self.gui_signal.signal_feedback
+        self.buffer[1] = self.gui_signal.signal_network
+        self.buffer[2] = self.gui_signal.signal_protocol
+        self.buffer[3] = self.gui_signal.signal_speech
+        self.buffer[4] = self.gui_signal.signal_vision
+        print(self.gui_signal.signal_protocol)
+
 
 ###function for what happens when a button is clicked
     def start_protocol(self):
         self.protocol_event.set()
-        self.protocol = mp.Process(target=self.protocol_process,args=(self.protocol_event,))
+        self.protocol = mp.Process(target=protocol_process,args=(self.protocol_event,))
         print("Protocol start")
         self.processes.append(self.protocol)
         self.log_box.append("Protocol started at " + str(datetime.now()))
@@ -177,7 +232,7 @@ class gui_window(QWidget):
 
     def vision_start(self):
         self.vision_event.set()
-        self.vision = mp.Process(target=self.vision_process,args=(self.vision_event,))
+        self.vision = mp.Process(target=vision_process,args=(self.vision_event,))
         print("Vision start")
         self.processes.append(self.vision)
         self.log_box.append("Vision started at " + str(datetime.now()))
@@ -197,7 +252,7 @@ class gui_window(QWidget):
 
     def network_start(self):
         self.network_event.set()
-        self.network = mp.Process(target=self.network_process,args=(self.network_event,))
+        self.network = mp.Process(target=network_process,args=(self.network_event,))
         print("Network started")
         self.processes.append(self.network)
         self.log_box.append("Network started at " + str(datetime.now()))
@@ -217,7 +272,7 @@ class gui_window(QWidget):
 
     def speech_start(self):
         self.speech_event.set()
-        self.speech = mp.Process(target=self.speech_process,args=(self.speech_event,))
+        self.speech = mp.Process(target=speech_process,args=(self.speech_event,))
         print("Speech started")
         self.processes.append(self.speech)
         self.log_box.append("Speech started at " + str(datetime.now()))
@@ -237,7 +292,7 @@ class gui_window(QWidget):
 
     def feedback_start(self):
         self.feedback_event.set()
-        self.feedback = mp.Process(target=self.feedback_process,args=(self.feedback_event,))
+        self.feedback = mp.Process(target=feedback_process,args=(self.feedback_event,))
         print("Feedback started")
         self.processes.append(self.feedback)
         self.log_box.append("Feedback started at " + str(datetime.now()))
@@ -254,10 +309,17 @@ class gui_window(QWidget):
                 self.log_box.append("Feedback stopped at " + str(datetime.now()))
         except:
             pass
+####################################################3
+#Shared Memory Specific Processes:
+    def shared_memory_cleanup(self):
+        self.process_memory.unlink()
+
+
+
 
 #################################################
 
-    @pyqtSlot(str)
+    @pyqtSlot(QByteArray)
     def update_protocol(self, message):
         self.protocol_box.append(message)
 
@@ -278,36 +340,6 @@ class gui_window(QWidget):
         self.feedback_box.setText(message)  
 
 
-###########################################################################################################################################################################################################
-
-    "'Process spawning"
-    def protocol_process(self,event):
-        self.gui_signal.signal_protocol.emit("Hello WOrld!!!!!!!!")
-        while event.is_set() is True:
-            message = "Protocol Process/Thread Running at " + str(datetime.now())
-            print(message)
-            self.gui_signal.signal_protocol.emit(message)
-            self.protocol_box.append(message)
-            sleep(5)
-        
-
-    def feedback_process(self,event):
-        while event.is_set() is True:
-            print("Feedback Process Running at ",datetime.now())
-
-    def speech_process(self,event):
-        while event.is_set() is True:
-            print("Speech Process Running at ",datetime.now())
-        
-    def vision_process(self,event):
-        while event.is_set() is True:
-            print("Vision process Running at ",datetime.now())
-
-    def network_process(self,event):
-        while event.is_set() is True:
-            print("Network Process Running at ",datetime.now())
-
-    ######################
 
 "'Code for Multiprocessing set up"
 import py_trees 
@@ -325,8 +357,7 @@ if __name__ == "__main__":
     application = QApplication(sys.argv)
     width, height = application.desktop().screenGeometry().width(), application.desktop().screenGeometry().height()
     command_queue = Queue()
-    gui_signal = GUI_signal()
-    Window = gui_window(application=application,queue=command_queue,width=width,height=height,signal=gui_signal)
+    Window = gui_window(application=application,queue=command_queue,width=width,height=height)
     
     
 
