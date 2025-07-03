@@ -26,34 +26,6 @@ class GUI_signal(QObject):
 
 from time import sleep
 
-###########################################
-######################
-"'Process spawning"
-def protocol_process(event):
-    while event.is_set() is True:
-        message = "Protocol Process/Thread Running at " + str(datetime.now())
-        print(message)
-        gui_signal.signal_protocol.emit(message)
-        sleep(5)
-    
-
-def feedback_process(event):
-    while event.is_set() is True:
-        print("Feedback Process Running at ",datetime.now())
-
-def speech_process(event):
-    while event.is_set() is True:
-        print("Speech Process Running at ",datetime.now())
-    
-def vision_process(event):
-    while event.is_set() is True:
-        print("Vision process Running at ",datetime.now())
-
-def network_process(event):
-    while event.is_set() is True:
-        print("Network Process Running at ",datetime.now())
-
-######################
 
 
 "'GUI/Window  class"
@@ -180,12 +152,12 @@ class gui_window(QWidget):
         #signal set up
         self.gui_signal = signal
         self.gui_signal.signal_protocol.connect(self.update_protocol)
-       # gui_signal.signal_protocol.emit("Debug Begins")
+        gui_signal.signal_protocol.emit("Debug Begins")
 
 ###function for what happens when a button is clicked
     def start_protocol(self):
         self.protocol_event.set()
-        self.protocol = mp.Process(target=protocol_process,args=(self.protocol_event,))
+        self.protocol = mp.Process(target=self.protocol_process,args=(self.protocol_event,))
         print("Protocol start")
         self.processes.append(self.protocol)
         self.log_box.append("Protocol started at " + str(datetime.now()))
@@ -205,7 +177,7 @@ class gui_window(QWidget):
 
     def vision_start(self):
         self.vision_event.set()
-        self.vision = mp.Process(target=vision_process,args=(self.vision_event,))
+        self.vision = mp.Process(target=self.vision_process,args=(self.vision_event,))
         print("Vision start")
         self.processes.append(self.vision)
         self.log_box.append("Vision started at " + str(datetime.now()))
@@ -225,7 +197,7 @@ class gui_window(QWidget):
 
     def network_start(self):
         self.network_event.set()
-        self.network = mp.Process(target=network_process,args=(self.network_event,))
+        self.network = mp.Process(target=self.network_process,args=(self.network_event,))
         print("Network started")
         self.processes.append(self.network)
         self.log_box.append("Network started at " + str(datetime.now()))
@@ -245,7 +217,7 @@ class gui_window(QWidget):
 
     def speech_start(self):
         self.speech_event.set()
-        self.speech = mp.Process(target=speech_process,args=(self.speech_event,))
+        self.speech = mp.Process(target=self.speech_process,args=(self.speech_event,))
         print("Speech started")
         self.processes.append(self.speech)
         self.log_box.append("Speech started at " + str(datetime.now()))
@@ -265,7 +237,7 @@ class gui_window(QWidget):
 
     def feedback_start(self):
         self.feedback_event.set()
-        self.feedback = mp.Process(target=feedback_process,args=(self.feedback_event,))
+        self.feedback = mp.Process(target=self.feedback_process,args=(self.feedback_event,))
         print("Feedback started")
         self.processes.append(self.feedback)
         self.log_box.append("Feedback started at " + str(datetime.now()))
@@ -306,9 +278,36 @@ class gui_window(QWidget):
         self.feedback_box.setText(message)  
 
 
-############################################################################################################################################################################################################
+###########################################################################################################################################################################################################
 
+    "'Process spawning"
+    def protocol_process(self,event):
+        self.gui_signal.signal_protocol.emit("Hello WOrld!!!!!!!!")
+        while event.is_set() is True:
+            message = "Protocol Process/Thread Running at " + str(datetime.now())
+            print(message)
+            self.gui_signal.signal_protocol.emit(message)
+            self.protocol_box.append(message)
+            sleep(5)
+        
 
+    def feedback_process(self,event):
+        while event.is_set() is True:
+            print("Feedback Process Running at ",datetime.now())
+
+    def speech_process(self,event):
+        while event.is_set() is True:
+            print("Speech Process Running at ",datetime.now())
+        
+    def vision_process(self,event):
+        while event.is_set() is True:
+            print("Vision process Running at ",datetime.now())
+
+    def network_process(self,event):
+        while event.is_set() is True:
+            print("Network Process Running at ",datetime.now())
+
+    ######################
 
 "'Code for Multiprocessing set up"
 import py_trees 
