@@ -19,7 +19,9 @@ from datetime import datetime
 "'Process spawning"
 def protocol_process(event):
     while event.is_set() is True:
-        print("Protocol Process/Thread Running at ",datetime.now())
+        message = "Protocol Process/Thread Running at " + str(datetime.now())
+        print(message)
+
 
 def feedback_process(event):
     while event.is_set() is True:
@@ -56,15 +58,15 @@ class gui_window(QWidget):
         #self.setWindowTitle('CognitiveEMS Debugging Demo')
         self.main_title = QLabel(self)
         self.main_title.setText("CognitiveEMS Debugging Demo")
-        self.main_title.addWidget(self.main_title,0,0,1,1)
         self.setLayout(main_layout)
         self.setGeometry(0, 0, self.width, self.height)
         self.setStyleSheet("background-color: #2E2E2E; color: white; font-size: 16px; font-family: Arial;")
+        main_layout.addWidget(self.main_title)
 
         ################button creation
         self.protocol_button_start = QPushButton('Protocol Start', self)
         self.protocol_button_stop = QPushButton('Protocol Stop',self)
-        main_layout.addWidget(self.protocol_button_start,0,0,2,2)
+        main_layout.addWidget(self.protocol_button_start)
         main_layout.addWidget(self.protocol_button_stop)
         print("Protocol buttons created")
 
@@ -102,39 +104,40 @@ class gui_window(QWidget):
         self.protocol_box.setOverwriteMode(True)
         main_layout.addWidget(self.protocol_box)
         self.protocol_box.setText("Protocol Log:\n")
+        self.protocol_update = pyqtSignal(str)
 
 
         self.vision_box = QTextEdit()
         self.vision_box.setReadOnly(True)
-        self.vision_box.setStyleSheet("background-color:transparent; font-size: 14px; font-family: Arial;")
+        self.vision_box.setStyleSheet("background-color:#1E1E1E; font-size: 14px; font-family: Arial;")
         self.vision_box.setOverwriteMode(True)
         main_layout.addWidget(self.vision_box)
         self.vision_box.setText("Vision Log:\n")
 
         self.network_box = QTextEdit()
         self.network_box.setReadOnly(True)
-        self.network_box.setStyleSheet("background-color:transparent; font-size: 14px; font-family: Arial;")
+        self.network_box.setStyleSheet("background-color:#1E1E1E; font-size: 14px; font-family: Arial;")
         self.network_box.setOverwriteMode(True)
         main_layout.addWidget(self.network_box)
         self.network_box.setText("Network Log:\n")
 
         self.speech_box = QTextEdit()
         self.speech_box.setReadOnly(True)
-        self.speech_box.setStyleSheet("background-color:transparent; font-size: 14px; font-family: Arial;")
+        self.speech_box.setStyleSheet("background-color:#1E1E1E; font-size: 14px; font-family: Arial;")
         self.speech_box.setOverwriteMode(True)
         main_layout.addWidget(self.speech_box)
         self.speech_box.setText("Speech Log:\n")
 
         self.feedback_box = QTextEdit()
         self.feedback_box.setReadOnly(True)
-        self.feedback_box.setStyleSheet("background-color:transparent; font-size: 14px; font-family: Arial;")
+        self.feedback_box.setStyleSheet("background-color:#1E1E1E; font-size: 14px; font-family: Arial;")
         self.feedback_box.setOverwriteMode(True)
         main_layout.addWidget(self.feedback_box)
         self.feedback_box.setText("Feedback Log:\n")    
 
         self.log_box = QTextEdit()
         self.log_box.setReadOnly(True)
-        self.log_box.setStyleSheet("background-color:transparent; font-size: 14px; font-family: Arial;")
+        self.log_box.setStyleSheet("background-color:#1E1E1E; font-size: 14px; font-family: Arial;")
         self.log_box.setOverwriteMode(True)
         main_layout.addWidget(self.log_box)
         self.log_box.setText("Log:\n")
@@ -173,12 +176,16 @@ class gui_window(QWidget):
         self.protocol.start()
 
     def stop_protocol(self): 
-        self.protocol_event.clear()
-        self.protocol.terminate()  # Ensure the process is terminated
-        self.protocol.join()  # Wait for the process to finish
-        self.processes.remove(self.protocol)
-        self.log_box.append("Protocol stopped at " + str(datetime.now()))
-        print("Protocol stopped")
+        try:
+            self.protocol_event.clear()
+            if self.protocol is not None or self.protocol in self.processes:
+                self.protocol.terminate()  # Ensure the process is terminated
+                self.protocol.join()  # Wait for the process to finish
+                self.processes.remove(self.protocol)
+                self.log_box.append("Protocol stopped at " + str(datetime.now()))
+                print("Protocol stopped")
+        except:
+            pass
 
     def vision_start(self):
         self.vision_event.set()
@@ -189,12 +196,16 @@ class gui_window(QWidget):
         self.vision.start()
 
     def vision_stop(self):
-        self.vision_event.clear()
-        print("Vision stopped")
-        self.vision.terminate()  # Ensure the process is terminated
-        self.vision.join()  # Wait for the process to finish
-        self.processes.remove(self.vision)
-        self.log_box.append("Vision stopped at " + str(datetime.now()))
+        try: #used to prevent premature exiting
+            self.vision_event.clear()
+            if self.vision is not None and self.vision in self.processes:# Handles case where the vision process might not be active or a process that did not proper get cleaned up 
+                print("Vision stopped")
+                self.vision.terminate()  # Ensure the process is terminated
+                self.vision.join()  # Wait for the process to finish
+                self.processes.remove(self.vision)
+                self.log_box.append("Vision stopped at " + str(datetime.now()))
+        except:
+            pass
 
     def network_start(self):
         self.network_event.set()
@@ -205,12 +216,16 @@ class gui_window(QWidget):
         self.network.start()
 
     def network_stop(self):
-        self.network_event.clear()
-        print("Network stopped")
-        self.network.terminate()  # Ensure the process is terminated
-        self.network.join()  # Wait for the process to finish
-        self.processes.remove(self.network)
-        self.log_box.append("Network stopped at " + str(datetime.now()))
+        try:
+            self.network_event.clear()
+            if self.network is not None and self.network in self.processes:
+                print("Network stopped")
+                self.network.terminate()  # Ensure the process is terminated
+                self.network.join()  # Wait for the process to finish
+                self.processes.remove(self.network)
+                self.log_box.append("Network stopped at " + str(datetime.now()))
+        except:
+            pass
 
     def speech_start(self):
         self.speech_event.set()
@@ -221,12 +236,16 @@ class gui_window(QWidget):
         self.speech.start()
 
     def speech_stop(self):
-        self.speech_event.clear()
-        print("Speech stopped")
-        self.speech.terminate()  # Ensure the process is terminated
-        self.speech.join()  # Wait for the process to finish
-        self.processes.remove(self.speech)
-        self.log_box.append("Speech stopped at " + str(datetime.now()))
+        try:
+            self.speech_event.clear()
+            if (self.speech is not None) and self.speech in self.processes:
+                print("Speech stopped")
+                self.speech.terminate()  # Ensure the process is terminated
+                self.speech.join()  # Wait for the process to finish
+                self.processes.remove(self.speech)
+                self.log_box.append("Speech stopped at " + str(datetime.now()))
+        except:
+            pass
 
     def feedback_start(self):
         self.feedback_event.set()
@@ -237,17 +256,21 @@ class gui_window(QWidget):
         self.feedback.start()
         
     def feedback_stop(self):
-        self.feedback_event.clear()
-        print("Feedback stopped")
-        self.feedback.terminate()  # Ensure the process is terminated
-        self.feedback.join()  # Wait for the process to finish
-        self.processes.remove(self.feedback)
-        self.log_box.append("Feedback stopped at " + str(datetime.now()))
+        try:
+            self.feedback_event.clear()
+            if (self.feedback is not None or self.feedback.is_alive()) and self.feedback in self.processes :
+                print("Feedback stopped")
+                self.feedback.terminate()  # Ensure the process is terminated
+                self.feedback.join()  # Wait for the process to finish
+                self.processes.remove(self.feedback)
+                self.log_box.append("Feedback stopped at " + str(datetime.now()))
+        except:
+            pass
 
 #################################################
 
     @pyqtSlot(str)
-    def update_protocol_log(self, message):
+    def update_protocol(self, message):
         self.protocol_box.append(message)
 
     @pyqtSlot(str)
