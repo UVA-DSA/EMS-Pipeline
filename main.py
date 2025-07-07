@@ -29,39 +29,52 @@ from time import sleep
 
 
 ###########################################################################################################################################################################################################
+  ### 2 forms of queues == (src, message) or (src,dst,status,reason)
 
+  ####when demoing how the processes work, add in additional lines of code
 "'Process spawning"
-def protocol_process(self,event):
-    protocol_existing_memory = SharedMemory(name='shared memory process', create=False)
-    signal = protocol_existing_memory.buf[2]
-    print(signal)
+def protocol_process(event):
+    value = 0
     while event.is_set() is True:
         message = "Protocol Process/Thread Running at " + str(datetime.now())
         print(message)
+        command_queue.put(('protocol', message))
         sleep(5)
-    protocol_existing_memory.unlink()
     
     
 
-def feedback_process(self,event):
-    feedback_existing_memory = SharedMemory(name='shared memory process', create=False)
+def feedback_process(event):
     while event.is_set() is True:
-        print("Feedback Process Running at ",datetime.now())
+        message = "Feedback Process Running at " + str(datetime.now())
+        print(message)
+        command_queue.put(('feedback',message))
+        sleep(5)
 
-def speech_process(self,event):
-    speech_existing_memory = SharedMemory(name='shared memory process', create=False)
+
+def speech_process(event):
     while event.is_set() is True:
-        print("Speech Process Running at ",datetime.now())
-    
-def vision_process(self,event):
-    vision_existing_memory = SharedMemory(name='shared memory process', create=False)
+        message = "Speech Process Running at " + str(datetime.now())
+        print(message)
+        command_queue.put('speech', message)
+        sleep(21)
+
+
+def vision_process(event):
     while event.is_set() is True:
-        print("Vision process Running at ",datetime.now())
+        message = "Vision Process Running at " + str(datetime.now())
+        print(message)
+        command_queue.put(('vision',message))
+        sleep(9)
+
 
 def network_process(self,event):
-    netowrk_existing_memory = SharedMemory(name='shared memory process', create=False)
     while event.is_set() is True:
-        print("Network Process Running at ",datetime.now())
+        message = "Network Process Running at " + str(datetime.now())
+        print(message)
+        command_queue.put(('network',message))
+        sleep(9)
+
+
 
 ######################
 
@@ -196,18 +209,70 @@ class gui_window(QWidget):
         self.gui_signal.signal_network.connect(self.update_network_log)
         self.gui_signal.signal_speech.connect(self.update_speech_log)
         self.gui_signal.signal_vision.connect(self.update_vision_log)
+      
 
-
-        ##shared memory setup
-        self.process_memory = SharedMemory(name='shared memory process',create=True,size=5)
-        self.buffer = self.process_memory.buf
-        self.buffer[0] = self.gui_signal.signal_feedback
-        self.buffer[1] = self.gui_signal.signal_network
-        self.buffer[2] = self.gui_signal.signal_protocol
-        self.buffer[3] = self.gui_signal.signal_speech
-        self.buffer[4] = self.gui_signal.signal_vision
-        print(self.gui_signal.signal_protocol)
-
+    def continuous_queue_check(self):
+        while True:
+            ### 2 forms of queues == (src, message) or (src,dst,status,reason)
+            if not command_queue.empty():
+                result = command_queue.get()
+                if len(result) == 2:
+                    src = result[0]
+                    message = str(result[1])
+                    match src:
+                        case 'feedback':
+                            self.gui_signal.signal_feedback.emit(message)
+                        case 'protocol':
+                            self.gui_signal.signal_protocol.emit(message)
+                        case 'network':
+                            self.gui_signal.signal_network.emit(message)
+                        case 'vision':
+                            self.gui_signal.signal_vision.emit(message)
+                        case 'speech':
+                            self.gui_signal.signal_speech.emit(message)
+                        case _:
+                            self.log_box.append("Source Process is Inputted Incorrectly")
+                            print("Invalid Source Process")
+                if len(result) == 4: 
+                    src = result[0]
+                    dst = result[1]
+                    status = str(result[2])
+                    temp_message = result[3]
+                    message = "Process " + str(src) + " due to " + str(temp_message) + "resulting in " + str(status)
+                    match dst:
+                        case 'protocol':
+                            self.gui_signal.signal_protocol.emit(message)   
+                            if status == 'stop':
+                                self.stop_protocol()
+                            if status == 'start':
+                                self.start_protocol
+                        case 'feedback':
+                            self.gui_signal.signal_feedback.emit(message)   
+                            if status == 'stop':
+                                self.feedback_stop()
+                            if status == 'start':
+                                self.feedback_start()
+                        case 'network':
+                            self.gui_signal.signal_network.emit(message)
+                            if status == 'start':
+                                self.network_start()
+                            if status == 'stop':
+                                self.network_start()
+                        case 'vision':
+                            self.gui_signal.signal_vision.emit(message)
+                            if status == 'start':
+                                self.vision_start()
+                            if status == 'stop':
+                                self.vision_stop()
+                        case 'speech':
+                            self.gui_signal.signal_speech.emit(message)
+                            if status == 'start':
+                                self.speech_start()
+                            if status == 'stop':
+                                self.speech_stop()                   
+                        case _:
+                            print("Invalid Destination")
+                            pass
 
 ###function for what happens when a button is clicked
     def start_protocol(self):
@@ -312,8 +377,11 @@ class gui_window(QWidget):
 ####################################################3
 #Shared Memory Specific Processes:
     def shared_memory_cleanup(self):
-        self.process_memory.unlink()
-
+        if len(self.processes) > 0:
+            for i in range(len(self.processes)):
+                self.processes[i].terminate()
+                self.processes[i].join()
+        self.close()
 
 
 
@@ -367,6 +435,7 @@ if __name__ == "__main__":
     print(f"width: {Window.width}")
     print(f"height: {Window.height}")
     sys.exit(application.exec_()) # Start the event loop
+
 
 ####################################################################################
 #if you do not want to load in the process each time the start button is called then you can create the processes outside of the class and just pass htem in as class parameters to the initializatino at which point it will just be equated to the class variable process for each of the 5 process
