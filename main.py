@@ -29,11 +29,11 @@ from time import sleep
 
 
 ###########################################################################################################################################################################################################
-  ### 2 forms of queues == (src, message) or (src,dst,status,reason)
+  ### 2 forms of queues == (src, message) or (src,dst,status,reason) or for interprocess communication ==> (dst,status signal,message)
 
   ####when demoing how the processes work, add in additional lines of code
 "'Process spawning"
-def protocol_process(event,command_queue):
+def protocol_process(event,command_queue,process_queue):
     value = 0
     while event.is_set() is True:
         message = "Protocol Process/Thread Running at " + str(datetime.now())
@@ -43,7 +43,7 @@ def protocol_process(event,command_queue):
     
     
 
-def feedback_process(event,command_queue):
+def feedback_process(event,command_queue,process_queue):
     while event.is_set() is True:
         message = "Feedback Process Running at " + str(datetime.now())
         print(message)
@@ -51,7 +51,7 @@ def feedback_process(event,command_queue):
         sleep(5)
 
 
-def speech_process(event,command_queue):
+def speech_process(event,command_queue,process_queue):
     while event.is_set() is True:
         message = "Speech Process Running at " + str(datetime.now())
         print(message)
@@ -59,7 +59,7 @@ def speech_process(event,command_queue):
         sleep(21)
 
 
-def vision_process(event,command_queue):
+def vision_process(event,command_queue,process_queue):
     while event.is_set() is True:
         message = "Vision Process Running at " + str(datetime.now())
         print(message)
@@ -67,7 +67,7 @@ def vision_process(event,command_queue):
         sleep(9)
 
 
-def network_process(event,command_queue):
+def network_process(event,command_queue,process_queue):
     while event.is_set() is True:
         message = "Network Process Running at " + str(datetime.now())
         print(message)
@@ -85,6 +85,16 @@ class gui_window(QWidget):
         self.app = application
         self.command_queue = queue
         
+
+
+        ##Each process has its own queue to check to ensure that data is not overwritten or lost while still meeting real time constraints:
+        self.feedback_queue = Queue()
+        self.network_queue = Queue()
+        self.vision_queue = Queue()
+        self.speech_queue = Queue()
+        self.protocol_queue = Queue()
+
+
         main_layout = QVBoxLayout()
         
         ##setting up window
@@ -202,6 +212,29 @@ class gui_window(QWidget):
         self.vision_stop_button.clicked.connect(self.vision_stop)
         self.exit_button.clicked.connect(self.shared_memory_cleanup)
 
+
+        #setting up button clickability and color
+        self.protocol_button_start.setEnabled(True)
+        self.protocol_button_stop.setEnabled(False)
+        self.protocol_button_stop.setStyleSheet("color: black")
+        self.protocol_button_start.setStyleSheet("color: white")
+        self.speech_start_button.setEnabled(True)
+        self.speech_start_button.setStyleSheet("color: white")
+        self.speech_stop_button.setStyleSheet("color: black")
+        self.speech_stop_button.setEnabled(False)
+        self.feedback_start_button.setEnabled(True)
+        self.feedback_start_button.setStyleSheet("color: white")
+        self.feedback_stopped_button.setStyleSheet("color: black")
+        self.feedback_stopped_button.setEnabled(False)
+        self.network_start_button.setEnabled(True)
+        self.network_start_button.setStyleSheet("color: white")
+        self.network_end_button.setStyleSheet("color: black")
+        self.network_end_button.setEnabled(False)
+        self.vision_start_button.setEnabled(True)
+        self.vision_start_button.setStyleSheet("color: white")
+        self.vision_stop_button.setStyleSheet("color: black")
+        self.vision_stop_button.setEnabled(False)
+
         #signal set up
         self.gui_signal = GUI_signal()
         self.gui_signal.signal_protocol.connect(self.update_protocol)
@@ -239,6 +272,7 @@ class gui_window(QWidget):
                         case _:
                             self.log_box.append("Source Process is Inputted Incorrectly")
                             print("Invalid Source Process")
+                
                 if len(result) == 4: 
                     src = result[0]
                     dst = result[1]
@@ -282,8 +316,12 @@ class gui_window(QWidget):
 
 ###function for what happens when a button is clicked
     def start_protocol(self):
+        self.protocol_button_start.setEnabled(False)
+        self.protocol_button_stop.setEnabled(True)
+        self.protocol_button_stop.setStyleSheet("color: white")
+        self.protocol_button_start.setStyleSheet("color: black")
         self.protocol_event.set()
-        self.protocol = mp.Process(target=protocol_process,args=(self.protocol_event,self.command_queue,))
+        self.protocol = mp.Process(target=protocol_process,args=(self.protocol_event,self.command_queue,self.protocol_queue,))
         print("Protocol start")
         self.processes.append(self.protocol)
         self.log_box.append("Protocol started at " + str(datetime.now()))
@@ -293,6 +331,10 @@ class gui_window(QWidget):
         try:
             self.protocol_event.clear()
             if self.protocol is not None or self.protocol in self.processes:
+                self.protocol_button_start.setEnabled(True)
+                self.protocol_button_stop.setEnabled(False)
+                self.protocol_button_stop.setStyleSheet("color: black")
+                self.protocol_button_start.setStyleSheet("color: white")
                 self.protocol.terminate()  # Ensure the process is terminated
                 self.protocol.join()  # Wait for the process to finish
                 self.processes.remove(self.protocol)
@@ -303,7 +345,11 @@ class gui_window(QWidget):
 
     def vision_start(self):
         self.vision_event.set()
-        self.vision = mp.Process(target=vision_process,args=(self.vision_event,self.command_queue,))
+        self.vision_start_button.setEnabled(False)
+        self.vision_stop_button.setEnabled(True)
+        self.vision_start_button.setStyleSheet("color: black")
+        self.vision_stop_button.setStyleSheet("color: white")
+        self.vision = mp.Process(target=vision_process,args=(self.vision_event,self.command_queue,self.vision_queue))
         print("Vision start")
         self.processes.append(self.vision)
         self.log_box.append("Vision started at " + str(datetime.now()))
@@ -313,6 +359,10 @@ class gui_window(QWidget):
         try: #used to prevent premature exiting
             self.vision_event.clear()
             if self.vision is not None and self.vision in self.processes:# Handles case where the vision process might not be active or a process that did not proper get cleaned up 
+                self.vision_start_button.setEnabled(True)
+                self.vision_stop_button.setEnabled(False)
+                self.vision_start_button.setStyleSheet("color: white")
+                self.vision_stop_button.setStyleSheet("color: black")
                 print("Vision stopped")
                 self.vision.terminate()  # Ensure the process is terminated
                 self.vision.join()  # Wait for the process to finish
@@ -323,7 +373,11 @@ class gui_window(QWidget):
 
     def network_start(self):
         self.network_event.set()
-        self.network = mp.Process(target=network_process,args=(self.network_event,self.command_queue,))
+        self.network_start_button.setEnabled(False)
+        self.network_end_button.setEnabled(True)
+        self.network_start_button.setStyleSheet("color: black")
+        self.network_end_button.setStyleSheet("color: white")
+        self.network = mp.Process(target=network_process,args=(self.network_event,self.command_queue,self.network_queue,))
         print("Network started")
         self.processes.append(self.network)
         self.log_box.append("Network started at " + str(datetime.now()))
@@ -333,6 +387,10 @@ class gui_window(QWidget):
         try:
             self.network_event.clear()
             if self.network is not None and self.network in self.processes:
+                self.network_start_button.setEnabled(True)
+                self.network_end_button.setEnabled(False)
+                self.network_start_button.setStyleSheet("color: white")
+                self.network_end_button.setStyleSheet("color: black")
                 print("Network stopped")
                 self.network.terminate()  # Ensure the process is terminated
                 self.network.join()  # Wait for the process to finish
@@ -343,7 +401,11 @@ class gui_window(QWidget):
 
     def speech_start(self):
         self.speech_event.set()
-        self.speech = mp.Process(target=speech_process,args=(self.speech_event,self.command_queue,))
+        self.speech_start_button.setEnabled(False)
+        self.speech_stop_button.setEnabled(True)
+        self.speech_start_button.setStyleSheet("color: black")
+        self.speech_stop_button.setStyleSheet("color: white")
+        self.speech = mp.Process(target=speech_process,args=(self.speech_event,self.command_queue,self.speech_queue,))
         print("Speech started")
         self.processes.append(self.speech)
         self.log_box.append("Speech started at " + str(datetime.now()))
@@ -353,6 +415,10 @@ class gui_window(QWidget):
         try:
             self.speech_event.clear()
             if (self.speech is not None) and self.speech in self.processes:
+                self.speech_start_button.setEnabled(True)
+                self.speech_stop_button.setEnabled(False)
+                self.speech_start_button.setStyleSheet("color: white")
+                self.speech_stop_button.setStyleSheet("color: black")
                 print("Speech stopped")
                 self.speech.terminate()  # Ensure the process is terminated
                 self.speech.join()  # Wait for the process to finish
@@ -363,7 +429,11 @@ class gui_window(QWidget):
 
     def feedback_start(self):
         self.feedback_event.set()
-        self.feedback = mp.Process(target=feedback_process,args=(self.feedback_event,self.command_queue,))
+        self.feedback_start_button.setEnabled(False)
+        self.feedback_stopped_button.setEnabled(True)
+        self.feedback_start_button.setStyleSheet("color: black")
+        self.feedback_stopped_button.setStyleSheet("color: white")
+        self.feedback = mp.Process(target=feedback_process,args=(self.feedback_event,self.command_queue,self.feedback_queue,))
         print("Feedback started")
         self.processes.append(self.feedback)
         self.log_box.append("Feedback started at " + str(datetime.now()))
@@ -374,6 +444,10 @@ class gui_window(QWidget):
             self.feedback_event.clear()
             if (self.feedback is not None or self.feedback.is_alive()) and self.feedback in self.processes :
                 print("Feedback stopped")
+                self.feedback_start_button.setEnabled(True)
+                self.feedback_stopped_button.setEnabled(False)
+                self.feedback_start_button.setStyleSheet("color: white")
+                self.feedback_stopped_button.setStyleSheet("color: black")
                 self.feedback.terminate()  # Ensure the process is terminated
                 self.feedback.join()  # Wait for the process to finish
                 self.processes.remove(self.feedback)
@@ -399,19 +473,19 @@ class gui_window(QWidget):
 
     @pyqtSlot(str)
     def update_vision_log(self, message):
-        self.vision_box.setText(message)
+        self.vision_box.append(message)
     
     @pyqtSlot(str)
     def update_network_log(self, message):
-        self.network_box.setText(message)
+        self.network_box.append(message)
     
     @pyqtSlot(str)
     def update_speech_log(self, message):
-        self.speech_box.setText(message)
+        self.speech_box.append(message)
     
     @pyqtSlot(str)
     def update_feedback_log(self, message):
-        self.feedback_box.setText(message)  
+        self.feedback_box.append(message)
 
 
 
