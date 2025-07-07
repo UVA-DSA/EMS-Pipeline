@@ -17,7 +17,7 @@ from multiprocessing.shared_memory import SharedMemory
 from datetime import datetime
 ###########################################pyqtSlot Signals
 class GUI_signal(QObject):
-    signal_protocol = pyqtSignal(QByteArray)
+    signal_protocol = pyqtSignal(str)
     signal_feedback = pyqtSignal(str)
     signal_speech = pyqtSignal(str)
     signal_vision = pyqtSignal(str)
@@ -33,7 +33,7 @@ from time import sleep
 
   ####when demoing how the processes work, add in additional lines of code
 "'Process spawning"
-def protocol_process(event):
+def protocol_process(event,command_queue):
     value = 0
     while event.is_set() is True:
         message = "Protocol Process/Thread Running at " + str(datetime.now())
@@ -43,7 +43,7 @@ def protocol_process(event):
     
     
 
-def feedback_process(event):
+def feedback_process(event,command_queue):
     while event.is_set() is True:
         message = "Feedback Process Running at " + str(datetime.now())
         print(message)
@@ -51,15 +51,15 @@ def feedback_process(event):
         sleep(5)
 
 
-def speech_process(event):
+def speech_process(event,command_queue):
     while event.is_set() is True:
         message = "Speech Process Running at " + str(datetime.now())
         print(message)
-        command_queue.put('speech', message)
+        command_queue.put(('speech', message))
         sleep(21)
 
 
-def vision_process(event):
+def vision_process(event,command_queue):
     while event.is_set() is True:
         message = "Vision Process Running at " + str(datetime.now())
         print(message)
@@ -67,7 +67,7 @@ def vision_process(event):
         sleep(9)
 
 
-def network_process(self,event):
+def network_process(event,command_queue):
     while event.is_set() is True:
         message = "Network Process Running at " + str(datetime.now())
         print(message)
@@ -210,9 +210,15 @@ class gui_window(QWidget):
         self.gui_signal.signal_speech.connect(self.update_speech_log)
         self.gui_signal.signal_vision.connect(self.update_vision_log)
       
+        #####timer stuff for queue checking
+        self.timer = QtCore.QTimer(self)
+        self.timer.setInterval(10) #delay to prevent it from causing undefined behavior
+        self.timer.timeout.connect(self.continuous_queue_check)
+        self.timer.start()
+
 
     def continuous_queue_check(self):
-        while True:
+        
             ### 2 forms of queues == (src, message) or (src,dst,status,reason)
             if not command_queue.empty():
                 result = command_queue.get()
@@ -241,7 +247,7 @@ class gui_window(QWidget):
                     message = "Process " + str(src) + " due to " + str(temp_message) + "resulting in " + str(status)
                     match dst:
                         case 'protocol':
-                            self.gui_signal.signal_protocol.emit(message)   
+                            self.gui_signalself.timer = QtCore.QTimer(self).signal_protocol.emit(message)   
                             if status == 'stop':
                                 self.stop_protocol()
                             if status == 'start':
@@ -277,7 +283,7 @@ class gui_window(QWidget):
 ###function for what happens when a button is clicked
     def start_protocol(self):
         self.protocol_event.set()
-        self.protocol = mp.Process(target=protocol_process,args=(self.protocol_event,))
+        self.protocol = mp.Process(target=protocol_process,args=(self.protocol_event,self.command_queue,))
         print("Protocol start")
         self.processes.append(self.protocol)
         self.log_box.append("Protocol started at " + str(datetime.now()))
@@ -297,7 +303,7 @@ class gui_window(QWidget):
 
     def vision_start(self):
         self.vision_event.set()
-        self.vision = mp.Process(target=vision_process,args=(self.vision_event,))
+        self.vision = mp.Process(target=vision_process,args=(self.vision_event,self.command_queue,))
         print("Vision start")
         self.processes.append(self.vision)
         self.log_box.append("Vision started at " + str(datetime.now()))
@@ -317,7 +323,7 @@ class gui_window(QWidget):
 
     def network_start(self):
         self.network_event.set()
-        self.network = mp.Process(target=network_process,args=(self.network_event,))
+        self.network = mp.Process(target=network_process,args=(self.network_event,self.command_queue,))
         print("Network started")
         self.processes.append(self.network)
         self.log_box.append("Network started at " + str(datetime.now()))
@@ -337,7 +343,7 @@ class gui_window(QWidget):
 
     def speech_start(self):
         self.speech_event.set()
-        self.speech = mp.Process(target=speech_process,args=(self.speech_event,))
+        self.speech = mp.Process(target=speech_process,args=(self.speech_event,self.command_queue,))
         print("Speech started")
         self.processes.append(self.speech)
         self.log_box.append("Speech started at " + str(datetime.now()))
@@ -357,7 +363,7 @@ class gui_window(QWidget):
 
     def feedback_start(self):
         self.feedback_event.set()
-        self.feedback = mp.Process(target=feedback_process,args=(self.feedback_event,))
+        self.feedback = mp.Process(target=feedback_process,args=(self.feedback_event,self.command_queue,))
         print("Feedback started")
         self.processes.append(self.feedback)
         self.log_box.append("Feedback started at " + str(datetime.now()))
@@ -387,7 +393,7 @@ class gui_window(QWidget):
 
 #################################################
 
-    @pyqtSlot(QByteArray)
+    @pyqtSlot(str)
     def update_protocol(self, message):
         self.protocol_box.append(message)
 
@@ -438,4 +444,3 @@ if __name__ == "__main__":
 
 
 ####################################################################################
-#if you do not want to load in the process each time the start button is called then you can create the processes outside of the class and just pass htem in as class parameters to the initializatino at which point it will just be equated to the class variable process for each of the 5 process
