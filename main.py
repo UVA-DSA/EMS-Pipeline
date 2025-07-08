@@ -29,50 +29,34 @@ from time import sleep
 
 
 ###########################################################################################################################################################################################################
-  ### 2 forms of queues == (src, message) or (src,dst,status,reason) or for interprocess communication ==> (dst,status signal,message)
+  ### 2 forms of queues == (src, message) or (src,dst,status,reason) or for interprocess communication ==> (src,dst,status signal,message,pipeline number)
 
   ####when demoing how the processes work, add in additional lines of code
 "'Process spawning"
 def protocol_process(event,command_queue,process_queue):
-    value = 0
     while event.is_set() is True:
-        message = "Protocol Process/Thread Running at " + str(datetime.now())
-        print(message)
-        command_queue.put(('protocol', message))
-        sleep(5)
+        pass
     
     
 
 def feedback_process(event,command_queue,process_queue):
     while event.is_set() is True:
-        message = "Feedback Process Running at " + str(datetime.now())
-        print(message)
-        command_queue.put(('feedback',message))
-        sleep(5)
+        pass
 
 
 def speech_process(event,command_queue,process_queue):
     while event.is_set() is True:
-        message = "Speech Process Running at " + str(datetime.now())
-        print(message)
-        command_queue.put(('speech', message))
-        sleep(21)
+        pass
 
 
 def vision_process(event,command_queue,process_queue):
     while event.is_set() is True:
-        message = "Vision Process Running at " + str(datetime.now())
-        print(message)
-        command_queue.put(('vision',message))
-        sleep(9)
+       pass
 
 
 def network_process(event,command_queue,process_queue):
     while event.is_set() is True:
-        message = "Network Process Running at " + str(datetime.now())
-        print(message)
-        command_queue.put(('network',message))
-        sleep(9)
+        pass
 
 
 
@@ -251,7 +235,6 @@ class gui_window(QWidget):
 
 
     def continuous_queue_check(self):
-        
             ### 2 forms of queues == (src, message) or (src,dst,status,reason)
             if not command_queue.empty():
                 result = command_queue.get()
@@ -273,46 +256,52 @@ class gui_window(QWidget):
                             self.log_box.append("Source Process is Inputted Incorrectly")
                             print("Invalid Source Process")
                 
-                if len(result) == 4: 
+                if len(result) == 5: 
                     src = result[0]
                     dst = result[1]
                     status = str(result[2])
                     temp_message = result[3]
                     message = "Process " + str(src) + " due to " + str(temp_message) + "resulting in " + str(status)
-                    match dst:
-                        case 'protocol':
-                            self.gui_signalself.timer = QtCore.QTimer(self).signal_protocol.emit(message)   
-                            if status == 'stop':
-                                self.stop_protocol()
-                            if status == 'start':
-                                self.start_protocol
-                        case 'feedback':
-                            self.gui_signal.signal_feedback.emit(message)   
-                            if status == 'stop':
-                                self.feedback_stop()
-                            if status == 'start':
-                                self.feedback_start()
-                        case 'network':
-                            self.gui_signal.signal_network.emit(message)
-                            if status == 'start':
-                                self.network_start()
-                            if status == 'stop':
-                                self.network_start()
-                        case 'vision':
-                            self.gui_signal.signal_vision.emit(message)
-                            if status == 'start':
-                                self.vision_start()
-                            if status == 'stop':
-                                self.vision_stop()
-                        case 'speech':
-                            self.gui_signal.signal_speech.emit(message)
-                            if status == 'start':
-                                self.speech_start()
-                            if status == 'stop':
-                                self.speech_stop()                   
-                        case _:
-                            print("Invalid Destination")
-                            pass
+                    match result[4]:
+                        case False:    
+                            match dst:
+                                case 'protocol':
+                                    self.gui_signalself.timer = QtCore.QTimer(self).signal_protocol.emit(message)   
+                                    if status == 'stop':
+                                        self.stop_protocol()
+                                    if status == 'start':
+                                        self.start_protocol
+                                case 'feedback':
+                                    self.gui_signal.signal_feedback.emit(message)   
+                                    if status == 'stop':
+                                        self.feedback_stop()
+                                    if status == 'start':
+                                        self.feedback_start()
+                                case 'network':
+                                    self.gui_signal.signal_network.emit(message)
+                                    if status == 'start':
+                                        self.network_start()
+                                    if status == 'stop':
+                                        self.network_start()
+                                case 'vision':
+                                    self.gui_signal.signal_vision.emit(message)
+                                    if status == 'start':
+                                        self.vision_start()
+                                    if status == 'stop':
+                                        self.vision_stop()
+                                case 'speech':
+                                    self.gui_signal.signal_speech.emit(message)
+                                    if status == 'start':
+                                        self.speech_start()
+                                    if status == 'stop':
+                                        self.speech_stop()                   
+                                case _:
+                                    print("Invalid Destination")
+                                    pass
+                        case True:
+
+                    
+
 
 ###function for what happens when a button is clicked
     def start_protocol(self):
