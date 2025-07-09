@@ -235,7 +235,7 @@ class gui_window(QWidget):
 
 
     def continuous_queue_check(self):
-            ### 2 forms of queues == (src, message) or (src,dst,status,reason)
+            ### 2 forms of queues == (src, message) or (src,dst,status,reason) or (type of data sent,dst,contents of message)
             if not command_queue.empty():
                 result = command_queue.get()
                 if len(result) == 2:
@@ -255,50 +255,99 @@ class gui_window(QWidget):
                         case _:
                             self.log_box.append("Source Process is Inputted Incorrectly")
                             print("Invalid Source Process")
-                
-                if len(result) == 5: 
+                if len(result) == 3: ###one reason for not terminating processs after the thread finishes is due to the fact that there might still be data somewhere in the pipeline
                     src = result[0]
                     dst = result[1]
+                    message_contents =  str(result[2])
+                    time_stamp = src(datetime.now())
+                    match dst:
+                        case 'protocol':
+                            if self.protocol not in self.processes:
+                                self.start_protocol()
+                            message = "Data Received from " + str(src) + " at: " + time_stamp
+                            self.gui_signal.signal_protocol.emit(message)
+                            data = message_contents
+                            self.protocol_queue.put((data))
+
+                        case 'feedback':
+                            if self.feedback not in self.processes:
+                                self.feedback_start()
+                            message = "Data Received from " + str(src) + " at: " + time_stamp
+                            data = message_contents
+                            if src == 'protocol':
+                                self.feedback_queue.put(('protocol',data))
+                            if src == 'vision': 
+                                self.feedback_queue.put(('vision',data))
+                            self.gui_signal.signal_feedback.emit(message)
+
+                        case 'network':
+                            message = "Data Received from " + str(src) + " at: " + time_stamp
+                            update = message_contents
+                            self.network_queue.put((update))
+                            self.gui_signal.signal_network.emit(message)
+
+
+
+                        case 'speech': #signal sent from network to speech thread
+                            if self.speech not in self.processes:
+                                self.speech_start()
+                            message = f"Audio Signal Received from {src} at: "+ time_stamp
+                            signal = message_contents
+                            self.speech_queue.put((signal))
+                            self.gui_signal.signal_speech.emit(message)
+
+                        case 'vision':
+                            message = "Video Frames Received from " + str(src) + " at: " + time_stamp
+                            frames = message_contents
+                            if self.vision not in self.processes:
+                                self.vision_start()
+                            self.vision_queue.put((frames))
+                            self.gui_signal.signal_vision.emit(message)
+
+                        case _:
+                            print("INVALID REQUEST")
+                        
+                        
+                if len(result) == 4: 
+                    src = result[0] #which process is initiating things
+                    dst = result[1] #where the process 
                     status = str(result[2])
                     temp_message = result[3]
-                    message = "Process " + str(src) + " due to " + str(temp_message) + "resulting in " + str(status)
-                    match result[4]:
-                        case False:    
-                            match dst:
-                                case 'protocol':
-                                    self.gui_signalself.timer = QtCore.QTimer(self).signal_protocol.emit(message)   
-                                    if status == 'stop':
-                                        self.stop_protocol()
-                                    if status == 'start':
-                                        self.start_protocol
-                                case 'feedback':
-                                    self.gui_signal.signal_feedback.emit(message)   
-                                    if status == 'stop':
-                                        self.feedback_stop()
-                                    if status == 'start':
-                                        self.feedback_start()
-                                case 'network':
-                                    self.gui_signal.signal_network.emit(message)
-                                    if status == 'start':
-                                        self.network_start()
-                                    if status == 'stop':
-                                        self.network_start()
-                                case 'vision':
-                                    self.gui_signal.signal_vision.emit(message)
-                                    if status == 'start':
-                                        self.vision_start()
-                                    if status == 'stop':
-                                        self.vision_stop()
-                                case 'speech':
-                                    self.gui_signal.signal_speech.emit(message)
-                                    if status == 'start':
-                                        self.speech_start()
-                                    if status == 'stop':
-                                        self.speech_stop()                   
-                                case _:
-                                    print("Invalid Destination")
-                                    pass
-                        case True:
+                    message = "Process " + str(src) + " due to " + str(temp_message) + "resulting in " + str(status)                     
+                    match dst:
+                        case 'protocol':
+                            self.gui_signal.signal_protocol.emit(message)   
+                            if status == 'stop':
+                                self.stop_protocol()
+                            if status == 'start':
+                                self.start_protocol
+                        case 'feedback':
+                            self.gui_signal.signal_feedback.emit(message)   
+                            if status == 'stop':
+                                self.feedback_stop()
+                            if status == 'start':
+                                self.feedback_start()
+                        case 'network':
+                            self.gui_signal.signal_network.emit(message)
+                            if status == 'start':
+                                self.network_start()
+                            if status == 'stop':
+                                self.network_start()
+                        case 'vision':
+                            self.gui_signal.signal_vision.emit(message)
+                            if status == 'start':
+                                self.vision_start()
+                            if status == 'stop':
+                                self.vision_stop()
+                        case 'speech':
+                            self.gui_signal.signal_speech.emit(message)
+                            if status == 'start':
+                                self.speech_start()
+                            if status == 'stop':
+                                self.speech_stop()                   
+                        case _:
+                            print("Invalid Destination")
+                            pass
 
                     
 
