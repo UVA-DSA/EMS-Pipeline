@@ -38,7 +38,9 @@ def protocol_process(event,command_queue,process_queue):
     while event.is_set() is True:
         if process_queue.empty() and counter == 1000000:
             message = "Protocol Process Running in the Background at " + str(datetime.now())
+            print(message)
             command_queue.put(('protocol',message))
+            counter = 0
         else:
             received_content = process_queue.get()
             command_queue.put(('protocol','feedback',received_content[0]))
@@ -48,9 +50,13 @@ def protocol_process(event,command_queue,process_queue):
     
 
 def feedback_process(event,command_queue,process_queue):
+    counter = 0
     while event.is_set() is True:
+        print(counter)
         if process_queue.empty() and counter == 1000000:
             message = "Feedback Process Running in the Background at " + str(datetime.now())
+            print(message + str(counter))
+            counter = 0
             command_queue.put(('feedback',message))
         else:
             received_content = process_queue.get()
@@ -63,10 +69,13 @@ def feedback_process(event,command_queue,process_queue):
 
 
 def speech_process(event,command_queue,process_queue):
+    counter = 0
     while event.is_set() is True:
         if process_queue.empty() and counter == 1000000:
             message = "Speech Process Running in the Background at " + str(datetime.now())
+            print(message)
             command_queue.put(('speech',message))
+            counter = 0
         else:
             received_content = process_queue.get()
             command_queue.put(('speech','protocol',received_content[0]))
@@ -74,10 +83,13 @@ def speech_process(event,command_queue,process_queue):
 
 
 def vision_process(event,command_queue,process_queue):
+    counter = 0
     while event.is_set() is True:
         if process_queue.empty() and counter == 1000000:
             message = "Vision Process Running in the Background at " + str(datetime.now())
+            print(message)
             command_queue.put(('vision',message))
+            counter = 0
         else:
             received_content = process_queue.get()
             command_queue.put(('vision','feedback',received_content[0]))
@@ -85,10 +97,12 @@ def vision_process(event,command_queue,process_queue):
 
 def network_process(event,command_queue,process_queue):
     audio_or_video = 0
+    counter = 0
     while event.is_set() is True:
-        pass
-        if process_queue.empty() and counter == 1000000:
+        print(counter)
+        if process_queue.empty() :
             message = "Network Process Running in the Background at " + str(datetime.now())
+            print(message)
             command_queue.put(('network',message))
             if audio_or_video == 0:
                 command_queue.put(('network','speech',counter))
@@ -96,6 +110,7 @@ def network_process(event,command_queue,process_queue):
             else:
                 command_queue.put(('network','vision',counter))
                 audio_or_video = 0
+            counter = 0
         else:
             received_content = process_queue.get()
             data = f"Data sent over the network is {received_content[0]}"
@@ -540,6 +555,7 @@ class gui_window(QWidget):
             for i in range(len(self.processes)):
                 self.processes[i].terminate()
                 self.processes[i].join()
+        print("Program closed")
         self.close()
 
 
@@ -569,8 +585,8 @@ class gui_window(QWidget):
 
 
 "'Code for Multiprocessing set up"
-import py_trees 
-from py_trees.blackboard import Blackboard
+#import py_trees 
+#from py_trees.blackboard import Blackboard
 
 
 ##############
