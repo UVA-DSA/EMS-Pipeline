@@ -15,6 +15,7 @@ from PyQt5.QtCore import pyqtSlot
 from multiprocessing import Event
 from multiprocessing.shared_memory import SharedMemory
 from datetime import datetime
+from threading import Thread
 ###########################################pyqtSlot Signals
 class GUI_signal(QObject):
     signal_protocol = pyqtSignal(str)
@@ -29,93 +30,116 @@ from time import sleep
 
 
 ###########################################################################################################################################################################################################
-  ### 2 forms of queues == (src, message) or (src,dst,status,reason) or for interprocess communication ==> (src,dst,status signal,message,pipeline number)
-
-  ####when demoing how the processes work, add in additional lines of code
 "'Process spawning"
-def protocol_process(event,command_queue,process_queue):
-    counter = 0
+def protocol_process(event,receive_queue, sending_queue, command_queue):
     while event.is_set() is True:
-        if process_queue.empty() and counter == 1000000:
-            message = "Protocol Process Running in the Background at " + str(datetime.now())
-            print(message)
-            command_queue.put(('protocol',message))
-            counter = 0
-        else:
-            received_content = process_queue.get()
-            command_queue.put(('protocol','feedback',received_content[0]))
-        counter+=1
+        if not receive_queue.empty():
+            received_data = receive_queue.get_nowait()
+            print(f"[PROTOCOL] [PROCESS] Received the following message: {received_data}")
+            message = f"[PROTOCOL][MESSAGE] Protocol based on received data is sent at {datetime.now()}"
+            try:
+                sending_queue.put_nowait(message)
+                print(message)
+            except:
+                print("[ERROR][PROTOCOL] Data could not be added to queue to send over to the Feedback Process")
 
-    
-    
 
-def feedback_process(event,command_queue,process_queue):
-    counter = 0
+
+
+def feedback_process(event,receiving_queue, sending_queue,command_queue):
     while event.is_set() is True:
-        print(counter)
-        if process_queue.empty() and counter == 1000000:
-            message = "Feedback Process Running in the Background at " + str(datetime.now())
-            print(message + str(counter))
-            counter = 0
-            command_queue.put(('feedback',message))
-        else:
-            received_content = process_queue.get()
-            if received_content[0] == 'network':
-                command_queue.put(('feedback','network',received_content[1]))
-            else:
-                data = f"Data at the end of the pipeline is {received_content[1]}"
-                command_queue.put('feedback',data)
-        counter+=1
+        if not receiving_queue.empty():
+            received_data = receiving_queue.get_nowait()
+            print(f"[FEEDBACK] [PROCESS] Received the following message: {received_data}")
+            message = f"[FEEDBACK][MESSAGE] Feedback based on received data is sent at {datetime.now()}"
+            try:
+                sending_queue.put_nowait(message)
+                print(message)
+            except:
+                print("[ERROR][FEEDBACK] Data could not be added to queue to send over to the Network Process")
+            
 
 
-def speech_process(event,command_queue,process_queue):
-    counter = 0
+def speech_process(event,received_audio,sent_signal,command_queue):
     while event.is_set() is True:
-        if process_queue.empty() and counter == 1000000:
-            message = "Speech Process Running in the Background at " + str(datetime.now())
-            print(message)
-            command_queue.put(('speech',message))
-            counter = 0
-        else:
-            received_content = process_queue.get()
-            command_queue.put(('speech','protocol',received_content[0]))
-        counter+=1
+        if not received_audio.empty():
+            received_data = received_audio.get()
+            print(f"[SPEECH][PROCESS] Received the following message from network: {received_data}")
+            message = f"[SPEECH][MESSAGE] Audio signal received and sent at {datetime.now()}"
+            try:
+                sent_signal.put_nowait(message)
+                print(message)
+            except:
+                print("[ERROR][SPEECH] Data could not be added to queue to send over to the Protocol Process")
 
 
-def vision_process(event,command_queue,process_queue):
-    counter = 0
+def vision_process(event,video_from_network, frames_to_protocol,command_queue):
     while event.is_set() is True:
-        if process_queue.empty() and counter == 1000000:
-            message = "Vision Process Running in the Background at " + str(datetime.now())
-            print(message)
-            command_queue.put(('vision',message))
-            counter = 0
-        else:
-            received_content = process_queue.get()
-            command_queue.put(('vision','feedback',received_content[0]))
-        counter+=1
+        if not video_from_network.empty():
+            received_data = video_from_network.get()
+            print(f"[VISION][PROCESS] Received the following message from network: {received_data}")
+            message = f"[VISION][MESSAGE] Video frames received and sent at {datetime.now()}"
+            try:
+                frames_to_protocol.put_nowait(message)
+                print(message)
 
-def network_process(event,command_queue,process_queue):
-    audio_or_video = 0
-    counter = 0
+            except:
+                print("[ERROR][VISION] Data could not be added to queue to send over to the Protocol Process")
+
+
+def audio_thread(send_audio,send_over_socket):
+    while True:
+        #to do: see if you can check the message type over the socket to only put that on there
+        try:
+            message = f"[AUDIO][MESSAGE] Audio Signal Received and Sent at {datetime.now()}"
+            send_audio.put_nowait(message)
+        except:
+            print("[ERROR][AUDIO] Data could not be added to queue to send over to the Speech Process")
+        print(message)
+        sleep(0.5)
+                
+def video_thread(send_video,send_over_socket):
+    while True:
+        try:
+            message = f"[VIDEO][MESSAGE] Video frames received and sent at {datetime.now()}"
+            send_video.put_nowait(message)
+        except:
+            print("[ERROR][VIDEO] Data could not be added to queue to send over to the Vision Process")
+        print(message)
+        sleep(2)
+
+def network_process(event, send_audio, send_video,commands,receiving_queue,response_sending_queue):
+    thread_list = []
+    ##AUDIO THREAD STUFF
+    print("[THREAD FOR AUDIO]")
+    thread_for_audio = Thread(target=audio_thread,args=(send_audio,response_sending_queue,))
+    thread_list.append(thread_for_audio)
+    thread_for_audio.daemon = True #automatically ends the thread when main is killed
+    print("Thread for audio is created")
+
+    thread_for_audio.start()
+
+    ##VIDEO THREAD STUFF
+    print("[Thread for Video] ")
+    thread_for_video = Thread(target=video_thread,args=(send_video,response_sending_queue,))
+    thread_list.append(thread_for_video)
+    thread_for_video.daemon = True
+    print("Thread for Video is Created")
+    thread_for_video.start()
+
     while event.is_set() is True:
-        print(counter)
-        if process_queue.empty() :
-            message = "Network Process Running in the Background at " + str(datetime.now())
-            print(message)
-            command_queue.put(('network',message))
-            if audio_or_video == 0:
-                command_queue.put(('network','speech',counter))
-                audio_or_video == 1
-            else:
-                command_queue.put(('network','vision',counter))
-                audio_or_video = 0
-            counter = 0
-        else:
-            received_content = process_queue.get()
-            data = f"Data sent over the network is {received_content[0]}"
-            command_queue.put(('network',data))
-        counter+=1
+        # print(f"[NETWORK][PROCESS] Size of AUdio queue: {send_audio.qsize()}")
+        # print(f"[NETWORK][PROCESS] Size of Video queue: {send_video.qsize()} ")
+        # sleep(3)
+        if not receiving_queue.empty():
+            received_data = receiving_queue.get()
+            print(f"[NETWORK][PROCESS] Received the following message from feedback: {received_data}")
+            message = f"[NETWORK][MESSAGE] Video frames received and sent out {datetime.now()}"
+            try:
+                response_sending_queue.put_nowait(message)
+                print(message)
+            except:
+                print("[ERROR][NETWORK] Data could not be sent over sockets")
 
 
 ######################
@@ -128,13 +152,15 @@ class gui_window(QWidget):
         self.command_queue = queue
         
 
-
+        MAXSIZE = 512
         ##Each process has its own queue to check to ensure that data is not overwritten or lost while still meeting real time constraints:
-        self.feedback_queue = Queue()
-        self.network_queue = Queue()
-        self.vision_queue = Queue()
-        self.speech_queue = Queue()
-        self.protocol_queue = Queue()
+        self.network_send_audio = Queue(maxsize=MAXSIZE)
+        self.network_send_video = Queue(maxsize=MAXSIZE)
+        self.speech_audio_send_protocol = Queue(maxsize=MAXSIZE)
+        self.protocol_send_feedback = Queue(maxsize=MAXSIZE)
+        self.feedback_send_network = Queue(maxsize=MAXSIZE)
+        self.sendout_network = Queue(maxsize=MAXSIZE)
+ 
 
 
         main_layout = QVBoxLayout()
@@ -285,127 +311,15 @@ class gui_window(QWidget):
         self.gui_signal.signal_speech.connect(self.update_speech_log)
         self.gui_signal.signal_vision.connect(self.update_vision_log)
       
-        #####timer stuff for queue checking
-        self.timer = QtCore.QTimer(self)
-        self.timer.setInterval(10) #delay to prevent it from causing undefined behavior
-        self.timer.timeout.connect(self.continuous_queue_check)
-        self.timer.start()
+    #     #####timer stuff for queue checking
+    #     self.timer = QtCore.QTimer(self)
+    #     self.timer.setInterval(10) #delay to prevent it from causing undefined behavior
+    #     self.timer.timeout.connect(self.continuous_queue_check)
+    #     self.timer.start()
 
 
-    def continuous_queue_check(self):
-            ### 2 forms of queues == (src, message) or (src,dst,status,reason) or (type of data sent,dst,contents of message)
-            if not command_queue.empty():
-                result = command_queue.get()
-                if len(result) == 2:
-                    src = result[0]
-                    message = str(result[1])
-                    match src:
-                        case 'feedback':
-                            self.gui_signal.signal_feedback.emit(message)
-                        case 'protocol':
-                            self.gui_signal.signal_protocol.emit(message)
-                        case 'network':
-                            self.gui_signal.signal_network.emit(message)
-                        case 'vision':
-                            self.gui_signal.signal_vision.emit(message)
-                        case 'speech':
-                            self.gui_signal.signal_speech.emit(message)
-                        case _:
-                            self.log_box.append("Source Process is Inputted Incorrectly")
-                            print("Invalid Source Process")
-                if len(result) == 3: ###one reason for not terminating processs after the thread finishes is due to the fact that there might still be data somewhere in the pipeline
-                    src = result[0]
-                    dst = result[1]
-                    message_contents =  str(result[2])
-                    time_stamp = src(datetime.now())
-                    match dst:
-                        case 'protocol':
-                            if self.protocol not in self.processes:
-                                self.start_protocol()
-                            message = "Data Received from " + str(src) + " at: " + time_stamp
-                            self.gui_signal.signal_protocol.emit(message)
-                            data = message_contents
-                            self.protocol_queue.put((data))
-
-                        case 'feedback':
-                            if self.feedback not in self.processes:
-                                self.feedback_start()
-                            message = "Data Received from " + str(src) + " at: " + time_stamp
-                            data = message_contents
-                            if src == 'protocol':
-                                self.feedback_queue.put(('protocol',data))
-                            if src == 'vision': 
-                                self.feedback_queue.put(('vision',data))
-                            self.gui_signal.signal_feedback.emit(message)
-
-                        case 'network':
-                            message = "Data Received from " + str(src) + " at: " + time_stamp
-                            update = message_contents
-                            self.network_queue.put((update))
-                            self.gui_signal.signal_network.emit(message)
-
-                        case 'speech': #signal sent from network to speech thread
-                            if self.speech not in self.processes:
-                                self.speech_start()
-                            message = f"Audio Signal Received from {src} at: "+ time_stamp
-                            signal = message_contents
-                            self.speech_queue.put((signal))
-                            self.gui_signal.signal_speech.emit(message)
-
-                        case 'vision':
-                            message = "Video Frames Received from " + str(src) + " at: " + time_stamp
-                            frames = message_contents
-                            if self.vision not in self.processes:
-                                self.vision_start()
-                            self.vision_queue.put((frames))
-                            self.gui_signal.signal_vision.emit(message)
-
-                        case _:
-                            print("INVALID REQUEST")
-                        
-                        
-                if len(result) == 4: 
-                    src = result[0] #which process is initiating things
-                    dst = result[1] #where the process 
-                    status = str(result[2])
-                    temp_message = result[3]
-                    message = "Process " + str(src) + " due to " + str(temp_message) + "resulting in " + str(status)                     
-                    match dst:
-                        case 'protocol':
-                            self.gui_signal.signal_protocol.emit(message)   
-                            if status == 'stop':
-                                self.stop_protocol()
-                            if status == 'start':
-                                self.start_protocol
-                        case 'feedback':
-                            self.gui_signal.signal_feedback.emit(message)   
-                            if status == 'stop':
-                                self.feedback_stop()
-                            if status == 'start':
-                                self.feedback_start()
-                        case 'network':
-                            self.gui_signal.signal_network.emit(message)
-                            if status == 'start':
-                                self.network_start()
-                            if status == 'stop':
-                                self.network_start()
-                        case 'vision':
-                            self.gui_signal.signal_vision.emit(message)
-                            if status == 'start':
-                                self.vision_start()
-                            if status == 'stop':
-                                self.vision_stop()
-                        case 'speech':
-                            self.gui_signal.signal_speech.emit(message)
-                            if status == 'start':
-                                self.speech_start()
-                            if status == 'stop':
-                                self.speech_stop()                   
-                        case _:
-                            print("Invalid Destination")
-                            pass
-
-                    
+    # def continuous_queue_check(self):
+    #         pass
 
 
 ###function for what happens when a button is clicked
@@ -415,10 +329,11 @@ class gui_window(QWidget):
         self.protocol_button_stop.setStyleSheet("color: white")
         self.protocol_button_start.setStyleSheet("color: black")
         self.protocol_event.set()
-        self.protocol = mp.Process(target=protocol_process,args=(self.protocol_event,self.command_queue,self.protocol_queue,))
+        self.protocol = mp.Process(target=protocol_process,args=(self.protocol_event,self.speech_audio_send_protocol,self.protocol_send_feedback,self.command_queue,))
         print("Protocol start")
         self.processes.append(self.protocol)
         self.log_box.append("Protocol started at " + str(datetime.now()))
+        print(f"PROCESS: {self.protocol}")
         self.protocol.start()
 
     def stop_protocol(self): 
@@ -443,7 +358,7 @@ class gui_window(QWidget):
         self.vision_stop_button.setEnabled(True)
         self.vision_start_button.setStyleSheet("color: black")
         self.vision_stop_button.setStyleSheet("color: white")
-        self.vision = mp.Process(target=vision_process,args=(self.vision_event,self.command_queue,self.vision_queue))
+        self.vision = mp.Process(target=vision_process,args=(self.vision_event,self.network_send_video,self.speech_audio_send_protocol,self.command_queue,))        
         print("Vision start")
         self.processes.append(self.vision)
         self.log_box.append("Vision started at " + str(datetime.now()))
@@ -471,7 +386,7 @@ class gui_window(QWidget):
         self.network_end_button.setEnabled(True)
         self.network_start_button.setStyleSheet("color: black")
         self.network_end_button.setStyleSheet("color: white")
-        self.network = mp.Process(target=network_process,args=(self.network_event,self.command_queue,self.network_queue,))
+        self.network = mp.Process(target=network_process,args=(self.network_event,self.network_send_audio, self.network_send_video,self.command_queue,self.feedback_send_network,self.sendout_network,))
         print("Network started")
         self.processes.append(self.network)
         self.log_box.append("Network started at " + str(datetime.now()))
@@ -499,7 +414,7 @@ class gui_window(QWidget):
         self.speech_stop_button.setEnabled(True)
         self.speech_start_button.setStyleSheet("color: black")
         self.speech_stop_button.setStyleSheet("color: white")
-        self.speech = mp.Process(target=speech_process,args=(self.speech_event,self.command_queue,self.speech_queue,))
+        self.speech = mp.Process(target=speech_process,args=(self.speech_event,self.network_send_audio,self.speech_audio_send_protocol,self.command_queue,))
         print("Speech started")
         self.processes.append(self.speech)
         self.log_box.append("Speech started at " + str(datetime.now()))
@@ -527,7 +442,7 @@ class gui_window(QWidget):
         self.feedback_stopped_button.setEnabled(True)
         self.feedback_start_button.setStyleSheet("color: black")
         self.feedback_stopped_button.setStyleSheet("color: white")
-        self.feedback = mp.Process(target=feedback_process,args=(self.feedback_event,self.command_queue,self.feedback_queue,))
+        self.feedback = mp.Process(target=feedback_process,args=(self.feedback_event,self.protocol_send_feedback,self.feedback_send_network,self.command_queue))
         print("Feedback started")
         self.processes.append(self.feedback)
         self.log_box.append("Feedback started at " + str(datetime.now()))
@@ -601,8 +516,6 @@ if __name__ == "__main__":
     width, height = application.desktop().screenGeometry().width(), application.desktop().screenGeometry().height()
     command_queue = Queue()
     Window = gui_window(application=application,queue=command_queue,width=width,height=height)
-    
-    
 
 
     Window.show()
