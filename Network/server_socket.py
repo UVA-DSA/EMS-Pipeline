@@ -4,24 +4,25 @@ import asyncio
 import aiohttp as web
 import threading 
 import socket
-
+import aiohttp
 
 
 
 class server_network():
-    def __init__(self,IP,PORT,WEB_PORT,LISTENER,video_queue,audio_queue):
+    def __init__(self,IP,PORT,WEB_PORT,video_queue,audio_queue):
         self.ip = IP
         self.socket_port = PORT
         self.web_port = WEB_PORT
         self.server = socketio.AsyncServer(async_mode='aiohttp',cors_allowed_origins='*')
         self.application = web.Application()
         self.server.attach(self.application)
-        self.list = LISTENER
         self.audio_queue = audio_queue
         self.video_queue = video_queue
+    def set_listener(self,LISTENER):
+        self.list = LISTENER
     def setup(self):
         print("Creating Asyncio Task for Receiving Data Over UDP")
-        asyncio.create_task(self.list.listEn())
+        asyncio.create_task(self.list.listen())
         return self.application
     def event_setup(self):
         @self.server.event

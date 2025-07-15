@@ -86,52 +86,56 @@ def vision_process(event,video_from_network, frames_to_protocol,command_queue):
 
             except:
                 print("[ERROR][VISION] Data could not be added to queue to send over to the Protocol Process")
-
-#Dummy threads to test pipeline execution
-def audio_thread(send_audio,send_over_socket):
-    while True:
-        #to do: see if you can check the message type over the socket to only put that on there
-        try:
-            message = f"[AUDIO][MESSAGE] Audio Signal Received and Sent at {datetime.now()}"
-            send_audio.put_nowait(message)
-        except:
-            print("[ERROR][AUDIO] Data could not be added to queue to send over to the Speech Process")
-        print(message)
-        sleep(0.5)
                 
-def video_thread(send_video,send_over_socket):
+def audio_thread(send_audio,send_over_socket,receive_over_socket):
+    
     while True:
         try:
-            message = f"[VIDEO][MESSAGE] Video frames received and sent at {datetime.now()}"
-            send_video.put_nowait(message)
+            if not receive_over_socket.empty():
+                result = receive_over_socket.get_nowait()
+                message = f"[AUDIO][MESSAGE] Audio Signal Received and Sent at {datetime.now()} in the form of {result}"
+                print(message)
+                send_audio.put_nowait(result)
         except:
-            print("[ERROR][VIDEO] Data could not be added to queue to send over to the Vision Process")
-        print(message)
-        sleep(2)
+            print("[ERROR][AUDIO] Data could not be added to queue to send over to the Speech Process") 
 
-def network_process(event, send_audio, send_video,commands,receiving_queue,response_sending_queue):
+
+def video_thread(send_video,send_over_socket,receive_over_socket):
+        while True:
+            try:
+                if not receive_over_socket.empty():
+                    result = receive_over_socket.get_nowait()
+                    message = f"[VIDEO][MESSAGE] Video frames received and sent at {datetime.now()}"
+                    print(message)
+                    send_video.put_nowait(result)
+            except:
+                print("[ERROR][AUDIO] Data could not be added to queue to send over to the Speech Process")
+
+
+def network_process(event, send_audio, send_video,commands,receiving_queue,response_sending_queue,receiving_video_socket_queue,receiving_audio_socket_queue):
     thread_list = []
+    server = server_network(IP="0.0.0.0",PORT=12345,WEB_PORT=8080,video_queue=receiving_video_socket_queue,audio_queue=receiving_audio_socket_queue)
     ##AUDIO THREAD STUFF
+    audio_video_listener = listener(IP="0.0.0.0",SOCKET_PORT=12345,SERVER=server.return_server())
+    audio_video_listener.listen()
     print("[THREAD FOR AUDIO]")
-    thread_for_audio = Thread(target=audio_thread,args=(send_audio,response_sending_queue,))
+    thread_for_audio = Thread(target=audio_thread,args=(send_audio,response_sending_queue,receiving_audio_socket_queue,))
     thread_list.append(thread_for_audio)
     thread_for_audio.daemon = True #automatically ends the thread when main is killed
-    print("Thread for audio is created")
+    print("[THREAD FOR AUDIO] Created")
 
     thread_for_audio.start()
 
     ##VIDEO THREAD STUFF
-    print("[Thread for Video] ")
-    thread_for_video = Thread(target=video_thread,args=(send_video,response_sending_queue,))
+    print("[THREAD FOR VIDEO] ")
+    thread_for_video = Thread(target=video_thread,args=(send_video,response_sending_queue,receiving_video_socket_queue))
     thread_list.append(thread_for_video)
     thread_for_video.daemon = True
-    print("Thread for Video is Created")
+    print("[THREAD FOR VIDEO] Created")
     thread_for_video.start()
 
     while event.is_set() is True:
-        # print(f"[NETWORK][PROCESS] Size of AUdio queue: {send_audio.qsize()}")
-        # print(f"[NETWORK][PROCESS] Size of Video queue: {send_video.qsize()} ")
-        # sleep(3)
+
         if not receiving_queue.empty():
             received_data = receiving_queue.get()
             print(f"[NETWORK][PROCESS] Received the following message from feedback: {received_data}")
@@ -161,7 +165,8 @@ class gui_window(QWidget):
         self.protocol_send_feedback = Queue(maxsize=MAXSIZE)
         self.feedback_send_network = Queue(maxsize=MAXSIZE)
         self.sendout_network = Queue(maxsize=MAXSIZE)
- 
+        self.receive_over_network_audio = Queue(maxsize=MAXSIZE)
+        self.receive_over_network_video = Queue(maxsize=MAXSIZE)
 
 
         main_layout = QVBoxLayout()
@@ -387,7 +392,7 @@ class gui_window(QWidget):
         self.network_end_button.setEnabled(True)
         self.network_start_button.setStyleSheet("color: black")
         self.network_end_button.setStyleSheet("color: white")
-        self.network = mp.Process(target=network_process,args=(self.network_event,self.network_send_audio, self.network_send_video,self.command_queue,self.feedback_send_network,self.sendout_network,))
+        self.network = mp.Process(target=network_process,args=(self.network_event,self.network_send_audio, self.network_send_video,self.command_queue,self.feedback_send_network,self.sendout_network,self.receive_over_network_video,self.receive_over_network_audio,))
         print("Network started")
         self.processes.append(self.network)
         self.log_box.append("Network started at " + str(datetime.now()))
