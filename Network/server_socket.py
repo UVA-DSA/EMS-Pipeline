@@ -1,7 +1,7 @@
 import socketio
 import datetime
 import asyncio
-import aiohttp as web
+from aiohttp import web
 import threading 
 import socket
 import aiohttp
@@ -62,7 +62,7 @@ class listener():
             while True:
                 try:
                     data, discard = await asyncio.get_event_loop().sock_recvfrom(sock,65535)
-                    print("Data Received over UDP: ", str(data))
+                    print(f"Data Received over UDP at {datetime.now()}: {data}")
                     if 'audio' in data:
                         await self.server.emit("audio",data)
                     elif 'video' in data:
