@@ -31,6 +31,7 @@ from time import sleep
 
 ###########################################################################################################################################################################################################
 "'Process spawning"
+from Network.server_socket import listener, server_network #for networking purposes
 def protocol_process(event,receive_queue, sending_queue, command_queue):
     while event.is_set() is True:
         if not receive_queue.empty():
@@ -86,7 +87,7 @@ def vision_process(event,video_from_network, frames_to_protocol,command_queue):
             except:
                 print("[ERROR][VISION] Data could not be added to queue to send over to the Protocol Process")
 
-
+#Dummy threads to test pipeline execution
 def audio_thread(send_audio,send_over_socket):
     while True:
         #to do: see if you can check the message type over the socket to only put that on there
