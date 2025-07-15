@@ -26,11 +26,13 @@ with SocketIO('http://localhost:0.0.0.0', 8080) as sio:
     if audio_or_video == 0:
         sio.emit('audio', {'data': 'AUDIO SIGNAL'})
         audio_or_video = 1
+        print("[CLIENT][AUDIO] emitted")
     else:
         sio.emit('video',{'data':'VIDEO FRAMES'})
         audio_or_video = 0
+        print("[CLIENT][VIDEO] Emitted")
    
     print("Sent")
     sleep(5)
 
-
+print("Program ended")

@@ -20,7 +20,7 @@ class server_network():
         self.video_queue = video_queue
     def set_listener(self,LISTENER):
         self.list = LISTENER
-    def setup(self):
+    async def setup(self):
         print("Creating Asyncio Task for Receiving Data Over UDP")
         asyncio.create_task(self.list.listen())
         return self.application

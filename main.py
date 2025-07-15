@@ -114,10 +114,14 @@ def video_thread(send_video,send_over_socket,receive_over_socket):
 
 def network_process(event, send_audio, send_video,commands,receiving_queue,response_sending_queue,receiving_video_socket_queue,receiving_audio_socket_queue):
     thread_list = []
-    server = server_network(IP="0.0.0.0",PORT=12345,WEB_PORT=8080,video_queue=receiving_video_socket_queue,audio_queue=receiving_audio_socket_queue)
+    # server = server_network(IP="0.0.0.0",PORT=12345,WEB_PORT=8080,video_queue=receiving_video_socket_queue,audio_queue=receiving_audio_socket_queue)
+    # audio_video_listener = listener(IP="0.0.0.0",SOCKET_PORT=12345,SERVER=server.return_server())
+    # server.set_listener(audio_video_listener)
+    # server.setup_server()
+    print("Server Set Up Properly")
+
+
     ##AUDIO THREAD STUFF
-    audio_video_listener = listener(IP="0.0.0.0",SOCKET_PORT=12345,SERVER=server.return_server())
-    audio_video_listener.listen()
     print("[THREAD FOR AUDIO]")
     thread_for_audio = Thread(target=audio_thread,args=(send_audio,response_sending_queue,receiving_audio_socket_queue,))
     thread_list.append(thread_for_audio)
@@ -145,6 +149,7 @@ def network_process(event, send_audio, send_video,commands,receiving_queue,respo
                 print(message)
             except:
                 print("[ERROR][NETWORK] Data could not be sent over sockets")
+    server.close()
 
 
 ######################
@@ -392,7 +397,7 @@ class gui_window(QWidget):
         self.network_end_button.setEnabled(True)
         self.network_start_button.setStyleSheet("color: black")
         self.network_end_button.setStyleSheet("color: white")
-        self.network = mp.Process(target=network_process,args=(self.network_event,self.network_send_audio, self.network_send_video,self.command_queue,self.feedback_send_network,self.sendout_network,self.receive_over_network_video,self.receive_over_network_audio,))
+        self.network = mp.Process(target=network_process,args=(self.network_event,self.network_send_audio, self.network_send_video,self.command_queue,self.feedback_send_network,self.sendout_network,self.receive_over_network_video,self.receive_over_network_audio))
         print("Network started")
         self.processes.append(self.network)
         self.log_box.append("Network started at " + str(datetime.now()))
