@@ -6,6 +6,9 @@ import threading
 import socket
 import aiohttp
 
+from multiprocessing import Queue
+
+import multiprocessing as mp
 
 
 class server_network():
@@ -14,6 +17,7 @@ class server_network():
         self.socket_port = PORT
         self.web_port = WEB_PORT
         self.server = socketio.AsyncServer(async_mode='aiohttp',cors_allowed_origins='*')
+        print("here..")
         self.application = web.Application()
         self.server.attach(self.application)
         self.audio_queue = audio_queue
@@ -72,3 +76,17 @@ class listener():
                 except Exception as e:
                     print(f"Error Message: {e}")        
     
+
+if __name__ == "__main__":
+
+    receiving_video_socket_queue = Queue()
+    receiving_audio_socket_queue = Queue()
+
+    print("Starting socket main")
+
+    socketio_server = server_network(IP="0.0.0.0",PORT=12345,WEB_PORT=8080,video_queue=receiving_video_socket_queue,audio_queue=receiving_audio_socket_queue)
+    audio_listener = listener("0.0.0.0",12345,socketio_server)
+    socketio_server.set_listener(audio_listener)
+    socketio_process = mp.Process(target=socketio_server.setup_server)
+
+    socketio_process.start()

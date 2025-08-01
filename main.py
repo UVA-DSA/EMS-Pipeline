@@ -114,10 +114,10 @@ def video_thread(send_video,send_over_socket,receive_over_socket):
 
 def network_process(event, send_audio, send_video,commands,receiving_queue,response_sending_queue,receiving_video_socket_queue,receiving_audio_socket_queue):
     thread_list = []
-    # server = server_network(IP="0.0.0.0",PORT=12345,WEB_PORT=8080,video_queue=receiving_video_socket_queue,audio_queue=receiving_audio_socket_queue)
-    # audio_video_listener = listener(IP="0.0.0.0",SOCKET_PORT=12345,SERVER=server.return_server())
-    # server.set_listener(audio_video_listener)
-    # server.setup_server()
+    server = server_network(IP="0.0.0.0",PORT=12345,WEB_PORT=8080,video_queue=receiving_video_socket_queue,audio_queue=receiving_audio_socket_queue)
+    audio_video_listener = listener(IP="0.0.0.0",SOCKET_PORT=12345,SERVER=server.return_server())
+    server.set_listener(audio_video_listener)
+    server.setup_server()
     print("Server Set Up Properly")
 
 
