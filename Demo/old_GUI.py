@@ -113,11 +113,11 @@ class MainWindow(QWidget):
         self.finalSpeechSegmentsSpeech = []
         self.finalSpeechSegmentsNLP = []
         self.nonFinalText = ""
-
+        
         self.ip_address = get_local_ipv4()
-
+        
         self.VideoThread = None
-
+        
 
         #whisper
 
@@ -263,9 +263,9 @@ class MainWindow(QWidget):
 
         #self.feedback_client = Feedback.FeedbackClient()
         #self.feedback_client.start()
+       
 
-
-        # Threads for video
+        # Threads for video 
         self.VideoThread = VideoThread(data_path, videostream)
         self.VideoThread.changePixmap.connect(self.setImage)
         self.VideoThread.changeVisInfo.connect(self.handle_message2)
@@ -277,7 +277,7 @@ class MainWindow(QWidget):
         th2.start()
 
 
-        # ==== Start the EMS Agent - Xueren ==== #
+            # ==== Start the EMS Agent - Xueren ==== #
         print("EMSAgent Thread Started")
         self.EMSAgentThread = EMSTinyBERTSystem.EMSAgentInference(self,EMSAgentSpeechToNLPQueue, FeedbackQueue)
         self.EMSAgentThread.start()
@@ -295,58 +295,43 @@ class MainWindow(QWidget):
         self.ControlPanelGridLayout = QGridLayout(self.ControlPanel)
         self.Grid_Layout.addWidget(self.ControlPanel, 9, 0, 1, 2)
 
-
-
         # Audio Options Menu
-        self.DataSourceBox = QComboBox()
+        self.ComboBox = QComboBox()
+        self.ComboBox.addItems(["Microphone",
+                                "000_190105",
+                                "001_190105",
+                                "002_190105",
+                                "003_190105",
+                                "004_190105",
+                                "005_190105",
+                                "006_190105",
+                                "007_190105",
+                                "008_190105",
+                                "009_190105",
+                                "010_190105",
+                                "011_190105",
+                                "CPR_transcript1",
+                                "CPR_transcript2",
+                                "CPR_transcript3",
+                                "CPR_Kay",
+                                "NG1",
+                                "Other Audio File",
+                                "Text File"])
 
-        self.DataSourceBox.addItems(["simulator", "local files", "Microphone"])
-
-        self.ControlPanelGridLayout.addWidget(self.DataSourceBox, 0, 0, 1, 1)
-
-        # Modality Selection Group
-        self.ModalityGroupBox = QGroupBox("Select Modalities")
-        self.ModalityLayout = QHBoxLayout()
-
-        self.VideoCheckBox = QCheckBox("Video")
-        self.VideoCheckBox.setChecked(True)
-        self.ModalityLayout.addWidget(self.VideoCheckBox)
-
-        self.AudioCheckBox = QCheckBox("Audio")
-        self.AudioCheckBox.setChecked(True)
-        self.ModalityLayout.addWidget(self.AudioCheckBox)
-
-        self.SmartWatchCheckBox = QCheckBox("Smart Watch")
-        self.SmartWatchCheckBox.setChecked(True)
-        self.ModalityLayout.addWidget(self.SmartWatchCheckBox)
-
-        self.ModalityGroupBox.setLayout(self.ModalityLayout)
-        self.ControlPanelGridLayout.addWidget(self.ModalityGroupBox, 2, 0, 1, 3)
-
-        # Data Source Configuration Container
-        self.ConfigGroupBox = QGroupBox("Data Source Configuration")
-        self.ConfigLayout = QVBoxLayout()
-        self.ConfigGroupBox.setLayout(self.ConfigLayout)
-        self.ControlPanelGridLayout.addWidget(self.ConfigGroupBox, 3, 0, 1, 3)
-
-        # Connect data source change to update configuration options
-        self.DataSourceBox.currentTextChanged.connect(self.UpdateDataSourceConfig)
-
-        # Initialize with default configuration
-        self.UpdateDataSourceConfig(self.DataSourceBox.currentText())
+        self.ControlPanelGridLayout.addWidget(self.ComboBox, 0, 0, 1, 1)
 
         # Radio Buttons Google or Other ML Model
         self.GoogleSpeechRadioButton = QRadioButton("Google Speech Cloud Model", self)
         self.GoogleSpeechRadioButton.setEnabled(True)
         self.GoogleSpeechRadioButton.setChecked(True)
         self.ControlPanelGridLayout.addWidget(
-            self.GoogleSpeechRadioButton, 0, 1, 1, 1)
+        self.GoogleSpeechRadioButton, 0, 1, 1, 1)
 
         self.MLSpeechRadioButton = QRadioButton("OpenAI Whisper Local Model", self)
         self.MLSpeechRadioButton.setEnabled(True) #changed from False to True to enable
         self.MLSpeechRadioButton.setChecked(False)
         self.ControlPanelGridLayout.addWidget(
-            self.MLSpeechRadioButton, 0, 2, 1, 1)
+        self.MLSpeechRadioButton, 0, 2, 1, 1)
 
         # Create a start button in the Control Panel
         self.StartButton = QPushButton('Start', self)
@@ -482,140 +467,6 @@ class MainWindow(QWidget):
 
         # self.Grid_Layout.setSpacing(0)
         # self.Grid_Layout.setContentsMargins(0, 0, 0, 0)
-
-    def UpdateDataSourceConfig(self, source):
-        """Update configuration options based on selected data source"""
-        # Clear existing widgets
-        while self.ConfigLayout.count():
-            child = self.ConfigLayout.takeAt(0)
-            if child.widget():
-                child.widget().deleteLater()
-
-        if source == "simulator":
-            # Simulator configuration
-            simLayout = QGridLayout()
-
-            # Height
-            simLayout.addWidget(QLabel("Height:"), 0, 0)
-            self.HeightSpinBox = QSpinBox()
-            self.HeightSpinBox.setRange(240, 2160)
-            self.HeightSpinBox.setValue(720)
-            simLayout.addWidget(self.HeightSpinBox, 0, 1)
-
-            # Width
-            simLayout.addWidget(QLabel("Width:"), 1, 0)
-            self.WidthSpinBox = QSpinBox()
-            self.WidthSpinBox.setRange(320, 3840)
-            self.WidthSpinBox.setValue(1280)
-            simLayout.addWidget(self.WidthSpinBox, 1, 1)
-
-            # IP Address
-            simLayout.addWidget(QLabel("IP Address:"), 2, 0)
-            self.IPAddressLineEdit = QLineEdit()
-            self.IPAddressLineEdit.setText("127.0.0.1")
-            self.IPAddressLineEdit.setPlaceholderText("e.g., 192.168.1.100")
-            simLayout.addWidget(self.IPAddressLineEdit, 2, 1)
-
-            # Port Number
-            simLayout.addWidget(QLabel("Port:"), 3, 0)
-            self.PortSpinBox = QSpinBox()
-            self.PortSpinBox.setRange(1024, 65535)
-            self.PortSpinBox.setValue(9000)
-            simLayout.addWidget(self.PortSpinBox, 3, 1)
-
-            self.ConfigLayout.addLayout(simLayout)
-
-        elif source == "local files":
-            # Local files configuration
-            fileLayout = QVBoxLayout()
-
-            # MP4 file selection
-            mp4Layout = QHBoxLayout()
-            mp4Layout.addWidget(QLabel("Video File (MP4):"))
-            self.VideoFileLineEdit = QLineEdit()
-            self.VideoFileLineEdit.setReadOnly(True)
-            self.VideoFileLineEdit.setPlaceholderText("No file selected")
-            mp4Layout.addWidget(self.VideoFileLineEdit)
-
-            self.VideoFileBrowseButton = QPushButton("Browse...")
-            self.VideoFileBrowseButton.clicked.connect(self.BrowseVideoFile)
-            mp4Layout.addWidget(self.VideoFileBrowseButton)
-            fileLayout.addLayout(mp4Layout)
-
-            # CSV file selection
-            csvLayout = QHBoxLayout()
-            csvLayout.addWidget(QLabel("Data File (CSV):"))
-            self.CSVFileLineEdit = QLineEdit()
-            self.CSVFileLineEdit.setReadOnly(True)
-            self.CSVFileLineEdit.setPlaceholderText("No file selected")
-            csvLayout.addWidget(self.CSVFileLineEdit)
-
-            self.CSVFileBrowseButton = QPushButton("Browse...")
-            self.CSVFileBrowseButton.clicked.connect(self.BrowseCSVFile)
-            csvLayout.addWidget(self.CSVFileBrowseButton)
-            fileLayout.addLayout(csvLayout)
-
-            self.ConfigLayout.addLayout(fileLayout)
-
-        elif source == "Microphone":
-            # Microphone configuration (if needed)
-            micLayout = QVBoxLayout()
-            micLayout.addWidget(QLabel("Microphone input will be used for audio capture."))
-            self.ConfigLayout.addLayout(micLayout)
-
-    def BrowseVideoFile(self):
-        """Open file dialog to select MP4 video file"""
-        fileName, _ = QFileDialog.getOpenFileName(
-            self,
-            "Select Video File",
-            "",
-            "Video Files (*.mp4);;All Files (*)"
-        )
-        if fileName:
-            self.VideoFileLineEdit.setText(fileName)
-
-    def BrowseCSVFile(self):
-        """Open file dialog to select CSV data file"""
-        fileName, _ = QFileDialog.getOpenFileName(
-            self,
-            "Select CSV Data File",
-            "",
-            "CSV Files (*.csv);;All Files (*)"
-        )
-        if fileName:
-            self.CSVFileLineEdit.setText(fileName)
-
-    def StartButtonClick(self):
-        # Get selected modalities
-        modalities = {
-            'video': self.VideoCheckBox.isChecked(),
-            'audio': self.AudioCheckBox.isChecked(),
-            'smartwatch': self.SmartWatchCheckBox.isChecked()
-        }
-
-        # Get data source and configuration
-        source = self.DataSourceBox.currentText()
-
-        if source == "simulator":
-            config = {
-                'height': self.HeightSpinBox.value(),
-                'width': self.WidthSpinBox.value(),
-                'ip': self.IPAddressLineEdit.text(),
-                'port': self.PortSpinBox.value()
-            }
-        elif source == "local files":
-            config = {
-                'video_file': self.VideoFileLineEdit.text(),
-                'csv_file': self.CSVFileLineEdit.text()
-            }
-        elif source == "Microphone":
-            config = {}
-
-        # Your start logic here
-        print(f"Modalities: {modalities}")
-        print(f"Source: {source}")
-        print(f"Config: {config}")
-
     # ================================================================== GUI Functions ==================================================================
     @pyqtSlot(QImage)
     def setImage(self, image):
@@ -662,14 +513,14 @@ class MainWindow(QWidget):
                 #reset everything
                 # self.ResetButtonClick()
 
-                self.DataSourceBox.setEnabled(True)
+                self.ComboBox.setEnabled(True)
 
                 self.MLSpeechRadioButton.click()
 
 
 
     def mediaStateChanged(self, state):
-        if self.player.state() == QMediaPlayer.StoppedState:
+    	if self.player.state() == QMediaPlayer.StoppedState:
             print("video has stopped playing!")
             self.VisionInformation.setPlainText("CPR Done\nAverage Compression Rate: 140 bpm")
 
@@ -684,22 +535,22 @@ class MainWindow(QWidget):
         self.stopped = 1
         self.reset = 1
         self.VideoThread.stop()
-
+        
         SpeechToNLPQueue.put('Kill')
         EMSAgentSpeechToNLPQueue.put('Exit')
         FeedbackQueue.put('Kill')
         event.accept()
-
+        
         # self.th2.join()
-
-
+        
+        
 
     @pyqtSlot()
     def SaveButtonClick(self):
         #name = QFileDialog.getSaveFileName(self, 'Save File')
         name = str(datetime.datetime.now().strftime("%c")) + ".txt"
         #file = open("./Dumps/" + name,'w')
-        mode_text = self.DataSourceBox.currentText()
+        mode_text = self.ComboBox.currentText()
         speech_text = str(self.SpeechBox.toPlainText())
         concept_extraction_text = str(self.ConceptExtraction.toPlainText())
         protocol_text = str(self.ProtocolBox.toPlainText())
@@ -724,7 +575,7 @@ class MainWindow(QWidget):
         self.stopped = 0
         self.StartButton.setEnabled(False)
         self.StopButton.setEnabled(True)
-        self.DataSourceBox.setEnabled(False)
+        self.ComboBox.setEnabled(False)
         self.ResetButton.setEnabled(False)
 
         # ==== Start the Speech/Text Thread
@@ -738,41 +589,41 @@ class MainWindow(QWidget):
         #     print("Demo Audio Started")
 
         # If Microphone
-        if(self.DataSourceBox.currentText() == 'Microphone'):
+        if(self.ComboBox.currentText() == 'Microphone'):
             if(self.GoogleSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(
                     target=GoogleSpeechMicStream.GoogleSpeech, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, data_path, audiostream, transcriptStream,))
-
-
+            
+            
             elif(self.MLSpeechRadioButton.isChecked()):
 
                 print("Starting Whisper for Microphone")
-                # Start Whisper module
+                            # Start Whisper module
                 whispercppcommand = [
-                    "./stream",
-                    "-m", # use specific whisper model
-                    f"models/ggml-{pipeline_config.whisper_model_size}.bin",
-                    "--threads",
-                    str(pipeline_config.num_threads),
-                    "--step",
-                    str(pipeline_config.step),
-                    "--length",
-                    str(pipeline_config.length),
-                    "--keep",
-                    str(pipeline_config.keep_ms)
+                "./stream",
+                "-m", # use specific whisper model
+                f"models/ggml-{pipeline_config.whisper_model_size}.bin", 
+                "--threads",
+                str(pipeline_config.num_threads),
+                "--step",                          
+                str(pipeline_config.step),
+                "--length",
+                str(pipeline_config.length),
+                "--keep",
+                str(pipeline_config.keep_ms)
                 ]
 
-                # If a Hard-coded Audio test file, use virtual mic to capture the recording
+            # If a Hard-coded Audio test file, use virtual mic to capture the recording
                 # whispercppcommand.append("--capture")
 
                 # Start subprocess
                 self.WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='EMS_Whisper/')
-
+                
                 # time.sleep(5)
 
                 self.SpeechThread = StoppableThread(
-                    target=WhisperMicStream.WhisperMicStream, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue,))
-
+                        target=WhisperMicStream.WhisperMicStream, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue,))
+                
 
             self.SpeechThread.start()
             print('Microphone Speech Thread Started')
@@ -786,7 +637,7 @@ class MainWindow(QWidget):
         #             self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, str(audio_fname), data_path, audiostream, transcriptStream,))
         #     elif(self.MLSpeechRadioButton.isChecked()):
         #         self.SpeechThread = StoppableThread(target=WavVecFileStream.WavVec, args=(self, SpeechToNLPQueue, str(audio_fname),)) #(target=DeepSpeechFileStream.DeepSpeech, args=(self, SpeechToNLPQueue, str(audio_fname),))
-
+            
         #     self.otheraudiofilename = str(audio_fname)
         #     self.SpeechThread.start()
         #     print("Other Audio File Speech Thread Started")
@@ -804,23 +655,23 @@ class MainWindow(QWidget):
         else:
             if(self.GoogleSpeechRadioButton.isChecked()):
                 self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
-                    self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue,'./Audio_Scenarios/2019_Test/' + str(self.DataSourceBox.currentText()) + '.wav', data_path, audiostream, transcriptStream,))
+                    self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue,'./Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav', data_path, audiostream, transcriptStream,))
             elif(self.MLSpeechRadioButton.isChecked()):
 
-
-                # Start Whisper module
+                                
+            # Start Whisper module
                 whispercppcommand = [
-                    "./stream",
-                    "-m", # use specific whisper model
-                    f"models/ggml-{pipeline_config.whisper_model_size}.bin",
-                    "--threads",
-                    str(pipeline_config.num_threads),
-                    "--step",
-                    str(pipeline_config.step),
-                    "--length",
-                    str(pipeline_config.length),
-                    "--keep",
-                    str(pipeline_config.keep_ms)
+                "./stream",
+                "-m", # use specific whisper model
+                f"models/ggml-{pipeline_config.whisper_model_size}.bin", 
+                "--threads",
+                str(pipeline_config.num_threads),
+                "--step",                          
+                str(pipeline_config.step),
+                "--length",
+                str(pipeline_config.length),
+                "--keep",
+                str(pipeline_config.keep_ms)
                 ]
                 # If a Hard-coded Audio test file, use virtual mic to capture the recording
                 if(pipeline_config.hardcoded):
@@ -828,12 +679,12 @@ class MainWindow(QWidget):
 
                 # Start subprocess
                 self.WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='EMS_Whisper/')
-
+                
                 time.sleep(4)
 
                 self.SpeechThread = StoppableThread(
-                    target=WhisperFileStream.Whisper, args=(self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.DataSourceBox.currentText()) + '.wav'))
-
+                        target=WhisperFileStream.Whisper, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav'))
+                
             self.SpeechThread.start()
             print("Hard-coded Audio File Speech Thread Started")
 
@@ -847,7 +698,7 @@ class MainWindow(QWidget):
 
 
 
-        # ==== Start the Feedback Thread ==== #
+         # ==== Start the Feedback Thread ==== #
         # if(self.FeedbackThread == None):
         #     print("Feedback Thread Started")
         #     self.FeedbackThread = StoppableThread(
@@ -861,7 +712,7 @@ class MainWindow(QWidget):
         self.stopped = 1
         time.sleep(.1)
         self.StartButton.setEnabled(True)
-        self.DataSourceBox.setEnabled(True)
+        self.ComboBox.setEnabled(True)
         self.ResetButton.setEnabled(True)
         self.SpeechThread.stop()
 
@@ -973,7 +824,7 @@ class MainWindow(QWidget):
 
 
                 # for a in self.finalSpeechSegmentsSpeech:
-
+                    
 
                 #     text = sFinal
 
@@ -1001,7 +852,7 @@ class MainWindow(QWidget):
     # Update the Protocols and Interventions Boxes
     def UpdateProtocolBoxes(self, input):
         global chunkdata
-
+        
         self.ProtocolBox.setText("")
         for received in input:
             try:
@@ -1013,17 +864,17 @@ class MainWindow(QWidget):
                     chunkdata.append(protocol_display)
             except Exception as e:
                 print("Key error!", e)
-
+        
 
         try:
             intervention = received.intervention
             intervention_display = intervention
-
+            
             self.InterventionBox.setText(intervention_display)
             chunkdata.append(intervention_display)
         except Exception as e:
             print("Key error!", e)
-
+        
 
         with open("check.csv", mode="a") as csv_file:
             writer = csv.writer(csv_file, delimiter=',')
@@ -1064,13 +915,13 @@ class MainWindow(QWidget):
                 target=GoogleSpeechMicStream.GoogleSpeech, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, data_path, audiostream, transcriptStream))
             self.SpeechThread.start()
         elif(item == 'File'):
-            if self.DataSourceBox.currentText() == 'Other Audio File':
+            if self.ComboBox.currentText() == 'Other Audio File':
                 print("\n\nStart Again\n\n")
                 self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
                     self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, self.otheraudiofilename, data_path, audiostream, transcriptStream))
             else:
                 self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
-                    self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.DataSourceBox.currentText()) + '.wav', data_path, audiostream, transcriptStream))
+                    self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.ComboBox.currentText()) + '.wav', data_path, audiostream, transcriptStream))
             self.SpeechThread.start()
 
     # Enabled and/or disable given buttons in a tuple (Button Object, True/False)
@@ -1108,23 +959,23 @@ def get_resolution_multiple_screens():
 
 # ================================================================== Main ==================================================================
 if __name__ == '__main__':
-
+    
     # mp.set_start_method('spawn', force=True)
 
 
     #run with arguments
     #options:
-    # --datacollect --> "1" or "0" for collect data or not
-    # --streams --> "all" or list of specific streams (options are audio, video, smartwatch, conceptextract, protocol, intervention, transcript)
+        # --datacollect --> "1" or "0" for collect data or not
+        # --streams --> "all" or list of specific streams (options are audio, video, smartwatch, conceptextract, protocol, intervention, transcript)
     #if no arguments given, default options are "0" for data collection and "all" for streams
 
     arg_count = len(sys.argv)
-
+    
     print(f"Arguments count: {arg_count}")
     for i, arg in enumerate(sys.argv):
         print(f"Argument {i:>6}: {arg}")
 
-    if(arg_count >= 3):
+    if(arg_count >= 3): 
         if sys.argv[1] == "--datacollect":
             if sys.argv[2] == "1":
                 datacollection = True
