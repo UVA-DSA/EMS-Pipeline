@@ -66,7 +66,7 @@ from EMS_Agent.Interface import EMSTinyBERTSystem
 
 from StoppableThread.StoppableThread import StoppableThread
 
-from video_streaming import VideoThread
+from video_streaming_sebastian import VideoThread
 from smartwatch_streaming import Thread_Watch
 from Feedback import FeedbackClient
 
