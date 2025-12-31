@@ -72,6 +72,8 @@ from smartwatch_streaming import Thread_Watch
 
 from GenUtils.genutils import *
 
+import simulator_network_receiver_sebastian as sim_seb
+
 import torch.multiprocessing as mp  # or just 'import multiprocessing as mp'
 
 chunkdata = []
@@ -269,6 +271,7 @@ class MainWindow(QWidget):
         self.VideoThread = VideoThread(data_path, videostream)
         self.VideoThread.changePixmap.connect(self.setImage)
         self.VideoThread.changeVisInfo.connect(self.handle_message2)
+        sim_seb.setup_pipes()
         self.VideoThread.start()  #Disabled for now
 
         # Threads for smartwatch
@@ -499,14 +502,14 @@ class MainWindow(QWidget):
             simLayout.addWidget(QLabel("Height:"), 0, 0)
             self.HeightSpinBox = QSpinBox()
             self.HeightSpinBox.setRange(240, 2160)
-            self.HeightSpinBox.setValue(720)
+            self.HeightSpinBox.setValue(270)
             simLayout.addWidget(self.HeightSpinBox, 0, 1)
 
             # Width
             simLayout.addWidget(QLabel("Width:"), 1, 0)
             self.WidthSpinBox = QSpinBox()
             self.WidthSpinBox.setRange(320, 3840)
-            self.WidthSpinBox.setValue(1280)
+            self.WidthSpinBox.setValue(480)
             simLayout.addWidget(self.WidthSpinBox, 1, 1)
 
             # IP Address
@@ -585,13 +588,26 @@ class MainWindow(QWidget):
         if fileName:
             self.CSVFileLineEdit.setText(fileName)
 
+    @pyqtSlot()
     def StartButtonClick(self):
+
+        print('Start pressed!')
+        self.UpdateMsgBox(["Starting!"])
+        self.reset = 0
+        self.stopped = 0
+        self.StartButton.setEnabled(False)
+        self.StopButton.setEnabled(True)
+        self.DataSourceBox.setEnabled(False)
+        self.ResetButton.setEnabled(False)
+
         # Get selected modalities
-        modalities = {
-            'video': self.VideoCheckBox.isChecked(),
-            'audio': self.AudioCheckBox.isChecked(),
-            'smartwatch': self.SmartWatchCheckBox.isChecked()
-        }
+        modalities = set()
+        if self.VideoCheckBox.isChecked():
+            modalities.add(1)
+        if self.AudioCheckBox.isChecked():
+            modalities.add(2)
+        if self.SmartWatchCheckBox.isChecked():
+            modalities.add(3)
 
         # Get data source and configuration
         source = self.DataSourceBox.currentText()
@@ -603,6 +619,13 @@ class MainWindow(QWidget):
                 'ip': self.IPAddressLineEdit.text(),
                 'port': self.PortSpinBox.value()
             }
+            # sim_seb.setup_pipes()
+            srt_client = sim_seb.SRTReceiver(config['ip'], config['port'], config['width'], config['height'], modalities)
+            if not srt_client.start():
+                print("[Main] Failed to connect to SRT server!")
+                sys.exit(1)
+
+
         elif source == "local files":
             config = {
                 'video_file': self.VideoFileLineEdit.text(),
@@ -615,6 +638,8 @@ class MainWindow(QWidget):
         print(f"Modalities: {modalities}")
         print(f"Source: {source}")
         print(f"Config: {config}")
+
+
 
     # ================================================================== GUI Functions ==================================================================
     @pyqtSlot(QImage)
@@ -717,7 +742,7 @@ class MainWindow(QWidget):
             writer.writerow(results)
 
     @pyqtSlot()
-    def StartButtonClick(self):
+    def StartButtonClick1(self):
         print('Start pressed!')
         self.UpdateMsgBox(["Starting!"])
         self.reset = 0
