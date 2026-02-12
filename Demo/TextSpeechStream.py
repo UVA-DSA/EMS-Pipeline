@@ -76,5 +76,5 @@ def TextSpeech(Window, SpeechToNLPQueue, textfile_name):
 
     # Clean up and end thread
     MsgSignal.signal.emit(["Transcription of text file complete!"])
-    ButtonsSignal.signal.emit([(Window.StartButton, True), (Window.ComboBox, True), (Window.ResetButton, True)])
+    ButtonsSignal.signal.emit([(Window.StartButton, True), (Window.DataSourceBox, True), (Window.ResetButton, True)])
 

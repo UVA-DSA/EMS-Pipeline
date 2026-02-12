@@ -118,6 +118,7 @@ class VideoThread(QThread):
 
         self.PIPE_VIDEO = "/tmp/emsvid"
         self.video_pipe_holder = None
+        print('DISPLAY INIT!!!!')
 
 
 
@@ -251,9 +252,11 @@ class VideoThread(QThread):
                 try:
                     frame = display_queue.get_nowait()
                     RGB_img = frame[:, :, ::-1].copy()
-                    print('displaying image')
+                    # print('displaying image')
                 except Exception as e:
-                    print(e)
+                    # print(f'[display_image] Error: {type(e).__name__}: {e}')
+                    # import traceback
+                    # traceback.print_exc()
                     continue
                 # print('qsize', str(display_queue.qsize()))
 
@@ -263,7 +266,7 @@ class VideoThread(QThread):
                 convertToQtFormat = QImage(RGB_img.data, w, h, bytesPerLine, QImage.Format_RGB888)
                 p = convertToQtFormat.scaled(640,480, Qt.KeepAspectRatio)
                 changePixmap.emit(p)
-                print('got through here')
+                # print('got through here')
                 # del RGB_img
 
 
@@ -360,7 +363,7 @@ class VideoThread(QThread):
 
         while self.is_running and is_connected:
             try:
-                print('here')
+                # print('here')
                 # Read video frame
                 # Format: 4 bytes length + data
                 length_bytes = self.read_exactly(self.video_pipe_holder, 4)
@@ -370,7 +373,7 @@ class VideoThread(QThread):
 
                 video_length = int.from_bytes(length_bytes, 'big')
                 video_data = self.read_exactly(self.video_pipe_holder, video_length)
-                print(type(video_data))
+                # print(type(video_data))
                 if video_data is None:
                     print("[Reader] Failed to read video data")
                     break
@@ -381,7 +384,7 @@ class VideoThread(QThread):
                         (270, 480, 3)
                     )
                     # self.frame_ready.emit(video_frame.copy())
-                    print('frame count', count)
+                    # print('frame count', count)
                     display_queue.put_nowait(video_frame.copy())
                     count += 1
                     # image_queue.put_nowait(video_frame.copy())
@@ -389,6 +392,7 @@ class VideoThread(QThread):
                     print(f"[Reader] Failed to decode video frame: {e}")
             except Exception as e:
                 print(e)
+                print('here exception e')
                 print('reader error')
 
 

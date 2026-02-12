@@ -4,50 +4,29 @@
 # ============== Imports ==============
 
 from __future__ import absolute_import, division, print_function
-from six.moves import queue
 
-import sys
-import os
-import time
 import math
 import datetime
-import numpy as np
-import pandas as pd
 import csv
 import sys
-import cv2
-import socket
-from PIL import Image
 import os
-import socket
-import threading, wave, pyaudio, time, queue
-import datetime as dt
+import queue
 import subprocess
 
-
-from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QLineEdit
-from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtWidgets import QApplication, QPushButton, QLineEdit
+from PyQt5.QtGui import QIcon
 from PyQt5 import QtCore
 from PyQt5.QtMultimediaWidgets import QVideoWidget
-from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
+from PyQt5.QtMultimedia import QMediaPlayer
 from PyQt5.QtWidgets import  QWidget, QLabel, QApplication
-from PyQt5.QtCore import QThread, Qt, pyqtSignal, pyqtSlot
 from PyQt5.QtGui import QImage, QPixmap, QGuiApplication
-from PyQt5.QtCore import QCoreApplication, Qt,QBasicTimer, QTimer,QPoint,QSize
 import PyQt5.QtWidgets,PyQt5.QtCore
-
-import py_trees
-from py_trees.blackboard import Blackboard
 
 # from behaviours_m import *
 from DSP.amplitude import Amplitude
-from classes import SpeechNLPItem, GUISignal
-import TextSpeechStream
 # import CognitiveSystem
-from EMS_Agent.Interface import EMSAgentSystem
 #import Feedback
 import GoogleSpeechMicStream
 import GoogleSpeechFileStream
@@ -59,7 +38,6 @@ import GoogleSpeechFileStream
 import pipeline_config
 import WhisperFileStream
 import WhisperMicStream
-import audio_streaming
 
 from EMS_Agent.Interface import EMSTinyBERTSystem
 
@@ -67,14 +45,14 @@ from EMS_Agent.Interface import EMSTinyBERTSystem
 from StoppableThread.StoppableThread import StoppableThread
 
 from video_streaming_sebastian import VideoThread
-from smartwatch_streaming import Thread_Watch
+from audio_streaming_sebastian import AudioThread, SpeechThread
+from imu_streaming_sebastian import Thread_Watch, IMUThread
+# from smartwatch_streaming import Thread_Watch, IMUThread
 #from Feedback import FeedbackClient
 
 from GenUtils.genutils import *
 
 import simulator_network_receiver_sebastian as sim_seb
-
-import torch.multiprocessing as mp  # or just 'import multiprocessing as mp'
 
 chunkdata = []
 
@@ -274,6 +252,12 @@ class MainWindow(QWidget):
         sim_seb.setup_pipes()
         self.VideoThread.start()  #Disabled for now
 
+        # Threads for audio
+        self.AudioThread = AudioThread()
+        self.AudioThread.start()
+
+        self.SpeechThread = SpeechThread()
+
         # Threads for smartwatch
         th2 = Thread_Watch(data_path, smartwatchStream, pipeline_config.smartwatch_ip, pipeline_config.smartwatch_port)
         th2.changeActivityRec.connect(self.handle_message)
@@ -300,7 +284,6 @@ class MainWindow(QWidget):
 
 
 
-        # Audio Options Menu
         self.DataSourceBox = QComboBox()
 
         self.DataSourceBox.addItems(["simulator", "local files", "Microphone"])
@@ -625,6 +608,34 @@ class MainWindow(QWidget):
                 print("[Main] Failed to connect to SRT server!")
                 sys.exit(1)
 
+            if(self.MLSpeechRadioButton.isChecked()):
+                print("Starting Whisper for simulator audio")
+                whispercppcommand = [
+                    "./stream",
+                    "-m", # use specific whisper model
+                    f"models/ggml-{pipeline_config.whisper_model_size}.bin",
+                    "--threads",
+                    str(pipeline_config.num_threads),
+                    "--step",
+                    str(pipeline_config.step),
+                    "--length",
+                    str(pipeline_config.length),
+                    "--keep",
+                    str(pipeline_config.keep_ms)
+                ]
+
+                # Start subprocess
+                self.WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='EMS_Whisper/')
+
+                # time.sleep(5)
+
+                self.SpeechThread = StoppableThread(
+                    target=WhisperMicStream.WhisperMicStream, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue,))
+
+            self.SpeechThread.start()
+            print('started simulator speech thread')
+
+
 
         elif source == "local files":
             config = {
@@ -751,6 +762,10 @@ class MainWindow(QWidget):
         self.StopButton.setEnabled(True)
         self.DataSourceBox.setEnabled(False)
         self.ResetButton.setEnabled(False)
+
+
+
+
 
         # ==== Start the Speech/Text Thread
         # hacky bypass for demo
