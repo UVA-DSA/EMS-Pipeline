@@ -44,9 +44,9 @@ from EMS_Agent.Interface import EMSTinyBERTSystem
 
 from StoppableThread.StoppableThread import StoppableThread
 
-from video_streaming_sebastian import VideoThread
-from audio_streaming_sebastian import AudioThread, SpeechThread
-from imu_streaming_sebastian import Thread_Watch, IMUThread
+from video_streaming_sebastian import VideoStreamManager
+from audio_streaming_sebastian import AudioStreamManager, SpeechThread
+from imu_streaming_sebastian import IMUStreamManager
 # from smartwatch_streaming import Thread_Watch, IMUThread
 #from Feedback import FeedbackClient
 
@@ -245,23 +245,38 @@ class MainWindow(QWidget):
         #self.feedback_client.start()
 
 
-        # Threads for video
-        self.VideoThread = VideoThread(data_path, videostream)
-        self.VideoThread.changePixmap.connect(self.setImage)
-        self.VideoThread.changeVisInfo.connect(self.handle_message2)
-        sim_seb.setup_pipes()
-        self.VideoThread.start()  #Disabled for now
+        # Processes for video
+        # self.VideoThread = VideoThread(data_path, videostream)
+        # self.VideoThread.changePixmap.connect(self.setImage)
+        # self.VideoThread.changeVisInfo.connect(self.handle_message2)
+        # sim_seb.setup_pipes()
+        # self.VideoThread.start()  #Disabled for now
 
-        # Threads for audio
-        self.AudioThread = AudioThread()
-        self.AudioThread.start()
+        self.VideoProcess = VideoStreamManager(data_path, videostream)
+        self.VideoProcess.changePixmap.connect(self.setImage)
+        self.VideoProcess.changeVisInfo.connect(self.handle_message2)
+        sim_seb.setup_pipes()
+        self.VideoProcess.start()
+
+        # Processes for audio
+
+        self.AudioProcess = AudioStreamManager()
+        self.AudioProcess.start()
+
+        # self.AudioThread = AudioThread()
+        # self.AudioThread.start()
 
         self.SpeechThread = SpeechThread()
 
-        # Threads for smartwatch
-        th2 = Thread_Watch(data_path, smartwatchStream, pipeline_config.smartwatch_ip, pipeline_config.smartwatch_port)
-        th2.changeActivityRec.connect(self.handle_message)
-        th2.start()
+        # Processes for smartwatch
+
+        self.IMUProcess = IMUStreamManager(data_path, smartwatchStream)
+        self.IMUProcess.changeActivityRec.connect(self.handle_message)
+        self.IMUProcess.start()
+
+        # th2 = Thread_Watch(data_path, smartwatchStream, pipeline_config.smartwatch_ip, pipeline_config.smartwatch_port)
+        # th2.changeActivityRec.connect(self.handle_message)
+        # th2.start()
 
 
         # ==== Start the EMS Agent - Xueren ==== #
@@ -603,8 +618,8 @@ class MainWindow(QWidget):
                 'port': self.PortSpinBox.value()
             }
             # sim_seb.setup_pipes()
-            srt_client = sim_seb.SRTReceiver(config['ip'], config['port'], config['width'], config['height'], modalities)
-            if not srt_client.start():
+            self.srt_client = sim_seb.SRTReceiverProcess(config['ip'], config['port'], config['width'], config['height'], modalities)
+            if not self.srt_client.start():
                 print("[Main] Failed to connect to SRT server!")
                 sys.exit(1)
 
@@ -719,7 +734,32 @@ class MainWindow(QWidget):
         self.internet_check_thread.stop()
         self.stopped = 1
         self.reset = 1
-        self.VideoThread.stop()
+        # self.VideoThread.stop()
+
+
+        # Stop SRT receiver first (stops data flow)
+        if hasattr(self, 'srt_client') and self.srt_client is not None:
+            print("[GUI] Stopping SRT receiver...")
+            self.srt_client.stop()
+
+        # Stop video
+        if hasattr(self, 'VideoProcess') and self.VideoProcess is not None:
+            print("[GUI] Stopping VideoProcess...")
+            self.VideoProcess.stop()
+
+        # Stop audio
+        if hasattr(self, 'AudioProcess') and self.AudioProcess is not None:
+            print("[GUI] Stopping AudioProcess...")
+            self.AudioProcess.stop()
+
+        # Stop IMU/Watch
+        if hasattr(self, 'IMUProcess') and self.IMUProcess is not None:
+            print("[GUI] Stopping IMUProcess...")
+            self.IMUProcess.stop()
+
+        print("[GUI] All processes stopped")
+
+
 
         SpeechToNLPQueue.put('Kill')
         EMSAgentSpeechToNLPQueue.put('Exit')

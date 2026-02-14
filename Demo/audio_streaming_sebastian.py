@@ -1,41 +1,31 @@
-# Thread for streaming audio from pipe to headphones
+# Process for streaming audio from pipe to headphones
 
 import os
 import time
-import threading
-import numpy as np
-import pyaudio
+from multiprocessing import Process, Queue, Value
+import ctypes
 
 from PyQt5.QtCore import QThread, pyqtSignal
 
 
-class AudioThread(QThread):
+def audio_player_process(pipe_path, running_flag):
     """
-    Thread that reads audio data from /tmp/emsaud pipe and plays it through headphones.
-    Audio format: raw PCM int16 samples at 16000 Hz, mono
+    Separate process that reads audio from pipe and plays through headphones.
+    Args:
+        pipe_path: Path to audio pipe (/tmp/emsaud)
+        running_flag: Shared Value to control process lifecycle
     """
+    # IMPORTANT: Import PyAudio INSIDE the process function, after fork
+    import pyaudio
 
-    audio_status = pyqtSignal(str)  # Signal to update status in GUI if needed
+    print(f"[AudioProcess] Starting, PID: {os.getpid()}")
 
-    def __init__(self):
-        super().__init__()
+    # Audio configuration
+    SAMPLE_RATE = 16000
+    CHANNELS = 1
+    CHUNK_SIZE = 1024  # Match your working code
 
-        self.PIPE_AUDIO = "/tmp/emsaud"
-        self.audio_pipe_holder = None
-        self.is_running = True
-
-        # Audio configuration (must match server settings)
-        self.SAMPLE_RATE = 16000
-        self.CHANNELS = 1
-        self.CHUNK_SIZE = 1024  # Frames per buffer
-
-        # PyAudio setup
-        self.p = pyaudio.PyAudio()
-        self.stream = None
-
-        print('[AudioThread] Initialized')
-
-    def read_exactly(self, pipe, n):
+    def read_exactly(pipe, n):
         """Read exactly n bytes from pipe."""
         data = b''
         while len(data) < n:
@@ -45,98 +35,162 @@ class AudioThread(QThread):
             data += chunk
         return data
 
-    def stop(self):
-        """Stop the audio streaming thread."""
-        print("[INFO] Audio Thread stopping...")
-        self.is_running = False
+    frame_count = 0
+    p = None
+    stream = None
+    audio_pipe = None
 
-        # Stop and close PyAudio stream
-        if self.stream is not None:
-            self.stream.stop_stream()
-            self.stream.close()
+    try:
+        print(f"[AudioProcess] Opening {pipe_path} for reading...")
+        audio_pipe = open(pipe_path, 'rb', buffering=0)
+        print(f"[AudioProcess] {pipe_path} opened!")
 
-        if self.p is not None:
-            self.p.terminate()
+        # Initialize PyAudio (after fork, inside process)
+        p = pyaudio.PyAudio()
 
-        self.quit()
-        print("[INFO] Audio Thread Stopped")
+        print("[AudioProcess] Using system default audio device")
 
-    def run(self):
-        """Main thread loop - reads from pipe and plays audio."""
-        is_connected = False
+        # Open stream - exactly like your working code
+        stream = p.open(
+            format=pyaudio.paInt16,
+            channels=CHANNELS,
+            rate=SAMPLE_RATE,
+            output=True,
+            frames_per_buffer=CHUNK_SIZE
+        )
 
-        try:
-            print(f"[AudioThread] Opening {self.PIPE_AUDIO} for reading...")
-            self.audio_pipe_holder = open(self.PIPE_AUDIO, 'rb', buffering=0)
-            print(f"[AudioThread] {self.PIPE_AUDIO} opened!")
-            is_connected = True
+        print("[AudioProcess] PyAudio stream opened successfully")
+        print("[AudioProcess] Starting read loop...")
 
-            # Open PyAudio stream for playback
-            self.stream = self.p.open(
-                format=pyaudio.paInt16,
-                channels=self.CHANNELS,
-                rate=self.SAMPLE_RATE,
-                output=True,
-                frames_per_buffer=self.CHUNK_SIZE
-            )
-            print("[AudioThread] PyAudio stream opened for playback")
+        last_debug = time.time()
 
-        except Exception as e:
-            print(f'[AudioThread] Error opening audio pipe or stream: {e}')
-            return
-
-        frame_count = 0
-
-        while self.is_running and is_connected:
+        while running_flag.value:
             try:
                 # Read audio data
                 # Format: 4 bytes length + PCM int16 data
-                length_bytes = self.read_exactly(self.audio_pipe_holder, 4)
+                # print("[AudioProcess] Reading length bytes...")  # Uncomment for verbose debug
+                length_bytes = read_exactly(audio_pipe, 4)
                 if length_bytes is None:
-                    print("[AudioThread] Audio pipe closed")
+                    print("[AudioProcess] Audio pipe closed (read returned None)")
                     break
 
                 audio_length = int.from_bytes(length_bytes, 'big')
-                audio_data = self.read_exactly(self.audio_pipe_holder, audio_length)
+                # print(f"[AudioProcess] Expecting {audio_length} bytes")  # Uncomment for verbose debug
+                audio_data = read_exactly(audio_pipe, audio_length)
 
                 if audio_data is None:
-                    print("[AudioThread] Failed to read audio data")
+                    print("[AudioProcess] Failed to read audio data (read returned None)")
                     break
 
-                # Play audio through speakers/headphones
-                # audio_data is already in the correct format (PCM int16)
-                self.stream.write(audio_data)
+                # Play audio - exactly like your working code
+                stream.write(audio_data, exception_on_underflow=False)
 
                 frame_count += 1
 
-                # Debug output every 100 frames (~6 seconds at 16kHz)
+                # Debug first frame
+                if frame_count == 1:
+                    print(f"[AudioProcess] ✓ First audio frame played ({audio_length} bytes)")
+
+                # Debug every 100 frames (~6 seconds at 16kHz)
                 if frame_count % 100 == 0:
-                    print(f"[AudioThread] Played {frame_count} audio frames ({audio_length} bytes)")
+                    elapsed = time.time() - last_debug
+                    print(f"[AudioProcess] Played {frame_count} audio frames "
+                          f"({audio_length} bytes, {elapsed:.1f}s elapsed)")
+                    last_debug = time.time()
 
             except Exception as e:
-                print(f'[AudioThread] Error in audio playback loop: {e}')
-                import traceback
-                traceback.print_exc()
+                if running_flag.value:
+                    print(f"[AudioProcess] Error in playback loop: {e}")
+                    import traceback
+                    traceback.print_exc()
                 break
 
-        print("[AudioThread] Exiting run loop")
+        print(f"[AudioProcess] Exited read loop (running_flag={running_flag.value}, frames={frame_count})")
 
+    except Exception as e:
+        print(f'[AudioProcess] Error: {e}')
+        import traceback
+        traceback.print_exc()
+    finally:
+        # Cleanup - exactly like your working code
+        if stream is not None:
+            try:
+                stream.stop_stream()
+                stream.close()
+            except:
+                pass
+
+        if p is not None:
+            try:
+                p.terminate()
+            except:
+                pass
+
+        if audio_pipe is not None:
+            try:
+                audio_pipe.close()
+            except:
+                pass
+
+    print(f"[AudioProcess] Exiting, played {frame_count} frames")
+
+
+class AudioStreamManager:
+    """
+    Manager class for the audio playback process.
+    Use this in GUI.py instead of AudioThread.
+    """
+    def __init__(self):
+        self.PIPE_AUDIO = "/tmp/emsaud"
+
+        # Use spawn instead of fork to avoid inherited audio state
+        import multiprocessing as mp
+        self.ctx = mp.get_context('spawn')
+
+        # IMPORTANT: Create shared Value with spawn context
+        self.running_flag = self.ctx.Value(ctypes.c_bool, True)
+
+        # Player process with spawn context
+        self.player_process = self.ctx.Process(
+            target=audio_player_process,
+            args=(self.PIPE_AUDIO, self.running_flag),
+            daemon=True
+        )
+
+        print('[AudioStreamManager] Initialized (using spawn mode)')
+
+    def start(self):
+        """Start the audio player process."""
+        print("[AudioStreamManager] Starting...")
+        self.running_flag.value = True
+        self.player_process.start()
+        print(f"[AudioStreamManager] Started (Process PID: {self.player_process.pid})")
+
+    def stop(self):
+        """Stop the audio player process."""
+        print("[AudioStreamManager] Stopping...")
+
+        self.running_flag.value = False
+        self.player_process.join(timeout=3)
+
+        if self.player_process.is_alive():
+            print("[AudioStreamManager] Process didn't stop, terminating...")
+            self.player_process.terminate()
+            self.player_process.join(timeout=1)
+
+        print("[AudioStreamManager] Stopped")
 
 class SpeechThread(QThread):
     """
-    Placeholder class for compatibility with existing GUI code.
-    The actual audio streaming/playback is handled by AudioThread.
-    This can be used for speech recognition if needed in the future.
+    Placeholder for speech recognition.
+    Currently does nothing but maintains compatibility.
     """
-
     def __init__(self):
         super().__init__()
         print('[SpeechThread] Initialized (placeholder)')
 
     def run(self):
-        """Placeholder - speech recognition could be added here."""
         pass
 
     def stop(self):
-        """Stop the thread."""
         self.quit()
