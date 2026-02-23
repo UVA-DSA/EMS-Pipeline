@@ -1,7 +1,15 @@
 #!/usr/bin/env python3
 """
 SRT Receiver Process - Receives multimodal SRT stream and writes to named pipes
-This should run as a separate process to avoid blocking the GUI with network I/O.
+Supports both display/playback pipes and ML pipeline pipes.
+
+Pipe mapping:
+  1 = /tmp/emsvid (video display)
+  2 = /tmp/emsaud (audio playback)
+  3 = /tmp/emscsv (CSV display)
+  4 = /tmp/emsvidml (video ML)
+  5 = /tmp/emsaudml (audio ML)
+  6 = /tmp/emscsvml (CSV ML)
 """
 import os
 import sys
@@ -74,11 +82,18 @@ else:
 PIPE_VIDEO = "/tmp/emsvid"
 PIPE_AUDIO = "/tmp/emsaud"
 PIPE_CSV = "/tmp/emscsv"
+PIPE_VIDEO_ML = "/tmp/emsvidml"
+PIPE_AUDIO_ML = "/tmp/emsaudml"
+PIPE_CSV_ML = "/tmp/emscsvml"
+PIPE_EGOSIM_TRANSCRIPT = "/tmp/egosim_transcript"
 
 
 def setup_pipes():
-    """Create all three named pipes."""
-    for pipe_path in [PIPE_VIDEO, PIPE_AUDIO, PIPE_CSV]:
+    """Create all six named pipes (display + ML)."""
+    all_pipes = [PIPE_VIDEO, PIPE_AUDIO, PIPE_CSV,
+                 PIPE_VIDEO_ML, PIPE_AUDIO_ML, PIPE_CSV_ML]#, PIPE_EGOSIM_TRANSCRIPT]
+
+    for pipe_path in all_pipes:
         try:
             if os.path.exists(pipe_path):
                 os.unlink(pipe_path)
@@ -90,8 +105,11 @@ def setup_pipes():
 
 
 def cleanup_pipes():
-    """Remove all three named pipes."""
-    for pipe_path in [PIPE_VIDEO, PIPE_AUDIO, PIPE_CSV]:
+    """Remove all six named pipes."""
+    all_pipes = [PIPE_VIDEO, PIPE_AUDIO, PIPE_CSV,
+                 PIPE_VIDEO_ML, PIPE_AUDIO_ML, PIPE_CSV_ML, PIPE_EGOSIM_TRANSCRIPT]
+
+    for pipe_path in all_pipes:
         try:
             if os.path.exists(pipe_path):
                 os.unlink(pipe_path)
@@ -108,7 +126,8 @@ def srt_receiver_process(host, port, width, height, enabled_types, running_flag)
         port: SRT server port
         width: Video frame width
         height: Video frame height
-        enabled_types: Set of enabled data types (1=video, 2=audio, 3=csv)
+        enabled_types: Set of enabled data types
+                       1=video, 2=audio, 3=csv, 4=video_ml, 5=audio_ml, 6=csv_ml
         running_flag: Shared Value to control process lifecycle
     """
     print(f"[SRTProcess] Starting, PID: {os.getpid()}")
@@ -163,21 +182,47 @@ def srt_receiver_process(host, port, width, height, enabled_types, running_flag)
 
         print("[SRTProcess] Connected to SRT server!")
 
-        # Open pipes
+        # Open pipes - map type numbers to pipe paths
         print("[SRTProcess] Opening pipes for writing...")
-        pipe_map = {1: PIPE_VIDEO, 2: PIPE_AUDIO, 3: PIPE_CSV}
+        pipe_map = {
+            1: PIPE_VIDEO,      # Video display
+            2: PIPE_AUDIO,      # Audio playback
+            3: PIPE_CSV,        # CSV display
+            4: PIPE_VIDEO_ML,   # Video ML
+            5: PIPE_AUDIO_ML,   # Audio ML
+            6: PIPE_CSV_ML      # CSV ML
+        }
 
-        for data_type in enabled_types:
+        # Open all pipes in parallel - named pipe open() blocks until the
+        # reader connects. ML pipes (e.g. egosim_stream) may take longer to
+        # start than display pipes, so we can't open sequentially or we stall.
+        import threading
+        errors = []
+
+        def open_pipe(data_type):
+            if data_type not in pipe_map:
+                print(f"[SRTProcess] Warning: Unknown data type {data_type}")
+                return
             pipe_path = pipe_map[data_type]
             try:
-                if data_type == 3:  # CSV is text mode
+                if data_type in [3, 6]:  # CSV or CSV ML - text mode
                     opened_pipes[data_type] = open(pipe_path, 'w', buffering=1)
                 else:
                     opened_pipes[data_type] = open(pipe_path, 'wb', buffering=0)
                 print(f"[SRTProcess] Opened {pipe_path}")
             except Exception as e:
-                print(f"[SRTProcess] Failed to open {pipe_path}: {e}")
-                return
+                errors.append(f"[SRTProcess] Failed to open {pipe_path}: {e}")
+
+        threads = [threading.Thread(target=open_pipe, args=(dt,)) for dt in enabled_types]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join()
+
+        if errors:
+            for err in errors:
+                print(err)
+            return
 
         print(f"[SRTProcess] All {len(opened_pipes)} pipes opened! Starting to receive...")
 
@@ -188,6 +233,16 @@ def srt_receiver_process(host, port, width, height, enabled_types, running_flag)
         frame_buffers = {}
         expected_chunks = {}
         current_frame = None
+
+        # Determine which base types we need (video=1, audio=2, csv=3)
+        # We receive these base types and duplicate to ML pipes
+        base_types_needed = set()
+        if 1 in enabled_types or 4 in enabled_types:  # Video or Video ML
+            base_types_needed.add(1)
+        if 2 in enabled_types or 5 in enabled_types:  # Audio or Audio ML
+            base_types_needed.add(2)
+        if 3 in enabled_types or 6 in enabled_types:  # CSV or CSV ML
+            base_types_needed.add(3)
 
         while running_flag.value:
             try:
@@ -203,11 +258,12 @@ def srt_receiver_process(host, port, width, height, enabled_types, running_flag)
                 if received < 11:
                     continue
 
+                # Server sends type 1, 2, or 3 (base types)
                 data_type, frame_idx, chunk_num, total_chunks, data_size = struct.unpack('!BIHHH', buf.raw[:11])
                 data = buf.raw[11:11+data_size]
 
-                # Ignore disabled types
-                if data_type not in enabled_types:
+                # Only process if we need this base type
+                if data_type not in base_types_needed:
                     continue
 
                 # Initialize frame buffer
@@ -227,28 +283,55 @@ def srt_receiver_process(host, port, width, height, enabled_types, running_flag)
                     ec = expected_chunks[current_frame]
 
                     all_complete = True
-                    for dt in enabled_types:
+                    for dt in base_types_needed:
                         if dt not in ec or len(fb[dt]) != ec[dt]:
                             all_complete = False
                             break
 
                     if all_complete:
-                        # Assemble and write complete frame
-                        for dt in enabled_types:
-                            complete_data = b''.join(fb[dt][i] for i in range(ec[dt]))
+                        # Assemble and write complete frame to ALL enabled pipes
+                        for base_type in base_types_needed:
+                            complete_data = b''.join(fb[base_type][i] for i in range(ec[base_type]))
 
-                            if dt == 1:  # Video
+                            if base_type == 1:  # Video
                                 video_bytes = len(complete_data).to_bytes(4, 'big') + complete_data
-                                opened_pipes[1].write(video_bytes)
-                                opened_pipes[1].flush()
-                            elif dt == 2:  # Audio
+
+                                # Write to display pipe if enabled
+                                if 1 in opened_pipes:
+                                    opened_pipes[1].write(video_bytes)
+                                    opened_pipes[1].flush()
+
+                                # Write to ML pipe if enabled
+                                if 4 in opened_pipes:
+                                    opened_pipes[4].write(video_bytes)
+                                    opened_pipes[4].flush()
+
+                            elif base_type == 2:  # Audio
                                 audio_bytes = len(complete_data).to_bytes(4, 'big') + complete_data
-                                opened_pipes[2].write(audio_bytes)
-                                opened_pipes[2].flush()
-                            elif dt == 3:  # CSV
+
+                                # Write to playback pipe if enabled
+                                if 2 in opened_pipes:
+                                    opened_pipes[2].write(audio_bytes)
+                                    opened_pipes[2].flush()
+
+                                # Write to ML pipe if enabled
+                                if 5 in opened_pipes:
+                                    # print(opened_pipes[5])
+                                    opened_pipes[5].write(audio_bytes)
+                                    opened_pipes[5].flush()
+
+                            elif base_type == 3:  # CSV
                                 csv_text = complete_data.decode('utf-8').strip()
-                                opened_pipes[3].write(csv_text + '\n')
-                                opened_pipes[3].flush()
+
+                                # Write to display pipe if enabled
+                                if 3 in opened_pipes:
+                                    opened_pipes[3].write(csv_text + '\n')
+                                    opened_pipes[3].flush()
+
+                                # Write to ML pipe if enabled
+                                if 6 in opened_pipes:
+                                    opened_pipes[6].write(csv_text + '\n')
+                                    opened_pipes[6].flush()
 
                         frames_received += 1
 

@@ -45,7 +45,7 @@ from EMS_Agent.Interface import EMSTinyBERTSystem
 from StoppableThread.StoppableThread import StoppableThread
 
 from video_streaming_sebastian import VideoStreamManager
-from audio_streaming_sebastian import AudioStreamManager, SpeechThread
+from audio_streaming_sebastian import AudioStreamManager, SpeechProcessManager
 from imu_streaming_sebastian import IMUStreamManager
 # from smartwatch_streaming import Thread_Watch, IMUThread
 #from Feedback import FeedbackClient
@@ -74,6 +74,9 @@ data_path = "./data_collection_folder/"+dt_string+"/"
 
 
 # Main Window of the Application
+
+
+
 
 class MainWindow(QWidget):
 
@@ -244,39 +247,9 @@ class MainWindow(QWidget):
         #self.feedback_client = Feedback.FeedbackClient()
         #self.feedback_client.start()
 
+        self.start_video_audio_imu_processes()
 
-        # Processes for video
-        # self.VideoThread = VideoThread(data_path, videostream)
-        # self.VideoThread.changePixmap.connect(self.setImage)
-        # self.VideoThread.changeVisInfo.connect(self.handle_message2)
-        # sim_seb.setup_pipes()
-        # self.VideoThread.start()  #Disabled for now
 
-        self.VideoProcess = VideoStreamManager(data_path, videostream)
-        self.VideoProcess.changePixmap.connect(self.setImage)
-        self.VideoProcess.changeVisInfo.connect(self.handle_message2)
-        sim_seb.setup_pipes()
-        self.VideoProcess.start()
-
-        # Processes for audio
-
-        self.AudioProcess = AudioStreamManager()
-        self.AudioProcess.start()
-
-        # self.AudioThread = AudioThread()
-        # self.AudioThread.start()
-
-        self.SpeechThread = SpeechThread()
-
-        # Processes for smartwatch
-
-        self.IMUProcess = IMUStreamManager(data_path, smartwatchStream)
-        self.IMUProcess.changeActivityRec.connect(self.handle_message)
-        self.IMUProcess.start()
-
-        # th2 = Thread_Watch(data_path, smartwatchStream, pipeline_config.smartwatch_ip, pipeline_config.smartwatch_port)
-        # th2.changeActivityRec.connect(self.handle_message)
-        # th2.start()
 
 
         # ==== Start the EMS Agent - Xueren ==== #
@@ -313,13 +286,25 @@ class MainWindow(QWidget):
         self.VideoCheckBox.setChecked(True)
         self.ModalityLayout.addWidget(self.VideoCheckBox)
 
+        self.VideoMLCheckBox = QCheckBox("Video ML")
+        self.VideoMLCheckBox.setChecked(False)
+        self.ModalityLayout.addWidget(self.VideoMLCheckBox)
+
         self.AudioCheckBox = QCheckBox("Audio")
         self.AudioCheckBox.setChecked(True)
         self.ModalityLayout.addWidget(self.AudioCheckBox)
 
+        self.AudioMLCheckBox = QCheckBox("Audio ML")
+        self.AudioMLCheckBox.setChecked(False)
+        self.ModalityLayout.addWidget(self.AudioMLCheckBox)
+
         self.SmartWatchCheckBox = QCheckBox("Smart Watch")
         self.SmartWatchCheckBox.setChecked(True)
         self.ModalityLayout.addWidget(self.SmartWatchCheckBox)
+
+        self.SmartWatchMLCheckBox = QCheckBox("Smart Watch ML")
+        self.SmartWatchMLCheckBox.setChecked(False)
+        self.ModalityLayout.addWidget(self.SmartWatchMLCheckBox)
 
         self.ModalityGroupBox.setLayout(self.ModalityLayout)
         self.ControlPanelGridLayout.addWidget(self.ModalityGroupBox, 2, 0, 1, 3)
@@ -484,6 +469,50 @@ class MainWindow(QWidget):
         # self.Grid_Layout.setSpacing(0)
         # self.Grid_Layout.setContentsMargins(0, 0, 0, 0)
 
+    def start_video_audio_imu_processes(self):
+        # Processes for video
+        # self.VideoThread = VideoThread(data_path, videostream)
+        # self.VideoThread.changePixmap.connect(self.setImage)
+        # self.VideoThread.changeVisInfo.connect(self.handle_message2)
+        # sim_seb.setup_pipes()
+        # self.VideoThread.start()  #Disabled for now
+
+        self.VideoProcess = VideoStreamManager(data_path, videostream)
+        self.VideoProcess.changePixmap.connect(self.setImage)
+        self.VideoProcess.changeVisInfo.connect(self.handle_message2)
+        sim_seb.setup_pipes()
+        self.VideoProcess.start()
+
+        # Processes for audio
+
+        self.AudioProcess = AudioStreamManager()
+        self.AudioProcess.start()
+
+        self.SpeechProcess = SpeechProcessManager()
+        self.SpeechProcess.transcript_ready.connect(self.update_transcript_widget)
+        self.SpeechProcess.start()
+
+        # self.AudioThread = AudioThread()
+        # self.AudioThread.start()
+
+        # self.SpeechThread = SpeechThread()
+
+        # Processes for smartwatch
+
+        self.IMUProcess = IMUStreamManager(data_path, smartwatchStream)
+        self.IMUProcess.changeActivityRec.connect(self.handle_message)
+        self.IMUProcess.start()
+
+        # th2 = Thread_Watch(data_path, smartwatchStream, pipeline_config.smartwatch_ip, pipeline_config.smartwatch_port)
+        # th2.changeActivityRec.connect(self.handle_message)
+        # th2.start()
+
+    def update_transcript_widget(self, transcript):
+        # current_text = self.SpeechBox.toPlainText()
+        self.SpeechBox.append(transcript)
+        # self.SpeechBox.setPlainText(current_text + transcript + "\n")
+        # self.SpeechBox.moveCursor(QTextCursor.End)
+
     def UpdateDataSourceConfig(self, source):
         """Update configuration options based on selected data source"""
         # Clear existing widgets
@@ -606,6 +635,12 @@ class MainWindow(QWidget):
             modalities.add(2)
         if self.SmartWatchCheckBox.isChecked():
             modalities.add(3)
+        if self.VideoMLCheckBox.isChecked():
+            modalities.add(4)
+        if self.AudioMLCheckBox.isChecked():
+            modalities.add(5)
+        if self.SmartWatchMLCheckBox.isChecked():
+            modalities.add(6)
 
         # Get data source and configuration
         source = self.DataSourceBox.currentText()
@@ -623,32 +658,32 @@ class MainWindow(QWidget):
                 print("[Main] Failed to connect to SRT server!")
                 sys.exit(1)
 
-            if(self.MLSpeechRadioButton.isChecked()):
-                print("Starting Whisper for simulator audio")
-                whispercppcommand = [
-                    "./stream",
-                    "-m", # use specific whisper model
-                    f"models/ggml-{pipeline_config.whisper_model_size}.bin",
-                    "--threads",
-                    str(pipeline_config.num_threads),
-                    "--step",
-                    str(pipeline_config.step),
-                    "--length",
-                    str(pipeline_config.length),
-                    "--keep",
-                    str(pipeline_config.keep_ms)
-                ]
-
-                # Start subprocess
-                self.WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='EMS_Whisper/')
-
-                # time.sleep(5)
-
-                self.SpeechThread = StoppableThread(
-                    target=WhisperMicStream.WhisperMicStream, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue,))
-
-            self.SpeechThread.start()
-            print('started simulator speech thread')
+            # if(self.MLSpeechRadioButton.isChecked()):
+            #     print("Starting Whisper for simulator audio")
+            #     whispercppcommand = [
+            #         "./stream",
+            #         "-m", # use specific whisper model
+            #         f"models/ggml-{pipeline_config.whisper_model_size}.bin",
+            #         "--threads",
+            #         str(pipeline_config.num_threads),
+            #         "--step",
+            #         str(pipeline_config.step),
+            #         "--length",
+            #         str(pipeline_config.length),
+            #         "--keep",
+            #         str(pipeline_config.keep_ms)
+            #     ]
+            #
+            #     # Start subprocess
+            #     self.WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='EMS_Whisper/')
+            #
+            #     # time.sleep(5)
+            #
+            #     self.SpeechThread = StoppableThread(
+            #         target=WhisperMicStream.WhisperMicStream, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue,))
+            #
+            # self.SpeechThread.start()
+            # print('started simulator speech thread')
 
 
 
@@ -724,8 +759,44 @@ class MainWindow(QWidget):
             print("video has stopped playing!")
             self.VisionInformation.setPlainText("CPR Done\nAverage Compression Rate: 140 bpm")
 
-    # Called when closing the GUI
+
     def closeEvent(self, event):
+        """
+        Called when the GUI window is closed.
+        Clean up all processes before exiting.
+        """
+        print("[GUI] Closing, cleaning up processes...")
+
+        # Stop SRT receiver
+        if hasattr(self, 'srt_client') and self.srt_client is not None:
+            print("[GUI] Stopping SRT receiver...")
+            self.srt_client.stop()
+
+        # Stop Video streaming
+        if hasattr(self, 'VideoThread') and self.VideoThread is not None:
+            print("[GUI] Stopping video stream...")
+            self.VideoThread.stop()
+
+        # Stop Audio streaming
+        if hasattr(self, 'AudioThread') and self.AudioThread is not None:
+            print("[GUI] Stopping audio stream...")
+            self.AudioThread.stop()
+
+        # Stop IMU streaming
+        if hasattr(self, 'WatchThread') and self.WatchThread is not None:
+            print("[GUI] Stopping IMU stream...")
+            self.WatchThread.stop()
+
+        # Stop Speech/Whisper process (this kills egosim_stream)
+        if hasattr(self, 'SpeechProcess') and self.SpeechProcess is not None:
+            print("[GUI] Stopping speech process...")
+            self.SpeechProcess.stop()
+
+        print("[GUI] All processes stopped")
+        event.accept()
+
+    # Called when closing the GUI
+    def closeEvent1(self, event):
         print('Closing GUI')
         #self.feedback_client.send_message("Exiting!", 'exit')
         #self.feedback_client.sio.disconnect()
@@ -936,6 +1007,50 @@ class MainWindow(QWidget):
 
     @pyqtSlot()
     def StopButtonClick(self):
+        """
+        Stop all streaming processes and reset to pre-start state.
+        """
+        print("Stop pressed!")
+        self.UpdateMsgBox(["Stopping!"])
+
+        # Stop SRT receiver if it exists
+        if hasattr(self, 'srt_client') and self.srt_client is not None:
+            print("[StopButtonClick] Stopping SRT receiver...")
+            self.srt_client.stop()
+            self.srt_client = None
+            print("[StopButtonClick] SRT receiver stopped")
+
+        # Stop and restart SpeechProcess to kill egosim_stream
+        if hasattr(self, 'SpeechProcess') and self.SpeechProcess is not None:
+            print("[StopButtonClick] Stopping SpeechProcess...")
+            self.SpeechProcess.stop()
+
+            # Give it a moment to clean up
+            import time
+            time.sleep(0.5)
+
+            # Restart it so it's ready for next Start
+            print("[StopButtonClick] Restarting SpeechProcess...")
+            self.SpeechProcess = SpeechProcessManager()
+            self.SpeechProcess.transcript_ready.connect(self.update_transcript_widget)
+            self.SpeechProcess.start()
+            print("[StopButtonClick] SpeechProcess restarted")
+
+        # Re-enable UI controls
+        self.StartButton.setEnabled(True)
+        self.DataSourceBox.setEnabled(True)
+        self.ResetButton.setEnabled(True)
+
+        # Update state flags
+        self.stopped = 1
+
+        print("[StopButtonClick] Stopped successfully")
+        self.UpdateMsgBox(["Stopped!"])
+        self.start_video_audio_imu_processes()
+
+
+    @pyqtSlot()
+    def StopButtonClick1(self):
         print("Stop pressed!")
         self.UpdateMsgBox(["Stopping!"])
         self.stopped = 1
