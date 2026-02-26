@@ -278,7 +278,7 @@ class ConceptExtractor(object):
                                     self.pattern, latter_strPiece)
                                 if mapped_concept == "spo2":
                                     # print(value)
-                                    print()
+                                    print("mapped concept = spo2")
                             if len(value) > 0:
                                 if mapped_concept == 'bp':
                                     if len(value) >= 2:

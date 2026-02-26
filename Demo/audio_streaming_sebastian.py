@@ -262,10 +262,10 @@ def whisper_speech_process(audio_ml_pipe, transcript_fifo, transcript_queue, run
             whisper_cmd,
             # stdout=subprocess.PIPE,
             # stderr=subprocess.PIPE,
-            # stdout=subprocess.DEVNULL,
-            # stderr=subprocess.DEVNULL,
-            stdout=None,
-            stderr=None,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            # stdout=None,
+            # stderr=None,
             text=True,
             bufsize=1,
             env=env
@@ -281,9 +281,9 @@ def whisper_speech_process(audio_ml_pipe, transcript_fifo, transcript_queue, run
             print(f"[WhisperProcess] stderr: {stderr}")
             return
 
-        print('running flag value', running_flag.value)
+        # print('running flag value', running_flag.value)
         print(f"[WhisperProcess] egosim_stream still running after 1s - looks good")
-        print('running flag value', running_flag.value)
+        # print('running flag value', running_flag.value)
 
         # Open transcript FIFO in background thread so we don't block here.
         # egosim_stream will only open --text-fifo once it has processed

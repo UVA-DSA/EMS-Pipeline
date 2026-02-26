@@ -202,5 +202,5 @@ def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue):
         except Exception as e:
             # print(e)
             MsgSignal.signal.emit(["Unable to get response from Google! Network or other issues. Please Try again!\n Exception: " + str(e)])     
-            ButtonsSignal.signal.emit([(Window.StartButton, True), (Window.ComboBox, True), (Window.ResetButton, True)])
+            ButtonsSignal.signal.emit([(Window.StartButton, True), (Window.DataSourceBox, True), (Window.ResetButton, True)])
             sys.exit()

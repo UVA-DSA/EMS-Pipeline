@@ -52,7 +52,7 @@ def get_tokens(text):
 	sentences = regex.sub(' ', text)
 
 	# Get the words
-	raw_tokens = list(set(word_tokenize(unicode(sentences, errors='ignore'))))
+	raw_tokens = list(set(word_tokenize(sentences)))
 
 	# Filter numbers and characters
 	#tokens= [str(t) for t in raw_tokens if str(t) not in stops and not str(t).isdigit() and len(str(t))>1]
@@ -67,16 +67,16 @@ def get_pos_tags(tokens):
 	tags = [];
 	starti = 0
 	endi = 0
-	no_chunks = len(tokens)/5000+1;
-	print 'Process '+str(len(tokens))+' tokens in '+str(no_chunks)+ ' chunks..'
+	no_chunks = int(math.ceiling(len(tokens)/5000+1));
+	print('Process '+str(len(tokens))+' tokens in '+str(no_chunks)+ ' chunks..')
 	for l in range(0, no_chunks):
 		endi =  min((starti + (len(tokens)/no_chunks) ), len(tokens))
-		print "Tagging #" + str(l) + ": from " + str(starti)+ " to "+str(endi-1)
+		print("Tagging #" + str(l) + ": from " + str(starti)+ " to "+str(endi-1))
 		tags = tags + nltk.pos_tag(tokens[starti:endi]);
 		#tags = tags + pos.tag(tokens[starti:endi])[0];
 		starti = endi;
 
-	print str(len(tags))+" words tagged.."
+	print(str(len(tags))+" words tagged..")
 
 	# Save all the Noun and Adjective unigrams in a hash table
 	tag_set = {'Word':'Tag'}
@@ -113,7 +113,7 @@ def get_tech_ngrams(text, tag_set):
 		regex = re.compile('[%s]' % re.escape('!"#$%&\'()*+/:<=>?@[\\]^_`{|}~-'))
 		Text = regex.sub(' ',s)
 		# Get the words
-		words = word_tokenize(unicode(s, errors='ignore'))
+		words = word_tokenize(s)
 		w_i = -1;
 		# Filter numbers
 		#words= [str(t) for t in raw_tokens if not str(t).isdigit() and len(str(t))>1]
@@ -138,19 +138,19 @@ def get_tech_ngrams(text, tag_set):
 						tag_str = ', '.join(tags)
 						if not(n_gram_str in s_result) :
 							s_result.append(n_gram_str)
-				n_gram_str = n_gram_str.decode('utf-8')
+				# n_gram_str = n_gram_str.decode('utf-8')
 				if (n_gram_str in Text):
-					if not(results.has_key(n_gram_str)):
+					if not(n_gram_str in results):
 						results[n_gram_str] = tag_str
 				else:
-					print 'ngram not found in text: '+n_gram_str
+					print('ngram not found in text: ' + n_gram_str)
 				# Restart searching for next n-gram
 				n_gram = []
 				tags = []
 				n_gram_str = ''
 				tag_str = ''
 
-	print str(len(results.keys()))+" n-grams found.."
+	print(str(len(results.keys()))+" n-grams found..")
 	return results
 def mutual_info (file, n_gram):
     N00=0
@@ -177,25 +177,26 @@ def mutual_info (file, n_gram):
     mi_score=  (N11/N)* (math.log(((N*N11)/(N1*N1)),2)+
                (N01/N)* (math.log(((N*N01)/(N0*N1)),2))+
                (N10/N)* (math.log(((N*N10)/(N1*N0)),2)+
-               (N00/N)* (math.log(((N*N00)/(N0*N0)),2))
+               (N00/N)* (math.log(((N*N00)/(N0*N0)),2))))
     return result_mi
 def main():
 	os.chdir("./dataset")
 
 	# Set default encoding of python to utf8
-	reload(sys)
-	sys.setdefaultencoding('utf8')
+	# reload(sys)
+	# sys.setdefaultencoding('utf8')
 
 	with open('output.csv', 'w') as output:
 		csvwriter = csv.writer(output)
 		csvwriter.writerow(["Data File",  "MI score"])
+        # ngrams
 		for file in glob.glob("*.txt"):
 			with open(file, 'r') as reader:
 				text = ''
 				for line in reader:
 					text = text + line.rstrip('\n\r').lower()
 
-				print "\nProcessing "+file
+				print("\nProcessing "+file)
 				# Tokenization
 				tokens = get_tokens(text)
 
@@ -204,11 +205,11 @@ def main():
 
 				# Technical N-gram extraction
 				ngrams = get_tech_ngrams(file, tag_set)
-        # mutual info extraction
-        mi= mutual info (text, n_gram)
+                # mutual info extraction
+                mi_score = mutual_info(text, ngrams)
 
-				# Write to output
-				csvwriter.writerow([file, mi_score.keys()])
+                # Write to output
+                csvwriter.writerow([file, mi_score.keys()])
 
 if __name__ == '__main__':
     sys.exit(main())

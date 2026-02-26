@@ -1,18 +1,12 @@
-
-import csv
 import datetime
 import os
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-import PyQt5.QtWidgets,PyQt5.QtCore
-from PyQt5.QtCore import QThread, Qt, pyqtSignal, pyqtSlot
+from PyQt5.QtCore import QThread, pyqtSignal
 
 import time
 import pandas as pd
 import socket
 import collections
-from cpr_calculation import preprocess_data, find_cpr_rate, find_peaks_valleys
+from Feb2026_unused_files.cpr_calculation import preprocess_data, find_cpr_rate, find_peaks_valleys
 
 # variables for getting smartwatch data via udp
 localIP     = "0.0.0.0"

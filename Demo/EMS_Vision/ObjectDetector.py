@@ -20,7 +20,7 @@ class ObjectDetector(multiprocessing.Process):
         self.output_queue = output_queue
         self.signal_queue = signal_queue
         self.detr_engine = None
-        self.feedback_client = FeedbackClient()
+        # self.feedback_client = FeedbackClient()
         self.detected_objects = [] #list of identified objects 
         self.action = " " #action for action log\
         # self.sio = Client()
@@ -50,12 +50,12 @@ class ObjectDetector(multiprocessing.Process):
         if proposedAction != self.action: #checks that a new action has began 
             self.action = proposedAction
             
-            self.feedback_client.send_message(self.action+ " " + str(datetime.now().strftime("%H:%M:%S")), 'action')
+            # self.feedback_client.send_message(self.action+ " " + str(datetime.now().strftime("%H:%M:%S")), 'action')
 
 
     def run(self):
         self.detr_engine = DETREngine(detr_version)
-        self.feedback_client.start()
+        # self.feedback_client.start()
         frame_count = 0
         while True:
             #print("ObjectDetector: Waiting for frame")
@@ -64,8 +64,8 @@ class ObjectDetector(multiprocessing.Process):
                 signal = self.signal_queue.get_nowait()
                 if signal == 'stop':
                     print("[ObjectDetector]: Exiting")
-                    self.feedback_client.sio.disconnect()
-                    self.feedback_client.stop()
+                    # self.feedback_client.sio.disconnect()
+                    # self.feedback_client.stop()
                     break
             except:
                 signal = None
@@ -90,7 +90,7 @@ class ObjectDetector(multiprocessing.Process):
                     (image_array, objectDetected) = result_image
                     #print("This is the length of the objects detected: " + str(len(objectDetected)))
                     if str(objectDetected) != '[]': #if not null, sometimes it identifies a box with no object detection?
-                        self.feedback_client.send_message(objectDetected, 'objectFeedback') #send detected object on objectfeedback channel, with number of objects detected
+                        # self.feedback_client.send_message(objectDetected, 'objectFeedback') #send detected object on objectfeedback channel, with number of objects detected
                     
                         #send detected object on objectfeedback channel, with number of objects detected
                         

@@ -1,18 +1,11 @@
 from __future__ import absolute_import, division, print_function
 import os
 from py_trees import blackboard
-from six.moves import queue
 import py_trees
 import behaviours_m as be
 from py_trees.blackboard import Blackboard
-from tqdm import tqdm as tqdm
-from classes import SpeechNLPItem, GUISignal, FeedbackObj
-import threading
-import text_clf_utils as utils
-from ranking_func import rank
-from Form_Filling import textParse2
+from classes import GUISignal, FeedbackObj
 from operator import itemgetter
-import subprocess
 import re
 
 #added 3/18
@@ -38,7 +31,6 @@ download_nltk_data('punkt')
 download_nltk_data('punkt_tab')
 
 # ============== Cognitive System ==============
-from behaviours_m import blackboard
 blackboard.tick_num = 0
 
 # Cognitive System Thread
@@ -52,7 +44,7 @@ def CognitiveSystem(Window, SpeechToNLPQueue, FeedbackQueue, data_path_str, conc
     ConceptExtractionSignal.signal.connect(Window.UpdateConceptExtractionBox)
 
     # Initialize BT framework parameters
-    exec(open("./bt_parameters.py").read())
+    exec(open("bt_parameters.py").read())
 
     # Setup BT Framework
     #blackboard = Blackboard()

@@ -28,16 +28,16 @@ import PyQt5.QtWidgets,PyQt5.QtCore
 from DSP.amplitude import Amplitude
 # import CognitiveSystem
 #import Feedback
-import GoogleSpeechMicStream
-import GoogleSpeechFileStream
+# import GoogleSpeechMicStream
+# import GoogleSpeechFileStream
 #import DeepSpeechMicStream
 #import DeepSpeechFileStream
 # import WavVecMicStream
 # import WavVecFileStream
 
 import pipeline_config
-import WhisperFileStream
-import WhisperMicStream
+# import WhisperFileStream
+# import WhisperMicStream
 
 from EMS_Agent.Interface import EMSTinyBERTSystem
 
@@ -253,9 +253,9 @@ class MainWindow(QWidget):
 
 
         # ==== Start the EMS Agent - Xueren ==== #
-        print("EMSAgent Thread Started")
-        self.EMSAgentThread = EMSTinyBERTSystem.EMSAgentInference(self,EMSAgentSpeechToNLPQueue, FeedbackQueue)
-        self.EMSAgentThread.start()
+        # print("EMSAgent Thread Started")
+        # self.EMSAgentThread = EMSTinyBERTSystem.EMSAgentInference(self,EMSAgentSpeechToNLPQueue, FeedbackQueue)
+        # self.EMSAgentThread.start()
         # self.EMSAgentThread = StoppableThread(
         #     # target=EMSAgenSystem.EMSAgentSystem, args=(self, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path, protocolStream))
         #     target=EMSTinyBERTSystem.EMSTinyBERTSystem, args=(self, EMSAgentSpeechToNLPQueue, FeedbackQueue))
@@ -833,7 +833,7 @@ class MainWindow(QWidget):
 
 
         SpeechToNLPQueue.put('Kill')
-        EMSAgentSpeechToNLPQueue.put('Exit')
+        # EMSAgentSpeechToNLPQueue.put('Exit')
         FeedbackQueue.put('Kill')
         event.accept()
 
@@ -863,147 +863,147 @@ class MainWindow(QWidget):
             writer = csv.writer(csv_file, delimiter=',')
             writer.writerow(results)
 
-    @pyqtSlot()
-    def StartButtonClick1(self):
-        print('Start pressed!')
-        self.UpdateMsgBox(["Starting!"])
-        self.reset = 0
-        self.stopped = 0
-        self.StartButton.setEnabled(False)
-        self.StopButton.setEnabled(True)
-        self.DataSourceBox.setEnabled(False)
-        self.ResetButton.setEnabled(False)
-
-
-
-
-
-        # ==== Start the Speech/Text Thread
-        # hacky bypass for demo
-        # if True:
-        #     self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
-        #             self, SpeechToNLPQueue, './Audio_Scenarios/test5.wav',))
-        #     # self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
-        #     #         self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/002_190105.wav',))
-        #     self.SpeechThread.start()
-        #     print("Demo Audio Started")
-
-        # If Microphone
-        if(self.DataSourceBox.currentText() == 'Microphone'):
-            if(self.GoogleSpeechRadioButton.isChecked()):
-                self.SpeechThread = StoppableThread(
-                    target=GoogleSpeechMicStream.GoogleSpeech, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, data_path, audiostream, transcriptStream,))
-
-
-            elif(self.MLSpeechRadioButton.isChecked()):
-
-                print("Starting Whisper for Microphone")
-                # Start Whisper module
-                whispercppcommand = [
-                    "./stream",
-                    "-m", # use specific whisper model
-                    f"models/ggml-{pipeline_config.whisper_model_size}.bin",
-                    "--threads",
-                    str(pipeline_config.num_threads),
-                    "--step",
-                    str(pipeline_config.step),
-                    "--length",
-                    str(pipeline_config.length),
-                    "--keep",
-                    str(pipeline_config.keep_ms)
-                ]
-
-                # If a Hard-coded Audio test file, use virtual mic to capture the recording
-                # whispercppcommand.append("--capture")
-
-                # Start subprocess
-                self.WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='EMS_Whisper/')
-
-                # time.sleep(5)
-
-                self.SpeechThread = StoppableThread(
-                    target=WhisperMicStream.WhisperMicStream, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue,))
-
-
-            self.SpeechThread.start()
-            print('Microphone Speech Thread Started')
-
-        # If Other Audio File
-        # elif(self.ComboBox.currentText() == 'Other Audio File'):
-        #     audio_fname = QFileDialog.getOpenFileName(
-        #         self, 'Open file', 'c:\\', "Wav files (*.wav)")
-        #     if(self.GoogleSpeechRadioButton.isChecked()):
-        #         self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
-        #             self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, str(audio_fname), data_path, audiostream, transcriptStream,))
-        #     elif(self.MLSpeechRadioButton.isChecked()):
-        #         self.SpeechThread = StoppableThread(target=WavVecFileStream.WavVec, args=(self, SpeechToNLPQueue, str(audio_fname),)) #(target=DeepSpeechFileStream.DeepSpeech, args=(self, SpeechToNLPQueue, str(audio_fname),))
-
-        #     self.otheraudiofilename = str(audio_fname)
-        #     self.SpeechThread.start()
-        #     print("Other Audio File Speech Thread Started")
-
-        # If Text File
-        # elif(self.ComboBox.currentText() == 'Text File'):
-        #     text_fname = QFileDialog.getOpenFileName(
-        #         self, 'Open file', 'c:\\', "Text files (*.txt)")
-        #     self.SpeechThread = StoppableThread(target=TextSpeechStream.TextSpeech, args=(
-        #         self, SpeechToNLPQueue, str(text_fname),))
-        #     self.SpeechThread.start()
-        #     print("Text File Speech Thread Started")
-
-        # If a Hard-coded Audio test file
-        else:
-            if(self.GoogleSpeechRadioButton.isChecked()):
-                self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
-                    self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue,'./Audio_Scenarios/2019_Test/' + str(self.DataSourceBox.currentText()) + '.wav', data_path, audiostream, transcriptStream,))
-            elif(self.MLSpeechRadioButton.isChecked()):
-
-
-                # Start Whisper module
-                whispercppcommand = [
-                    "./stream",
-                    "-m", # use specific whisper model
-                    f"models/ggml-{pipeline_config.whisper_model_size}.bin",
-                    "--threads",
-                    str(pipeline_config.num_threads),
-                    "--step",
-                    str(pipeline_config.step),
-                    "--length",
-                    str(pipeline_config.length),
-                    "--keep",
-                    str(pipeline_config.keep_ms)
-                ]
-                # If a Hard-coded Audio test file, use virtual mic to capture the recording
-                if(pipeline_config.hardcoded):
-                    whispercppcommand.append("--capture")
-
-                # Start subprocess
-                self.WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='EMS_Whisper/')
-
-                time.sleep(4)
-
-                self.SpeechThread = StoppableThread(
-                    target=WhisperFileStream.Whisper, args=(self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.DataSourceBox.currentText()) + '.wav'))
-
-            self.SpeechThread.start()
-            print("Hard-coded Audio File Speech Thread Started")
-
-        # ==== Start the Cognitive System Thread
-        # if(self.CognitiveSystemThread == None):
-        #     print("Cognitive System Thread Started")
-        #     self.CognitiveSystemThread = StoppableThread(
-        #         target=CognitiveSystem.CognitiveSystem, args=(self, SpeechToNLPQueue, FeedbackQueue, data_path, conceptExtractionStream, interventionStream,))
-        #     # self.CognitiveSystemThread.start()
-
-
-
-
-        # ==== Start the Feedback Thread ==== #
-        # if(self.FeedbackThread == None):
-        #     print("Feedback Thread Started")
-        #     self.FeedbackThread = StoppableThread(
-        #         target=Feedback.FeedbackClient, args=(self, data_path, FeedbackQueue))
-        #     # self.FeedbackThread.start()
+    # @pyqtSlot()
+    # def StartButtonClick1(self):
+    #     print('Start pressed!')
+    #     self.UpdateMsgBox(["Starting!"])
+    #     self.reset = 0
+    #     self.stopped = 0
+    #     self.StartButton.setEnabled(False)
+    #     self.StopButton.setEnabled(True)
+    #     self.DataSourceBox.setEnabled(False)
+    #     self.ResetButton.setEnabled(False)
+    #
+    #
+    #
+    #
+    #
+    #     # ==== Start the Speech/Text Thread
+    #     # hacky bypass for demo
+    #     # if True:
+    #     #     self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
+    #     #             self, SpeechToNLPQueue, './Audio_Scenarios/test5.wav',))
+    #     #     # self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
+    #     #     #         self, SpeechToNLPQueue, './Audio_Scenarios/2019_Test/002_190105.wav',))
+    #     #     self.SpeechThread.start()
+    #     #     print("Demo Audio Started")
+    #
+    #     # If Microphone
+    #     if(self.DataSourceBox.currentText() == 'Microphone'):
+    #         if(self.GoogleSpeechRadioButton.isChecked()):
+    #             self.SpeechThread = StoppableThread(
+    #                 target=GoogleSpeechMicStream.GoogleSpeech, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, data_path, audiostream, transcriptStream,))
+    #
+    #
+    #         elif(self.MLSpeechRadioButton.isChecked()):
+    #
+    #             print("Starting Whisper for Microphone")
+    #             # Start Whisper module
+    #             whispercppcommand = [
+    #                 "./stream",
+    #                 "-m", # use specific whisper model
+    #                 f"models/ggml-{pipeline_config.whisper_model_size}.bin",
+    #                 "--threads",
+    #                 str(pipeline_config.num_threads),
+    #                 "--step",
+    #                 str(pipeline_config.step),
+    #                 "--length",
+    #                 str(pipeline_config.length),
+    #                 "--keep",
+    #                 str(pipeline_config.keep_ms)
+    #             ]
+    #
+    #             # If a Hard-coded Audio test file, use virtual mic to capture the recording
+    #             # whispercppcommand.append("--capture")
+    #
+    #             # Start subprocess
+    #             self.WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='EMS_Whisper/')
+    #
+    #             # time.sleep(5)
+    #
+    #             self.SpeechThread = StoppableThread(
+    #                 target=WhisperMicStream.WhisperMicStream, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue,))
+    #
+    #
+    #         self.SpeechThread.start()
+    #         print('Microphone Speech Thread Started')
+    #
+    #     # If Other Audio File
+    #     # elif(self.ComboBox.currentText() == 'Other Audio File'):
+    #     #     audio_fname = QFileDialog.getOpenFileName(
+    #     #         self, 'Open file', 'c:\\', "Wav files (*.wav)")
+    #     #     if(self.GoogleSpeechRadioButton.isChecked()):
+    #     #         self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
+    #     #             self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, str(audio_fname), data_path, audiostream, transcriptStream,))
+    #     #     elif(self.MLSpeechRadioButton.isChecked()):
+    #     #         self.SpeechThread = StoppableThread(target=WavVecFileStream.WavVec, args=(self, SpeechToNLPQueue, str(audio_fname),)) #(target=DeepSpeechFileStream.DeepSpeech, args=(self, SpeechToNLPQueue, str(audio_fname),))
+    #
+    #     #     self.otheraudiofilename = str(audio_fname)
+    #     #     self.SpeechThread.start()
+    #     #     print("Other Audio File Speech Thread Started")
+    #
+    #     # If Text File
+    #     # elif(self.ComboBox.currentText() == 'Text File'):
+    #     #     text_fname = QFileDialog.getOpenFileName(
+    #     #         self, 'Open file', 'c:\\', "Text files (*.txt)")
+    #     #     self.SpeechThread = StoppableThread(target=TextSpeechStream.TextSpeech, args=(
+    #     #         self, SpeechToNLPQueue, str(text_fname),))
+    #     #     self.SpeechThread.start()
+    #     #     print("Text File Speech Thread Started")
+    #
+    #     # If a Hard-coded Audio test file
+    #     else:
+    #         if(self.GoogleSpeechRadioButton.isChecked()):
+    #             self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
+    #                 self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue,'./Audio_Scenarios/2019_Test/' + str(self.DataSourceBox.currentText()) + '.wav', data_path, audiostream, transcriptStream,))
+    #         elif(self.MLSpeechRadioButton.isChecked()):
+    #
+    #
+    #             # Start Whisper module
+    #             whispercppcommand = [
+    #                 "./stream",
+    #                 "-m", # use specific whisper model
+    #                 f"models/ggml-{pipeline_config.whisper_model_size}.bin",
+    #                 "--threads",
+    #                 str(pipeline_config.num_threads),
+    #                 "--step",
+    #                 str(pipeline_config.step),
+    #                 "--length",
+    #                 str(pipeline_config.length),
+    #                 "--keep",
+    #                 str(pipeline_config.keep_ms)
+    #             ]
+    #             # If a Hard-coded Audio test file, use virtual mic to capture the recording
+    #             if(pipeline_config.hardcoded):
+    #                 whispercppcommand.append("--capture")
+    #
+    #             # Start subprocess
+    #             self.WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='EMS_Whisper/')
+    #
+    #             time.sleep(4)
+    #
+    #             self.SpeechThread = StoppableThread(
+    #                 target=WhisperFileStream.Whisper, args=(self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.DataSourceBox.currentText()) + '.wav'))
+    #
+    #         self.SpeechThread.start()
+    #         print("Hard-coded Audio File Speech Thread Started")
+    #
+    #     # ==== Start the Cognitive System Thread
+    #     # if(self.CognitiveSystemThread == None):
+    #     #     print("Cognitive System Thread Started")
+    #     #     self.CognitiveSystemThread = StoppableThread(
+    #     #         target=CognitiveSystem.CognitiveSystem, args=(self, SpeechToNLPQueue, FeedbackQueue, data_path, conceptExtractionStream, interventionStream,))
+    #     #     # self.CognitiveSystemThread.start()
+    #
+    #
+    #
+    #
+    #     # ==== Start the Feedback Thread ==== #
+    #     # if(self.FeedbackThread == None):
+    #     #     print("Feedback Thread Started")
+    #     #     self.FeedbackThread = StoppableThread(
+    #     #         target=Feedback.FeedbackClient, args=(self, data_path, FeedbackQueue))
+    #     #     # self.FeedbackThread.start()
 
     @pyqtSlot()
     def StopButtonClick(self):
@@ -1089,7 +1089,7 @@ class MainWindow(QWidget):
         # #     EMSAgentSpeechToNLPQueue.put('Kill')
         # #     FeedbackQueue.put('Kill')
         # # SpeechToNLPQueue.put('Kill')
-        EMSAgentSpeechToNLPQueue.put('Kill')
+        # EMSAgentSpeechToNLPQueue.put('Kill')
         # FeedbackQueue.put('Kill')
         self.VUMeter.setValue(0)
         self.finalSpeechSegmentsSpeech = []
@@ -1116,67 +1116,67 @@ class MainWindow(QWidget):
 
     # Update the Speech Box
     #@pyqtSlot
-    def UpdateSpeechBox(self, input):
-
-        item = input[0]
-
-        if(self.GoogleSpeechRadioButton.isChecked()):
-            if(item.isFinal):
-                if(item.origin == 'Speech'):
-                    self.finalSpeechSegmentsSpeech.append(
-                        '<b>' + item.transcript + '</b>')
-                elif(item.origin == 'NLP'):
-                    self.finalSpeechSegmentsNLP.append(
-                        '<b>' + item.transcript + '</b>')
-
-
-                text = ""
-
-                for a in self.finalSpeechSegmentsNLP:
-                    text += a + "<br>"
-
-                for a in self.finalSpeechSegmentsSpeech[len(self.finalSpeechSegmentsNLP):]:
-                    text += a + "<br>"
-
-                self.SpeechBox.setText('<b>' + text + '</b>')
-                self.SpeechBox.moveCursor(QTextCursor.End)
-                self.nonFinalText = ""
-
-            else:
-                text = ""
-
-                for a in self.finalSpeechSegmentsNLP:
-                    text += a + "<br>"
-
-                for a in self.finalSpeechSegmentsSpeech[len(self.finalSpeechSegmentsNLP):]:
-                    text += a + "<br>"
-
-                if(not len(text)):
-                    text = "<b></b>"
-
-                previousTextMinusPrinted = self.nonFinalText[:len(
-                    self.nonFinalText) - item.numPrinted]
-                self.nonFinalText = previousTextMinusPrinted + item.transcript
-                self.SpeechBox.setText(text + self.nonFinalText)
-                self.SpeechBox.moveCursor(QTextCursor.End)
-
-        if(self.MLSpeechRadioButton.isChecked()):
-            if(item.isFinal):
-                self.SpeechBox.clear()
-
-                self.finalSpeechSegmentsSpeech.append(item.transcript)
-
-
-                # for a in self.finalSpeechSegmentsSpeech:
-
-
-                #     text = sFinal
-
-                text = self.finalSpeechSegmentsSpeech[-1]
-
-                self.SpeechBox.setText('<b>' + text + '</b>')
-                self.SpeechBox.moveCursor(QTextCursor.End)
-                self.nonFinalText = ""
+    # def UpdateSpeechBox(self, input):
+    #
+    #     item = input[0]
+    #
+    #     if(self.GoogleSpeechRadioButton.isChecked()):
+    #         if(item.isFinal):
+    #             if(item.origin == 'Speech'):
+    #                 self.finalSpeechSegmentsSpeech.append(
+    #                     '<b>' + item.transcript + '</b>')
+    #             elif(item.origin == 'NLP'):
+    #                 self.finalSpeechSegmentsNLP.append(
+    #                     '<b>' + item.transcript + '</b>')
+    #
+    #
+    #             text = ""
+    #
+    #             for a in self.finalSpeechSegmentsNLP:
+    #                 text += a + "<br>"
+    #
+    #             for a in self.finalSpeechSegmentsSpeech[len(self.finalSpeechSegmentsNLP):]:
+    #                 text += a + "<br>"
+    #
+    #             self.SpeechBox.setText('<b>' + text + '</b>')
+    #             self.SpeechBox.moveCursor(QTextCursor.End)
+    #             self.nonFinalText = ""
+    #
+    #         else:
+    #             text = ""
+    #
+    #             for a in self.finalSpeechSegmentsNLP:
+    #                 text += a + "<br>"
+    #
+    #             for a in self.finalSpeechSegmentsSpeech[len(self.finalSpeechSegmentsNLP):]:
+    #                 text += a + "<br>"
+    #
+    #             if(not len(text)):
+    #                 text = "<b></b>"
+    #
+    #             previousTextMinusPrinted = self.nonFinalText[:len(
+    #                 self.nonFinalText) - item.numPrinted]
+    #             self.nonFinalText = previousTextMinusPrinted + item.transcript
+    #             self.SpeechBox.setText(text + self.nonFinalText)
+    #             self.SpeechBox.moveCursor(QTextCursor.End)
+    #
+    #     if(self.MLSpeechRadioButton.isChecked()):
+    #         if(item.isFinal):
+    #             self.SpeechBox.clear()
+    #
+    #             self.finalSpeechSegmentsSpeech.append(item.transcript)
+    #
+    #
+    #             # for a in self.finalSpeechSegmentsSpeech:
+    #
+    #
+    #             #     text = sFinal
+    #
+    #             text = self.finalSpeechSegmentsSpeech[-1]
+    #
+    #             self.SpeechBox.setText('<b>' + text + '</b>')
+    #             self.SpeechBox.moveCursor(QTextCursor.End)
+    #             self.nonFinalText = ""
 
 
 
@@ -1252,21 +1252,21 @@ class MainWindow(QWidget):
             self.VUMeter.setValue(0)
 
     # Restarts Google Speech API, called when the API limit is reached
-    def StartGoogle(self, input):
-        item = input[0]
-        if(item == 'Mic'):
-            self.SpeechThread = StoppableThread(
-                target=GoogleSpeechMicStream.GoogleSpeech, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, data_path, audiostream, transcriptStream))
-            self.SpeechThread.start()
-        elif(item == 'File'):
-            if self.DataSourceBox.currentText() == 'Other Audio File':
-                print("\n\nStart Again\n\n")
-                self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
-                    self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, self.otheraudiofilename, data_path, audiostream, transcriptStream))
-            else:
-                self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
-                    self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.DataSourceBox.currentText()) + '.wav', data_path, audiostream, transcriptStream))
-            self.SpeechThread.start()
+    # def StartGoogle(self, input):
+    #     item = input[0]
+    #     if(item == 'Mic'):
+    #         self.SpeechThread = StoppableThread(
+    #             target=GoogleSpeechMicStream.GoogleSpeech, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, data_path, audiostream, transcriptStream))
+    #         self.SpeechThread.start()
+    #     elif(item == 'File'):
+    #         if self.DataSourceBox.currentText() == 'Other Audio File':
+    #             print("\n\nStart Again\n\n")
+    #             self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
+    #                 self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, self.otheraudiofilename, data_path, audiostream, transcriptStream))
+    #         else:
+    #             self.SpeechThread = StoppableThread(target=GoogleSpeechFileStream.GoogleSpeech, args=(
+    #                 self, SpeechToNLPQueue, EMSAgentSpeechToNLPQueue, './Audio_Scenarios/2019_Test/' + str(self.DataSourceBox.currentText()) + '.wav', data_path, audiostream, transcriptStream))
+    #         self.SpeechThread.start()
 
     # Enabled and/or disable given buttons in a tuple (Button Object, True/False)
     def ButtonsSetEnabled(self, input):
@@ -1387,11 +1387,11 @@ if __name__ == '__main__':
     videostream = True
     # protocolStream = True
     # Set the Google Speech API service-account key environment variable
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "service-account.json"
+    # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "service-account.json"
 
     # Create thread-safe queue for communication between Speech and Cognitive System threads
     SpeechToNLPQueue = queue.Queue()
-    EMSAgentSpeechToNLPQueue  = queue.Queue()
+    # EMSAgentSpeechToNLPQueue  = queue.Queue()
     FeedbackQueue = queue.Queue()
     # GUI: Create the main window, show it, and run the app
     print("Starting GUI")

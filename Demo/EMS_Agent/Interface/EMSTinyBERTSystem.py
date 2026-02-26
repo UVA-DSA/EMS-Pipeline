@@ -77,8 +77,8 @@ class EMSTinyBERT(nn.Module):
         checkpoint = torch.load(model_path)
         self.model.load_state_dict(checkpoint, strict=False)
 
-        self.feedback_client = FeedbackClient()
-        self.feedback_client.start()
+        #self.feedback_client = FeedbackClient()
+        #self.feedback_client.start()
         print("[Protocol Model: Device ]",self.device)
         self.model.to(self.device)
 
@@ -253,8 +253,8 @@ class EMSAgentInference(QThread):
             if(received == 'Exit'):
                 print("[Protocol Model Thread received exit signal. Exiting..]")
                 narrative = ""
-                self.model.feedback_client.sio.disconnect()
-                self.model.feedback_client.stop()
+                #self.model.feedback_client.sio.disconnect()
+                #self.model.feedback_client.stop()
                 break
                 
             print('=============================================================')
@@ -279,7 +279,7 @@ class EMSAgentInference(QThread):
                 protocolFB =  FeedbackObj("", pred[0], prob[0], "")
                 protocolFeedback = ProtocolObj(pred[0],prob[0])
                 protocol_dict = protocolFeedback.__dict__
-                self.model.feedback_client.send_message(protocol_dict, 'protocolFeedback') 
+                #self.model.feedback_client.send_message(protocol_dict, 'protocolFeedback')
                 
                 self.protocol_queue.put(protocolFB)
 

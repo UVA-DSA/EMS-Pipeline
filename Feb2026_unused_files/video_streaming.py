@@ -1,34 +1,16 @@
 #Thread for streaming video to the GUI vision window
 
-import csv
-import os
-import scipy
-import time
-import math
 import datetime
-import time
 
 import asyncio
 
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-from PyQt5.QtCore import Qt
-import PyQt5.QtWidgets,PyQt5.QtCore
-from PyQt5.QtCore import QThread, Qt, pyqtSignal, pyqtSlot
-from PyQt5.QtGui import QImage, QPixmap
+from PyQt5.QtCore import QThread, Qt, pyqtSignal
+from PyQt5.QtGui import QImage
 
 import mediapipe as mp
-import socket
-import datetime as dt
 import numpy as np
-import pandas as pd
 import cv2
-import socket
 from PIL import Image
-import io
-
-from cpr_calculation import vid_streaming_Cpr
 
 from socketio import Client
 
@@ -40,11 +22,8 @@ import time
 from multiprocessing import Process, Queue
 
 from EMS_Vision.ObjectDetector import ObjectDetector
-from pipeline_config import socketio_ipaddr
+from Demo.pipeline_config import socketio_ipaddr
 
-from torch import multiprocessing
-
-import queue
 # Media Pipe vars
 global mp_drawing, mp_drawing_styles, mp_hands, mp_face_mesh
 mp_drawing = mp.solutions.drawing_utils

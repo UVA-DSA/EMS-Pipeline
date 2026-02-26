@@ -1,18 +1,14 @@
 import pipeline_config
 import wave
 import pyaudio
-import time
 import re
-from classes import TranscriptItem, SpeechNLPItem
+from classes import SpeechNLPItem
 import traceback
 # import sounddevice as sd
 # import soundfile as sf
 
-import queue
 import os
 import errno
-import sys
-import threading
 from classes import GUISignal
 
 
@@ -61,7 +57,7 @@ def process_whisper_response(response):
 
     return block, isFinal, avg_p, latency
 
-def Whisper(Window, TranscriptQueue,EMSAgentSpeechQueue, wavefile_name):
+def Whisper(Window, TranscriptQueue, EMSAgentSpeechQueue, wavefile_name):
     fifo_path = "/tmp/myfifo"
     finalized_blocks = ''
     

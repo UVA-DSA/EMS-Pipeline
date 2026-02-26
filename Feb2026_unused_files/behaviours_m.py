@@ -5,9 +5,7 @@ from py_trees import blackboard
 from scipy import spatial
 from py_trees.blackboard import Blackboard
 import ConceptExtract as CE
-from ranking_func import rank
-from collections import defaultdict
-import openpyxl
+from Feb2026_unused_files.ranking_func import rank
 
 
 def softmax(x):

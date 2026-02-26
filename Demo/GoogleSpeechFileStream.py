@@ -101,7 +101,7 @@ class FileStream(object):
                 FileStream.position = 0
                 MsgSignal.signal.emit(["Transcription of audio file complete!"])
                 ButtonsSignal.signal.emit(
-                    [(self.Window.StartButton, True), (self.Window.ComboBox, True), (self.Window.ResetButton, True)])
+                    [(self.Window.StartButton, True), (self.Window.DataSourceBox, True), (self.Window.ResetButton, True)])
                 return
 
             if chunk is None:
@@ -254,7 +254,7 @@ def GoogleSpeech(Window, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue, wavefile_nam
             MsgSignal.signal.emit(
                 ["Unable to get response from Google! Network or other issues. Please Try again!\n Exception: " + str(e)])
             ButtonsSignal.signal.emit(
-                [(Window.StartButton, True), (Window.ComboBox, True), (Window.ResetButton, True)])
+                [(Window.StartButton, True), (Window.DataSourceBox, True), (Window.ResetButton, True)])
             sys.exit()
 
 
