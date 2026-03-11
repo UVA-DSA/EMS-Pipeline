@@ -273,7 +273,7 @@ def whisper_speech_process(audio_ml_pipe, transcript_fifo, transcript_queue, run
         print(f"[WhisperProcess] Whisper started (PID: {whisper_proc.pid})")
 
         # Check egosim_stream didn't crash immediately
-        time.sleep(1.0)
+        time.sleep(2.0)
         if whisper_proc.poll() is not None:
             stdout, stderr = whisper_proc.communicate()
             print(f"[WhisperProcess] ERROR: egosim_stream crashed immediately!")
@@ -282,8 +282,14 @@ def whisper_speech_process(audio_ml_pipe, transcript_fifo, transcript_queue, run
             return
 
         # print('running flag value', running_flag.value)
-        print(f"[WhisperProcess] egosim_stream still running after 1s - looks good")
+        print(f"[WhisperProcess] egosim_stream still running after 2s - looks good")
         # print('running flag value', running_flag.value)
+
+        # Signal the GUI that Whisper is up and ready
+        try:
+            transcript_queue.put_nowait("__WHISPER_READY__")
+        except:
+            pass
 
         # Open transcript FIFO in background thread so we don't block here.
         # egosim_stream will only open --text-fifo once it has processed
@@ -391,6 +397,7 @@ def _make_transcript_thread():
 
     class TranscriptDisplayThread(QThread):
         transcript_ready = pyqtSignal(str)
+        whisper_ready = pyqtSignal()
 
         def __init__(self, transcript_queue):
             super().__init__()
@@ -410,7 +417,10 @@ def _make_transcript_thread():
             while self.is_running:
                 try:
                     transcript = self.transcript_queue.get(timeout=0.1)
-                    self.transcript_ready.emit(transcript)
+                    if transcript == "__WHISPER_READY__":
+                        self.whisper_ready.emit()
+                    else:
+                        self.transcript_ready.emit(transcript)
                 except:
                     continue
             print("[TranscriptDisplayThread] Exiting run loop")
@@ -473,6 +483,10 @@ class SpeechProcessManager:
     @property
     def transcript_ready(self):
         return self.display_thread.transcript_ready
+
+    @property
+    def whisper_ready(self):
+        return self.display_thread.whisper_ready
 
 
 class SpeechProcess:

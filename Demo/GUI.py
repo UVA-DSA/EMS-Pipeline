@@ -344,10 +344,6 @@ class MainWindow(QWidget):
         self.StopButton.clicked.connect(self.StopButtonClick)
         self.ControlPanelGridLayout.addWidget(self.StopButton, 1, 1, 1, 1)
 
-        # Create a reset  button in the Control Panel
-        self.ResetButton = QPushButton('Reset', self)
-        self.ResetButton.clicked.connect(self.ResetButtonClick)
-        self.ControlPanelGridLayout.addWidget(self.ResetButton, 1, 2, 1, 1)
 
         # VU Meter Panel
         self.VUMeterPanel = QWidget()
@@ -490,6 +486,7 @@ class MainWindow(QWidget):
 
         self.SpeechProcess = SpeechProcessManager()
         self.SpeechProcess.transcript_ready.connect(self.update_transcript_widget)
+        self.SpeechProcess.whisper_ready.connect(self.on_whisper_ready)
         self.SpeechProcess.start()
 
         # self.AudioThread = AudioThread()
@@ -512,6 +509,12 @@ class MainWindow(QWidget):
         self.SpeechBox.append(transcript)
         # self.SpeechBox.setPlainText(current_text + transcript + "\n")
         # self.SpeechBox.moveCursor(QTextCursor.End)
+
+    @pyqtSlot()
+    def on_whisper_ready(self):
+        """Called when Whisper is up and running - show Ready! in video widget."""
+        self.video.setText('<font size="10" color="green"><b>Ready!</b></font>')
+        self.video.setAlignment(QtCore.Qt.AlignCenter)
 
     def UpdateDataSourceConfig(self, source):
         """Update configuration options based on selected data source"""
@@ -625,8 +628,6 @@ class MainWindow(QWidget):
         self.StartButton.setEnabled(False)
         self.StopButton.setEnabled(True)
         self.DataSourceBox.setEnabled(False)
-        self.ResetButton.setEnabled(False)
-
         # Get selected modalities
         modalities = set()
         if self.VideoCheckBox.isChecked():
@@ -1033,13 +1034,18 @@ class MainWindow(QWidget):
             print("[StopButtonClick] Restarting SpeechProcess...")
             self.SpeechProcess = SpeechProcessManager()
             self.SpeechProcess.transcript_ready.connect(self.update_transcript_widget)
+            self.SpeechProcess.whisper_ready.connect(self.on_whisper_ready)
             self.SpeechProcess.start()
             print("[StopButtonClick] SpeechProcess restarted")
 
         # Re-enable UI controls
         self.StartButton.setEnabled(True)
         self.DataSourceBox.setEnabled(True)
-        self.ResetButton.setEnabled(True)
+
+        # Clear widgets
+        self.SpeechBox.clear()
+        self.Smartwatch.clear()
+        self.video.clear()
 
         # Update state flags
         self.stopped = 1
@@ -1057,7 +1063,6 @@ class MainWindow(QWidget):
         time.sleep(.1)
         self.StartButton.setEnabled(True)
         self.DataSourceBox.setEnabled(True)
-        self.ResetButton.setEnabled(True)
         self.SpeechThread.stop()
 
     @pyqtSlot()
