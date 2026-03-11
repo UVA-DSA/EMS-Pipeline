@@ -516,13 +516,19 @@ class MainWindow(QWidget):
         self.video.setText('<font size="10" color="green"><b>Ready!</b></font>')
         self.video.setAlignment(QtCore.Qt.AlignCenter)
 
+    def _clear_layout(self, layout):
+        """Recursively remove and delete all items from a layout."""
+        while layout.count():
+            item = layout.takeAt(0)
+            widget = item.widget()
+            if widget is not None:
+                widget.deleteLater()
+            elif item.layout() is not None:
+                self._clear_layout(item.layout())
+
     def UpdateDataSourceConfig(self, source):
         """Update configuration options based on selected data source"""
-        # Clear existing widgets
-        while self.ConfigLayout.count():
-            child = self.ConfigLayout.takeAt(0)
-            if child.widget():
-                child.widget().deleteLater()
+        self._clear_layout(self.ConfigLayout)
 
         if source == "simulator":
             # Simulator configuration
