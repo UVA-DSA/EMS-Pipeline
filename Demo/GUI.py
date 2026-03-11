@@ -324,13 +324,13 @@ class MainWindow(QWidget):
         # Radio Buttons Google or Other ML Model
         self.GoogleSpeechRadioButton = QRadioButton("Google Speech Cloud Model", self)
         self.GoogleSpeechRadioButton.setEnabled(True)
-        self.GoogleSpeechRadioButton.setChecked(True)
+        self.GoogleSpeechRadioButton.setChecked(False)
         self.ControlPanelGridLayout.addWidget(
             self.GoogleSpeechRadioButton, 0, 1, 1, 1)
 
-        self.MLSpeechRadioButton = QRadioButton("OpenAI Whisper Local Model", self)
+        self.MLSpeechRadioButton = QRadioButton("Whisper - Local Model", self)
         self.MLSpeechRadioButton.setEnabled(True) #changed from False to True to enable
-        self.MLSpeechRadioButton.setChecked(False)
+        self.MLSpeechRadioButton.setChecked(True)
         self.ControlPanelGridLayout.addWidget(
             self.MLSpeechRadioButton, 0, 2, 1, 1)
 
