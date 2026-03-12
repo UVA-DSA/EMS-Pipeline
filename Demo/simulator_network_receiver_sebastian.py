@@ -19,29 +19,43 @@ import time
 from multiprocessing import Process, Value
 import numpy as np
 
-# Load libsrt
-if sys.platform == 'darwin':
-    try:
-        libsrt = ctypes.CDLL('/opt/homebrew/Cellar/srt/1.5.4/lib/libsrt.dylib')
-    except OSError:
+# Load libsrt.
+# Different distros expose different SONAMEs (e.g. libsrt-gnutls.so.1.5 on Ubuntu).
+def _load_libsrt():
+    if sys.platform == 'darwin':
+        candidates = [
+            '/opt/homebrew/Cellar/srt/1.5.4/lib/libsrt.dylib',
+            '/opt/homebrew/lib/libsrt.dylib',
+            'libsrt.dylib',
+        ]
+    else:
+        candidates = [
+            'libsrt.so.1',
+            'libsrt.so',
+            'libsrt-gnutls.so.1.5',
+            'libsrt-gnutls.so.1',
+            'libsrt-gnutls.so',
+            'libsrt-openssl.so.1.5',
+            'libsrt-openssl.so.1',
+            'libsrt-openssl.so',
+        ]
+
+    for candidate in candidates:
         try:
-            libsrt = ctypes.CDLL('/opt/homebrew/lib/libsrt.dylib')
+            return ctypes.CDLL(candidate)
         except OSError:
-            try:
-                libsrt = ctypes.CDLL('libsrt.dylib')
-            except OSError:
-                print("Error: libsrt not found on macOS")
-                print("Install with: brew install srt")
-                sys.exit(1)
-else:
-    try:
-        libsrt = ctypes.CDLL("libsrt.so.1")
-    except OSError:
-        try:
-            libsrt = ctypes.CDLL("libsrt.so")
-        except OSError:
-            print("Error: libsrt not found")
-            sys.exit(1)
+            continue
+
+    print("Error: libsrt not found")
+    print("Tried:", ", ".join(candidates))
+    if sys.platform == 'darwin':
+        print("Install with: brew install srt")
+    else:
+        print("Install with conda-forge 'srt' or your distro package (e.g. libsrt1.5-gnutls).")
+    sys.exit(1)
+
+
+libsrt = _load_libsrt()
 
 # SRT function declarations
 libsrt.srt_startup.argtypes = []
