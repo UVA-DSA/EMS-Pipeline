@@ -45,7 +45,7 @@ import pipeline_config
 from StoppableThread.StoppableThread import StoppableThread
 
 from video_streaming_sebastian import VideoStreamManager
-from audio_streaming_sebastian import AudioStreamManager, SpeechProcessManager
+from audio_streaming_sebastian import AudioStreamManager, SpeechProcessManager, GoogleSpeechStreamManager
 from imu_streaming_sebastian import IMUStreamManager
 # from smartwatch_streaming import Thread_Watch, IMUThread
 #from Feedback import FeedbackClient
@@ -247,7 +247,7 @@ class MainWindow(QWidget):
         #self.feedback_client = Feedback.FeedbackClient()
         #self.feedback_client.start()
 
-        self.start_video_audio_imu_processes()
+
 
 
 
@@ -320,17 +320,20 @@ class MainWindow(QWidget):
 
         # Initialize with default configuration
         self.UpdateDataSourceConfig(self.DataSourceBox.currentText())
+        print('here 1')
 
         # Radio Buttons Google or Other ML Model
         self.GoogleSpeechRadioButton = QRadioButton("Google Speech Cloud Model", self)
         self.GoogleSpeechRadioButton.setEnabled(True)
         self.GoogleSpeechRadioButton.setChecked(False)
+        self.GoogleSpeechRadioButton.toggled.connect(self.on_speech_mode_changed)
         self.ControlPanelGridLayout.addWidget(
             self.GoogleSpeechRadioButton, 0, 1, 1, 1)
 
-        self.MLSpeechRadioButton = QRadioButton("Whisper - Local Model", self)
-        self.MLSpeechRadioButton.setEnabled(True) #changed from False to True to enable
+        self.MLSpeechRadioButton = QRadioButton("OpenAI Whisper Local Model", self)
+        self.MLSpeechRadioButton.setEnabled(True)
         self.MLSpeechRadioButton.setChecked(True)
+        self.MLSpeechRadioButton.toggled.connect(self.on_speech_mode_changed)
         self.ControlPanelGridLayout.addWidget(
             self.MLSpeechRadioButton, 0, 2, 1, 1)
 
@@ -465,6 +468,8 @@ class MainWindow(QWidget):
         # self.Grid_Layout.setSpacing(0)
         # self.Grid_Layout.setContentsMargins(0, 0, 0, 0)
 
+        self.start_video_audio_imu_processes()
+
     def start_video_audio_imu_processes(self):
         # Processes for video
         # self.VideoThread = VideoThread(data_path, videostream)
@@ -483,11 +488,10 @@ class MainWindow(QWidget):
 
         self.AudioProcess = AudioStreamManager()
         self.AudioProcess.start()
+        print('here 1111')
 
-        self.SpeechProcess = SpeechProcessManager()
-        self.SpeechProcess.transcript_ready.connect(self.update_transcript_widget)
-        self.SpeechProcess.whisper_ready.connect(self.on_whisper_ready)
-        self.SpeechProcess.start()
+        self.SpeechProcess = None   # will be set by _start_speech_manager
+        self._start_speech_manager(use_google=False)  # default: Whisper
 
         # self.AudioThread = AudioThread()
         # self.AudioThread.start()
@@ -515,6 +519,42 @@ class MainWindow(QWidget):
         """Called when Whisper is up and running - show Ready! in video widget."""
         self.video.setText('<font size="10" color="green"><b>Ready!</b></font>')
         self.video.setAlignment(QtCore.Qt.AlignCenter)
+
+    def _start_speech_manager(self, use_google: bool):
+        """
+        Tear down whatever speech manager is currently running and start the
+        appropriate one (Whisper local or Google Cloud STT).
+        """
+        # Stop existing manager if any
+        if hasattr(self, 'SpeechProcess') and self.SpeechProcess is not None:
+            print(f'[GUI] Stopping current speech manager...')
+            self.SpeechProcess.stop()
+            self.SpeechProcess = None
+
+        if use_google:
+            print('[GUI] Starting Google Cloud STT manager')
+            self.UpdateMsgBox(['Switching to Google Cloud Speech...'])
+            self.SpeechProcess = GoogleSpeechStreamManager()
+        else:
+            print('[GUI] Starting Whisper local model manager')
+            self.UpdateMsgBox(['Switching to Whisper local model...'])
+            self.SpeechProcess = SpeechProcessManager()
+
+        self.SpeechProcess.transcript_ready.connect(self.update_transcript_widget)
+        self.SpeechProcess.whisper_ready.connect(self.on_whisper_ready)
+        self.SpeechProcess.start()
+
+    @pyqtSlot(bool)
+    def on_speech_mode_changed(self, checked):
+        """
+        Called when either radio button is toggled.
+        Each toggle fires twice (one button unchecked, one checked) — only
+        act on the checked=True event to avoid double-switching.
+        """
+        if not checked:
+            return
+        use_google = self.GoogleSpeechRadioButton.isChecked()
+        self._start_speech_manager(use_google)
 
     def _clear_layout(self, layout):
         """Recursively remove and delete all items from a layout."""
@@ -1036,13 +1076,10 @@ class MainWindow(QWidget):
             import time
             time.sleep(0.5)
 
-            # Restart it so it's ready for next Start
-            print("[StopButtonClick] Restarting SpeechProcess...")
-            self.SpeechProcess = SpeechProcessManager()
-            self.SpeechProcess.transcript_ready.connect(self.update_transcript_widget)
-            self.SpeechProcess.whisper_ready.connect(self.on_whisper_ready)
-            self.SpeechProcess.start()
-            print("[StopButtonClick] SpeechProcess restarted")
+            # Restart in whatever mode the radio button currently says
+            print("[StopButtonClick] Restarting speech manager...")
+            self._start_speech_manager(use_google=self.GoogleSpeechRadioButton.isChecked())
+            print("[StopButtonClick] Speech manager restarted")
 
         # Re-enable UI controls
         self.StartButton.setEnabled(True)
@@ -1398,7 +1435,7 @@ if __name__ == '__main__':
     videostream = True
     # protocolStream = True
     # Set the Google Speech API service-account key environment variable
-    # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "service-account.json"
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "service-account.json"
 
     # Create thread-safe queue for communication between Speech and Cognitive System threads
     SpeechToNLPQueue = queue.Queue()
