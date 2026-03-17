@@ -561,6 +561,7 @@ class GoogleSpeechStreamManager:
                 print('[GoogleSpeechThread] Started')
                 try:
                     from google.cloud import speech
+                    from google.api_core.exceptions import OutOfRange, ServiceUnavailable
                 except ImportError:
                     print('[GoogleSpeechThread] ERROR: google-cloud-speech not installed. '
                           'Run: pip install google-cloud-speech')
@@ -570,16 +571,25 @@ class GoogleSpeechStreamManager:
 
                 config = speech.RecognitionConfig(
                     encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
-                    sample_rate_hertz=self.SAMPLE_RATE if hasattr(self, 'SAMPLE_RATE')
-                    else 16000,
+                    sample_rate_hertz=16000,
                     language_code='en-US',
                     enable_automatic_punctuation=True,
                     model='latest_long',
                 )
                 streaming_config = speech.StreamingRecognitionConfig(
                     config=config,
-                    interim_results=False,   # only emit final results
+                    interim_results=False,
                 )
+
+                # ── Wait for the pipe to exist (SRT receiver creates it on Start) ──
+                print('[GoogleSpeechThread] Waiting for audio pipe to become available...')
+                while self._running:
+                    if os.path.exists(GoogleSpeechStreamManager.PIPE_AUDIO_ML):
+                        break
+                    time.sleep(0.25)
+                if not self._running:
+                    print('[GoogleSpeechThread] Stopped before pipe appeared')
+                    return
 
                 print('[GoogleSpeechThread] Opening audio pipe...')
                 try:
@@ -587,9 +597,7 @@ class GoogleSpeechStreamManager:
                 except Exception as e:
                     print(f'[GoogleSpeechThread] Failed to open pipe: {e}')
                     return
-                print('[GoogleSpeechThread] Audio pipe open')
-
-                # Signal GUI that Google STT is ready (pipe is open)
+                print('[GoogleSpeechThread] Audio pipe open — Google STT ready')
                 self.whisper_ready.emit()
 
                 def _read_exactly(n):
@@ -601,13 +609,15 @@ class GoogleSpeechStreamManager:
                         buf += chunk
                     return buf if self._running else None
 
-                CHUNK_BYTES = 3200   # 100 ms of int16 mono at 16 kHz
-
-                def _audio_generator():
-                    """Yield AudioRequests from the pipe."""
+                def _make_audio_generator():
+                    """
+                    Returns a fresh generator of StreamingRecognizeRequests.
+                    Call this for each new streaming session — a generator can
+                    only be iterated once.
+                    Frame format: 4-byte big-endian length + PCM int16 data,
+                    same as written by the SRT receiver.
+                    """
                     while self._running:
-                        # Frame format written by SRT receiver:
-                        # 4-byte big-endian length + PCM int16 data
                         hdr = _read_exactly(4)
                         if hdr is None:
                             return
@@ -620,29 +630,45 @@ class GoogleSpeechStreamManager:
                 try:
                     while self._running:
                         print('[GoogleSpeechThread] Starting streaming session...')
-                        responses = client.streaming_recognize(
-                            streaming_config,
-                            _audio_generator(),
-                        )
-                        for response in responses:
-                            if not self._running:
-                                break
-                            for result in response.results:
-                                if result.is_final:
-                                    text = result.alternatives[0].transcript.strip()
-                                    if text:
-                                        print(f'[GoogleSpeechThread] Transcript: {text}')
-                                        self.transcript_ready.emit(text)
-                        # Loop back and start a new streaming session (auto-restart
-                        # after Google's 5-min limit or if the generator exhausts)
-                        if self._running:
-                            print('[GoogleSpeechThread] Streaming session ended, restarting...')
+                        try:
+                            responses = client.streaming_recognize(
+                                streaming_config,
+                                _make_audio_generator(),
+                            )
+                            for response in responses:
+                                if not self._running:
+                                    break
+                                for result in response.results:
+                                    if result.is_final:
+                                        text = result.alternatives[0].transcript.strip()
+                                        if text:
+                                            print(f'[GoogleSpeechThread] Transcript: {text}')
+                                            self.transcript_ready.emit(text)
 
-                except Exception as e:
-                    if self._running:
-                        print(f'[GoogleSpeechThread] Streaming error: {e}')
-                        import traceback
-                        traceback.print_exc()
+                        except OutOfRange as e:
+                            # Google sends this when audio timeout occurs (no audio
+                            # received close to real time). Safe to restart session.
+                            if self._running:
+                                print('[GoogleSpeechThread] Audio timeout from Google — '
+                                      'restarting session...')
+                            continue
+                        except ServiceUnavailable as e:
+                            if self._running:
+                                print(f'[GoogleSpeechThread] Service unavailable, '
+                                      f'retrying in 2s: {e}')
+                                time.sleep(2)
+                            continue
+                        except Exception as e:
+                            if self._running:
+                                print(f'[GoogleSpeechThread] Streaming error: {e}')
+                                import traceback
+                                traceback.print_exc()
+                                time.sleep(1)
+                            continue
+
+                        if self._running:
+                            print('[GoogleSpeechThread] Session ended cleanly, restarting...')
+
                 finally:
                     try:
                         pipe.close()

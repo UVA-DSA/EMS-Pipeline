@@ -320,7 +320,6 @@ class MainWindow(QWidget):
 
         # Initialize with default configuration
         self.UpdateDataSourceConfig(self.DataSourceBox.currentText())
-        print('here 1')
 
         # Radio Buttons Google or Other ML Model
         self.GoogleSpeechRadioButton = QRadioButton("Google Speech Cloud Model", self)
@@ -488,7 +487,6 @@ class MainWindow(QWidget):
 
         self.AudioProcess = AudioStreamManager()
         self.AudioProcess.start()
-        print('here 1111')
 
         self.SpeechProcess = None   # will be set by _start_speech_manager
         self._start_speech_manager(use_google=False)  # default: Whisper
@@ -522,12 +520,13 @@ class MainWindow(QWidget):
 
     def _start_speech_manager(self, use_google: bool):
         """
-        Tear down whatever speech manager is currently running and start the
-        appropriate one (Whisper local or Google Cloud STT).
+        Tear down whatever speech manager is currently running and immediately
+        start the appropriate one. Both managers self-regulate: Whisper waits
+        for its pipe, Google loops on OutOfRange until audio arrives.
         """
         # Stop existing manager if any
         if hasattr(self, 'SpeechProcess') and self.SpeechProcess is not None:
-            print(f'[GUI] Stopping current speech manager...')
+            print('[GUI] Stopping current speech manager...')
             self.SpeechProcess.stop()
             self.SpeechProcess = None
 
@@ -674,6 +673,8 @@ class MainWindow(QWidget):
         self.StartButton.setEnabled(False)
         self.StopButton.setEnabled(True)
         self.DataSourceBox.setEnabled(False)
+        self.GoogleSpeechRadioButton.setEnabled(False)
+        self.MLSpeechRadioButton.setEnabled(False)
         # Get selected modalities
         modalities = set()
         if self.VideoCheckBox.isChecked():
@@ -1067,23 +1068,23 @@ class MainWindow(QWidget):
             self.srt_client = None
             print("[StopButtonClick] SRT receiver stopped")
 
-        # Stop and restart SpeechProcess to kill egosim_stream
+        # Stop and restart the speech process in the same mode
         if hasattr(self, 'SpeechProcess') and self.SpeechProcess is not None:
             print("[StopButtonClick] Stopping SpeechProcess...")
             self.SpeechProcess.stop()
 
-            # Give it a moment to clean up
             import time
             time.sleep(0.5)
 
-            # Restart in whatever mode the radio button currently says
-            print("[StopButtonClick] Restarting speech manager...")
+            print("[StopButtonClick] Restarting speech manager in same mode...")
             self._start_speech_manager(use_google=self.GoogleSpeechRadioButton.isChecked())
             print("[StopButtonClick] Speech manager restarted")
 
         # Re-enable UI controls
         self.StartButton.setEnabled(True)
         self.DataSourceBox.setEnabled(True)
+        self.GoogleSpeechRadioButton.setEnabled(True)
+        self.MLSpeechRadioButton.setEnabled(True)
 
         # Clear widgets
         self.SpeechBox.clear()
