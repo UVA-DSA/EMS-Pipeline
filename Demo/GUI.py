@@ -47,6 +47,7 @@ from StoppableThread.StoppableThread import StoppableThread
 from video_streaming_sebastian import VideoStreamManager
 from audio_streaming_sebastian import AudioStreamManager, SpeechProcessManager, GoogleSpeechStreamManager
 from imu_streaming_sebastian import IMUStreamManager
+from protocol_manager import ProtocolManager
 # from smartwatch_streaming import Thread_Watch, IMUThread
 #from Feedback import FeedbackClient
 
@@ -491,6 +492,11 @@ class MainWindow(QWidget):
         self.SpeechProcess = None   # will be set by _start_speech_manager
         self._start_speech_manager(use_google=False)  # default: Whisper
 
+        # Protocol prediction model
+        self.ProtocolProcess = ProtocolManager()
+        self.ProtocolProcess.protocol_prediction.connect(self.UpdateProtocolBoxes)
+        self.ProtocolProcess.start()
+
         # self.AudioThread = AudioThread()
         # self.AudioThread.start()
 
@@ -507,10 +513,10 @@ class MainWindow(QWidget):
         # th2.start()
 
     def update_transcript_widget(self, transcript):
-        # current_text = self.SpeechBox.toPlainText()
         self.SpeechBox.append(transcript)
-        # self.SpeechBox.setPlainText(current_text + transcript + "\n")
-        # self.SpeechBox.moveCursor(QTextCursor.End)
+        # Feed transcript to protocol prediction model
+        if hasattr(self, 'ProtocolProcess') and self.ProtocolProcess is not None:
+            self.ProtocolProcess.feed_transcript(transcript)
 
     @pyqtSlot()
     def on_whisper_ready(self):
@@ -1080,6 +1086,12 @@ class MainWindow(QWidget):
             self._start_speech_manager(use_google=self.GoogleSpeechRadioButton.isChecked())
             print("[StopButtonClick] Speech manager restarted")
 
+        # Stop and restart protocol prediction
+        if hasattr(self, 'ProtocolProcess') and self.ProtocolProcess is not None:
+            print("[StopButtonClick] Stopping ProtocolProcess...")
+            self.ProtocolProcess.stop()
+            self.ProtocolProcess = None
+
         # Re-enable UI controls
         self.StartButton.setEnabled(True)
         self.DataSourceBox.setEnabled(True)
@@ -1090,6 +1102,8 @@ class MainWindow(QWidget):
         self.SpeechBox.clear()
         self.Smartwatch.clear()
         self.video.clear()
+        self.ProtocolBox.clear()
+        self.InterventionBox.clear()
 
         # Update state flags
         self.stopped = 1
