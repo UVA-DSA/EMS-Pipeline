@@ -709,8 +709,16 @@ class MainWindow(QWidget):
             # sim_seb.setup_pipes()
             self.srt_client = sim_seb.SRTReceiverProcess(config['ip'], config['port'], config['width'], config['height'], modalities)
             if not self.srt_client.start():
-                print("[Main] Failed to connect to SRT server!")
-                sys.exit(1)
+                error_msg = getattr(self.srt_client, 'last_error', None) or "Failed to start SRT receiver."
+                print(f"[Main] {error_msg}")
+                self.UpdateMsgBox([error_msg])
+                self.StartButton.setEnabled(True)
+                self.StopButton.setEnabled(False)
+                self.DataSourceBox.setEnabled(True)
+                self.GoogleSpeechRadioButton.setEnabled(self.InternetAvailLabel.text() == "INTERNET AVAILABLE")
+                self.MLSpeechRadioButton.setEnabled(True)
+                self.srt_client = None
+                return
 
             # if(self.MLSpeechRadioButton.isChecked()):
             #     print("Starting Whisper for simulator audio")
