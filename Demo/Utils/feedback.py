@@ -1,7 +1,7 @@
 import time
 import socketio
 import threading
-from pipeline_config import socketio_ipaddr, feedback_topic
+from Utils.pipeline_config import socketio_ipaddr, feedback_topic
 
 class FeedbackClient(threading.Thread):
     """Simple Socket.IO client that keeps retrying on connect error

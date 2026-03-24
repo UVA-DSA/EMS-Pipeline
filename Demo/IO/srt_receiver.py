@@ -19,43 +19,8 @@ import struct
 import time
 from multiprocessing import Process, Value
 
-# Load libsrt.
-# Different distros expose different SONAMEs (e.g. libsrt-gnutls.so.1.5 on Ubuntu).
-def _load_libsrt():
-    if sys.platform == 'darwin':
-        candidates = [
-            '/opt/homebrew/Cellar/srt/1.5.4/lib/libsrt.dylib',
-            '/opt/homebrew/lib/libsrt.dylib',
-            'libsrt.dylib',
-        ]
-    else:
-        candidates = [
-            'libsrt.so.1',
-            'libsrt.so',
-            'libsrt-gnutls.so.1.5',
-            'libsrt-gnutls.so.1',
-            'libsrt-gnutls.so',
-            'libsrt-openssl.so.1.5',
-            'libsrt-openssl.so.1',
-            'libsrt-openssl.so',
-        ]
-
-    for candidate in candidates:
-        try:
-            return ctypes.CDLL(candidate)
-        except OSError:
-            continue
-
-    print("Error: libsrt not found")
-    print("Tried:", ", ".join(candidates))
-    if sys.platform == 'darwin':
-        print("Install with: brew install srt")
-    else:
-        print("Install with conda-forge 'srt' or your distro package (e.g. libsrt1.5-gnutls).")
-    sys.exit(1)
-
-
-libsrt = _load_libsrt()
+libsrt = None
+libsrt_load_error = None
 
 
 def _iter_libsrt_candidates():
@@ -405,8 +370,7 @@ def srt_receiver_process(host, port, width, height, enabled_types, running_flag)
 
                                 # Write to ML pipe if enabled
                                 if 5 in opened_pipes:
-                                    # print(opened_pipes[5])
-                                    opened_pipes[5].write(audio_bytes)
+                                    opened_pipes[5].write(complete_data)
                                     opened_pipes[5].flush()
 
                             elif base_type == 3:  # CSV

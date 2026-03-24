@@ -6,7 +6,7 @@ import torch
 import numpy as np
 import json
 import torch.multiprocessing
-import pipeline_config
+from Utils import pipeline_config
 torch.multiprocessing.set_sharing_strategy('file_system')
 model_name = pipeline_config.protocol_model_type
 

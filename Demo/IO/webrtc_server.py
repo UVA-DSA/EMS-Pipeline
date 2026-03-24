@@ -4,15 +4,13 @@ import logging
 import os
 import random
 import socket
-import queue
-import threading
 import time
 import wave
 
 import cv2
 import numpy as np
 from aiohttp import web
-from aiortc import RTCPeerConnection, RTCIceCandidate, RTCSessionDescription
+from aiortc import RTCPeerConnection, RTCSessionDescription
 from aiortc.sdp import candidate_from_sdp, candidate_to_sdp
 import qrcode
 
@@ -41,6 +39,11 @@ AUDIO_GAIN = float(os.environ.get("AUDIO_GAIN", "1.0"))
 # AUDIO_OUTPUT_RATE = int(os.environ.get("AUDIO_OUTPUT_RATE", "0") or "0")
 AUDIO_OUTPUT_RATE = 48000
 RECORD_AUDIO = os.environ.get("RECORD_AUDIO", "1") == "1"
+PIPE_VIDEO_PATH = os.environ.get("PIPE_VIDEO_PATH", "").strip()
+PIPE_AUDIO_PATH = os.environ.get("PIPE_AUDIO_PATH", "").strip()
+PIPE_AUDIO_ML_PATH = os.environ.get("PIPE_AUDIO_ML_PATH", "").strip()
+PIPE_VIDEO_WIDTH = int(os.environ.get("PIPE_VIDEO_WIDTH", "480") or "480")
+PIPE_VIDEO_HEIGHT = int(os.environ.get("PIPE_VIDEO_HEIGHT", "270") or "270")
 
 
 def get_lan_ip():
@@ -74,6 +77,164 @@ def print_connection_info():
         qr.add_data(ws_url)
         qr.make(fit=True)
         qr.print_ascii(invert=True)
+
+
+class LengthPrefixedPipeWriter:
+    def __init__(self, *paths):
+        self.paths = [path for path in paths if path]
+        self.handles = []
+
+    @property
+    def enabled(self):
+        return bool(self.paths)
+
+    def open(self):
+        if self.handles:
+            return
+        for path in self.paths:
+            self.handles.append(open(path, "wb", buffering=0))
+            logging.info("Opened pipe writer: %s", path)
+
+    def write(self, payload):
+        if not self.enabled:
+            return
+        if not self.handles:
+            self.open()
+
+        packet = len(payload).to_bytes(4, "big") + payload
+        for handle in self.handles:
+            handle.write(packet)
+            handle.flush()
+
+    def close(self):
+        while self.handles:
+            handle = self.handles.pop()
+            try:
+                handle.close()
+            except Exception:
+                pass
+
+
+class RawPipeWriter:
+    def __init__(self, *paths):
+        self.paths = [path for path in paths if path]
+        self.handles = []
+
+    @property
+    def enabled(self):
+        return bool(self.paths)
+
+    def open(self):
+        if self.handles:
+            return
+        for path in self.paths:
+            self.handles.append(open(path, "wb", buffering=0))
+            logging.info("Opened raw pipe writer: %s", path)
+
+    def write(self, payload):
+        if not self.enabled:
+            return
+        if not self.handles:
+            self.open()
+
+        for handle in self.handles:
+            handle.write(payload)
+            handle.flush()
+
+    def close(self):
+        while self.handles:
+            handle = self.handles.pop()
+            try:
+                handle.close()
+            except Exception:
+                pass
+
+
+def _has_video_pipe_output():
+    return bool(PIPE_VIDEO_PATH)
+
+
+def _has_audio_pipe_output():
+    return bool(PIPE_AUDIO_PATH or PIPE_AUDIO_ML_PATH)
+
+
+async def mirror_video_to_pipes(track):
+    logging.info("Video pipe output enabled")
+    writer = LengthPrefixedPipeWriter(PIPE_VIDEO_PATH)
+    try:
+        while True:
+            frame = await track.recv()
+            image = frame.to_ndarray(format="bgr24")
+            print("[WEBRTC]: Frame Received")
+
+            if DISPLAY_VIDEO:
+                cv2.imshow("Server View", image)
+                if cv2.waitKey(1) & 0xFF == ord("q"):
+                    break
+
+            resized = cv2.resize(
+                image,
+                (PIPE_VIDEO_WIDTH, PIPE_VIDEO_HEIGHT),
+                interpolation=cv2.INTER_AREA,
+            )
+            writer.write(resized.tobytes())
+    except Exception as exc:
+        logging.info("Video pipe output stopped: %s", exc)
+    finally:
+        writer.close()
+        if DISPLAY_VIDEO:
+            cv2.destroyAllWindows()
+
+
+async def mirror_audio_to_pipes(track):
+    logging.info("Audio pipe output enabled")
+    try:
+        import av
+    except Exception as exc:
+        logging.info("PyAV not available for audio pipe output: %s", exc)
+        await consume_audio(track)
+        return
+
+    playback_writer = LengthPrefixedPipeWriter(PIPE_AUDIO_PATH)
+    ml_writer = RawPipeWriter(PIPE_AUDIO_ML_PATH)
+    resampler = av.AudioResampler(format="s16", layout="mono", rate=16000)
+
+    try:
+        while True:
+            frame = await track.recv()
+            frames = resampler.resample(frame)
+            if frames is None:
+                continue
+            if not isinstance(frames, (list, tuple)):
+                frames = [frames]
+
+            for resampled in frames:
+                pcm = np.ascontiguousarray(resampled.to_ndarray().reshape(-1), dtype=np.int16)
+                if pcm.size:
+                    payload = pcm.tobytes()
+                    playback_writer.write(payload)
+                    ml_writer.write(payload)
+    except Exception as exc:
+        logging.info("Audio pipe output stopped: %s", exc)
+    finally:
+        playback_writer.close()
+        ml_writer.close()
+
+
+async def handle_video_track(track):
+    if _has_video_pipe_output():
+        await mirror_video_to_pipes(track)
+    else:
+        await display_video(track)
+
+
+async def handle_audio_track(track):
+    if _has_audio_pipe_output():
+        await mirror_audio_to_pipes(track)
+    elif PLAY_AUDIO:
+        await play_audio(track)
+    else:
+        await consume_audio(track)
 
 
 async def display_video(track):
@@ -579,11 +740,11 @@ async def offer(request):
     def on_track(track):
         logging.info(f"Track received: {track.kind}")
         if track.kind == "video":
-            task = asyncio.create_task(display_video(track))
+            task = asyncio.create_task(handle_video_track(track))
             video_tasks.add(task)
             task.add_done_callback(video_tasks.discard)
         elif track.kind == "audio":
-            task = asyncio.create_task(play_audio(track) if PLAY_AUDIO else consume_audio(track))
+            task = asyncio.create_task(handle_audio_track(track))
             audio_tasks.add(task)
             task.add_done_callback(audio_tasks.discard)
 
@@ -615,11 +776,11 @@ async def websocket_handler(request):
     def on_track(track):
         logging.info(f"Track received: {track.kind}")
         if track.kind == "video":
-            task = asyncio.create_task(display_video(track))
+            task = asyncio.create_task(handle_video_track(track))
             video_tasks.add(task)
             task.add_done_callback(video_tasks.discard)
         elif track.kind == "audio":
-            task = asyncio.create_task(play_audio(track) if PLAY_AUDIO else consume_audio(track))
+            task = asyncio.create_task(handle_audio_track(track))
             audio_tasks.add(task)
             task.add_done_callback(audio_tasks.discard)
 

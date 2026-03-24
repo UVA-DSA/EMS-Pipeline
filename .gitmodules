@@ -1,0 +1,3 @@
+[submodule "Demo/EMS_Speech/EMS_Whisper/whisper.cpp_realtime_stream"]
+	path = Demo/EMS_Speech/EMS_Whisper/whisper.cpp_realtime_stream
+	url = git@github.com:keshara2032/whisper.cpp_realtime_stream.git

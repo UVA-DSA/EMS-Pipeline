@@ -1,6 +1,7 @@
 import torch.nn as nn
 import torch
 import os
+from pathlib import Path
 from EMS_Agent.Interface.default_sets import seed_everything, device, ungroup_p_node
 import numpy as np
 import warnings
@@ -10,28 +11,28 @@ from EMS_Agent.Interface.default_sets import model_name
 from EMS_Agent.Interface.Heterogeneous_graph import HeteroGraph
 from EMS_Agent.Interface.model import EMSMultiModel
 from transformers import BertTokenizer
-from Feedback import FeedbackClient
+from Utils.feedback import FeedbackClient
 import pandas as pd
 from tqdm import tqdm
 warnings.filterwarnings("ignore")
-from classes import FeedbackObj, ProtocolObj
+from Utils.data_objects import FeedbackObj, ProtocolObj
 import time
 import sys
 from re import match
-from classes import GUISignal
+from Utils.data_objects import GUISignal
 
 from PyQt5.QtCore import QThread, Qt, pyqtSignal, pyqtSlot
 
 from multiprocessing import Process
 
-sys.path.append('../Demo')
-import pipeline_config
+from Utils import pipeline_config
 
 class EMSTinyBERT(nn.Module):
     def __init__(self, config, date):
         super(EMSTinyBERT, self).__init__()
         self.config = config
         self.device = torch.device("cuda")
+        self.interface_dir = Path(__file__).resolve().parent
 
         # download nltk data
         download_nltk_data('stopwords')
@@ -40,14 +41,15 @@ class EMSTinyBERT(nn.Module):
 
         self.tokenizer = BertTokenizer.from_pretrained(self.config.backbone, do_lower_Case=True, local_files_only=False)
         self.clean_model_date = date
-        self.save_model_root = os.path.join('EMS_Agent/Interface/models', '{}'.format(self.clean_model_date))
+        self.save_model_root = self.interface_dir / 'models' / self.clean_model_date
         if self.config.graph == 'hetero':
             print('start reading file')
             start_t = time.time()
-            signs_df = pd.read_excel('./EMS_Agent/Interface/config_file/All Protocols Mapping.xlsx')
-            impre_df = pd.read_excel('./EMS_Agent/Interface/config_file/Impression Protocol.xlsx')
-            med_df = pd.read_excel('./EMS_Agent/Interface/config_file/Medication Protocol.xlsx')
-            proc_df = pd.read_excel('./EMS_Agent/Interface/config_file/Procedure Protocol.xlsx')
+            config_dir = self.interface_dir / 'config_file'
+            signs_df = pd.read_excel(config_dir / 'All Protocols Mapping.xlsx')
+            impre_df = pd.read_excel(config_dir / 'Impression Protocol.xlsx')
+            med_df = pd.read_excel(config_dir / 'Medication Protocol.xlsx')
+            proc_df = pd.read_excel(config_dir / 'Procedure Protocol.xlsx')
             end_t = time.time()
             print(f'time to load files: {end_t - start_t}')
             print('end reading files')
@@ -71,8 +73,7 @@ class EMSTinyBERT(nn.Module):
         print(f'time to build model: {end_t - start_t}')
         print('end building model')
 
-
-        model_path = os.path.join(self.save_model_root, 'model.pt')
+        model_path = self.save_model_root / 'model.pt'
         # checkpoint = torch.load(model_path, map_location='cpu')
         checkpoint = torch.load(model_path)
         self.model.load_state_dict(checkpoint, strict=False)

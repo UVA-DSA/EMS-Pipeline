@@ -2,6 +2,7 @@ import json
 import torch.nn as nn
 import torch
 import os
+from pathlib import Path
 from .default_sets import seed_everything, device, p_node
 import numpy as np
 import warnings
@@ -15,21 +16,23 @@ import pandas as pd
 import time
 from tqdm import tqdm
 warnings.filterwarnings("ignore")
-from classes import GUISignal, FeedbackObj
+from Utils.data_objects import GUISignal, FeedbackObj
 
 
 class EMSAgent(nn.Module):
     def __init__(self, config, date):
         super(EMSAgent, self).__init__()
         self.config = config
+        self.interface_dir = Path(__file__).resolve().parent
         self.tokenizer = BertTokenizer.from_pretrained(self.config.backbone, do_lower_Case=True)
         self.clean_model_date = date
-        self.save_model_root = os.path.join('./EMS_Agent/Interface/models/DKEC-TinyClinicalBERT/')
+        self.save_model_root = self.interface_dir / 'models' / 'DKEC-TinyClinicalBERT'
         if self.config.graph == 'hetero':
-            signs_df = pd.read_excel('./EMS_Agent/Interface/config_file/All Protocols Mapping.xlsx')
-            impre_df = pd.read_excel('./EMS_Agent/Interface/config_file/Impression Protocol.xlsx')
-            med_df = pd.read_excel('./EMS_Agent/Interface/config_file/Medication Protocol.xlsx')
-            proc_df = pd.read_excel('./EMS_Agent/Interface/config_file/Procedure Protocol.xlsx')
+            config_dir = self.interface_dir / 'config_file'
+            signs_df = pd.read_excel(config_dir / 'All Protocols Mapping.xlsx')
+            impre_df = pd.read_excel(config_dir / 'Impression Protocol.xlsx')
+            med_df = pd.read_excel(config_dir / 'Medication Protocol.xlsx')
+            proc_df = pd.read_excel(config_dir / 'Procedure Protocol.xlsx')
             HGraph = HeteroGraph(backbone=self.config.backbone, mode=self.config.cluster)
             self.graph = HGraph(signs_df, impre_df, med_df, proc_df)
         else:
@@ -38,7 +41,7 @@ class EMSAgent(nn.Module):
                                    self.config.cluster, self.config.cls, self.graph)
 
 
-        model_path = os.path.join(self.save_model_root, 'model.pt')
+        model_path = self.save_model_root / 'model.pt'
         checkpoint = torch.load(model_path)
         self.model.load_state_dict(checkpoint)
         self.model.to(device)
@@ -224,5 +227,4 @@ def EMSAgentSystem(Window, EMSAgentSpeechToNLPQueue, FeedbackQueue, data_path_st
 
             
                 
-
 

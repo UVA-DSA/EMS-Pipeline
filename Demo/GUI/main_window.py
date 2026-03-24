@@ -10,14 +10,16 @@ import datetime
 import csv
 import sys
 import os
-import queue
 import subprocess
+import time
+from io import BytesIO
 
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import QApplication, QPushButton, QLineEdit
 from PyQt5.QtGui import QIcon
 from PyQt5 import QtCore
+from PyQt5.QtCore import Qt, pyqtSlot
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtMultimedia import QMediaPlayer
 from PyQt5.QtWidgets import  QWidget, QLabel, QApplication
@@ -25,7 +27,7 @@ from PyQt5.QtGui import QImage, QPixmap, QGuiApplication
 import PyQt5.QtWidgets,PyQt5.QtCore
 
 # from behaviours_m import *
-from DSP.amplitude import Amplitude
+from Utils.DSP.amplitude import Amplitude
 # import CognitiveSystem
 #import Feedback
 # import GoogleSpeechMicStream
@@ -34,26 +36,25 @@ from DSP.amplitude import Amplitude
 #import DeepSpeechFileStream
 # import WavVecMicStream
 # import WavVecFileStream
-
-import pipeline_config
 # import WhisperFileStream
 # import WhisperMicStream
 
 # from EMS_Agent.Interface import EMSTinyBERTSystem
 
-
-from StoppableThread.StoppableThread import StoppableThread
-
-from video_streaming_sebastian import VideoStreamManager
-from audio_streaming_sebastian import AudioStreamManager, SpeechProcessManager, GoogleSpeechStreamManager
-from imu_streaming_sebastian import IMUStreamManager
-from protocol_manager import ProtocolManager
+from EMS_Agent.protocol_manager import ProtocolManager
+from EMS_Speech.EMS_GSpeech.stream_manager import GoogleSpeechStreamManager
+from EMS_Speech.EMS_Whisper.EMS_whisper import SpeechProcessManager
+from GUI.imu_stream import IMUStreamManager
+from EMS_Vision.stream_manager import VisionStreamManager
+from IO.audio_output import AudioStreamManager
 # from smartwatch_streaming import Thread_Watch, IMUThread
 #from Feedback import FeedbackClient
 
-from GenUtils.genutils import *
+from Utils.GenUtils.genutils import InternetCheckThread, get_local_ipv4
+from Utils.runtime_paths import demo_path, etc_path
+from Utils import pipeline_config
 
-import simulator_network_receiver_sebastian as sim_seb
+from IO import srt_receiver as sim_seb
 
 chunkdata = []
 
@@ -69,7 +70,7 @@ transcriptStream = False
 curr_date = datetime.datetime.now()
 dt_string = curr_date.strftime("%d-%m-%Y-%H-%M-%S")
 
-data_path = "./data_collection_folder/"+dt_string+"/"
+data_path = str(demo_path("data_collection_folder", dt_string)) + "/"
 
 # ================================================================== GUI ==================================================================
 
@@ -101,6 +102,17 @@ class MainWindow(QWidget):
         self.ip_address = get_local_ipv4()
 
         self.VideoThread = None
+        self.VideoProcess = None
+        self.AudioProcess = None
+        self.IMUProcess = None
+        self.SpeechProcess = None
+        self.ProtocolProcess = None
+        self.srt_client = None
+        self.smartglass_process = None
+        self.smartglass_ws_url = None
+        self.showing_qr_code = False
+        self.shutdown_dialog = None
+        self.is_closing = False
 
 
         #whisper
@@ -109,7 +121,7 @@ class MainWindow(QWidget):
 
         # Set geometry of the window
         self.setWindowTitle('CognitiveEMS Demo')
-        self.setWindowIcon(QIcon('./Images/Logos/UVA.png'))
+        self.setWindowIcon(QIcon(str(demo_path("Images", "Logos", "UVA.png"))))
         self.setGeometry(int(width * .065), int(height * .070),
                          int(width * .9), int(height * .9))
         self.Grid_Layout = QGridLayout(self)
@@ -275,7 +287,7 @@ class MainWindow(QWidget):
 
         self.DataSourceBox = QComboBox()
 
-        self.DataSourceBox.addItems(["simulator", "local files", "Microphone"])
+        self.DataSourceBox.addItems(["simulator", "smartglass"])
 
         self.ControlPanelGridLayout.addWidget(self.DataSourceBox, 0, 0, 1, 1)
 
@@ -346,6 +358,7 @@ class MainWindow(QWidget):
         self.StopButton = QPushButton('Stop', self)
         self.StopButton.clicked.connect(self.StopButtonClick)
         self.ControlPanelGridLayout.addWidget(self.StopButton, 1, 1, 1, 1)
+        self.StopButton.setEnabled(False)
 
 
         # VU Meter Panel
@@ -355,7 +368,7 @@ class MainWindow(QWidget):
 
         # Add Microphone Logo to the VU Meter Panel
         self.MicPictureBox = QLabel(self)
-        self.MicPictureBox.setPixmap(QPixmap('./Images/Logos/mic2.png'))
+        self.MicPictureBox.setPixmap(QPixmap(str(demo_path("Images", "Logos", "mic2.png"))))
         self.VUMeterPanelGridLayout.addWidget(self.MicPictureBox, 0, 0, 1, 1)
 
         # Add the VU Meter progress bar to VU Meter Panel
@@ -426,13 +439,10 @@ class MainWindow(QWidget):
         # self.Grid_Layout.setRowStretch(7, 0)
 
         # Populate the Message Box with welcome message
-        System_Info_Text_File = open("../ETC/System_Info.txt", "r")
-        System_Info_Text = ""
-        for line in System_Info_Text_File.readlines():
-            System_Info_Text += line
-        System_Info_Text_File.close()
-        self.MsgBox.setText(System_Info_Text + "\n" + str(datetime.datetime.now().strftime("%c")) + " - Ready to start speech recognition!")
-        self.MsgBox.setText(System_Info_Text)
+        system_info_path = etc_path("System_Info.txt")
+        system_info_text = system_info_path.read_text() if system_info_path.exists() else ""
+        if system_info_text:
+            self.MsgBox.setText(system_info_text)
         self.UpdateMsgBox(["Ready to start speech recognition!"])
 
 
@@ -450,7 +460,7 @@ class MainWindow(QWidget):
 
         # Add Link Lab Logo
         self.PictureBox = QLabel()
-        self.PictureBox.setPixmap(QPixmap('./Images/Logos/LinkLabLogo.png'))
+        self.PictureBox.setPixmap(QPixmap(str(demo_path("Images", "Logos", "LinkLabLogo.png"))))
         self.PictureBox.setAlignment(Qt.AlignCenter)
         self.Grid_Layout.addWidget(self.PictureBox, 10, 2, 1, 2)
 
@@ -471,46 +481,217 @@ class MainWindow(QWidget):
         self.start_video_audio_imu_processes()
 
     def start_video_audio_imu_processes(self):
-        # Processes for video
-        # self.VideoThread = VideoThread(data_path, videostream)
-        # self.VideoThread.changePixmap.connect(self.setImage)
-        # self.VideoThread.changeVisInfo.connect(self.handle_message2)
-        # sim_seb.setup_pipes()
-        # self.VideoThread.start()  #Disabled for now
+        sim_seb.setup_pipes()
 
-        self.VideoProcess = VideoStreamManager(data_path, videostream)
+        self.VideoProcess = VisionStreamManager(data_path, videostream)
         self.VideoProcess.changePixmap.connect(self.setImage)
         self.VideoProcess.changeVisInfo.connect(self.handle_message2)
-        sim_seb.setup_pipes()
         self.VideoProcess.start()
 
-        # Processes for audio
+        self._sync_audio_playback_process()
 
-        self.AudioProcess = AudioStreamManager()
-        self.AudioProcess.start()
+        self.SpeechProcess = None
+        self._start_speech_manager(use_google=self.GoogleSpeechRadioButton.isChecked())
 
-        self.SpeechProcess = None   # will be set by _start_speech_manager
-        self._start_speech_manager(use_google=False)  # default: Whisper
-
-        # Protocol prediction model
         self.ProtocolProcess = ProtocolManager()
         self.ProtocolProcess.protocol_prediction.connect(self.UpdateProtocolBoxes)
         self.ProtocolProcess.start()
-
-        # self.AudioThread = AudioThread()
-        # self.AudioThread.start()
-
-        # self.SpeechThread = SpeechThread()
-
-        # Processes for smartwatch
 
         self.IMUProcess = IMUStreamManager(data_path, smartwatchStream)
         self.IMUProcess.changeActivityRec.connect(self.handle_message)
         self.IMUProcess.start()
 
-        # th2 = Thread_Watch(data_path, smartwatchStream, pipeline_config.smartwatch_ip, pipeline_config.smartwatch_port)
-        # th2.changeActivityRec.connect(self.handle_message)
-        # th2.start()
+    def stop_pipeline_processes(self):
+        if self.VideoProcess is not None:
+            print("[GUI] Stopping video stream...")
+            self.VideoProcess.stop()
+            self.VideoProcess = None
+
+        if self.AudioProcess is not None:
+            print("[GUI] Stopping audio stream...")
+            self.AudioProcess.stop()
+            self.AudioProcess = None
+
+        if self.IMUProcess is not None:
+            print("[GUI] Stopping IMU stream...")
+            self.IMUProcess.stop()
+            self.IMUProcess = None
+
+        if self.SpeechProcess is not None:
+            print("[GUI] Stopping speech process...")
+            self.SpeechProcess.stop()
+            self.SpeechProcess = None
+
+        if self.ProtocolProcess is not None:
+            print("[GUI] Stopping protocol process...")
+            self.ProtocolProcess.stop()
+            self.ProtocolProcess = None
+
+    def stop_source_processes(self):
+        if self.srt_client is not None:
+            print("[GUI] Stopping SRT receiver...")
+            self.srt_client.stop()
+            self.srt_client = None
+
+        if self.smartglass_process is not None:
+            print("[GUI] Stopping smartglass WebRTC server...")
+            if self.smartglass_process.poll() is None:
+                self.smartglass_process.terminate()
+                try:
+                    self.smartglass_process.wait(timeout=3)
+                except subprocess.TimeoutExpired:
+                    self.smartglass_process.kill()
+                    self.smartglass_process.wait(timeout=1)
+
+            if self.smartglass_process.stdout is not None:
+                self.smartglass_process.stdout.close()
+
+            self.smartglass_process = None
+            self.smartglass_ws_url = None
+            self.showing_qr_code = False
+
+    def _should_play_audio_locally(self):
+        return 2 in self._build_enabled_modalities()
+
+    def _sync_audio_playback_process(self):
+        should_play = self._should_play_audio_locally()
+        audio_pipe_ready = os.path.exists(sim_seb.PIPE_AUDIO)
+
+        if should_play and self.AudioProcess is None and audio_pipe_ready:
+            print("[GUI] Starting local audio playback process...")
+            self.AudioProcess = AudioStreamManager()
+            self.AudioProcess.start()
+        elif (not should_play or not audio_pipe_ready) and self.AudioProcess is not None:
+            print("[GUI] Stopping local audio playback process...")
+            self.AudioProcess.stop()
+            self.AudioProcess = None
+
+    def _build_enabled_modalities(self):
+        """
+        Mirror display selections into the ML pipes so speech/protocol can run
+        whenever a source is active, while still allowing ML-only toggles.
+        """
+        modalities = set()
+        source = self.DataSourceBox.currentText()
+
+        if self.VideoCheckBox.isChecked():
+            modalities.update({1, 4})
+        elif self.VideoMLCheckBox.isChecked():
+            modalities.add(4)
+
+        if source == "smartglass":
+            if self.AudioCheckBox.isChecked() or self.AudioMLCheckBox.isChecked():
+                modalities.add(5)
+        elif self.AudioCheckBox.isChecked():
+            modalities.update({2, 5})
+        elif self.AudioMLCheckBox.isChecked():
+            modalities.add(5)
+
+        if self.SmartWatchCheckBox.isChecked():
+            modalities.update({3, 6})
+        elif self.SmartWatchMLCheckBox.isChecked():
+            modalities.add(6)
+
+        return modalities
+
+    def _smartglass_bind_host(self):
+        host = self.SmartglassHostLineEdit.text().strip()
+        return host or "0.0.0.0"
+
+    def _smartglass_public_host(self, bind_host):
+        if bind_host in {"", "0.0.0.0", "::"}:
+            return self.ip_address or get_local_ipv4() or "127.0.0.1"
+        return bind_host
+
+    def _build_smartglass_ws_url(self, bind_host, port):
+        public_host = self._smartglass_public_host(bind_host)
+        return f"ws://{public_host}:{port}/ws"
+
+    def _show_smartglass_qr(self, ws_url):
+        try:
+            import qrcode
+
+            qr = qrcode.QRCode(border=2)
+            qr.add_data(ws_url)
+            qr.make(fit=True)
+
+            image = qr.make_image(fill_color="black", back_color="white")
+            png_buffer = BytesIO()
+            image.save(png_buffer, format="PNG")
+
+            pixmap = QPixmap()
+            pixmap.loadFromData(png_buffer.getvalue(), "PNG")
+            scaled = pixmap.scaled(640, 480, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+
+            self.video.clear()
+            self.video.setAlignment(Qt.AlignCenter)
+            self.video.setPixmap(scaled)
+            self.showing_qr_code = True
+        except Exception as exc:
+            print(f"[GUI] Failed to render QR code: {exc}")
+            self.video.clear()
+            self.video.setAlignment(Qt.AlignCenter)
+            self.video.setText(
+                "Scan this URL from the smartglass client:\n"
+                f"{ws_url}"
+            )
+            self.showing_qr_code = False
+
+    def _start_smartglass_server(self, enabled_types):
+        bind_host = self._smartglass_bind_host()
+        port = self.SmartglassPortSpinBox.value()
+        ws_url = self._build_smartglass_ws_url(bind_host, port)
+
+        env = os.environ.copy()
+        env.update(
+            {
+                "HOST": bind_host,
+                "PORT": str(port),
+                "DISPLAY_VIDEO": "0",
+                "PRINT_QR": "0",
+                "PLAY_AUDIO": "0",
+                "RECORD_AUDIO": "0",
+                "PIPE_VIDEO_PATH": sim_seb.PIPE_VIDEO if 1 in enabled_types else "",
+                "PIPE_AUDIO_PATH": "",
+                "PIPE_AUDIO_ML_PATH": sim_seb.PIPE_AUDIO_ML if 5 in enabled_types else "",
+                "PIPE_VIDEO_WIDTH": "480",
+                "PIPE_VIDEO_HEIGHT": "270",
+            }
+        )
+
+        server_script = demo_path("IO", "webrtc_server.py")
+        self.smartglass_process = subprocess.Popen(
+            [sys.executable, "-u", str(server_script)],
+            cwd=str(demo_path()),
+            env=env,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+        )
+
+        time.sleep(1.0)
+        if self.smartglass_process.poll() is not None:
+            error_output = ""
+            if self.smartglass_process.stdout is not None:
+                error_output = self.smartglass_process.stdout.read().strip()
+
+            error_msg = error_output or (
+                f"WebRTC server exited immediately with code {self.smartglass_process.returncode}."
+            )
+            self.stop_source_processes()
+            self.UpdateMsgBox([error_msg])
+            return False
+
+        self.smartglass_ws_url = ws_url
+        self._show_smartglass_qr(ws_url)
+        self.UpdateMsgBox(
+            [
+                f"Smartglass WebRTC server started on port {port}.",
+                f"Smartglass connection URL: {ws_url}",
+                "Scan the QR code in the Video Content panel to connect.",
+            ]
+        )
+        return True
 
     def update_transcript_widget(self, transcript):
         self.SpeechBox.append(transcript)
@@ -520,9 +701,11 @@ class MainWindow(QWidget):
 
     @pyqtSlot()
     def on_whisper_ready(self):
-        """Called when Whisper is up and running - show Ready! in video widget."""
-        self.video.setText('<font size="10" color="green"><b>Ready!</b></font>')
-        self.video.setAlignment(QtCore.Qt.AlignCenter)
+        """Called when STT is ready without clobbering live video or QR content."""
+        self.UpdateMsgBox(["Speech pipeline ready."])
+        if self.video.pixmap() is None and not self.showing_qr_code:
+            self.video.setText('<font size="10" color="green"><b>Ready!</b></font>')
+            self.video.setAlignment(QtCore.Qt.AlignCenter)
 
     def _start_speech_manager(self, use_google: bool):
         """
@@ -609,65 +792,31 @@ class MainWindow(QWidget):
 
             self.ConfigLayout.addLayout(simLayout)
 
-        elif source == "local files":
-            # Local files configuration
-            fileLayout = QVBoxLayout()
+        elif source == "smartglass":
+            smartglassLayout = QGridLayout()
 
-            # MP4 file selection
-            mp4Layout = QHBoxLayout()
-            mp4Layout.addWidget(QLabel("Video File (MP4):"))
-            self.VideoFileLineEdit = QLineEdit()
-            self.VideoFileLineEdit.setReadOnly(True)
-            self.VideoFileLineEdit.setPlaceholderText("No file selected")
-            mp4Layout.addWidget(self.VideoFileLineEdit)
+            smartglassLayout.addWidget(QLabel("Bind Host:"), 0, 0)
+            self.SmartglassHostLineEdit = QLineEdit()
+            self.SmartglassHostLineEdit.setText(pipeline_config.smartglass_ip or "0.0.0.0")
+            self.SmartglassHostLineEdit.setPlaceholderText("0.0.0.0")
+            smartglassLayout.addWidget(self.SmartglassHostLineEdit, 0, 1)
 
-            self.VideoFileBrowseButton = QPushButton("Browse...")
-            self.VideoFileBrowseButton.clicked.connect(self.BrowseVideoFile)
-            mp4Layout.addWidget(self.VideoFileBrowseButton)
-            fileLayout.addLayout(mp4Layout)
+            smartglassLayout.addWidget(QLabel("Port:"), 1, 0)
+            self.SmartglassPortSpinBox = QSpinBox()
+            self.SmartglassPortSpinBox.setRange(1024, 65535)
+            self.SmartglassPortSpinBox.setValue(pipeline_config.smartglass_port or 8889)
+            smartglassLayout.addWidget(self.SmartglassPortSpinBox, 1, 1)
 
-            # CSV file selection
-            csvLayout = QHBoxLayout()
-            csvLayout.addWidget(QLabel("Data File (CSV):"))
-            self.CSVFileLineEdit = QLineEdit()
-            self.CSVFileLineEdit.setReadOnly(True)
-            self.CSVFileLineEdit.setPlaceholderText("No file selected")
-            csvLayout.addWidget(self.CSVFileLineEdit)
+            info_label = QLabel(
+                "Press Start to launch the smartglass WebRTC server. "
+                "The QR code will appear in the Video Content panel."
+            )
+            info_label.setWordWrap(True)
+            smartglassLayout.addWidget(info_label, 2, 0, 1, 2)
 
-            self.CSVFileBrowseButton = QPushButton("Browse...")
-            self.CSVFileBrowseButton.clicked.connect(self.BrowseCSVFile)
-            csvLayout.addWidget(self.CSVFileBrowseButton)
-            fileLayout.addLayout(csvLayout)
+            self.ConfigLayout.addLayout(smartglassLayout)
 
-            self.ConfigLayout.addLayout(fileLayout)
-
-        elif source == "Microphone":
-            # Microphone configuration (if needed)
-            micLayout = QVBoxLayout()
-            micLayout.addWidget(QLabel("Microphone input will be used for audio capture."))
-            self.ConfigLayout.addLayout(micLayout)
-
-    def BrowseVideoFile(self):
-        """Open file dialog to select MP4 video file"""
-        fileName, _ = QFileDialog.getOpenFileName(
-            self,
-            "Select Video File",
-            "",
-            "Video Files (*.mp4);;All Files (*)"
-        )
-        if fileName:
-            self.VideoFileLineEdit.setText(fileName)
-
-    def BrowseCSVFile(self):
-        """Open file dialog to select CSV data file"""
-        fileName, _ = QFileDialog.getOpenFileName(
-            self,
-            "Select CSV Data File",
-            "",
-            "CSV Files (*.csv);;All Files (*)"
-        )
-        if fileName:
-            self.CSVFileLineEdit.setText(fileName)
+        self._sync_audio_playback_process()
 
     @pyqtSlot()
     def StartButtonClick(self):
@@ -681,23 +830,11 @@ class MainWindow(QWidget):
         self.DataSourceBox.setEnabled(False)
         self.GoogleSpeechRadioButton.setEnabled(False)
         self.MLSpeechRadioButton.setEnabled(False)
-        # Get selected modalities
-        modalities = set()
-        if self.VideoCheckBox.isChecked():
-            modalities.add(1)
-        if self.AudioCheckBox.isChecked():
-            modalities.add(2)
-        if self.SmartWatchCheckBox.isChecked():
-            modalities.add(3)
-        if self.VideoMLCheckBox.isChecked():
-            modalities.add(4)
-        if self.AudioMLCheckBox.isChecked():
-            modalities.add(5)
-        if self.SmartWatchMLCheckBox.isChecked():
-            modalities.add(6)
+        modalities = self._build_enabled_modalities()
 
         # Get data source and configuration
         source = self.DataSourceBox.currentText()
+        config = {}
 
         if source == "simulator":
             config = {
@@ -719,43 +856,18 @@ class MainWindow(QWidget):
                 self.MLSpeechRadioButton.setEnabled(True)
                 self.srt_client = None
                 return
-
-            # if(self.MLSpeechRadioButton.isChecked()):
-            #     print("Starting Whisper for simulator audio")
-            #     whispercppcommand = [
-            #         "./stream",
-            #         "-m", # use specific whisper model
-            #         f"models/ggml-{pipeline_config.whisper_model_size}.bin",
-            #         "--threads",
-            #         str(pipeline_config.num_threads),
-            #         "--step",
-            #         str(pipeline_config.step),
-            #         "--length",
-            #         str(pipeline_config.length),
-            #         "--keep",
-            #         str(pipeline_config.keep_ms)
-            #     ]
-            #
-            #     # Start subprocess
-            #     self.WhisperSubprocess = subprocess.Popen(whispercppcommand, cwd='EMS_Whisper/')
-            #
-            #     # time.sleep(5)
-            #
-            #     self.SpeechThread = StoppableThread(
-            #         target=WhisperMicStream.WhisperMicStream, args=(self, SpeechToNLPQueue,EMSAgentSpeechToNLPQueue,))
-            #
-            # self.SpeechThread.start()
-            # print('started simulator speech thread')
-
-
-
-        elif source == "local files":
+        elif source == "smartglass":
             config = {
-                'video_file': self.VideoFileLineEdit.text(),
-                'csv_file': self.CSVFileLineEdit.text()
+                'host': self._smartglass_bind_host(),
+                'port': self.SmartglassPortSpinBox.value(),
             }
-        elif source == "Microphone":
-            config = {}
+            if not self._start_smartglass_server(modalities):
+                self.StartButton.setEnabled(True)
+                self.StopButton.setEnabled(False)
+                self.DataSourceBox.setEnabled(True)
+                self.GoogleSpeechRadioButton.setEnabled(self.InternetAvailLabel.text() == "INTERNET AVAILABLE")
+                self.MLSpeechRadioButton.setEnabled(True)
+                return
 
         # Your start logic here
         print(f"Modalities: {modalities}")
@@ -767,6 +879,7 @@ class MainWindow(QWidget):
     # ================================================================== GUI Functions ==================================================================
     @pyqtSlot(QImage)
     def setImage(self, image):
+        self.showing_qr_code = False
         self.video.setPixmap(QPixmap.fromImage(image))
 
     @pyqtSlot(str)
@@ -821,40 +934,61 @@ class MainWindow(QWidget):
             print("video has stopped playing!")
             self.VisionInformation.setPlainText("CPR Done\nAverage Compression Rate: 140 bpm")
 
+    def _show_shutdown_dialog(self):
+        if self.shutdown_dialog is None:
+            dialog = QDialog(self)
+            dialog.setWindowTitle("Shutting Down")
+            dialog.setModal(True)
+            dialog.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
+            dialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
+            dialog.setFixedSize(320, 120)
+            dialog.setStyleSheet("background-color: white;")
+
+            layout = QVBoxLayout(dialog)
+            layout.setContentsMargins(24, 24, 24, 24)
+            layout.setSpacing(0)
+
+            message = QLabel("Shutting down, please wait...")
+            message.setAlignment(Qt.AlignCenter)
+            message.setWordWrap(True)
+            layout.addWidget(message)
+
+            self.shutdown_dialog_message = message
+            self.shutdown_dialog = dialog
+
+        self.shutdown_dialog_message.setText("Shutting down, please wait...")
+        self.shutdown_dialog.show()
+        self.shutdown_dialog.raise_()
+        self.shutdown_dialog.activateWindow()
+        QApplication.processEvents()
+
+    def _hide_shutdown_dialog(self):
+        if self.shutdown_dialog is not None:
+            self.shutdown_dialog.hide()
+        QApplication.processEvents()
 
     def closeEvent(self, event):
         """
         Called when the GUI window is closed.
         Clean up all processes before exiting.
         """
-        print("[GUI] Closing, cleaning up processes...")
+        if self.is_closing:
+            event.ignore()
+            return
 
-        # Stop SRT receiver
-        if hasattr(self, 'srt_client') and self.srt_client is not None:
-            print("[GUI] Stopping SRT receiver...")
-            self.srt_client.stop()
+        self.is_closing = True
+        self._show_shutdown_dialog()
 
-        # Stop Video streaming
-        if hasattr(self, 'VideoThread') and self.VideoThread is not None:
-            print("[GUI] Stopping video stream...")
-            self.VideoThread.stop()
+        try:
+            print("[GUI] Closing, cleaning up processes...")
+            self.internet_check_thread.stop()
+            self.stop_source_processes()
+            self.stop_pipeline_processes()
+            print("[GUI] All processes stopped")
+        finally:
+            self._hide_shutdown_dialog()
+            self.is_closing = False
 
-        # Stop Audio streaming
-        if hasattr(self, 'AudioThread') and self.AudioThread is not None:
-            print("[GUI] Stopping audio stream...")
-            self.AudioThread.stop()
-
-        # Stop IMU streaming
-        if hasattr(self, 'WatchThread') and self.WatchThread is not None:
-            print("[GUI] Stopping IMU stream...")
-            self.WatchThread.stop()
-
-        # Stop Speech/Whisper process (this kills egosim_stream)
-        if hasattr(self, 'SpeechProcess') and self.SpeechProcess is not None:
-            print("[GUI] Stopping speech process...")
-            self.SpeechProcess.stop()
-
-        print("[GUI] All processes stopped")
         event.accept()
 
     # Called when closing the GUI
@@ -910,7 +1044,7 @@ class MainWindow(QWidget):
         #file = open("./Dumps/" + name,'w')
         mode_text = self.DataSourceBox.currentText()
         speech_text = str(self.SpeechBox.toPlainText())
-        concept_extraction_text = str(self.ConceptExtraction.toPlainText())
+        concept_extraction_text = ""
         protocol_text = str(self.ProtocolBox.toPlainText())
         intervention_text = str(self.InterventionBox.toPlainText())
         msg_text = str(self.MsgBox.toPlainText())
@@ -921,7 +1055,7 @@ class MainWindow(QWidget):
         self.UpdateMsgBox(["System results saved to results.csv"])
         results = [speech_text, concept_extraction_text,
                    protocol_text, intervention_text]
-        with open("results.csv", mode="a") as csv_file:
+        with open(demo_path("results.csv"), mode="a") as csv_file:
             writer = csv.writer(csv_file, delimiter=',')
             writer.writerow(results)
 
@@ -1074,36 +1208,14 @@ class MainWindow(QWidget):
         """
         print("Stop pressed!")
         self.UpdateMsgBox(["Stopping!"])
-
-        # Stop SRT receiver if it exists
-        if hasattr(self, 'srt_client') and self.srt_client is not None:
-            print("[StopButtonClick] Stopping SRT receiver...")
-            self.srt_client.stop()
-            self.srt_client = None
-            print("[StopButtonClick] SRT receiver stopped")
-
-        # Stop and restart the speech process in the same mode
-        if hasattr(self, 'SpeechProcess') and self.SpeechProcess is not None:
-            print("[StopButtonClick] Stopping SpeechProcess...")
-            self.SpeechProcess.stop()
-
-            import time
-            time.sleep(0.5)
-
-            print("[StopButtonClick] Restarting speech manager in same mode...")
-            self._start_speech_manager(use_google=self.GoogleSpeechRadioButton.isChecked())
-            print("[StopButtonClick] Speech manager restarted")
-
-        # Stop and restart protocol prediction
-        if hasattr(self, 'ProtocolProcess') and self.ProtocolProcess is not None:
-            print("[StopButtonClick] Stopping ProtocolProcess...")
-            self.ProtocolProcess.stop()
-            self.ProtocolProcess = None
+        self.stop_source_processes()
+        self.stop_pipeline_processes()
 
         # Re-enable UI controls
         self.StartButton.setEnabled(True)
+        self.StopButton.setEnabled(False)
         self.DataSourceBox.setEnabled(True)
-        self.GoogleSpeechRadioButton.setEnabled(True)
+        self.GoogleSpeechRadioButton.setEnabled(self.InternetAvailLabel.text() == "INTERNET AVAILABLE")
         self.MLSpeechRadioButton.setEnabled(True)
 
         # Clear widgets
@@ -1112,6 +1224,7 @@ class MainWindow(QWidget):
         self.video.clear()
         self.ProtocolBox.clear()
         self.InterventionBox.clear()
+        self.showing_qr_code = False
 
         # Update state flags
         self.stopped = 1
@@ -1291,7 +1404,7 @@ class MainWindow(QWidget):
             print("Key error!", e)
 
 
-        with open("check.csv", mode="a") as csv_file:
+        with open(demo_path("check.csv"), mode="a") as csv_file:
             writer = csv.writer(csv_file, delimiter=',')
             writer.writerow(chunkdata)
         chunkdata = []
@@ -1372,113 +1485,107 @@ def get_resolution_multiple_screens():
 
     # now choose one
 
-# ================================================================== Main ==================================================================
-if __name__ == '__main__':
+def _configure_google_credentials():
+    if os.environ.get("GOOGLE_APPLICATION_CREDENTIALS"):
+        return
 
-    # mp.set_start_method('spawn', force=True)
+    for candidate in (demo_path("service-account.json"),):
+        if candidate.exists():
+            os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = str(candidate)
+            return
 
 
-    #run with arguments
-    #options:
-    # --datacollect --> "1" or "0" for collect data or not
-    # --streams --> "all" or list of specific streams (options are audio, video, smartwatch, conceptextract, protocol, intervention, transcript)
-    #if no arguments given, default options are "0" for data collection and "all" for streams
+def configure_runtime(argv=None):
+    global datacollection, videostream, audiostream
+    global smartwatchStream, conceptExtractionStream
+    global protocolStream, interventionStream, transcriptStream
 
-    arg_count = len(sys.argv)
+    args = list(argv or sys.argv)
+    arg_count = len(args)
 
     print(f"Arguments count: {arg_count}")
-    for i, arg in enumerate(sys.argv):
+    for i, arg in enumerate(args):
         print(f"Argument {i:>6}: {arg}")
 
-    if(arg_count >= 3):
-        if sys.argv[1] == "--datacollect":
-            if sys.argv[2] == "1":
-                datacollection = True
-                videostream = True
-                audiostream = True
-                smartwatchStream = True
-                conceptExtractionStream = True
-                protocolStream = True
-                interventionStream = True
-                transcriptStream = True
-            else: #sys.argv[2] == 0
-                datacollection = False
-                videostream = False
-                audiostream = False
-                smartwatchStream = False
-                conceptExtractionStream = False
-                protocolStream = False
-                interventionStream = False
-                transcriptStream = False
-            if (arg_count > 3):
-                if sys.argv[3] == "--streams":
-                    videostream = False
-                    audiostream = False
-                    smartwatchStream = False
-                    conceptExtractionStream = False
-                    protocolStream = False
-                    interventionStream = False
-                    transcriptStream = False
-                    print("User is specifying streams")
-                    for i in range(4, len(sys.argv)):
-                        if sys.argv[i] == "audio":
-                            audiostream = True
-                        if sys.argv[i] == "video":
-                            videostream = True
-                        if sys.argv[i] == "smartwatch":
-                            smartwatchStream = True
-                        if sys.argv[i] == "conceptextract":
-                            conceptExtractionStream = True
-                        if sys.argv[i] == "protocol":
-                            protocolStream = True
-                        if sys.argv[i] == "intervention":
-                            interventionStream = True
-                        if sys.argv[i] == "transcript":
-                            transcriptStream = True
-                        if sys.argv[i] == "all":
-                            videostream = True
-                            audiostream = True
-                            smartwatchStream = True
-                            conceptExtractionStream = True
-                            protocolStream = True
-                            interventionStream = True
-                            transcriptStream = True
+    if arg_count >= 3:
+        if args[1] != "--datacollect":
+            print(
+                "User Error: Please use --datacollect 1 or --datacollect 0 to specify "
+                "if you want data collected."
+            )
+            raise SystemExit(1)
 
-        else: #if arguments specified but --datacollect is not specified then user should enter option for --datacollect
-            print("User Error: Please use --datacollect 1 or --datacollect 0 to specifiy if you want data collected with the data collection algorithm.")
-            print("Default data collection will collect all streams, but you may also specify streams with the --streams option")
-            exit()
+        enabled = args[2] == "1"
+        datacollection = enabled
+        videostream = enabled
+        audiostream = enabled
+        smartwatchStream = enabled
+        conceptExtractionStream = enabled
+        protocolStream = enabled
+        interventionStream = enabled
+        transcriptStream = enabled
+
+        if arg_count > 3 and args[3] == "--streams":
+            videostream = False
+            audiostream = False
+            smartwatchStream = False
+            conceptExtractionStream = False
+            protocolStream = False
+            interventionStream = False
+            transcriptStream = False
+            print("User is specifying streams")
+            for arg in args[4:]:
+                if arg == "audio":
+                    audiostream = True
+                if arg == "video":
+                    videostream = True
+                if arg == "smartwatch":
+                    smartwatchStream = True
+                if arg == "conceptextract":
+                    conceptExtractionStream = True
+                if arg == "protocol":
+                    protocolStream = True
+                if arg == "intervention":
+                    interventionStream = True
+                if arg == "transcript":
+                    transcriptStream = True
+                if arg == "all":
+                    videostream = True
+                    audiostream = True
+                    smartwatchStream = True
+                    conceptExtractionStream = True
+                    protocolStream = True
+                    interventionStream = True
+                    transcriptStream = True
     else:
         print("No data collection arguments specified -- defaulting to no data collection")
 
-    print("stream bools: ", audiostream, videostream, smartwatchStream, conceptExtractionStream, protocolStream, interventionStream, transcriptStream)
+    print(
+        "stream bools: ",
+        audiostream,
+        videostream,
+        smartwatchStream,
+        conceptExtractionStream,
+        protocolStream,
+        interventionStream,
+        transcriptStream,
+    )
 
-    # smartwatchStream = True
-    audiostream = True # harcode audio saving
+    audiostream = True
     videostream = True
-    # protocolStream = True
-    # Set the Google Speech API service-account key environment variable
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "service-account.json"
+    _configure_google_credentials()
 
-    # Create thread-safe queue for communication between Speech and Cognitive System threads
-    SpeechToNLPQueue = queue.Queue()
-    # EMSAgentSpeechToNLPQueue  = queue.Queue()
-    FeedbackQueue = queue.Queue()
-    # GUI: Create the main window, show it, and run the app
+
+def run(argv=None):
+    args = list(argv or sys.argv)
+    configure_runtime(args)
+
     print("Starting GUI")
-    app = QApplication(sys.argv)
+    app = QApplication(args)
     screen_resolution = app.desktop().screenGeometry()
     width, height = screen_resolution.width(), screen_resolution.height()
-
-    #width = 1920
-    #height = 1080
-    #width = 1366
-    #height = 768
     print("Screen Resolution\nWidth: %s\nHeight: %s" % (width, height))
-    Window = MainWindow(width, height)
-    #Window.StartButtonClick()
-    # monitor =  app.desktop().screenGeometry(1)
-    # Window.move(monitor.left(), monitor.top())
-    Window.show()
 
-    sys.exit(app.exec_())
+    window = MainWindow(width, height)
+    window.show()
+    return app.exec_()

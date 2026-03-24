@@ -129,7 +129,7 @@ class _ProtocolThread(QThread):
             from EMS_Agent.Interface.utils import AttrDict, onehot2p, convert_label, preprocess
             from EMS_Agent.Interface.default_sets import seed_everything, ungroup_p_node
             from EMS_Agent.Interface.EMSTinyBERTSystem import EMSTinyBERT
-            import pipeline_config
+            from Utils import pipeline_config
         except ImportError as e:
             print(f'[_ProtocolThread] Import error: {e}')
             print('[_ProtocolThread] Protocol prediction will not be available.')
