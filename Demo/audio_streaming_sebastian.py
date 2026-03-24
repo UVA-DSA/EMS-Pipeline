@@ -285,6 +285,12 @@ def whisper_speech_process(audio_ml_pipe, transcript_fifo, transcript_queue, run
         print(f"[WhisperProcess] egosim_stream still running after 1s - looks good")
         # print('running flag value', running_flag.value)
 
+        # Signal the GUI that Whisper is up and ready
+        try:
+            transcript_queue.put_nowait("__WHISPER_READY__")
+        except:
+            pass
+
         # Open transcript FIFO in background thread so we don't block here.
         # egosim_stream will only open --text-fifo once it has processed
         # enough audio, so we must not block the process on this.
@@ -391,6 +397,7 @@ def _make_transcript_thread():
 
     class TranscriptDisplayThread(QThread):
         transcript_ready = pyqtSignal(str)
+        whisper_ready = pyqtSignal()
 
         def __init__(self, transcript_queue):
             super().__init__()
@@ -410,7 +417,10 @@ def _make_transcript_thread():
             while self.is_running:
                 try:
                     transcript = self.transcript_queue.get(timeout=0.1)
-                    self.transcript_ready.emit(transcript)
+                    if transcript == "__WHISPER_READY__":
+                        self.whisper_ready.emit()
+                    else:
+                        self.transcript_ready.emit(transcript)
                 except:
                     continue
             print("[TranscriptDisplayThread] Exiting run loop")
@@ -474,6 +484,10 @@ class SpeechProcessManager:
     def transcript_ready(self):
         return self.display_thread.transcript_ready
 
+    @property
+    def whisper_ready(self):
+        return self.display_thread.whisper_ready
+
 
 class SpeechProcess:
     """
@@ -491,3 +505,202 @@ class SpeechProcess:
 
     def stop(self):
         self.manager.stop()
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Google Cloud Speech streaming manager
+# Reads raw PCM int16 frames from /tmp/emsaudml (same pipe whisper uses)
+# and streams them to Google Cloud Speech-to-Text v1 streaming API.
+# Emits transcripts via transcript_ready signal, identical interface to
+# SpeechProcessManager so GUI.py can swap between the two transparently.
+# ─────────────────────────────────────────────────────────────────────────────
+
+class GoogleSpeechStreamManager:
+    """
+    Drop-in replacement for SpeechProcessManager that uses Google Cloud STT.
+
+    Prerequisites:
+        pip install google-cloud-speech
+        GOOGLE_APPLICATION_CREDENTIALS env var set to service-account JSON path.
+
+    Usage in GUI.py:
+        self.GoogleSpeechManager = GoogleSpeechStreamManager()
+        self.GoogleSpeechManager.transcript_ready.connect(self.update_transcript_widget)
+        self.GoogleSpeechManager.start()
+        ...
+        self.GoogleSpeechManager.stop()
+    """
+
+    PIPE_AUDIO_ML = "/tmp/emsaudml"
+    SAMPLE_RATE   = 16000
+    CHANNELS      = 1
+    # Google STT streaming limit is ~5 minutes; we restart automatically
+    STREAM_LIMIT_SECS = 240
+
+    def __init__(self):
+        from PyQt5.QtCore import QThread, pyqtSignal
+
+        class _GoogleThread(QThread):
+            transcript_ready = pyqtSignal(str)
+            # No whisper_ready signal — Google is ready immediately
+            whisper_ready = pyqtSignal()
+
+            def __init__(self):
+                super().__init__()
+                self._running = True
+                print('[GoogleSpeechThread] Initialized')
+
+            def stop(self):
+                print('[GoogleSpeechThread] Stopping...')
+                self._running = False
+                self.quit()
+                self.wait(3000)
+                print('[GoogleSpeechThread] Stopped')
+
+            def run(self):
+                print('[GoogleSpeechThread] Started')
+                try:
+                    from google.cloud import speech
+                    from google.api_core.exceptions import OutOfRange, ServiceUnavailable
+                except ImportError:
+                    print('[GoogleSpeechThread] ERROR: google-cloud-speech not installed. '
+                          'Run: pip install google-cloud-speech')
+                    return
+
+                client = speech.SpeechClient()
+
+                config = speech.RecognitionConfig(
+                    encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+                    sample_rate_hertz=16000,
+                    language_code='en-US',
+                    enable_automatic_punctuation=True,
+                    model='latest_long',
+                )
+                streaming_config = speech.StreamingRecognitionConfig(
+                    config=config,
+                    interim_results=False,
+                )
+
+                # ── Wait for the pipe to exist (SRT receiver creates it on Start) ──
+                print('[GoogleSpeechThread] Waiting for audio pipe to become available...')
+                while self._running:
+                    if os.path.exists(GoogleSpeechStreamManager.PIPE_AUDIO_ML):
+                        break
+                    time.sleep(0.25)
+                if not self._running:
+                    print('[GoogleSpeechThread] Stopped before pipe appeared')
+                    return
+
+                print('[GoogleSpeechThread] Opening audio pipe...')
+                try:
+                    pipe = open(GoogleSpeechStreamManager.PIPE_AUDIO_ML, 'rb', buffering=0)
+                except Exception as e:
+                    print(f'[GoogleSpeechThread] Failed to open pipe: {e}')
+                    return
+                print('[GoogleSpeechThread] Audio pipe open — Google STT ready')
+                self.whisper_ready.emit()
+
+                def _read_exactly(n):
+                    buf = b''
+                    while len(buf) < n and self._running:
+                        chunk = pipe.read(n - len(buf))
+                        if not chunk:
+                            return None
+                        buf += chunk
+                    return buf if self._running else None
+
+                def _make_audio_generator():
+                    """
+                    Returns a fresh generator of StreamingRecognizeRequests.
+                    Call this for each new streaming session — a generator can
+                    only be iterated once.
+                    Frame format: 4-byte big-endian length + PCM int16 data,
+                    same as written by the SRT receiver.
+                    """
+                    while self._running:
+                        hdr = _read_exactly(4)
+                        if hdr is None:
+                            return
+                        length = int.from_bytes(hdr, 'big')
+                        pcm = _read_exactly(length)
+                        if pcm is None:
+                            return
+                        yield speech.StreamingRecognizeRequest(audio_content=pcm)
+
+                try:
+                    while self._running:
+                        print('[GoogleSpeechThread] Starting streaming session...')
+                        try:
+                            responses = client.streaming_recognize(
+                                streaming_config,
+                                _make_audio_generator(),
+                            )
+                            for response in responses:
+                                if not self._running:
+                                    break
+                                for result in response.results:
+                                    if result.is_final:
+                                        text = result.alternatives[0].transcript.strip()
+                                        if text:
+                                            print(f'[GoogleSpeechThread] Transcript: {text}')
+                                            self.transcript_ready.emit(text)
+
+                        except OutOfRange as e:
+                            # Google sends this when audio timeout occurs (no audio
+                            # received close to real time). Safe to restart session.
+                            if self._running:
+                                print('[GoogleSpeechThread] Audio timeout from Google — '
+                                      'restarting session...')
+                            continue
+                        except ServiceUnavailable as e:
+                            if self._running:
+                                print(f'[GoogleSpeechThread] Service unavailable, '
+                                      f'retrying in 2s: {e}')
+                                time.sleep(2)
+                            continue
+                        except Exception as e:
+                            if self._running:
+                                print(f'[GoogleSpeechThread] Streaming error: {e}')
+                                import traceback
+                                traceback.print_exc()
+                                time.sleep(1)
+                            continue
+
+                        if self._running:
+                            print('[GoogleSpeechThread] Session ended cleanly, restarting...')
+
+                finally:
+                    try:
+                        pipe.close()
+                    except:
+                        pass
+
+                print('[GoogleSpeechThread] Exiting')
+
+        # Patch SAMPLE_RATE into the inner class so it can reference it
+        _GoogleThread.SAMPLE_RATE = self.SAMPLE_RATE
+
+        self._thread = _GoogleThread()
+        print('[GoogleSpeechStreamManager] Initialized')
+
+    # ── public API (mirrors SpeechProcessManager) ──────────────────────────
+
+    def start(self):
+        print('[GoogleSpeechStreamManager] Starting...')
+        self._thread._running = True
+        self._thread.start()
+        print('[GoogleSpeechStreamManager] Started')
+
+    def stop(self):
+        print('[GoogleSpeechStreamManager] Stopping...')
+        self._thread.stop()
+        print('[GoogleSpeechStreamManager] Stopped')
+
+    @property
+    def transcript_ready(self):
+        return self._thread.transcript_ready
+
+    @property
+    def whisper_ready(self):
+        """Emitted once the pipe is open and Google STT is streaming."""
+        return self._thread.whisper_ready

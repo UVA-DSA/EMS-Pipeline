@@ -3,7 +3,7 @@
 
 # ============== Imports ==============
 
-from __future__ import absolute_import, division, print_function
+# from __future__ import absolute_import, division, print_function
 
 import math
 import datetime
@@ -39,14 +39,15 @@ import pipeline_config
 # import WhisperFileStream
 # import WhisperMicStream
 
-from EMS_Agent.Interface import EMSTinyBERTSystem
+# from EMS_Agent.Interface import EMSTinyBERTSystem
 
 
 from StoppableThread.StoppableThread import StoppableThread
 
 from video_streaming_sebastian import VideoStreamManager
-from audio_streaming_sebastian import AudioStreamManager, SpeechProcessManager
+from audio_streaming_sebastian import AudioStreamManager, SpeechProcessManager, GoogleSpeechStreamManager
 from imu_streaming_sebastian import IMUStreamManager
+from protocol_manager import ProtocolManager
 # from smartwatch_streaming import Thread_Watch, IMUThread
 #from Feedback import FeedbackClient
 
@@ -247,7 +248,7 @@ class MainWindow(QWidget):
         #self.feedback_client = Feedback.FeedbackClient()
         #self.feedback_client.start()
 
-        self.start_video_audio_imu_processes()
+
 
 
 
@@ -324,13 +325,15 @@ class MainWindow(QWidget):
         # Radio Buttons Google or Other ML Model
         self.GoogleSpeechRadioButton = QRadioButton("Google Speech Cloud Model", self)
         self.GoogleSpeechRadioButton.setEnabled(True)
-        self.GoogleSpeechRadioButton.setChecked(True)
+        self.GoogleSpeechRadioButton.setChecked(False)
+        self.GoogleSpeechRadioButton.toggled.connect(self.on_speech_mode_changed)
         self.ControlPanelGridLayout.addWidget(
             self.GoogleSpeechRadioButton, 0, 1, 1, 1)
 
         self.MLSpeechRadioButton = QRadioButton("OpenAI Whisper Local Model", self)
-        self.MLSpeechRadioButton.setEnabled(True) #changed from False to True to enable
-        self.MLSpeechRadioButton.setChecked(False)
+        self.MLSpeechRadioButton.setEnabled(True)
+        self.MLSpeechRadioButton.setChecked(True)
+        self.MLSpeechRadioButton.toggled.connect(self.on_speech_mode_changed)
         self.ControlPanelGridLayout.addWidget(
             self.MLSpeechRadioButton, 0, 2, 1, 1)
 
@@ -344,10 +347,6 @@ class MainWindow(QWidget):
         self.StopButton.clicked.connect(self.StopButtonClick)
         self.ControlPanelGridLayout.addWidget(self.StopButton, 1, 1, 1, 1)
 
-        # Create a reset  button in the Control Panel
-        self.ResetButton = QPushButton('Reset', self)
-        self.ResetButton.clicked.connect(self.ResetButtonClick)
-        self.ControlPanelGridLayout.addWidget(self.ResetButton, 1, 2, 1, 1)
 
         # VU Meter Panel
         self.VUMeterPanel = QWidget()
@@ -469,6 +468,8 @@ class MainWindow(QWidget):
         # self.Grid_Layout.setSpacing(0)
         # self.Grid_Layout.setContentsMargins(0, 0, 0, 0)
 
+        self.start_video_audio_imu_processes()
+
     def start_video_audio_imu_processes(self):
         # Processes for video
         # self.VideoThread = VideoThread(data_path, videostream)
@@ -488,9 +489,13 @@ class MainWindow(QWidget):
         self.AudioProcess = AudioStreamManager()
         self.AudioProcess.start()
 
-        self.SpeechProcess = SpeechProcessManager()
-        self.SpeechProcess.transcript_ready.connect(self.update_transcript_widget)
-        self.SpeechProcess.start()
+        self.SpeechProcess = None   # will be set by _start_speech_manager
+        self._start_speech_manager(use_google=False)  # default: Whisper
+
+        # Protocol prediction model
+        self.ProtocolProcess = ProtocolManager()
+        self.ProtocolProcess.protocol_prediction.connect(self.UpdateProtocolBoxes)
+        self.ProtocolProcess.start()
 
         # self.AudioThread = AudioThread()
         # self.AudioThread.start()
@@ -508,18 +513,67 @@ class MainWindow(QWidget):
         # th2.start()
 
     def update_transcript_widget(self, transcript):
-        # current_text = self.SpeechBox.toPlainText()
         self.SpeechBox.append(transcript)
-        # self.SpeechBox.setPlainText(current_text + transcript + "\n")
-        # self.SpeechBox.moveCursor(QTextCursor.End)
+        # Feed transcript to protocol prediction model
+        if hasattr(self, 'ProtocolProcess') and self.ProtocolProcess is not None:
+            self.ProtocolProcess.feed_transcript(transcript)
+
+    @pyqtSlot()
+    def on_whisper_ready(self):
+        """Called when Whisper is up and running - show Ready! in video widget."""
+        self.video.setText('<font size="10" color="green"><b>Ready!</b></font>')
+        self.video.setAlignment(QtCore.Qt.AlignCenter)
+
+    def _start_speech_manager(self, use_google: bool):
+        """
+        Tear down whatever speech manager is currently running and immediately
+        start the appropriate one. Both managers self-regulate: Whisper waits
+        for its pipe, Google loops on OutOfRange until audio arrives.
+        """
+        # Stop existing manager if any
+        if hasattr(self, 'SpeechProcess') and self.SpeechProcess is not None:
+            print('[GUI] Stopping current speech manager...')
+            self.SpeechProcess.stop()
+            self.SpeechProcess = None
+
+        if use_google:
+            print('[GUI] Starting Google Cloud STT manager')
+            self.UpdateMsgBox(['Switching to Google Cloud Speech...'])
+            self.SpeechProcess = GoogleSpeechStreamManager()
+        else:
+            print('[GUI] Starting Whisper local model manager')
+            self.UpdateMsgBox(['Switching to Whisper local model...'])
+            self.SpeechProcess = SpeechProcessManager()
+
+        self.SpeechProcess.transcript_ready.connect(self.update_transcript_widget)
+        self.SpeechProcess.whisper_ready.connect(self.on_whisper_ready)
+        self.SpeechProcess.start()
+
+    @pyqtSlot(bool)
+    def on_speech_mode_changed(self, checked):
+        """
+        Called when either radio button is toggled.
+        Each toggle fires twice (one button unchecked, one checked) — only
+        act on the checked=True event to avoid double-switching.
+        """
+        if not checked:
+            return
+        use_google = self.GoogleSpeechRadioButton.isChecked()
+        self._start_speech_manager(use_google)
+
+    def _clear_layout(self, layout):
+        """Recursively remove and delete all items from a layout."""
+        while layout.count():
+            item = layout.takeAt(0)
+            widget = item.widget()
+            if widget is not None:
+                widget.deleteLater()
+            elif item.layout() is not None:
+                self._clear_layout(item.layout())
 
     def UpdateDataSourceConfig(self, source):
         """Update configuration options based on selected data source"""
-        # Clear existing widgets
-        while self.ConfigLayout.count():
-            child = self.ConfigLayout.takeAt(0)
-            if child.widget():
-                child.widget().deleteLater()
+        self._clear_layout(self.ConfigLayout)
 
         if source == "simulator":
             # Simulator configuration
@@ -625,8 +679,8 @@ class MainWindow(QWidget):
         self.StartButton.setEnabled(False)
         self.StopButton.setEnabled(True)
         self.DataSourceBox.setEnabled(False)
-        self.ResetButton.setEnabled(False)
-
+        self.GoogleSpeechRadioButton.setEnabled(False)
+        self.MLSpeechRadioButton.setEnabled(False)
         # Get selected modalities
         modalities = set()
         if self.VideoCheckBox.isChecked():
@@ -655,8 +709,16 @@ class MainWindow(QWidget):
             # sim_seb.setup_pipes()
             self.srt_client = sim_seb.SRTReceiverProcess(config['ip'], config['port'], config['width'], config['height'], modalities)
             if not self.srt_client.start():
-                print("[Main] Failed to connect to SRT server!")
-                sys.exit(1)
+                error_msg = getattr(self.srt_client, 'last_error', None) or "Failed to start SRT receiver."
+                print(f"[Main] {error_msg}")
+                self.UpdateMsgBox([error_msg])
+                self.StartButton.setEnabled(True)
+                self.StopButton.setEnabled(False)
+                self.DataSourceBox.setEnabled(True)
+                self.GoogleSpeechRadioButton.setEnabled(self.InternetAvailLabel.text() == "INTERNET AVAILABLE")
+                self.MLSpeechRadioButton.setEnabled(True)
+                self.srt_client = None
+                return
 
             # if(self.MLSpeechRadioButton.isChecked()):
             #     print("Starting Whisper for simulator audio")
@@ -1020,26 +1082,36 @@ class MainWindow(QWidget):
             self.srt_client = None
             print("[StopButtonClick] SRT receiver stopped")
 
-        # Stop and restart SpeechProcess to kill egosim_stream
+        # Stop and restart the speech process in the same mode
         if hasattr(self, 'SpeechProcess') and self.SpeechProcess is not None:
             print("[StopButtonClick] Stopping SpeechProcess...")
             self.SpeechProcess.stop()
 
-            # Give it a moment to clean up
             import time
             time.sleep(0.5)
 
-            # Restart it so it's ready for next Start
-            print("[StopButtonClick] Restarting SpeechProcess...")
-            self.SpeechProcess = SpeechProcessManager()
-            self.SpeechProcess.transcript_ready.connect(self.update_transcript_widget)
-            self.SpeechProcess.start()
-            print("[StopButtonClick] SpeechProcess restarted")
+            print("[StopButtonClick] Restarting speech manager in same mode...")
+            self._start_speech_manager(use_google=self.GoogleSpeechRadioButton.isChecked())
+            print("[StopButtonClick] Speech manager restarted")
+
+        # Stop and restart protocol prediction
+        if hasattr(self, 'ProtocolProcess') and self.ProtocolProcess is not None:
+            print("[StopButtonClick] Stopping ProtocolProcess...")
+            self.ProtocolProcess.stop()
+            self.ProtocolProcess = None
 
         # Re-enable UI controls
         self.StartButton.setEnabled(True)
         self.DataSourceBox.setEnabled(True)
-        self.ResetButton.setEnabled(True)
+        self.GoogleSpeechRadioButton.setEnabled(True)
+        self.MLSpeechRadioButton.setEnabled(True)
+
+        # Clear widgets
+        self.SpeechBox.clear()
+        self.Smartwatch.clear()
+        self.video.clear()
+        self.ProtocolBox.clear()
+        self.InterventionBox.clear()
 
         # Update state flags
         self.stopped = 1
@@ -1057,7 +1129,6 @@ class MainWindow(QWidget):
         time.sleep(.1)
         self.StartButton.setEnabled(True)
         self.DataSourceBox.setEnabled(True)
-        self.ResetButton.setEnabled(True)
         self.SpeechThread.stop()
 
     @pyqtSlot()
@@ -1387,7 +1458,7 @@ if __name__ == '__main__':
     videostream = True
     # protocolStream = True
     # Set the Google Speech API service-account key environment variable
-    # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "service-account.json"
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "service-account.json"
 
     # Create thread-safe queue for communication between Speech and Cognitive System threads
     SpeechToNLPQueue = queue.Queue()

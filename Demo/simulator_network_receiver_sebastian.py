@@ -14,10 +14,10 @@ Pipe mapping:
 import os
 import sys
 import ctypes
+import ctypes.util
 import struct
 import time
 from multiprocessing import Process, Value
-import numpy as np
 
 # Load libsrt.
 # Different distros expose different SONAMEs (e.g. libsrt-gnutls.so.1.5 on Ubuntu).
@@ -57,21 +57,93 @@ def _load_libsrt():
 
 libsrt = _load_libsrt()
 
-# SRT function declarations
-libsrt.srt_startup.argtypes = []
-libsrt.srt_startup.restype = ctypes.c_int
-libsrt.srt_create_socket.argtypes = []
-libsrt.srt_create_socket.restype = ctypes.c_int
-libsrt.srt_setsockopt.argtypes = [ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_void_p, ctypes.c_int]
-libsrt.srt_setsockopt.restype = ctypes.c_int
-libsrt.srt_connect.argtypes = [ctypes.c_int, ctypes.c_void_p, ctypes.c_int]
-libsrt.srt_connect.restype = ctypes.c_int
-libsrt.srt_recv.argtypes = [ctypes.c_int, ctypes.c_char_p, ctypes.c_int]
-libsrt.srt_recv.restype = ctypes.c_int
-libsrt.srt_close.argtypes = [ctypes.c_int]
-libsrt.srt_close.restype = ctypes.c_int
-libsrt.srt_cleanup.argtypes = []
-libsrt.srt_cleanup.restype = ctypes.c_int
+
+def _iter_libsrt_candidates():
+    env_path = os.environ.get("SRT_LIBRARY_PATH")
+    if env_path:
+        yield env_path
+
+    if sys.platform == 'darwin':
+        candidates = [
+            ctypes.util.find_library("srt"),
+            "/opt/homebrew/opt/srt/lib/libsrt.dylib",
+            "/opt/homebrew/lib/libsrt.dylib",
+            "/usr/local/opt/srt/lib/libsrt.dylib",
+            "/usr/local/lib/libsrt.dylib",
+            "libsrt.dylib",
+        ]
+    else:
+        candidates = [
+            ctypes.util.find_library("srt"),
+            ctypes.util.find_library("srt-gnutls"),
+            ctypes.util.find_library("srt-openssl"),
+            "libsrt.so.1",
+            "libsrt.so",
+            "libsrt-gnutls.so.1.5",
+            "libsrt-gnutls.so",
+            "libsrt-openssl.so.1.5",
+            "libsrt-openssl.so",
+        ]
+
+    seen = set()
+    for candidate in candidates:
+        if not candidate or candidate in seen:
+            continue
+        seen.add(candidate)
+        yield candidate
+
+
+def _configure_libsrt(lib):
+    lib.srt_startup.argtypes = []
+    lib.srt_startup.restype = ctypes.c_int
+    lib.srt_create_socket.argtypes = []
+    lib.srt_create_socket.restype = ctypes.c_int
+    lib.srt_setsockopt.argtypes = [ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_void_p, ctypes.c_int]
+    lib.srt_setsockopt.restype = ctypes.c_int
+    lib.srt_connect.argtypes = [ctypes.c_int, ctypes.c_void_p, ctypes.c_int]
+    lib.srt_connect.restype = ctypes.c_int
+    lib.srt_recv.argtypes = [ctypes.c_int, ctypes.c_char_p, ctypes.c_int]
+    lib.srt_recv.restype = ctypes.c_int
+    lib.srt_close.argtypes = [ctypes.c_int]
+    lib.srt_close.restype = ctypes.c_int
+    lib.srt_cleanup.argtypes = []
+    lib.srt_cleanup.restype = ctypes.c_int
+    return lib
+
+
+def _load_libsrt():
+    errors = []
+    for candidate in _iter_libsrt_candidates():
+        try:
+            return _configure_libsrt(ctypes.CDLL(candidate))
+        except OSError as exc:
+            errors.append(f"{candidate}: {exc}")
+
+    if sys.platform == 'darwin':
+        install_hint = "Install with: brew install srt"
+    else:
+        install_hint = (
+            "Install with: sudo apt install libsrt1.5-gnutls libsrt-gnutls-dev "
+            "(Ubuntu) or set SRT_LIBRARY_PATH to the full library path."
+        )
+
+    detail = "; ".join(errors) if errors else "no library candidates found"
+    raise OSError(f"libsrt not found. {install_hint} Tried: {detail}")
+
+
+def ensure_libsrt():
+    global libsrt, libsrt_load_error
+
+    if libsrt is not None:
+        return libsrt
+
+    try:
+        libsrt = _load_libsrt()
+        libsrt_load_error = None
+        return libsrt
+    except OSError as exc:
+        libsrt_load_error = str(exc)
+        raise RuntimeError(libsrt_load_error) from exc
 
 # Platform-specific socket address structure
 if sys.platform == 'darwin':
@@ -151,8 +223,11 @@ def srt_receiver_process(host, port, width, height, enabled_types, running_flag)
 
     sock = None
     opened_pipes = {}
+    frames_received = 0
 
     try:
+        libsrt = ensure_libsrt()
+
         # Initialize SRT
         if libsrt.srt_startup() < 0:
             print("[SRTProcess] Failed to initialize SRT")
@@ -408,6 +483,7 @@ class SRTReceiverProcess:
         self.width = width
         self.height = height
         self.enabled_types = enabled_types if enabled_types is not None else {1, 2, 3}
+        self.last_error = None
 
         # Multiprocessing components
         self.running_flag = Value(ctypes.c_bool, True)
@@ -424,8 +500,16 @@ class SRTReceiverProcess:
     def start(self):
         """Start the SRT receiver process."""
         print("[SRTReceiverProcess] Starting...")
+        try:
+            ensure_libsrt()
+        except RuntimeError as exc:
+            self.last_error = str(exc)
+            print(f"[SRTReceiverProcess] {self.last_error}")
+            return False
+
         self.running_flag.value = True
         self.receiver_process.start()
+        self.last_error = None
         print(f"[SRTReceiverProcess] Started (Process PID: {self.receiver_process.pid})")
         return True
 
