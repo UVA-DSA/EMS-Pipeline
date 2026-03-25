@@ -43,7 +43,7 @@ from Utils.DSP.amplitude import Amplitude
 
 from EMS_Agent.protocol_manager import ProtocolManager
 from EMS_Speech.EMS_GSpeech.stream_manager import GoogleSpeechStreamManager
-from EMS_Speech.EMS_Whisper.EMS_whisper import SpeechProcessManager
+from EMS_Speech.EMS_Whisper.stream_manager import SpeechProcessManager
 from GUI.imu_stream import IMUStreamManager
 from EMS_Vision.stream_manager import VisionStreamManager
 from IO.audio_output import AudioStreamManager
@@ -112,7 +112,18 @@ class MainWindow(QWidget):
         self.smartglass_ws_url = None
         self.showing_qr_code = False
         self.shutdown_dialog = None
+        self.shutdown_dialog_message = None
         self.is_closing = False
+        self.simulator_config = {
+            "height": 270,
+            "width": 480,
+            "ip": "127.0.0.1",
+            "port": 9000,
+        }
+        self.smartglass_config = {
+            "host": pipeline_config.smartglass_ip or "0.0.0.0",
+            "port": pipeline_config.smartglass_port or 8889,
+        }
 
 
         #whisper
@@ -326,6 +337,9 @@ class MainWindow(QWidget):
         self.ConfigGroupBox = QGroupBox("Data Source Configuration")
         self.ConfigLayout = QVBoxLayout()
         self.ConfigGroupBox.setLayout(self.ConfigLayout)
+        config_group_policy = self.ConfigGroupBox.sizePolicy()
+        config_group_policy.setRetainSizeWhenHidden(False)
+        self.ConfigGroupBox.setSizePolicy(config_group_policy)
         self.ControlPanelGridLayout.addWidget(self.ConfigGroupBox, 3, 0, 1, 3)
 
         # Connect data source change to update configuration options
@@ -595,8 +609,11 @@ class MainWindow(QWidget):
         return modalities
 
     def _smartglass_bind_host(self):
-        host = self.SmartglassHostLineEdit.text().strip()
+        host = self.smartglass_config["host"].strip()
         return host or "0.0.0.0"
+
+    def _smartglass_port(self):
+        return int(self.smartglass_config["port"] or 8889)
 
     def _smartglass_public_host(self, bind_host):
         if bind_host in {"", "0.0.0.0", "::"}:
@@ -639,7 +656,7 @@ class MainWindow(QWidget):
 
     def _start_smartglass_server(self, enabled_types):
         bind_host = self._smartglass_bind_host()
-        port = self.SmartglassPortSpinBox.value()
+        port = self._smartglass_port()
         ws_url = self._build_smartglass_ws_url(bind_host, port)
 
         env = os.environ.copy()
@@ -754,11 +771,39 @@ class MainWindow(QWidget):
             elif item.layout() is not None:
                 self._clear_layout(item.layout())
 
+    def _cache_visible_source_config(self):
+        if not hasattr(self, "HeightSpinBox") or self.HeightSpinBox is None:
+            return
+
+        try:
+            self.simulator_config.update(
+                {
+                    "height": self.HeightSpinBox.value(),
+                    "width": self.WidthSpinBox.value(),
+                    "ip": self.IPAddressLineEdit.text().strip() or "127.0.0.1",
+                    "port": self.PortSpinBox.value(),
+                }
+            )
+        except RuntimeError:
+            pass
+
+    def _refresh_control_panel_layout(self):
+        self.ConfigGroupBox.updateGeometry()
+        self.ControlPanelGridLayout.invalidate()
+        self.ControlPanel.adjustSize()
+        self.ControlPanel.updateGeometry()
+        self.Grid_Layout.invalidate()
+        self.updateGeometry()
+        QApplication.processEvents(QtCore.QEventLoop.ExcludeUserInputEvents)
+
     def UpdateDataSourceConfig(self, source):
         """Update configuration options based on selected data source"""
+        self._cache_visible_source_config()
         self._clear_layout(self.ConfigLayout)
+        show_simulator_config = source == "simulator"
+        self.ConfigGroupBox.setVisible(show_simulator_config)
 
-        if source == "simulator":
+        if show_simulator_config:
             # Simulator configuration
             simLayout = QGridLayout()
 
@@ -766,20 +811,20 @@ class MainWindow(QWidget):
             simLayout.addWidget(QLabel("Height:"), 0, 0)
             self.HeightSpinBox = QSpinBox()
             self.HeightSpinBox.setRange(240, 2160)
-            self.HeightSpinBox.setValue(270)
+            self.HeightSpinBox.setValue(self.simulator_config["height"])
             simLayout.addWidget(self.HeightSpinBox, 0, 1)
 
             # Width
             simLayout.addWidget(QLabel("Width:"), 1, 0)
             self.WidthSpinBox = QSpinBox()
             self.WidthSpinBox.setRange(320, 3840)
-            self.WidthSpinBox.setValue(480)
+            self.WidthSpinBox.setValue(self.simulator_config["width"])
             simLayout.addWidget(self.WidthSpinBox, 1, 1)
 
             # IP Address
             simLayout.addWidget(QLabel("IP Address:"), 2, 0)
             self.IPAddressLineEdit = QLineEdit()
-            self.IPAddressLineEdit.setText("127.0.0.1")
+            self.IPAddressLineEdit.setText(self.simulator_config["ip"])
             self.IPAddressLineEdit.setPlaceholderText("e.g., 192.168.1.100")
             simLayout.addWidget(self.IPAddressLineEdit, 2, 1)
 
@@ -787,35 +832,12 @@ class MainWindow(QWidget):
             simLayout.addWidget(QLabel("Port:"), 3, 0)
             self.PortSpinBox = QSpinBox()
             self.PortSpinBox.setRange(1024, 65535)
-            self.PortSpinBox.setValue(9000)
+            self.PortSpinBox.setValue(self.simulator_config["port"])
             simLayout.addWidget(self.PortSpinBox, 3, 1)
 
             self.ConfigLayout.addLayout(simLayout)
 
-        elif source == "smartglass":
-            smartglassLayout = QGridLayout()
-
-            smartglassLayout.addWidget(QLabel("Bind Host:"), 0, 0)
-            self.SmartglassHostLineEdit = QLineEdit()
-            self.SmartglassHostLineEdit.setText(pipeline_config.smartglass_ip or "0.0.0.0")
-            self.SmartglassHostLineEdit.setPlaceholderText("0.0.0.0")
-            smartglassLayout.addWidget(self.SmartglassHostLineEdit, 0, 1)
-
-            smartglassLayout.addWidget(QLabel("Port:"), 1, 0)
-            self.SmartglassPortSpinBox = QSpinBox()
-            self.SmartglassPortSpinBox.setRange(1024, 65535)
-            self.SmartglassPortSpinBox.setValue(pipeline_config.smartglass_port or 8889)
-            smartglassLayout.addWidget(self.SmartglassPortSpinBox, 1, 1)
-
-            info_label = QLabel(
-                "Press Start to launch the smartglass WebRTC server. "
-                "The QR code will appear in the Video Content panel."
-            )
-            info_label.setWordWrap(True)
-            smartglassLayout.addWidget(info_label, 2, 0, 1, 2)
-
-            self.ConfigLayout.addLayout(smartglassLayout)
-
+        self._refresh_control_panel_layout()
         self._sync_audio_playback_process()
 
     @pyqtSlot()
@@ -859,7 +881,7 @@ class MainWindow(QWidget):
         elif source == "smartglass":
             config = {
                 'host': self._smartglass_bind_host(),
-                'port': self.SmartglassPortSpinBox.value(),
+                'port': self._smartglass_port(),
             }
             if not self._start_smartglass_server(modalities):
                 self.StartButton.setEnabled(True)
@@ -941,31 +963,74 @@ class MainWindow(QWidget):
             dialog.setModal(True)
             dialog.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
             dialog.setWindowFlag(Qt.WindowCloseButtonHint, False)
-            dialog.setFixedSize(320, 120)
-            dialog.setStyleSheet("background-color: white;")
+            dialog.setMinimumWidth(360)
+            dialog.setStyleSheet(
+                """
+                QDialog {
+                    background-color: #f6f7f9;
+                }
+                QLabel#ShutdownTitle {
+                    color: #142033;
+                    font-size: 15px;
+                    font-weight: 600;
+                }
+                QLabel#ShutdownMessage {
+                    color: #4a5565;
+                }
+                QProgressBar {
+                    border: 1px solid #d4d9e2;
+                    border-radius: 6px;
+                    background-color: #ffffff;
+                    height: 14px;
+                }
+                QProgressBar::chunk {
+                    background-color: #2f7dd1;
+                    border-radius: 6px;
+                }
+                """
+            )
 
             layout = QVBoxLayout(dialog)
             layout.setContentsMargins(24, 24, 24, 24)
-            layout.setSpacing(0)
+            layout.setSpacing(12)
+
+            title = QLabel("Closing CognitiveEMS")
+            title.setObjectName("ShutdownTitle")
+            title.setAlignment(Qt.AlignCenter)
+            layout.addWidget(title)
 
             message = QLabel("Shutting down, please wait...")
+            message.setObjectName("ShutdownMessage")
             message.setAlignment(Qt.AlignCenter)
             message.setWordWrap(True)
             layout.addWidget(message)
+
+            progress = QProgressBar()
+            progress.setRange(0, 0)
+            progress.setTextVisible(False)
+            layout.addWidget(progress)
 
             self.shutdown_dialog_message = message
             self.shutdown_dialog = dialog
 
         self.shutdown_dialog_message.setText("Shutting down, please wait...")
+        self.shutdown_dialog.adjustSize()
+        parent_center = self.frameGeometry().center()
+        dialog_rect = self.shutdown_dialog.frameGeometry()
+        dialog_rect.moveCenter(parent_center)
+        self.shutdown_dialog.move(dialog_rect.topLeft())
         self.shutdown_dialog.show()
         self.shutdown_dialog.raise_()
         self.shutdown_dialog.activateWindow()
-        QApplication.processEvents()
+        QApplication.setOverrideCursor(Qt.WaitCursor)
+        QApplication.processEvents(QtCore.QEventLoop.ExcludeUserInputEvents)
 
     def _hide_shutdown_dialog(self):
         if self.shutdown_dialog is not None:
             self.shutdown_dialog.hide()
-        QApplication.processEvents()
+        if QApplication.overrideCursor() is not None:
+            QApplication.restoreOverrideCursor()
+        QApplication.processEvents(QtCore.QEventLoop.ExcludeUserInputEvents)
 
     def closeEvent(self, event):
         """

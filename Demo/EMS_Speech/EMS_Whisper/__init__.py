@@ -1,3 +1,3 @@
-from .EMS_whisper import SpeechProcess, SpeechProcessManager
+from .stream_manager import SpeechProcess, SpeechProcessManager
 
 __all__ = ["SpeechProcess", "SpeechProcessManager"]

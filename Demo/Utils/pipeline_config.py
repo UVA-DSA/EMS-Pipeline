@@ -34,9 +34,9 @@ whisper_model_size = "finetuned-base-v203"
 
 PATH_TO_WHISPER_CPP_FOLDER = "/home/cogems_nist/Desktop/CognitiveEMS/Pipeline/EMS_Whisper/whisper.cpp"
 num_threads = 4
-step = 8000
+step = 4000
 length = 16000
-keep_ms = 100 #audio to keep from previous step in ms
+keep_ms = 200 #audio to keep from previous step in ms
 
 # -- EMS Vision configuration ------
 vision_model_type = 'openai/clip-vit-base-patch32' 
