@@ -56,6 +56,8 @@ from Utils import pipeline_config
 
 from IO import srt_receiver as sim_seb
 
+from EMS_Vision.video_ml_client import VideoMLClient
+
 chunkdata = []
 
 datacollection = False
@@ -84,6 +86,8 @@ class MainWindow(QWidget):
 
     def __init__(self, width, height):
         super(MainWindow, self).__init__()
+
+        self.VideoMLProcess = None
 
         # Fields
         self.width = width
@@ -491,8 +495,13 @@ class MainWindow(QWidget):
 
         # self.Grid_Layout.setSpacing(0)
         # self.Grid_Layout.setContentsMargins(0, 0, 0, 0)
-
+        import threading
+        threading.Thread(
+            target=VideoMLClient.warmup_static,
+            daemon=True
+        ).start()
         self.start_video_audio_imu_processes()
+        self._start_video_ml_client()
 
     def start_video_audio_imu_processes(self):
         sim_seb.setup_pipes()
@@ -515,11 +524,40 @@ class MainWindow(QWidget):
         self.IMUProcess.changeActivityRec.connect(self.handle_message)
         self.IMUProcess.start()
 
+    def _start_video_ml_client(self):
+        if self.VideoMLProcess is not None:
+            return
+        print("[GUI] Starting Video ML client...")
+        self.VideoMLProcess = VideoMLClient(self.VideoProcess.ml_queue)
+
+        # ML frames go to the video widget — disconnect the plain stream first
+        try:
+            self.VideoProcess.changePixmap.disconnect(self.setImage)
+        except TypeError:
+            pass  # wasn't connected
+
+        self.VideoMLProcess.annotatedFrame.connect(self.setImage)
+        self.VideoMLProcess.activityResult.connect(self._on_video_ml_result)
+        self.VideoMLProcess.start()
+
+    @pyqtSlot(str)
+    def _on_video_ml_result(self, text):
+        self.VisionInformation.append(text)
+        self.VisionInformation.moveCursor(QTextCursor.End)
+
     def stop_pipeline_processes(self):
         if self.VideoProcess is not None:
             print("[GUI] Stopping video stream...")
             self.VideoProcess.stop()
             self.VideoProcess = None
+
+        if self.VideoMLProcess is not None:
+            print("[GUI] Stopping Video ML client...")
+            self.VideoMLProcess.stop()
+            self.VideoMLProcess = None
+            # Reconnect plain video display now that ML is off
+            if self.VideoProcess is not None:
+                self.VideoProcess.changePixmap.connect(self.setImage)
 
         if self.AudioProcess is not None:
             print("[GUI] Stopping audio stream...")
@@ -588,22 +626,40 @@ class MainWindow(QWidget):
         modalities = set()
         source = self.DataSourceBox.currentText()
 
+        # if self.VideoCheckBox.isChecked():
+        #     modalities.update({1, 4})
+        # elif self.VideoMLCheckBox.isChecked():
+        #     modalities.add(4)
+        #
+        # if source == "smartglass":
+        #     if self.AudioCheckBox.isChecked() or self.AudioMLCheckBox.isChecked():
+        #         modalities.add(5)
+        # elif self.AudioCheckBox.isChecked():
+        #     modalities.update({2, 5})
+        # elif self.AudioMLCheckBox.isChecked():
+        #     modalities.add(5)
+        #
+        # if self.SmartWatchCheckBox.isChecked():
+        #     modalities.update({3, 6})
+        # elif self.SmartWatchMLCheckBox.isChecked():
+        #     modalities.add(6)
+
         if self.VideoCheckBox.isChecked():
-            modalities.update({1, 4})
-        elif self.VideoMLCheckBox.isChecked():
+            modalities.update({1})
+        if self.VideoMLCheckBox.isChecked():
             modalities.add(4)
 
-        if source == "smartglass":
-            if self.AudioCheckBox.isChecked() or self.AudioMLCheckBox.isChecked():
-                modalities.add(5)
-        elif self.AudioCheckBox.isChecked():
-            modalities.update({2, 5})
-        elif self.AudioMLCheckBox.isChecked():
+        # if source == "smartglass":
+        #     if self.AudioCheckBox.isChecked() or self.AudioMLCheckBox.isChecked():
+        #         modalities.add(5)
+        if self.AudioCheckBox.isChecked():
+            modalities.update({2})
+        if self.AudioMLCheckBox.isChecked():
             modalities.add(5)
 
         if self.SmartWatchCheckBox.isChecked():
-            modalities.update({3, 6})
-        elif self.SmartWatchMLCheckBox.isChecked():
+            modalities.update({3})
+        if self.SmartWatchMLCheckBox.isChecked():
             modalities.add(6)
 
         return modalities

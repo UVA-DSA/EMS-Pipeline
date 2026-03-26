@@ -61,7 +61,7 @@ def _build_status_frame(cv2_module, frame_width, frame_height, title, subtitle):
     return frame
 
 
-def vision_reader_process(pipe_path, frame_queue, running_flag, frame_width, frame_height):
+def vision_reader_process(pipe_path, frame_queue, running_flag, frame_width, frame_height, ml_queue=None):
     """
     Read raw frames from the display video pipe, add a lightweight overlay,
     and forward the annotated frames back to the GUI bridge queue.
@@ -144,6 +144,11 @@ def vision_reader_process(pipe_path, frame_queue, running_flag, frame_width, fra
                     ).copy()
                     frame_count += 1
                     has_received_stream = True
+
+                    # Send the clean (pre-overlay) frame to the ML queue so the
+                    # inference server receives unmodified image data.
+                    if ml_queue is not None:
+                        _enqueue_latest(ml_queue, frame.copy())
 
                     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                     overlay_text = f"UI overlay | {timestamp}"
@@ -276,6 +281,7 @@ class VisionStreamManager:
 
         self.ctx = mp.get_context("spawn")
         self.frame_queue = self.ctx.Queue(maxsize=10)
+        self._ml_queue = self.ctx.Queue(maxsize=5)
         self.running_flag = self.ctx.Value(ctypes.c_bool, True)
         self.reader_process = self.ctx.Process(
             target=vision_reader_process,
@@ -285,6 +291,7 @@ class VisionStreamManager:
                 self.running_flag,
                 FRAME_WIDTH,
                 FRAME_HEIGHT,
+                self._ml_queue,
             ),
             daemon=True,
         )
@@ -320,6 +327,10 @@ class VisionStreamManager:
     @property
     def changeVisInfo(self):
         return self.display_thread.changeVisInfo
+
+    @property
+    def ml_queue(self):
+        return self._ml_queue
 
 
 # Compatibility alias in case older code still expects the old manager name.
