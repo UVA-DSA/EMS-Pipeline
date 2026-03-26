@@ -136,10 +136,15 @@ class VideoMLClient(QThread):
                 act = self._post(session, act_url, image_bytes)
                 activity = act.get("activity")
                 if isinstance(activity, dict):
-                    act_line = (
-                        f"{activity.get('label', '?')} "
-                        f"({activity.get('score', 0):.2f})"
-                    )
+                    if activity.get('score', 0) > 0.8:
+                        act_line = (
+                            f"{activity.get('label', '?')} "
+                            f"({activity.get('score', 0):.2f})"
+                        )
+                    else:
+                        act_line = (
+                            f"Not confident"
+                        )
                 else:
                     buf = act.get("buffer_size", "?")
                     win = act.get("window_size", "?")

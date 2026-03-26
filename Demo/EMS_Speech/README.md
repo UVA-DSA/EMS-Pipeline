@@ -57,8 +57,8 @@ If it is missing, build it from inside the submodule:
 
 ```bash
 cd Demo/EMS_Speech/EMS_Whisper/whisper.cpp_realtime_stream
-cmake -B build
-cmake --build build -j
+cmake -B build -DWHISPER_SDL2=ON
+cmake --build build --config Release
 ```
 
 ## Notes
