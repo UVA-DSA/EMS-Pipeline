@@ -11,6 +11,7 @@ import csv
 import sys
 import os
 import subprocess
+import threading
 import time
 from io import BytesIO
 
@@ -113,6 +114,7 @@ class MainWindow(QWidget):
         self.ProtocolProcess = None
         self.srt_client = None
         self.smartglass_process = None
+        self.smartglass_log_thread = None
         self.smartglass_ws_url = None
         self.showing_qr_code = False
         self.shutdown_dialog = None
@@ -542,8 +544,30 @@ class MainWindow(QWidget):
 
     @pyqtSlot(str)
     def _on_video_ml_result(self, text):
-        self.VisionInformation.append(text)
-        self.VisionInformation.moveCursor(QTextCursor.End)
+        self.VisionInformation.setPlainText(text)
+
+    def _start_smartglass_log_reader(self):
+        if self.smartglass_process is None or self.smartglass_process.stdout is None:
+            return
+        if self.smartglass_log_thread is not None and self.smartglass_log_thread.is_alive():
+            return
+
+        stream = self.smartglass_process.stdout
+
+        def _drain_stdout():
+            try:
+                for line in iter(stream.readline, ""):
+                    if not line:
+                        break
+                    print(f"[SmartglassServer] {line.rstrip()}")
+            except Exception as exc:
+                print(f"[GUI] Smartglass log reader stopped: {exc}")
+
+        self.smartglass_log_thread = threading.Thread(
+            target=_drain_stdout,
+            daemon=True,
+        )
+        self.smartglass_log_thread.start()
 
     def stop_pipeline_processes(self):
         if self.VideoProcess is not None:
@@ -599,6 +623,7 @@ class MainWindow(QWidget):
                 self.smartglass_process.stdout.close()
 
             self.smartglass_process = None
+            self.smartglass_log_thread = None
             self.smartglass_ws_url = None
             self.showing_qr_code = False
 
@@ -741,15 +766,13 @@ class MainWindow(QWidget):
             stderr=subprocess.STDOUT,
             text=True,
         )
+        self._start_smartglass_log_reader()
 
         time.sleep(1.0)
         if self.smartglass_process.poll() is not None:
-            error_output = ""
-            if self.smartglass_process.stdout is not None:
-                error_output = self.smartglass_process.stdout.read().strip()
-
-            error_msg = error_output or (
-                f"WebRTC server exited immediately with code {self.smartglass_process.returncode}."
+            error_msg = (
+                f"WebRTC server exited immediately with code {self.smartglass_process.returncode}. "
+                "Check the SmartglassServer logs above for details."
             )
             self.stop_source_processes()
             self.UpdateMsgBox([error_msg])

@@ -10,7 +10,7 @@ import wave
 import cv2
 import numpy as np
 from aiohttp import web
-from aiortc import RTCPeerConnection, RTCSessionDescription
+from aiortc import RTCPeerConnection, RTCRtpReceiver, RTCSessionDescription
 from aiortc.sdp import candidate_from_sdp, candidate_to_sdp
 import qrcode
 
@@ -158,14 +158,47 @@ def _has_audio_pipe_output():
     return bool(PIPE_AUDIO_PATH or PIPE_AUDIO_ML_PATH)
 
 
+def configure_video_receiver(pc):
+    """
+    Work around aiortc 1.10.x crashing on negotiated RTX packets by excluding
+    RTX from the server's preferred receive codecs.
+    """
+    if not (_has_video_pipe_output() or DISPLAY_VIDEO):
+        return
+
+    transceiver = pc.addTransceiver("video", direction="recvonly")
+    capabilities = RTCRtpReceiver.getCapabilities("video")
+    preferred_codecs = [
+        codec
+        for codec in capabilities.codecs
+        if codec.mimeType.lower() != "video/rtx"
+    ]
+    transceiver.setCodecPreferences(preferred_codecs)
+    logging.info(
+        "Configured video receive codecs without RTX: %s",
+        ", ".join(codec.mimeType for codec in preferred_codecs),
+    )
+
+
 async def mirror_video_to_pipes(track):
     logging.info("Video pipe output enabled")
     writer = LengthPrefixedPipeWriter(PIPE_VIDEO_PATH)
+    frames_mirrored = 0
+    video_idle = False
     try:
         while True:
-            frame = await track.recv()
+            try:
+                frame = await asyncio.wait_for(track.recv(), timeout=5.0)
+            except asyncio.TimeoutError:
+                if not video_idle:
+                    logging.warning("No video frames received from WebRTC track for 5.0s")
+                    video_idle = True
+                continue
+            if video_idle:
+                logging.info("WebRTC video track resumed")
+                video_idle = False
             image = frame.to_ndarray(format="bgr24")
-            print("[WEBRTC]: Frame Received")
+            frames_mirrored += 1
 
             if DISPLAY_VIDEO:
                 cv2.imshow("Server View", image)
@@ -178,6 +211,8 @@ async def mirror_video_to_pipes(track):
                 interpolation=cv2.INTER_AREA,
             )
             writer.write(resized.tobytes())
+            if frames_mirrored % 120 == 0:
+                logging.info("Mirrored %s video frames to pipe", frames_mirrored)
     except Exception as exc:
         logging.info("Video pipe output stopped: %s", exc)
     finally:
@@ -733,6 +768,7 @@ async def offer(request):
     offer = RTCSessionDescription(sdp=params["sdp"], type=params["type"])
 
     pc = RTCPeerConnection()
+    configure_video_receiver(pc)
     pcs.add(pc)
     logging.info("Peer connection created")
 
@@ -769,6 +805,7 @@ async def websocket_handler(request):
     await ws.prepare(request)
 
     pc = RTCPeerConnection()
+    configure_video_receiver(pc)
     pcs.add(pc)
     logging.info("WebSocket peer connection created")
 

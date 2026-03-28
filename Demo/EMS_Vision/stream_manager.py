@@ -1,6 +1,8 @@
 import ctypes
 import datetime
 import os
+import select
+import time
 
 import numpy as np
 
@@ -10,16 +12,23 @@ FRAME_WIDTH = 480
 FRAME_HEIGHT = 270
 DISPLAY_WIDTH = 640
 DISPLAY_HEIGHT = 480
+PIPE_IDLE_TIMEOUT_SECONDS = 5.0
 
 
-def _read_exactly(pipe_handle, n_bytes):
-    data = b""
+def _read_exactly(pipe_handle, n_bytes, idle_timeout_seconds=None, on_idle=None):
+    data = bytearray()
     while len(data) < n_bytes:
+        if idle_timeout_seconds is not None:
+            ready, _, _ = select.select([pipe_handle], [], [], idle_timeout_seconds)
+            if not ready:
+                if on_idle is not None:
+                    on_idle()
+                continue
         chunk = pipe_handle.read(n_bytes - len(data))
         if not chunk:
             return None
-        data += chunk
-    return data
+        data.extend(chunk)
+    return bytes(data)
 
 
 def _enqueue_latest(queue_handle, item):
@@ -78,6 +87,8 @@ def vision_reader_process(pipe_path, frame_queue, running_flag, frame_width, fra
     frame_count = 0
     session_count = 0
     has_received_stream = False
+    pipe_stalled = False
+    last_pipe_idle_log_at = 0.0
 
     while running_flag.value:
         video_pipe = None
@@ -85,11 +96,45 @@ def vision_reader_process(pipe_path, frame_queue, running_flag, frame_width, fra
             print(f"[VisionProcess] Opening {pipe_path} for reading...")
             video_pipe = open(pipe_path, "rb", buffering=0)
             session_count += 1
+            pipe_stalled = False
             print(f"[VisionProcess] {pipe_path} opened! Session {session_count}")
 
             while running_flag.value:
                 try:
-                    length_bytes = _read_exactly(video_pipe, 4)
+                    def on_pipe_idle():
+                        nonlocal pipe_stalled, last_pipe_idle_log_at
+                        pipe_stalled = True
+                        now = time.monotonic()
+                        if now - last_pipe_idle_log_at < PIPE_IDLE_TIMEOUT_SECONDS:
+                            return
+                        last_pipe_idle_log_at = now
+                        print(
+                            "[VisionProcess] No video bytes received for "
+                            f"{PIPE_IDLE_TIMEOUT_SECONDS:.1f}s"
+                        )
+                        if has_received_stream:
+                            waiting_frame = _build_status_frame(
+                                cv2,
+                                frame_width,
+                                frame_height,
+                                "Video stream stalled",
+                                "Waiting for new video frames...",
+                            )
+                            _enqueue_latest(
+                                frame_queue,
+                                (
+                                    waiting_frame,
+                                    "Vision stream stalled\n"
+                                    "Waiting for new video frames to resume.",
+                                ),
+                            )
+
+                    length_bytes = _read_exactly(
+                        video_pipe,
+                        4,
+                        idle_timeout_seconds=PIPE_IDLE_TIMEOUT_SECONDS,
+                        on_idle=on_pipe_idle,
+                    )
                     if length_bytes is None:
                         print("[VisionProcess] Video pipe closed; waiting for stream to resume")
                         if has_received_stream:
@@ -111,7 +156,12 @@ def vision_reader_process(pipe_path, frame_queue, running_flag, frame_width, fra
                         break
 
                     frame_length = int.from_bytes(length_bytes, "big")
-                    frame_bytes = _read_exactly(video_pipe, frame_length)
+                    frame_bytes = _read_exactly(
+                        video_pipe,
+                        frame_length,
+                        idle_timeout_seconds=PIPE_IDLE_TIMEOUT_SECONDS,
+                        on_idle=on_pipe_idle,
+                    )
                     if frame_bytes is None:
                         print("[VisionProcess] Incomplete video frame; waiting for reconnection")
                         if has_received_stream:
@@ -142,6 +192,9 @@ def vision_reader_process(pipe_path, frame_queue, running_flag, frame_width, fra
                     frame = np.frombuffer(frame_bytes, dtype=np.uint8).reshape(
                         (frame_height, frame_width, 3)
                     ).copy()
+                    if pipe_stalled:
+                        print("[VisionProcess] Video pipe resumed")
+                        pipe_stalled = False
                     frame_count += 1
                     has_received_stream = True
 
