@@ -19,6 +19,8 @@ import queue
 import time
 from PyQt5.QtCore import QThread, pyqtSignal
 
+from IO.feedback_engine import FeedbackPublisher, format_feedback_text
+
 
 # ── Lightweight transcript carrier ───────────────────────────────────────────
 # EMSAgentInference expects queue items with a .transcript attribute.
@@ -109,6 +111,7 @@ class _ProtocolThread(QThread):
         super().__init__()
         self._speech_queue = speech_queue
         self._running = True
+        self._feedback_publisher = FeedbackPublisher()
         print('[_ProtocolThread] Initialized')
 
     def stop(self):
@@ -116,6 +119,7 @@ class _ProtocolThread(QThread):
         self._running = False
         self.quit()
         self.wait(5000)
+        self._feedback_publisher.close()
         print('[_ProtocolThread] Stopped')
 
     def run(self):
@@ -198,6 +202,17 @@ class _ProtocolThread(QThread):
                     for prot, conf in zip(protocol_arr, prob_arr)
                 ]
                 self.protocol_prediction.emit(top3)
+                if top3:
+                    top_protocol = format_feedback_text(
+                        top3[0].protocol,
+                        top3[0].protocol_confidence,
+                    )
+                    if top_protocol:
+                        if self._feedback_publisher.publish_protocol(top_protocol):
+                            print(
+                                f"[_ProtocolThread] Published protocol feedback: "
+                                f"{top_protocol}"
+                            )
 
             except Exception as e:
                 print(f'[_ProtocolThread] Inference error: {e}')

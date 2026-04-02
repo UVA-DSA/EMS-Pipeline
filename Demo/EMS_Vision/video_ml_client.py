@@ -12,6 +12,9 @@ import requests
 from PyQt5.QtCore import QThread, Qt, pyqtSignal
 from PyQt5.QtGui import QImage
 
+from IO.bbox_engine import BBoxPublisher, build_bbox_box
+from IO.feedback_engine import FeedbackPublisher, format_feedback_text
+
 SERVER_BASE_URL = "http://localhost:8000"
 DETR_ENDPOINT = "/infer/detr"
 ACTIVITY_ENDPOINT_TEMPLATE = "/infer/activity/{stream_id}"
@@ -22,6 +25,13 @@ DISPLAY_WIDTH = 640
 DISPLAY_HEIGHT = 480
 HEALTH_LOG_INTERVAL_FRAMES = 30
 IDLE_LOG_INTERVAL_SECONDS = 2.0
+ACTIVITY_FEEDBACK_THRESHOLD = 0.80
+BBOX_CONFIDENCE_THRESHOLD = 0.70
+MAX_BBOXES_PER_LABEL = 2
+REQUIRE_HANDS_FOR_CHEST_COMPRESSIONS_FEEDBACK = False
+HANDS_DETECTION_LABEL = "hands"
+CHEST_COMPRESSIONS_ACTION_LABEL = "chest_compressions"
+NOT_CONFIDENT_ACTION_FEEDBACK = "Not confident"
 
 
 def _opencv():
@@ -73,6 +83,9 @@ class VideoMLClient(QThread):
         self._frame_id = 0
         self._last_frame_received_at = None
         self._last_idle_log_at = 0.0
+        self._last_published_action_feedback = None
+        self._bbox_publisher = BBoxPublisher()
+        self._feedback_publisher = FeedbackPublisher()
         print("[VideoMLClient] Initialized")
 
     def stop(self):
@@ -80,6 +93,8 @@ class VideoMLClient(QThread):
         self.is_running = False
         self.quit()
         self.wait()
+        self._bbox_publisher.close()
+        self._feedback_publisher.close()
         print("[VideoMLClient] Stopped")
 
     def _encode(self, frame_bgr):
@@ -104,6 +119,101 @@ class VideoMLClient(QThread):
         )
         resp.raise_for_status()
         return resp.json()
+
+    def _build_bbox_boxes(self, detections, frame_shape):
+        if frame_shape is None or len(frame_shape) < 2:
+            return []
+
+        frame_height, frame_width = frame_shape[:2]
+        label_counts = {}
+        boxes = []
+        ranked_detections = sorted(
+            detections or [],
+            key=self._detection_score,
+            reverse=True,
+        )
+
+        for det in ranked_detections:
+            try:
+                score_value = float(det.get("score", 0))
+            except (TypeError, ValueError):
+                continue
+
+            if score_value < BBOX_CONFIDENCE_THRESHOLD:
+                continue
+
+            label_text = str(det.get("label") or "").strip()
+            if not label_text:
+                continue
+
+            label_key = label_text.lower()
+            if label_counts.get(label_key, 0) >= MAX_BBOXES_PER_LABEL:
+                continue
+
+            bbox_box = build_bbox_box(
+                label=label_text,
+                score=score_value,
+                box_xyxy=det.get("box_xyxy", []),
+                frame_width=frame_width,
+                frame_height=frame_height,
+            )
+            if bbox_box is None:
+                continue
+
+            boxes.append(bbox_box)
+            label_counts[label_key] = label_counts.get(label_key, 0) + 1
+
+        return boxes
+
+    def _detection_score(self, detection):
+        try:
+            return float((detection or {}).get("score", 0) or 0)
+        except (AttributeError, TypeError, ValueError):
+            return 0.0
+
+    def _build_action_feedback(self, activity, bbox_boxes):
+        if not isinstance(activity, dict):
+            return ""
+
+        score = activity.get("score", 0)
+        try:
+            score_value = float(score)
+        except (TypeError, ValueError):
+            return ""
+
+        if score_value < ACTIVITY_FEEDBACK_THRESHOLD:
+            return NOT_CONFIDENT_ACTION_FEEDBACK
+
+        label_text = str(activity.get("label") or "").strip()
+        if not label_text:
+            return ""
+
+        if (
+            REQUIRE_HANDS_FOR_CHEST_COMPRESSIONS_FEEDBACK
+            and label_text.lower() == CHEST_COMPRESSIONS_ACTION_LABEL
+            and not any(
+                str(box.get("label") or "").strip().lower() == HANDS_DETECTION_LABEL
+                for box in bbox_boxes
+            )
+        ):
+            print(
+                "[VideoMLClient] Suppressed chest_compressions feedback: "
+                "no hands detected above bbox threshold"
+            )
+            return NOT_CONFIDENT_ACTION_FEEDBACK
+
+        return format_feedback_text(label_text, score_value)
+
+    def _publish_action_feedback(self, action_feedback):
+        if action_feedback == self._last_published_action_feedback:
+            return
+
+        if self._feedback_publisher.publish_action(action_feedback):
+            if action_feedback:
+                print(f"[VideoMLClient] Published action feedback: {action_feedback}")
+            else:
+                print("[VideoMLClient] Cleared action feedback")
+            self._last_published_action_feedback = action_feedback
 
     def run(self):
         print("[VideoMLClient] Started")
@@ -142,7 +252,9 @@ class VideoMLClient(QThread):
             self._last_frame_received_at = frame_started
             annotated = frame.copy()
             detections = []
+            bbox_boxes = []
             act_line = "buffering..."
+            action_feedback = ""
             det_line = "none"
             encode_ms = 0.0
             detr_ms = 0.0
@@ -163,6 +275,7 @@ class VideoMLClient(QThread):
             try:
                 detr = self._post(session, detr_url, image_bytes)
                 detections = detr.get("detections", [])
+                bbox_boxes = self._build_bbox_boxes(detections, frame.shape)
                 det_strs = [
                     f"{d.get('label', '?')} {d.get('score', 0):.2f}"
                     for d in detections[:3]
@@ -179,15 +292,8 @@ class VideoMLClient(QThread):
                 act = self._post(session, act_url, image_bytes)
                 activity = act.get("activity")
                 if isinstance(activity, dict):
-                    if activity.get('score', 0) > 0.8:
-                        act_line = (
-                            f"{activity.get('label', '?')} "
-                            f"({activity.get('score', 0):.2f})"
-                        )
-                    else:
-                        act_line = (
-                            f"Not confident"
-                        )
+                    action_feedback = self._build_action_feedback(activity, bbox_boxes)
+                    act_line = action_feedback or "Not confident"
                 else:
                     buf = act.get("buffer_size", "?")
                     win = act.get("window_size", "?")
@@ -216,6 +322,13 @@ class VideoMLClient(QThread):
             self.activityResult.emit(
                 f"[Video ML @ {ts}]\nActivity: {act_line}\nDetections: {det_line}"
             )
+            if self._bbox_publisher.publish(self._frame_id, bbox_boxes):
+                if bbox_boxes or self._frame_id % HEALTH_LOG_INTERVAL_FRAMES == 0:
+                    print(
+                        f"[VideoMLClient] Published bbox frame: "
+                        f"frame_id={self._frame_id} boxes={len(bbox_boxes)}"
+                    )
+            self._publish_action_feedback(action_feedback)
             emit_ms = (time.monotonic() - emit_started) * 1000.0
             total_ms = (time.monotonic() - frame_started) * 1000.0
 

@@ -14,12 +14,24 @@ from aiortc import RTCPeerConnection, RTCRtpReceiver, RTCSessionDescription
 from aiortc.sdp import candidate_from_sdp, candidate_to_sdp
 import qrcode
 
+try:
+    from IO.bbox_engine import BBoxBroker
+except ImportError:
+    from bbox_engine import BBoxBroker
+
+try:
+    from IO.feedback_engine import FeedbackBroker, build_feedback_payload
+except ImportError:
+    from feedback_engine import FeedbackBroker, build_feedback_payload
+
 logging.basicConfig(level=logging.INFO)
 
 pcs = set()
 video_tasks = set()
 audio_tasks = set()
 data_tasks = set()
+bbox_broker = BBoxBroker()
+feedback_broker = FeedbackBroker()
 
 HOST = os.environ.get("HOST", "0.0.0.0")
 PORT = int(os.environ.get("PORT", "8080"))
@@ -686,38 +698,113 @@ async def send_mock_feedback(channel):
         "Slow down",
         "Proceed forward",
     ]
-    assistance = [
-        "Need extra light",
-        "Hold camera steady",
-        "Move closer",
-        "Check blind spot",
-    ]
     try:
         while channel.readyState == "open":
-            send_all = random.random() < 0.5
-            feedback = {}
-            if send_all:
-                feedback = {
-                    "protocol": random.choice(protocols),
-                    "action": random.choice(actions),
-                    "assistance": random.choice(assistance),
-                }
+            if random.random() < 0.5:
+                payload = build_feedback_payload(
+                    action=random.choice(actions),
+                    protocol="",
+                )
             else:
-                kind = random.choice(["protocol", "action", "assistance"])
-                if kind == "protocol":
-                    feedback["protocol"] = random.choice(protocols)
-                elif kind == "action":
-                    feedback["action"] = random.choice(actions)
-                else:
-                    feedback["assistance"] = random.choice(assistance)
-            payload = {
-                "type": "feedback",
-                "feedback": feedback,
-            }
+                payload = build_feedback_payload(
+                    action="",
+                    protocol=random.choice(protocols),
+                )
             channel.send(json.dumps(payload))
             await asyncio.sleep(1.0)
     except Exception as exc:
         logging.info(f"DataChannel sender stopped: {exc}")
+
+
+async def send_feedback_updates(channel):
+    last_version = feedback_broker.current_version
+    try:
+        logging.info(
+            "Feedback sender task started for channel=%s version=%s current=%s",
+            channel.label,
+            last_version,
+            feedback_broker.current_feedback,
+        )
+        current_feedback = feedback_broker.current_feedback
+        if current_feedback.get("action") or current_feedback.get("protocol"):
+            payload = build_feedback_payload(
+                action=current_feedback.get("action", ""),
+                protocol=current_feedback.get("protocol", ""),
+            )
+            logging.info("Sending initial feedback snapshot: %s", payload["feedback"])
+            channel.send(json.dumps(payload))
+        else:
+            logging.info("No initial feedback snapshot available for channel=%s", channel.label)
+
+        while channel.readyState == "open":
+            await asyncio.sleep(0.1)
+
+            current_version = feedback_broker.current_version
+            if current_version <= last_version:
+                continue
+
+            last_version = current_version
+            feedback = feedback_broker.current_feedback
+            logging.info(
+                "Feedback broker produced update for channel=%s version=%s feedback=%s",
+                channel.label,
+                last_version,
+                feedback,
+            )
+            payload = build_feedback_payload(
+                action=feedback.get("action", ""),
+                protocol=feedback.get("protocol", ""),
+            )
+            logging.info("Sending feedback update: %s", payload["feedback"])
+            channel.send(json.dumps(payload))
+    except Exception as exc:
+        logging.info(f"DataChannel sender stopped: {exc}")
+
+
+async def send_bbox_updates(channel):
+    last_version = bbox_broker.current_version
+    try:
+        logging.info(
+            "BBox sender task started for channel=%s version=%s current=%s",
+            channel.label,
+            last_version,
+            bbox_broker.current_payload,
+        )
+        current_payload = bbox_broker.current_payload
+        if current_payload is not None:
+            logging.info(
+                "Sending initial bbox snapshot: frame_id=%s boxes=%s",
+                current_payload.get("frameId"),
+                len(current_payload.get("boxes", [])),
+            )
+            channel.send(json.dumps(current_payload))
+        else:
+            logging.info("No initial bbox snapshot available for channel=%s", channel.label)
+
+        while channel.readyState == "open":
+            await asyncio.sleep(0.1)
+
+            current_version = bbox_broker.current_version
+            if current_version <= last_version:
+                continue
+
+            last_version = current_version
+            payload = bbox_broker.current_payload
+            if payload is None:
+                continue
+
+            logging.info(
+                "BBox broker produced update for channel=%s version=%s "
+                "frame_id=%s boxes=%s",
+                channel.label,
+                last_version,
+                payload.get("frameId"),
+                len(payload.get("boxes", [])),
+            )
+            channel.send(json.dumps(payload))
+    except Exception as exc:
+        logging.info(f"DataChannel sender stopped: {exc}")
+
 
 async def send_mock_bboxes(channel):
     frame_id = 0
@@ -756,9 +843,16 @@ def attach_datachannel_handlers(channel):
         task = asyncio.create_task(send_mock_bboxes(channel))
         data_tasks.add(task)
         task.add_done_callback(data_tasks.discard)
+    elif channel.label == DETECTION_CHANNEL_LABEL:
+        task = asyncio.create_task(send_bbox_updates(channel))
+        data_tasks.add(task)
+        task.add_done_callback(data_tasks.discard)
 
-    if SEND_MOCK_FEEDBACK and channel.label == DETECTION_CHANNEL_LABEL:
-        task = asyncio.create_task(send_mock_feedback(channel))
+    if channel.label == DETECTION_CHANNEL_LABEL:
+        if SEND_MOCK_FEEDBACK:
+            task = asyncio.create_task(send_mock_feedback(channel))
+        else:
+            task = asyncio.create_task(send_feedback_updates(channel))
         data_tasks.add(task)
         task.add_done_callback(data_tasks.discard)
 
@@ -874,16 +968,43 @@ async def websocket_handler(request):
     return ws
 
 
+async def on_startup(app):
+    if SEND_MOCK_BBOX:
+        logging.info("Mock bbox enabled; skipping bbox broker startup")
+    else:
+        await bbox_broker.start()
+        logging.info(
+            "BBox broker startup complete: version=%s current=%s",
+            bbox_broker.current_version,
+            bbox_broker.current_payload,
+        )
+
+    if SEND_MOCK_FEEDBACK:
+        logging.info("Mock feedback enabled; skipping feedback broker startup")
+    else:
+        await feedback_broker.start()
+        logging.info(
+            "Feedback broker startup complete: version=%s current=%s",
+            feedback_broker.current_version,
+            feedback_broker.current_feedback,
+        )
+
+
 async def on_shutdown(app):
     logging.info("Shutting down")
     await asyncio.gather(*[pc.close() for pc in pcs], return_exceptions=True)
     pcs.clear()
+    if not SEND_MOCK_BBOX:
+        await bbox_broker.stop()
+    if not SEND_MOCK_FEEDBACK:
+        await feedback_broker.stop()
 
 
 def main():
     app = web.Application()
     app.router.add_post("/offer", offer)
     app.router.add_get("/ws", websocket_handler)
+    app.on_startup.append(on_startup)
     app.on_shutdown.append(on_shutdown)
     print_connection_info()
     web.run_app(app, host=HOST, port=PORT)

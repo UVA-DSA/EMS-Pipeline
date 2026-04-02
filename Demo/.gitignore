@@ -1,6 +1,7 @@
 # Ignore Mac system files
 .DS_store
 
+*.log
 results.csv
 
 chunk.csv

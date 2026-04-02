@@ -56,6 +56,8 @@ from Utils.runtime_paths import demo_path, etc_path
 from Utils import pipeline_config
 
 from IO import srt_receiver as sim_seb
+from IO.bbox_engine import reset_bbox_engine
+from IO.feedback_engine import reset_feedback_engine
 
 from EMS_Vision.video_ml_client import VideoMLClient
 
@@ -506,6 +508,8 @@ class MainWindow(QWidget):
         self._start_video_ml_client()
 
     def start_video_audio_imu_processes(self):
+        reset_bbox_engine()
+        reset_feedback_engine()
         sim_seb.setup_pipes()
 
         self.VideoProcess = VisionStreamManager(data_path, videostream)
