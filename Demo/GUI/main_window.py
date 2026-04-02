@@ -505,7 +505,6 @@ class MainWindow(QWidget):
             daemon=True
         ).start()
         self.start_video_audio_imu_processes()
-        self._start_video_ml_client()
 
     def start_video_audio_imu_processes(self):
         reset_bbox_engine()
@@ -513,7 +512,7 @@ class MainWindow(QWidget):
         sim_seb.setup_pipes()
 
         self.VideoProcess = VisionStreamManager(data_path, videostream)
-        self.VideoProcess.changePixmap.connect(self.setImage)
+        # Do NOT connect changePixmap here — VideoML owns the video widget always.
         self.VideoProcess.changeVisInfo.connect(self.handle_message2)
         self.VideoProcess.start()
 
@@ -530,18 +529,12 @@ class MainWindow(QWidget):
         self.IMUProcess.changeActivityRec.connect(self.handle_message)
         self.IMUProcess.start()
 
+        # VideoML is always active — start it unconditionally.
+        self._start_video_ml_client()
+
     def _start_video_ml_client(self):
-        if self.VideoMLProcess is not None:
-            return
         print("[GUI] Starting Video ML client...")
         self.VideoMLProcess = VideoMLClient(self.VideoProcess.ml_queue)
-
-        # ML frames go to the video widget — disconnect the plain stream first
-        try:
-            self.VideoProcess.changePixmap.disconnect(self.setImage)
-        except TypeError:
-            pass  # wasn't connected
-
         self.VideoMLProcess.annotatedFrame.connect(self.setImage)
         self.VideoMLProcess.activityResult.connect(self._on_video_ml_result)
         self.VideoMLProcess.start()
@@ -574,18 +567,16 @@ class MainWindow(QWidget):
         self.smartglass_log_thread.start()
 
     def stop_pipeline_processes(self):
-        if self.VideoProcess is not None:
-            print("[GUI] Stopping video stream...")
-            self.VideoProcess.stop()
-            self.VideoProcess = None
-
+        # Stop VideoML first — it holds a reference to VideoProcess's ml_queue.
         if self.VideoMLProcess is not None:
             print("[GUI] Stopping Video ML client...")
             self.VideoMLProcess.stop()
             self.VideoMLProcess = None
-            # Reconnect plain video display now that ML is off
-            if self.VideoProcess is not None:
-                self.VideoProcess.changePixmap.connect(self.setImage)
+
+        if self.VideoProcess is not None:
+            print("[GUI] Stopping video stream...")
+            self.VideoProcess.stop()
+            self.VideoProcess = None
 
         if self.AudioProcess is not None:
             print("[GUI] Stopping audio stream...")
@@ -677,6 +668,8 @@ class MainWindow(QWidget):
             modalities.update({1})
         if self.VideoMLCheckBox.isChecked():
             modalities.add(4)
+        # VideoML always reads from the video pipe — ensure modality 1 is always present.
+        modalities.add(1)
 
         # if source == "smartglass":
         #     if self.AudioCheckBox.isChecked() or self.AudioMLCheckBox.isChecked():
