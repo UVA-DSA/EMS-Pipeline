@@ -12,7 +12,7 @@ import requests
 from PyQt5.QtCore import QThread, Qt, pyqtSignal
 from PyQt5.QtGui import QImage
 
-from IO.bbox_engine import BBoxPublisher, build_bbox_box
+from IO.bbox_engine import BBoxPublisher, build_bbox_box, normalize_bbox_label
 from IO.feedback_engine import FeedbackPublisher, format_feedback_text
 
 SERVER_BASE_URL = "http://localhost:8000"
@@ -31,7 +31,6 @@ MAX_BBOXES_PER_LABEL = 2
 REQUIRE_HANDS_FOR_CHEST_COMPRESSIONS_FEEDBACK = False
 HANDS_DETECTION_LABEL = "hands"
 CHEST_COMPRESSIONS_ACTION_LABEL = "chest_compressions"
-NOT_CONFIDENT_ACTION_FEEDBACK = "Not confident"
 
 
 def _opencv():
@@ -49,7 +48,7 @@ def _draw_detections(frame_bgr, detections):
         if len(box) != 4:
             continue
         x1, y1, x2, y2 = [int(round(v)) for v in box]
-        label = det.get("label", "?")
+        label = normalize_bbox_label(det.get("label", "?")) or "?"
         score = det.get("score", 0.0)
         color = (0, 220, 0)
         cv2.rectangle(frame_bgr, (x1, y1), (x2, y2), color, 2)
@@ -142,7 +141,7 @@ class VideoMLClient(QThread):
             if score_value < BBOX_CONFIDENCE_THRESHOLD:
                 continue
 
-            label_text = str(det.get("label") or "").strip()
+            label_text = normalize_bbox_label(det.get("label"))
             if not label_text:
                 continue
 
@@ -182,7 +181,7 @@ class VideoMLClient(QThread):
             return ""
 
         if score_value < ACTIVITY_FEEDBACK_THRESHOLD:
-            return NOT_CONFIDENT_ACTION_FEEDBACK
+            return ""
 
         label_text = str(activity.get("label") or "").strip()
         if not label_text:
@@ -200,19 +199,19 @@ class VideoMLClient(QThread):
                 "[VideoMLClient] Suppressed chest_compressions feedback: "
                 "no hands detected above bbox threshold"
             )
-            return NOT_CONFIDENT_ACTION_FEEDBACK
+            return ""
 
         return format_feedback_text(label_text, score_value)
 
     def _publish_action_feedback(self, action_feedback):
+        if not action_feedback:
+            return
+
         if action_feedback == self._last_published_action_feedback:
             return
 
         if self._feedback_publisher.publish_action(action_feedback):
-            if action_feedback:
-                print(f"[VideoMLClient] Published action feedback: {action_feedback}")
-            else:
-                print("[VideoMLClient] Cleared action feedback")
+            print(f"[VideoMLClient] Published action feedback: {action_feedback}")
             self._last_published_action_feedback = action_feedback
 
     def run(self):
@@ -277,7 +276,8 @@ class VideoMLClient(QThread):
                 detections = detr.get("detections", [])
                 bbox_boxes = self._build_bbox_boxes(detections, frame.shape)
                 det_strs = [
-                    f"{d.get('label', '?')} {d.get('score', 0):.2f}"
+                    f"{normalize_bbox_label(d.get('label', '?')) or '?'} "
+                    f"{d.get('score', 0):.2f}"
                     for d in detections[:3]
                 ]
                 det_line = ", ".join(det_strs) if det_strs else "none"
