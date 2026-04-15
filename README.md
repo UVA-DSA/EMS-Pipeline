@@ -4,46 +4,73 @@
 
 ![CognitiveEMS](Assets/CognitiveEMS_Arch.png)
 
-
 The **CognitiveEMS Pipeline** is a decision support system designed for real-time, multimodal, and edge-deployed **Cognitive Assistant Systems for Emergency Medical Services (EMS)**. Its primary goal is to enhance situational awareness for first responders and paramedics by automatically collecting and analyzing multimodal data from incident scenes, providing actionable insights and suggestions. The system comprises advanced AI models and modular software components designed for deployment on edge devices.
 
 For more information, visit the [project page](https://www.nist.gov/ctl/pscr/cognitive-assistant-systems-emergency-response).
 
 ---
 
-## Demo Branch Overview
+## Demo Overview
 
-This branch contains a **portable demo** of the CognitiveEMS pipeline, featuring a GUI for Ubuntu-based systems. The demo includes:
+This branch contains a **portable Ubuntu-based demo** of the CognitiveEMS pipeline with a desktop GUI and device integrations.
 
 ### Server Features
-- Real-time **speech recognition**.
-- **Protocol prediction** based on incident data.
-- **EMS object detection**.
-- Preliminary version of **EMS intervention detection**.
+- Real-time **speech recognition**
+- **Protocol prediction** based on running transcript context
+- **EMS object detection**
+- Preliminary **EMS intervention/activity detection**
 
 ### AR Smartglass Features
 - **Augmented Reality (AR)** feedback displaying:
-  - Predicted protocols.
-  - Detected EMS objects.
-  - Detected interventions.
-- Real-time streaming of egocentric video and audio.
+  - Predicted protocols
+  - Detected EMS objects
+  - Detected interventions
+- Real-time streaming of egocentric video and audio
 
 ### Smartwatch Features
-- Real-time streaming of **hand movement data**.
+- Real-time streaming of **hand movement data**
 
 ---
 
 ## High-Level Architecture
 
-The CognitiveEMS pipeline employs a real-time, multi-threaded architecture to process multimodal data inputs. Its main components include:
+The current demo is split across a few major runtime components:
 
-### Core AI Models
-1. **EMS-Whisper**: A fine-tuned speech recognition model for EMS audio inputs.
-2. **EMS-TinyBERT**: A protocol prediction model utilizing medical knowledge and transcript analysis.
-3. **EMS-Vision**: An intervention recognition model leveraging contextual knowledge and video data.
+1. **Desktop GUI**  
+   Entry point: `Demo/main.py`  
+   This is the main operator-facing application.
 
+2. **Speech Recognition**
+   - **Google Cloud Speech-to-Text** for cloud inference
+   - **EMS-Whisper / Whisper C++ streaming** for local inference
 
-For detailed descriptions of the models, refer to the [Technical Documentation](#technical-documentation).
+3. **Protocol Prediction**
+   - **EMS-TinyBERT** consumes the running transcript and predicts likely EMS protocols
+
+4. **Vision Inference**
+   - The code under `Demo/EMS_Vision/` does **not** run the heavy vision models directly
+   - Instead, it sends video frames to a separate **Docker-based inference server**
+   - That server is documented in [Tools/EMS_Vision/README_container_inference.md](Tools/EMS_Vision/README_container_inference.md)
+
+5. **Device Ingestion**
+   - `simulator` source: incoming SRT stream
+   - `smartglass` source: GUI-managed WebRTC server for the smartglass client
+
+---
+
+## Repository Layout
+
+The directories most users will need are:
+
+- `Demo/main.py`: desktop app entry point
+- `Demo/GUI/`: main Qt GUI
+- `Demo/EMS_Speech/`: speech recognition components
+- `Demo/EMS_Agent/`: protocol prediction components
+- `Demo/EMS_Vision/`: desktop-side vision client that talks to the Docker inference server
+- `Demo/IO/`: SRT/WebRTC ingestion and local runtime I/O
+- `Tools/EMS_Vision/`: Dockerized vision inference server, TensorRT conversion tools, and container guide
+- `Android/EgoStreamer/`: Android smartglass submodule
+- `Android/EgoStreamer/Android/EgoStreamer/`: Android Studio project for the smartglass app
 
 ---
 
@@ -52,23 +79,23 @@ For detailed descriptions of the models, refer to the [Technical Documentation](
 ### Recommended Specifications
 
 #### Server
-- **Processor**: 12th Gen (or newer) Intel® Core™ i5, i7, or i9.
-- **RAM**: 32GB.
-- **Graphics**: NVIDIA RTX 3080 or higher.
+- **Processor**: 12th Gen (or newer) Intel Core i5, i7, or i9
+- **RAM**: 32GB
+- **Graphics**: NVIDIA RTX 3080 or higher
 
 #### Smartglass
-- **Model**: [Vuzix M4000 Smart Glasses](https://www.vuzix.com/products/m4000-smart-glasses).
+- **Model**: [Vuzix M4000 Smart Glasses](https://www.vuzix.com/products/m4000-smart-glasses)
 
 #### Smartwatch
-- **Model**: Samsung Galaxy Watch 5.
+- **Model**: Samsung Galaxy Watch 5
 
 ---
 
 ### Minimum Specifications
 
 #### Server
-- **Processor**: 12th Gen Intel® Core™ i5
-- **RAM**: 16GB.
+- **Processor**: 12th Gen Intel Core i5
+- **RAM**: 16GB
 - **Graphics**: NVIDIA RTX 3060
 
 ---
@@ -76,99 +103,146 @@ For detailed descriptions of the models, refer to the [Technical Documentation](
 ## Software Requirements
 
 #### Server
-- **OS**: Ubuntu 22.04.5 LTS (64-bit).
-- **CUDA**: Version 12.4.
-- **Environment**: Conda (Python 3.10.9).
-- **Android Studio**: For android app deployments for smartglass, smartwatch.
+- **OS**: Ubuntu 22.04.5 LTS (64-bit)
+- **CUDA**: Version 12.x recommended for GPU-backed workloads
+- **Environment**: Conda with Python 3.10
+- **Docker + NVIDIA Container Toolkit**: required for the current EMS-Vision runtime
+- **Android Studio**: for Android app deployment to smartglass and smartwatch
 
 #### Smartglass
-- **OS**: Android OS.
+- **OS**: Android OS
 
 #### Smartwatch
-- **OS**: Android Wear OS.
+- **OS**: Android Wear OS
 
 ---
 
 ## Prerequisites
 
 ### Network Configuration
-- Ensure the server, smartglass, and smartwatch are on the **same network**.
-- Assign a **static IP** to the server and configure it in the Android applications.
-- Remove any firewall rules blocking TCP or UDP traffic.
+- Ensure the server, smartglass, and smartwatch are on the **same network**
+- Assign a **static IP** to the server and configure it in the Android applications where needed
+- Remove any firewall rules blocking required TCP or UDP traffic
 
 ![Network Architecture](Assets/Network_Architecture.png)
 
 ---
 
-## Installation 
+## Installation
 
-:exclamation: Following instructions are still a work in progress.
-
-
+> The setup steps below reflect the current directory structure and runtime flow. Some components are still evolving, but these are the correct starting points for the present demo.
 
 ### 1. Clone the Repository
+
+Clone with submodules so the Whisper runtime code is available immediately:
+
 ```bash
-git clone https://github.com/UVA-DSA/EMS-Pipeline.git
+git clone --recurse-submodules https://github.com/UVA-DSA/EMS-Pipeline.git
+cd EMS-Pipeline
 git checkout demo
+git submodule update --init --recursive
 ```
 
-### 2. Conda Environment Setup
-#### Standard Setup
-For hardware matching [recommended specifications](#hardware-requirements), use the provided `environment.yml` file:
-```bash
-cd Demo/
+If you already cloned the repository without submodules:
 
-# Make sure your system is up-to-date
+```bash
+git submodule update --init --recursive
+```
+
+### 2. Create the Conda Environment
+
+```bash
+conda create -n EMSProject python=3.10
+conda activate EMSProject
+```
+
+### 3. Install System Packages
+
+Install the desktop, audio, SRT, and build dependencies:
+
+```bash
 sudo apt update
 sudo apt upgrade
 
-# dependencies for pyaudio
-sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
-sudo apt-get install ffmpeg libav-tools
-
+sudo apt-get install -y \
+  build-essential \
+  cmake \
+  pkg-config \
+  ffmpeg \
+  libav-tools \
+  libsdl2-dev \
+  libasound-dev \
+  portaudio19-dev \
+  libportaudio2 \
+  libportaudiocpp0 \
+  libsrt1.5-gnutls \
+  libsrt-gnutls-dev \
+  libxcb-randr0-dev \
+  libxcb-xtest0-dev \
+  libxcb-xinerama0-dev \
+  libxcb-shape0-dev \
+  libxcb-xkb-dev
 ```
 
-#### Custom Setup
+### 4. Install Python Packages
 
-Manually install dependencies:
-1. Identify your CUDA version using `nvidia-smi`.
-2. Use the [PyTorch installation guide](https://pytorch.org/get-started/locally/) to install PyTorch (v2.5.1 tested), torchvision, and torchaudio for your system.
+Install PyTorch first for your CUDA version. The example below matches the currently tested setup:
+
 ```bash
-
-conda create -n EMSProject python=3.10
-conda activate EMSProject
 pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu118
 
-# downgrade below packages in the given order.
 pip install -q torch-scatter -f https://pytorch-geometric.com/whl/torch-2.2.0+cu118.html
 pip install -q torch-sparse -f https://pytorch-geometric.com/whl/torch-2.2.0+cu118.html
 pip install -q torch-geometric==2.3.1
 ```
 
-3. Install additional packages:
-```bash
-pip install pyyaml transformers==4.27.2 pyqt5 pandas openpyxl evaluate jiwer
-sudo apt-get install libxcb-randr0-dev libxcb-xtest0-dev libxcb-xinerama0-dev libxcb-shape0-dev libxcb-xkb-dev
+Then install the remaining application dependencies:
 
-pip install pyaudio
-pip install nltk
-pip install python-socketio
-pip install google-cloud-speech
-pip install pygame
-pip install sounddevice
-pip install mediapipe
-pip install netifaces
-pip install opencv-python-headless
-pip install pyqt5==5.15.6
-pip install py-trees==2.0.5
+```bash
+pip install \
+  pyyaml \
+  transformers==4.27.2 \
+  pyqt5==5.15.6 \
+  pandas \
+  openpyxl \
+  evaluate \
+  jiwer \
+  pyaudio \
+  nltk \
+  python-socketio \
+  google-cloud-speech \
+  pygame \
+  sounddevice \
+  mediapipe \
+  netifaces \
+  opencv-python-headless \
+  py-trees==2.0.5 \
+  requests \
+  aiohttp \
+  aiortc \
+  qrcode[pil]
 ```
 
-## Google Cloud Speech-to-Text API (Optional)
+### 5. Speech Recognition Setup
+
+The demo supports both cloud and local speech recognition.
+
+#### Google Cloud Speech-to-Text API (Optional)
 
 To enable cloud-based speech recognition:
-1. Obtain a service account JSON key with the Speech API enabled.
-2. Place it under the `Demo/` folder as `service-account.json`.
-3. For more information, visit the [Google Cloud Speech-to-Text API](https://cloud.google.com/speech-to-text/) page.
+
+1. Obtain a service account JSON key with the Speech API enabled
+2. Place it in the `Demo/` folder as `service-account.json`
+3. The GUI will automatically pick it up from:
+
+```text
+Demo/service-account.json
+```
+
+Reference:
+- [Google Cloud Speech-to-Text API](https://cloud.google.com/speech-to-text/)
+
+Expected JSON structure:
 
 ```json
 {
@@ -184,137 +258,354 @@ To enable cloud-based speech recognition:
   "client_x509_cert_url": "",
   "universe_domain": "googleapis.com"
 }
-
 ```
 
----
+#### Local Whisper Setup
 
-### 3. Virtual Speaker and Mic Setup
-For audio input:
+The current local speech path uses the Whisper submodule at:
+
+```text
+Demo/EMS_Speech/EMS_Whisper/whisper.cpp_realtime_stream
+```
+
+Download the Whisper model files and place them under:
+
+```text
+Demo/EMS_Speech/EMS_Whisper/whisper.cpp_realtime_stream/models
+```
+
+The current Python code expects the local model file:
+
+```text
+Demo/EMS_Speech/EMS_Whisper/whisper.cpp_realtime_stream/models/ggml-finetuned-base-v203.bin
+```
+
+Build the realtime streaming binary:
+
 ```bash
-pactl load-module module-null-sink sink_name="virtual_speaker" sink_properties=device.description="virtual_speaker"
-pactl load-module module-remap-source master="virtual_speaker.monitor" source_name="virtual_mic" source_properties=device.description="virtual_mic"
+cd Demo/EMS_Speech/EMS_Whisper/whisper.cpp_realtime_stream
+
+cmake -B build --fresh \
+  -DWHISPER_SDL2=ON \
+  -DGGML_CUDA=1 \
+  -DCUDAToolkit_ROOT=/usr/local/cuda-13.2
+
+cmake --build build -j --config Release
 ```
 
-Set the `LD_LIBRARY_PATH`:
+After the build, verify that this file exists:
+
+```text
+Demo/EMS_Speech/EMS_Whisper/whisper.cpp_realtime_stream/build/bin/egosim_stream
+```
+
+If your system requires ALSA plugin discovery help, set:
+
 ```bash
 export LD_LIBRARY_PATH=/usr/lib/aarch64-linux-gnu/alsa-lib/:$LD_LIBRARY_PATH
 ```
 
----
+### 6. Protocol Prediction Model Setup
 
-## 4. Model Setup
+Download the protocol prediction model files and place the extracted `models` directory under:
 
-### EMS-Whisper
-1. Download the `models` folder from [here](https://drive.google.com/drive/folders/1Z4oakBCSiSyW_agq3UG1eHsQDMmHKHOA?usp=sharing) and place it under `Demo/EMS_Whisper/models/`.
-2. Go to directory `Demo/EMS_Whisper`.
-3. Execute following commands to compile Whisper_CPP. Make sure to update `CUDA_ARCH_FLAG` in the `MakeFile` if `CUBLAS` is used (recommended).
-```bash
-make clean
-WHISPER_CUBLAS=1 make -j
+```text
+Demo/EMS_Agent/Interface/models/
 ```
-4. Verify if `stream` artifact is generated within the folder.
 
-### EMS-TinyBERT
-1. Download the `models` folder from [here](https://drive.google.com/drive/folders/1y4Ko6iSr5zkmYbm2llNQq7cwL-cu6Qi3?usp=sharing) and place it under `Demo/EMSAgent/Interface/models/`.
+The current protocol runtime loads from:
 
+```text
+Demo/EMS_Agent/Interface/models/DKEC-TinyClinicalBERT/model.pt
+```
 
-### EMS-Vision
-1. Download the `models` folder from [here](https://drive.google.com/drive/folders/1y4Ko6iSr5zkmYbm2llNQq7cwL-cu6Qi3?usp=sharing) and place it under `Demo/EMSVision/weights/`.
+### 7. Vision Setup
 
+The current **EMS-Vision** runtime is containerized.
+
+Important:
+- The code under `Demo/EMS_Vision/` is a **client**
+- It sends frames to a local inference server at `http://localhost:8000`
+- It expects the Docker inference server described in [Tools/EMS_Vision/README_container_inference.md](Tools/EMS_Vision/README_container_inference.md) to be running first
+
+Recommended setup path:
+
+1. Follow the container guide in [Tools/EMS_Vision/README_container_inference.md](Tools/EMS_Vision/README_container_inference.md)
+2. First try the **prebuilt Docker image**
+3. If the prebuilt image or TensorRT engines are not compatible with your GPU architecture, follow the same guide to **build from source on the target machine**
+
+This matters because TensorRT engines are GPU-family sensitive. In practice, that means:
+- prebuilt images are the fastest way to get started
+- some machines will still need a local rebuild for correct TensorRT compatibility
+
+Before launching the full demo, verify the inference server is healthy:
+
+```bash
+curl http://localhost:8000/health
+```
+
+If you want object detection and intervention/activity inference in the GUI, keep that container running while using the demo.
 
 ---
 
-### 5. Android Application Setup
+### 8. Android Smartglass Application Setup
 
-To install and configure the **CognitiveEMS** Android application on the smartglass, follow the steps below:
+The current smartglass application is stored in the `Android/EgoStreamer` git submodule.
 
-#### **1. Open the Project in Android Studio**
-- Launch **Android Studio** and open the project located at:  
-  ```
-  AndroidDevelopment/cognitive_ems
-  ```
-- Ensure you have the correct **JDK** and **SDKs** installed for Android development.
+If you cloned the main repository without submodules, initialize it first:
 
-#### **2. Sync Gradle and Resolve Dependencies**
-- Allow **Gradle** to synchronize and resolve dependencies.  
-- Ensure there are no synchronization issues.
+```bash
+git submodule update --init --recursive
+```
 
-#### **3. Connect the Smartglass**
-- Use a **USB cable** to connect the smartglass to your development machine.
-- Enable **Developer Options** on the smartglass.
-- Ensure **USB Debugging** is turned on.
+At a minimum, make sure this submodule is present:
 
-#### **4. Verify Device Connection**
-- Open **Android Studio** and check that the smartglass appears under **Connected Devices**.
+```text
+Android/EgoStreamer
+```
 
-#### **5. Configure Network Settings (Important ⚠️)**
-- Ensure the **smartglass** and the **server hosting the CognitiveEMS pipeline** are on the **same network**.
-- Determine the **server's IP address**.  
-  - Ideally, assign a **static IP** to the server to avoid connectivity issues.
-- Open the file:  
+To install and use the smartglass application:
+
+#### **1. Open the Android Project in Android Studio**
+
+- Launch **Android Studio**
+- Open the project located at:
+  ```text
+  Android/EgoStreamer/Android/EgoStreamer
   ```
-  AndroidDevelopment/cognitive_ems/app/src/main/res/values/strings.xml
-  ```
-- Update the following line with the **server's IP address**:  
-  ```xml
-  <string name="server_ip">YOUR_SERVER_IP_HERE</string>
-  ```
-  Example:
-  ```xml
-  <string name="server_ip">192.168.1.100</string>
-  ```
+- Ensure the Android SDK and Gradle dependencies are allowed to sync
+
+#### **2. Connect the Smartglass**
+
+- Use a **USB cable** to connect the smartglass to your development machine
+- Enable **Developer Options** on the smartglass
+- Enable **USB Debugging**
+- Confirm the device appears in Android Studio under **Connected Devices**
+
+#### **3. Build and Install the App**
+
+- Build the project in Android Studio
+- Install the app on the smartglass
+
+The Android app requests and uses:
+- camera access
+- microphone access
+- network access
+
+#### **4. Put the Smartglass and Server on the Same Network**
+
+- Ensure the **smartglass** and the **desktop system running the CognitiveEMS GUI** are on the **same network**
+- A stable local network is strongly recommended for the current WebRTC-based setup
+
+#### **5. Start the Desktop GUI in Smartglass Mode**
+
+On the desktop side:
+
+1. Launch the CognitiveEMS GUI:
+   ```bash
+   cd Demo
+   python main.py
+   ```
+2. Select `smartglass` as the data source
+3. Press `Start`
+
+In the current code path, the GUI starts its local WebRTC smartglass server and displays a **QR code / WebSocket connection URL** in the video panel.
+
+#### **6. Connect the Smartglass App**
+
+On the smartglass:
+
+1. Open the installed app
+2. Grant camera and microphone permissions if prompted
+3. Tap **Scan QR**
+4. Scan the QR code displayed by the desktop GUI
+5. Tap **Start Streaming**
+
+The Android app expects a WebSocket signaling URL of the form:
+
+```text
+ws://<server-ip>:<port>/ws
+```
+
+In normal use, you should rely on the QR code so the correct host and port are captured automatically.
+
+#### **7. Manual URL Entry Fallback**
+
+If QR scanning fails, the app also allows manual entry of the WebSocket URL.
+
+In that case:
+- use the exact `ws://.../ws` URL shown by the desktop GUI
+- make sure the smartglass can reach that host on the local network
 
 ![Android Studio](Assets/Android_Studio.png)
 
-
-#### **6. Build and Deploy the Application**
-- Compile the project in **Android Studio**.
-- Install the application on the **smartglass**.
-
 ---
-
-
 
 ## Usage
 
-### Running the Cognitive Assistant Server
+### Quick Start
 
-1. Navigate to EMS-Pipeline directory.
-2. Activate the conda environment.
-3. Go to `Demo` folder and execute ```python GUI.py```. This should open up the main GUI for the cognitive assistant.
+For the current end-to-end demo, use this order:
+
+1. Activate your environment
+2. Start the EMS-Vision Docker inference server and verify `http://localhost:8000/health`
+3. Launch the desktop GUI with `python main.py` from the `Demo/` directory
+4. Choose `simulator` or `smartglass` as the source
+5. Choose the speech backend:
+   - `Google Speech Cloud Model`
+   - `OpenAI Whisper Local Model`
+6. Press `Start`
+
+### Running the Cognitive Assistant GUI
+
+1. Navigate to the repository root
+2. Activate the conda environment
+3. Start the GUI from the `Demo` directory:
+
+```bash
+cd Demo
+python main.py
+```
+
+This launches the current desktop application entry point.
+
 ![Main GUI](Assets/Main_GUI.png)
 
+### Source Selection in the GUI
 
-4. To run the pipeline with pre-recorded audio transcripts, select the drop down `Microphone` and select one of the files. (Important ⚠️: Only speech recognitio and protocol prediction will work under this setting)
-5. To toggle between Google Speech (Internet connectivity required) and Local Speech Model (Whisper) simply click the appropriate radio button.
-6. To run the pipeline, press `Start`.
+The current GUI supports two source modes:
 
-### Running the SocketIO Server
+#### 1. `simulator`
 
-1. To enable communication between the Cognitive Assistant and the smartglass application, socketio server needs to run in the background (Important ⚠️).
-2. Navigate to `EMS-Pipeline/Demo` folder.
-3. Activate the `Conda` environment.
-4. Run the server by executing `python flask_socket_server.py` and make sure it runs in the background.
+Use this when an upstream simulator is sending a multimodal SRT stream to the desktop application.
 
+You will need to configure:
+- **Height**
+- **Width**
+- **IP Address**
+- **Port**
+
+Notes:
+- The desktop app uses `Demo/IO/srt_receiver.py` for this path
+- The host machine must have `libsrt` installed
+- The sender must already be streaming to the configured host and port
+
+#### 2. `smartglass`
+
+Use this when connecting the smartglass client directly to the desktop app.
+
+In the current code path:
+- selecting `smartglass` and pressing `Start` causes the GUI to launch its local WebRTC ingestion server
+- the server is started from `Demo/IO/webrtc_server.py`
+- the GUI then displays a **connection URL / QR code** in the video panel
+
+Important:
+- There is **no separate `flask_socket_server.py` step** in the current desktop runtime
+- The older `python GUI.py` and Socket.IO instructions no longer match the present code path
+
+### Speech Backend Selection
+
+The GUI currently exposes two speech modes:
+
+#### Google Speech Cloud Model
+
+Use this when:
+- internet connectivity is available
+- `Demo/service-account.json` is present
+- you want cloud speech recognition
+
+#### OpenAI Whisper Local Model
+
+Use this when:
+- you have built `egosim_stream`
+- the Whisper model file is available locally
+- you want offline/local speech recognition
+
+### Vision Runtime Behavior
+
+For the current demo:
+
+- the desktop app posts frames to the local inference container at `http://localhost:8000`
+- object detection requests go to `/infer/detr`
+- activity/intervention requests go to `/infer/activity/{stream_id}`
+
+If that container is not running, vision features will not work correctly.
 
 ### Running the AR Smartglass Application
 
-1. In the menu screen of the smartglass, open the application with the name `CognitveEMS`.
-2. Make sure that requested permissions from the app (mic,camera,network) is allowed and restart the application.
-3. There is no interaction with the application and if above steps with Cognitive Assistant and SocketIO server is properly executed, the app will communicate with the Cognitive Assistant.
-4. (Important ⚠️) The application may not be comlpetely optimized to use system resources. This was part of R&D and please use with that in mind. Application may close by itself (rarely) and may not maintain the connection with socket server over a long time (1+ hours).
+1. Make sure the `Android/EgoStreamer` submodule has been cloned and the app has been installed on the smartglass
+2. Ensure the smartglass and the desktop machine are on the same local network
+3. Start the desktop GUI and select `smartglass` as the source
+4. Press `Start` in the desktop GUI so the local smartglass WebRTC server starts and shows a QR code
+5. Open the smartglass app
+6. Grant camera and microphone permissions if prompted
+7. Tap **Scan QR** and scan the QR code shown by the desktop GUI
+8. Tap **Start Streaming**
+9. If scanning fails, manually enter the exact `ws://.../ws` URL shown by the GUI
 
 ### Smartwatch Integration
+
 *In progress*
 
+While the simulator supports smartwatch data streaming, full pipeline is not yet implemented with an actual smartwatch wirelessly streaming data in realtime.
 
-### Demonstrating the system
+### Demonstrating the System
 
-1. Once all above steps are executed and Cognitive Assistant is running, Smartglass application is running, you may test the system using following instructions.
-2. To begin speech recognition, make sure the Microphone radio button is pressed and start speaking to the smartglass. When Google speech is used, you should see immediate speech translation. THe protocol model will process the speech when it detects a pause in your speech. If Whisper model is used, make sure in the OS sound settings, output is selected to be virtual_speaker and input is virtual_mic.
-3. After a test, stop the speech recognition by pressing `stop` button in the main GUI. To clear the current speech transcript and protocol predictions, press `reset`. To start again, follow the above steps.
+1. Complete the required setup for speech, protocol prediction, and vision
+2. Start the Docker inference server for vision if you want detections and interventions
+3. Launch the GUI with `python main.py`
+4. Select the desired source and speech backend
+5. Press `Start`
+6. Confirm the following update in the GUI:
+   - transcript text
+   - protocol predictions
+   - vision detections / activities
+7. Press `Stop` when the session is complete
 
 ---
 
+## Troubleshooting
 
+### `egosim_stream` not found
+
+Make sure you:
+- initialized submodules
+- built `Demo/EMS_Speech/EMS_Whisper/whisper.cpp_realtime_stream`
+- verified the output binary exists at `build/bin/egosim_stream`
+
+### Whisper model not found
+
+Make sure this file exists:
+
+```text
+Demo/EMS_Speech/EMS_Whisper/whisper.cpp_realtime_stream/models/ggml-finetuned-base-v203.bin
+```
+
+### Vision container is not reachable
+
+Check:
+
+```bash
+curl http://localhost:8000/health
+```
+
+If this fails, start or rebuild the Docker inference server using:
+
+- [Tools/EMS_Vision/README_container_inference.md](Tools/EMS_Vision/README_container_inference.md)
+
+### SRT simulator mode fails to connect
+
+Check:
+- the simulator is actually streaming to the configured host and port
+- `libsrt` is installed on the host
+- the configured resolution matches the sender
+- local firewall rules are not blocking the connection
+
+### Google speech is unavailable in the GUI
+
+Check:
+- internet connectivity
+- `google-cloud-speech` is installed
+- `Demo/service-account.json` exists and is valid
+
+---

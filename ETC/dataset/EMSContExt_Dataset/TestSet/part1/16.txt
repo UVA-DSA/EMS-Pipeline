@@ -1,9 +1,0 @@
-Ambulance: Lindsay, 4142, requesting a patch.
-
-Dispatch: 10-4, switch to Tactical 2.
-
-Hospital: Cobourg Emergency.
-
-Ambulance: This is 4142 en route to your facility CTAS 3 with an 13y/o Male patient. Belted patient in a two car, low speed MVC. Patient complaining of low grade neck pain, vitals unremarkable. Be advised patient is autistic, agitated and unable to effectively communicate. ETA 15 minutes.
-
-Hospital: 10-4.

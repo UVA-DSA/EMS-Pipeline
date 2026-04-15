@@ -1,0 +1,304 @@
+import torch
+import torchvision
+import torchvision.transforms as T
+import matplotlib.pyplot as plt
+import time
+import os
+import argparse
+import pickle
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+import numpy as np
+import cv2
+from PIL import Image
+from dataclasses import dataclass
+
+try:
+    from classes import DetectionObj
+except ImportError:
+    @dataclass
+    class DetectionObj:
+        box_coords: list
+        name: str
+        confidence: str
+
+try:
+    from pipeline_config import detr_threshold
+except ImportError:
+    detr_threshold = 0.7
+
+
+class DETREngine:
+    def __init__(self, detr_version="base", checkpoint_path=None, threshold=None, device=None):
+        print(torch.__version__, torch.cuda.is_available())
+        torch.set_grad_enabled(False)
+        
+        print("[DETR Engine] Initializing DETR Engine")
+
+        self.threshold = detr_threshold if threshold is None else threshold
+        if device is None:
+            self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        else:
+            self.device = torch.device(device)
+
+        self.detr_version = detr_version
+        inference_dir = os.path.dirname(os.path.abspath(__file__))
+        default_ems_ckpt = os.path.join(inference_dir, "checkpoints", "ems_finetuned_detr_checkpoint.pth")
+
+        if (self.detr_version == "ems"):
+            self.finetuned_classes = [
+                'IV needle', 'bp monitor', 'bvm', 'defib pads', 'dummy', 'hands'
+            ]
+            if checkpoint_path is None and os.path.exists(default_ems_ckpt):
+                checkpoint_path = default_ems_ckpt
+
+        else:
+            self.finetuned_classes = [
+                'N/A', 'person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus',
+                'train', 'truck', 'boat', 'traffic light', 'fire hydrant', 'N/A',
+                'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse',
+                'sheep', 'cow', 'elephant', 'bear', 'zebra', 'giraffe', 'N/A', 'backpack',
+                'umbrella', 'N/A', 'N/A', 'handbag', 'tie', 'suitcase', 'frisbee', 'skis',
+                'snowboard', 'sports ball', 'kite', 'baseball bat', 'baseball glove',
+                'skateboard', 'surfboard', 'tennis racket', 'bottle', 'N/A', 'wine glass',
+                'cup', 'fork', 'knife', 'spoon', 'bowl', 'banana', 'apple', 'sandwich',
+                'orange', 'broccoli', 'carrot', 'hot dog', 'pizza', 'donut', 'cake',
+                'chair', 'couch', 'potted plant', 'bed', 'N/A', 'dining table', 'N/A',
+                'N/A', 'toilet', 'N/A', 'tv', 'laptop', 'mouse', 'remote', 'keyboard',
+                'cell phone', 'microwave', 'oven', 'toaster', 'sink', 'refrigerator', 'N/A',
+                'book', 'clock', 'vase', 'scissors', 'teddy bear', 'hair drier',
+                'toothbrush'
+            ]
+            if checkpoint_path is None:
+                old_default = './EMS_Vision/weights/detr-r50-e632da11.pth'
+                if os.path.exists(old_default):
+                    checkpoint_path = old_default
+
+        self.num_classes = len(self.finetuned_classes)
+
+        self.COLORS = [[0.000, 0.447, 0.741], [0.850, 0.325, 0.098], [0.929, 0.694, 0.125],
+                       [0.494, 0.184, 0.556], [0.466, 0.674, 0.188], [0.301, 0.745, 0.933]]
+
+        self.transform = T.Compose([
+            # T.Resize((512, 512)),  # Resize the image to 224x224 pixels
+            T.ToTensor(),
+            T.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        ])
+
+        self.model = torch.hub.load(
+            'facebookresearch/detr', 'detr_resnet50', pretrained=False, num_classes=self.num_classes)
+        if checkpoint_path is None:
+            raise FileNotFoundError("No checkpoint path provided/found. Pass --checkpoint to run standalone inference.")
+        print(f"[DETR Engine] Loading model from checkpoint: {checkpoint_path}")
+        checkpoint = self._load_checkpoint(checkpoint_path)
+        model_state = checkpoint['model'] if isinstance(checkpoint, dict) and 'model' in checkpoint else checkpoint
+        self.model.load_state_dict(model_state, strict=True)
+        print("[DETR_Engine] DETR Model loaded")
+
+        self.model.to(self.device)
+        self.model.eval()
+
+    @staticmethod
+    def _load_checkpoint(checkpoint_path):
+        """Load checkpoint compatibly across torch versions (incl. 2.6 weights_only default change)."""
+        try:
+            return torch.load(checkpoint_path, map_location='cpu')
+        except (pickle.UnpicklingError, RuntimeError) as exc:
+            msg = str(exc)
+            if "Weights only load failed" in msg or "Unsupported global" in msg:
+                print(
+                    "[DETR Engine] Retrying checkpoint load with weights_only=False. "
+                    "Use only with trusted checkpoints."
+                )
+                return torch.load(checkpoint_path, map_location='cpu', weights_only=False)
+            raise
+
+    @staticmethod
+    def cv2_to_pil(cv2_image):
+        """Convert a cv2 image (numpy array in BGR) to a PIL Image in RGB."""
+        rgb_image = cv2.cvtColor(cv2_image, cv2.COLOR_BGR2RGB)
+        pil_image = Image.fromarray(rgb_image)
+        return pil_image
+
+    @staticmethod
+    def box_cxcywh_to_xyxy(x):
+        """Convert bbox coordinates from (center_x, center_y, w, h) to [(x1, y1), (x2, y2)]"""
+        x_c, y_c, w, h = x.unbind(1)
+        b = [(x_c - 0.5 * w), (y_c - 0.5 * h),
+             (x_c + 0.5 * w), (y_c + 0.5 * h)]
+        return torch.stack(b, dim=1)
+
+    @staticmethod
+    def rescale_bboxes(out_bbox, size):
+        """Rescale bounding boxes from ratio values to pixel values"""
+        img_w, img_h = size
+        b = DETREngine.box_cxcywh_to_xyxy(out_bbox)
+        b = b * torch.tensor([img_w, img_h, img_w, img_h], dtype=torch.float32).to(b.device)
+        return b
+
+    def filter_bboxes_from_outputs(self, outputs, img_size, threshold=0.7):
+        """Recover bounding-boxes with prediction confidence above threshold (default=0.7)"""
+        probas = outputs['pred_logits'].softmax(-1)[0, :, :-1]
+        keep = probas.max(-1).values > threshold
+        probas_to_keep = probas[keep]
+        bboxes_scaled = self.rescale_bboxes(
+            outputs['pred_boxes'][0, keep], img_size)
+        return probas_to_keep, bboxes_scaled
+
+
+
+    def plot_finetuned_results(self, cv2_img, prob=None, boxes=None):
+        """ Given confidences and bounding box coordinates plot the bounding boxes and assign labels.
+        Also returns DetectionObjs with data from the probabilities and box coordinates.
+
+        Args:
+            cv2_img (_type_): image in cv2 format
+            prob (_type_): probabilities of each detection
+            boxes (torch.Tensor): tensor for bounding box coordinates
+
+        Returns:
+            np.array, list: annotated image, list of DetectionObjs
+        """
+        if prob is None or boxes is None:
+            return cv2_img, []
+
+        highest_confidence_objects = {}
+
+        for p, box in zip(prob, boxes):
+            cl = p.argmax().item()
+            if cl == 1:
+                continue
+
+            confidence = p[cl].item()
+            if cl not in highest_confidence_objects or confidence > highest_confidence_objects[cl][0]:
+                xmin, ymin, xmax, ymax = box
+                box_coordinates = [(int(xmin), int(ymin)), (int(xmax), int(ymax))]
+                highest_confidence_objects[cl] = (confidence, box_coordinates, p, cl)
+
+        detection_objects = []
+        for cl, (confidence, box_coordinates, p, cl) in highest_confidence_objects.items():
+            name = self.finetuned_classes[cl]
+            label = f'{name}: {confidence:.2f}'
+            color = [int(x * 255) for x in self.COLORS[cl % len(self.COLORS)]]
+
+            # Draw rectangle
+            cv2.rectangle(cv2_img, (box_coordinates[0][0], box_coordinates[0][1]),
+                        (box_coordinates[1][0], box_coordinates[1][1]), color, 2)
+
+            # Draw label background
+            label_size, _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 2)
+            cv2.rectangle(cv2_img, (box_coordinates[0][0], box_coordinates[0][1] - label_size[1] - 10),
+                        (box_coordinates[0][0] + label_size[0], box_coordinates[0][1]), color, cv2.FILLED)
+
+            # Draw text
+            cv2.putText(cv2_img, label, (box_coordinates[0][0], box_coordinates[0][1] - 5),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+
+            detection_objects.append(DetectionObj(box_coords=box_coordinates,
+                                                name=name,
+                                                confidence=f'{confidence:.2f}'))
+
+        return cv2_img, detection_objects
+
+
+    def run_workflow(self, my_image):
+        start_t = time.time()
+        img = self.cv2_to_pil(my_image)
+        # print(f"[DETR Engine] Image conversion time: {time.time() - start_t}")
+        img = self.transform(img).unsqueeze(0).to(self.device)
+        outputs = self.model(img)
+        # print(f"[DETR Engine] Inference time: {time.time() - start_t}")
+        img_h, img_w = my_image.shape[:2]
+        probas_to_keep, bboxes_scaled = self.filter_bboxes_from_outputs(
+            outputs, img_size=(img_w, img_h), threshold=self.threshold)
+
+        # plot bboxes on image
+        result_image, detection_objects = self.plot_finetuned_results(
+            my_image, probas_to_keep, bboxes_scaled)
+
+        detection_results_serialized = [
+            vars(detection_object) for detection_object in detection_objects]
+        
+
+        return result_image, detection_results_serialized
+
+
+def _find_default_video(video_arg):
+    if video_arg:
+        return video_arg
+
+    inference_dir = os.path.dirname(os.path.abspath(__file__))
+    videos_dir = os.path.join(inference_dir, "videos")
+    if not os.path.isdir(videos_dir):
+        return None
+
+    valid_exts = (".mp4", ".avi", ".mov", ".mkv", ".m4v")
+    for name in sorted(os.listdir(videos_dir)):
+        if name.lower().endswith(valid_exts):
+            return os.path.join(videos_dir, name)
+    return None
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Standalone DETR video inference with realtime visualization.")
+    parser.add_argument("--video", type=str, default=None, help="Path to input video. If omitted, first video in ./videos is used.")
+    parser.add_argument("--checkpoint", type=str, default=None, help="Path to checkpoint .pth file.")
+    parser.add_argument("--detr-version", type=str, default="ems", choices=["ems", "base"], help="Class set to use.")
+    parser.add_argument("--threshold", type=float, default=None, help="Detection confidence threshold.")
+    parser.add_argument("--device", type=str, default=None, help="Torch device override (e.g., cpu, cuda:0).")
+    parser.add_argument("--display-width", type=int, default=960, help="Display width while preserving aspect ratio.")
+    args = parser.parse_args()
+
+    video_path = _find_default_video(args.video)
+    if not video_path or not os.path.exists(video_path):
+        raise FileNotFoundError("Video not found. Pass a valid --video path.")
+
+    engine = DETREngine(
+        detr_version=args.detr_version,
+        checkpoint_path=args.checkpoint,
+        threshold=args.threshold,
+        device=args.device,
+    )
+
+    cap = cv2.VideoCapture(video_path)
+    if not cap.isOpened():
+        raise RuntimeError(f"Unable to open video: {video_path}")
+
+    print(f"[DETR Engine] Running realtime inference on: {video_path}")
+    prev_t = time.time()
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        annotated, _ = engine.run_workflow(frame)
+        now = time.time()
+        fps = 1.0 / max(now - prev_t, 1e-6)
+        prev_t = now
+        cv2.putText(
+            annotated,
+            f"FPS: {fps:.1f}",
+            (10, 30),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.8,
+            (0, 255, 0),
+            2,
+        )
+
+        if args.display_width > 0:
+            h, w = annotated.shape[:2]
+            new_w = args.display_width
+            new_h = int(h * (new_w / w))
+            display_frame = cv2.resize(annotated, (new_w, new_h))
+        else:
+            display_frame = annotated
+
+        cv2.imshow("DETR Realtime Inference", display_frame)
+        if cv2.waitKey(1) & 0xFF in (ord('q'), 27):
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
+
+
+if __name__ == "__main__":
+    main()
