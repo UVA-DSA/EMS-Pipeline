@@ -1,6 +1,7 @@
 .vscode
 DataCollection
 
+.codex
 
 Demo/Audio_Scenarios/2019_Test_Ground_Truth.zip
 Demo/Audio_Scenarios/2023_Test.zip

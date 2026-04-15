@@ -10,8 +10,8 @@ LOGGER = logging.getLogger(__name__)
 
 DEFAULT_BBOX_ENGINE_PATH = "/tmp/ems_bbox.log"
 POLL_INTERVAL_SECONDS = 0.1
-LABEL_ALIASES = {
-    "bp monitor": "bag valve mask",
+EXCLUDED_BBOX_LABELS = {
+    "bp monitor",
 }
 
 
@@ -38,8 +38,14 @@ def normalize_bbox_label(value):
     label_text = str(value).strip()
     if not label_text:
         return ""
+    return label_text
 
-    return LABEL_ALIASES.get(label_text.lower(), label_text)
+
+def is_excluded_bbox_label(value):
+    label_text = normalize_bbox_label(value)
+    if not label_text:
+        return False
+    return label_text.lower() in EXCLUDED_BBOX_LABELS
 
 
 def normalize_bbox_score(value):
@@ -52,6 +58,8 @@ def normalize_bbox_score(value):
 def build_bbox_box(label, score, box_xyxy, frame_width, frame_height):
     label_text = normalize_bbox_label(label)
     if not label_text:
+        return None
+    if is_excluded_bbox_label(label_text):
         return None
 
     try:
@@ -101,6 +109,8 @@ def build_bbox_payload(frame_id, boxes, timestamp_ms=None):
             continue
         label_text = normalize_bbox_label(box.get("label"))
         if not label_text:
+            continue
+        if is_excluded_bbox_label(label_text):
             continue
         try:
             normalized_box = {
