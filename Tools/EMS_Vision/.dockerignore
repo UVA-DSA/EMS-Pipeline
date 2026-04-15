@@ -1,0 +1,14 @@
+*
+!.dockerignore
+!checkpoints
+!checkpoints/ems_finetuned_detr_trt.ts
+!checkpoints/mtrsap_30frames_window_resnet_trt.ts
+!checkpoints/resnet50_feature_extractor_trt.ts
+!conversion
+!conversion/action_class_mapping.json
+!servers
+!servers/Dockerfile
+!servers/start_inference_server.sh
+!servers/container_inference_server.py
+!servers/container_inference
+!servers/container_inference/**
