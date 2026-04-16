@@ -56,6 +56,7 @@ from Utils.runtime_paths import demo_path, etc_path
 from Utils import pipeline_config
 
 from IO import srt_receiver as sim_seb
+from IO.local_file_sampler import LocalFileSamplerProcess
 from IO.bbox_engine import reset_bbox_engine
 from IO.feedback_engine import reset_feedback_engine
 
@@ -306,7 +307,7 @@ class MainWindow(QWidget):
 
         self.DataSourceBox = QComboBox()
 
-        self.DataSourceBox.addItems(["simulator", "smartglass"])
+        self.DataSourceBox.addItems(["simulator", "smartglass", "local files"])
 
         self.ControlPanelGridLayout.addWidget(self.DataSourceBox, 0, 0, 1, 1)
 
@@ -876,35 +877,32 @@ class MainWindow(QWidget):
         """Update configuration options based on selected data source"""
         self._cache_visible_source_config()
         self._clear_layout(self.ConfigLayout)
-        show_simulator_config = source == "simulator"
-        self.ConfigGroupBox.setVisible(show_simulator_config)
 
-        if show_simulator_config:
+        show_config = source in ("simulator", "local files")
+        self.ConfigGroupBox.setVisible(show_config)
+
+        if source == "simulator":
             # Simulator configuration
             simLayout = QGridLayout()
 
-            # Height
             simLayout.addWidget(QLabel("Height:"), 0, 0)
             self.HeightSpinBox = QSpinBox()
             self.HeightSpinBox.setRange(240, 2160)
             self.HeightSpinBox.setValue(self.simulator_config["height"])
             simLayout.addWidget(self.HeightSpinBox, 0, 1)
 
-            # Width
             simLayout.addWidget(QLabel("Width:"), 1, 0)
             self.WidthSpinBox = QSpinBox()
             self.WidthSpinBox.setRange(320, 3840)
             self.WidthSpinBox.setValue(self.simulator_config["width"])
             simLayout.addWidget(self.WidthSpinBox, 1, 1)
 
-            # IP Address
             simLayout.addWidget(QLabel("IP Address:"), 2, 0)
             self.IPAddressLineEdit = QLineEdit()
             self.IPAddressLineEdit.setText(self.simulator_config["ip"])
             self.IPAddressLineEdit.setPlaceholderText("e.g., 192.168.1.100")
             simLayout.addWidget(self.IPAddressLineEdit, 2, 1)
 
-            # Port Number
             simLayout.addWidget(QLabel("Port:"), 3, 0)
             self.PortSpinBox = QSpinBox()
             self.PortSpinBox.setRange(1024, 65535)
@@ -913,8 +911,77 @@ class MainWindow(QWidget):
 
             self.ConfigLayout.addLayout(simLayout)
 
+        elif source == "local files":
+            # Local file configuration
+            fileLayout = QGridLayout()
+
+            # Video file row
+            fileLayout.addWidget(QLabel("Video File (.mp4):"), 0, 0)
+            self.LocalVideoPathEdit = QLineEdit()
+            self.LocalVideoPathEdit.setPlaceholderText("Select .mp4 file...")
+            self.LocalVideoPathEdit.setMinimumWidth(300)
+            fileLayout.addWidget(self.LocalVideoPathEdit, 0, 1)
+            browseVideoBtn = QPushButton("Browse…")
+            browseVideoBtn.clicked.connect(self._browse_local_video)
+            fileLayout.addWidget(browseVideoBtn, 0, 2)
+
+            # CSV file row
+            fileLayout.addWidget(QLabel("CSV File:"), 1, 0)
+            self.LocalCSVPathEdit = QLineEdit()
+            self.LocalCSVPathEdit.setPlaceholderText("Select .csv file...")
+            self.LocalCSVPathEdit.setMinimumWidth(300)
+            fileLayout.addWidget(self.LocalCSVPathEdit, 1, 1)
+            browseCSVBtn = QPushButton("Browse…")
+            browseCSVBtn.clicked.connect(self._browse_local_csv)
+            fileLayout.addWidget(browseCSVBtn, 1, 2)
+
+            # FPS + resolution row
+            fileLayout.addWidget(QLabel("FPS:"), 2, 0)
+            self.LocalFPSSpinBox = QSpinBox()
+            self.LocalFPSSpinBox.setRange(1, 120)
+            self.LocalFPSSpinBox.setValue(30)
+            fileLayout.addWidget(self.LocalFPSSpinBox, 2, 1)
+
+            fileLayout.addWidget(QLabel("Width × Height:"), 3, 0)
+            resLayout = QHBoxLayout()
+            self.LocalWidthSpinBox = QSpinBox()
+            self.LocalWidthSpinBox.setRange(320, 3840)
+            self.LocalWidthSpinBox.setValue(480)
+            resLayout.addWidget(self.LocalWidthSpinBox)
+            resLayout.addWidget(QLabel("×"))
+            self.LocalHeightSpinBox = QSpinBox()
+            self.LocalHeightSpinBox.setRange(240, 2160)
+            self.LocalHeightSpinBox.setValue(270)
+            resLayout.addWidget(self.LocalHeightSpinBox)
+            resLayout.addStretch()
+            fileLayout.addLayout(resLayout, 3, 1)
+
+            # Loop checkbox
+            self.LocalLoopCheckBox = QCheckBox("Loop playback")
+            self.LocalLoopCheckBox.setChecked(False)
+            fileLayout.addWidget(self.LocalLoopCheckBox, 4, 0, 1, 3)
+
+            self.ConfigLayout.addLayout(fileLayout)
+
         self._refresh_control_panel_layout()
         self._sync_audio_playback_process()
+
+    # ---- helpers for local-file browse buttons ----------------------------
+    def _browse_local_video(self):
+        path, _ = QFileDialog.getOpenFileName(
+            self, "Select Video File", "",
+            "Video Files (*.mp4 *.avi *.mkv *.mov);;All Files (*)"
+        )
+        if path:
+            self.LocalVideoPathEdit.setText(path)
+
+    def _browse_local_csv(self):
+        path, _ = QFileDialog.getOpenFileName(
+            self, "Select CSV File", "",
+            "CSV Files (*.csv);;All Files (*)"
+        )
+        if path:
+            self.LocalCSVPathEdit.setText(path)
 
     @pyqtSlot()
     def StartButtonClick(self):
@@ -965,6 +1032,56 @@ class MainWindow(QWidget):
                 self.DataSourceBox.setEnabled(True)
                 self.GoogleSpeechRadioButton.setEnabled(self.InternetAvailLabel.text() == "INTERNET AVAILABLE")
                 self.MLSpeechRadioButton.setEnabled(True)
+                return
+
+
+        elif source == "local files":
+            video_path = self.LocalVideoPathEdit.text().strip()
+            csv_path   = self.LocalCSVPathEdit.text().strip()
+
+            if not video_path:
+                self.UpdateMsgBox(["ERROR: Please select a video file."])
+                self.StartButton.setEnabled(True)
+                self.StopButton.setEnabled(False)
+                self.DataSourceBox.setEnabled(True)
+                self.GoogleSpeechRadioButton.setEnabled(self.InternetAvailLabel.text() == "INTERNET AVAILABLE")
+                self.MLSpeechRadioButton.setEnabled(True)
+                return
+            if not csv_path:
+                self.UpdateMsgBox(["ERROR: Please select a CSV file."])
+                self.StartButton.setEnabled(True)
+                self.StopButton.setEnabled(False)
+                self.DataSourceBox.setEnabled(True)
+                self.GoogleSpeechRadioButton.setEnabled(self.InternetAvailLabel.text() == "INTERNET AVAILABLE")
+                self.MLSpeechRadioButton.setEnabled(True)
+                return
+
+            config = {
+                'video': video_path,
+                'csv':   csv_path,
+                'width':  self.LocalWidthSpinBox.value(),
+                'height': self.LocalHeightSpinBox.value(),
+                'fps':    self.LocalFPSSpinBox.value(),
+                'loop':   self.LocalLoopCheckBox.isChecked(),
+            }
+            self.srt_client = LocalFileSamplerProcess(
+                video_file    = config['video'],
+                csv_file      = config['csv'],
+                width         = config['width'],
+                height        = config['height'],
+                fps           = config['fps'],
+                enabled_types = modalities,
+                loop          = config['loop'],
+            )
+            if not self.srt_client.start():
+                error_msg = getattr(self.srt_client, 'last_error', None) or "Failed to start local file sampler."
+                self.UpdateMsgBox([error_msg])
+                self.StartButton.setEnabled(True)
+                self.StopButton.setEnabled(False)
+                self.DataSourceBox.setEnabled(True)
+                self.GoogleSpeechRadioButton.setEnabled(self.InternetAvailLabel.text() == "INTERNET AVAILABLE")
+                self.MLSpeechRadioButton.setEnabled(True)
+                self.srt_client = None
                 return
 
         # Your start logic here
