@@ -1,0 +1,37 @@
+{
+  "job_id": "9951907",
+  "task": "segmentation",
+  "num_classes": 14,
+  "class_to_new_id": {
+    "approach_patient": 0,
+    "check_responsiveness": 1,
+    "check_pulse": 2,
+    "check_breathing": 3,
+    "chest_compressions": 4,
+    "turn_on_aed": 5,
+    "attach_defib_pads": 6,
+    "clear_for_analysis": 7,
+    "clear_for_shock": 8,
+    "administer_shock_aed": 9,
+    "open_airway": 10,
+    "place_bvm": 11,
+    "ventilate_patient": 12,
+    "no_action": 13
+  },
+  "new_id_to_class": {
+    "0": "approach_patient",
+    "1": "check_responsiveness",
+    "2": "check_pulse",
+    "3": "check_breathing",
+    "4": "chest_compressions",
+    "5": "turn_on_aed",
+    "6": "attach_defib_pads",
+    "7": "clear_for_analysis",
+    "8": "clear_for_shock",
+    "9": "administer_shock_aed",
+    "10": "open_airway",
+    "11": "place_bvm",
+    "12": "ventilate_patient",
+    "13": "no_action"
+  }
+}

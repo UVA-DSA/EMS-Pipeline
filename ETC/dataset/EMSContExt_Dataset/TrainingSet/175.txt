@@ -1,9 +1,0 @@
-You are a hospital based ambulance service where you primarily work in the ED in the functions of a nurse (budget cuts you know) and you run ambulance calls on the side. Call volume about 350 calls a month.
-
-Your transports are around 30-60 minutes from scene to ER. You have a 3 hour trip to get to the next bigger hospital which is a 308 bed general medical facility. Your hospital is a 200 bed acute care facility and your ER volume is around 100 per day. There are smaller hospitals between you and the 308 bed facility. You have all the bells and whistles of a big hospital just a smaller package. Your lab is state of the art, they do everything and nothing hardly ever has to be sent out.
-
-Air transport is non-existent in your area. (you won't need them though unless you get this scenario wrong)
-
-You have a diverse population of people from all over the world. Many from Europe and many also from Africa.
-
-A 45-year-old woman calls 911 for bleeding gums and bruises on both forearms for the last 2 days. For the preceding 10 days she had been experiencing a high fever (which has since broken) and rigors.

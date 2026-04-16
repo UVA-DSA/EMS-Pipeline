@@ -1,7 +1,0 @@
-You have resuscitated a patient who was in PEA. He's now in a normal sinus rhythm with pulses. As you are transporting the patient, he goes into a wide-complex tachycardia that looks exactly like VT (perfect sine waves), but at heart rate of 120, and he still has pulses. Would you cardiovert?
-
-My thinking is that no, you should not, because you can't be sure if it's VT, and that even if it is, the rate isn't so fast as to affect cardiac output.
-
-I actually had a similar scenario where I had a critical patient who went from a brady sinus rhythm with narrow complexes to a wide-complex tachycardia at a rate of 120 (with pulses). I held off doing anything and about a minute later the patient converted back into a sinus rhythm.
-
-My co-worked argued that if the apparent VT was sustained, it should be cardioverted because it could soon deteriorate into VF or a much faster VT.

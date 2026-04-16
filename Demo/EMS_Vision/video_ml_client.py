@@ -12,7 +12,12 @@ import requests
 from PyQt5.QtCore import QThread, Qt, pyqtSignal
 from PyQt5.QtGui import QImage
 
-from IO.bbox_engine import BBoxPublisher, build_bbox_box, normalize_bbox_label
+from IO.bbox_engine import (
+    BBoxPublisher,
+    build_bbox_box,
+    is_excluded_bbox_label,
+    normalize_bbox_label,
+)
 from IO.feedback_engine import FeedbackPublisher, format_feedback_text
 
 SERVER_BASE_URL = "http://localhost:8000"
@@ -44,6 +49,8 @@ def _draw_detections(frame_bgr, detections):
     """Draw bounding boxes and labels onto frame in-place."""
     cv2 = _opencv()
     for det in detections:
+        if is_excluded_bbox_label(det.get("label")):
+            continue
         box = det.get("box_xyxy", [])
         if len(box) != 4:
             continue
@@ -278,8 +285,10 @@ class VideoMLClient(QThread):
                 det_strs = [
                     f"{normalize_bbox_label(d.get('label', '?')) or '?'} "
                     f"{d.get('score', 0):.2f}"
-                    for d in detections[:3]
+                    for d in detections
+                    if not is_excluded_bbox_label(d.get("label"))
                 ]
+                det_strs = det_strs[:3]
                 det_line = ", ".join(det_strs) if det_strs else "none"
             except Exception as e:
                 det_line = f"DETR unavailable ({e})"
