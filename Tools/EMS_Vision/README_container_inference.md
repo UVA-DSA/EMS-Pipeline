@@ -232,9 +232,10 @@ Before conversion or image build:
 1. Docker is installed.
 2. NVIDIA Container Toolkit is working.
 3. `docker run --gpus all ...` works on the machine.
-4. You have the source checkpoints:
+4. You have the source checkpoints: Download them from [Google Drive](https://drive.google.com/file/d/1WECewxNfH95oaWxqGCwdnrt6LGcg2aDk/view?usp=sharing)
    - `/path/to/EgoEMS/Tools/inference/checkpoints/ems_finetuned_detr_checkpoint.pth`
    - `/path/to/EgoEMS/Tools/inference/checkpoints/mtrsap_30frames_window_resnet.pt` (if activity is needed)
+   - 
 
 If you want activity recognition enabled, you also need:
 
