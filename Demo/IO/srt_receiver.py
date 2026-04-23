@@ -17,6 +17,7 @@ import ctypes
 import ctypes.util
 import struct
 import time
+import zlib
 from multiprocessing import Process, Value
 
 libsrt = None
@@ -186,9 +187,40 @@ def srt_receiver_process(host, port, width, height, enabled_types, running_flag)
     print(f"[SRTProcess] Video: {width}x{height}")
     print(f"[SRTProcess] Enabled types: {enabled_types}")
 
+    # ---- Session logging setup -------------------------------------------
+    _session_ts = time.strftime("%Y%m%d_%H%M%S")
+    _log_dir    = "/tmp/ems_session_logs"
+    os.makedirs(_log_dir, exist_ok=True)
+    _stats_path    = f"{_log_dir}/srt_stats_{_session_ts}.tsv"
+    _checksum_path = f"{_log_dir}/srt_checksums_{_session_ts}.tsv"
+
+    _stats_f    = open(_stats_path,    "w", buffering=1)
+    _checksum_f = open(_checksum_path, "w", buffering=1)
+
+    # Stats log: human-readable events + timing
+    _stats_f.write("# SRT receiver session log\n")
+    _stats_f.write(f"# session_start\t{_session_ts}\n")
+    _stats_f.write(f"# host\t{host}:{port}\n")
+    _stats_f.write(f"# resolution\t{width}x{height}\n")
+    _stats_f.write(f"# enabled_types\t{sorted(enabled_types)}\n")
+    _stats_f.write("event\tframe_idx\ttimestamp\tdetail\n")
+
+    # Checksum log: one row per complete frame, for comparison with local sampler
+    _checksum_f.write("# SRT receiver frame checksums (adler32)\n")
+    _checksum_f.write(f"# session_start\t{_session_ts}\n")
+    _checksum_f.write("frame_idx\tvideo_adler32\taudio_adler32\tcsv_adler32\tframe_wall_time\n")
+
+    def _log_event(event, frame_idx, detail=""):
+        _stats_f.write(f"{event}\t{frame_idx}\t{time.time():.6f}\t{detail}\n")
+
+    print(f"[SRTProcess] Session logs: {_log_dir}/srt_*_{_session_ts}.tsv")
+
     sock = None
     opened_pipes = {}
     frames_received = 0
+    _last_complete_frame_idx = -1   # for detecting gaps / dropped frames
+    _frame_arrival_times = []       # wall-clock time each frame was completed
+    _reassembly_start = {}          # frame_idx -> wall time first chunk arrived
 
     try:
         libsrt = ensure_libsrt()
@@ -324,6 +356,7 @@ def srt_receiver_process(host, port, width, height, enabled_types, running_flag)
                 if frame_idx not in frame_buffers:
                     frame_buffers[frame_idx] = {1: {}, 2: {}, 3: {}}
                     expected_chunks[frame_idx] = {}
+                    _reassembly_start[frame_idx] = time.time()
                     if current_frame is None:
                         current_frame = frame_idx
 
@@ -343,69 +376,99 @@ def srt_receiver_process(host, port, width, height, enabled_types, running_flag)
                             break
 
                     if all_complete:
-                        # Assemble and write complete frame to ALL enabled pipes
+                        _now = time.time()
+
+                        # ---- Dropped-frame detection -------------------------
+                        if _last_complete_frame_idx >= 0:
+                            _gap = current_frame - _last_complete_frame_idx - 1
+                            if _gap > 0:
+                                _log_event("DROPPED", current_frame,
+                                           f"gap={_gap} prev={_last_complete_frame_idx}")
+                                print(f"[SRTProcess] WARNING: {_gap} dropped frame(s) before idx {current_frame}")
+
+                        # ---- Inter-frame jitter ------------------------------
+                        if _frame_arrival_times:
+                            _ift = _now - _frame_arrival_times[-1]
+                            if _ift > 0.050:   # >50ms = more than 1.5x a 30fps frame
+                                _log_event("JITTER", current_frame,
+                                           f"inter_frame_ms={_ift*1000:.1f}")
+                        _frame_arrival_times.append(_now)
+
+                        # ---- Reassembly time ---------------------------------
+                        _rtime = _now - _reassembly_start.get(current_frame, _now)
+                        _reassembly_start.pop(current_frame, None)
+
+                        # ---- Assemble payloads & compute checksums -----------
+                        _payloads = {}
                         for base_type in base_types_needed:
-                            complete_data = b''.join(fb[base_type][i] for i in range(ec[base_type]))
+                            _payloads[base_type] = b''.join(
+                                fb[base_type][i] for i in range(ec[base_type])
+                            )
+
+                        _vid_crc = zlib.adler32(_payloads.get(1, b'')) & 0xFFFFFFFF
+                        _aud_crc = zlib.adler32(_payloads.get(2, b'')) & 0xFFFFFFFF
+                        _csv_crc = zlib.adler32(
+                            _payloads.get(3, b'').rstrip(b'\n')
+                        ) & 0xFFFFFFFF
+
+                        _checksum_f.write(
+                            f"{current_frame}\t{_vid_crc}\t{_aud_crc}\t{_csv_crc}\t{_now:.6f}\n"
+                        )
+
+                        # ---- Write to pipes ----------------------------------
+                        for base_type in base_types_needed:
+                            complete_data = _payloads[base_type]
 
                             if base_type == 1:  # Video
                                 video_bytes = len(complete_data).to_bytes(4, 'big') + complete_data
-
-                                # Write to display pipe if enabled
                                 if 1 in opened_pipes:
                                     opened_pipes[1].write(video_bytes)
                                     opened_pipes[1].flush()
-
-                                # Write to ML pipe if enabled
                                 if 4 in opened_pipes:
                                     opened_pipes[4].write(video_bytes)
                                     opened_pipes[4].flush()
 
                             elif base_type == 2:  # Audio
                                 audio_bytes = len(complete_data).to_bytes(4, 'big') + complete_data
-
-                                # Write to playback pipe if enabled
                                 if 2 in opened_pipes:
                                     opened_pipes[2].write(audio_bytes)
                                     opened_pipes[2].flush()
-
-                                # Write to ML pipe if enabled
                                 if 5 in opened_pipes:
                                     opened_pipes[5].write(complete_data)
                                     opened_pipes[5].flush()
 
                             elif base_type == 3:  # CSV
                                 csv_text = complete_data.decode('utf-8').strip()
-
-                                # Write to display pipe if enabled
                                 if 3 in opened_pipes:
                                     opened_pipes[3].write(csv_text + '\n')
                                     opened_pipes[3].flush()
-
-                                # Write to ML pipe if enabled
                                 if 6 in opened_pipes:
                                     opened_pipes[6].write(csv_text + '\n')
                                     opened_pipes[6].flush()
 
                         frames_received += 1
+                        _last_complete_frame_idx = current_frame
 
-                        # Debug
+                        # ---- Console debug -----------------------------------
                         if frames_received % 30 == 0:
                             elapsed = time.time() - last_debug
                             fps = 30 / elapsed
-                            print(f"[SRTProcess] Frames: {frames_received:5d} | FPS: {fps:.1f}")
+                            print(f"[SRTProcess] Frames: {frames_received:5d} | FPS: {fps:.1f} | reassembly: {_rtime*1000:.1f}ms")
                             last_debug = time.time()
 
-                        # Cleanup
+                        # ---- Cleanup -----------------------------------------
                         del frame_buffers[current_frame]
                         del expected_chunks[current_frame]
                         current_frame += 1
 
-                        # Remove old frames
                         old_frames = [f for f in frame_buffers.keys() if f < current_frame - 5]
                         for old_frame in old_frames:
                             del frame_buffers[old_frame]
                             if old_frame in expected_chunks:
                                 del expected_chunks[old_frame]
+                            _reassembly_start.pop(old_frame, None)
+                            # Log frames that were abandoned (never completed)
+                            _log_event("ABANDONED", old_frame, "chunks_never_completed")
 
             except Exception as e:
                 if running_flag.value:
@@ -419,7 +482,54 @@ def srt_receiver_process(host, port, width, height, enabled_types, running_flag)
         import traceback
         traceback.print_exc()
     finally:
-        # Cleanup
+        # ---- Session summary ------------------------------------------------
+        _end_ts = time.time()
+        try:
+            _duration = _end_ts - (
+                _frame_arrival_times[0] if _frame_arrival_times else _end_ts
+            )
+            _actual_fps = (
+                len(_frame_arrival_times) / _duration if _duration > 0 else 0.0
+            )
+            # Inter-frame time stats
+            if len(_frame_arrival_times) > 1:
+                _ifts = [
+                    (_frame_arrival_times[i] - _frame_arrival_times[i-1]) * 1000
+                    for i in range(1, len(_frame_arrival_times))
+                ]
+                _ift_mean = sum(_ifts) / len(_ifts)
+                _ift_max  = max(_ifts)
+                _ift_min  = min(_ifts)
+                _jitter_frames = sum(1 for x in _ifts if x > 50)
+            else:
+                _ift_mean = _ift_max = _ift_min = 0.0
+                _jitter_frames = 0
+
+            _summary = (
+                f"# SESSION SUMMARY\n"
+                f"# frames_received\t{frames_received}\n"
+                f"# duration_s\t{_duration:.2f}\n"
+                f"# actual_fps\t{_actual_fps:.2f}\n"
+                f"# ift_mean_ms\t{_ift_mean:.2f}\n"
+                f"# ift_min_ms\t{_ift_min:.2f}\n"
+                f"# ift_max_ms\t{_ift_max:.2f}\n"
+                f"# jitter_frames_(>50ms)\t{_jitter_frames}\n"
+            )
+            _stats_f.write(_summary)
+            print(f"[SRTProcess] {_summary.replace('#', '').strip()}")
+        except Exception as _e:
+            print(f"[SRTProcess] Warning: could not write session summary: {_e}")
+
+        try:
+            _stats_f.close()
+        except Exception:
+            pass
+        try:
+            _checksum_f.close()
+        except Exception:
+            pass
+
+        # ---- Pipe + socket cleanup ------------------------------------------
         print("[SRTProcess] Cleaning up...")
 
         for pipe in opened_pipes.values():

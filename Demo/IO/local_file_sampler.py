@@ -14,6 +14,7 @@ import os
 import struct
 import subprocess
 import sys
+import zlib
 print(f"[LocalSampler] sys.prefix = {sys.prefix}")
 print(f"[LocalSampler] sys.executable = {sys.executable}")
 import threading
@@ -59,6 +60,35 @@ def local_file_sampler_process(
     print(f"[LocalSampler] video={video_file}  csv={csv_file}")
     print(f"[LocalSampler] {width}x{height} @ {fps} fps  loop={loop}")
     print(f"[LocalSampler] enabled_types={enabled_types}")
+
+    # ---- Session logging setup -------------------------------------------
+    _session_ts = time.strftime("%Y%m%d_%H%M%S")
+    _log_dir    = "/tmp/ems_session_logs"
+    os.makedirs(_log_dir, exist_ok=True)
+    _stats_path    = f"{_log_dir}/local_stats_{_session_ts}.tsv"
+    _checksum_path = f"{_log_dir}/local_checksums_{_session_ts}.tsv"
+
+    _stats_f    = open(_stats_path,    "w", buffering=1)
+    _checksum_f = open(_checksum_path, "w", buffering=1)
+
+    _stats_f.write("# LocalFileSampler session log\n")
+    _stats_f.write(f"# session_start\t{_session_ts}\n")
+    _stats_f.write(f"# video\t{video_file}\n")
+    _stats_f.write(f"# csv\t{csv_file}\n")
+    _stats_f.write(f"# resolution\t{width}x{height}\n")
+    _stats_f.write(f"# fps_target\t{fps}\n")
+    _stats_f.write(f"# enabled_types\t{sorted(enabled_types)}\n")
+    _stats_f.write("event\tframe_idx\ttimestamp\tdetail\n")
+
+    _checksum_f.write("# LocalFileSampler frame checksums (adler32)\n")
+    _checksum_f.write(f"# session_start\t{_session_ts}\n")
+    _checksum_f.write("frame_idx\tvideo_adler32\taudio_adler32\tcsv_adler32\tframe_wall_time\n")
+
+    def _log_event(event, frame_idx, detail=""):
+        _stats_f.write(f"{event}\t{frame_idx}\t{time.time():.6f}\t{detail}\n")
+
+    _send_times = []   # wall-clock time each frame was sent, for jitter analysis
+    print(f"[LocalSampler] Session logs: {_log_dir}/local_*_{_session_ts}.tsv")
 
     # ---- Resolve ffmpeg (spawn processes don't inherit conda PATH) ----------
     # Priority: conda-env ffmpeg first (self-consistent libs), then PATH, then system.
@@ -299,6 +329,31 @@ def local_file_sampler_process(
                             csv_exhausted = True
                             print("[LocalSampler] CSV lines exhausted")
 
+                    # ---- Checksum & timing instrumentation -----------------
+                    _now = time.time()
+
+                    # Jitter: flag if we sent this frame late (>1.5 frame periods)
+                    if _send_times:
+                        _ift = _now - _send_times[-1]
+                        if _ift > (1.5 / fps):
+                            _log_event("JITTER", frame_idx,
+                                       f"inter_frame_ms={_ift*1000:.1f}")
+                    _send_times.append(_now)
+
+                    # Checksums — hash the raw payloads (same bytes the SRT
+                    # receiver will reconstruct), stripping CSV newline to match
+                    _vid_payload = video_data if need_video else b''
+                    _aud_payload = audio_data if need_audio else b''
+                    _csv_payload = csv_lines[frame_idx].encode() if (need_csv and not csv_exhausted and frame_idx < len(csv_lines)) else b''
+
+                    _vid_crc = zlib.adler32(_vid_payload) & 0xFFFFFFFF
+                    _aud_crc = zlib.adler32(_aud_payload) & 0xFFFFFFFF
+                    _csv_crc = zlib.adler32(_csv_payload) & 0xFFFFFFFF
+
+                    _checksum_f.write(
+                        f"{frame_idx}\t{_vid_crc}\t{_aud_crc}\t{_csv_crc}\t{_now:.6f}\n"
+                    )
+
                     frames_sent += 1
                     frame_idx   += 1
 
@@ -334,6 +389,52 @@ def local_file_sampler_process(
         import traceback
         traceback.print_exc()
     finally:
+        # ---- Session summary ------------------------------------------------
+        try:
+            _duration = (
+                (_send_times[-1] - _send_times[0]) if len(_send_times) > 1 else 0.0
+            )
+            _actual_fps = (
+                len(_send_times) / _duration if _duration > 0 else 0.0
+            )
+            if len(_send_times) > 1:
+                _ifts = [
+                    (_send_times[i] - _send_times[i-1]) * 1000
+                    for i in range(1, len(_send_times))
+                ]
+                _ift_mean = sum(_ifts) / len(_ifts)
+                _ift_max  = max(_ifts)
+                _ift_min  = min(_ifts)
+                _jitter_frames = sum(1 for x in _ifts if x > (1500.0 / fps))
+            else:
+                _ift_mean = _ift_max = _ift_min = 0.0
+                _jitter_frames = 0
+
+            _summary = (
+                f"# SESSION SUMMARY\n"
+                f"# frames_sent\t{frames_sent}\n"
+                f"# duration_s\t{_duration:.2f}\n"
+                f"# actual_fps\t{_actual_fps:.2f}\n"
+                f"# ift_mean_ms\t{_ift_mean:.2f}\n"
+                f"# ift_min_ms\t{_ift_min:.2f}\n"
+                f"# ift_max_ms\t{_ift_max:.2f}\n"
+                f"# jitter_frames_(>1.5x_period)\t{_jitter_frames}\n"
+            )
+            _stats_f.write(_summary)
+            print(f"[LocalSampler] {_summary.replace('#', '').strip()}")
+        except Exception as _e:
+            print(f"[LocalSampler] Warning: could not write session summary: {_e}")
+
+        try:
+            _stats_f.close()
+        except Exception:
+            pass
+        try:
+            _checksum_f.close()
+        except Exception:
+            pass
+
+        # ---- Pipe cleanup ---------------------------------------------------
         for pipe in opened_pipes.values():
             try:
                 pipe.close()
