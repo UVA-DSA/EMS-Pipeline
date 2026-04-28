@@ -137,7 +137,7 @@ class VideoMLClient(QThread):
             detections or [],
             key=self._detection_score,
             reverse=True,
-        )
+            )
 
         for det in ranked_detections:
             try:
@@ -195,12 +195,12 @@ class VideoMLClient(QThread):
             return ""
 
         if (
-            REQUIRE_HANDS_FOR_CHEST_COMPRESSIONS_FEEDBACK
-            and label_text.lower() == CHEST_COMPRESSIONS_ACTION_LABEL
-            and not any(
-                str(box.get("label") or "").strip().lower() == HANDS_DETECTION_LABEL
-                for box in bbox_boxes
-            )
+                REQUIRE_HANDS_FOR_CHEST_COMPRESSIONS_FEEDBACK
+                and label_text.lower() == CHEST_COMPRESSIONS_ACTION_LABEL
+                and not any(
+            str(box.get("label") or "").strip().lower() == HANDS_DETECTION_LABEL
+            for box in bbox_boxes
+        )
         ):
             print(
                 "[VideoMLClient] Suppressed chest_compressions feedback: "
@@ -223,6 +223,17 @@ class VideoMLClient(QThread):
 
     def run(self):
         print("[VideoMLClient] Started")
+
+        import os
+        _log_dir = "/tmp/ems_session_logs"
+        os.makedirs(_log_dir, exist_ok=True)
+        _log_path = f"{_log_dir}/video_ml_{time.strftime('%Y%m%d_%H%M%S')}.txt"
+        _log_f = open(_log_path, "w", buffering=1)
+        _log_f.write("# VideoMLClient activity log\n")
+        _log_f.write(f"# session_start\t{time.strftime('%Y-%m-%d %H:%M:%S')}\n")
+        _log_f.write("wall_time_s\tframe_id\tactivity_label\tactivity_score\n")
+        print(f"[VideoMLClient] Logging activity to: {_log_path}")
+
         session = requests.Session()
         detr_url = f"{SERVER_BASE_URL}{DETR_ENDPOINT}"
         act_url = SERVER_BASE_URL + ACTIVITY_ENDPOINT_TEMPLATE.format(
@@ -312,6 +323,22 @@ class VideoMLClient(QThread):
             finally:
                 act_ms = (time.monotonic() - act_started) * 1000.0
 
+            # ---- Log activity to file -----------------------------------
+            try:
+                _act_label = ""
+                _act_score = 0.0
+                if isinstance(activity, dict):
+                    _act_label = str(activity.get("label") or "").strip()
+                    try:
+                        _act_score = float(activity.get("score", 0))
+                    except (TypeError, ValueError):
+                        pass
+                _log_f.write(
+                    f"{time.time():.3f}\t{self._frame_id}\t{_act_label}\t{_act_score:.4f}\n"
+                )
+            except Exception:
+                pass
+
             # Draw boxes on annotated copy then add status bar overlay
             _draw_detections(annotated, detections)
             ts = time.strftime("%H:%M:%S")
@@ -351,6 +378,10 @@ class VideoMLClient(QThread):
                 )
 
         session.close()
+        try:
+            _log_f.close()
+        except Exception:
+            pass
         print("[VideoMLClient] Exiting")
 
     # ------------------------------------------------------------------

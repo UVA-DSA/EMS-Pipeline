@@ -157,6 +157,13 @@ def whisper_speech_process(audio_ml_pipe, transcript_fifo, transcript_queue, run
         except Exception:
             pass
 
+        # Open raw transcript log file
+        _log_dir = "/tmp/ems_session_logs"
+        os.makedirs(_log_dir, exist_ok=True)
+        _transcript_path = f"{_log_dir}/transcript_{time.strftime('%Y%m%d_%H%M%S')}.txt"
+        _transcript_log = open(_transcript_path, "w", buffering=1)
+        print(f"[WhisperProcess] Logging raw transcript to: {_transcript_path}")
+
         while running_flag.value:
             try:
                 if whisper_proc.poll() is not None:
@@ -167,11 +174,14 @@ def whisper_speech_process(audio_ml_pipe, transcript_fifo, transcript_queue, run
                 if not line:
                     continue
 
+                line_count += 1
+
+                # Write raw line (with newline) to file
+                _transcript_log.write(line)
+
                 line = line.strip()
                 if not line:
                     continue
-
-                line_count += 1
 
                 try:
                     transcript_queue.put_nowait(line)
@@ -188,6 +198,8 @@ def whisper_speech_process(audio_ml_pipe, transcript_fifo, transcript_queue, run
                 if running_flag.value:
                     print(f"[WhisperProcess] Error reading transcript: {exc}")
                 break
+
+        _transcript_log.close()
     except Exception as exc:
         print(f"[WhisperProcess] Error: {exc}")
     finally:
