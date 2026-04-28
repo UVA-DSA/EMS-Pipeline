@@ -15,7 +15,8 @@ POLL_INTERVAL_SECONDS = 0.1
 
 
 def _trace(message):
-    print(f"[FeedbackEngine] {message}")
+    pass
+    # print(f"[FeedbackEngine] {message}")
 
 
 def get_feedback_engine_path():

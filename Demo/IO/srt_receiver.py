@@ -236,12 +236,18 @@ def srt_receiver_process(host, port, width, height, enabled_types, running_flag)
             libsrt.srt_cleanup()
             return
 
-        # Configure SRT socket
-        rcvbuf = ctypes.c_int(48000000)
+        # PRE-CONNECT socket options (must be set before srt_connect)
+        # SRTO_RCVBUF — large receive buffer for burst tolerance
+        rcvbuf = ctypes.c_int(96000000)
         libsrt.srt_setsockopt(sock, 0, 8, ctypes.byref(rcvbuf), ctypes.sizeof(rcvbuf))
 
-        tlpktdrop = ctypes.c_int(0)
-        libsrt.srt_setsockopt(sock, 0, 6, ctypes.byref(tlpktdrop), ctypes.sizeof(tlpktdrop))
+        # SRTO_RCVLATENCY (option 43) — how long SRT holds packets before
+        # delivering them, in milliseconds.  Higher value = more buffer against
+        # a slow receiver.  120ms is the default; we use 500ms so the server's
+        # initial burst is absorbed inside the SRT layer rather than overflowing
+        # into our application buffer before srt_recv has been called once.
+        rcvlatency = ctypes.c_int(500)
+        libsrt.srt_setsockopt(sock, 0, 43, ctypes.byref(rcvlatency), ctypes.sizeof(rcvlatency))
 
         # Setup address
         addr = sockaddr_in()
@@ -268,72 +274,121 @@ def srt_receiver_process(host, port, width, height, enabled_types, running_flag)
 
         print("[SRTProcess] Connected to SRT server!")
 
-        # Open pipes - map type numbers to pipe paths
-        print("[SRTProcess] Opening pipes for writing...")
+        # POST-CONNECT socket options
+        # SRTO_TLPKTDROP (option 6) — must be set after connect so it
+        # survives the SRT handshake negotiation.  Enables graceful dropping
+        # of packets that can't be delivered in time instead of hard errors.
+        tlpktdrop = ctypes.c_int(1)
+        libsrt.srt_setsockopt(sock, 0, 6, ctypes.byref(tlpktdrop), ctypes.sizeof(tlpktdrop))
+
+        # SRTO_SNDDROPDELAY (option 27, sender-side) — how long the sender
+        # waits before dropping a packet it can't send.  Setting to 0 on the
+        # receiver side is a no-op but harmless; the real effect is that we're
+        # telling SRT to shed packets early rather than retrying until the
+        # buffer is completely full.
+        snddropdelay = ctypes.c_int(0)
+        libsrt.srt_setsockopt(sock, 0, 27, ctypes.byref(snddropdelay), ctypes.sizeof(snddropdelay))
+
+        # ------------------------------------------------------------------
+        # Key insight: srt_recv MUST start immediately after connect.
+        # Any blocking work done before the first srt_recv call lets the
+        # server fill the receive buffer → "No room to store incoming packet".
+        #
+        # Architecture:
+        #   • Main thread: tight srt_recv loop, puts assembled frames onto
+        #     _write_queue (non-blocking put_nowait — drops if full rather
+        #     than stalling the receive loop).
+        #   • PipeOpener threads: open() each named pipe in background.
+        #     Each open() blocks until a reader connects; that is now
+        #     completely off the critical path.
+        #   • PipeWriter thread: drains _write_queue and writes to whichever
+        #     pipes are open at that moment.
+        # ------------------------------------------------------------------
+
+        import threading
+        import queue as _queue_mod
+
         pipe_map = {
-            1: PIPE_VIDEO,      # Video display
-            2: PIPE_AUDIO,      # Audio playback
-            3: PIPE_CSV,        # CSV display
-            4: PIPE_VIDEO_ML,   # Video ML
-            5: PIPE_AUDIO_ML,   # Audio ML
-            6: PIPE_CSV_ML      # CSV ML
+            1: PIPE_VIDEO,
+            2: PIPE_AUDIO,
+            3: PIPE_CSV,
+            4: PIPE_VIDEO_ML,
+            5: PIPE_AUDIO_ML,
+            6: PIPE_CSV_ML,
         }
 
-        # Open all pipes in parallel - named pipe open() blocks until the
-        # reader connects. ML pipes (e.g. egosim_stream) may take longer to
-        # start than display pipes, so we can't open sequentially or we stall.
-        import threading
-        errors = []
-
-        def open_pipe(data_type):
-            if data_type not in pipe_map:
-                print(f"[SRTProcess] Warning: Unknown data type {data_type}")
+        # ---- Pipe opener threads (fire and forget) -------------------------
+        def _open_pipe(data_type):
+            path = pipe_map.get(data_type)
+            if not path:
                 return
-            pipe_path = pipe_map[data_type]
             try:
-                if data_type in [3, 6]:  # CSV or CSV ML - text mode
-                    opened_pipes[data_type] = open(pipe_path, 'w', buffering=1)
+                if data_type in (3, 6):
+                    opened_pipes[data_type] = open(path, 'w', buffering=1)
                 else:
-                    opened_pipes[data_type] = open(pipe_path, 'wb', buffering=0)
-                print(f"[SRTProcess] Opened {pipe_path}")
-            except Exception as e:
-                errors.append(f"[SRTProcess] Failed to open {pipe_path}: {e}")
+                    opened_pipes[data_type] = open(path, 'wb', buffering=0)
+                print(f"[SRTProcess] Opened pipe {path}")
+            except Exception as exc:
+                print(f"[SRTProcess] Failed to open {path}: {exc}")
 
-        threads = [threading.Thread(target=open_pipe, args=(dt,)) for dt in enabled_types]
-        for t in threads:
-            t.start()
-        for t in threads:
-            t.join()
+        for dt in enabled_types:
+            threading.Thread(target=_open_pipe, args=(dt,), daemon=True).start()
 
-        if errors:
-            for err in errors:
-                print(err)
-            return
+        # ---- Pipe writer thread -------------------------------------------
+        # maxsize=8: small cushion so a momentarily slow consumer doesn't
+        # instantly start dropping, but not large enough to grow unbounded.
+        _write_queue = _queue_mod.Queue(maxsize=8)
+        _writer_done = threading.Event()
+        _queue_drops = [0]
 
-        print(f"[SRTProcess] All {len(opened_pipes)} pipes opened! Starting to receive...")
+        def _pipe_writer():
+            while not _writer_done.is_set() or not _write_queue.empty():
+                try:
+                    fidx, payloads, btypes = _write_queue.get(timeout=0.05)
+                except _queue_mod.Empty:
+                    continue
+                for bt in btypes:
+                    data = payloads[bt]
+                    try:
+                        if bt == 1:
+                            b = len(data).to_bytes(4, 'big') + data
+                            if 1 in opened_pipes: opened_pipes[1].write(b); opened_pipes[1].flush()
+                            if 4 in opened_pipes: opened_pipes[4].write(b); opened_pipes[4].flush()
+                        elif bt == 2:
+                            b = len(data).to_bytes(4, 'big') + data
+                            if 2 in opened_pipes: opened_pipes[2].write(b); opened_pipes[2].flush()
+                            if 5 in opened_pipes: opened_pipes[5].write(data); opened_pipes[5].flush()
+                        elif bt == 3:
+                            line = data.decode('utf-8').strip() + '\n'
+                            if 3 in opened_pipes: opened_pipes[3].write(line); opened_pipes[3].flush()
+                            if 6 in opened_pipes: opened_pipes[6].write(line); opened_pipes[6].flush()
+                    except Exception as exc:
+                        print(f"[SRTProcess] Pipe write error bt={bt} frame={fidx}: {exc}")
 
-        # Main receive loop
-        frames_received = 0
-        last_debug = time.time()
+        _writer_thread = threading.Thread(target=_pipe_writer, daemon=True, name="PipeWriter")
+        _writer_thread.start()
 
-        frame_buffers = {}
-        expected_chunks = {}
-        current_frame = None
-
-        # Determine which base types we need (video=1, audio=2, csv=3)
-        # We receive these base types and duplicate to ML pipes
+        # ---- Base-type mapping -------------------------------------------
         base_types_needed = set()
-        if 1 in enabled_types or 4 in enabled_types:  # Video or Video ML
+        if 1 in enabled_types or 4 in enabled_types:
             base_types_needed.add(1)
-        if 2 in enabled_types or 5 in enabled_types:  # Audio or Audio ML
+        if 2 in enabled_types or 5 in enabled_types:
             base_types_needed.add(2)
-        if 3 in enabled_types or 6 in enabled_types:  # CSV or CSV ML
+        if 3 in enabled_types or 6 in enabled_types:
             base_types_needed.add(3)
+
+        # ---- Receive loop — nothing blocking except srt_recv itself -------
+        frames_received = 0
+        last_debug      = time.time()
+        frame_buffers   = {}
+        expected_chunks = {}
+        current_frame   = None
+
+        print("[SRTProcess] Receive loop running...")
 
         while running_flag.value:
             try:
-                # Receive one chunk
-                buf = ctypes.create_string_buffer(2048)
+                buf      = ctypes.create_string_buffer(2048)
                 received = libsrt.srt_recv(sock, buf, 2048)
 
                 if received <= 0:
@@ -344,138 +399,112 @@ def srt_receiver_process(host, port, width, height, enabled_types, running_flag)
                 if received < 11:
                     continue
 
-                # Server sends type 1, 2, or 3 (base types)
-                data_type, frame_idx, chunk_num, total_chunks, data_size = struct.unpack('!BIHHH', buf.raw[:11])
-                data = buf.raw[11:11+data_size]
+                data_type, frame_idx, chunk_num, total_chunks, data_size = struct.unpack(
+                    '!BIHHH', buf.raw[:11]
+                )
+                data = buf.raw[11:11 + data_size]
 
-                # Only process if we need this base type
                 if data_type not in base_types_needed:
                     continue
 
-                # Initialize frame buffer
                 if frame_idx not in frame_buffers:
-                    frame_buffers[frame_idx] = {1: {}, 2: {}, 3: {}}
+                    frame_buffers[frame_idx]   = {1: {}, 2: {}, 3: {}}
                     expected_chunks[frame_idx] = {}
                     _reassembly_start[frame_idx] = time.time()
                     if current_frame is None:
                         current_frame = frame_idx
 
-                # Store chunk
                 frame_buffers[frame_idx][data_type][chunk_num] = data
                 expected_chunks[frame_idx][data_type] = total_chunks
 
-                # Check if current frame is complete
-                if current_frame in frame_buffers:
-                    fb = frame_buffers[current_frame]
-                    ec = expected_chunks[current_frame]
+                if current_frame not in frame_buffers:
+                    continue
 
-                    all_complete = True
-                    for dt in base_types_needed:
-                        if dt not in ec or len(fb[dt]) != ec[dt]:
-                            all_complete = False
-                            break
+                fb = frame_buffers[current_frame]
+                ec = expected_chunks[current_frame]
 
-                    if all_complete:
-                        _now = time.time()
+                if not all(dt in ec and len(fb[dt]) == ec[dt] for dt in base_types_needed):
+                    continue
 
-                        # ---- Dropped-frame detection -------------------------
-                        if _last_complete_frame_idx >= 0:
-                            _gap = current_frame - _last_complete_frame_idx - 1
-                            if _gap > 0:
-                                _log_event("DROPPED", current_frame,
-                                           f"gap={_gap} prev={_last_complete_frame_idx}")
-                                print(f"[SRTProcess] WARNING: {_gap} dropped frame(s) before idx {current_frame}")
+                # Frame complete
+                _now = time.time()
 
-                        # ---- Inter-frame jitter ------------------------------
-                        if _frame_arrival_times:
-                            _ift = _now - _frame_arrival_times[-1]
-                            if _ift > 0.050:   # >50ms = more than 1.5x a 30fps frame
-                                _log_event("JITTER", current_frame,
-                                           f"inter_frame_ms={_ift*1000:.1f}")
-                        _frame_arrival_times.append(_now)
+                if _last_complete_frame_idx >= 0:
+                    _gap = current_frame - _last_complete_frame_idx - 1
+                    if _gap > 0:
+                        _log_event("DROPPED", current_frame,
+                                   f"gap={_gap} prev={_last_complete_frame_idx}")
+                        print(f"[SRTProcess] WARNING: {_gap} dropped frame(s) before idx {current_frame}")
 
-                        # ---- Reassembly time ---------------------------------
-                        _rtime = _now - _reassembly_start.get(current_frame, _now)
-                        _reassembly_start.pop(current_frame, None)
+                if _frame_arrival_times:
+                    _ift = _now - _frame_arrival_times[-1]
+                    if _ift > 0.050:
+                        _log_event("JITTER", current_frame, f"inter_frame_ms={_ift*1000:.1f}")
+                _frame_arrival_times.append(_now)
 
-                        # ---- Assemble payloads & compute checksums -----------
-                        _payloads = {}
-                        for base_type in base_types_needed:
-                            _payloads[base_type] = b''.join(
-                                fb[base_type][i] for i in range(ec[base_type])
-                            )
+                _rtime = _now - _reassembly_start.pop(current_frame, _now)
 
-                        _vid_crc = zlib.adler32(_payloads.get(1, b'')) & 0xFFFFFFFF
-                        _aud_crc = zlib.adler32(_payloads.get(2, b'')) & 0xFFFFFFFF
-                        _csv_crc = zlib.adler32(
-                            _payloads.get(3, b'').rstrip(b'\n')
-                        ) & 0xFFFFFFFF
+                _payloads = {
+                    bt: b''.join(fb[bt][i] for i in range(ec[bt]))
+                    for bt in base_types_needed
+                }
 
-                        _checksum_f.write(
-                            f"{current_frame}\t{_vid_crc}\t{_aud_crc}\t{_csv_crc}\t{_now:.6f}\n"
-                        )
+                _vid_crc = zlib.adler32(_payloads.get(1, b'')) & 0xFFFFFFFF
+                _aud_crc = zlib.adler32(_payloads.get(2, b'')) & 0xFFFFFFFF
+                _csv_crc = zlib.adler32(_payloads.get(3, b'').rstrip(b'\n')) & 0xFFFFFFFF
+                _checksum_f.write(
+                    f"{current_frame}\t{_vid_crc}\t{_aud_crc}\t{_csv_crc}\t{_now:.6f}\n"
+                )
 
-                        # ---- Write to pipes ----------------------------------
-                        for base_type in base_types_needed:
-                            complete_data = _payloads[base_type]
+                # Non-blocking hand-off to writer; drop frame if writer is behind
+                try:
+                    _write_queue.put_nowait((current_frame, _payloads, base_types_needed))
+                except _queue_mod.Full:
+                    _queue_drops[0] += 1
+                    _log_event("QUEUE_FULL_DROP", current_frame,
+                               f"total={_queue_drops[0]}")
+                    if _queue_drops[0] % 30 == 1:
+                        print(f"[SRTProcess] WARNING: writer behind, "
+                              f"dropped frame {current_frame} "
+                              f"(total drops: {_queue_drops[0]})")
 
-                            if base_type == 1:  # Video
-                                video_bytes = len(complete_data).to_bytes(4, 'big') + complete_data
-                                if 1 in opened_pipes:
-                                    opened_pipes[1].write(video_bytes)
-                                    opened_pipes[1].flush()
-                                if 4 in opened_pipes:
-                                    opened_pipes[4].write(video_bytes)
-                                    opened_pipes[4].flush()
+                frames_received += 1
+                _last_complete_frame_idx = current_frame
 
-                            elif base_type == 2:  # Audio
-                                audio_bytes = len(complete_data).to_bytes(4, 'big') + complete_data
-                                if 2 in opened_pipes:
-                                    opened_pipes[2].write(audio_bytes)
-                                    opened_pipes[2].flush()
-                                if 5 in opened_pipes:
-                                    opened_pipes[5].write(complete_data)
-                                    opened_pipes[5].flush()
+                if frames_received % 30 == 0:
+                    elapsed = time.time() - last_debug
+                    print(
+                        f"[SRTProcess] Frames: {frames_received:5d} | "
+                        f"FPS: {30/elapsed:.1f} | "
+                        f"reassembly: {_rtime*1000:.1f}ms | "
+                        f"queue_drops: {_queue_drops[0]}"
+                    )
+                    last_debug = time.time()
 
-                            elif base_type == 3:  # CSV
-                                csv_text = complete_data.decode('utf-8').strip()
-                                if 3 in opened_pipes:
-                                    opened_pipes[3].write(csv_text + '\n')
-                                    opened_pipes[3].flush()
-                                if 6 in opened_pipes:
-                                    opened_pipes[6].write(csv_text + '\n')
-                                    opened_pipes[6].flush()
+                del frame_buffers[current_frame]
+                del expected_chunks[current_frame]
+                current_frame += 1
 
-                        frames_received += 1
-                        _last_complete_frame_idx = current_frame
+                # Evict stale incomplete frames
+                stale = [f for f in frame_buffers if f < current_frame - 5]
+                for f in stale:
+                    del frame_buffers[f]
+                    expected_chunks.pop(f, None)
+                    _reassembly_start.pop(f, None)
+                    _log_event("ABANDONED", f, "chunks_never_completed")
 
-                        # ---- Console debug -----------------------------------
-                        if frames_received % 30 == 0:
-                            elapsed = time.time() - last_debug
-                            fps = 30 / elapsed
-                            print(f"[SRTProcess] Frames: {frames_received:5d} | FPS: {fps:.1f} | reassembly: {_rtime*1000:.1f}ms")
-                            last_debug = time.time()
-
-                        # ---- Cleanup -----------------------------------------
-                        del frame_buffers[current_frame]
-                        del expected_chunks[current_frame]
-                        current_frame += 1
-
-                        old_frames = [f for f in frame_buffers.keys() if f < current_frame - 5]
-                        for old_frame in old_frames:
-                            del frame_buffers[old_frame]
-                            if old_frame in expected_chunks:
-                                del expected_chunks[old_frame]
-                            _reassembly_start.pop(old_frame, None)
-                            # Log frames that were abandoned (never completed)
-                            _log_event("ABANDONED", old_frame, "chunks_never_completed")
-
-            except Exception as e:
+            except Exception as exc:
                 if running_flag.value:
-                    print(f"[SRTProcess] Error in receive loop: {e}")
+                    print(f"[SRTProcess] Error in receive loop: {exc}")
                     import traceback
                     traceback.print_exc()
                 break
+
+        # Signal writer to drain and stop
+        _writer_done.set()
+        _writer_thread.join(timeout=3)
+        if _writer_thread.is_alive():
+            print("[SRTProcess] Warning: pipe writer thread did not exit cleanly")
 
     except Exception as e:
         print(f"[SRTProcess] Error: {e}")

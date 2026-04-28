@@ -218,7 +218,7 @@ class VideoMLClient(QThread):
             return
 
         if self._feedback_publisher.publish_action(action_feedback):
-            print(f"[VideoMLClient] Published action feedback: {action_feedback}")
+            # print(f"[VideoMLClient] Published action feedback: {action_feedback}")
             self._last_published_action_feedback = action_feedback
 
     def run(self):
@@ -360,10 +360,11 @@ class VideoMLClient(QThread):
             )
             if self._bbox_publisher.publish(self._frame_id, bbox_boxes):
                 if bbox_boxes or self._frame_id % HEALTH_LOG_INTERVAL_FRAMES == 0:
-                    print(
-                        f"[VideoMLClient] Published bbox frame: "
-                        f"frame_id={self._frame_id} boxes={len(bbox_boxes)}"
-                    )
+                    pass
+                    # print(
+                    #     f"[VideoMLClient] Published bbox frame: "
+                    #     f"frame_id={self._frame_id} boxes={len(bbox_boxes)}"
+                    # )
             self._publish_action_feedback(action_feedback)
             emit_ms = (time.monotonic() - emit_started) * 1000.0
             total_ms = (time.monotonic() - frame_started) * 1000.0

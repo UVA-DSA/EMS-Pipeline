@@ -16,7 +16,8 @@ EXCLUDED_BBOX_LABELS = {
 
 
 def _trace(message):
-    print(f"[BBoxEngine] {message}")
+    #print(f"[BBoxEngine] {message}")
+    pass
 
 
 def get_bbox_engine_path():
