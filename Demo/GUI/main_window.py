@@ -328,7 +328,7 @@ class MainWindow(QWidget):
         self.ModalityLayout.addWidget(self.AudioCheckBox)
 
         self.AudioMLCheckBox = QCheckBox("Audio ML")
-        self.AudioMLCheckBox.setChecked(False)
+        self.AudioMLCheckBox.setChecked(True)
         self.ModalityLayout.addWidget(self.AudioMLCheckBox)
 
         self.SmartWatchCheckBox = QCheckBox("Smart Watch")
@@ -1836,14 +1836,40 @@ def configure_runtime(argv=None):
 
 def run(argv=None):
     args = list(argv or sys.argv)
-    configure_runtime(args)
+
+    # Strip --auto-start <seconds> before configure_runtime sees the args,
+    # otherwise configure_runtime mistakes it for --datacollect.
+    auto_start_delay_ms = None
+    filtered_args = []
+    i = 0
+    while i < len(args):
+        if args[i] == "--auto-start" and i + 1 < len(args):
+            try:
+                auto_start_delay_ms = int(float(args[i + 1]) * 1000)
+            except ValueError:
+                print(f"WARNING: --auto-start value '{args[i+1]}' is not a number, ignoring")
+            i += 2
+        else:
+            filtered_args.append(args[i])
+            i += 1
+
+    configure_runtime(filtered_args)
 
     print("Starting GUI")
-    app = QApplication(args)
+    app = QApplication(filtered_args)
     screen_resolution = app.desktop().screenGeometry()
     width, height = screen_resolution.width(), screen_resolution.height()
     print("Screen Resolution\nWidth: %s\nHeight: %s" % (width, height))
 
     window = MainWindow(width, height)
     window.show()
+
+    if auto_start_delay_ms is not None:
+        from PyQt5.QtCore import QTimer
+        def _auto_click_start():
+            print(f"[auto-start] Clicking Start button after {auto_start_delay_ms}ms delay")
+            window.StartButtonClick()
+        QTimer.singleShot(auto_start_delay_ms, _auto_click_start)
+        print(f"[auto-start] Scheduled Start click in {auto_start_delay_ms / 1000:.1f}s")
+
     return app.exec_()
