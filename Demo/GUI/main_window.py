@@ -1837,17 +1837,38 @@ def configure_runtime(argv=None):
 def run(argv=None):
     args = list(argv or sys.argv)
 
-    # Strip --auto-start <seconds> before configure_runtime sees the args,
-    # otherwise configure_runtime mistakes it for --datacollect.
+    # ------------------------------------------------------------------
+    # Strip all batch-runner flags BEFORE configure_runtime sees the args
+    # so they don't trip the positional --datacollect check.
+    #
+    # Supported flags (all optional, all used by run_scenarios.py):
+    #   --auto-start <seconds>   click Start automatically after delay
+    #   --source <name>          set DataSourceBox (e.g. "local files")
+    #   --video <path>           prefill LocalVideoPathEdit
+    #   --csv <path>             prefill LocalCSVPathEdit
+    # ------------------------------------------------------------------
     auto_start_delay_ms = None
+    prefill_source      = None
+    prefill_video       = None
+    prefill_csv         = None
+
+    single_flags = {"--auto-start", "--source", "--video", "--csv"}
     filtered_args = []
     i = 0
     while i < len(args):
-        if args[i] == "--auto-start" and i + 1 < len(args):
-            try:
-                auto_start_delay_ms = int(float(args[i + 1]) * 1000)
-            except ValueError:
-                print(f"WARNING: --auto-start value '{args[i+1]}' is not a number, ignoring")
+        if args[i] in single_flags and i + 1 < len(args):
+            flag, val = args[i], args[i + 1]
+            if flag == "--auto-start":
+                try:
+                    auto_start_delay_ms = int(float(val) * 1000)
+                except ValueError:
+                    print(f"WARNING: --auto-start value {val!r} is not a number, ignoring")
+            elif flag == "--source":
+                prefill_source = val
+            elif flag == "--video":
+                prefill_video = val
+            elif flag == "--csv":
+                prefill_csv = val
             i += 2
         else:
             filtered_args.append(args[i])
@@ -1864,11 +1885,46 @@ def run(argv=None):
     window = MainWindow(width, height)
     window.show()
 
+    # ------------------------------------------------------------------
+    # Prefill: switch source and populate file fields before auto-start
+    # fires so that StartButtonClick sees the correct values.
+    # ------------------------------------------------------------------
+    def _apply_prefill():
+        if prefill_source is not None:
+            idx = window.DataSourceBox.findText(prefill_source)
+            if idx >= 0:
+                window.DataSourceBox.setCurrentIndex(idx)
+                print(f"[prefill] Source set to: {prefill_source!r}")
+            else:
+                print(f"[prefill] WARNING: source {prefill_source!r} not found in DataSourceBox")
+
+        # After source switch, UpdateDataSourceConfig has run and the
+        # Local* widgets exist — safe to set them now.
+        if prefill_video is not None:
+            if hasattr(window, "LocalVideoPathEdit"):
+                window.LocalVideoPathEdit.setText(prefill_video)
+                print(f"[prefill] Video: {prefill_video}")
+            else:
+                print("[prefill] WARNING: LocalVideoPathEdit not found — wrong source?")
+
+        if prefill_csv is not None:
+            if hasattr(window, "LocalCSVPathEdit"):
+                window.LocalCSVPathEdit.setText(prefill_csv)
+                print(f"[prefill] CSV: {prefill_csv}")
+            else:
+                print("[prefill] WARNING: LocalCSVPathEdit not found — wrong source?")
+
+    def _auto_click_start():
+        print(f"[auto-start] Clicking Start button after {auto_start_delay_ms}ms delay")
+        window.StartButtonClick()
+
+    if prefill_source is not None or prefill_video is not None or prefill_csv is not None:
+        from PyQt5.QtCore import QTimer
+        # Prefill at t=0 (next event loop tick) so all widgets are rendered
+        QTimer.singleShot(0, _apply_prefill)
+
     if auto_start_delay_ms is not None:
         from PyQt5.QtCore import QTimer
-        def _auto_click_start():
-            print(f"[auto-start] Clicking Start button after {auto_start_delay_ms}ms delay")
-            window.StartButtonClick()
         QTimer.singleShot(auto_start_delay_ms, _auto_click_start)
         print(f"[auto-start] Scheduled Start click in {auto_start_delay_ms / 1000:.1f}s")
 
