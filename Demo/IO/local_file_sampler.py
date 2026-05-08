@@ -293,12 +293,17 @@ def local_file_sampler_process(
                                 print(f"[LocalSampler] ffmpeg video stderr tail:\n{_tail}")
                             break
                         video_bytes = len(video_data).to_bytes(4, "big") + video_data
-                        if 1 in opened_pipes:
-                            opened_pipes[1].write(video_bytes)
-                            opened_pipes[1].flush()
-                        if 4 in opened_pipes:
-                            opened_pipes[4].write(video_bytes)
-                            opened_pipes[4].flush()
+                        for _dt in (1, 4):
+                            if _dt in opened_pipes:
+                                try:
+                                    opened_pipes[_dt].write(video_bytes)
+                                    opened_pipes[_dt].flush()
+                                except BrokenPipeError:
+                                    print(f"[LocalSampler] Pipe {_dt} ({pipe_map[_dt]}) closed by reader — dropping")
+                                    _log_event("PIPE_CLOSED", frame_idx, f"pipe={_dt} path={pipe_map[_dt]}")
+                                    try: opened_pipes[_dt].close()
+                                    except Exception: pass
+                                    del opened_pipes[_dt]
 
                     # --- Audio ---
                     if audio_proc is not None:
@@ -307,24 +312,33 @@ def local_file_sampler_process(
                             print("[LocalSampler] Audio stream ended")
                             break
                         audio_with_len = len(audio_data).to_bytes(4, "big") + audio_data
-                        if 2 in opened_pipes:
-                            opened_pipes[2].write(audio_with_len)
-                            opened_pipes[2].flush()
-                        # ML pipe gets raw PCM (no length prefix) — same as SRT receiver
-                        if 5 in opened_pipes:
-                            opened_pipes[5].write(audio_data)
-                            opened_pipes[5].flush()
+                        for _dt, _payload in ((2, audio_with_len), (5, audio_data)):
+                            if _dt in opened_pipes:
+                                try:
+                                    opened_pipes[_dt].write(_payload)
+                                    opened_pipes[_dt].flush()
+                                except BrokenPipeError:
+                                    print(f"[LocalSampler] Pipe {_dt} ({pipe_map[_dt]}) closed by reader — dropping")
+                                    _log_event("PIPE_CLOSED", frame_idx, f"pipe={_dt} path={pipe_map[_dt]}")
+                                    try: opened_pipes[_dt].close()
+                                    except Exception: pass
+                                    del opened_pipes[_dt]
 
                     # --- CSV ---
                     if need_csv and not csv_exhausted:
                         if frame_idx < len(csv_lines):
                             csv_line = csv_lines[frame_idx] + "\n"
-                            if 3 in opened_pipes:
-                                opened_pipes[3].write(csv_line)
-                                opened_pipes[3].flush()
-                            if 6 in opened_pipes:
-                                opened_pipes[6].write(csv_line)
-                                opened_pipes[6].flush()
+                            for _dt in (3, 6):
+                                if _dt in opened_pipes:
+                                    try:
+                                        opened_pipes[_dt].write(csv_line)
+                                        opened_pipes[_dt].flush()
+                                    except BrokenPipeError:
+                                        print(f"[LocalSampler] Pipe {_dt} ({pipe_map[_dt]}) closed by reader — dropping")
+                                        _log_event("PIPE_CLOSED", frame_idx, f"pipe={_dt} path={pipe_map[_dt]}")
+                                        try: opened_pipes[_dt].close()
+                                        except Exception: pass
+                                        del opened_pipes[_dt]
                         else:
                             csv_exhausted = True
                             print("[LocalSampler] CSV lines exhausted")

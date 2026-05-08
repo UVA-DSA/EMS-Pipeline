@@ -133,11 +133,11 @@ def _resolve_whisper_assets():
     whisper_params = {
         "step": _resolve_int_env(
             ["EMS_WHISPER_STEP"],
-            getattr(pipeline_config, "step", 2000),
+            getattr(pipeline_config, "step", 4000),
         ),
         "length": _resolve_int_env(
             ["EMS_WHISPER_MAX_LENGTH", "EMS_WHISPER_LENGTH"],
-            getattr(pipeline_config, "length", 4000),
+            getattr(pipeline_config, "length", 16000),
         ),
         "keep_ms": _resolve_int_env(
             ["EMS_WHISPER_KEEP_MS", "EMS_WHISPER_KEEP"],
@@ -289,13 +289,24 @@ def whisper_speech_process(audio_ml_pipe, transcript_fifo, transcript_queue, run
                 # ----------------------------------------------------------
                 if raw_text.startswith("T=") and "\t" in raw_text:
                     ts_part, text_part = raw_text.split("\t", 1)
-                    t1_s   = int(ts_part[2:]) / 1000.0
-                    t0_s   = max(0.0, t1_s - whisper_params["step"] / 1000.0)
+                    text_part = text_part.strip()
+                    try:
+                        t1_s = int(ts_part[2:]) / 1000.0
+                        t0_s = max(0.0, t1_s - whisper_params["step"] / 1000.0)
+                    except (ValueError, IndexError):
+                        # Malformed T= prefix — fall back to wall-clock
+                        t0_s = t_prev_line - t_ready
+                        t1_s = t_line      - t_ready
                 else:
                     # Fallback: wall-clock interval
-                    t0_s   = t_prev_line - t_ready
-                    t1_s   = t_line      - t_ready
+                    t0_s      = t_prev_line - t_ready
+                    t1_s      = t_line      - t_ready
                     text_part = raw_text
+
+                # Skip if no actual text content after stripping the prefix
+                if not text_part:
+                    t_prev_line = t_line
+                    continue
 
                 t0_str = _fmt_timestamp(t0_s)
                 t1_str = _fmt_timestamp(t1_s)
