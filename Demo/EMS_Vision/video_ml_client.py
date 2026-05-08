@@ -90,6 +90,7 @@ class VideoMLClient(QThread):
         self._last_frame_received_at = None
         self._last_idle_log_at = 0.0
         self._last_published_action_feedback = None
+        self._last_act_line = "buffering..."
         self._bbox_publisher = BBoxPublisher()
         self._feedback_publisher = FeedbackPublisher()
         print("[VideoMLClient] Initialized")
@@ -308,6 +309,7 @@ class VideoMLClient(QThread):
 
             # --- Activity recognition ---
             act_started = time.monotonic()
+            activity = None
             try:
                 act = self._post(session, act_url, image_bytes)
                 activity = act.get("activity")
@@ -339,6 +341,14 @@ class VideoMLClient(QThread):
             except Exception:
                 pass
 
+            # Only update the sticky overlay text when we got a confident
+            # activity result; otherwise keep showing the last one so the
+            # overlay doesn't fall back to "buffering..." or "Not confident"
+            # between predictions.
+            if isinstance(activity, dict) and action_feedback:
+                self._last_act_line = action_feedback
+            overlay_act_line = self._last_act_line
+
             # Draw boxes on annotated copy then add status bar overlay
             _draw_detections(annotated, detections)
             ts = time.strftime("%H:%M:%S")
@@ -349,7 +359,7 @@ class VideoMLClient(QThread):
                 cv2.FONT_HERSHEY_SIMPLEX, 0.45, (255, 255, 255), 1, cv2.LINE_AA,
             )
             cv2.putText(
-                annotated, f"Activity: {act_line}", (10, 36),
+                annotated, f"Activity: {overlay_act_line}", (10, 36),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.45, (125, 255, 125), 1, cv2.LINE_AA,
             )
 
