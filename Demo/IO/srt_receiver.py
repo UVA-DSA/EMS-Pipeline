@@ -407,12 +407,51 @@ def srt_receiver_process(host, port, width, height, enabled_types, running_flag)
                 if data_type not in base_types_needed:
                     continue
 
+                # ---- DIAGNOSTIC: validate header sanity --------------------
+                if total_chunks == 0 or total_chunks > 1000:
+                    _log_event("BAD_TOTAL_CHUNKS", frame_idx,
+                               f"dt={data_type} chunk={chunk_num} total={total_chunks} dsize={data_size}")
+                    print(f"[SRTProcess] CORRUPT total_chunks: dt={data_type} "
+                          f"frame={frame_idx} chunk={chunk_num} total={total_chunks} "
+                          f"dsize={data_size}")
+                    continue
+                if chunk_num >= total_chunks:
+                    _log_event("BAD_CHUNK_NUM", frame_idx,
+                               f"dt={data_type} chunk={chunk_num} total={total_chunks}")
+                    print(f"[SRTProcess] CORRUPT chunk_num >= total_chunks: dt={data_type} "
+                          f"frame={frame_idx} chunk={chunk_num}/{total_chunks}")
+                    continue
+                if data_size != len(data):
+                    _log_event("BAD_DATA_SIZE", frame_idx,
+                               f"dt={data_type} declared={data_size} actual={len(data)}")
+                    continue
+
                 if frame_idx not in frame_buffers:
                     frame_buffers[frame_idx]   = {1: {}, 2: {}, 3: {}}
                     expected_chunks[frame_idx] = {}
                     _reassembly_start[frame_idx] = time.time()
                     if current_frame is None:
                         current_frame = frame_idx
+
+                # ---- DIAGNOSTIC: detect inconsistent total_chunks -----------
+                if data_type in expected_chunks[frame_idx]:
+                    prev = expected_chunks[frame_idx][data_type]
+                    if prev != total_chunks:
+                        _log_event("INCONSISTENT_TOTAL", frame_idx,
+                                   f"dt={data_type} chunk={chunk_num} prev={prev} new={total_chunks}")
+                        print(f"[SRTProcess] INCONSISTENT total_chunks: frame={frame_idx} "
+                              f"dt={data_type} chunk={chunk_num} prev_total={prev} this_total={total_chunks}")
+                        # KEEP THE OLD ONE - don't overwrite with corrupted value
+                        total_chunks = prev
+
+                # ---- DIAGNOSTIC: detect duplicate chunk arrival -------------
+                if chunk_num in frame_buffers[frame_idx][data_type]:
+                    prev_data = frame_buffers[frame_idx][data_type][chunk_num]
+                    if prev_data != data:
+                        _log_event("DUPLICATE_DIFFERENT", frame_idx,
+                                   f"dt={data_type} chunk={chunk_num}")
+                        print(f"[SRTProcess] DUPLICATE chunk with DIFFERENT data: "
+                              f"frame={frame_idx} dt={data_type} chunk={chunk_num}")
 
                 frame_buffers[frame_idx][data_type][chunk_num] = data
                 expected_chunks[frame_idx][data_type] = total_chunks
@@ -444,10 +483,43 @@ def srt_receiver_process(host, port, width, height, enabled_types, running_flag)
 
                 _rtime = _now - _reassembly_start.pop(current_frame, _now)
 
-                _payloads = {
-                    bt: b''.join(fb[bt][i] for i in range(ec[bt]))
-                    for bt in base_types_needed
-                }
+                _payloads = {}
+                _reassembly_ok = True
+                for bt in base_types_needed:
+                    expected_count = ec[bt]
+                    received_chunks = fb[bt]
+
+                    # Verify all indices 0..expected_count-1 are present
+                    missing = [i for i in range(expected_count) if i not in received_chunks]
+                    if missing:
+                        _log_event("MISSING_INDICES", current_frame,
+                                   f"dt={bt} missing={missing[:10]} count_ok_but_holes")
+                        print(f"[SRTProcess] FRAME {current_frame} dt={bt}: count matches "
+                              f"but missing indices {missing[:10]}")
+                        _reassembly_ok = False
+                        break
+
+                    payload = b''.join(received_chunks[i] for i in range(expected_count))
+                    _payloads[bt] = payload
+
+                    # Video sanity check
+                    if bt == 1:
+                        expected_video_size = width * height * 3
+                        if len(payload) != expected_video_size:
+                            _log_event("BAD_VIDEO_SIZE", current_frame,
+                                       f"got={len(payload)} expected={expected_video_size}")
+                            print(f"[SRTProcess] FRAME {current_frame}: video size "
+                                  f"{len(payload)} != expected {expected_video_size} "
+                                  f"(chunks={expected_count})")
+                            _reassembly_ok = False
+                            break
+
+                if not _reassembly_ok:
+                    # Skip this frame entirely
+                    del frame_buffers[current_frame]
+                    del expected_chunks[current_frame]
+                    current_frame += 1
+                    continue
 
                 _vid_crc = zlib.adler32(_payloads.get(1, b'')) & 0xFFFFFFFF
                 _aud_crc = zlib.adler32(_payloads.get(2, b'')) & 0xFFFFFFFF

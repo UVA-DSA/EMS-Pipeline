@@ -30,7 +30,7 @@ DISPLAY_WIDTH = 640
 DISPLAY_HEIGHT = 480
 HEALTH_LOG_INTERVAL_FRAMES = 30
 IDLE_LOG_INTERVAL_SECONDS = 2.0
-ACTIVITY_FEEDBACK_THRESHOLD = 0.80
+ACTIVITY_FEEDBACK_THRESHOLD = 0.25
 BBOX_CONFIDENCE_THRESHOLD = 0.70
 MAX_BBOXES_PER_LABEL = 2
 REQUIRE_HANDS_FOR_CHEST_COMPRESSIONS_FEEDBACK = False
@@ -189,7 +189,7 @@ class VideoMLClient(QThread):
             return ""
 
         if score_value < ACTIVITY_FEEDBACK_THRESHOLD:
-            return ""
+            return "Not confident"
 
         label_text = str(activity.get("label") or "").strip()
         if not label_text:

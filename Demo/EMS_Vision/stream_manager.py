@@ -90,6 +90,21 @@ def vision_reader_process(pipe_path, frame_queue, running_flag, frame_width, fra
     pipe_stalled = False
     last_pipe_idle_log_at = 0.0
 
+    # ---- Reader-side diagnostic log (mirrors SRT/local sampler logs) -------
+    import zlib as _zlib
+    _session_ts = time.strftime("%Y%m%d_%H%M%S")
+    _log_dir    = "/tmp/ems_session_logs"
+    os.makedirs(_log_dir, exist_ok=True)
+    _reader_log_path = f"{_log_dir}/vision_reader_{_session_ts}.tsv"
+    _reader_log = open(_reader_log_path, "w", buffering=1)
+    _reader_log.write("# vision_reader_process diagnostic log\n")
+    _reader_log.write(f"# pipe={pipe_path}  expected_frame_bytes={expected_bytes}\n")
+    _reader_log.write("event\tframe_count\ttimestamp\tdetail\n")
+    print(f"[VisionProcess] Diagnostic log: {_reader_log_path}")
+
+    def _rlog(event, detail=""):
+        _reader_log.write(f"{event}\t{frame_count}\t{time.time():.6f}\t{detail}\n")
+
     while running_flag.value:
         video_pipe = None
         try:
@@ -156,6 +171,30 @@ def vision_reader_process(pipe_path, frame_queue, running_flag, frame_width, fra
                         break
 
                     frame_length = int.from_bytes(length_bytes, "big")
+
+                    # ---- Diagnostic: log every length prefix ------------
+                    if frame_length != expected_bytes:
+                        # Catch the bug red-handed: log the raw prefix bytes
+                        # and the surrounding context.
+                        _hex_prefix = length_bytes.hex()
+                        _rlog("BAD_LENGTH_PREFIX",
+                              f"got={frame_length} expected={expected_bytes} "
+                              f"raw_hex={_hex_prefix} after_frames={frame_count}")
+                        print(f"[VisionProcess] BAD LENGTH PREFIX after frame "
+                              f"{frame_count}: got {frame_length} "
+                              f"(0x{_hex_prefix}) expected {expected_bytes}")
+                        # Try to drain whatever follows so we can see what's
+                        # actually in the pipe.  Read up to 64KB.
+                        try:
+                            _drained = pipe_handle.read(65536)
+                            _rlog("DRAIN_AFTER_BAD_PREFIX",
+                                  f"drained_bytes={len(_drained) if _drained else 0}")
+                        except Exception as _exc:
+                            _rlog("DRAIN_FAILED", str(_exc))
+                        # Bail out — outer loop will reopen the pipe and
+                        # resync.
+                        break
+
                     frame_bytes = _read_exactly(
                         video_pipe,
                         frame_length,
@@ -188,6 +227,13 @@ def vision_reader_process(pipe_path, frame_queue, running_flag, frame_width, fra
                             f"expected {expected_bytes} bytes, received {frame_length}"
                         )
                         continue
+
+                    # ---- Diagnostic: hash every frame so we can compare to
+                    # the SRT receiver's adler32 log for the same frame_count.
+                    if frame_count % 30 == 0:
+                        _h = _zlib.adler32(frame_bytes) & 0xFFFFFFFF
+                        _rlog("FRAME_OK",
+                              f"len={frame_length} adler32={_h:08x}")
 
                     frame = np.frombuffer(frame_bytes, dtype=np.uint8).reshape(
                         (frame_height, frame_width, 3)
