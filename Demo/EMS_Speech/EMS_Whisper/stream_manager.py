@@ -66,8 +66,9 @@ def _normalize_numbers(text: str) -> str:
 
         # Re-attach punctuation, preserving original capitalisation for non-number words
         if replacement == stripped.lower() and not replacement.isdigit():
-            # Preserve original capitalisation
-            if stripped[0].isupper() and len(stripped) > 1:
+            # Preserve original capitalisation — guard against empty stripped
+            # (happens when a token is entirely punctuation e.g. "--" or "...")
+            if stripped and replacement and stripped[0].isupper() and len(stripped) > 1:
                 replacement = replacement[0].upper() + replacement[1:]
         result.append(punct_lead + replacement + punct_trail)
 
