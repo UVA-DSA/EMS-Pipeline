@@ -336,6 +336,16 @@ export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
 python main.py
 ```
 
+Upon launching, the GUI "Video Content" widget should say "Ready" after 1 second, indicating that Whisper has started.
+If "Ready" is not displayed, Whisper did not start correctly. The pipeline should be restarted.
+
+Other indications that the pipeline didn't start correctly and needs to be restarted:
+- less than 5 files in /tmp/ems_session_logs
+  - You should expect "vision_reader", "video_ml", "transcript", "local_checksums", "local_stats"
+- Not getting transcript output in the Speech Recognition widget
+- Not getting updated activity recognition inferences in the overlay of the Video Content widget
+- Not getting constantly-updating output in the Vision Information widget
+
 ### Command-Line Flags
 
 `main.py` supports several flags used by the [EgoEMS-Sim](https://github.com/UVA-DSA/EgoEMS-Sim) batch runner for automated evaluation:

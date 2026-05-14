@@ -293,55 +293,66 @@ def local_file_sampler_process(
                                 print(f"[LocalSampler] ffmpeg video stderr tail:\n{_tail}")
                             break
                         video_bytes = len(video_data).to_bytes(4, "big") + video_data
-                        for _dt in (1, 4):
-                            if _dt in opened_pipes:
-                                try:
-                                    opened_pipes[_dt].write(video_bytes)
-                                    opened_pipes[_dt].flush()
-                                except BrokenPipeError:
-                                    print(f"[LocalSampler] Pipe {_dt} ({pipe_map[_dt]}) closed by reader — dropping")
-                                    _log_event("PIPE_CLOSED", frame_idx, f"pipe={_dt} path={pipe_map[_dt]}")
-                                    try: opened_pipes[_dt].close()
-                                    except Exception: pass
-                                    del opened_pipes[_dt]
+                        if 1 in opened_pipes:
+                            opened_pipes[1].write(video_bytes)
+                            opened_pipes[1].flush()
+                        if 4 in opened_pipes:
+                            opened_pipes[4].write(video_bytes)
+                            opened_pipes[4].flush()
 
                     # --- Audio ---
                     if audio_proc is not None:
                         audio_data = audio_proc.stdout.read(audio_bytes_per_frame)
                         if len(audio_data) != audio_bytes_per_frame:
-                            print("[LocalSampler] Audio stream ended")
+                            got = len(audio_data)
+                            if got == 0:
+                                print(f"[LocalSampler] Audio stream ended after {frame_idx} frames")
+                                break
+                            # Pad the final short frame with silence (matches SRT server),
+                            # write it, then stop after this frame
+                            audio_data = audio_data + b'\x00' * (audio_bytes_per_frame - got)
+                            print(
+                                f"[LocalSampler] Audio EOF at frame {frame_idx} — "
+                                f"padded final frame with {audio_bytes_per_frame - got} bytes of silence"
+                            )
+                            audio_with_len = len(audio_data).to_bytes(4, "big") + audio_data
+                            if 2 in opened_pipes:
+                                try:
+                                    opened_pipes[2].write(audio_with_len)
+                                    opened_pipes[2].flush()
+                                except BrokenPipeError:
+                                    pass
+                            if 5 in opened_pipes:
+                                try:
+                                    opened_pipes[5].write(audio_data)
+                                    opened_pipes[5].flush()
+                                except BrokenPipeError:
+                                    pass
+                            frames_sent += 1
+                            frame_idx   += 1
                             break
                         audio_with_len = len(audio_data).to_bytes(4, "big") + audio_data
-                        for _dt, _payload in ((2, audio_with_len), (5, audio_data)):
-                            if _dt in opened_pipes:
-                                try:
-                                    opened_pipes[_dt].write(_payload)
-                                    opened_pipes[_dt].flush()
-                                except BrokenPipeError:
-                                    print(f"[LocalSampler] Pipe {_dt} ({pipe_map[_dt]}) closed by reader — dropping")
-                                    _log_event("PIPE_CLOSED", frame_idx, f"pipe={_dt} path={pipe_map[_dt]}")
-                                    try: opened_pipes[_dt].close()
-                                    except Exception: pass
-                                    del opened_pipes[_dt]
+                        if 2 in opened_pipes:
+                            opened_pipes[2].write(audio_with_len)
+                            opened_pipes[2].flush()
+                        # ML pipe gets raw PCM (no length prefix) — same as SRT receiver
+                        if 5 in opened_pipes:
+                            opened_pipes[5].write(audio_data)
+                            opened_pipes[5].flush()
 
                     # --- CSV ---
                     if need_csv and not csv_exhausted:
                         if frame_idx < len(csv_lines):
                             csv_line = csv_lines[frame_idx] + "\n"
-                            for _dt in (3, 6):
-                                if _dt in opened_pipes:
-                                    try:
-                                        opened_pipes[_dt].write(csv_line)
-                                        opened_pipes[_dt].flush()
-                                    except BrokenPipeError:
-                                        print(f"[LocalSampler] Pipe {_dt} ({pipe_map[_dt]}) closed by reader — dropping")
-                                        _log_event("PIPE_CLOSED", frame_idx, f"pipe={_dt} path={pipe_map[_dt]}")
-                                        try: opened_pipes[_dt].close()
-                                        except Exception: pass
-                                        del opened_pipes[_dt]
+                            if 3 in opened_pipes:
+                                opened_pipes[3].write(csv_line)
+                                opened_pipes[3].flush()
+                            if 6 in opened_pipes:
+                                opened_pipes[6].write(csv_line)
+                                opened_pipes[6].flush()
                         else:
-                            csv_exhausted = True
-                            print("[LocalSampler] CSV lines exhausted")
+                            print(f"[LocalSampler] CSV lines exhausted after {frame_idx} frames — stopping")
+                            break
 
                     # ---- Checksum & timing instrumentation -----------------
                     _now = time.time()
