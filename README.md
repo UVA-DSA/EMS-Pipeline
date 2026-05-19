@@ -93,6 +93,11 @@ EMS-Pipeline/
 │   │       └── whisper.cpp_realtime_stream/   ← Whisper C++ submodule
 │   │           ├── models/                    ← Model weights (.bin files)
 │   │           └── build/bin/egosim_stream    ← Built binary
+│   ├── EMS_CPR/
+│   │   ├── cpr_depth_reader.py                ← Arduino VL6180 CPR sensor reader + FIFO publisher
+│   │   ├── cpr_data_visualizer.py             ← Standalone CPR depth waveform/rate GUI
+│   │   └── arduino/
+│   │       └── vl6180_cpr_depth/              ← Arduino sketch for CPR manikin distance sensor
 │   ├── EMS_Agent/
 │   │   └── Interface/
 │   │       └── models/
