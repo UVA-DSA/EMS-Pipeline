@@ -3,4 +3,4 @@
 	url = git@github.com:keshara2032/whisper.cpp_realtime_stream.git
 [submodule "Android/EgoStreamer"]
 	path = Android/EgoStreamer
-	url =git@github.com:keshara2032/EgoStreamer.git
+	url = git@github.com:keshara2032/EgoStreamer.git
