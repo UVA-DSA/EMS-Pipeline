@@ -150,6 +150,8 @@ EMS-Pipeline/
 | NVIDIA Container Toolkit | Required for GPU-accelerated Docker |
 | Android Studio | Required only for smartglass app deployment |
 
+> **CUDA toolkit note:** `nvidia-smi` reports the CUDA runtime version supported by your NVIDIA driver. It does not guarantee that the CUDA compiler (`nvcc`) is installed or that CMake will use the correct toolkit. On Ubuntu 20.04, `sudo apt install nvidia-cuda-toolkit` may install CUDA 10.1, which is too old for this project. Install an NVIDIA CUDA toolkit package such as `cuda-toolkit-11-8` or a supported CUDA 12.x toolkit, then point CMake at that toolkit explicitly.
+
 ---
 
 ## Installation
@@ -180,16 +182,30 @@ conda activate demo_ems
 
 ```bash
 sudo apt update && sudo apt upgrade -y
+sudo add-apt-repository universe
+sudo apt update
 
 sudo apt-get install -y \
   build-essential cmake pkg-config \
   ffmpeg \
   libsdl2-dev \
-  libasound-dev \
+  libasound2-dev \
   portaudio19-dev libportaudio2 libportaudiocpp0 \
-  libsrt1.5-gnutls libsrt-gnutls-dev \
   libxcb-randr0-dev libxcb-xtest0-dev \
   libxcb-xinerama0-dev libxcb-shape0-dev libxcb-xkb-dev
+```
+
+Install the SRT development package for your Ubuntu release:
+
+```bash
+# Check your Ubuntu version
+lsb_release -rs
+
+# Ubuntu 20.04
+sudo apt-get install -y libsrt-dev
+
+# Ubuntu 22.04 or newer
+sudo apt-get install -y libsrt-gnutls-dev
 ```
 
 ### 4. Install Python Packages
@@ -235,13 +251,20 @@ The local speech recognition path uses a C++ Whisper runtime that must be built 
 ```bash
 cd Demo/EMS_Speech/EMS_Whisper/whisper.cpp_realtime_stream
 
+# Confirm that CMake will use a supported CUDA toolkit.
+# This should print CUDA 11.8 or a supported CUDA 12.x version, not CUDA 10.1.
+/usr/local/cuda-11.8/bin/nvcc --version
+
 cmake -B build --fresh \
   -DWHISPER_SDL2=ON \
   -DGGML_CUDA=1 \
-  -DCUDAToolkit_ROOT=/usr/local/cuda
+  -DCUDAToolkit_ROOT=/usr/local/cuda-11.8 \
+  -DCMAKE_CUDA_COMPILER=/usr/local/cuda-11.8/bin/nvcc
 
 cmake --build build -j --config Release
 ```
+
+If you use a different supported CUDA version, replace `/usr/local/cuda-11.8` with your toolkit path, for example `/usr/local/cuda-12.3`.
 
 Verify the binary was built:
 
@@ -280,6 +303,43 @@ Demo/EMS_Agent/Interface/models/DKEC-TinyClinicalBERT/model.pt
 ### 7. Vision Inference Server (Docker)
 
 The VideoML client sends JPEG-encoded frames to a local Docker container at `http://localhost:8000`. The container runs DETR object detection and an activity recognition model using TensorRT.
+
+Use Docker Engine on Linux for GPU containers. Docker Desktop's `desktop-linux` context may not expose the host NVIDIA driver correctly.
+
+```bash
+# Confirm Docker is using the Linux Docker Engine, not Docker Desktop.
+docker context ls
+docker context use default
+
+# Start Docker Engine if it is installed but stopped.
+sudo systemctl enable --now docker
+
+# Allow your user to run Docker without sudo, then log out and back in.
+sudo usermod -aG docker $USER
+```
+
+After logging back in, verify Docker and GPU access:
+
+```bash
+docker run --rm hello-world
+docker run --rm --gpus all nvidia/cuda:12.3.2-base-ubuntu22.04 nvidia-smi
+```
+
+If the GPU test fails, install and configure the NVIDIA Container Toolkit:
+
+```bash
+sudo apt-get install -y nvidia-container-toolkit
+sudo nvidia-ctk runtime configure --runtime=docker
+sudo systemctl restart docker
+```
+
+Also confirm the host NVIDIA driver is new enough for the container image:
+
+```bash
+nvidia-smi
+```
+
+The CUDA version shown by `nvidia-smi` is the maximum CUDA runtime supported by the host driver. If the container reports that the NVIDIA driver is too old, update the host NVIDIA driver or use an older compatible image tag.
 
 ```bash
 # Pull the prebuilt image
@@ -530,7 +590,29 @@ curl http://localhost:8000/health
 docker ps | grep egoems
 ```
 
-If the container exits immediately, check GPU architecture compatibility. Run `nvidia-smi` and compare the listed compute capability against what the TensorRT engines were compiled for.
+If the container exits immediately, check the container logs:
+
+```bash
+docker ps -a | grep egoems
+docker logs <container_id>
+```
+
+Common Docker/GPU setup issues:
+
+| Symptom | Likely cause | Fix |
+|---|---|---|
+| `Cannot connect to the Docker daemon at unix:///var/run/docker.sock` | Docker Engine is not running or not installed | Start it with `sudo systemctl enable --now docker`; if `docker.service` is missing, install Docker Engine |
+| `permission denied while trying to connect to the Docker daemon socket` | Current user cannot access `/var/run/docker.sock` | Run `sudo usermod -aG docker $USER`, log out and back in, then verify `id` includes `docker` |
+| `/var/run/docker.sock` is owned by `nobody:nogroup` | Socket ownership is wrong | Run `sudo chown root:docker /var/run/docker.sock && sudo chmod 660 /var/run/docker.sock` |
+| `libnvidia-ml.so.1: cannot open shared object file` | Docker GPU runtime cannot see the host NVIDIA driver, often due to Docker Desktop context or missing NVIDIA Container Toolkit | Use `docker context use default`, install `nvidia-container-toolkit`, run `sudo nvidia-ctk runtime configure --runtime=docker`, and restart Docker |
+| `The NVIDIA driver on your system is too old (found version 12030)` | The container's PyTorch/TensorRT stack requires a newer host NVIDIA driver than the one installed | Update the host NVIDIA driver, or run an older image tag built for your driver-supported CUDA version |
+| TensorRT errors about GPU architecture or `sm_` mismatch | Prebuilt TensorRT engines do not match your GPU architecture | Rebuild the engines locally; see [Tools/EMS_Vision/README_container_inference.md](Tools/EMS_Vision/README_container_inference.md) |
+
+Before debugging the application, this command should work:
+
+```bash
+docker run --rm --gpus all nvidia/cuda:12.3.2-base-ubuntu22.04 nvidia-smi
+```
 
 ### SRT: "No room to store incoming packet"
 
