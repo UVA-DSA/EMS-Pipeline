@@ -1,7 +1,6 @@
-"""Standalone GUI for visualizing CPR compression depth from the CPR FIFO."""
+"""Standalone GUI for visualizing CPR compression depth from an Arduino."""
 
 import argparse
-import os
 import sys
 import time
 from collections import deque
@@ -9,16 +8,31 @@ from dataclasses import dataclass
 
 try:
     from PyQt5.QtCore import QThread, QTimer, pyqtSignal
-    from PyQt5.QtWidgets import QApplication, QFrame, QGridLayout, QLabel, QMainWindow, QWidget
+    from PyQt5.QtGui import QFont
+    from PyQt5.QtWidgets import (
+        QApplication,
+        QComboBox,
+        QFrame,
+        QGridLayout,
+        QLabel,
+        QMainWindow,
+        QMessageBox,
+        QPushButton,
+        QWidget,
+    )
     import pyqtgraph as pg
     GUI_IMPORT_ERROR = None
 except ImportError as exc:
     GUI_IMPORT_ERROR = exc
     QApplication = None
+    QComboBox = object
+    QFont = object
     QFrame = object
     QGridLayout = None
     QLabel = object
     QMainWindow = object
+    QMessageBox = object
+    QPushButton = object
     QThread = object
     QTimer = None
     QWidget = object
@@ -35,16 +49,27 @@ except ImportError as exc:
         return _MissingSignal()
 
 try:
-    from .cpr_depth_reader import PIPE_CPR, setup_cpr_pipes, stat_is_fifo
+    from .cpr_depth_reader import parse_arduino_line
 except ImportError:
-    from cpr_depth_reader import PIPE_CPR, setup_cpr_pipes, stat_is_fifo
+    from cpr_depth_reader import parse_arduino_line
 
 
-NORMAL_DISTANCE_BASELINE_MM = 100.0
+NORMAL_DISTANCE_BASELINE_MM = 92.0
 PLOT_WINDOW_SECONDS = 15.0
 RATE_WINDOW_SECONDS = 10.0
 MIN_COMPRESSION_DEPTH_MM = 10.0
 MIN_PEAK_INTERVAL_SECONDS = 0.25
+
+FONT_FAMILY = "Arial"
+METRIC_TITLE_FONT_SIZE = 36
+METRIC_VALUE_FONT_SIZE = 64
+METRIC_UNIT_FONT_SIZE = 24
+CONTROL_LABEL_FONT_SIZE = 20
+STATUS_FONT_SIZE = 20
+BUTTON_FONT_SIZE = 20
+COMBO_BOX_FONT_SIZE = 20
+PLOT_AXIS_FONT_SIZE = 18
+PLOT_TICK_FONT_SIZE = 15
 
 
 @dataclass(frozen=True)
@@ -127,60 +152,92 @@ def estimate_cpr_rate_bpm(peaks):
     return 60.0 / (sum(intervals) / len(intervals))
 
 
-class CPRPipeReaderThread(QThread):
+class CPRSerialReaderThread(QThread):
     sample_received = pyqtSignal(object)
     status_changed = pyqtSignal(str)
+    warning_requested = pyqtSignal(str, str)
 
-    def __init__(self, pipe_path, baseline_mm, create_pipe=True):
+    def __init__(self, port, baudrate, baseline_mm):
         super().__init__()
-        self.pipe_path = pipe_path
+        self.port = port
+        self.baudrate = baudrate
         self.baseline_mm = baseline_mm
-        self.create_pipe = create_pipe
         self.is_running = True
+        self.serial_connection = None
 
     def stop(self):
         self.is_running = False
+        if self.serial_connection is not None:
+            try:
+                self.serial_connection.close()
+            except Exception:
+                pass
         self.quit()
         self.wait(1500)
 
     def run(self):
-        if self.create_pipe:
-            setup_cpr_pipes((self.pipe_path,))
+        try:
+            import serial
 
-        if os.path.exists(self.pipe_path) and not stat_is_fifo(self.pipe_path):
-            self.status_changed.emit(f"{self.pipe_path} exists but is not a FIFO")
-            return
+            self.status_changed.emit(f"Connecting to Arduino on {self.port}")
+            self.serial_connection = serial.Serial(self.port, self.baudrate, timeout=0.1)
+            time.sleep(2)
+            self.status_changed.emit(f"Connected to Arduino on {self.port}")
 
-        while self.is_running:
-            pipe_file = None
-            try:
-                self.status_changed.emit(f"Waiting for CPR data on {self.pipe_path}")
-                fd = os.open(self.pipe_path, os.O_RDONLY | os.O_NONBLOCK)
-                pipe_file = os.fdopen(fd, "r", buffering=1)
-                self.status_changed.emit(f"Connected to {self.pipe_path}")
-
-                while self.is_running:
-                    line = pipe_file.readline()
-                    if not line:
-                        time.sleep(0.02)
+            record = False
+            while self.is_running:
+                try:
+                    raw_line = self.serial_connection.readline()
+                    if not raw_line:
                         continue
 
-                    try:
-                        sample = parse_pipe_line(line, self.baseline_mm)
-                    except ValueError:
+                    line = raw_line.decode("utf-8", errors="replace").strip()
+                    if line.startswith("Start"):
+                        record = True
+                        continue
+                    if not record:
                         continue
 
+                    arduino_sample = parse_arduino_line(line)
+                    if arduino_sample is None:
+                        continue
+
+                    sample = parse_pipe_line(arduino_sample.to_csv_line(), self.baseline_mm)
                     if sample is not None:
                         self.sample_received.emit(sample)
+                except ValueError:
+                    continue
+                except Exception as exc:
+                    if self.is_running:
+                        self.status_changed.emit(f"Arduino read error: {exc}")
+                    break
+        except PermissionError as exc:
+            self._emit_permission_warning(str(exc))
+        except Exception as exc:
+            message = str(exc)
+            if "Permission" in message or "permission" in message:
+                self._emit_permission_warning(message)
+            else:
+                self.status_changed.emit(f"Arduino connection error: {exc}")
+                self.warning_requested.emit("Arduino connection error", str(exc))
+        finally:
+            if self.serial_connection is not None:
+                self.serial_connection.close()
+                self.serial_connection = None
+            if self.is_running:
+                self.status_changed.emit("Disconnected from Arduino")
 
-            except FileNotFoundError:
-                time.sleep(0.25)
-            except Exception as exc:
-                self.status_changed.emit(f"CPR reader error: {exc}")
-                time.sleep(0.5)
-            finally:
-                if pipe_file is not None:
-                    pipe_file.close()
+    def _emit_permission_warning(self, message):
+        self.status_changed.emit(f"Permission denied for {self.port}")
+        self.warning_requested.emit(
+            "Arduino port permission denied",
+            (
+                f"Could not open {self.port}.\n\n"
+                f"{message}\n\n"
+                "Close any other program using the Arduino. On Linux, you may also need access "
+                "to the dialout group or equivalent serial-port permission."
+            ),
+        )
 
 
 class MetricCard(QFrame):
@@ -207,13 +264,14 @@ class MetricCard(QFrame):
 
 
 class CPRVisualizerWindow(QMainWindow):
-    def __init__(self, pipe_path, baseline_mm, create_pipe=True):
+    def __init__(self, baseline_mm, baudrate):
         super().__init__()
-        self.pipe_path = pipe_path
         self.baseline_mm = baseline_mm
+        self.baudrate = baudrate
         self.samples = deque()
         self.last_sample = None
         self.last_peaks = []
+        self.reader_thread = None
 
         self.setWindowTitle("CPR Depth Monitor")
         self.resize(1180, 680)
@@ -221,8 +279,7 @@ class CPRVisualizerWindow(QMainWindow):
         self.plot_widget = pg.PlotWidget()
         self.plot_widget.setBackground("#101820")
         self.plot_widget.showGrid(x=True, y=True, alpha=0.25)
-        self.plot_widget.setLabel("left", "Compression depth", units="mm")
-        self.plot_widget.setLabel("bottom", "Time", units="s")
+        self.apply_plot_fonts()
         self.plot_widget.setYRange(0, max(65, baseline_mm * 0.7), padding=0)
         self.depth_curve = self.plot_widget.plot(
             [],
@@ -240,6 +297,16 @@ class CPRVisualizerWindow(QMainWindow):
         self.status_label.setObjectName("statusLabel")
         self.baseline_label = QLabel(f"Baseline: {baseline_mm:.1f} mm")
         self.baseline_label.setObjectName("baselineLabel")
+        self.port_label = QLabel("Arduino port")
+        self.port_label.setObjectName("controlLabel")
+        self.port_combo = QComboBox()
+        self.port_combo.setEditable(True)
+        self.port_combo.setObjectName("portCombo")
+        self.refresh_ports_button = QPushButton("Refresh")
+        self.refresh_ports_button.clicked.connect(self.refresh_serial_ports)
+        self.connect_button = QPushButton("Connect")
+        self.connect_button.setObjectName("primaryButton")
+        self.connect_button.clicked.connect(self.connect_to_arduino)
 
         side_panel = QWidget()
         side_panel.setObjectName("sidePanel")
@@ -249,9 +316,13 @@ class CPRVisualizerWindow(QMainWindow):
         side_layout.addWidget(self.rate_card, 0, 0)
         side_layout.addWidget(self.depth_card, 1, 0)
         side_layout.addWidget(self.range_card, 2, 0)
-        side_layout.addWidget(self.baseline_label, 3, 0)
-        side_layout.addWidget(self.status_label, 4, 0)
-        side_layout.setRowStretch(5, 1)
+        side_layout.addWidget(self.port_label, 3, 0)
+        side_layout.addWidget(self.port_combo, 4, 0)
+        side_layout.addWidget(self.refresh_ports_button, 5, 0)
+        side_layout.addWidget(self.connect_button, 6, 0)
+        side_layout.addWidget(self.baseline_label, 7, 0)
+        side_layout.addWidget(self.status_label, 8, 0)
+        side_layout.setRowStretch(9, 1)
 
         root = QWidget()
         root.setObjectName("root")
@@ -264,11 +335,7 @@ class CPRVisualizerWindow(QMainWindow):
         layout.setColumnMinimumWidth(1, 285)
         self.setCentralWidget(root)
         self.apply_styles()
-
-        self.reader_thread = CPRPipeReaderThread(pipe_path, baseline_mm, create_pipe=create_pipe)
-        self.reader_thread.sample_received.connect(self.add_sample)
-        self.reader_thread.status_changed.connect(self.status_label.setText)
-        self.reader_thread.start()
+        self.refresh_serial_ports()
 
         self.update_timer = QTimer(self)
         self.update_timer.timeout.connect(self.update_display)
@@ -276,42 +343,170 @@ class CPRVisualizerWindow(QMainWindow):
 
     def apply_styles(self):
         self.setStyleSheet(
-            """
-            QMainWindow, QWidget#root {
+            f"""
+            QMainWindow, QWidget#root {{
                 background: #0b1117;
                 color: #e5edf5;
-                font-family: Arial, sans-serif;
-            }
-            QWidget#sidePanel {
+                font-family: {FONT_FAMILY}, sans-serif;
+            }}
+            QWidget#sidePanel {{
                 background: #121a22;
                 border: 1px solid #263340;
                 border-radius: 8px;
-            }
-            QFrame#metricCard {
+            }}
+            QFrame#metricCard {{
                 background: #17212b;
                 border: 1px solid #2b3b4a;
                 border-radius: 8px;
-            }
-            QLabel#metricTitle {
+            }}
+            QLabel#metricTitle {{
                 color: #91a4b7;
-                font-size: 13px;
+                font-size: {METRIC_TITLE_FONT_SIZE}px;
                 font-weight: 700;
-            }
-            QLabel#metricValue {
+            }}
+            QLabel#metricValue {{
                 color: #f8fafc;
-                font-size: 40px;
+                font-size: {METRIC_VALUE_FONT_SIZE}px;
                 font-weight: 800;
-            }
-            QLabel#metricUnit {
+            }}
+            QLabel#metricUnit {{
                 color: #7dd3fc;
-                font-size: 13px;
-            }
-            QLabel#statusLabel, QLabel#baselineLabel {
+                font-size: {METRIC_UNIT_FONT_SIZE}px;
+            }}
+            QLabel#statusLabel, QLabel#baselineLabel {{
                 color: #b8c7d4;
-                font-size: 13px;
-            }
+                font-size: {STATUS_FONT_SIZE}px;
+            }}
+            QLabel#controlLabel {{
+                color: #91a4b7;
+                font-size: {CONTROL_LABEL_FONT_SIZE}px;
+                font-weight: 700;
+            }}
+            QComboBox {{
+                background: #0f1720;
+                border: 1px solid #2b3b4a;
+                border-radius: 6px;
+                color: #e5edf5;
+                font-size: {COMBO_BOX_FONT_SIZE}px;
+                min-height: 32px;
+                padding: 4px 8px;
+            }}
+            QPushButton {{
+                background: #17212b;
+                border: 1px solid #2b3b4a;
+                border-radius: 6px;
+                color: #e5edf5;
+                font-size: {BUTTON_FONT_SIZE}px;
+                font-weight: 700;
+                min-height: 32px;
+                padding: 4px 10px;
+            }}
+            QPushButton:hover {{
+                background: #1f2d3a;
+            }}
+            QPushButton#primaryButton {{
+                background: #0e7490;
+                border-color: #22d3ee;
+                color: #f8fafc;
+            }}
+            QPushButton#primaryButton:hover {{
+                background: #0891b2;
+            }}
             """
         )
+
+    def apply_plot_fonts(self):
+        label_style = {
+            "color": "#b8c7d4",
+            "font-size": f"{PLOT_AXIS_FONT_SIZE}px",
+            "font-family": FONT_FAMILY,
+        }
+        self.plot_widget.setLabel("left", "Compression depth", units="mm", **label_style)
+        self.plot_widget.setLabel("bottom", "Time", units="s", **label_style)
+
+        tick_font = QFont(FONT_FAMILY, PLOT_TICK_FONT_SIZE)
+        self.plot_widget.getAxis("left").setTickFont(tick_font)
+        self.plot_widget.getAxis("bottom").setTickFont(tick_font)
+
+    def refresh_serial_ports(self):
+        current_port = self.selected_port()
+        self.port_combo.clear()
+
+        ports = []
+        try:
+            from serial.tools import list_ports
+
+            ports = [
+                f"{port.device} - {port.description}"
+                for port in list_ports.comports()
+            ]
+        except Exception as exc:
+            self.status_label.setText(f"Could not list serial ports: {exc}")
+
+        self.port_combo.addItems(ports)
+        if current_port:
+            index = next(
+                (
+                    item_index
+                    for item_index in range(self.port_combo.count())
+                    if self.port_combo.itemText(item_index).split(" - ", 1)[0] == current_port
+                ),
+                -1,
+            )
+            if index >= 0:
+                self.port_combo.setCurrentIndex(index)
+            else:
+                self.port_combo.setEditText(current_port)
+        elif ports:
+            self.port_combo.setCurrentIndex(0)
+            self.status_label.setText("Select an Arduino port, then click Connect")
+        else:
+            self.port_combo.setEditText("")
+            self.status_label.setText("No serial ports found; enter a port manually")
+
+    def selected_port(self):
+        return self.port_combo.currentText().split(" - ", 1)[0].strip()
+
+    def connect_to_arduino(self):
+        if self.reader_thread is not None:
+            self.disconnect_from_arduino()
+            return
+
+        port = self.selected_port()
+        if not port:
+            QMessageBox.warning(self, "Arduino port required", "Select or enter a serial port before connecting.")
+            return
+
+        self.samples.clear()
+        self.last_sample = None
+        self.last_peaks = []
+        self.reader_thread = CPRSerialReaderThread(port, self.baudrate, self.baseline_mm)
+        self.reader_thread.sample_received.connect(self.add_sample)
+        self.reader_thread.status_changed.connect(self.status_label.setText)
+        self.reader_thread.warning_requested.connect(self.show_warning)
+        self.reader_thread.finished.connect(self.on_reader_finished)
+        self.reader_thread.start()
+        self.port_combo.setEnabled(False)
+        self.refresh_ports_button.setEnabled(False)
+        self.connect_button.setText("Disconnect")
+
+    def disconnect_from_arduino(self):
+        if self.reader_thread is None:
+            return
+        self.status_label.setText("Disconnecting from Arduino")
+        reader_thread = self.reader_thread
+        self.reader_thread = None
+        reader_thread.stop()
+        self.on_reader_finished()
+
+    def on_reader_finished(self):
+        self.reader_thread = None
+        self.port_combo.setEnabled(True)
+        self.refresh_ports_button.setEnabled(True)
+        self.connect_button.setText("Connect")
+
+    def show_warning(self, title, message):
+        QMessageBox.warning(self, title, message)
 
     def add_sample(self, sample):
         self.samples.append(sample)
@@ -352,20 +547,20 @@ class CPRVisualizerWindow(QMainWindow):
         self.range_card.set_value("--" if latest_range < 0 else f"{latest_range:.1f}")
 
     def closeEvent(self, event):
-        self.reader_thread.stop()
+        if self.reader_thread is not None:
+            self.reader_thread.stop()
         event.accept()
 
 
 def build_arg_parser():
-    parser = argparse.ArgumentParser(description="Visualize CPR depth samples from the CPR FIFO.")
-    parser.add_argument("--pipe", default=PIPE_CPR, help=f"CPR FIFO path. Default: {PIPE_CPR}")
+    parser = argparse.ArgumentParser(description="Visualize CPR depth samples from an Arduino serial port.")
+    parser.add_argument("--baudrate", type=int, default=115200, help="Arduino serial baud rate. Default: 115200")
     parser.add_argument(
         "--baseline-mm",
         type=float,
         default=NORMAL_DISTANCE_BASELINE_MM,
         help="Resting sensor distance in mm. Depth is baseline_mm - range_mm.",
     )
-    parser.add_argument("--no-create-pipe", action="store_true", help="Do not create the FIFO if missing.")
     return parser
 
 
@@ -379,9 +574,8 @@ def main(argv=None):
     args = build_arg_parser().parse_args(argv)
     app = QApplication(sys.argv if argv is None else [sys.argv[0], *argv])
     window = CPRVisualizerWindow(
-        pipe_path=args.pipe,
         baseline_mm=args.baseline_mm,
-        create_pipe=not args.no_create_pipe,
+        baudrate=args.baudrate,
     )
     window.show()
     return app.exec_()
