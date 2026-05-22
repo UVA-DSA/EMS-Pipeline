@@ -302,6 +302,8 @@ Demo/EMS_Agent/Interface/models/DKEC-TinyClinicalBERT/model.pt
 
 ### 7. Vision Inference Server (Docker)
 
+> For full Docker inference server setup details, including building the container from source, see the [Container Inference Server README](Tools/EMS_Vision/README_container_inference.md).
+
 The VideoML client sends JPEG-encoded frames to a local Docker container at `http://localhost:8000`. The container runs DETR object detection and an activity recognition model using TensorRT.
 
 Use Docker Engine on Linux for GPU containers. Docker Desktop's `desktop-linux` context may not expose the host NVIDIA driver correctly.
