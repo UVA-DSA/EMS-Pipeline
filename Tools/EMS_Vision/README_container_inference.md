@@ -235,7 +235,9 @@ Before conversion or image build:
 
 ### Download Vision Checkpoints
 
-If you are building the vision container from source, download the source checkpoints from [Google Drive](https://drive.google.com/file/d/1WECewxNfH95oaWxqGCwdnrt6LGcg2aDk/view?usp=sharing) and place them under `Tools/EMS_Vision/checkpoints/` in this repo.
+If you are building the vision container from source, download the source checkpoints from Google Drive and place them under `Tools/EMS_Vision/checkpoints/` in this repo.
+- DETR EMS checkpoint : [link](https://drive.google.com/drive/folders/1sb6veBX_Gjv_6KWlgPuyc-XyQur7thUo)
+- EgoEMS Activity Recognition checkpoint: [link](https://drive.google.com/drive/folders/1qrApTMH_mIniBqZ6l4BlThlzQuJv7Crk)
 
 Required artifacts:
 
