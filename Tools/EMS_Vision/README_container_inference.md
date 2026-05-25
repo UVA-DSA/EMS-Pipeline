@@ -232,10 +232,24 @@ Before conversion or image build:
 1. Docker is installed.
 2. NVIDIA Container Toolkit is working.
 3. `docker run --gpus all ...` works on the machine.
-4. You have the source checkpoints: Download them from [Google Drive](https://drive.google.com/file/d/1WECewxNfH95oaWxqGCwdnrt6LGcg2aDk/view?usp=sharing)
-   - `/path/to/EgoEMS/Tools/inference/checkpoints/ems_finetuned_detr_checkpoint.pth`
-   - `/path/to/EgoEMS/Tools/inference/checkpoints/mtrsap_30frames_window_resnet.pt` (if activity is needed)
-   - 
+
+### Download Vision Checkpoints
+
+If you are building the vision container from source, download the source checkpoints from [Google Drive](https://drive.google.com/file/d/1WECewxNfH95oaWxqGCwdnrt6LGcg2aDk/view?usp=sharing) and place them under `Tools/EMS_Vision/checkpoints/` in this repo.
+
+Required artifacts:
+
+- `ems_finetuned_detr_checkpoint.pth`
+  - required for DETR conversion
+  - place at `Tools/EMS_Vision/checkpoints/ems_finetuned_detr_checkpoint.pth`
+- `mtrsap_30frames_window_resnet.pt`
+  - required only if activity recognition is enabled
+  - place at `Tools/EMS_Vision/checkpoints/mtrsap_30frames_window_resnet.pt`
+
+Notes:
+
+- The ResNet50 activity feature extractor does not require a separate downloaded checkpoint by default. The conversion flow below uses torchvision weights via `--weights imagenet1k_v1`.
+- If you only want DETR object detection, you only need the DETR checkpoint above.
 
 If you want activity recognition enabled, you also need:
 
@@ -259,10 +273,10 @@ Run conversion on a CUDA/TensorRT-capable runtime on the target machine.
 From repo root:
 
 ```bash
-cd /path/to/EgoEMS
+cd /path/to/EMS-Pipeline
 docker run --rm --gpus all -it \
-  -v "$PWD":/workspace/EgoEMS \
-  -w /workspace/EgoEMS/Tools/inference \
+  -v "$PWD":/workspace/EMS-Pipeline \
+  -w /workspace/EMS-Pipeline/Tools/EMS_Vision \
   nvcr.io/nvidia/pytorch:26.02-py3 \
   bash
 ```
@@ -304,18 +318,18 @@ ls -lh checkpoints/*trt.ts
 
 ### Build Context
 
-The Dockerfile lives in `Tools/inference/servers`, but the build context must be `Tools/inference`.
+The Dockerfile lives in `Tools/EMS_Vision/servers`, but the build context must be `Tools/EMS_Vision`.
 
 Use:
 
 ```bash
 docker build \
-  -f /path/to/EgoEMS/Tools/inference/servers/Dockerfile \
+  -f /path/to/EMS-Pipeline/Tools/EMS_Vision/servers/Dockerfile \
   -t keshara2032/egoems-inference-server:latest \
-  /path/to/EgoEMS/Tools/inference
+  /path/to/EMS-Pipeline/Tools/EMS_Vision
 ```
 
-Do not use `Tools/inference/servers` as the build context. It is too small.
+Do not use `Tools/EMS_Vision/servers` as the build context. It is too small.
 
 ### Run The Rebuilt Image
 

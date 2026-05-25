@@ -274,11 +274,15 @@ ls build/bin/egosim_stream
 
 #### Download Whisper model weights
 
+Download the fine-tuned Whisper model from [Google Drive](https://drive.google.com/drive/folders/1Z4oakBCSiSyW_agq3UG1eHsQDMmHKHOA?usp=sharing).
+
 Place the fine-tuned model file at:
 
 ```
 Demo/EMS_Speech/EMS_Whisper/whisper.cpp_realtime_stream/models/ggml-finetuned-base-v203.bin
 ```
+
+This file is required only if you plan to use the local Whisper-based speech recognition path.
 
 #### Whisper configuration
 
@@ -294,17 +298,23 @@ For lower transcription latency at the cost of slightly less context, try `step=
 
 ### 6. Protocol Prediction Model
 
-Download the model and place it at:
+Download the TinyBERT protocol prediction model from [Google Drive](https://drive.google.com/drive/folders/1y4Ko6iSr5zkmYbm2llNQq7cwL-cu6Qi3?usp=sharing).
+
+Place the model at:
 
 ```
 Demo/EMS_Agent/Interface/models/DKEC-TinyClinicalBERT/model.pt
 ```
+
+This model is required for protocol prediction in the desktop demo.
 
 ### 7. Vision Inference Server (Docker)
 
 > For full Docker inference server setup details, including building the container from source, see the [Container Inference Server README](Tools/EMS_Vision/README_container_inference.md).
 
 The VideoML client sends JPEG-encoded frames to a local Docker container at `http://localhost:8000`. The container runs DETR object detection and an activity recognition model using TensorRT.
+
+If you use the prebuilt Docker image, you typically do not need to place raw vision checkpoints manually. If you build the vision container from source, you will need the DETR checkpoint and, if activity recognition is enabled, the MTRSAP checkpoint. See [Tools/EMS_Vision/README_container_inference.md](Tools/EMS_Vision/README_container_inference.md) for the exact download link, filenames, placement paths, and conversion steps.
 
 Use Docker Engine on Linux for GPU containers. Docker Desktop's `desktop-linux` context may not expose the host NVIDIA driver correctly.
 

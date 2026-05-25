@@ -6,11 +6,13 @@ import time
 import os
 import argparse
 import pickle
+import json
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import numpy as np
 import cv2
 from PIL import Image
 from dataclasses import dataclass
+from pathlib import Path
 
 try:
     from classes import DetectionObj
@@ -146,56 +148,75 @@ class DETREngine:
 
 
 
-    def plot_finetuned_results(self, cv2_img, prob=None, boxes=None):
-        """ Given confidences and bounding box coordinates plot the bounding boxes and assign labels.
-        Also returns DetectionObjs with data from the probabilities and box coordinates.
-
-        Args:
-            cv2_img (_type_): image in cv2 format
-            prob (_type_): probabilities of each detection
-            boxes (torch.Tensor): tensor for bounding box coordinates
-
-        Returns:
-            np.array, list: annotated image, list of DetectionObjs
-        """
+    def detections_from_outputs(self, prob=None, boxes=None):
         if prob is None or boxes is None:
-            return cv2_img, []
+            return []
 
-        highest_confidence_objects = {}
-
+        detections = []
         for p, box in zip(prob, boxes):
             cl = p.argmax().item()
-            if cl == 1:
-                continue
-
             confidence = p[cl].item()
-            if cl not in highest_confidence_objects or confidence > highest_confidence_objects[cl][0]:
-                xmin, ymin, xmax, ymax = box
-                box_coordinates = [(int(xmin), int(ymin)), (int(xmax), int(ymax))]
-                highest_confidence_objects[cl] = (confidence, box_coordinates, p, cl)
+            xmin, ymin, xmax, ymax = box.tolist()
+            x1, y1, x2, y2 = int(round(xmin)), int(round(ymin)), int(round(xmax)), int(round(ymax))
+            name = self.finetuned_classes[cl]
+            detections.append({
+                "class_id": int(cl),
+                "name": name,
+                "confidence": float(confidence),
+                "box_coords": [(x1, y1), (x2, y2)],
+                "bbox_xyxy": [x1, y1, x2, y2],
+            })
+
+        detections.sort(key=lambda item: item["confidence"], reverse=True)
+        return detections
+
+    def plot_finetuned_results(self, cv2_img, detections=None):
+        """Draw every kept detection on the image and return serialized detection data."""
+        if detections is None:
+            detections = []
 
         detection_objects = []
-        for cl, (confidence, box_coordinates, p, cl) in highest_confidence_objects.items():
-            name = self.finetuned_classes[cl]
-            label = f'{name}: {confidence:.2f}'
+        for detection in detections:
+            cl = detection["class_id"]
+            confidence = detection["confidence"]
+            box_coordinates = detection["box_coords"]
+            label = f'{detection["name"]}: {confidence:.2f}'
             color = [int(x * 255) for x in self.COLORS[cl % len(self.COLORS)]]
 
-            # Draw rectangle
-            cv2.rectangle(cv2_img, (box_coordinates[0][0], box_coordinates[0][1]),
-                        (box_coordinates[1][0], box_coordinates[1][1]), color, 2)
+            cv2.rectangle(
+                cv2_img,
+                (box_coordinates[0][0], box_coordinates[0][1]),
+                (box_coordinates[1][0], box_coordinates[1][1]),
+                color,
+                2,
+            )
 
-            # Draw label background
             label_size, _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 2)
-            cv2.rectangle(cv2_img, (box_coordinates[0][0], box_coordinates[0][1] - label_size[1] - 10),
-                        (box_coordinates[0][0] + label_size[0], box_coordinates[0][1]), color, cv2.FILLED)
+            cv2.rectangle(
+                cv2_img,
+                (box_coordinates[0][0], box_coordinates[0][1] - label_size[1] - 10),
+                (box_coordinates[0][0] + label_size[0], box_coordinates[0][1]),
+                color,
+                cv2.FILLED,
+            )
 
-            # Draw text
-            cv2.putText(cv2_img, label, (box_coordinates[0][0], box_coordinates[0][1] - 5),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+            cv2.putText(
+                cv2_img,
+                label,
+                (box_coordinates[0][0], box_coordinates[0][1] - 5),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.5,
+                (255, 255, 255),
+                1,
+            )
 
-            detection_objects.append(DetectionObj(box_coords=box_coordinates,
-                                                name=name,
-                                                confidence=f'{confidence:.2f}'))
+            detection_objects.append(
+                DetectionObj(
+                    box_coords=box_coordinates,
+                    name=detection["name"],
+                    confidence=f'{confidence:.2f}',
+                )
+            )
 
         return cv2_img, detection_objects
 
@@ -211,12 +232,16 @@ class DETREngine:
         probas_to_keep, bboxes_scaled = self.filter_bboxes_from_outputs(
             outputs, img_size=(img_w, img_h), threshold=self.threshold)
 
-        # plot bboxes on image
-        result_image, detection_objects = self.plot_finetuned_results(
-            my_image, probas_to_keep, bboxes_scaled)
+        detections = self.detections_from_outputs(probas_to_keep, bboxes_scaled)
+        result_image, detection_objects = self.plot_finetuned_results(my_image, detections)
 
-        detection_results_serialized = [
-            vars(detection_object) for detection_object in detection_objects]
+        detection_results_serialized = []
+        for detection, detection_object in zip(detections, detection_objects):
+            serialized = vars(detection_object)
+            serialized["class_id"] = detection["class_id"]
+            serialized["bbox_xyxy"] = detection["bbox_xyxy"]
+            serialized["confidence"] = round(detection["confidence"], 6)
+            detection_results_serialized.append(serialized)
         
 
         return result_image, detection_results_serialized
@@ -246,11 +271,21 @@ def main():
     parser.add_argument("--threshold", type=float, default=None, help="Detection confidence threshold.")
     parser.add_argument("--device", type=str, default=None, help="Torch device override (e.g., cpu, cuda:0).")
     parser.add_argument("--display-width", type=int, default=960, help="Display width while preserving aspect ratio.")
+    parser.add_argument("--no-display", action="store_true", help="Disable GUI display.")
+    parser.add_argument("--frame-stride", type=int, default=1, help="Run inference on every Nth frame.")
+    parser.add_argument("--max-frames", type=int, default=None, help="Stop after this many processed frames.")
+    parser.add_argument("--print-every", type=int, default=1, help="Print progress every N processed frames.")
+    parser.add_argument("--output-json", type=str, default=None, help="Optional JSON output path for per-frame detections.")
+    parser.add_argument("--save-annotated-video", type=str, default=None, help="Optional path for annotated output video.")
     args = parser.parse_args()
 
     video_path = _find_default_video(args.video)
     if not video_path or not os.path.exists(video_path):
         raise FileNotFoundError("Video not found. Pass a valid --video path.")
+    if args.frame_stride <= 0:
+        raise ValueError("--frame-stride must be > 0")
+    if args.max_frames is not None and args.max_frames <= 0:
+        raise ValueError("--max-frames must be > 0")
 
     engine = DETREngine(
         detr_version=args.detr_version,
@@ -263,17 +298,58 @@ def main():
     if not cap.isOpened():
         raise RuntimeError(f"Unable to open video: {video_path}")
 
+    fps_value = cap.get(cv2.CAP_PROP_FPS)
+    frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+    outputs_dir = Path(__file__).resolve().parents[1] / "outputs"
+    outputs_dir.mkdir(parents=True, exist_ok=True)
+    output_json_path = Path(args.output_json) if args.output_json else outputs_dir / f"{Path(video_path).stem}_detr_pytorch.json"
+
+    writer = None
+    if args.save_annotated_video:
+        save_annotated_video = Path(args.save_annotated_video)
+        save_annotated_video.parent.mkdir(parents=True, exist_ok=True)
+        writer = cv2.VideoWriter(
+            str(save_annotated_video),
+            cv2.VideoWriter_fourcc(*"mp4v"),
+            fps_value if fps_value > 0 else 30.0,
+            (frame_width, frame_height),
+        )
+        if not writer.isOpened():
+            raise RuntimeError(f"Unable to create output video: {save_annotated_video}")
+
     print(f"[DETR Engine] Running realtime inference on: {video_path}")
     prev_t = time.time()
+    frame_index = 0
+    processed_frames = 0
+    frame_results = []
     while True:
         ret, frame = cap.read()
         if not ret:
             break
 
-        annotated, _ = engine.run_workflow(frame)
+        current_frame_index = frame_index
+        frame_index += 1
+        if current_frame_index % args.frame_stride != 0:
+            continue
+
+        annotated, detections = engine.run_workflow(frame)
         now = time.time()
         fps = 1.0 / max(now - prev_t, 1e-6)
         prev_t = now
+        processed_frames += 1
+
+        frame_results.append({
+            "frame_index": current_frame_index,
+            "timestamp_ms": round((current_frame_index / fps_value) * 1000.0, 3) if fps_value and fps_value > 0 else None,
+            "detections": detections,
+        })
+
+        if args.print_every > 0 and processed_frames % args.print_every == 0:
+            print(f"[frame {current_frame_index}] detections={len(detections)}")
+
         cv2.putText(
             annotated,
             f"FPS: {fps:.1f}",
@@ -284,20 +360,57 @@ def main():
             2,
         )
 
-        if args.display_width > 0:
+        if writer is not None:
+            writer.write(annotated)
+
+        if not args.no_display and args.display_width > 0:
             h, w = annotated.shape[:2]
             new_w = args.display_width
             new_h = int(h * (new_w / w))
             display_frame = cv2.resize(annotated, (new_w, new_h))
-        else:
+        elif not args.no_display:
             display_frame = annotated
 
-        cv2.imshow("DETR Realtime Inference", display_frame)
-        if cv2.waitKey(1) & 0xFF in (ord('q'), 27):
+        if not args.no_display:
+            cv2.imshow("DETR Realtime Inference", display_frame)
+            if cv2.waitKey(1) & 0xFF in (ord('q'), 27):
+                break
+
+        if args.max_frames is not None and processed_frames >= args.max_frames:
             break
 
     cap.release()
-    cv2.destroyAllWindows()
+    if writer is not None:
+        writer.release()
+    if not args.no_display:
+        cv2.destroyAllWindows()
+
+    output_payload = {
+        "model": {
+            "name": "detr_pytorch",
+            "detr_version": args.detr_version,
+            "checkpoint_path": args.checkpoint,
+            "device": args.device or str(engine.device),
+            "threshold": engine.threshold,
+            "class_names": engine.finetuned_classes,
+        },
+        "video": {
+            "path": video_path,
+            "fps": fps_value,
+            "width": frame_width,
+            "height": frame_height,
+            "frame_count": frame_count,
+            "frame_stride": args.frame_stride,
+        },
+        "summary": {
+            "processed_frames": processed_frames,
+        },
+        "frames": frame_results,
+    }
+    output_json_path.write_text(json.dumps(output_payload, indent=2))
+    print(f"[DETR Engine] Wrote frame detections to: {output_json_path}")
+    if args.save_annotated_video:
+        print(f"[DETR Engine] Wrote annotated video to: {args.save_annotated_video}")
 
 
 if __name__ == "__main__":
